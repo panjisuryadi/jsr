@@ -1,6 +1,6 @@
 git add .
 
-echo 'Judul Commit:'
+echo 'Judul:'
 read commitMessage
 
 git commit -a -m "$commitMessage |  `date +%F-%T`"
