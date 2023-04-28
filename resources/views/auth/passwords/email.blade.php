@@ -11,6 +11,7 @@
     <link rel="icon" href="{{ asset('images/favicon.png') }}">
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="{{ url('/') }}{{ mix('css/app.css') }}" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url('/') }}{{ mix('css/backend.css') }}" crossorigin="anonymous">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
      <style>
@@ -78,7 +79,7 @@ if (settings()->site_logo) {
 
                             <div class="row">
                                 <div class="col-12">
-                                    <button class="btn btn-block btn-primary" type="submit">
+                                    <button    style="background-color: {{settings()->btn_color}} !important;" class="btn btn-block btn-primary" type="submit">
                                         <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
                                     </button>
                                 </div>

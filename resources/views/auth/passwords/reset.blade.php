@@ -11,10 +11,9 @@
     <link rel="icon" href="{{ asset('images/favicon.png') }}">
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="{{ url('/') }}{{ mix('css/app.css') }}" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-          integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ url('/') }}{{ mix('css/backend.css') }}" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+
 </head>
 <body class="c-app flex-row align-items-center">
 <div class="container">
@@ -59,7 +58,8 @@
                             <input type="password" name="password_confirmation" class="form-control"
                                    placeholder="Confirm password">
                         </div>
-                        <button type="submit" class="btn btn-block btn-primary btn-block btn-flat">
+                        <button type="submit"   style="background-color: {{settings()->btn_color}} !important;"
+                            class="btn btn-block btn-primary btn-block btn-flat">
                             <i class="fa fa-btn fa-refresh"></i> Reset
                         </button>
                     </form>
