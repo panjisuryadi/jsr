@@ -3,6 +3,7 @@ git config --global user.name "n0izestr3am"
 #
 git add .
 
+
 echo 'Judul:'
 read commitMessage
 
