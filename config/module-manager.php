@@ -33,7 +33,6 @@ return [
 
             'controller_backend'            => ['Http/Controllers/Backend/stubController.stub', 'Http/Controllers/stubBackendController.php'],
           
-
             'views_backend_index'           => ['Resources/views/backend/stubViews/index.blade.stub', 'Resources/views/stubViews/index.blade.php'],
 
             'views_backend_index_datatable' => ['Resources/views/backend/stubViews/index_datatable.blade.stub', 'Resources/views/stubViews/index_datatable.blade.php'],

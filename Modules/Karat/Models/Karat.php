@@ -1,11 +1,11 @@
 <?php
 
-namespace {{namespace}}\{{moduleName}}\Models;
+namespace Modules\Karat\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class {{moduleName}} extends Model
+class Karat extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class {{moduleName}} extends Model
 
     protected static function newFactory()
     {
-        return \{{namespace}}\{{moduleName}}\database\factories\{{moduleName}}Factory::new();
+        return \Modules\Karat\database\factories\KaratFactory::new();
     }
 }
 

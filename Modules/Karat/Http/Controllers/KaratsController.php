@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}\{{moduleName}}\Http\Controllers;
+namespace Modules\Karat\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
-class {{moduleNamePlural}}Controller extends Controller
+class KaratsController extends Controller
 {
 
 
@@ -19,15 +19,15 @@ class {{moduleNamePlural}}Controller extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = '{{moduleName}}';
+        $this->module_title = 'Karat';
         // module name
-        $this->module_name = '{{moduleNameLower}}';
+        $this->module_name = 'karat';
         // directory path of the module
-        $this->module_path = '{{moduleNameLower}}';
+        $this->module_path = 'karat';
         // module icon
         $this->module_icon = 'fas fa-sitemap';
         // module model name, path
-        $this->module_model = "{{namespace}}\{{moduleName}}\Models\{{moduleName}}";
+        $this->module_model = "Modules\Karat\Models\Karat";
 
 
     }
@@ -38,11 +38,11 @@ class {{moduleNamePlural}}Controller extends Controller
      */
 
     public function index() {
-        abort_if(Gate::denies('access_{{moduleNameLower}}'), 403);
+        abort_if(Gate::denies('access_karat'), 403);
 
          $module_action = 'List';
         
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.index', compact('module_action'));
+         return view('karat::karats.index', compact('module_action'));
 
     }
 
@@ -99,7 +99,7 @@ public function index_data()
     public function create()
     {
          $module_action = 'Create';
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.create', compact('module_action'));
+         return view('karat::karats.create', compact('module_action'));
     }
 
     /**
@@ -120,7 +120,7 @@ public function index_data()
     public function show($id)
     {
          $module_action = 'Show';
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.show', compact('module_action'));
+         return view('karat::karats.show', compact('module_action'));
     }
 
     /**
@@ -131,7 +131,7 @@ public function index_data()
     public function edit($id)
     {
         $module_action = 'Edit';
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.edit', compact('module_action'));
+         return view('karat::karats.edit', compact('module_action'));
     }
 
     /**
