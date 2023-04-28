@@ -1,0 +1,8 @@
+Topup saldo table >> master data
+
+1.saldo
+2.card_id //buat barcode
+3.tanggal
+
+validasi ...berdasarkan jumlah saldo
+rules topup
