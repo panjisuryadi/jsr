@@ -31,6 +31,9 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link',
             ]);
 
+
+
+
             // Access Control Dropdown
             $masterData = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Master Data', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -86,7 +89,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-title text-muted',
             ])
             ->data([
-                'order'         => 107,
+                'order'         => 89,
                 'permission'    =>
                    [
                    'access_user_management',
@@ -94,6 +97,107 @@ class GenerateMenus
                    'access_currencies'
                    ],
             ]);
+
+
+
+
+
+
+ // Access Control Dropdown
+            $setting = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-gear"></i>'.__('Setting').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 90,
+                'activematches' => [
+                    'currencies*',
+
+                ],
+                'permission'    => ['access_currencies','access_settings'],
+            ]);
+            $setting->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // Submenu: Users
+
+            $setting->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> '.__('currencies').'', [
+                'route' => 'currencies.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 91,
+                'activematches' => 'currencies*',
+                'permission'    => ['access_currencies'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+  $setting->add('<i class="c-sidebar-nav-icon bi-sliders"></i> '.__('System Settings').'', [
+                'route' => 'settings.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 91,
+                'activematches' => 'settings*',
+                'permission'    => ['access_settings'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
+
+
+
+
+
+
+   // Access Control Dropdown
+            $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-people"></i>'.__('users management').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 101,
+                'activematches' => [
+                    'users*',
+
+                ],
+                'permission'    => ['access_user_management'],
+            ]);
+            $accessControl->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // Submenu: Users
+
+            $accessControl->add('<i class="c-sidebar-nav-icon cil-people"></i> '.__('users').'', [
+                'route' => 'users.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 102,
+                'activematches' => 'users*',
+                'permission'    => ['access_user_management'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
+
+
+
+
+
 
             // Access Permission Check
             $menu->filter(function ($item) {
