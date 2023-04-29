@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Modules\Product\Entities\Category;
+use Modules\Product\Entities\Product;
 use Modules\Product\DataTables\ProductCategoriesDataTable;
 
 class CategoriesController extends Controller
@@ -70,15 +71,12 @@ class CategoriesController extends Controller
         abort_if(Gate::denies('access_product_categories'), 403);
 
         $category = Category::findOrFail($id);
-
-        if ($category->products()->isNotEmpty()) {
+        $produk = Product::where('category_id',$id)->get();
+        if ($produk->isNotEmpty()) {
             return back()->withErrors('Can\'t delete beacuse there are products associated with this category.');
         }
-
         $category->delete();
-
         toast('Product Category Deleted!', 'warning');
-
         return redirect()->route('product-categories.index');
     }
 }
