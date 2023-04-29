@@ -103,6 +103,118 @@ class GenerateMenus
 
 
 
+
+
+
+
+
+ // Access Control Dropdown
+            $report = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Reports').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 88,
+                'activematches' => [
+                    '*-report.index',
+
+                ],
+                'permission'    => ['access_reports'],
+            ]);
+            $report->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // Submenu: Users
+            $report->add('<i class="c-sidebar-nav-icon bi bi-cash-coin"></i> '.__('Profit Loss Report').'', [
+                'route' => 'profit-loss-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+   // Submenu: Users
+            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2"></i> '.__('Payments Report').'', [
+                'route' => 'payments-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+ // Submenu: Users
+            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-check"></i> '.__('Sales Report').'', [
+                'route' => 'sales-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+ // Submenu: Users
+            $report->add('<i class="c-sidebar-nav-icon bi bi-receipt"></i> '.__('Purchases Report').'', [
+                'route' => 'purchases-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+ // Submenu: Users
+            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-fill"></i> '.__('Sales Return Report').'', [
+                'route' => 'sales-return-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+ // Submenu: Users
+            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-x"></i> '.__('Purchases Return Report').'', [
+                'route' => 'purchases-return-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
+
+
+
+
  // Access Control Dropdown
             $setting = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-gear"></i>'.__('Setting').'', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -136,7 +248,7 @@ class GenerateMenus
             ]);
 
 
-  $setting->add('<i class="c-sidebar-nav-icon bi-sliders"></i> '.__('System Settings').'', [
+          $setting->add('<i class="c-sidebar-nav-icon bi-sliders"></i> '.__('System Settings').'', [
                 'route' => 'settings.index',
                 'class' => 'nav-item',
             ])
