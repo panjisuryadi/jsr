@@ -16,14 +16,10 @@ return new class extends Migration
         Schema::create('karats', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->nullable();
             $table->text('description')->nullable();
-            $table->tinyInteger('status')->default(1);
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->integer('deleted_by')->unsigned()->nullable();
+            //$table->string('image')->nullable(true);
             $table->timestamps();
-            $table->softDeletes();
+
         });
     }
 

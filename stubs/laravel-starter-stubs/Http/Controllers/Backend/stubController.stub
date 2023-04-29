@@ -1,7 +1,7 @@
 <?php
 
 namespace {{namespace}}\{{moduleName}}\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -20,15 +20,10 @@ class {{moduleNamePlural}}Controller extends Controller
     {
         // Page Title
         $this->module_title = '{{moduleName}}';
-        // module name
         $this->module_name = '{{moduleNameLower}}';
-        // directory path of the module
-        $this->module_path = '{{moduleNameLower}}';
-        // module icon
+        $this->module_path = '{{moduleNameLowerPlural}}';
         $this->module_icon = 'fas fa-sitemap';
-        // module model name, path
         $this->module_model = "{{namespace}}\{{moduleName}}\Models\{{moduleName}}";
-
 
     }
 
@@ -37,13 +32,20 @@ class {{moduleNamePlural}}Controller extends Controller
      * @return Renderable
      */
 
-    public function index() {
-        abort_if(Gate::denies('access_{{moduleNameLower}}'), 403);
-
-         $module_action = 'List';
-        
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.index', compact('module_action'));
-
+  public function index() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.index',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
     }
 
 
@@ -109,7 +111,28 @@ public function index_data()
      */
     public function store(Request $request)
     {
-        //
+         abort_if(Gate::denies('create_{{moduleNameLower}}'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Store';
+
+        $request->validate([
+             'name' => 'required|min:3|max:191',
+             'description' => 'required|min:3|max:191',
+         ]);
+       // $params = $request->all();
+        //dd($params);
+        $params = $request->except('_token');
+        $params['name'] = $params['name'];
+        $params['description'] = $params['description'];
+         $$module_name_singular = $module_model::create($params);
+         toast(''. $module_title.' Created!', 'success');
+         return redirect()->route(''.$module_name.'.index');
     }
 
     /**
@@ -117,10 +140,27 @@ public function index_data()
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+public function show($id)
     {
-         $module_action = 'Show';
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.show', compact('module_action'));
+
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+        //dd($detail);
+          return view(''.$module_name.'::'.$module_path.'.show',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+
     }
 
     /**
@@ -130,8 +170,21 @@ public function index_data()
      */
     public function edit($id)
     {
+       $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
         $module_action = 'Edit';
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.edit', compact('module_action'));
+        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.edit',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
     }
 
     /**
@@ -142,9 +195,24 @@ public function index_data()
      */
     public function update(Request $request, $id)
     {
-        //
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+        $$module_name_singular = $module_model::findOrFail($id);
+        $request->validate([
+            'name' => 'required|min:3|max:191',
+                 ]);
+        $params = $request->except('_token');
+        $params['name'] = $params['name'];
+        $params['description'] = $params['description'];
+        $$module_name_singular->update($params);
+         toast(''. $module_title.' Updated!', 'success');
+         return redirect()->route(''.$module_name.'.index');
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -152,6 +220,29 @@ public function index_data()
      */
     public function destroy($id)
     {
-        //
+
+        try {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Delete';
+
+        $$module_name_singular = $module_model::findOrFail($id);
+
+        $$module_name_singular->delete();
+         toast(''. $module_title.' Deleted!', 'success');
+         return redirect()->route(''.$module_name.'.index');
+
+          } catch (\Exception $e) {
+            dd($e);
+                toast(''. $module_title.' error!', 'warning');
+                return redirect()->back();
+            }
+
     }
+
 }

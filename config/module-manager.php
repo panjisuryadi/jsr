@@ -32,17 +32,15 @@ return [
             'route_api'                     => ['routes/api.stub', 'routes/api.php'],
 
             'controller_backend'            => ['Http/Controllers/Backend/stubController.stub', 'Http/Controllers/stubBackendController.php'],
-          
+
             'views_backend_index'           => ['Resources/views/backend/stubViews/index.blade.stub', 'Resources/views/stubViews/index.blade.php'],
 
             'views_backend_index_datatable' => ['Resources/views/backend/stubViews/index_datatable.blade.stub', 'Resources/views/stubViews/index_datatable.blade.php'],
-
-
             'views_backend_create'          => ['Resources/views/backend/stubViews/create.blade.stub', 'Resources/views/stubViews/create.blade.php'],
             'views_backend_form'            => ['Resources/views/backend/stubViews/form.blade.stub', 'Resources/views/stubViews/form.blade.php'],
             'views_backend_show'            => ['Resources/views/backend/stubViews/show.blade.stub', 'Resources/views/stubViews/show.blade.php'],
             'views_backend_edit'            => ['Resources/views/backend/stubViews/edit.blade.stub', 'Resources/views/stubViews/edit.blade.php'],
-            'views_backend_trash'           => ['Resources/views/backend/stubViews/trash.blade.stub', 'Resources/views/stubViews/trash.blade.php'],
+
 
         ],
     ],

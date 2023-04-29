@@ -51,6 +51,14 @@
                                         <label for="city">City <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="city" required>
                                     </div>
+
+
+
+
+
+
+
+
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">

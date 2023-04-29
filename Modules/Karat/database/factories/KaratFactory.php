@@ -26,10 +26,8 @@ class KaratFactory extends Factory
     {
         return [
             'name'              => substr($this->faker->text(15), 0, -1),
-            'slug'              => '',
             'description'       => $this->faker->paragraph,
-            'status'            => 1,
-            'created_at'        => Carbon::now(),
+             'created_at'        => Carbon::now(),
             'updated_at'        => Carbon::now(),
         ];
     }

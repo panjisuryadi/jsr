@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Products')
+@section('title', 'Karat')
 
 @section('third_party_stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
@@ -9,7 +9,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Products</li>
+        <li class="breadcrumb-item active">{{$module_title}}</li>
     </ol>
 @endsection
 
@@ -19,14 +19,38 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ route('products.create') }}" class="btn btn-primary">
-                            Add Product <i class="bi bi-plus"></i>
+
+ <div class="flex justify-between py-1 border-bottom">
+  <div>
+   <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
+                            Add {{$module_title}}<i class="bi bi-plus"></i>
                         </a>
+    </div>
 
-                        <hr>
+  <div></div>
+</div>
 
-                        <div class="table-responsive">
-                          
+                        <div class="table-responsive mt-1">
+                          <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%!important;">
+                                    NO
+                                </th>
+
+                                <th>
+                                    Title
+                                </th>
+
+                                <th>
+                                    Updated
+                                </th>
+                                <th style="width: 15%!important;" class="text-center">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
                         </div>
                     </div>
                 </div>
@@ -36,5 +60,44 @@
 @endsection
 
 @push('page_scripts')
-  
+   <script type="text/javascript">
+        $('#datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            autoWidth: true,
+            responsive: true,
+            "aaSorting": [
+                [0, "desc"]
+            ],
+            "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+            }],
+            "sPaginationType": "simple_numbers",
+            ajax: '{{ route("$module_name.index_data") }}',
+            columns: [{
+                    "data": 'id',
+                    "sortable": false,
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'updated_at',
+                    name: 'updated_at'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ]
+        });
+    </script>
 @endpush

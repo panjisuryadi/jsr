@@ -26,7 +26,7 @@ class KaratDatabaseSeeder extends Seeder
         // DB::table('karats')->truncate();
         // echo "Truncate: karats \n";
 
-        Karat::factory()->count(5)->create();
+        Karat::factory()->count(20)->create();
         $rows = Karat::all();
         echo " Insert: karats \n\n";
 

@@ -1,71 +1,81 @@
-@extends('backend.layouts.app')
+@extends('layouts.app')
 
-@section('title') {{ __($module_action) }} {{ __($module_title) }} @endsection
+@section('title', ''.$module_title.' Details')
 
-@section('breadcrumbs')
-<x-backend-breadcrumbs>
-    <x-backend-breadcrumb-item route='{{route("backend.$module_name.index")}}' icon='{{ $module_icon }}'>
-        {{ __($module_title) }}
-    </x-backend-breadcrumb-item>
-    <x-backend-breadcrumb-item type="active">{{ __($module_action) }}</x-backend-breadcrumb-item>
-</x-backend-breadcrumbs>
+@section('breadcrumb')
+    <ol class="breadcrumb border-0 m-0">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item active">{{$module_title}}</li>
+    </ol>
 @endsection
+
 
 @section('content')
-<div class="card">
-    <div class="card-body">
-        <x-backend.section-header>
-            <i class="{{ $module_icon }}"></i> {{ __($module_title) }} <small class="text-muted">{{ __($module_action) }}</small>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
 
-            <x-slot name="subtitle">
-                @lang(":module_name Management Dashboard", ['module_name'=>Str::title($module_name)])
-            </x-slot>
-            <x-slot name="toolbar">
-                <x-backend.buttons.return-back />
-                <x-buttons.show route='{!!route("backend.$module_name.show", $$module_name_singular)!!}' title="{{__('Show')}} {{ ucwords(Str::singular($module_name)) }}" class="ms-1" />
-            </x-slot>
-        </x-backend.section-header>
+   <form action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
+            @csrf
+            @method('patch')
 
-        <hr>
+               <div class="form-row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                          <?php
+                            $field_name = 'name';
+                            $field_lable = __("Name");
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                            $required = '';
+                            ?>
+                         <label for="{{ $field_name }}">{{ $field_lable }}</label>
+                        <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value="{{ $detail->name }}" placeholder=" Name" {{ $required }}>
+                            @if ($errors->has($field_name))
+                                <span class="invalid feedback"role="alert">
+                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                        class="text-danger">
+                                </span>
+                            @endif
 
-        <div class="row mt-4">
-            <div class="col">
-                {{ html()->modelForm($$module_name_singular, 'PATCH', route("backend.$module_name.update", $$module_name_singular))->acceptsFiles()->class('form')->open() }}
-
-                @include ("$module_path.$module_name.form")
-
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            {{ html()->submit($text = icon('fas fa-save')." Save")->class('btn btn-success') }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    {{ html()->form()->close() }}
 
-                    <div class="col-8">
-                        <div class="float-end">
-                            @can('delete_'.$module_name)
-                            <a href="{{route("backend.$module_name.destroy", $$module_name_singular)}}" class="btn btn-danger" data-method="DELETE" data-token="{{csrf_token()}}" data-toggle="tooltip" title="{{__('labels.backend.delete')}}"><i class="fas fa-trash-alt"></i></a>
-                            @endcan
-                            <x-buttons.cancel></x-buttons.cancel>
+                           <div class="form-group">
+                             <?php
+                            $field_name = 'description';
+                            $field_lable = __("Description");
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                            $required = '';
+                            ?>
+            <label for="{{ $field_name }}">{{ $field_lable }}</label>
+            <textarea name="{{ $field_name }}" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}">{{ $detail->description }}</textarea>
+
+               @if ($errors->has($field_name))
+                                <span class="invalid feedback"role="alert">
+                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                        class="text-danger">
+                                </span>
+                            @endif
+                            </div>
+
+                        <div class="flex justify-between">
+                            <div></div>
+                            <div class="form-group">
+                                <button type="submit" class="px-5 btn btn-success">Update</button>
+                            </div>
                         </div>
+                   </form>
+
+
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-    <div class="card-footer">
-        <div class="row">
-            <div class="col">
-                <small class="float-end text-muted">
-                    Updated: {{$$module_name_singular->updated_at->diffForHumans()}},
-                    Created at: {{$$module_name_singular->created_at->isoFormat('LLLL')}}
-                </small>
-            </div>
-        </div>
-    </div>
-</div>
-
 @endsection
+
