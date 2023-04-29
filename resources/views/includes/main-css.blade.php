@@ -59,6 +59,16 @@ body {
     background: transparent;
 }
 
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: {{settings()->btn_color}} !important;
+    border-color: {{settings()->btn_color}} !important;
+}
+
+
+
+
 .c-sidebar .c-sidebar-nav-link.c-active, .c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
   color: #fff;
   background: rgba(255, 255, 255, 0.05);
