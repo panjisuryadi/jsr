@@ -38,6 +38,21 @@
     text-decoration: none;
 }
 
+.btn-primary {
+  background-color: {{settings()->btn_color}} !important;"
+  color: white;
+  text-decoration: none;
+  opacity: 1.0;
+
+}
+.btn-primary:hover {
+ opacity: 0.5;
+  background-color: #333 !important;"
+}
+.hp {
+display: none !important;
+}
+
  </style>
 </head>
 
@@ -52,13 +67,9 @@ if (settings()->site_logo) {
 ?>
 <body class="c-app flex-row align-items-center">
 <div class="container">
-    <div class="row mb-1">
-        <div class="col-12 d-flex justify-content-center">
-            <img style="height: 120px !important;" class="py-2" src="{{ $logo }}" alt="Logo">
-        </div>
-    </div>
+
     <div class="row justify-content-center">
-        <div class="{{ Route::has('register') ? 'col-md-8' : 'col-md-5' }}">
+        <div class="{{ Route::has('register') ? 'col-md-8' : 'col-md-7' }}">
             @if(Session::has('account_deactivated'))
                 <div class="alert alert-danger" role="alert">
                     {{ Session::get('account_deactivated') }}
@@ -71,6 +82,11 @@ if (settings()->site_logo) {
                             @csrf
 
                             <p class="text-muted text-sm font-semibold">Sign In to your account</p>
+<div class="flex justify-between py-1 border-bottom">
+
+
+    <div class="w-2/5">  <img class="object-contain h-32" src="{{ $logo }}" alt="Logo"></div>
+    <div class="w-4/5 mt-3">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
@@ -91,11 +107,6 @@ if (settings()->site_logo) {
                                     </span>
                                 </div>
 
-                         {{--        <input type="password"
-                                       class="form-control @error('password') is-invalid @enderror"
-                                       placeholder="Password" name="password">
- --}}
-
         <input class="form-control block @error('password') is-invalid @enderror" :type="show ? 'password' : 'text'" name="password" id="password" autocomplete="off" type="password" placeholder="Password" name="password">
         <div class="absolute top-1/2 right-4 cursor-pointer" style="transform: translateY(-50%);">
           <svg class="h-4 text-gray-700 block" fill="none" @click="show = !show" :class="{'hidden': !show, 'block':show }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -112,17 +123,18 @@ if (settings()->site_logo) {
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+</div>
+</div>
 
-                            <div class="row">
+                            <div class="row mt-2">
                                 <div class="col-4">
-                                    <button
-                               style="background-color: {{settings()->btn_color}} !important;"
-                                    class="px-5 btn btn-primary px-4" type="submit">Login</button>
-                                </div>
-                                <div class="col-8 text-right">
                                     <a class="btn btn-link px-0" href="{{ route('password.request') }}">
                                         Forgot password?
                                     </a>
+                                </div>
+                                <div class="col-8 text-right">
+                                    <button
+                                    class="btn btn-primary px-5" type="submit">Login</button>
                                 </div>
                             </div>
                         </form>

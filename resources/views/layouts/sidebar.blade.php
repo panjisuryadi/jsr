@@ -2,8 +2,21 @@
 {{ request()->routeIs('app.pos.*')  ||  request()->routeIs('adjustments.*') ? 'c-sidebar-minimized' : '' }}" id="sidebar">
     <div class="c-sidebar-brand d-md-down-none">
         <a href="{{ route('home') }}">
+            <?php
+
+if (settings()->site_logo) {
+            $logo = asset("storage/logo/" .settings()->site_logo);
+        }else{
+            $logo = asset('images/logo.png');
+        }
+
+?>
             <img class="h-16 px-2 c-sidebar-brand-full"
-            src="<?php echo asset("storage/logo/".settings()->site_logo)?>" alt="Site Logo">
+            src="<?php echo $logo?>" alt="Site Logo">
+
+
+
+
             <img class="h-10 px-2 c-sidebar-brand-minimized" src="<?php echo asset("storage/logo/".settings()->small_logo)?>" alt="Site Logo">
         </a>
     </div>
