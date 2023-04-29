@@ -1,7 +1,7 @@
 
 # Local Instalasi
 
-- run `` git clone https://github.com/ZAPPS-AI/pos-v2.git ``
+- run `` git clone https://github.com/ZAPPS-AI/hookie.git ``
 - run ``composer update ``
 - run `` npm install ``
 - run ``npm run dev``
@@ -17,9 +17,9 @@
 > Email: super@admin.com || Password: password
 
 ## Demo
-**Live Demo:** https://pos.v2.zapps.co.id/
+**Live Demo:** https://gold.demo.official-gtds.com
 
-##  smart POS GTDS
+##  Gold POS GTDS
 
 - **Products Management & Barcode Printing**
 - **Stock Management**
