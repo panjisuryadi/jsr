@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}\{{moduleName}}\Http\Middleware;
+namespace Modules\Karat\Http\Middleware;
 
 use Closure;
 
@@ -25,15 +25,15 @@ class GenerateMenus
          */
         \Menu::make('admin_sidebar', function ($menu) {
 
-            // {{moduleNamePlural}}
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('{{moduleNamePlural}}'), [
-                'route' => '{{moduleNameLower}}.index',
+            // Karats
+            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Karats'), [
+                'route' => 'karat.index',
                 'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 77,
-                'activematches' => ['{{moduleNameLowerPlural}}*'],
-                'permission'    => ['access_{{moduleNameLowerPlural}}'],
+                'activematches' => ['karats*'],
+                'permission'    => ['access_karats'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',

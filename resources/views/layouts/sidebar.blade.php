@@ -2,7 +2,7 @@
 {{ request()->routeIs('app.pos.*')  ||  request()->routeIs('adjustments.*') ? 'c-sidebar-minimized' : '' }}" id="sidebar">
     <div class="c-sidebar-brand d-md-down-none">
         <a href="{{ route('home') }}">
-            <?php
+<?php
 
 if (settings()->site_logo) {
             $logo = asset("storage/logo/" .settings()->site_logo);
@@ -37,7 +37,10 @@ if (settings()->site_logo) {
 
 
     <ul class="c-sidebar-nav">
-        @include('layouts.menu')
+
+
+    {!! $admin_sidebar->asUl( ['class' => 'c-sidebar-nav'], ['class' => 'c-sidebar-nav-dropdown-items'] ) !!}
+      {{--   @include('layouts.menu') --}}
         <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
             <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
         </div>

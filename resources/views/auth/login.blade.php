@@ -76,39 +76,38 @@ if (settings()->site_logo) {
                 </div>
             @endif
             <div class="card-group">
-                <div class="card p-3 border-0 shadow-sm">
+                <div class="card p-2 border-0 shadow-sm">
                     <div class="card-body">
                         <form method="post" action="{{ url('/login') }}">
                             @csrf
 
                             <p class="text-muted text-sm font-semibold">Sign In to your account</p>
-<div class="flex justify-between py-1 border-bottom">
+<div class="flex justify-between py-1 pb-3 border-bottom">
 
 
-    <div class="w-2/5">  <img class="object-contain h-32" src="{{ $logo }}" alt="Logo"></div>
+    <div class="w-2/5 flex justify-center items-center">  <img class="items-center object-contain h-32" src="{{ $logo }}" alt="Logo"></div>
     <div class="w-4/5 mt-3">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                      <i class="bi bi-person"></i>
-                                    </span>
-                                </div>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+
+
+  <div class="flex py-1">
+    <span class="px-3 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-100 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400"> <i class="bi bi-person"></i></span>
+    <input type="email" class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border h-10 border-grey-light px-3 relative focus:border-blue focus:shadow @error('email') is-invalid @enderror"
                                        name="email" value="{{ old('email') }}"
                                        placeholder="Email">
-                                @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="input-group mb-4"  x-data="{ show: true }">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                      <i class="bi bi-lock"></i>
-                                    </span>
-                                </div>
 
-        <input class="form-control block @error('password') is-invalid @enderror" :type="show ? 'password' : 'text'" name="password" id="password" autocomplete="off" type="password" placeholder="Password" name="password">
-        <div class="absolute top-1/2 right-4 cursor-pointer" style="transform: translateY(-50%);">
+
+  </div>
+@error('email')
+<div class="capitalize small text-red-500">{{ $message }}</div>
+@enderror
+
+  <div class="flex py-1 mt-2 relative"  x-data="{ show: true }">
+    <span class="px-3 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-100 text-sm text-gray-500 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400"> <i class="bi bi-lock"></i></span>
+
+ <input class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border h-10 border-grey-light px-3 relative focus:border-blue focus:shadow @error('password') border-red-200 @enderror" :type="show ? 'password' : 'text'" name="password" id="password" autocomplete="off" type="password" placeholder="Password" name="password">
+
+
+   <div class="absolute top-1/2 right-4 cursor-pointer" style="transform: translateY(-50%);">
           <svg class="h-4 text-gray-700 block" fill="none" @click="show = !show" :class="{'hidden': !show, 'block':show }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
             <path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
             </path>
@@ -119,10 +118,14 @@ if (settings()->site_logo) {
             </path>
           </svg>
         </div>
-                                @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+
+
+  </div>
+
+@error('password')
+<div class="small capitalize text-red-500">{{ $message }}</div>
+@enderror
+
 </div>
 </div>
 

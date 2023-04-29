@@ -31,8 +31,8 @@ class KaratServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(base_path('Modules/Karat/database/migrations'));
 
         // adding global middleware
-        // $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
-        // $kernel->pushMiddleware('Modules\Karat\Http\Middleware\GenerateMenus');
+        $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
+        $kernel->pushMiddleware('Modules\Karat\Http\Middleware\GenerateMenus');
 
         // register commands
         $this->registerCommands('\Modules\Karat\Console\Commands');

@@ -17,6 +17,9 @@ class ProductCategoriesDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('action', function ($data) {
                 return view('product::categories.partials.actions', compact('data'));
+            })
+            ->addColumn('image', function ($data) {
+               return view('product::categories.partials.image', compact('data'));
             });
     }
 
@@ -29,7 +32,7 @@ class ProductCategoriesDataTable extends DataTable
             ->setTableId('product_categories-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
+            ->dom("<'row py-2 '<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(4)
@@ -48,19 +51,22 @@ class ProductCategoriesDataTable extends DataTable
     protected function getColumns() {
         return [
 
-             Column::make('category_code')
+         Column::make('image')
+                ->addClass('w-5 text-center'),
+
+                 Column::make('category_code')
                 ->addClass('w-15 text-center'),
 
             Column::make('category_name')
                 ->addClass('text-center'),
 
             Column::make('products_count')
-                ->addClass('w-20  text-center'),
+                ->addClass('w-25  text-center'),
 
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->addClass('w-10  text-center'),
+                ->addClass('w-15  text-center'),
 
             Column::make('created_at')
                 ->visible(false)

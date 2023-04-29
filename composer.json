@@ -18,10 +18,13 @@
         "livewire/livewire": "^2.5",
         "milon/barcode": "^8.0",
         "nwidart/laravel-modules": "8.2.*",
+         "lavary/laravel-menu": "^1.7",
          "nasirkhan/module-manager": "^0.4.0",
         "realrashid/sweet-alert": "^4.0",
         "spatie/laravel-medialibrary": "^9.0.0",
         "spatie/laravel-permission": "^4.2",
+        "brian2694/laravel-toastr": "^5.54",
+         "intervention/image": "^2.5",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {

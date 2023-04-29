@@ -4,6 +4,31 @@
     </a>
 </li>
 
+
+
+   <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('karat.*') ? 'c-show' : '' }}">
+        <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <i class="c-sidebar-nav-icon bi bi-card-list" style="line-height: 1;"></i> @lang('Master Data')
+        </a>
+        <ul class="c-sidebar-nav-dropdown-items">
+
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->routeIs('karat.index') ? 'c-active' : '' }}" href="{{ route('karat.index') }}">
+                        <i class="c-sidebar-nav-icon bi bi-chevron-right" style="line-height: 1;"></i>@lang('Karat')
+                    </a>
+                </li>
+
+
+        </ul>
+    </li>
+
+
+
+
+
+
+
+
 @can('access_products')
 <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('products.*') || request()->routeIs('product-categories.*') ? 'c-show text-gray-600' : '' }}">
     <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">

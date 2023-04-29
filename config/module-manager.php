@@ -31,6 +31,8 @@ return [
             'route_web'                     => ['routes/web.stub', 'routes/web.php'],
             'route_api'                     => ['routes/api.stub', 'routes/api.php'],
 
+            'middleware_menu' => ['Http/Middleware/GenerateMenus.stub', 'Http/Middleware/GenerateMenus.php'],
+
             'controller_backend'            => ['Http/Controllers/Backend/stubController.stub', 'Http/Controllers/stubBackendController.php'],
 
             'views_backend_index'           => ['Resources/views/backend/stubViews/index.blade.stub', 'Resources/views/stubViews/index.blade.php'],

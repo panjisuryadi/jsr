@@ -75,12 +75,7 @@ class SuperUserSeeder extends Seeder
         $manager->givePermissionTo($managerpermissions);
         $operator->givePermissionTo($operatorpermissions);
         $admin->givePermissionTo($adminpermissions);
-        $user->givePermissionTo('edit_own_profile',
-                                'show_total_stats',
-                                'show_month_overview',
-                                'show_weekly_sales_purchases',
-                                'show_monthly_cashflow',
-                                'show_notifications');
+        $user->givePermissionTo($operatorpermissions);
 
 
 

@@ -28,7 +28,7 @@
 
                         <hr>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive w-full mt-2">
                             {!! $dataTable->table() !!}
                         </div>
                     </div>
