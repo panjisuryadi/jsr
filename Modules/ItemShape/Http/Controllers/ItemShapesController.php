@@ -123,7 +123,7 @@ public function index_data()
 
         $request->validate([
              'name' => 'required|min:3|max:191',
-             'description' => 'required|min:3|max:191',
+             'value' => 'required',
          ]);
        // $params = $request->all();
         //dd($params);
