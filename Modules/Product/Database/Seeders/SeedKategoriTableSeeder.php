@@ -23,17 +23,42 @@ class SeedKategoriTableSeeder extends Seeder
         $produk = [
             [
                 'category_code'                  => 'C-00001',
-                'category_name'                  => 'Minuman',
+                'category_name'                  => 'Mutiara',
                 'created_at'                    => Carbon::now(),
                 'updated_at'                    => Carbon::now(),
             ],[
                 'category_code'                  => 'C-00002',
-                'category_name'                  => 'Makanan',
+                'category_name'                  => 'Berlian',
                 'created_at'                    => Carbon::now(),
                 'updated_at'                    => Carbon::now(),
             ],[
                 'category_code'                  => 'C-00003',
-                'category_name'                  => 'Elekronik',
+                'category_name'                  => 'SIlver / Perak',
+                'created_at'                    => Carbon::now(),
+                'updated_at'                    => Carbon::now(),
+            ],[
+                'category_code'                  => 'C-00004',
+                'category_name'                  => 'Logam Mulia',
+                'created_at'                    => Carbon::now(),
+                'updated_at'                    => Carbon::now(),
+            ],[
+                'category_code'                  => 'C-00005',
+                'category_name'                  => 'Paladium / Rhodium / Osmium / Iridium',
+                'created_at'                    => Carbon::now(),
+                'updated_at'                    => Carbon::now(),
+            ],[
+                'category_code'                  => 'C-00006',
+                'category_name'                  => 'Emas Rosegold',
+                'created_at'                    => Carbon::now(),
+                'updated_at'                    => Carbon::now(),
+            ],[
+                'category_code'                  => 'C-00007',
+                'category_name'                  => 'Emas Putih',
+                'created_at'                    => Carbon::now(),
+                'updated_at'                    => Carbon::now(),
+            ],[
+                'category_code'                  => 'C-00008',
+                'category_name'                  => 'Emas Kuning',
                 'created_at'                    => Carbon::now(),
                 'updated_at'                    => Carbon::now(),
             ],

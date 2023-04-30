@@ -12,12 +12,7 @@
     <form action="{{ route('karat.store') }}" method="POST">
         @csrf
         <div class="row">
-            <div class="col-lg-12">
 
-                <div class="form-group">
-                    <button class="btn btn-primary">Create Karat <i class="bi bi-check"></i></button>
-                </div>
-            </div>
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
@@ -67,7 +62,11 @@
                         <div class="flex justify-between">
                             <div></div>
                             <div class="form-group">
-                                <button type="submit" class="px-5 btn btn-success">Create</button>
+
+                             <a class="px-5 btn btn-danger"
+                            href="{{ route("karat.index") }}">
+                            @lang('Cancel')</a>
+                                <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
                             </div>
                         </div>
 

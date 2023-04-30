@@ -238,7 +238,7 @@ public function show($id)
          return redirect()->route(''.$module_name.'.index');
 
           } catch (\Exception $e) {
-            //dd($e);
+           // dd($e);
                 toast(''. $module_title.' error!', 'warning');
                 return redirect()->back();
             }

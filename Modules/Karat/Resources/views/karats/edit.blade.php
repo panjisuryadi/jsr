@@ -67,7 +67,10 @@
                         <div class="flex justify-between">
                             <div></div>
                             <div class="form-group">
-                                <button type="submit" class="px-5 btn btn-success">Update</button>
+                             <a class="px-5 btn btn-danger"
+                            href="{{ route("karat.index") }}">
+                            @lang('Cancel')</a>
+                                <button type="submit" class="px-5 btn btn-success">@lang('Update')</button>
                             </div>
                         </div>
                    </form>

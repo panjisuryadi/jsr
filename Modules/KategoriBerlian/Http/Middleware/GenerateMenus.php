@@ -26,7 +26,7 @@ class GenerateMenus
         \Menu::make('admin_sidebar', function ($menu) {
 
             // KategoriBerlians
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('KategoriBerlians'), [
+            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Kategori Berlian'), [
                 'route' => 'kategoriberlian.index',
                 'class' => 'nav-item',
             ])

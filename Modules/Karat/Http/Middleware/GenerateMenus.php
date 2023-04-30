@@ -26,7 +26,7 @@ class GenerateMenus
         \Menu::make('admin_sidebar', function ($menu) {
 
             // Karats
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Karats'), [
+            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Karat'), [
                 'route' => 'karat.index',
                 'class' => 'nav-item',
             ])

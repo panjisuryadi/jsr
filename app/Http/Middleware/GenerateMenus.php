@@ -271,7 +271,7 @@ class GenerateMenus
 
 
    // Access Control Dropdown
-            $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-people"></i>'.__('users management').'', [
+            $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-people"></i>'.__('Users Management').'', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -289,7 +289,7 @@ class GenerateMenus
 
             // Submenu: Users
 
-            $accessControl->add('<i class="c-sidebar-nav-icon cil-people"></i> '.__('users').'', [
+            $accessControl->add('<i class="c-sidebar-nav-icon cil-people"></i> '.__('Users').'', [
                 'route' => 'users.index',
                 'class' => 'nav-item',
             ])

@@ -12,6 +12,7 @@ use Modules\Product\Database\Seeders\ProductDatabaseSeeder;
 use Modules\Locations\Database\Seeders\LocationsDatabaseSeeder;
 use Modules\Locations\Database\Seeders\UsersLocationsDatabaseSeeder;
 use Modules\KategoriBerlian\database\seeders\KategoriBerlianDatabaseSeeder;
+use Modules\Karat\database\seeders\KaratDatabaseSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -32,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LocationsDatabaseSeeder::class);
         $this->call(UsersLocationsDatabaseSeeder::class);
         $this->call(KategoriBerlianDatabaseSeeder::class);
+        $this->call(KaratDatabaseSeeder::class);
     }
 }
