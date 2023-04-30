@@ -23,22 +23,23 @@ class GenerateMenus
          *
          * *********************************************************************
          */
-        \Menu::make('admin_sidebar', function ($menu) {
+        // \Menu::make('admin_sidebar', function ($menu) {
 
-            // Karats
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Karat'), [
-                'route' => 'karat.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 77,
-                'activematches' => ['karats*'],
-                'permission'    => ['access_karats'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link',
-            ]);
-        })->sortBy('order');
+        //     // Karats
+        //     $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Karat'), [
+        //         'route' => 'karat.index',
+        //         'class' => 'nav-item',
+        //     ])
+        //     ->data([
+        //         'order'         => 77,
+        //         'activematches' => ['karats*'],
+        //         'permission'    => ['access_karats'],
+        //     ])
+        //     ->link->attr([
+        //         'class' => 'c-sidebar-nav-link',
+        //     ]);
+
+        // })->sortBy('order');
 
 
 

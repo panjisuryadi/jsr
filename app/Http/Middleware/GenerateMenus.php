@@ -43,9 +43,18 @@ class GenerateMenus
                 'activematches' => [
                     'products*',
                     'product-categories*',
+                    'diamondcertificates*',
+                    'itemrounds*',
+                    'itemshapes*',
 
                 ],
-                'permission'    => ['create_products', 'access_product_categories', 'access_products'],
+                'permission' => ['create_products',
+                                      'access_product_categories',
+                                      'access_itemrounds',
+                                      'access_itemshapes',
+                                      'access_karats',
+                                      'access_diamondcertificates',
+                                      'access_products'],
             ]);
             $masterData->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -79,6 +88,68 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
+
+
+   // DiamondCertificates
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Diamond Certificate'), [
+                'route' => 'diamondcertificate.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['diamondcertificates*'],
+                'permission'    => ['access_diamondcertificates'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+        // Karats
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Karat'), [
+                'route' => 'karat.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['karats*'],
+                'permission'    => ['access_karats'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+          $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Rounds'), [
+                'route' => 'itemround.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'itemrounds*',
+                'permission'    => ['access_itemrounds'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+            // ItemShapes
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Shapes'), [
+                'route' => 'itemshape.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['itemshapes*'],
+                'permission'    => ['access_itemshapes'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
 
 
 

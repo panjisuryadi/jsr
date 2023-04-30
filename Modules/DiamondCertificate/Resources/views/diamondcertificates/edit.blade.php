@@ -46,14 +46,14 @@
                         </div>
 
                            <div class="form-group">
-                             <?php
+                  <?php
                             $field_name = 'description';
-                            $field_lable = __("Description");
-                            $field_placeholder = $field_lable;
+                            $field_lable = __($field_name);
+                            $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             $required = '';
                             ?>
-            <label for="{{ $field_name }}">{{ $field_lable }}</label>
+            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
             <textarea name="{{ $field_name }}" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}">{{ $detail->description }}</textarea>
 
                @if ($errors->has($field_name))
