@@ -10,14 +10,18 @@ if (settings()->site_logo) {
             $logo = asset('images/logo.png');
         }
 
+
+  if (settings()->small_logo) {
+            $small_logo = asset("storage/logo/" .settings()->small_logo);
+        }else{
+            $small_logo = asset('images/logo.png');
+        }
+
+
 ?>
             <img class="h-16 px-2 c-sidebar-brand-full"
             src="<?php echo $logo?>" alt="Site Logo">
-
-
-
-
-            <img class="h-10 px-2 c-sidebar-brand-minimized" src="<?php echo asset("storage/logo/".settings()->small_logo)?>" alt="Site Logo">
+            <img class="h-10 px-2 c-sidebar-brand-minimized" src="<?php echo $small_logo ;?>" alt="Site Logo">
         </a>
     </div>
 

@@ -155,7 +155,7 @@ class GenerateMenus
             ]);
 
 
-      // Access Control Dropdown
+      //============================Access Control Dropdown
             $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Products', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
@@ -167,7 +167,7 @@ class GenerateMenus
 
                 ],
                 'permission' => ['create_products',
-                                      //'access_product_categories',
+                                      'print_barcodes',
                                       'access_products'],
             ]);
             $products->link->attr([
@@ -177,7 +177,9 @@ class GenerateMenus
 
 
        // Submenu: products
-            $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i>List Products', [
+            $products->add('
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('List Products').'',
+                 [
                 'route' => 'products.index',
                 'class' => 'nav-item',
             ])
@@ -185,6 +187,22 @@ class GenerateMenus
                 'order'         => 3,
                 'activematches' => 'products*',
                 'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+       // Submenu: products
+            $products->add(
+                '<i class="c-sidebar-nav-icon bi bi-upc-scan mb-2"></i>'.__('Print Barcode').'',
+             [
+                'route' => 'barcode.print',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'barcode*',
+                'permission'    => ['print_barcodes'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -205,6 +223,70 @@ class GenerateMenus
                    'access_currencies'
                    ],
             ]);
+
+
+
+
+
+
+      //============================Access Control Dropdown
+            $adjustments = $menu->add('
+                <i class="mb-2 c-sidebar-nav-icon bi bi-clipboard-check"></i> '.__('Adjustments').'',
+                 [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                    'adjustments*',
+
+
+                ],
+                'permission' => ['access_adjustments',
+                                     // 'print_barcodes',
+                                      'create_adjustments'],
+            ]);
+            $adjustments->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+       // Submenu: adjustments
+            $adjustments->add('
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('List Adjustments').'',
+                 [
+                'route' => 'adjustments.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'adjustments*',
+                'permission'    => ['create_adjustments'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+  // Submenu: adjustments
+            $adjustments->add('
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Create Adjustments').'',
+                 [
+                'route' => 'adjustments.create',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'adjustments*',
+                'permission'    => ['create_adjustments'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
 
  // Access Control Dropdown
             $report = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Reports').'', [
