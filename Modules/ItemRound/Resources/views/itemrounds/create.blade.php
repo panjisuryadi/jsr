@@ -22,7 +22,7 @@
                                 <div class="form-group">
                           <?php
                             $field_name = 'name';
-                            $field_lable = __("Name");
+                            $field_lable = __($field_name);
                             $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             $required = '';

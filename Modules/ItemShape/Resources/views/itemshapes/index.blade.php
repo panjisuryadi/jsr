@@ -33,11 +33,15 @@
 
                         <div class="table-responsive mt-1">
                           <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
-                        <thead>
+                      <thead>
                             <tr>
-                                <th style="width: 5%!important;">NO</th>
-                                <th>Title</th>
-                                <th style="width: 15%!important;" class="text-center">
+                                <th style="width: 5%!important;">
+                                    NO
+                                </th>
+
+                                <th> Title </th>
+                                <th> Value </th>
+                                 <th style="width: 15%!important;" class="text-center">
                                     Updated
                                 </th>
                                 <th style="width: 15%!important;" class="text-center">
@@ -91,10 +95,8 @@
                     }
                 },
 
-                {
-                    data: 'name',
-                    name: 'name'
-                },
+                {data: 'name', name: 'name'},
+                {data: 'value', name: 'value'},
                 {
                     data: 'updated_at',
                     name: 'updated_at'

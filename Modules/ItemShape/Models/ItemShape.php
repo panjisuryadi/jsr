@@ -14,6 +14,7 @@ class ItemShape extends Model
     protected $fillable = [
         'name',
        // 'image',
+        'value',
         'description',
         'start_date',
         'end_date',
