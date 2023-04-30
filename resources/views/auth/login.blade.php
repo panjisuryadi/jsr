@@ -77,12 +77,22 @@ if (settings()->site_logo) {
             @endif
             <div class="card-group">
                 <div class="card p-2 border-0 shadow-sm">
-                    <div class="card-body">
+                    <div class="card-body py-3">
                         <form method="post" action="{{ url('/login') }}">
                             @csrf
 
-                            <p class="text-muted text-sm font-semibold">Sign In to your account</p>
-<div class="flex justify-between py-1 pb-3 border-bottom">
+
+<div class="flex relative py-2">
+  <div class="absolute inset-0 flex items-center">
+    <div class="w-full border-b border-gray-300"></div>
+  </div>
+  <div class="relative flex justify-left">
+    <span class="bg-white pl-0 pr-3  text-sm capitalize text-dark">Login to your account</span>
+  </div>
+</div>
+
+
+<div class="flex justify-between px-1 py-1 pb-3 border-bottom">
 
 
     <div class="w-2/5 flex justify-center items-center">  <img class="items-center object-contain h-32" src="{{ $logo }}" alt="Logo"></div>

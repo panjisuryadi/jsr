@@ -23,10 +23,8 @@ jobs:
           cd /home/gold/public_html
           git pull origin main
           composer update
+          php artisan migrate
           php artisan optimize:clear
-          php artisan migrate:fresh --seed
-          sudo chmod 777 -R storage
-          sudo chmod 777 -R bootstrap/cache
 
 
 #-----------------------------------------
