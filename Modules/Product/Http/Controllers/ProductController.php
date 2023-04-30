@@ -16,6 +16,8 @@ use Modules\Upload\Entities\Upload;
 class ProductController extends Controller
 {
 
+
+
     public function index(ProductDataTable $dataTable) {
         abort_if(Gate::denies('access_products'), 403);
 

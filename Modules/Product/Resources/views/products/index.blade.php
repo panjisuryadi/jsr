@@ -23,6 +23,52 @@ div.dataTables_wrapper div.dataTables_length select {
 @endsection
 @section('content')
 <div class="container-fluid">
+
+    <div class="flex flex-wrap -m-4 text-center">
+   @foreach(\Modules\Product\Entities\Category::all() as $category)
+     <div onclick="location.href='{{ route('products.create') }}';" class="cursor-pointer p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
+        <div class="justify-center text-center items-center">
+<?php
+if ($category->image) {
+            $image = asset(imageUrl() . $category->image);
+        }else{
+            $image = asset('images/logo.png');
+        }
+
+ ?>
+
+  <img id="default_1" src="{{ $image }}" alt="images"
+      class="h-16 w-16 object-contain mx-auto" />
+
+  </div>
+          <div class="leading-tight">{{ $category->category_name }}</div>
+        </div>
+      </div>
+
+    @endforeach
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="row">
         <div class="col-12">
             <div class="card">

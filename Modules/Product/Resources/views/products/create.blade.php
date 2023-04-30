@@ -17,9 +17,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     @include('utils.alerts')
-                    <div class="form-group">
-                        <button class="btn btn-primary">@lang('Create') @lang('Product') <i class="bi bi-check"></i></button>
-                    </div>
+
                 </div>
                 <div class="col-lg-12">
 
@@ -146,9 +144,47 @@
                                 </div>
                             </div>
                         </div>
+
+
+  <div class="flex justify-between px-3 pb-2 border-bottom">
+                        <div>
+
+                        </div>
+                       <div class="form-group">
+                           <a class="px-5 btn btn-danger"
+                            href="{{ route("products.index") }}">
+                            @lang('Cancel')</a>
+
+
+                        <button class="px-4 btn btn-primary">@lang('Create') @lang('Product') <i class="bi bi-check"></i></button>
                     </div>
+
+                    </div>
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
                 </div>
+
+
+
+
             </div>
+
+
+
+
+
+
+
         </form>
     </div>
 @endsection
