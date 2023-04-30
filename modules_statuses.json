@@ -15,6 +15,8 @@
     "Quotation": true,
     "Reports": true,
     "Locations": true,
-    "KategoriBerlian": true,
-    "Karat": true
+    "Karat": true,
+    "DiamondCertificate": true,
+    "ItemRound": true,
+    "ItemShape": true
 }
