@@ -23,28 +23,37 @@ class JenisProdukDatabaseSeeder extends Seeder
          * ------------------
          */
 
-        // DB::table('jenisproduks')->truncate();
-        // echo "Truncate: jenisproduks \n";
+        DB::table('jenisproduks')->truncate();
+        echo "Truncate: jenisproduks \n";
 
-        //  $data = [
-        //     [
-        //         'id'                 => 1,
-        //         'name'               => 'Inclusive',
-        //         'description'        => 'Diamond - Inclusive',
-        //         'created_at'         => Carbon::now(),
-        //         'updated_at'         => Carbon::now(),
-        //     ],
+         $data = [
+            [
+                'id'                 => 1,
+                'name'               => 'Gold',
+                'description'        => 'Gold - Produk',
+                'image'              => 'no_foto.png',
+                'created_at'         => Carbon::now(),
+                'updated_at'         => Carbon::now(),
+            ],
+           [
+                'id'                 => 2,
+                'name'               => 'Diamond',
+                'description'        => 'Diamond - Produk',
+                'image'              => 'no_foto.png',
+                'created_at'         => Carbon::now(),
+                'updated_at'         => Carbon::now(),
+            ],
 
-        // ];
+        ];
 
-        //     foreach ($data as $row) {
-        //         $data = JenisProduk::create($row);
+            foreach ($data as $row) {
+                $data = JenisProduk::create($row);
 
-        //     }
+            }
 
 
-        JenisProduk::factory()->count(20)->create();
-        $rows = JenisProduk::all();
+        // JenisProduk::factory()->count(20)->create();
+        // $rows = JenisProduk::all();
         echo " Insert: jenisproduks \n\n";
 
         // Enable foreign key checks!
