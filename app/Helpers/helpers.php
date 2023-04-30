@@ -27,6 +27,21 @@ if (!function_exists('label_case')) {
     }
 }
 
+if (!function_exists('imageUrl')) {
+    function imageUrl()
+    {
+        $return_text = '';
+        if (config('app.env') == 'production') {
+            $return_text = 'storage/uploads/';
+        }else{
+            $return_text = 'storage/uploads/';
+        }
+        return $return_text;
+    }
+}
+
+
+
 
 if (!function_exists('app_name')) {
     /**

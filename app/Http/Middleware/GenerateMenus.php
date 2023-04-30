@@ -42,6 +42,7 @@ class GenerateMenus
                 'order'         => 2,
                 'activematches' => [
                     'products*',
+                    'jenisproduks*',
                     'product-categories*',
                     'diamondcertificates*',
                     'itemrounds*',
@@ -53,6 +54,7 @@ class GenerateMenus
                                       'access_itemrounds',
                                       'access_itemshapes',
                                       'access_karats',
+                                      'access_jenisproduks',
                                       'access_diamondcertificates',
                                       'access_products'],
             ]);
@@ -61,19 +63,24 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
-            // Submenu: products
-            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i>Products', [
-                'route' => 'products.index',
+
+   // JenisProduks
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Jenis Produk'), [
+                'route' => 'jenisproduk.index',
                 'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 3,
-                'activematches' => 'products*',
-                'permission'    => ['access_products'],
+                'activematches' => ['jenisproduks*'],
+                'permission'    => ['access_jenisproduks'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
+
+
+
+
 
     // Submenu: Categories
             $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i>Categories', [
@@ -148,10 +155,40 @@ class GenerateMenus
             ]);
 
 
+      // Access Control Dropdown
+            $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Products', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                    'products*',
 
 
+                ],
+                'permission' => ['create_products',
+                                      //'access_product_categories',
+                                      'access_products'],
+            ]);
+            $products->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
 
 
+       // Submenu: products
+            $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i>List Products', [
+                'route' => 'products.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'products*',
+                'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
 
 
 
@@ -168,16 +205,6 @@ class GenerateMenus
                    'access_currencies'
                    ],
             ]);
-
-
-
-
-
-
-
-
-
-
 
  // Access Control Dropdown
             $report = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Reports').'', [

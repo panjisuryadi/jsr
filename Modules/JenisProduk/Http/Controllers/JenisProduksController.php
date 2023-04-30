@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\ItemShape\Http\Controllers;
+namespace Modules\JenisProduk\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -10,20 +10,20 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Lang;
+use Image;
 
-class ItemShapesController extends Controller
+class JenisProduksController extends Controller
 {
-
-
 
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'ItemShape';
-        $this->module_name = 'itemshape';
-        $this->module_path = 'itemshapes';
+        $this->module_title = 'JenisProduk';
+        $this->module_name = 'jenisproduk';
+        $this->module_path = 'jenisproduks';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "Modules\ItemShape\Models\ItemShape";
+        $this->module_model = "Modules\JenisProduk\Models\JenisProduk";
 
     }
 
@@ -101,7 +101,7 @@ public function index_data()
     public function create()
     {
          $module_action = 'Create';
-         return view('itemshape::itemshapes.create', compact('module_action'));
+         return view('jenisproduk::jenisproduks.create', compact('module_action'));
     }
 
     /**
@@ -111,7 +111,7 @@ public function index_data()
      */
     public function store(Request $request)
     {
-         abort_if(Gate::denies('create_itemshape'), 403);
+         abort_if(Gate::denies('create_jenisproduk'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -130,6 +130,19 @@ public function index_data()
         $params = $request->except('_token');
         $params['name'] = $params['name'];
         $params['description'] = $params['description'];
+        //  if ($image = $request->file('image')) {
+        //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
+        //             $constraint->aspectRatio();
+        //             })->encode();
+        //  $normalpath = 'uploads/' . $gambar;
+        //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+        //  Storage::disk($storage)->put($normalpath, (string) $normal);
+        //  $params['image'] = "$gambar";
+        // }else{
+        //    $params['image'] = 'no_foto.png';
+        // }
+
          $$module_name_singular = $module_model::create($params);
          toast(''. $module_title.' Created!', 'success');
          return redirect()->route(''.$module_name.'.index');
@@ -209,6 +222,22 @@ public function show($id)
         $params = $request->except('_token');
         $params['name'] = $params['name'];
         $params['description'] = $params['description'];
+
+       // if ($image = $request->file('image')) {
+       //                if ($$module_name_singular->image !== 'no_foto.png') {
+       //                    @unlink(imageUrl() . $$module_name_singular->image);
+       //                  }
+       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
+       //              $constraint->aspectRatio();
+       //              })->encode();
+       //   $normalpath = 'uploads/' . $gambar;
+       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+       //   Storage::disk($storage)->put($normalpath, (string) $normal);
+       //   $params['image'] = "$gambar";
+       //  }else{
+       //      unset($params['image']);
+       //  }
         $$module_name_singular->update($params);
          toast(''. $module_title.' Updated!', 'success');
          return redirect()->route(''.$module_name.'.index');

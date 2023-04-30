@@ -5,7 +5,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-         <li class="breadcrumb-item"><a href="{{ route("itemshape.index") }}">{{$module_title}}</a></li>
+         <li class="breadcrumb-item"><a href="{{ route("jenisproduk.index") }}">{{$module_title}}</a></li>
         <li class="breadcrumb-item active">{{$module_action}}</li>
     </ol>
 @endsection
@@ -27,7 +27,7 @@
                                 <div class="form-group">
                           <?php
                             $field_name = 'name';
-                            $field_lable = __($field_lable);
+                            $field_lable = __($field_name);
                             $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             $required = '';
@@ -48,7 +48,7 @@
                            <div class="form-group">
                              <?php
                             $field_name = 'description';
-                            $field_lable = __($field_lable);
+                            $field_lable = __($field_name);
                             $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             $required = '';
@@ -69,7 +69,7 @@
                             <div class="form-group">
 
                              <a class="px-5 btn btn-danger"
-                            href="{{ route("itemshape.index") }}">
+                            href="{{ route("jenisproduk.index") }}">
                             @lang('Cancel')</a>
                                 <button type="submit" class="px-5 btn btn-success">@lang('Update')</button>
                             </div>

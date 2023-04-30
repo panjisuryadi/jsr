@@ -1,0 +1,13 @@
+{
+    "name": "JenisProduk",
+    "alias": "jenisproduk",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\JenisProduk\\Providers\\JenisProdukServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

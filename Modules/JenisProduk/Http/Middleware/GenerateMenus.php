@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\ItemShape\Http\Middleware;
+namespace Modules\JenisProduk\Http\Middleware;
 
 use Closure;
 
@@ -25,21 +25,20 @@ class GenerateMenus
          */
         // \Menu::make('admin_sidebar', function ($menu) {
 
-        //     // ItemShapes
-        //     $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('ItemShapes'), [
-        //         'route' => 'itemshape.index',
+        //     // JenisProduks
+        //     $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('JenisProduks'), [
+        //         'route' => 'jenisproduk.index',
         //         'class' => 'nav-item',
         //     ])
         //     ->data([
         //         'order'         => 77,
-        //         'activematches' => ['itemshapes*'],
-        //         'permission'    => ['access_itemshapes'],
+        //         'activematches' => ['jenisproduks*'],
+        //         'permission'    => ['access_jenisproduks'],
         //     ])
         //     ->link->attr([
         //         'class' => 'c-sidebar-nav-link',
         //     ]);
         // })->sortBy('order');
-
 
         return $next($request);
     }

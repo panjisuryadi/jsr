@@ -13,6 +13,7 @@ use Modules\Locations\Database\Seeders\LocationsDatabaseSeeder;
 use Modules\Locations\Database\Seeders\UsersLocationsDatabaseSeeder;
 use Modules\DiamondCertificate\database\seeders\DiamondCertificateDatabaseSeeder;
 use Modules\Karat\database\seeders\KaratDatabaseSeeder;
+use Modules\JenisProduk\database\seeders\JenisProdukDatabaseSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         app()['cache']->forget('spatie.permission.cache');
+        $this->call(JenisProdukDatabaseSeeder::class);
         $this->call(CategoriesDatabaseSeeder::class);
         $this->call(ProductDatabaseSeeder::class);
         $this->call(PermissionsTableSeeder::class);

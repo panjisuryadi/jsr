@@ -66,13 +66,26 @@
             serverSide: true,
             autoWidth: true,
             responsive: true,
-            "aaSorting": [
-                [0, "desc"]
+            "oLanguage": {
+            "sSearch": "<i class='bi bi-search'></i> {{ __("labels.table.search") }} : ",
+            "sLengthMenu": "_MENU_ &nbsp;&nbsp;Data Per {{ __("labels.table.page") }} ",
+            "sInfo": "{{ __("labels.table.showing") }} _START_ s/d _END_ {{ __("labels.table.from") }} <b>_TOTAL_ data</b>",
+            "sInfoFiltered": "(filter {{ __("labels.table.from") }} _MAX_ total data)",
+            "sZeroRecords": "{{ __("labels.table.not_found") }}",
+            "sEmptyTable": "{{ __("labels.table.empty") }}",
+            "sLoadingRecords": "Harap Tunggu...",
+            "oPaginate": {
+                "sPrevious": "{{ __("labels.table.prev") }}",
+                "sNext": "{{ __("labels.table.next") }}"
+            }
+            },
+            "aaSorting": [[ 0, "desc" ]],
+            "columnDefs": [
+                {
+                    "targets": 'no-sort',
+                    "orderable": false,
+                }
             ],
-            "columnDefs": [{
-                "targets": 'no-sort',
-                "orderable": false,
-            }],
             "sPaginationType": "simple_numbers",
             ajax: '{{ route("$module_name.index_data") }}',
             columns: [{

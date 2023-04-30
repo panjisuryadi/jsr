@@ -18,16 +18,16 @@
                     <div class="card-body">
 
                    <div class="form-row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="form-group">
                           <?php
                             $field_name = 'name';
-                            $field_lable = __("Name");
+                            $field_lable = __($field_lable);
                             $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             $required = '';
                             ?>
-                         <label for="{{ $field_name }}">{{ Label_case($field_lable) }}</label>
+                         <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
                         <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value="{{ old($field_name) }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                             @if ($errors->has($field_name))
                                 <span class="invalid feedback"role="alert">
@@ -38,47 +38,18 @@
 
                                 </div>
                             </div>
-
-                       <div class="col-lg-6">
-                                <div class="form-group">
-                          <?php
-                            $field_name = 'value';
-                            $field_lable = __($field_name);
-                            $field_placeholder = Label_case($field_lable);
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = '';
-                            ?>
-                         <label for="{{ $field_name }}">{{ $field_lable }}</label>
-                        <input type="number" name="{{ $field_name }}"
-                        class="form-control {{ $invalid }}"
-                        step="0.01"
-                        value="{{ old($field_name) }}"
-                         placeholder="{{ $field_placeholder }}" {{ $required }}>
-                            @if ($errors->has($field_name))
-                                <span class="invalid feedback"role="alert">
-                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                        class="text-danger">
-                                </span>
-                            @endif
-
-                                </div>
-                            </div>
-
-
-
-
                         </div>
 
                            <div class="form-group">
                              <?php
                             $field_name = 'description';
-                            $field_lable = __("Description");
-                            $field_placeholder = $field_lable;
+                            $field_lable = __($field_lable);
+                            $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             $required = '';
                             ?>
-            <label for="{{ $field_name }}">{{ $field_lable }}</label>
-            <textarea name="{{ $field_name }}" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}"></textarea>
+            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
+            <textarea name="{{ $field_name }}" placeholder="{{ $field_placeholder }}" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}"></textarea>
 
                @if ($errors->has($field_name))
                                 <span class="invalid feedback"role="alert">

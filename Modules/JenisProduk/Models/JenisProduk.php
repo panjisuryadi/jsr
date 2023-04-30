@@ -1,16 +1,16 @@
 <?php
 
-namespace Modules\ItemShape\Models;
+namespace Modules\JenisProduk\Models;
 
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ItemShape extends Model
+class JenisProduk extends Model
 {
     use HasFactory;
-    protected $table = 'itemshapes';
+    protected $table = 'jenisproduks';
     protected $fillable = [
         'name',
        // 'image',
@@ -22,7 +22,7 @@ class ItemShape extends Model
 
     protected static function newFactory()
     {
-        return \Modules\ItemShape\database\factories\ItemShapeFactory::new();
+        return \Modules\JenisProduk\database\factories\JenisProdukFactory::new();
     }
 
 
