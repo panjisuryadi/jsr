@@ -22,33 +22,33 @@ class SuperUserSeeder extends Seeder
             [
                 'name' => 'Administrator',
                 'email' => 'super@admin.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('hokkie@2023'),
                 'is_active' => 1
             ],
             [
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('hokkie@2023'),
                 'is_active' => 1
             ], [
                 'name' => 'User',
                 'email' => 'super@user.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('hokkie@2023'),
                 'is_active' => 1
             ],[
                 'name' => 'Manager',
                 'email' => 'manager@manager.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('hokkie@2023'),
                 'is_active' => 1
             ],[
                 'name' => 'Operator',
                 'email' => 'operator@operator.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('hokkie@2023'),
                 'is_active' => 1
             ],[
                 'name' => 'Operator2',
                 'email' => 'operator2@operator.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('hokkie@2023'),
                 'is_active' => 1
             ],
 

@@ -11,6 +11,7 @@ use Modules\Product\Database\Seeders\CategoriesDatabaseSeeder;
 use Modules\Product\Database\Seeders\ProductDatabaseSeeder;
 use Modules\Locations\Database\Seeders\LocationsDatabaseSeeder;
 use Modules\Locations\Database\Seeders\UsersLocationsDatabaseSeeder;
+use Modules\KategoriBerlian\database\seeders\KategoriBerlianDatabaseSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -30,5 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PeopleDatabaseSeeder::class);
         $this->call(LocationsDatabaseSeeder::class);
         $this->call(UsersLocationsDatabaseSeeder::class);
+        $this->call(KategoriBerlianDatabaseSeeder::class);
     }
 }

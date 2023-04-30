@@ -1,0 +1,13 @@
+{
+    "name": "KategoriBerlian",
+    "alias": "kategoriberlian",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\KategoriBerlian\\Providers\\KategoriBerlianServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

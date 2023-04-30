@@ -4,8 +4,8 @@ namespace {{namespace}}\{{moduleName}}\database\seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Modules\Tag\Entities\{{moduleName}};
-
+use Modules\{{moduleName}}\Models\{{moduleName}};
+use Carbon\Carbon;
 class {{moduleName}}DatabaseSeeder extends Seeder
 {
     /**
@@ -25,6 +25,23 @@ class {{moduleName}}DatabaseSeeder extends Seeder
 
         // DB::table('{{moduleNameLowerPlural}}')->truncate();
         // echo "Truncate: {{moduleNameLowerPlural}} \n";
+
+        //  $data = [
+        //     [
+        //         'id'                 => 1,
+        //         'name'               => 'Inclusive',
+        //         'description'        => 'Diamond - Inclusive',
+        //         'created_at'         => Carbon::now(),
+        //         'updated_at'         => Carbon::now(),
+        //     ],
+
+        // ];
+
+        //     foreach ($data as $row) {
+        //         $data = {{moduleName}}::create($row);
+
+        //     }
+
 
         {{moduleName}}::factory()->count(20)->create();
         $rows = {{moduleName}}::all();

@@ -36,6 +36,8 @@ class CreateSettingsTable extends Migration
             $table->string('link_hover')->nullable();
             $table->string('header_color')->nullable();
             $table->string('btn_color')->nullable();
+            $table->string('btn_cancel')->nullable();
+            $table->string('btn_sukses')->nullable();
             $table->integer('product_tax')->default(0);
             $table->integer('product_tax_type')->default(0);
             $table->integer('pos_tax')->default(0);

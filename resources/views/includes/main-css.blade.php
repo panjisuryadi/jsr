@@ -66,12 +66,9 @@ body {
     border-color: {{settings()->btn_color}} !important;
 }
 
-
-
-
 .c-sidebar .c-sidebar-nav-link.c-active, .c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
   color: #fff;
-  background: rgba(255, 255, 255, 0.05);
+  background-color: {{settings()->bg_sidebar_aktif}} !important;
 }
 .c-sidebar .c-sidebar-nav-link.c-active .c-sidebar-nav-icon, .c-sidebar .c-active.c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
   color: #fff;
@@ -91,10 +88,12 @@ body {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 14'%3E%3Cpath fill='%23fff' d='M9.148 2.352l-4.148 4.148 4.148 4.148q0.148 0.148 0.148 0.352t-0.148 0.352l-1.297 1.297q-0.148 0.148-0.352 0.148t-0.352-0.148l-5.797-5.797q-0.148-0.148-0.148-0.352t0.148-0.352l5.797-5.797q0.148-0.148 0.352-0.148t0.352 0.148l1.297 1.297q0.148 0.148 0.148 0.352t-0.148 0.352z'/%3E%3C/svg%3E");
   }
 }
+
+
 .btn-danger {
     color: #fff;
-    background-color: #e55353 !important;
-    border-color: #e55353 !important;
+    background-color: {{settings()->btn_cancel}} !important;
+    border-color: {{settings()->btn_cancel}} !important;
 }
 .btn-primary {
     color: #fff;

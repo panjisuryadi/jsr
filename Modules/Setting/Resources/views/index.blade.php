@@ -67,48 +67,141 @@
                                         <label for="company_address">@lang('Company Address') <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="company_address" value="{{ $settings->company_address }}">
                                     </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="mt-3 form-group pb-2 border-bottom text-center">
-                                        <label for="image">Logo <span class="text-danger">*</span></label>
-                                        <div class="flex flex-col relative overflow-hidden mt-3 gap-4 rounded-2xl">
-                                            <img id="default_1" style="height: 90px !important;"
-                                            src="<?php echo asset("storage/logo/$settings->site_logo")?>"
-                                            class="h-full w-full">
-                                            <img id="preview_1" src="" class="h-full w-full d-none">
-                                            <div class="absolute bottom-4 flex items-center justify-center w-full">
-                                                <input id="file" type="file" name="site_logo" onchange="previewFile(this,1);" name="site_logo" data-max-file-size="500KB">
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-                                    <div class="mt-3 form-group pb-2 border-bottom text-center">
-                                        <label for="image">Icon <span class="text-danger">*</span></label>
-                                        <div class="flex flex-col relative overflow-hidden mt-3 gap-4">
-                                            <img id="default_1" style="height: 90px !important;"
-                                            src="<?php echo asset("storage/logo/$settings->small_logo")?>"
-                                            class="h-full w-full">
-                                            <img id="preview_1" src="" class="h-full w-full d-none">
-                                            <div class="absolute bottom-4 flex items-center justify-center w-full">
-                                                <input id="file" type="file" name="small_logo" onchange="previewFile(this,1);" name="small_logo" data-max-file-size="500KB">
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
 
 
 
 
-
-
-
-
-
-                                <div class="form-group mt-2">
+                                <div class="form-group">
                                     <label for="footer_text">Footer Text <span class="text-danger">*</span></label>
                                     <textarea rows="3" name="footer_text" class="form-control">{!! $settings->footer_text !!}</textarea>
                                 </div>
+
+
+
+
+
+                                </div>
+
+                                <div class="col-lg-4">
+
+
+
+                                    <div class="mt-3 form-group pb-2 border-bottom text-center">
+
+
+    <?php
+
+if ($settings->site_logo) {
+    $site_logo = asset("storage/logo/$settings->site_logo");
+}else{
+    $site_logo = asset('images/logo.png');
+}
+
+?>
+
+<div x-data="{photoName: null, photoPreview: null}" class="form-group">
+      <?php
+                $field_name = 'site_logo';
+                $field_lable = __($field_name);
+                $label = Label_Case($field_lable);
+                $field_placeholder = $label;
+                $required = '';
+                ?>
+ <input type="file" name="{{ $field_name }}" accept="image/*" class="hidden" x-ref="photo" x-on:change="
+                        photoName = $refs.photo.files[0].name;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            photoPreview = e.target.result;
+                        };
+                        reader.readAsDataURL($refs.photo.files[0]);
+    ">
+
+     <label for="Image" class="block text-gray-700 text-sm font-bold mb-2 text-center">{{ $label }}</label>
+
+    <div class="text-center">
+            <div class="mt-2" x-show="! photoPreview">
+            <img src="{{$site_logo}}" class="w-40 h-40 m-auto rounded-full shadow">
+        </div>
+        <div class="mt-2" x-show="photoPreview" style="display: none;">
+            <span class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+            </span>
+        </div>
+        <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
+          @lang('Select Image')
+        </button>
+    </div>
+
+@if ($errors->has($field_name))
+    <span class="invalid feedback"role="alert">
+        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+        class="text-danger">
+    </span>
+    @endif
+</div>
+
+                                </div>
+                                    <div class="mt-3 form-group pb-2 border-bottom text-center">
+
+                                        <?php
+
+                                    if ($settings->small_logo) {
+                                        $small_logo = asset("storage/logo/$settings->small_logo");
+                                    }else{
+                                        $small_logo = asset('images/logo.png');
+                                    }
+
+                                    ?>
+
+
+<div x-data="{photoName: null, photoPreview: null}" class="form-group">
+      <?php
+                $field_name = 'small_logo';
+                $field_lable = __($field_name);
+                $label = Label_Case($field_lable);
+                $field_placeholder = $label;
+                $required = '';
+                ?>
+ <input type="file" name="{{ $field_name }}" accept="image/*" class="hidden" x-ref="photo" x-on:change="
+                        photoName = $refs.photo.files[0].name;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            photoPreview = e.target.result;
+                        };
+                        reader.readAsDataURL($refs.photo.files[0]);
+    ">
+
+     <label for="Image" class="block text-gray-700 text-sm font-bold mb-2 text-center">{{ $label }}</label>
+
+    <div class="text-center">
+            <div class="mt-2" x-show="! photoPreview">
+            <img src="{{$small_logo}}" class="w-40 h-40 m-auto rounded-full shadow">
+        </div>
+        <div class="mt-2" x-show="photoPreview" style="display: none;">
+            <span class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+            </span>
+        </div>
+        <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
+          @lang('Select Image')
+        </button>
+    </div>
+
+@if ($errors->has($field_name))
+    <span class="invalid feedback"role="alert">
+        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+        class="text-danger">
+    </span>
+    @endif
+</div>
+
+
+
+
+
+
+
+
+                                </div>
+
 
                             </div>
                         </div>
@@ -179,6 +272,16 @@
 <div class="form-group">
         <label for="notification_email">Btn Color<span class="text-danger">*</span></label>
         <input type="color" class="form-control" name="btn_color" value="{{ $settings->btn_color }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="notification_email">Btn Cancel<span class="text-danger">*</span></label>
+        <input type="color" class="form-control" name="btn_color" value="{{ $settings->btn_cancel }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="notification_email">Btn Success<span class="text-danger">*</span></label>
+        <input type="color" class="form-control" name="btn_color" value="{{ $settings->btn_sukses }}" required>
     </div>
 
 

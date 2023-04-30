@@ -86,7 +86,7 @@ class GenerateMenus
 
            // Separator: Access Management
             $menu->add('Management', [
-                'class' => 'c-sidebar-nav-title text-muted',
+                'class' => 'c-sidebar-nav-title text-gray-100',
             ])
             ->data([
                 'order'         => 89,

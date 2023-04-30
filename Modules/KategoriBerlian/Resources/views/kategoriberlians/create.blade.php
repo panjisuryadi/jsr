@@ -1,15 +1,15 @@
 @extends('layouts.app')
-@section('title', 'Create {{moduleName}}')
+@section('title', 'Create KategoriBerlian')
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route("{{moduleNameLower}}.index") }}">{{moduleName}}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("kategoriberlian.index") }}">KategoriBerlian</a></li>
     <li class="breadcrumb-item active">Add</li>
 </ol>
 @endsection
 @section('content')
 <div class="container-fluid">
-    <form action="{{ route('{{moduleNameLower}}.store') }}" method="POST">
+    <form action="{{ route('kategoriberlian.store') }}" method="POST">
         @csrf
         <div class="row">
 
@@ -63,7 +63,7 @@
                             <div></div>
                             <div class="form-group">
                              <a class="px-5 btn btn-danger"
-                            href="{{ route("{{moduleNameLower}}.index") }}">
+                            href="{{ route("kategoriberlian.index") }}">
                             @lang('Cancel')</a>
                                 <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
                             </div>
