@@ -19,7 +19,7 @@ class ItemShapesController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'ItemShape';
+        $this->module_title = 'Shape';
         $this->module_name = 'itemshape';
         $this->module_path = 'itemshapes';
         $this->module_icon = 'fas fa-sitemap';
