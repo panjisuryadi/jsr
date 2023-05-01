@@ -36,6 +36,10 @@ return [
             'diamond_certificate'        => 'Diamond Certificate',
             'categories'                 => 'Categories',
             'carat'                      => 'Carat',
+            'people'                     => 'Customers & Suppliers',
+            'expense_categories'         => 'Expense Categories',
+            'expense'                    => 'Expense',
+            'expense_list'               => 'Expenses',
 
         ],
 

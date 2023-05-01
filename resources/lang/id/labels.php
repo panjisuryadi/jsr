@@ -35,6 +35,10 @@ return [
             'diamond_certificate'        => 'Sertifikat Berlian',
             'categories'                 => 'Kategori',
             'carat'                      => 'Karat',
+            'people'                     => 'Pelanggan & Suppliers',
+            'expense_categories'         => 'Kategori Pengeluaran',
+            'expense'                    => 'Pengeluaran',
+            'expense_list'               => 'List Pengeluaran',
 
         ],
 

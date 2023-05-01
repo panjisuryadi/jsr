@@ -214,6 +214,127 @@ class GenerateMenus
 
 
 
+
+
+
+ // customers Access Control Dropdown ==================================
+            $access_expenses = $menu->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
+                '.__('labels.menu.expense').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 77,
+                'activematches' => [
+                    'expense*',
+
+                ],
+                'permission'    => ['access_expenses','access_expense_categories'],
+            ]);
+            $access_expenses->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+     // Submenu: expenses
+            $access_expenses->add(
+                '<i class="c-sidebar-nav-icon bi bi-journal-arrow-up"></i>
+                 '.__('labels.menu.expense_list').'', [
+                'route' => 'expenses.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 77,
+                'activematches' => 'expenses*',
+                'permission'    => ['access_expenses'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+ // Submenu: expense_categories
+            $access_expenses->add(
+                '<i class="c-sidebar-nav-icon bi bi-journal-bookmark-fill"></i>
+                 '.__('labels.menu.expense_categories').'', [
+                'route' => 'expense-categories.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 77,
+                'activematches' => 'expense-categories*',
+                'permission'    => ['access_expense_categories'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
+
+
+
+
+ // customers Access Control Dropdown ==================================
+            $customers = $menu->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-people-fill"></i>
+                '.__('labels.menu.people').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 78,
+                'activematches' => [
+                    'customers*',
+
+                ],
+                'permission'    => ['access_customers','access_suppliers'],
+            ]);
+            $customers->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // Submenu: customers
+            $customers->add(
+                '<i class="c-sidebar-nav-icon bi bi-person-square"></i>
+                 '.__('customers').'', [
+                'route' => 'customers.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => 'customers*',
+                'permission'    => ['access_customers'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+     // Submenu: customers
+            $customers->add(
+                '<i class="c-sidebar-nav-icon bi bi-person-bounding-box"></i>
+                 '.__('Suppliers').'', [
+                'route' => 'suppliers.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => 'suppliers*',
+                'permission'    => ['access_suppliers'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
+
+
+
+
+
            // Separator: Access Management
             $menu->add('Management', [
                 'class' => 'c-sidebar-nav-title text-gray-100',
