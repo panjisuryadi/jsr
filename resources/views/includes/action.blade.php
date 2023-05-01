@@ -4,11 +4,7 @@
         <i class="bi bi-pencil"></i>
     </a>
 @endcan
-@can('show_'.$module_name.'')
-    <a href="{!!route("$module_name.show", $data)!!}" class="btn btn-primary btn-sm">
-        <i class="bi bi-eye"></i>
-    </a>
-@endcan
+
     @can('delete_'.$module_name.'')
     <button id="delete" class="btn btn-danger btn-sm" onclick="
         event.preventDefault();

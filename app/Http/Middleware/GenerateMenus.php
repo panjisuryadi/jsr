@@ -389,12 +389,6 @@ class GenerateMenus
             ]);
 
 
-
-
-
-
-
-
  // Access Control Dropdown
             $setting = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-gear"></i>'.__('Setting').'', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -440,12 +434,6 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-
-
-
-
-
-
 
 
 

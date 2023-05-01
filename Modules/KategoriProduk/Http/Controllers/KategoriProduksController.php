@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
-
+use Modules\Product\Entities\Category;
 class KategoriProduksController extends Controller
 {
 
@@ -262,8 +262,17 @@ public function show($id)
         $module_action = 'Delete';
 
         $$module_name_singular = $module_model::findOrFail($id);
+        $Category = Category::where('kategori_produk_id',$id)->get();
 
-        $$module_name_singular->delete();
+        if ($Category->isNotEmpty()) {
+           toast('Can\'t delete  category !', 'error');
+            return back();
+        }
+          if ($$module_name_singular->image !== 'no_foto.png') {
+               @unlink(imageUrl() . $$module_name_singular->image);
+            }
+
+         $$module_name_singular->delete();
          toast(''. $module_title.' Deleted!', 'success');
          return redirect()->route(''.$module_name.'.index');
 

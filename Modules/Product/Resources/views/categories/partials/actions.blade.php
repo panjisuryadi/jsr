@@ -1,3 +1,4 @@
+<div class="text-center">
 <a href="{{ route('product-categories.edit', $data->id) }}" class="btn btn-info btn-sm">
     <i class="bi bi-pencil"></i>
 </a>
@@ -13,3 +14,4 @@
         @method('delete')
     </form>
 </button>
+</div>

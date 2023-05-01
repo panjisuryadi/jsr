@@ -1,4 +1,4 @@
-<div class="p-0">
+<div class="p-0 object-center">
 <?php
 
 if ($data->image) {
@@ -9,5 +9,5 @@ if ($data->image) {
 
 ?>
  <img src="{{ $logo }}" alt="background"
-                class="rounded-xl h-30 bg-cover">
+                class="rounded-xl h-12 bg-cover mx-auto">
  </div>

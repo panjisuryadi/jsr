@@ -13,6 +13,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Product
     Route::resource('products', 'ProductController');
     //Product Category
+     Route::get("product-categories/index_data", ['as' => "categories.index_data", 'uses' => "CategoriesController@index_data"]);
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
 });
 

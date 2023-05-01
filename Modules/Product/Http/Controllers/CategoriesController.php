@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\Product\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -39,11 +39,84 @@ public function __construct()
 
 
     }
+  public function index() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_product_categories'), 403);
+         return view('product::categories.index',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
 
-    public function index(ProductCategoriesDataTable $dataTable) {
+
+    public function index_data_table(ProductCategoriesDataTable $dataTable) {
         abort_if(Gate::denies('access_product_categories'), 403);
 
         return $dataTable->render('product::categories.index');
+    }
+
+
+
+public function index_data()
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+
+        $$module_name = $module_model::withCount('products')->get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::categories.partials.actions',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->addColumn('image', function ($data) {
+                               return view('product::categories.partials.image', compact('data'));
+                            })
+                             ->editColumn('products_count', function ($data) {
+                                $tb = '<div class="items-center small text-center">
+                                <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+                                ' . $data->products_count . '</span></div>';
+                                return $tb;
+                            })
+                             ->editColumn('category_name', function ($data) {
+                                $tb = '<div class="flex items-center gap-x-2">
+                                        <div>
+                                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->category_name . '</h3>
+                                            <p class="text-xs font-normal text-red-600 dark:text-gray-400"> ' . $data->category_code . '</p>
+                                        </div>
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at','image','category_name','products_count', 'action'])
+                        ->make(true);
     }
 
 
