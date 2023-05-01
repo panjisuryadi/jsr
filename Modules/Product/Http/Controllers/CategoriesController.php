@@ -136,6 +136,7 @@ public function index_data()
         $params = $request->except('_token');
         $params['category_code'] = $params['category_code'];
         $params['category_name'] = $params['category_name'];
+        $params['kategori_produk_id'] = $params['kategori_produk_id'];
 
      if ($image = $request->file('image')) {
          $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
@@ -184,7 +185,7 @@ public function index_data()
         $params = $request->except('_token');
         $params['category_code'] = $params['category_code'];
         $params['category_name'] = $params['category_name'];
-
+        $params['kategori_produk_id'] = $params['kategori_produk_id'];
        if ($image = $request->file('image')) {
                       if ($$module_name_singular->image !== 'no_foto.png') {
                           @unlink(imageUrl() . $$module_name_singular->image);

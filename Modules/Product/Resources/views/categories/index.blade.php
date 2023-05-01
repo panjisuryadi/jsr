@@ -72,9 +72,23 @@ table.dataTable th {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
+
+
                 <form action="{{ route('product-categories.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
+
+                               <div class="form-group">
+                    <label for="kategori_produk_id">@lang('Main Kategori') <span class="text-danger">*</span></label>
+                    <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
+                        <option value="" selected disabled>Select Main Kategori</option>
+                        @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $kat)
+                        <option value="{{ $kat->id }}">{{ $kat->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                         <div class="form-group">
                             <label for="category_code">Category Code <span class="text-danger">*</span></label>
                             <input class="form-control" type="text" name="category_code" required>
@@ -83,6 +97,12 @@ table.dataTable th {
                             <label for="category_name">Category Name <span class="text-danger">*</span></label>
                             <input class="form-control" type="text" name="category_name" required>
                         </div>
+
+
+
+
+
+
 
 <div x-data="{photoName: null, photoPreview: null}" class="form-group">
       <?php
