@@ -42,7 +42,7 @@ class GenerateMenus
                 'order'         => 2,
                 'activematches' => [
                     'products*',
-                    'jenisproduks*',
+                    'kategoriproduk*',
                     'product-categories*',
                     'diamondcertificates*',
                     'itemrounds*',
@@ -54,7 +54,7 @@ class GenerateMenus
                                       'access_itemrounds',
                                       'access_itemshapes',
                                       'access_karats',
-                                      'access_jenisproduks',
+                                      'access_kategoriproduks',
                                       'access_diamondcertificates',
                                       'access_products'],
             ]);
@@ -65,14 +65,15 @@ class GenerateMenus
 
 
    // JenisProduks
-            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Jenis Produk'), [
-                'route' => 'jenisproduk.index',
+            $masterData->add(
+                '<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('labels.menu.categories'), [
+                'route' => 'kategoriproduk.index',
                 'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 3,
-                'activematches' => ['jenisproduks*'],
-                'permission'    => ['access_jenisproduks'],
+                'activematches' => ['kategoriproduk*'],
+                'permission'    => ['access_kategoriproduks'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -83,7 +84,8 @@ class GenerateMenus
 
 
     // Submenu: Categories
-            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i>Categories', [
+            $masterData->add(
+                '<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('labels.menu.kategori_produk'), [
                 'route' => 'product-categories.index',
                 'class' => 'nav-item',
             ])
@@ -98,7 +100,8 @@ class GenerateMenus
 
 
    // DiamondCertificates
-            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Diamond Certificate'), [
+            $masterData->add(
+                '<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('labels.menu.diamond_certificate'), [
                 'route' => 'diamondcertificate.index',
                 'class' => 'nav-item',
             ])
@@ -112,7 +115,8 @@ class GenerateMenus
             ]);
 
         // Karats
-            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Karat'), [
+            $masterData->add(
+                '<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('labels.menu.carat'), [
                 'route' => 'karat.index',
                 'class' => 'nav-item',
             ])
@@ -223,10 +227,6 @@ class GenerateMenus
                    'access_currencies'
                    ],
             ]);
-
-
-
-
 
 
       //============================Access Control Dropdown

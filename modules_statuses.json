@@ -19,5 +19,6 @@
     "DiamondCertificate": true,
     "ItemRound": true,
     "ItemShape": true,
-    "JenisProduk": true
+    "JenisProduk": true,
+    "KategoriProduk": true
 }

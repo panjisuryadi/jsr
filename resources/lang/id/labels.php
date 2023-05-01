@@ -30,7 +30,15 @@ return [
         'category_name'         => 'Kategori',
     ],
     // __("labels.text.edit_profile")
+     'menu' => [
+            'kategori_produk'            => 'Kategori Produk',
+            'diamond_certificate'        => 'Sertifikat Berlian',
+            'categories'                 => 'Kategori',
+            'carat'                      => 'Karat',
 
+        ],
+
+ // __("labels.menu.kategori_produk")
     'backend'   => [
         'users' => [
             'index' => [

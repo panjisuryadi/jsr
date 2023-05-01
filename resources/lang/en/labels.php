@@ -31,18 +31,19 @@ return [
         'date_of_birth'         => Label_case('date_of_birth'),
         'address'               => Label_case('address'),
     ],
+        'menu' => [
+            'kategori_produk'            => 'Products Categories',
+            'diamond_certificate'        => 'Diamond Certificate',
+            'categories'                 => 'Categories',
+            'carat'                      => 'Carat',
+
+        ],
+
+ // __("labels.menu.diamond_certificate")
 
    'akses' => [
         'view_backend'                                    => label_case('view_backend'),
         'edit_settings'                                   => label_case('edit_settings'),
-        'view_logs'                                       => label_case('view_logs'),
-        'block_users'                                       => label_case('block_users'),
-        'delete_roles'                                       => label_case('delete_roles'),
-        'create_backups'                                       => label_case('create_backups'),
-        'add_challenges'                                       => label_case('add_challenges'),
-        'add_rewards'                                       => label_case('add_rewards'),
-        'view_applications'                                       => label_case('view_applications'),
-
             ],
 
      'table' => [

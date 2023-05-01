@@ -1,5 +1,0 @@
-<?php
-
-return [
-    'name' => 'JenisProduk',
-];

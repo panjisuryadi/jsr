@@ -1,7 +1,7 @@
 <?php
 
 namespace {{namespace}}\{{moduleName}}\database\seeders;
-
+//use Modules\{{moduleName}}\database\seeders\{{moduleName}}DatabaseSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Modules\{{moduleName}}\Models\{{moduleName}};
