@@ -29,6 +29,10 @@ body {
 }
 
 
+.hokkie {
+    color: #FF9800 !important;
+    letter-spacing: 0.2rem;
+   }
 .c-sidebar {
     color: {{settings()->link_color}} !important;
     background:{{settings()->bg_sidebar}} !important;

@@ -11,7 +11,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products/print-barcode', 'BarcodeController@printBarcode')->name('barcode.print');
 
     //Product
+      Route::post("products/save", ['as' => "products.save", 'uses' => "ProductController@save"]);
       Route::get("products/index_data", ['as' => "products.index_data", 'uses' => "ProductController@index_data"]);
+
+       Route::get("add-products-categories/{id}",
+        ['as' => "products.add_products_categories",
+         'uses' => "ProductController@add_products_categories"]);
+
     Route::resource('products', 'ProductController');
 
     //Product Category

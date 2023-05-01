@@ -69,10 +69,29 @@ public function __construct()
     }
 
 
+    public function add_products_categories(Request $request ,$id) {
+        abort_if(Gate::denies('access_products'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $category = Category::where('id', $id)->first();
+        $module_action = 'List';
+         return view('product::products.add_kategori',
+           compact('module_name',
+            'category',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
 
 
 
-public function index_data()
+
+
+public function index_data(Request $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -95,53 +114,49 @@ public function index_data()
                             return view('product::products.partials.actions',
                             compact('module_name', 'data', 'module_model'));
                                 })
-   ->editColumn('product_name', function ($data) {
-        $tb = '<div class="flex items-center gap-x-2">
-                <div>
-                    <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                    <p class="text-xs font-normal text-yellow-600 dark:text-gray-400">
-                    ' . $data->category->category_name . '</p>
-                </div>
-            </div>';
-        return $tb;
-    })
-                          ->addColumn('product_image', function ($data) {
-                                $url = $data->getFirstMediaUrl('images', 'thumb');
-                                return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
-                            })
+           ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                            <p class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+                            ' . $data->category->category_name . '</p>
+                        </div>
+                    </div>';
+                return $tb;
+            })
+           ->addColumn('product_image', function ($data) {
+            $url = $data->getFirstMediaUrl('images', 'thumb');
+            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+        })
 
-                            ->addColumn('product_price', function ($data) {
-                                  return format_currency($data->product_price);
-                                  })
-                                ->addColumn('product_quantity', function ($data) {
-                                    return $data->product_quantity . ' ' . $data->product_unit;
-                                })
+           ->addColumn('product_price', function ($data) {
+              return format_currency($data->product_price);
+          })
+           ->addColumn('product_quantity', function ($data) {
+            return $data->product_quantity . ' ' . $data->product_unit;
+        })
 
-   ->editColumn('product_quantity', function ($data) {
-                                $tb = '<div class="items-center small text-center">
-                                <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
-                                ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
-                                return $tb;
-                            })
+           ->editColumn('product_quantity', function ($data) {
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
+            return $tb;
+        })
 
 
-                           ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
+           ->editColumn('updated_at', function ($data) {
+            $module_name = $this->module_name;
 
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                            }
-                        })
-                        ->rawColumns(['updated_at','product_image','product_name','product_quantity','product_price', 'action'])
-                        ->make(true);
+            $diff = Carbon::now()->diffInHours($data->updated_at);
+            if ($diff < 25) {
+                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+            } else {
+                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+            }
+        })
+           ->rawColumns(['updated_at','product_image','product_name','product_quantity','product_price', 'action'])
+           ->make(true);
     }
-
-
-
-
 
 
 
@@ -156,6 +171,9 @@ public function index_data()
 
 
     public function store(StoreProductRequest $request) {
+        //  $params = $request->all();
+        // $params = $request->except('_token');
+        //  dd($params);
         $product = Product::create($request->except('document'));
 
         if ($request->has('document')) {
@@ -170,11 +188,70 @@ public function index_data()
     }
 
 
+  public function save(StoreProductRequest $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Store';
+        $params = $request->all();
+        $params = $request->except('_token');
+         dd($params);
+         $$module_name_singular = $module_model::create($params);
+         toast('Product Created!', 'success');
+
+        return redirect()->route('products.index');
+    }
+
+
+
+ // "category_id" => "1"
+ //  "product_barcode_symbology" => "C128"
+ //  "product_stock_alert" => "5"
+ //  "product_name" => "cincin"
+ //  "product_quantity" => "90"
+ //  "karat_id" => "2"
+ //  "round_id" => "1"
+ //  "product_code" => "P-00007"
+ //  "shape_id" => "1"
+ //  "certificate_id" => "1"
+ //  "no_certificate" => "9008866"
+ //  "berat_emas" => "0.04"
+ //  "berat_accessories" => "0.04"
+ //  "berat_label" => "0.05"
+ //  "berat_total" => "0.04"
+ //  "product_price" => "80000"
+ //  "product_cost" => "9000"
+ //  "jual" => "7900"
+ //  "gudang" => "gudang"
+ //  "brankas" => "900"
+ //  "kode_baki" => "9876"
+ //  "product_note" => "89998"
+
+
+
+
+
+
+
+
+
+
+
+
     public function show(Product $product) {
         abort_if(Gate::denies('show_products'), 403);
 
         return view('product::products.show', compact('product'));
     }
+
+
+
+
 
 
     public function edit(Product $product) {
