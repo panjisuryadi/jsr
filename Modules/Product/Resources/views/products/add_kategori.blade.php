@@ -214,7 +214,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="jual">@lang('Jual') <span class="text-danger">*</span></label>
-            <input id="product_sale" type="text" class="form-control" name="jual" required value="{{ old('jual') }}">
+            <input id="product_sale" type="text" class="form-control" name="product_sale" required value="{{ old('jual') }}">
         </div>
     </div>
 </div>

@@ -24,7 +24,7 @@ class Product extends Model implements HasMedia
    public const URL = 'P';
 
 
-  public function ProductItem() {
+  public function product_item() {
         return $this->hasMany(ProductItem::class, 'product_id', 'id');
     }
 

@@ -20,6 +20,11 @@ class DiamondCertificate extends Model
 
      ];
 
+  public function certificates() {
+        return $this->hasMany(ProductItem::class, 'certificate_id', 'id');
+    }
+
+
     protected static function newFactory()
     {
         return \Modules\DiamondCertificate\database\factories\DiamondCertificateFactory::new();

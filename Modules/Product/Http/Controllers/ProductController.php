@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductItem;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
 use Modules\Upload\Entities\Upload;
@@ -38,6 +39,7 @@ public function __construct()
 
         // module model name, path
         $this->module_model = "Modules\Product\Entities\Product";
+        $this->module_item = "Modules\Product\Entities\ProductItem";
 
 
     }
@@ -103,7 +105,7 @@ public function index_data(Request $request)
         $module_action = 'List';
 
 
-        $$module_name = $module_model::with('category')->get();
+        $$module_name = $module_model::with('category','product_item')->get();
 
         $data = $$module_name;
 
@@ -143,6 +145,20 @@ public function index_data(Request $request)
             return $tb;
         })
 
+           ->editColumn('weight', function ($data) {
+              $berat = @$data->product_item[0]->berat_emas;
+            if ($berat) {
+                 $weight = @$data->product_item[0]->berat_emas;
+            } else {
+                $weight = '0';
+            }
+
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-yellow-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' .  $weight . '</span></div>';
+            return $tb;
+        })
+
 
            ->editColumn('updated_at', function ($data) {
             $module_name = $this->module_name;
@@ -154,7 +170,8 @@ public function index_data(Request $request)
                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
             }
         })
-           ->rawColumns(['updated_at','product_image','product_name','product_quantity','product_price', 'action'])
+           ->rawColumns(['updated_at','product_image','weight',
+            'product_name','product_quantity','product_price', 'action'])
            ->make(true);
     }
 
@@ -197,6 +214,7 @@ public function index_data(Request $request)
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $module_item = $this->module_item;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Store';
         //$params = $request->all();
@@ -218,33 +236,38 @@ public function index_data(Request $request)
                 $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
             }
         }
+         $produk = $$module_name_singular->id;
+         $this->_saveProductsItem($input ,$produk);
          toast('Product Created!', 'success');
 
         return redirect()->route('products.index');
     }
 
- // "category_id" => "1"
- //  "product_barcode_symbology" => "C128"
- //  "product_stock_alert" => "5"
- //  "product_name" => "cincin"
- //  "product_quantity" => "90"
- //  "karat_id" => "2"
- //  "round_id" => "1"
- //  "product_code" => "P-00007"
- //  "shape_id" => "1"
- //  "certificate_id" => "1"
- //  "no_certificate" => "9008866"
- //  "berat_emas" => "0.04"
- //  "berat_accessories" => "0.04"
- //  "berat_label" => "0.05"
- //  "berat_total" => "0.04"
- //  "product_price" => "80000"
- //  "product_cost" => "9000"
- //  "jual" => "7900"
- //  "gudang" => "gudang"
- //  "brankas" => "900"
- //  "kode_baki" => "9876"
- //  "product_note" => "89998"
+
+
+    private function _saveProductsItem($input ,$produk)
+    {
+
+       ProductItem::create([
+            'product_id'                  => $produk,
+            'karat_id'                    => $input['karat_id'],
+            'certificate_id'              => $input['certificate_id'],
+            'shape_id'                    => $input['shape_id'],
+            'round_id'                    => $input['round_id'],
+            'product_price'               => $input['product_price'],
+            'product_cost'                => $input['product_cost'],
+            'product_price'               => $input['product_price'],
+            'product_sale'                => $input['product_sale'],
+            'berat_emas'                  => $input['berat_emas'],
+            'berat_label'                 => $input['berat_label'],
+            'gudang'                      => $input['gudang'],
+            'brankas'                     => $input['brankas'],
+            'kode_baki'                   => $input['kode_baki'],
+            'berat_total'                 => $input['berat_total']
+        ]);
+       // dd($produk);
+      }
+
 
     public function show(Product $product) {
         abort_if(Gate::denies('show_products'), 403);
@@ -297,7 +320,6 @@ public function index_data(Request $request)
         $product->delete();
 
         toast('Product Deleted!', 'warning');
-
         return redirect()->route('products.index');
     }
 }

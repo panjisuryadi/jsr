@@ -22,6 +22,11 @@ class ProductItem extends Model
     }
 
 
+    public function certificates() {
+        return $this->belongsTo(DiamondCertificate::class, 'certificate_id', 'id');
+    }
+
+
 
 
 

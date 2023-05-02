@@ -73,6 +73,7 @@ if ($category->image) {
                                     <th>{{ Label_case('product_name') }}</th>
                                     <th>{{ Label_case('price') }}</th>
                 <th style="width: 15%!important;" class="text-center">{{ Label_case('quantity') }}</th>
+     <th style="width: 15%!important;" class="text-center">{{ Label_case('weight') }}</th>
 
                                     <th style="width: 14%!important;" class="text-center">
                                         Action
@@ -146,6 +147,9 @@ if ($category->image) {
                 }, {
                     data: 'product_quantity',
                     name: 'product_quantity'
+                }, {
+                    data: 'weight',
+                    name: 'weight'
                 },
 
                 {
