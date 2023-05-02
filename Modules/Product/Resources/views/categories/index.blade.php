@@ -10,7 +10,6 @@ table.dataTable th {
     padding: 0.8rem !important;
      border: 1px solid #d8dbe054 !important;
 }
-
 </style>
 
 @endsection
@@ -18,7 +17,7 @@ table.dataTable th {
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Products</a></li>
-    <li class="breadcrumb-item active">Categories</li>
+    <li class="breadcrumb-item active">{{ $module_title }}</li>
 </ol>
 @endsection
 @section('content')
@@ -33,7 +32,7 @@ table.dataTable th {
                         <div>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryCreateModal">
-                            Add Category <i class="bi bi-plus"></i>
+                            Add {{ $module_title }} <i class="bi bi-plus"></i>
                             </button>
                         </div>
                         <div id="buttons">
@@ -62,100 +61,87 @@ table.dataTable th {
         </div>
     </div>
 </div>
-    <!-- Create Modal -->
-    <div class="modal fade" id="categoryCreateModal" tabindex="-1" role="dialog" aria-labelledby="categoryCreateModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="categoryCreateModalLabel">Create Category</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-
-
-                <form action="{{ route('product-categories.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-
-                               <div class="form-group">
-                    <label for="kategori_produk_id">@lang('Main Kategori') <span class="text-danger">*</span></label>
-                    <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
-                        <option value="" selected disabled>Select Main Kategori</option>
-                        @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $kat)
-                        <option value="{{ $kat->id }}">{{ $kat->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                        <div class="form-group">
-                            <label for="category_code">Category Code <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" name="category_code" required>
+<!-- batass================================Create Modal============================= -->
+<div class="modal fade" id="categoryCreateModal" tabindex="-1" role="dialog" aria-labelledby="categoryCreateModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoryCreateModalLabel font-semibold">
+<i class="bi bi-chevron-right"></i>
+                Create {{ $module_title }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('product-categories.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="flex row px-4">
+                        <div class="w-1/3 text-center items-center">
+                            <div x-data="{photoName: null, photoPreview: null}" class="justify-center form-group">
+                                <?php
+                                $field_name = 'image';
+                                $field_lable = __($field_name);
+                                $label = Label_Case($field_lable);
+                                $field_placeholder = $label;
+                                $required = '';
+                                ?>
+                                <input type="file" name="{{ $field_name }}" accept="image/*" class="hidden" x-ref="photo" x-on:change="
+                                photoName = $refs.photo.files[0].name;
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                photoPreview = e.target.result;
+                                };
+                                reader.readAsDataURL($refs.photo.files[0]);
+                                ">
+                                <div class="text-center">
+                                    <div class="mt-2 py-2" x-show="! photoPreview">
+                                        <img src="{{asset("images/logo.png")}}" class="w-40 h-40 m-auto rounded-full shadow">
+                                    </div>
+                                    <div class="mt-2 py-2" x-show="photoPreview" style="display: none;">
+                                        <span class="block w-40 h-40 rounded-xl m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+                                        </span>
+                                    </div>
+                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-red-400 border border-gray-300 rounded-md font-semibold text-xs text-gray-50 uppercase tracking-widest shadow-sm hover:text-gray-400 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-400 active:bg-gray-50 transition ease-in-out duration-150" x-on:click.prevent="$refs.photo.click()">
+                                    @lang('Select Image')
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="category_name">Category Name <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" name="category_name" required>
+                        <div class="w-2/3">
+                            <div class="form-group">
+                                <label for="kategori_produk_id">@lang('Main Kategori') <span class="text-danger">*</span></label>
+                                <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
+                                    <option value="" selected disabled>Select Main Kategori</option>
+                                    @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $kat)
+                                    <option value="{{ $kat->id }}">{{ $kat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="category_code">Category Code <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="category_code" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category_name">Category Name <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="category_name" required>
+                            </div>
                         </div>
-
-
-
-
-
-
-
-<div x-data="{photoName: null, photoPreview: null}" class="form-group">
-      <?php
-                $field_name = 'image';
-                $field_lable = __($field_name);
-                $label = Label_Case($field_lable);
-                $field_placeholder = $label;
-                $required = '';
-                ?>
- <input type="file" name="{{ $field_name }}" accept="image/*" class="hidden" x-ref="photo" x-on:change="
-                        photoName = $refs.photo.files[0].name;
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            photoPreview = e.target.result;
-                        };
-                        reader.readAsDataURL($refs.photo.files[0]);
-    ">
-
-     <label for="Image" class="block text-gray-700 text-sm font-bold mb-2 text-center">Image</label>
-
-    <div class="text-center">
-            <div class="mt-2" x-show="! photoPreview">
-            <img src="{{asset("images/logo.png")}}" class="w-20 h-20 m-auto rounded-full shadow">
+                    </div>
+                </div>
+                <div class="modal-footer">
+<button type="button" class="btn btn-danger px-5" data-dismiss="modal" aria-label="Close">
+               Close
+                </button>
+                    <button type="submit" class="px-5 btn btn-primary">Create <i class="bi bi-check"></i></button>
+                </div>
+            </form>
         </div>
-        <div class="mt-2" x-show="photoPreview" style="display: none;">
-            <span class="block w-20 h-20 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
-            </span>
-        </div>
-        <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
-          @lang('Select Image')
-        </button>
     </div>
 </div>
+{{-- end modal ======================================================================--}}
 
-
-
-
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Create <i class="bi bi-check"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
-
-{{-- @push('page_scripts')
-    {!! $dataTable->scripts() !!}
-@endpush
- --}}
 
  <x-library.datatable />
 @push('page_scripts')
