@@ -349,14 +349,14 @@
              prefix: 'Rp ',
              thousands: '.',
              decimal: ',',
-             precision: 0
+             //precision: 0
         });
 
         $('#product_sale').maskMoney({
             prefix:'{{ settings()->currency->symbol }}',
             thousands:'{{ settings()->currency->thousand_separator }}',
             decimal:'{{ settings()->currency->decimal_separator }}',
-             precision: 0,
+             //precision: 0,
 
         });
 
@@ -365,7 +365,7 @@
             prefix:'{{ settings()->currency->symbol }}',
             thousands:'{{ settings()->currency->thousand_separator }}',
             decimal:'{{ settings()->currency->decimal_separator }}',
-            precision: 0,
+            //precision: 0,
         });
         $('#product-form').submit(function () {
             var product_cost = $('#product_cost').maskMoney('unmasked')[0];
