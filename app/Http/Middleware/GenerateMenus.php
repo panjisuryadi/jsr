@@ -66,7 +66,7 @@ class GenerateMenus
 
    // JenisProduks
             $masterData->add(
-                '<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('labels.menu.categories'), [
+                '<i class="text-sm c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('labels.menu.categories'), [
                 'route' => 'kategoriproduk.index',
                 'class' => 'nav-item',
             ])
@@ -76,7 +76,7 @@ class GenerateMenus
                 'permission'    => ['access_kategoriproduks'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 
@@ -85,7 +85,7 @@ class GenerateMenus
 
     // Submenu: Categories
             $masterData->add(
-                '<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('labels.menu.kategori_produk'), [
+                '<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('labels.menu.kategori_produk'), [
                 'route' => 'product-categories.index',
                 'class' => 'nav-item',
             ])
@@ -95,13 +95,13 @@ class GenerateMenus
                 'permission'    => ['access_product_categories'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 
    // DiamondCertificates
             $masterData->add(
-                '<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('labels.menu.diamond_certificate'), [
+                '<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('labels.menu.diamond_certificate'), [
                 'route' => 'diamondcertificate.index',
                 'class' => 'nav-item',
             ])
@@ -111,12 +111,12 @@ class GenerateMenus
                 'permission'    => ['access_diamondcertificates'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
         // Karats
             $masterData->add(
-                '<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('labels.menu.carat'), [
+                '<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('labels.menu.carat'), [
                 'route' => 'karat.index',
                 'class' => 'nav-item',
             ])
@@ -126,11 +126,11 @@ class GenerateMenus
                 'permission'    => ['access_karats'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 
-          $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Rounds'), [
+          $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Rounds'), [
                 'route' => 'itemround.index',
                 'class' => 'nav-item',
             ])
@@ -140,12 +140,12 @@ class GenerateMenus
                 'permission'    => ['access_itemrounds'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 
             // ItemShapes
-            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Shapes'), [
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Shapes'), [
                 'route' => 'itemshape.index',
                 'class' => 'nav-item',
             ])
@@ -155,11 +155,11 @@ class GenerateMenus
                 'permission'    => ['access_itemshapes'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 
-             $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Colours'), [
+             $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Colours'), [
                 'route' => 'itemcolour.index',
                 'class' => 'nav-item',
             ])
@@ -169,7 +169,7 @@ class GenerateMenus
                 'permission'    => ['access_itemcolours'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2 pb-3',
             ]);
 
 
@@ -214,7 +214,7 @@ class GenerateMenus
                 'permission'    => ['access_products'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
        // Submenu: products
@@ -230,7 +230,7 @@ class GenerateMenus
                 'permission'    => ['print_barcodes'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2 pb-3',
             ]);
 
 
@@ -260,7 +260,7 @@ class GenerateMenus
 
      // Submenu: expenses
             $access_expenses->add(
-                '<i class="c-sidebar-nav-icon bi bi-journal-arrow-up"></i>
+                '<i class="c-sidebar-nav-icon bi bi-journal-arrow-up mb-1"></i>
                  '.__('labels.menu.expense_list').'', [
                 'route' => 'expenses.index',
                 'class' => 'nav-item',
@@ -271,13 +271,13 @@ class GenerateMenus
                 'permission'    => ['access_expenses'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-3 mt-1',
             ]);
 
 
  // Submenu: expense_categories
             $access_expenses->add(
-                '<i class="c-sidebar-nav-icon bi bi-journal-bookmark-fill"></i>
+                '<i class="c-sidebar-nav-icon bi bi-journal-bookmark-fill mb-1"></i>
                  '.__('labels.menu.expense_categories').'', [
                 'route' => 'expense-categories.index',
                 'class' => 'nav-item',
@@ -288,7 +288,7 @@ class GenerateMenus
                 'permission'    => ['access_expense_categories'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-3',
             ]);
 
 
@@ -319,7 +319,7 @@ class GenerateMenus
 
             // Submenu: customers
             $customers->add(
-                '<i class="c-sidebar-nav-icon bi bi-person-square"></i>
+                '<i class="c-sidebar-nav-icon bi bi-person-square mb-1"></i>
                  '.__('customers').'', [
                 'route' => 'customers.index',
                 'class' => 'nav-item',
@@ -330,11 +330,11 @@ class GenerateMenus
                 'permission'    => ['access_customers'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-3',
             ]);
      // Submenu: customers
             $customers->add(
-                '<i class="c-sidebar-nav-icon bi bi-person-bounding-box"></i>
+                '<i class="c-sidebar-nav-icon bi bi-person-bounding-box mb-1"></i>
                  '.__('Suppliers').'', [
                 'route' => 'suppliers.index',
                 'class' => 'nav-item',
@@ -345,7 +345,7 @@ class GenerateMenus
                 'permission'    => ['access_suppliers'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-3',
             ]);
 
 
@@ -407,7 +407,7 @@ class GenerateMenus
                 'permission'    => ['create_adjustments'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-3',
             ]);
 
   // Submenu: adjustments
@@ -423,7 +423,7 @@ class GenerateMenus
                 'permission'    => ['create_adjustments'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2 pb-3',
             ]);
 
 
@@ -448,7 +448,7 @@ class GenerateMenus
             ]);
 
             // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-cash-coin"></i> '.__('Profit Loss Report').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i> '.__('Profit Loss Report').'', [
                 'route' => 'profit-loss-report.index',
                 'class' => 'nav-item',
             ])
@@ -462,7 +462,7 @@ class GenerateMenus
 
 
    // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2"></i> '.__('Payments Report').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Payments Report').'', [
                 'route' => 'payments-report.index',
                 'class' => 'nav-item',
             ])
@@ -476,7 +476,7 @@ class GenerateMenus
 
 
  // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-check"></i> '.__('Sales Report').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-check mb-2"></i> '.__('Sales Report').'', [
                 'route' => 'sales-report.index',
                 'class' => 'nav-item',
             ])
@@ -489,7 +489,7 @@ class GenerateMenus
             ]);
 
  // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-receipt"></i> '.__('Purchases Report').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-receipt mb-2"></i> '.__('Purchases Report').'', [
                 'route' => 'purchases-report.index',
                 'class' => 'nav-item',
             ])
@@ -503,7 +503,7 @@ class GenerateMenus
 
 
  // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-fill"></i> '.__('Sales Return Report').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-fill mb-2"></i> '.__('Sales Return Report').'', [
                 'route' => 'sales-return-report.index',
                 'class' => 'nav-item',
             ])
@@ -518,7 +518,7 @@ class GenerateMenus
 
 
  // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-x"></i> '.__('Purchases Return Report').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-x mb-2"></i> '.__('Purchases Return Report').'', [
                 'route' => 'purchases-return-report.index',
                 'class' => 'nav-item',
             ])
