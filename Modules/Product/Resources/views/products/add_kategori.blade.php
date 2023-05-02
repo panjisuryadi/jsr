@@ -53,14 +53,19 @@
 </div>
 
 
-    <div class="form-row mt-3">
 
-        <input type="hidden" name="category_id" value="{{ $category->id }}">
+     <input type="hidden" name="category_id" value="{{ $category->id }}">
         <input type="hidden" name="product_barcode_symbology" value="C128">
         <input type="hidden" name="product_stock_alert" value="5">
         <input type="hidden" name="product_unit" value="Gram">
-        <div class="col-md-4 pr-3">
-            <div class="form-group">
+
+
+<div class="grid grid-cols-3 gap-3">
+  <div class="border-right pr-3">
+
+
+
+      <div class="form-group">
                             <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
                             <div class="h-320 dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                 <div class="dz-message" data-dz-message>
@@ -68,10 +73,22 @@
                                 </div>
                             </div>
                         </div>
-        </div>
 
-        <div class="col-md-4 border-left pl-3">
-            <div class="form-group">
+
+
+
+
+  </div>
+  <div class="col-span-2 bg-transparent">
+
+
+<div class="row">
+
+
+<div class="col-md-6">
+
+
+  <div class="form-group">
                 <label for="product_name">@lang('Product Name') <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="product_name" required value="{{ old('product_name') }}">
             </div>
@@ -102,10 +119,14 @@
                     </select>
                 </div>
 
-        </div>
-{{-- ======================================= --}}
-        <div class="col-md-4">
-            <div class="form-group">
+
+
+</div>
+<div class="col-md-6">
+
+
+
+                <div class="form-group">
                 <label for="product_code">Code <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="product_code" readonly value="{{ $code }}">
             </div>
@@ -138,13 +159,25 @@
 
 
 
-        </div>
-{{-- =========================== --}}
 
-    </div>
 
-{{-- =================================================================================== --}}
-<div class="flex relative py-2">
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+<div class="flex relative py-1">
     <div class="absolute inset-0 flex items-center">
         <div class="w-full border-b border-gray-300"></div>
     </div>
@@ -153,6 +186,14 @@
         </span>
     </div>
 </div>
+
+
+<div class="flex row px-3 py-0">
+
+
+
+{{-- =================================================================================== --}}
+
 
 <div class="form-row">
     <div class="col-md-3">
@@ -188,8 +229,18 @@
 
 
 
-{{-- harga =================================================================================== --}}
-<div class="flex relative py-2">
+
+
+
+
+
+
+</div>
+
+
+
+
+<div class="flex relative py-1">
     <div class="absolute inset-0 flex items-center">
         <div class="w-full border-b border-gray-300"></div>
     </div>
@@ -197,6 +248,17 @@
          <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">Harga</span>
     </div>
 </div>
+
+
+
+
+<div class="flex row px-3 py-0">
+
+
+
+
+
+{{-- harga =================================================================================== --}}
 
 <div class="form-row">
     <div class="col-md-4">
@@ -213,8 +275,8 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="jual">@lang('Jual') <span class="text-danger">*</span></label>
-            <input id="product_sale" type="text" class="form-control" name="product_sale" required value="{{ old('jual') }}">
+            <label for="product_sale">@lang('Jual') <span class="text-danger">*</span></label>
+            <input id="product_sale" type="text" class="form-control" name="product_sale" required value="{{ old('product_sale') }}">
         </div>
     </div>
 </div>
@@ -227,8 +289,15 @@
 
 
 
-{{-- =================================================================================== --}}
-<div class="flex relative py-2">
+
+
+
+
+
+
+</div>
+
+<div class="flex relative py-0">
     <div class="absolute inset-0 flex items-center">
         <div class="w-full border-b border-gray-300"></div>
     </div>
@@ -236,6 +305,7 @@
          <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">Lokasi <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Lokasi Penyimpanan (Gudang /Rak etc."></i></span>
     </div>
 </div>
+{{-- =================================================================================== --}}
 
 <div class="form-row">
     <div class="col-md-4">
@@ -258,10 +328,38 @@
     </div>
 </div>
 {{-- =================================================================================== --}}
-                        <div class="form-group">
-                            <label for="product_note">Note</label>
-                            <textarea name="product_note" id="product_note" rows="4 " class="form-control"></textarea>
-                        </div>
+
+<div class="flex row px-3 py-0">
+    <div class="p-0 col-lg-12">
+    <div class="form-group">
+        <label for="product_note">Note</label>
+        <textarea name="product_note" id="product_note" rows="4 " class="form-control"></textarea>
+    </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
                     </div>
 
     <div class="flex justify-between px-3 pb-2 border-bottom">
