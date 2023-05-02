@@ -159,6 +159,27 @@ class GenerateMenus
             ]);
 
 
+             $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Colours'), [
+                'route' => 'itemcolour.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['itemcolours*'],
+                'permission'    => ['access_itemcolours'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
+
+
+
+
+
       //============================Access Control Dropdown
             $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Products', [
                 'class' => 'c-sidebar-nav-dropdown',

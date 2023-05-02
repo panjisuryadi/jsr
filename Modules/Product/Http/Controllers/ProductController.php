@@ -171,9 +171,9 @@ public function index_data(Request $request)
 
 
     public function store(StoreProductRequest $request) {
-        //  $params = $request->all();
-        // $params = $request->except('_token');
-        //  dd($params);
+         $params = $request->all();
+        $params = $request->except('_token');
+         dd($params);
         $product = Product::create($request->except('document'));
 
         if ($request->has('document')) {
@@ -190,24 +190,38 @@ public function index_data(Request $request)
 
   public function save(StoreProductRequest $request)
     {
+
+
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-
         $module_action = 'Store';
-        $params = $request->all();
-        $params = $request->except('_token');
-         dd($params);
-         $$module_name_singular = $module_model::create($params);
+        //$params = $request->all();
+        $input = $request->except(['document']);
+        //dd($input);
+        $$module_name_singular = $module_model::create([
+            'category_id'                       => $input['category_id'],
+            'product_stock_alert'               => $input['product_stock_alert'],
+            'product_name'                      => $input['product_name'],
+            'product_code'                      => $input['product_code'],
+            'product_price'                     => $input['product_price'],
+            'product_quantity'                  => $input['product_quantity'],
+            'product_barcode_symbology'         => $input['product_barcode_symbology'],
+            'product_unit'                      => $input['product_unit'],
+            'product_cost'                      => $input['product_cost']
+        ]);
+        if ($request->has('document')) {
+            foreach ($request->input('document', []) as $file) {
+                $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
+            }
+        }
          toast('Product Created!', 'success');
 
         return redirect()->route('products.index');
     }
-
-
 
  // "category_id" => "1"
  //  "product_barcode_symbology" => "C128"
@@ -231,17 +245,6 @@ public function index_data(Request $request)
  //  "brankas" => "900"
  //  "kode_baki" => "9876"
  //  "product_note" => "89998"
-
-
-
-
-
-
-
-
-
-
-
 
     public function show(Product $product) {
         abort_if(Gate::denies('show_products'), 403);

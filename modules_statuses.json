@@ -20,5 +20,6 @@
     "ItemRound": true,
     "ItemShape": true,
     "JenisProduk": true,
-    "KategoriProduk": true
+    "KategoriProduk": true,
+    "ItemColour": true
 }
