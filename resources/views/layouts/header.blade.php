@@ -106,7 +106,6 @@ title="@lang('Informasi Harga Emas')"
 
 
 
-
     <li class="c-header-nav-item dropdown">
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
            aria-haspopup="true" title="Informasi Akun" aria-expanded="false">
@@ -131,4 +130,23 @@ title="@lang('Informasi Harga Emas')"
             </form>
         </div>
     </li>
+
+
+<li class="c-header-nav-item dropdown d-md-down-none ml-1">
+        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+ title="@lang('Hokkie Apps')"
+        aria-haspopup="true" aria-expanded="false">
+        <i class="bi bi-grid-3x3-gap-fill text-xl"></i>
+        </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
+                <div class="dropdown-header bg-light">
+                    <strong>@lang('List Hokkie Apps')</strong>
+                </div>
+             <x-library.menu />
+
+
+            </div>
+    </li>
+
+
 </ul>
