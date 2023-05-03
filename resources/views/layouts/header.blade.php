@@ -12,6 +12,7 @@
              {!! settings()->company_name !!}
             </a>
         </li>
+        <li><x-library.widget /></li>
     </ul>
 <ul class="c-header-nav ml-auto">
 
@@ -21,16 +22,36 @@
 
 <ul class="c-header-nav ml-auto mr-4">
     @can('create_pos_sales')
-    <li class="c-header-nav-item mr-3">
-        <a class="btn btn-primary btn-pill {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}" href="{{ route('app.pos.index') }}">
-            <i class="bi bi-cart mr-1"></i> @lang('POS')
+    <li class="c-header-nav-item mr-0">
+        <a class="c-header-nav-link {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}"
+          data-toggle="tooltip" data-placement="bottom" title="@lang('Hokkie POS')"
+         href="{{ route('app.pos.index') }}">
+     <img class="w-7 mb-1" src="{{  asset('images/icon/cart.svg') }}">
+            {{-- <i class="bi bi-cart mr-1"></i> @lang('POS') --}}
         </a>
     </li>
     @endcan
 
+  <li class="c-header-nav-item dropdown d-md-down-none">
+           <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+title="@lang('Informasi Harga Emas')"
+           aria-haspopup="true" aria-expanded="false">
+         <img class="w-6 mb-1" src="{{  asset('images/icon/info.svg') }}">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
+            <div class="dropdown-header bg-light">
+                <strong>Update Harga Emas</strong>
+            </div>
+
+
+         <iframe src="https://harga-emas.org/widget/widget.php?v_widget_type=current_gold_price&v_height=260"></iframe>
+        </div>
+    </li>
     @can('show_notifications')
     <li class="c-header-nav-item dropdown d-md-down-none mr-2">
-        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+          title="@lang('Informasi Stok')"
+         aria-haspopup="true" aria-expanded="false">
             <i class="bi bi-bell" style="font-size: 20px;"></i>
             <span class="badge badge-pill badge-danger">
             @php
@@ -59,8 +80,14 @@
     @endcan
 
 <li class="c-header-nav-item dropdown d-md-down-none mr-0">
-        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-           <i class="bi bi-translate"></i>&nbsp; {{strtoupper(App::getLocale())}}
+        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+ title="@lang('Change language')"
+        aria-haspopup="true" aria-expanded="false">
+         <img class="w-6" src="{{  asset('images/icon/lang.svg') }}">&nbsp;
+<span class="badge badge-pill badge-primary">
+         {{strtoupper(App::getLocale())}}
+</span>
+
         </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
                 <div class="dropdown-header bg-light">
@@ -82,9 +109,9 @@
 
     <li class="c-header-nav-item dropdown">
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
-           aria-haspopup="true" aria-expanded="false">
+           aria-haspopup="true" title="Informasi Akun" aria-expanded="false">
             <div class="c-avatar mr-2">
-                <img class="c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
+                <img class="w-7 h-7 c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
             </div>
             <div class="d-flex flex-column">
                 <span class="font-weight-bold">{{ auth()->user()->name }}</span>
