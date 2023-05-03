@@ -1,5 +1,6 @@
 <div class="flex justify-center flex-wrap gap-4 lg:inline-grid lg:grid-cols-3 xl:grid-cols-3 px-4 py-3 mb-2">
     <div class="bg-white rounded-lg  w-18 h-18 flex justify-center items-center">
+        <div class="text-center mx-auto">
         <svg viewBox="0 0 37 38" class="h-10" xmlns="http://www.w3.org/2000/svg">
             <g fill-rule="nonzero" fill="none">
                 <path
@@ -16,7 +17,7 @@
                     fill="#FFF"></path>
             </g>
         </svg>
-
+</div>
 
     </div>
     <div class="bg-white rounded-lg  w-18 h-18 flex justify-center items-center">

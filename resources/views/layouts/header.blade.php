@@ -138,7 +138,7 @@ title="@lang('Informasi Harga Emas')"
         aria-haspopup="true" aria-expanded="false">
         <i class="bi bi-grid-3x3-gap-fill text-xl"></i>
         </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
+            <div style="width: 260px !important;" class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
                 <div class="dropdown-header bg-light">
                     <strong>@lang('List Hokkie Apps')</strong>
                 </div>
