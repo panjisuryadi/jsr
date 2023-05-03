@@ -28,9 +28,12 @@
                                 <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="{{ $field_name }}"
                                 placeholder="{{ $field_placeholder }}" value="{{ $detail->code }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
+                                @if ($errors->has($field_name))
+                                    <span class="invalid feedback"role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                        class="text-danger">
+                                    </span>
+                                    @endif
                             </div>
                             <div class="form-group">
                                 <?php
@@ -42,12 +45,15 @@
                                 ?>
                                 <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                 <input class="form-control" placeholder="{{ $field_placeholder }}" type="text" name="{{ $field_name }}" value="{{ $detail->name }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
+                                @if ($errors->has($field_name))
+                                    <span class="invalid feedback"role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                        class="text-danger">
+                                    </span>
+                                    @endif
                             </div>
                         </div>
-                        <div class="form-row">
+              {{--           <div class="form-row">
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <?php
@@ -68,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-
+ --}}
                         <div class="flex justify-between">
                             <div></div>
                             <div class="form-group">

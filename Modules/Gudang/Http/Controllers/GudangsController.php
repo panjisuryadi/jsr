@@ -245,27 +245,13 @@ public function show($id)
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
         $request->validate([
-            'name' => 'required|min:3|max:191',
-                 ]);
+            'name'=> 'required|string|min:1|max:191',
+            "code" => 'required|unique:gudangs,code,'.$id
+             ]
+        );
         $params = $request->except('_token');
         $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
-
-       // if ($image = $request->file('image')) {
-       //                if ($$module_name_singular->image !== 'no_foto.png') {
-       //                    @unlink(imageUrl() . $$module_name_singular->image);
-       //                  }
-       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
-       //              $constraint->aspectRatio();
-       //              })->encode();
-       //   $normalpath = 'uploads/' . $gambar;
-       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-       //   Storage::disk($storage)->put($normalpath, (string) $normal);
-       //   $params['image'] = "$gambar";
-       //  }else{
-       //      unset($params['image']);
-       //  }
+        $params['code'] = $params['code'];
         $$module_name_singular->update($params);
          toast(''. $module_title.' Updated!', 'success');
          return redirect()->route(''.$module_name.'.index');
