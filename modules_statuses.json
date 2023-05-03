@@ -21,5 +21,6 @@
     "ItemShape": true,
     "JenisProduk": true,
     "KategoriProduk": true,
-    "ItemColour": true
+    "ItemColour": true,
+    "Gudang": true
 }

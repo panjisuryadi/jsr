@@ -29,7 +29,8 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%!important;">No</th>
-                                    <th class="text-lefr">{{ __('Name') }}</th>
+                                    <th style="width: 18%!important;" class="text-left">{{ __('Code') }}</th>
+                                    <th class="text-left">{{ __('Name') }}</th>
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
                                     </th>
@@ -136,8 +137,8 @@
             ajax: '{{ route("$module_name.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
-                'copy',
-                'csv',
+                // 'copy',
+                // 'csv',
                 'excel',
                 'pdf',
                 'print'
@@ -151,6 +152,9 @@
                 },
 
                 {
+                    data: 'code',
+                    name: 'code'
+                }, {
                     data: 'name',
                     name: 'name'
                 },

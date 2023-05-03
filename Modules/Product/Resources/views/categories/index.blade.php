@@ -49,7 +49,7 @@ table.dataTable th {
                                     <th style="width: 15%!important;" class="text-center">
                                         Updated
                                     </th>
-                                    <th style="width: 11%!important;" class="text-center">
+                                    <th style="width: 18%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -67,7 +67,7 @@ table.dataTable th {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="categoryCreateModalLabel font-semibold">
-<i class="bi bi-chevron-right"></i>
+<i class="bi bi-grid-fill"></i> &nbsp;
                 Create {{ $module_title }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -96,13 +96,13 @@ table.dataTable th {
                                 ">
                                 <div class="text-center">
                                     <div class="mt-2 py-2" x-show="! photoPreview">
-                                        <img src="{{asset("images/logo.png")}}" class="w-40 h-40 m-auto rounded-full shadow">
+                                        <img src="{{asset("images/logo.png")}}" class="w-40 h-40 m-auto rounded-xl ">
                                     </div>
                                     <div class="mt-2 py-2" x-show="photoPreview" style="display: none;">
-                                        <span class="block w-40 h-40 rounded-xl m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+                                        <span class="block w-40 h-40 rounded-xl m-auto" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
                                         </span>
                                     </div>
-                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-red-400 border border-gray-300 rounded-md font-semibold text-xs text-gray-50 uppercase tracking-widest shadow-sm hover:text-gray-400 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-400 active:bg-gray-50 transition ease-in-out duration-150" x-on:click.prevent="$refs.photo.click()">
+                                    <button type="button" class="btn btn-secondary px-5" x-on:click.prevent="$refs.photo.click()">
                                     @lang('Select Image')
                                     </button>
                                 </div>

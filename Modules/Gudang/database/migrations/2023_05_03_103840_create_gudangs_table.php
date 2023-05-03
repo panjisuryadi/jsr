@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('{{moduleNameLowerPlural}}', function (Blueprint $table) {
+        Schema::create('gudangs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('code');
-            $table->text('description')->nullable();
+            //$table->text('description')->nullable();
             //$table->string('image')->nullable(true);
             $table->timestamps();
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('{{moduleNameLowerPlural}}');
+        Schema::dropIfExists('gudangs');
     }
 };

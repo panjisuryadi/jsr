@@ -1,5 +1,5 @@
 # php artisan module:make-model ProductItem Product --migration
-# php artisan module:build Colour --force
+# php artisan module:build Gudang --force
 
 public function up()
     {

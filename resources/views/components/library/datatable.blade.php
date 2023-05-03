@@ -5,7 +5,7 @@
 
 .datatable  th {
     text-align: center;
-    padding: 0.9rem !important;
+    padding: 0.5rem !important;
     font-size: 14px !important;
 }
 
@@ -20,7 +20,8 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 .datatable td, .table th {
-    padding: 0.75rem;
+    font-size: 0.8rem !important;
+    padding: 0.6rem !important;
     vertical-align: top;
     border-top: 1px solid #dee2e6;
     text-align: center !important;

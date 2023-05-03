@@ -1,15 +1,15 @@
 <?php
 
-namespace {{namespace}}\{{moduleName}}\Models;
+namespace Modules\Gudang\Models;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class {{moduleName}} extends Model
+class Gudang extends Model
 {
     use HasFactory;
-    protected $table = '{{moduleNameLowerPlural}}';
+    protected $table = 'gudangs';
     // protected $fillable = [
     //     'name',
     //    // 'image',
@@ -22,7 +22,7 @@ class {{moduleName}} extends Model
     protected $guarded = [];
     protected static function newFactory()
     {
-        return \{{namespace}}\{{moduleName}}\database\factories\{{moduleName}}Factory::new();
+        return \Modules\Gudang\database\factories\GudangFactory::new();
     }
 
 

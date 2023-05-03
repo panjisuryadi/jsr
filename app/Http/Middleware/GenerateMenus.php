@@ -114,6 +114,27 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+
+
+            // gudang
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Gudang'), [
+                'route' => 'gudang.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['gudangs*'],
+                'permission'    => ['access_gudangs'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link  py-2',
+            ]);
+
+
+
+
+
+
         // Karats
             $masterData->add(
                 '<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('labels.menu.carat'), [

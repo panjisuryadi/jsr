@@ -36,7 +36,7 @@
                                     <th>
                                         Updated
                                     </th>
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 19%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>

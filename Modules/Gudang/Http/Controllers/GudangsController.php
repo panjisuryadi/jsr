@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}\{{moduleName}}\Http\Controllers;
+namespace Modules\Gudang\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -13,17 +13,17 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 
-class {{moduleNamePlural}}Controller extends Controller
+class GudangsController extends Controller
 {
 
   public function __construct()
     {
         // Page Title
-        $this->module_title = '{{moduleName}}';
-        $this->module_name = '{{moduleNameLower}}';
-        $this->module_path = '{{moduleNameLowerPlural}}';
+        $this->module_title = 'Gudang';
+        $this->module_name = 'gudang';
+        $this->module_path = 'gudangs';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "{{namespace}}\{{moduleName}}\Models\{{moduleName}}";
+        $this->module_model = "Modules\Gudang\Models\Gudang";
 
     }
 
@@ -101,7 +101,7 @@ public function index_data()
     public function create()
     {
          $module_action = 'Create';
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.create', compact('module_action'));
+         return view('gudang::gudangs.create', compact('module_action'));
     }
 
     /**
@@ -109,9 +109,9 @@ public function index_data()
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store_old(Request $request)
     {
-         abort_if(Gate::denies('create_{{moduleNameLower}}'), 403);
+         abort_if(Gate::denies('create_gudang'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -123,13 +123,13 @@ public function index_data()
 
         $request->validate([
              'name' => 'required|min:3|max:191',
-             'description' => 'required|min:3|max:191',
+             'code' => 'required|min:3|max:191',
          ]);
        // $params = $request->all();
         //dd($params);
         $params = $request->except('_token');
         $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
+        $params['code'] = $params['code'];
         //  if ($image = $request->file('image')) {
         //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
         //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
@@ -151,9 +151,8 @@ public function index_data()
 
 
 
-//store ajax version
 
-public function store_ajax(Request $request)
+public function store(Request $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -178,14 +177,6 @@ public function store_ajax(Request $request)
     }
 
 
-
-
-
-
-
-
-
-
     /**
      * Show the specified resource.
      * @param int $id
@@ -193,7 +184,6 @@ public function store_ajax(Request $request)
      */
 public function show($id)
     {
-
 
         $module_title = $this->module_title;
         $module_name = $this->module_name;
