@@ -148,6 +148,19 @@ class GenerateMenus
             ]);
 
 
+            // Bandrols
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Bandrol'), [
+                'route' => 'bandrol.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['bandrols*'],
+                'permission'    => ['access_bandrols'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
         // Karats
             $masterData->add(

@@ -23,5 +23,6 @@
     "KategoriProduk": true,
     "ItemColour": true,
     "Gudang": true,
-    "Baki": true
+    "Baki": true,
+    "Bandrol": true
 }
