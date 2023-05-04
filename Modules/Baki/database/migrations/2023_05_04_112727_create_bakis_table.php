@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('bakis');
         Schema::create('bakis', function (Blueprint $table) {
            $table->id();
             $table->unsignedBigInteger('gudang_id');
