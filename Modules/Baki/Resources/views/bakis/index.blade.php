@@ -29,10 +29,22 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%!important;">No</th>
-                                    <th class="text-lefr">{{ __('Name') }}</th>
+                                    <th style="width: 14%!important;" class="text-center">{{ __('Kode Gudang') }}</th>
+
                                     <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
+                                         {{ __('Kode Baki') }}
                                     </th>
+                                      <th style="width: 15%!important;" class="text-center">
+                                         {{ __('Name') }}
+                                    </th>
+
+                                    <th style="width: 15%!important;" class="text-center">
+                                         {{ __('Berat') }}
+                                    </th>
+                                    <th style="width: 15%!important;" class="text-center">
+                                         {{ __('Bandrol') }}
+                                    </th>
+
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
@@ -62,14 +74,34 @@
                 @csrf
                 <div class="modal-body">
 <div id="response" class="inline-flex w-full items-center rounded-lg leading-normal text-green-700" role="alert">
-    <div id='ResponseInput' class="font-normal text-sm"></div>
+        <div id='ResponseInput' class="font-normal text-sm"></div>
+
+   </div>
+
+
+
+                  <div class="flex flex-row grid grid-cols-3 gap-4">
+
+<div class="col-span-2">
+
+    <div class="form-group">
+                                <label for="gudang_id">@lang('Kode Gudang') <span class="text-danger">*</span></label>
+                                <select class="form-control" name="gudang_id" id="gudang_id" required>
+                                    <option value="" selected disabled>Select Kode Gudang</option>
+                                    @foreach(\Modules\Gudang\Models\Gudang::all() as $kat)
+                                    <option value="{{ $kat->id }}">{{ $kat->code }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
 </div>
 
-                  <div class="flex flex-row grid grid-cols-2 gap-4">
+
+
                             <div class="form-group">
                                 <?php
                                 $field_name = 'code';
-                                $field_lable = label_case($field_name);
+                                $field_lable = label_case(__('Kode Baki'));
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -85,6 +117,38 @@
                  <div class="form-group">
                                 <?php
                                 $field_name = 'name';
+                                $field_lable = label_case(__('Nama Baki'));
+                                $field_placeholder =$field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                <input class="form-control" placeholder="{{ $field_placeholder }}" type="text" name="{{ $field_name }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
+
+                            </div>
+
+                             <div class="form-group">
+                                <?php
+                                $field_name = 'berat';
+                                $field_lable = label_case(__('Berat Baki'));
+                                $field_placeholder =$field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                <input class="form-control" placeholder="{{ $field_placeholder }}" type="number" name="{{ $field_name }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <?php
+                                $field_name = 'bandrol';
                                 $field_lable = label_case($field_name);
                                 $field_placeholder =$field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -139,8 +203,6 @@
             ajax: '{{ route("$module_name.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
-                'copy',
-                'csv',
                 'excel',
                 'pdf',
                 'print'
@@ -153,8 +215,12 @@
                     }
                 },
 
+                {data: 'gudang', name: 'gudang'},
+                {data: 'code', name: 'code'},
                 {data: 'name', name: 'name'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'berat', name: 'berat'},
+                {data: 'bandrol', name: 'bandrol'},
+
 
                 {
                     data: 'action',
@@ -195,7 +261,7 @@ jQuery.noConflict();
                   console.log(data.error)
                     if($.isEmptyObject(data.error)){
                       $('#ResponseInput').html(data.success);
-                       $("#response").addClass('py-5 px-5');
+                      $("#response").addClass('py-5 px-5');
                       $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('fast');
                         $("#response").removeClass('py-5 px-5');
                       setTimeout(function(){ autoRefresh(); }, 1000);

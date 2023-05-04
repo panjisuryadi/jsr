@@ -22,5 +22,6 @@
     "JenisProduk": true,
     "KategoriProduk": true,
     "ItemColour": true,
-    "Gudang": true
+    "Gudang": true,
+    "Baki": true
 }

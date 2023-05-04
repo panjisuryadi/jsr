@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}\{{moduleName}}\Http\Controllers;
+namespace Modules\Baki\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -10,20 +10,21 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Modules\Gudang\Models\Gudang;
 use Lang;
 use Image;
 
-class {{moduleNamePlural}}Controller extends Controller
+class BakisController extends Controller
 {
 
   public function __construct()
     {
         // Page Title
-        $this->module_title = '{{moduleName}}';
-        $this->module_name = '{{moduleNameLower}}';
-        $this->module_path = '{{moduleNameLowerPlural}}';
+        $this->module_title = 'Baki';
+        $this->module_name = 'baki';
+        $this->module_path = 'bakis';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "{{namespace}}\{{moduleName}}\Models\{{moduleName}}";
+        $this->module_model = "Modules\Baki\Models\Baki";
 
     }
 
@@ -62,7 +63,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::with('gudang')->get();
 
         $data = $$module_name;
 
@@ -73,10 +74,10 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
+                          ->editColumn('gudang', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                            <h3 class="text-sm font-medium text-gray-800"> ' .$data->gudang->code . '</h3>
+
                                     </div>';
                                 return $tb;
                             })
@@ -90,7 +91,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['updated_at', 'gudang', 'action'])
                         ->make(true);
     }
 
@@ -107,7 +108,7 @@ public function index_data(Request $request)
     public function create()
     {
          $module_action = 'Create';
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.create', compact('module_action'));
+         return view('baki::bakis.create', compact('module_action'));
     }
 
     /**
@@ -115,9 +116,9 @@ public function index_data(Request $request)
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store_old(Request $request)
     {
-         abort_if(Gate::denies('create_{{moduleNameLower}}'), 403);
+         abort_if(Gate::denies('create_baki'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -159,7 +160,7 @@ public function index_data(Request $request)
 
 //store ajax version
 
-public function store_ajax(Request $request)
+public function store(Request $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -177,7 +178,7 @@ public function store_ajax(Request $request)
 
         $input = $request->all();
         $input = $request->except('_token');
-        $input['code'] = $input['code'];
+       // $input['code'] = $input['code'];
         $$module_name_singular = $module_model::create($input);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);

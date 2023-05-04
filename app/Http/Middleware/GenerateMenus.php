@@ -117,7 +117,7 @@ class GenerateMenus
 
 
             // gudang
-            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('Gudang'), [
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Gudang'), [
                 'route' => 'gudang.index',
                 'class' => 'nav-item',
             ])
@@ -131,7 +131,19 @@ class GenerateMenus
             ]);
 
 
-
+            // Bakis
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Baki'), [
+                'route' => 'baki.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['bakis*'],
+                'permission'    => ['access_bakis'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
 
 

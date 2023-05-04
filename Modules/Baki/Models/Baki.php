@@ -1,15 +1,16 @@
 <?php
 
-namespace Modules\Gudang\Models;
+namespace Modules\Baki\Models;
+use Modules\Gudang\Models\Gudang;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Gudang extends Model
+class Baki extends Model
 {
     use HasFactory;
-    protected $table = 'gudangs';
+    protected $table = 'bakis';
     // protected $fillable = [
     //     'name',
     //    // 'image',
@@ -22,10 +23,11 @@ class Gudang extends Model
     protected $guarded = [];
     protected static function newFactory()
     {
-        return \Modules\Gudang\database\factories\GudangFactory::new();
+        return \Modules\Baki\database\factories\BakiFactory::new();
     }
-    public function baki() {
-        return $this->hasMany(Baki::class, 'gudang_id', 'id');
+
+   public function gudang() {
+        return $this->belongsTo(Gudang::class, 'gudang_id', 'id');
     }
 
 }

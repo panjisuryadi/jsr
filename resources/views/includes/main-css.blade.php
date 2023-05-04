@@ -114,4 +114,10 @@ body {
     background-color: #4caf50 !important;
     border-color: #321fdb !important;
 }
+
+.btn-outline-secondary {
+    color: #858688 !important;
+    border-color: #929599 !important;
+}
+
 </style>
