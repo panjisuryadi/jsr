@@ -11,11 +11,10 @@ return new class extends Migration
      *
      * @return void
      */
-
     public function up()
     {
         Schema::create('bakis', function (Blueprint $table) {
-            $table->id();
+           $table->id();
             $table->unsignedBigInteger('gudang_id');
             $table->string('code');
             $table->string('name');
@@ -25,6 +24,7 @@ return new class extends Migration
             //$table->string('image')->nullable(true);
             $table->foreign('gudang_id')->references('id')->on('gudangs')->restrictOnDelete();
             $table->timestamps();
+
 
         });
     }
