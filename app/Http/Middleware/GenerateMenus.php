@@ -131,6 +131,8 @@ class GenerateMenus
             ]);
 
 
+
+
             // Bakis
             $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Baki'), [
                 'route' => 'baki.index',
