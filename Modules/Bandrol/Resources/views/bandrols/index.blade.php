@@ -62,11 +62,9 @@
             <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-<div id="response" class="inline-flex w-full items-center rounded-lg leading-normal text-green-700" role="alert">
-    <div id='ResponseInput' class="font-normal text-sm"></div>
-</div>
 
-                  <div class="flex flex-row grid grid-cols-2 gap-4">
+             <x-library.alert />
+             <div class="flex flex-row grid grid-cols-2 gap-4">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'name';
@@ -199,24 +197,20 @@ jQuery.noConflict();
                   console.log(data.error)
                     if($.isEmptyObject(data.error)){
                       $('#ResponseInput').html(data.success);
-                       $("#response").addClass('py-5 px-5');
-                      $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('fast');
-                        $("#response").removeClass('py-5 px-5');
+                      $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
+                      $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
                       setTimeout(function(){ autoRefresh(); }, 1000);
                       $('#FormTambah').each(function(){
                         this.reset();
+
                     });
 
-
-                    }else{
+                 }else{
                         printErrorMsg(data.error);
                     }
                 }
         });
     }
-
-
-
 
  function printErrorMsg (msg) {
             $.each( msg, function( key, value ) {
