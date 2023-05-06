@@ -10,3 +10,41 @@
 @livewireScripts
 
 @stack('page_scripts')
+
+
+<!-- batass================================Create Modal============================= -->
+<div class="modal fade" id="ModalGue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeader"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+           <div class="modal-body p-0" id="ModalContent"></div>
+           <div class="modal-footer" id="ModalFooter"></div>
+        </div>
+    </div>
+</div>
+{{-- end modal ======================================================================--}}
+
+ <script type='text/javascript'>
+            (function($) {
+                 var jq = $.noConflict();
+                        jq(document).ready(function(){
+                        jq('#ModalGue').on('hide.bs.modal', function () {
+                           setTimeout(function(){
+                               jq('#ModalHeader, #ModalContent, #ModalFooter').html('');
+                           }, 500);
+
+                          });
+
+                        jq('#ModalGue').on('click', '.modal .close', function () {
+                                jq(this).closest('.modal').modal('hide');
+                            });
+
+                        });
+                    }
+                (jQuery));
+     </script>

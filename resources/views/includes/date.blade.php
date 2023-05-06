@@ -21,7 +21,7 @@ function showTime(){
     var minutes = date.getMinutes();
     var seconds = date.getSeconds();
 
-    var session = hours >= 12 ? 'pm' : 'am';
+    var session = hours >= 12 ? '' : '';
 
     hours = hours % 12;
     hours = hours ? hours : 12;

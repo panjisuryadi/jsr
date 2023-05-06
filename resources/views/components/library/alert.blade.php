@@ -1,11 +1,3 @@
-<div id="sukses" class="d-none flex row py-1 px-2 mb-3 relative">
-<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-  <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-  <path class="absolute checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-</svg>
-<div id="ResponseInput" class="text-dark px-2"></div>
-</div>
-@push('page_css')
 <style type="text/css">
 .checkmark__circle {
   stroke-dasharray: 166;
@@ -56,4 +48,12 @@
   }
 }
 
-@endpush
+</style>
+<div id="sukses" class="d-none flex row py-2 px-3 relative">
+<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+  <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+  <path class="absolute checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+</svg>
+<div id="ResponseInput" class="text-dark px-2"></div>
+</div>
+<div class="py-1"></div>

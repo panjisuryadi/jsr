@@ -2,11 +2,11 @@
   <x-library.alert />
   <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
                 @csrf
-             <div class="flex flex-row grid grid-cols-2 gap-4">
+             <div class="flex flex-row grid grid-cols-1 gap-4">
                             <div class="form-group">
                                 <?php
-                                $field_name = 'name';
-                                $field_lable = label_case('Keterangan');
+                                $field_name = 'code';
+                                $field_lable = label_case('Kode Jenis Group');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -19,24 +19,7 @@
                                 </span>
 
                             </div>
-                 <div class="form-group">
-                                <?php
-                                $field_name = 'berat';
-                                $field_lable = label_case($field_name);
-                                $field_placeholder =$field_lable;
-                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                $required = "required";
-                                ?>
-                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                <input class="form-control"
-                                step="0.01"
-                                 min="0"
-                                placeholder="{{ $field_placeholder }}" type="number" name="{{ $field_name }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
 
-                            </div>
 
                     </div>
 

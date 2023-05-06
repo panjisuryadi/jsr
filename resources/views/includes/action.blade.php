@@ -1,6 +1,9 @@
 <div class="text-center">
 @can('edit_'.$module_name.'')
-    <a href="{{ route(''.$module_name.'.edit', $data->id) }}" class="btn btn-info btn-sm">
+    <a href="{{ route(''.$module_name.'.edit', $data->id) }}"
+    id="Edit"
+    data-toggle="tooltip"
+     class="btn btn-info btn-sm">
         <i class="bi bi-pencil"></i> &nbsp;@lang('Edit')
     </a>
 @endcan

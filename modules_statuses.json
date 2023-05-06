@@ -24,5 +24,6 @@
     "ItemColour": true,
     "Gudang": true,
     "Baki": true,
-    "Bandrol": true
+    "Bandrol": true,
+    "JenisGroup": true
 }

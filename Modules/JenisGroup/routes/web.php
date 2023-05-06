@@ -12,11 +12,9 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    $module_name = 'bandrol';
-    $controller_name = 'BandrolsController';
+    $module_name = 'jenisgroup';
+    $controller_name = 'JenisGroupsController';
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
-     Route::get("$module_name/edit-modal", ['as' => "$module_name.edit_modal", 'uses' => "$controller_name@edit_modal"]);
-
     Route::resource("$module_name", "$controller_name");
 
 });

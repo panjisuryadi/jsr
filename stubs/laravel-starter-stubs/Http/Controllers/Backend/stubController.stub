@@ -52,6 +52,7 @@ class {{moduleNamePlural}}Controller extends Controller
 
 
 public function index_data(Request $request)
+
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -92,7 +93,7 @@ public function index_data(Request $request)
                         })
                         ->rawColumns(['updated_at', 'action', 'name'])
                         ->make(true);
-    }
+                     }
 
 
 
@@ -104,11 +105,23 @@ public function index_data(Request $request)
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
-    {
-         $module_action = 'Create';
-         return view('{{moduleNameLower}}::{{moduleNameLowerPlural}}.create', compact('module_action'));
-    }
+        public function create()
+        {
+           $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Create';
+            abort_if(Gate::denies('add_'.$module_name.''), 403);
+              return view(''.$module_name.'::'.$module_path.'.create',
+               compact('module_name',
+                'module_action',
+                'module_title',
+                'module_icon', 'module_model'));
+        }
+
 
     /**
      * Store a newly created resource in storage.
@@ -286,6 +299,51 @@ public function show($id)
          toast(''. $module_title.' Updated!', 'success');
          return redirect()->route(''.$module_name.'.index');
     }
+
+
+
+
+//update ajax version
+public function update_ajax(Request $request, $id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+        $$module_name_singular = $module_model::findOrFail($id);
+        $validator = \Validator::make($request->all(), [
+            'name' => [
+                'required',
+                'max:100',
+                'unique:'.$module_model.',name,'.$id
+            ],
+
+        ]);
+
+       if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+
+        $input = $request->all();
+        $params = $request->except('_token');
+        $params['name'] = $params['name'];
+        $params['berat'] = $params['berat'];
+        $$module_name_singular->update($params);
+        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+ }
+
+
+
+
+
+
+
+
+
     /**
      * Remove the specified resource from storage.
      * @param int $id

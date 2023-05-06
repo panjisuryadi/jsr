@@ -99,6 +99,21 @@ class GenerateMenus
             ]);
 
 
+      // JenisGroups
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Group'), [
+                'route' => 'jenisgroup.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['jenisgroups*'],
+                'permission'    => ['access_jenisgroups'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link  py-',
+            ]);
+
+
    // DiamondCertificates
             $masterData->add(
                 '<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('labels.menu.diamond_certificate'), [

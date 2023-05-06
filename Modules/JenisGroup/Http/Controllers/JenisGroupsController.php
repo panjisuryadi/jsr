@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Bandrol\Http\Controllers;
+namespace Modules\JenisGroup\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -13,17 +13,17 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 
-class BandrolsController extends Controller
+class JenisGroupsController extends Controller
 {
 
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'Bandrol';
-        $this->module_name = 'bandrol';
-        $this->module_path = 'bandrols';
+        $this->module_title = 'JenisGroup';
+        $this->module_name = 'jenisgroup';
+        $this->module_path = 'jenisgroups';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "Modules\Bandrol\Models\Bandrol";
+        $this->module_model = "Modules\JenisGroup\Models\JenisGroup";
 
     }
 
@@ -52,6 +52,7 @@ class BandrolsController extends Controller
 
 
 public function index_data(Request $request)
+
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -80,14 +81,6 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
-
-                             ->editColumn('berat', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <span class="text-sm font-medium text-green-500">
-                                     ' .$data->berat . '</span>
-                                    </div>';
-                                return $tb;
-                            })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -98,9 +91,13 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action',  'berat', 'name'])
+                        ->rawColumns(['updated_at', 'action', 'name'])
                         ->make(true);
-    }
+                     }
+
+
+
+
 
 
 
@@ -108,7 +105,7 @@ public function index_data(Request $request)
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+        public function create()
         {
            $module_title = $this->module_title;
             $module_name = $this->module_name;
@@ -118,7 +115,7 @@ public function index_data(Request $request)
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.modal.tambah',
+              return view(''.$module_name.'::'.$module_path.'.modal.add',
                compact('module_name',
                 'module_action',
                 'module_title',
@@ -133,7 +130,7 @@ public function index_data(Request $request)
      */
     public function store_old(Request $request)
     {
-         abort_if(Gate::denies('create_bandrol'), 403);
+         abort_if(Gate::denies('create_jenisgroup'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -152,7 +149,6 @@ public function index_data(Request $request)
         $params = $request->except('_token');
         $params['name'] = $params['name'];
         $params['description'] = $params['description'];
-
         //  if ($image = $request->file('image')) {
         //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
         //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
@@ -185,7 +181,7 @@ public function store(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'name' => 'required|max:191|unique:'.$module_model.',name',
+             'code' => 'required|max:191|unique:'.$module_model.',code',
 
         ]);
         if (!$validator->passes()) {
@@ -194,12 +190,19 @@ public function store(Request $request)
 
         $input = $request->all();
         $input = $request->except('_token');
-        $input['name'] = $input['name'];
-        $input['berat'] = $input['berat'];
+        $input['code'] = $input['code'];
         $$module_name_singular = $module_model::create($input);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
     }
+
+
+
+
+
+
+
+
 
 
     /**
@@ -209,6 +212,7 @@ public function store(Request $request)
      */
 public function show($id)
     {
+
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -252,23 +256,6 @@ public function show($id)
             'module_icon', 'module_model'));
     }
 
-
-    public function edit_modal(Request $request)
-    {
-
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'Edit';
-        abort_if(Gate::denies('edit_'.$module_name.''), 403);
-        $data = $module_model::findOrFail($request->get('id'));
-        echo json_encode($data);
-    }
-
-
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -290,7 +277,23 @@ public function show($id)
                  ]);
         $params = $request->except('_token');
         $params['name'] = $params['name'];
-        $params['berat'] = $params['berat'];
+        $params['description'] = $params['description'];
+
+       // if ($image = $request->file('image')) {
+       //                if ($$module_name_singular->image !== 'no_foto.png') {
+       //                    @unlink(imageUrl() . $$module_name_singular->image);
+       //                  }
+       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
+       //              $constraint->aspectRatio();
+       //              })->encode();
+       //   $normalpath = 'uploads/' . $gambar;
+       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+       //   Storage::disk($storage)->put($normalpath, (string) $normal);
+       //   $params['image'] = "$gambar";
+       //  }else{
+       //      unset($params['image']);
+       //  }
         $$module_name_singular->update($params);
          toast(''. $module_title.' Updated!', 'success');
          return redirect()->route(''.$module_name.'.index');
@@ -311,10 +314,10 @@ public function update(Request $request, $id)
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
         $validator = \Validator::make($request->all(), [
-            'name' => [
+            'code' => [
                 'required',
                 'max:100',
-                'unique:'.$module_model.',name,'.$id
+                'unique:'.$module_model.',code,'.$id
             ],
 
         ]);
@@ -325,8 +328,7 @@ public function update(Request $request, $id)
 
         $input = $request->all();
         $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['berat'] = $params['berat'];
+        $params['code'] = $params['code'];
         $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

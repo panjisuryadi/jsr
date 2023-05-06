@@ -26,7 +26,7 @@ class GenerateMenus
         \Menu::make('admin_sidebar', function ($menu) {
 
             // {{moduleNamePlural}}
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right"></i> '.__('{{moduleNamePlural}}'), [
+            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('{{moduleNamePlural}}'), [
                 'route' => '{{moduleNameLower}}.index',
                 'class' => 'nav-item',
             ])
@@ -36,7 +36,7 @@ class GenerateMenus
                 'permission'    => ['access_{{moduleNameLowerPlural}}'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
         })->sortBy('order');
 
