@@ -12,7 +12,7 @@
 @stack('page_scripts')
 
 
-<script src="{{  asset('js/jquery.min.js') }}"></script>
+{{-- <script src="{{  asset('js/jquery.min.js') }}"></script> --}}
 <!-- batass================================Create Modal============================= -->
 <div class="modal fade" id="ModalGue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
