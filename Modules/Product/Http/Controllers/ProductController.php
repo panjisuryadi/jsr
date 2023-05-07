@@ -217,19 +217,23 @@ public function index_data(Request $request)
         $module_item = $this->module_item;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Store';
-        //$params = $request->all();
+        $input = $request->all();
         $input = $request->except(['document']);
-        //dd($input);
-        $$module_name_singular = $module_model::create([
+        $input['product_price'] = preg_replace("/[^0-9]/", "", $input['product_price']);
+        $input['product_cost'] = preg_replace("/[^0-9]/", "", $input['product_cost']);
+         //dd($input);
+          $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
+          $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
+          $$module_name_singular = $module_model::create([
             'category_id'                       => $input['category_id'],
             'product_stock_alert'               => $input['product_stock_alert'],
             'product_name'                      => $input['product_name'],
             'product_code'                      => $input['product_code'],
-            'product_price'                     => $input['product_price'],
+            'product_price'                     => $product_price,
             'product_quantity'                  => $input['product_quantity'],
             'product_barcode_symbology'         => $input['product_barcode_symbology'],
             'product_unit'                      => $input['product_unit'],
-            'product_cost'                      => $input['product_cost']
+            'product_cost'                      =>  $product_cost
         ]);
         if ($request->has('document')) {
             foreach ($request->input('document', []) as $file) {
@@ -248,16 +252,19 @@ public function index_data(Request $request)
     private function _saveProductsItem($input ,$produk)
     {
 
+          $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
+          $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
+          $product_sale = preg_replace("/[^0-9]/", "", $input['product_sale']);
+
        ProductItem::create([
             'product_id'                  => $produk,
             'karat_id'                    => $input['karat_id'],
             'certificate_id'              => $input['certificate_id'],
             'shape_id'                    => $input['shape_id'],
             'round_id'                    => $input['round_id'],
-            'product_price'               => $input['product_price'],
-            'product_cost'                => $input['product_cost'],
-            'product_price'               => $input['product_price'],
-            'product_sale'                => $input['product_sale'],
+            'product_cost'                => $product_cost,
+            'product_price'               => $product_price,
+            'product_sale'                => $product_sale,
             'berat_emas'                  => $input['berat_emas'],
             'berat_label'                 => $input['berat_label'],
             'gudang'                      => $input['gudang'],

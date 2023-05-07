@@ -12,14 +12,13 @@ class JenisGroup extends Model
     protected $table = 'jenisgroups';
     // protected $fillable = [
     //     'name',
-    //    // 'image',
-    //    // 'code',
-    //     'description',
-    //     'start_date',
-    //     'end_date',
 
     //  ];
     protected $guarded = [];
+
+     public function group() {
+        return $this->hasMany(Group::class, 'jenis_group_id', 'id');
+    }
     protected static function newFactory()
     {
         return \Modules\JenisGroup\database\factories\JenisGroupFactory::new();

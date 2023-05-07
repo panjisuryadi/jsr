@@ -133,7 +133,7 @@
                                     <div class="form-row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="berat_emas">@lang('Berat Emas') <span class="text-danger">*</span></label>
+                                                <label for="berat_emas">@lang('Berat') <span class="text-danger">*</span></label>
                                                 <input min="0" step="0.01" id="berat_emas" type="number" class="form-control" name="berat_emas" required value="{{ old('berat_emas') }}">
                                             </div>
                                         </div>
@@ -299,35 +299,38 @@
         }
     }
 </script>
+{{-- <script src="{{  asset('js/jquery.min.js') }}"></script> --}}
 <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
 <script>
-    $(document).ready(function () {
-        $('#product_cost').maskMoney({
+    jQuery.noConflict();
+    (function( $ ) {
+            $('#product_cost').maskMoney({
             prefix: 'Rp ',
             thousands: '.',
             decimal: ',',
-//precision: 0
-});
+            precision: 0
+            });
         $('#product_sale').maskMoney({
             prefix:'{{ settings()->currency->symbol }}',
             thousands:'{{ settings()->currency->thousand_separator }}',
             decimal:'{{ settings()->currency->decimal_separator }}',
-//precision: 0,
-});
+            precision: 0,
+        });
         $('#product_price').maskMoney({
             prefix:'{{ settings()->currency->symbol }}',
             thousands:'{{ settings()->currency->thousand_separator }}',
             decimal:'{{ settings()->currency->decimal_separator }}',
-    //precision: 0,
-});
-        $('#product-form').submit(function () {
-            var product_cost = $('#product_cost').maskMoney('unmasked')[0];
-            var product_price = $('#product_price').maskMoney('unmasked')[0];
-            var product_sale = $('#product_sale').maskMoney('unmasked')[0];
-            $('#product_sale').val(product_sale);
-            $('#product_cost').val(product_cost);
-            $('#product_price').val(product_price);
-        });
-    });
+            precision: 0,
+            });
+        // $('#product-form').submit(function () {
+        //     var product_cost = $('#product_cost').maskMoney('unmasked')[0];
+        //     var product_price = $('#product_price').maskMoney('unmasked')[0];
+        //     var product_sale = $('#product_sale').maskMoney('unmasked')[0];
+        //     $('#product_sale').val(product_sale);
+        //     $('#product_cost').val(product_cost);
+        //     $('#product_price').val(product_price);
+        // });
+
+    })(jQuery);
 </script>
 @endpush

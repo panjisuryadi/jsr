@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('{{moduleNameLowerPlural}}', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            //$table->unsignedBigInteger('jenis_group_id');
-            $table->string('name');
+            $table->unsignedBigInteger('jenis_group_id');
             $table->string('code');
-            $table->text('description')->nullable();
-            //$table->string('image')->nullable(true);
-            // $table->foreign('jenis_group_id')->references('id')->on('jenisgroups')->restrictOnDelete();
+            $table->string('name');
+            $table->integer('harga');
+            $table->integer('harga_modal');
+            $table->foreign('jenis_group_id')->references('id')->on('jenisgroups')->restrictOnDelete();
             $table->timestamps();
 
         });
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('{{moduleNameLowerPlural}}');
+        Schema::dropIfExists('groups');
     }
 };

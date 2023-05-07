@@ -25,5 +25,6 @@
     "Gudang": true,
     "Baki": true,
     "Bandrol": true,
-    "JenisGroup": true
+    "JenisGroup": true,
+    "Group": true
 }

@@ -162,5 +162,5 @@
 
 @push('page_scripts')
 <script src="{{  asset('js/jquery.min.js') }}"></script>
-    <script src="{{ url('/') }}{{ mix('js/chart-config.js') }}"></script>
+<script src="{{ url('/') }}{{ mix('js/chart-config.js') }}"></script>
 @endpush

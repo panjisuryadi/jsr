@@ -1,15 +1,15 @@
 @extends('layouts.app')
-@section('title', 'Create {{moduleName}}')
+@section('title', 'Create Group')
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route("{{moduleNameLower}}.index") }}">{{moduleName}}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("group.index") }}">Group</a></li>
     <li class="breadcrumb-item active">Add</li>
 </ol>
 @endsection
 @section('content')
 <div class="container-fluid">
-    <form action="{{ route('{{moduleNameLower}}.store') }}" method="POST">
+    <form action="{{ route('group.store') }}" method="POST">
         @csrf
         <div class="row">
 
@@ -28,11 +28,7 @@
                             $required = '';
                             ?>
                          <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-                        <input type="text" name="{{ $field_name }}"
-                        class="form-control {{ $invalid }}"
-                         name="{{ $field_name }}"
-                         value="{{ old($field_name) }}"
-                         placeholder="{{ $field_placeholder }}" {{ $required }}>
+                        <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value="{{ old($field_name) }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                             @if ($errors->has($field_name))
                                 <span class="invalid feedback"role="alert">
                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -53,9 +49,7 @@
                             $required = '';
                             ?>
             <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <textarea name="{{ $field_name }}"
-             placeholder="{{ $field_placeholder }}"
-             id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}"></textarea>
+            <textarea name="{{ $field_name }}" placeholder="{{ $field_placeholder }}" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}"></textarea>
 
                @if ($errors->has($field_name))
                                 <span class="invalid feedback"role="alert">
@@ -69,7 +63,7 @@
                             <div></div>
                             <div class="form-group">
                              <a class="px-5 btn btn-danger"
-                            href="{{ route("{{moduleNameLower}}.index") }}">
+                            href="{{ route("group.index") }}">
                             @lang('Cancel')</a>
                                 <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
                             </div>
