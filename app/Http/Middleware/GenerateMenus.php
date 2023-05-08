@@ -202,7 +202,19 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-
+            // DataBanks
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Bank'), [
+                'route' => 'databank.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['databanks*'],
+                'permission'    => ['access_databanks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
 
             // DiamondCertificates

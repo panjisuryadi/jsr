@@ -31,5 +31,6 @@
     "MarketPlace": true,
     "KodeTransaksi": true,
     "KondisiBarang": true,
-    "KondisiPembelian": true
+    "KondisiPembelian": true,
+    "DataBank": true
 }
