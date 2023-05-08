@@ -29,5 +29,6 @@
     "Group": true,
     "DataSale": true,
     "MarketPlace": true,
-    "KodeTransaksi": true
+    "KodeTransaksi": true,
+    "KondisiBarang": true
 }

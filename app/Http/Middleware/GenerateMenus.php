@@ -173,7 +173,23 @@ class GenerateMenus
             ]);
 
 
-   // DiamondCertificates
+            // KondisiBarangs
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Kondisi Barang'), [
+                'route' => 'kondisibarang.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['kondisibarangs*'],
+                'permission'    => ['access_kondisibarangs'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+            // DiamondCertificates
             $masterData->add(
                 '<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('labels.menu.diamond_certificate'), [
                 'route' => 'diamondcertificate.index',

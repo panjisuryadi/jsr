@@ -33,8 +33,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th class="text-lef">{{ __('Name') }}</th>
+                                    <th class="text-left">{{ __('Code') }}</th>
 
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
@@ -101,7 +100,6 @@
                 },
 
                 {data: 'code', name: 'code'},
-                {data: 'name', name: 'name'},
                 {data: 'updated_at', name: 'updated_at'},
 
                 {
@@ -127,14 +125,14 @@ $(document).on('click', '#Tambah, #Edit', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
         }
         if($(this).attr('id') == 'Edit')
         {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }
         $('#ModalContent').load($(this).attr('href'));
