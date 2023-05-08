@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}\{{moduleName}}\Http\Controllers;
+namespace Modules\KondisiPembelian\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -13,17 +13,17 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 
-class {{moduleNamePlural}}Controller extends Controller
+class KondisiPembeliansController extends Controller
 {
 
   public function __construct()
     {
         // Page Title
-        $this->module_title = '{{moduleName}}';
-        $this->module_name = '{{moduleNameLower}}';
-        $this->module_path = '{{moduleNameLowerPlural}}';
+        $this->module_title = 'Kondisi Pembelian';
+        $this->module_name = 'kondisipembelian';
+        $this->module_path = 'kondisipembelians';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "{{namespace}}\{{moduleName}}\Models\{{moduleName}}";
+        $this->module_model = "Modules\KondisiPembelian\Models\KondisiPembelian";
 
     }
 
@@ -81,6 +81,22 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
+
+                             ->editColumn('potongan_harga', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .number_format($data->potongan_harga) . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+
+                              ->editColumn('persentase', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <span class="text-sm font-semibold text-green-500">
+                                     ' .$data->persentase . '%</span>
+                                    </div>';
+                                return $tb;
+                            })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -91,7 +107,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['updated_at', 'action', 'persentase','potongan_harga', 'name'])
                         ->make(true);
                      }
 
@@ -115,7 +131,7 @@ public function index_data(Request $request)
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.create',
+              return view(''.$module_name.'::'.$module_path.'.modal.create',
                compact('module_name',
                 'module_action',
                 'module_title',
@@ -128,51 +144,10 @@ public function index_data(Request $request)
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
-    {
-         abort_if(Gate::denies('create_{{moduleNameLower}}'), 403);
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-
-        $module_action = 'Store';
-
-        $request->validate([
-             'name' => 'required|min:3|max:191',
-             'description' => 'required|min:3|max:191',
-         ]);
-       // $params = $request->all();
-        //dd($params);
-        $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
-        //  if ($image = $request->file('image')) {
-        //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
-        //             $constraint->aspectRatio();
-        //             })->encode();
-        //  $normalpath = 'uploads/' . $gambar;
-        //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-        //  Storage::disk($storage)->put($normalpath, (string) $normal);
-        //  $params['image'] = "$gambar";
-        // }else{
-        //    $params['image'] = 'no_foto.png';
-        // }
-
-
-         $$module_name_singular = $module_model::create($params);
-         toast(''. $module_title.' Created!', 'success');
-         return redirect()->route(''.$module_name.'.index');
-    }
-
-
 
 //store ajax version
 
-public function store_ajax(Request $request)
+public function store(Request $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -181,8 +156,9 @@ public function store_ajax(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'code' => 'required|max:191|unique:'.$module_model.',code',
-             'name' => 'required|max:191',
+                 'name' => 'required|max:191',
+                 'potongan_harga' => 'required|max:191',
+                 'persentase' => 'required|max:191',
 
         ]);
         if (!$validator->passes()) {
@@ -191,9 +167,9 @@ public function store_ajax(Request $request)
 
         $input = $request->all();
         $input = $request->except('_token');
-        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $input['code'] = $input['code'];
         $input['name'] = $input['name'];
+        $input['potongan_harga'] = preg_replace("/[^0-9]/", "", $input['potongan_harga']);
+        $input['persentase'] = $input['persentase'];
         $$module_name_singular = $module_model::create($input);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
@@ -252,7 +228,7 @@ public function show($id)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.edit',
+          return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
             'detail',
@@ -266,48 +242,10 @@ public function show($id)
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'Update';
-        $$module_name_singular = $module_model::findOrFail($id);
-        $request->validate([
-            'name' => 'required|min:3|max:191',
-                 ]);
-        $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
-
-       // if ($image = $request->file('image')) {
-       //                if ($$module_name_singular->image !== 'no_foto.png') {
-       //                    @unlink(imageUrl() . $$module_name_singular->image);
-       //                  }
-       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
-       //              $constraint->aspectRatio();
-       //              })->encode();
-       //   $normalpath = 'uploads/' . $gambar;
-       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-       //   Storage::disk($storage)->put($normalpath, (string) $normal);
-       //   $params['image'] = "$gambar";
-       //  }else{
-       //      unset($params['image']);
-       //  }
-        $$module_name_singular->update($params);
-         toast(''. $module_title.' Updated!', 'success');
-         return redirect()->route(''.$module_name.'.index');
-    }
-
-
 
 
 //update ajax version
-public function update_ajax(Request $request, $id)
+public function update(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -317,27 +255,22 @@ public function update_ajax(Request $request, $id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
-        $validator = \Validator::make($request->all(),
-            [
-            'code' => [
-                'required',
-                'unique:'.$module_model.',code,'.$id
-            ],
-            'name' => 'required|max:191',
-
+        $validator = \Validator::make($request->all(),[
+                 'name' => 'required|max:191',
+                 'potongan_harga' => 'required|max:191',
+                 'persentase' => 'required|max:191',
 
         ]);
-
        if (!$validator->passes()) {
           return response()->json(['error'=>$validator->errors()]);
         }
 
         $input = $request->all();
-        $params = $request->except('_token');
-        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $params['code'] = $params['code'];
-        $params['name'] = $params['name'];
-        $$module_name_singular->update($params);
+        $input = $request->except('_token');
+        $input['name'] = $input['name'];
+        $input['potongan_harga'] = preg_replace("/[^0-9]/", "", $input['potongan_harga']);
+        $input['persentase'] = $input['persentase'];
+        $$module_name_singular->update($input);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }
