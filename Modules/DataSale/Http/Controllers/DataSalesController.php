@@ -233,11 +233,15 @@ public function update(Request $request, $id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(),
+            [
+
             'code' => [
                 'required',
                 'unique:'.$module_model.',code,'.$id
             ],
+            'name' => 'required|max:191',
+
 
         ]);
 

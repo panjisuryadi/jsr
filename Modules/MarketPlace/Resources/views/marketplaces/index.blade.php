@@ -32,10 +32,9 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th class="text-lef">{{ __('Name') }}</th>
-
+                                <th style="width: 6%!important;">No</th>
+                                 <th style="width: 15%!important;" class="text-center">{{ __('Kode Market Place') }}</th>
+                                    <th class="text-lef">{{ __('Nama Market Place') }}</th>
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
                                     </th>

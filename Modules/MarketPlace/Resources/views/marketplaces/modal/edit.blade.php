@@ -7,7 +7,7 @@
                             <div class="form-group">
                                 <?php
                                 $field_name = 'code';
-                                $field_lable = label_case('Code');
+                                $field_lable = label_case('Kode Market Place');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -22,11 +22,10 @@
                                 </span>
 
                             </div>
-
-                       <div class="form-group">
+                            <div class="form-group">
                                 <?php
                                 $field_name = 'name';
-                                $field_lable = label_case('Name');
+                                $field_lable = label_case('Nama Market Place');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -41,26 +40,6 @@
                                 </span>
 
                             </div>
-
-
-
-
-    {{--  <div class="form-group">
-                                        <label for="kategori_produk_id">Main Category <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
-                                            @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $main)
-                                                <option {{ $main->id == $category->kategori_produk_id ? 'selected' : '' }} value="{{ $main->id }}">{{ $main->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>--}}
-
-
-
-
-
-
-
-
 
 
                     </div>

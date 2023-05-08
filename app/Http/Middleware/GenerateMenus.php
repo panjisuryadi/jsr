@@ -143,6 +143,22 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+        // MarketPlaces
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Market Place'), [
+                'route' => 'marketplace.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['marketplaces*'],
+                'permission'    => ['access_marketplaces'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
 
    // DiamondCertificates
             $masterData->add(
