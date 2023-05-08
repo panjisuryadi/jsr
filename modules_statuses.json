@@ -28,5 +28,6 @@
     "JenisGroup": true,
     "Group": true,
     "DataSale": true,
-    "MarketPlace": true
+    "MarketPlace": true,
+    "KodeTransaksi": true
 }

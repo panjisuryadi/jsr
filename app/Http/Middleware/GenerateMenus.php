@@ -158,6 +158,19 @@ class GenerateMenus
             ]);
 
 
+            // KodeTransaksis
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Kode Transaksi'), [
+                'route' => 'kodetransaksi.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['kodetransaksis*'],
+                'permission'    => ['access_kodetransaksis'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
 
    // DiamondCertificates
