@@ -129,6 +129,19 @@ class GenerateMenus
             ]);
 
 
+            // DataSales
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
+                'route' => 'datasale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['datasales*'],
+                'permission'    => ['access_datasales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
 
    // DiamondCertificates
