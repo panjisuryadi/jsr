@@ -33,8 +33,7 @@
 
  --}}
 
-
-
+<script src="{{  asset('js/jquery.min.js') }}"></script>
 
 
     <form id="product-form" action="{{ route('products.save') }}" method="POST" enctype="multipart/form-data">
@@ -59,13 +58,6 @@
 
 
                     <div class="card-body">
-
-
-
-
-
-
-
                         <div class="flex relative py-2 mb-4">
                             <div class="absolute inset-0 flex items-center">
                                 <div class="w-full border-b border-gray-300"></div>
@@ -91,33 +83,30 @@
                                  <div class="form-group">
                                     <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
 
-                                <div class="mt-2">
-                                    <label class="inline-flex items-center">
-                                      <input id="upload-image" type="radio" class="form-radio" name="upload-pc"
-                                      value="pc" checked>
-                                      <span class="ml-2">Dari Komputer</span>
-                                    </label>
-                                    <label class="inline-flex items-center ml-6">
-                                      <input type="radio" class="chek-webcam form-radio" name="upload-webcam" value="1">
-                                      <span class="ml-2">Web Camera</span>
-                                    </label>
-                                  </div>
+<div class="py-2">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="upload" id="up2" checked>
+        <label class="form-check-label" for="up2">Upload</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="upload"
+        id="up1">
+        <label class="form-check-label" for="up1">Webcam</label>
+    </div>
+</div>
+<div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
+    <x-library.webcam />
 
 
-                                    <div class="h-320 dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
-                                        <div class="dz-message" data-dz-message>
-                                            <i class="text-red-800 bi bi-cloud-arrow-up"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="divwebcam align-items-center justify-content-center">
-                                       <x-library.webcam />
-                                    </div>
-
-
-
-
-                                </div>
+</div>
+<div id="upload1" style="display: block !important;" class="align-items-center justify-content-center">
+    <div  class="h-320 dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
+        <div class="dz-message" data-dz-message>
+            <i class="text-red-800 bi bi-cloud-arrow-up"></i>
+        </div>
+    </div>
+</div>
+</div>
 
 
 
@@ -330,10 +319,25 @@
 </div>
 @endsection
 @section('third_party_scripts')
+
 <script src="{{ asset('js/dropzone.js') }}"></script>
+
 @endsection
 @push('page_scripts')
 
+
+<script type="text/javascript">
+ $('#up1').change(function() {
+  $('#upload2').toggle();
+  $('#upload1').hide();
+});
+ $('#up2').change(function() {
+  $('#upload1').toggle();
+  $('#upload2').hide();
+});
+
+
+</script>
 
 <script>
     var uploadedDocumentMap = {}
@@ -424,24 +428,5 @@
 
 </script>
 
-{{-- <script language="JavaScript">
-   jQuery.noConflict();
-    (function( $ ) {
-   Webcam.set({
-            width: 310,
-            height: 310,
-            image_format: 'jpeg',
-            jpeg_quality: 90
-        });
 
-        Webcam.attach( '#my_camera' );
-
-    function take_snapshot() {
-            Webcam.snap( function(data_uri) {
-                $(".image-tag").val(data_uri);
-                document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-            } );
-        }
-        })(jQuery);
-</script> --}}
 @endpush

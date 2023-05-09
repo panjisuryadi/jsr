@@ -6,15 +6,15 @@ $shutter = asset('js/webcamjs/shutter.mp3');
 
    ?>
 <div class="flex flex-row grid grid-cols-1">
-<div class="py-3">
+<div class="py-0">
 
  <div class="h-320 d-flex flex-wrap align-items-center justify-content-center" id="camera">
-
+ <i style="font-size: 3.5rem !important;" class="text-red-800 bi bi-camera"></i>
  </div>
 <div class="flex py-3 flex-row gap-1 align-items-center justify-content-center">
    <input class="btn btn-sm btn-warning" type=button value="Start" onClick="configure()">
-    <input class="btn btn-sm btn-warning" type=button value="Take Snapshot" onClick="take_snapshot()">
-    <input class="btn btn-sm btn-warning" type=button value="Save Snapshot" onClick="saveSnap()">
+    <input class="btn btn-sm btn-warning" type=button value="Capture" onClick="take_snapshot()">
+   {{--  <input class="btn btn-sm btn-warning" type=button value="Save Snapshot" onClick="saveSnap()"> --}}
 </div>
 
 </div>
@@ -76,7 +76,12 @@ $shutter = asset('js/webcamjs/shutter.mp3');
                 // display results in page
                 document.getElementById('results').innerHTML =
                     '<img id="imageprev" src="'+data_uri+'"/>';
-            } );
+
+
+
+            });
+
+
             Webcam.reset();
         }
 
