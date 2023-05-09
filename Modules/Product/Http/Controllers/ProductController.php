@@ -242,16 +242,31 @@ public function index_data(Request $request)
             'product_unit'                      => $input['product_unit'],
             'product_cost'                      =>  $product_cost
         ]);
-        if ($request->has('document')) {
-            foreach ($request->input('document', []) as $file) {
-                $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
-            }
-        }
-         $produk = $$module_name_singular->id;
-         $this->_saveProductsItem($input ,$produk);
-         toast('Product Created!', 'success');
 
-        return redirect()->route('products.index');
+            if ($request->filled('image')) {
+                $img = $request->image;
+                $folderPath = "uploads/";
+                $image_parts = explode(";base64,", $img);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName ='webcam_'. uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('local')->put($file,$image_base64);
+                $$module_name_singular->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('images');
+                    //$params['image'] = "$newFilename";
+                }
+              if ($request->has('document')) {
+                    foreach ($request->input('document', []) as $file) {
+                        $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
+                    }
+                }
+
+                 $produk = $$module_name_singular->id;
+                 $this->_saveProductsItem($input ,$produk);
+                 toast('Product Created!', 'success');
+
+             return redirect()->route('products.index');
     }
 
 

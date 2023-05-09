@@ -13,7 +13,9 @@ $shutter = asset('js/webcamjs/shutter.mp3');
  </div>
 <div class="flex py-3 flex-row gap-1 align-items-center justify-content-center">
    <input class="btn btn-sm btn-warning" type=button value="Start" onClick="configure()">
-    <input class="btn btn-sm btn-warning" type=button value="Capture" onClick="take_snapshot()">
+   <input class="btn btn-sm btn-warning" type=button value="Capture" onClick="take_snapshot()">
+ <input type="hidden" name="image" class="image-tag">
+
    {{--  <input class="btn btn-sm btn-warning" type=button value="Save Snapshot" onClick="saveSnap()"> --}}
 </div>
 
@@ -73,11 +75,9 @@ $shutter = asset('js/webcamjs/shutter.mp3');
             shutter.play();
            // take snapshot and get image data
             Webcam.snap( function(data_uri) {
-                // display results in page
+                $(".image-tag").val(data_uri);
                 document.getElementById('results').innerHTML =
                     '<img id="imageprev" src="'+data_uri+'"/>';
-
-
 
             });
 
