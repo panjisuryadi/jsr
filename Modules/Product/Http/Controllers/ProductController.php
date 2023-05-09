@@ -187,6 +187,13 @@ public function index_data(Request $request)
     }
 
 
+    public function webcam() {
+        abort_if(Gate::denies('create_products'), 403);
+
+        return view('product::products.webcam');
+    }
+
+
     public function store(StoreProductRequest $request) {
          $params = $request->all();
         $params = $request->except('_token');

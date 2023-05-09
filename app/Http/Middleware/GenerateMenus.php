@@ -130,7 +130,7 @@ class GenerateMenus
 
 
             // DataSales
-            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Master Sales'), [
                 'route' => 'datasale.index',
                 'class' => 'nav-item',
             ])
@@ -138,6 +138,21 @@ class GenerateMenus
                 'order'         => 3,
                 'activematches' => ['datasales*'],
                 'permission'    => ['access_datasales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+          // DataRekenings
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Master Rekening'), [
+                'route' => 'datarekening.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['datarekenings*'],
+                'permission'    => ['access_datarekenings'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',

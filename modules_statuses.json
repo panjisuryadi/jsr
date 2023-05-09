@@ -32,5 +32,6 @@
     "KodeTransaksi": true,
     "KondisiBarang": true,
     "KondisiPembelian": true,
-    "DataBank": true
+    "DataBank": true,
+    "DataRekening": true
 }

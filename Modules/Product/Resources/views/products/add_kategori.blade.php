@@ -24,6 +24,19 @@
 </style>
 @endpush
 <div class="container-fluid">
+
+{{--
+<div class="flex flex-row">
+
+</div>
+
+
+ --}}
+
+
+
+
+
     <form id="product-form" action="{{ route('products.save') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
@@ -36,7 +49,23 @@
                 //echo $code;
                 @endphp
                 <div class="card">
+
+
+                    <div class="row">
+
+                    </div>
+
+
+
+
                     <div class="card-body">
+
+
+
+
+
+
+
                         <div class="flex relative py-2 mb-4">
                             <div class="absolute inset-0 flex items-center">
                                 <div class="w-full border-b border-gray-300"></div>
@@ -45,13 +74,59 @@
                                 <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Add Product Kategori <span class="px-1 hokkie font-semibold uppercase">{{ @$category->category_name }}</span></div>
                             </div>
                         </div>
+
+
+
                         <input type="hidden" name="category_id" value="{{ $category->id }}">
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_unit" value="Gram">
                         <div class="grid grid-cols-3 gap-3">
                             <div class="border-right pr-3">
-                                <div class="form-group">
+
+
+
+
+
+                                 <div class="form-group">
+                                    <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
+
+                                <div class="mt-2">
+                                    <label class="inline-flex items-center">
+                                      <input id="upload-image" type="radio" class="form-radio" name="upload-pc"
+                                      value="pc" checked>
+                                      <span class="ml-2">Dari Komputer</span>
+                                    </label>
+                                    <label class="inline-flex items-center ml-6">
+                                      <input type="radio" class="chek-webcam form-radio" name="upload-webcam" value="1">
+                                      <span class="ml-2">Web Camera</span>
+                                    </label>
+                                  </div>
+
+
+                                    <div class="h-320 dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
+                                        <div class="dz-message" data-dz-message>
+                                            <i class="text-red-800 bi bi-cloud-arrow-up"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="divwebcam align-items-center justify-content-center">
+                                       <x-library.webcam />
+                                    </div>
+
+
+
+
+                                </div>
+
+
+
+
+
+
+
+{{--
+                               <div class="form-group">
                                     <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
                                     <div class="h-320 dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                         <div class="dz-message" data-dz-message>
@@ -59,6 +134,10 @@
                                         </div>
                                     </div>
                                 </div>
+ --}}
+
+
+
                             </div>
                             <div class="col-span-2 bg-transparent">
                                 <div class="row">
@@ -245,12 +324,17 @@
             </div>
         </div>
     </form>
+
+
+
 </div>
 @endsection
 @section('third_party_scripts')
 <script src="{{ asset('js/dropzone.js') }}"></script>
 @endsection
 @push('page_scripts')
+
+
 <script>
     var uploadedDocumentMap = {}
     Dropzone.options.documentDropzone = {
@@ -301,6 +385,8 @@
 </script>
 {{-- <script src="{{  asset('js/jquery.min.js') }}"></script> --}}
 <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <script>
     jQuery.noConflict();
     (function( $ ) {
@@ -331,6 +417,31 @@
         //     $('#product_price').val(product_price);
         // });
 
+
+
     })(jQuery);
+
+
 </script>
+
+{{-- <script language="JavaScript">
+   jQuery.noConflict();
+    (function( $ ) {
+   Webcam.set({
+            width: 310,
+            height: 310,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+
+        Webcam.attach( '#my_camera' );
+
+    function take_snapshot() {
+            Webcam.snap( function(data_uri) {
+                $(".image-tag").val(data_uri);
+                document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            } );
+        }
+        })(jQuery);
+</script> --}}
 @endpush

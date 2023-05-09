@@ -20,7 +20,7 @@ jobs:
          key: ${{ secrets.SSH_PRIVATE_KEY }}
          port: ${{ secrets.SSH_PORT }}
          script: |
-          cd /home/gold/public_html
+          cd /home/warehouse/public_html
           git pull origin main
           composer update
           php artisan migrate

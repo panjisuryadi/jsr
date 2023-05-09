@@ -1,4 +1,5 @@
 <!-- php artisan make:component library/Datatable -->
+<!-- php artisan make:component library/webcam -->
 @push('page_css')
 <link rel="stylesheet" href="{{ asset('plugin/datatable/Buttons-2.3.3/css/buttons.min.css') }}">
 <style type="text/css">
