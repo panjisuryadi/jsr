@@ -99,6 +99,22 @@ class GenerateMenus
             ]);
 
 
+   // GoldCategories
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Gold Categories'), [
+                'route' => 'goldcategory.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['goldcategories*'],
+                'permission'    => ['access_goldcategories'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
       // JenisGroups
             $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Group'), [
                 'route' => 'jenisgroup.index',

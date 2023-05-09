@@ -34,5 +34,6 @@
     "KondisiPembelian": true,
     "DataBank": true,
     "DataRekening": true,
-    "DataEtalase": true
+    "DataEtalase": true,
+    "GoldCategory": true
 }

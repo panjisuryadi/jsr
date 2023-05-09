@@ -6,7 +6,7 @@
                             <div class="form-group">
                                 <?php
                                 $field_name = 'code';
-                                $field_lable = label_case('Kode Etalase');
+                                $field_lable = label_case('Kode Kategori');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -27,7 +27,7 @@
             <div class="form-group">
                                 <?php
                                 $field_name = 'name';
-                                $field_lable = label_case('Nama Etalase');
+                                $field_lable = label_case('Nama Kategori');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -43,24 +43,6 @@
                                 </span>
 
                             </div>
-
-
-
-  {{--  <div class="form-group">
-                        <label for="jenis_group_id">@lang('Jenis Group') <span class="text-danger">*</span></label>
-                        <select class="form-control" name="jenis_group_id" id="jenis_group_id" required>
-                            <option value="" selected disabled>Select Jenis Group</option>
-                            @foreach(\Modules\JenisGroup\Models\JenisGroup::all() as $jg)
-                            <option value="{{ $jg->id }}">{{ $jg->code }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-
-
-
-
-
-
 
                     </div>
 

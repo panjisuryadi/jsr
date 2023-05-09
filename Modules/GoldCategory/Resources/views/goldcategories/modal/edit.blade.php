@@ -1,74 +1,52 @@
   <div class="px-3">
   <x-library.alert />
-  <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
-                @csrf
+  <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
+                            @csrf
+                            @method('patch')
              <div class="flex flex-row grid grid-cols-2 gap-4">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'code';
-                                $field_lable = label_case('Kode Etalase');
+                                $field_lable = label_case('Kode Kategori');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
                                 ?>
                                 <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control"
-                         type="text"
-                         name="{{ $field_name }}"
-                         id="{{ $field_name }}"
-                         placeholder="{{ $field_placeholder }}">
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        value="{{$detail->code }}">
                                 <span class="invalid feedback" role="alert">
                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                 </span>
 
                             </div>
 
-
-            <div class="form-group">
+                       <div class="form-group">
                                 <?php
                                 $field_name = 'name';
-                                $field_lable = label_case('Nama Etalase');
+                                $field_lable = label_case('Nama Kategori');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
                                 ?>
                                 <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control"
-                         type="text"
-                         name="{{ $field_name }}"
-                         id="{{ $field_name }}"
-                         placeholder="{{ $field_placeholder }}">
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        value="{{$detail->name }}">
                                 <span class="invalid feedback" role="alert">
                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                 </span>
 
                             </div>
-
-
-
-  {{--  <div class="form-group">
-                        <label for="jenis_group_id">@lang('Jenis Group') <span class="text-danger">*</span></label>
-                        <select class="form-control" name="jenis_group_id" id="jenis_group_id" required>
-                            <option value="" selected disabled>Select Jenis Group</option>
-                            @foreach(\Modules\JenisGroup\Models\JenisGroup::all() as $jg)
-                            <option value="{{ $jg->id }}">{{ $jg->code }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-
-
-
-
-
-
-
                     </div>
 
             </form>
 
 
 </div>
-
 {{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
 <script>
 jQuery.noConflict();
@@ -79,15 +57,14 @@ jQuery.noConflict();
         table.ajax.reload();
 
 }
-    function Tambah()
+    function Update()
     {
         $.ajax({
-            url: $('#FormTambah').attr('action'),
+            url: $('#FormEdit').attr('action'),
             type: "POST",
             cache: false,
-            data: $('#FormTambah').serialize(),
+            data: $('#FormEdit').serialize(),
             dataType:'json',
-
             success: function(data) {
                   console.log(data.error)
                     if($.isEmptyObject(data.error)){
@@ -95,10 +72,9 @@ jQuery.noConflict();
                       $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                       $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
                       setTimeout(function(){ autoRefresh(); }, 1000);
-                      $('#FormTambah').each(function(){
-                        this.reset();
-
-                    });
+                      setTimeout(function () {
+                              $('#ModalGue').modal('hide');
+                            }, 3000);
 
                  }else{
                         printErrorMsg(data.error);
@@ -118,31 +94,28 @@ jQuery.noConflict();
         }
 
 $(document).ready(function(){
+
     var Tombol = "<button type='button' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
-    Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanTambah'>{{ __('Create') }}</button>";
+    Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanUpdate'>{{ __('Update') }}</button>";
     $('#ModalFooter').html(Tombol);
 
-    $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();
+    $("#FormEdit").find('input[type=text],textarea,select').filter(':visible:first').focus();
 
-    $('#SimpanTambah').click(function(e){
+    $('#SimpanUpdate').click(function(e){
         e.preventDefault();
-        Tambah();
+        Update();
     });
 
-    $('#FormTambah').submit(function(e){
+    $('#FormEdit').submit(function(e){
         e.preventDefault();
-        Tambah();
+        Update();
     });
-
- // $('#potongan_harga').maskMoney({
- //            prefix: 'Rp ',
- //            thousands: '.',
- //            decimal: ',',
- //            precision: 0
- //          });
-
-
-
+     // $('#potongan_harga').maskMoney({
+     //            prefix: 'Rp ',
+     //            thousands: '.',
+     //            decimal: ',',
+     //            precision: 0
+     //          });
 
 });
 })(jQuery);
