@@ -33,5 +33,6 @@
     "KondisiBarang": true,
     "KondisiPembelian": true,
     "DataBank": true,
-    "DataRekening": true
+    "DataRekening": true,
+    "DataEtalase": true
 }

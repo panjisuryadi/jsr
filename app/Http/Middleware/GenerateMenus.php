@@ -144,6 +144,21 @@ class GenerateMenus
             ]);
 
 
+
+            // DataEtalases
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Master Etalase'), [
+                'route' => 'dataetalase.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['dataetalases*'],
+                'permission'    => ['access_dataetalases'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
           // DataRekenings
             $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Master Rekening'), [
                 'route' => 'datarekening.index',

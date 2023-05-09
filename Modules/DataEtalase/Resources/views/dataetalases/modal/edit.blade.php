@@ -3,11 +3,11 @@
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
-             <div class="flex flex-row grid grid-cols-1 gap-4">
+             <div class="flex flex-row grid grid-cols-2 gap-4">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'code';
-                                $field_lable = label_case('Nama Kondisi Barang');
+                                $field_lable = label_case('Kode Etalase');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -23,13 +23,33 @@
 
                             </div>
 
+                       <div class="form-group">
+                                <?php
+                                $field_name = 'name';
+                                $field_lable = label_case('Nama Etalase');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        value="{{$detail->name }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
+
+                            </div>
+
+
                     </div>
 
             </form>
 
 
 </div>
-
+{{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
 <script>
 jQuery.noConflict();
 (function( $ ) {
@@ -92,6 +112,13 @@ $(document).ready(function(){
         e.preventDefault();
         Update();
     });
+     // $('#potongan_harga').maskMoney({
+     //            prefix: 'Rp ',
+     //            thousands: '.',
+     //            decimal: ',',
+     //            precision: 0
+     //          });
+
 });
 })(jQuery);
 </script>
