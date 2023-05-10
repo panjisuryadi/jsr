@@ -24,6 +24,7 @@ jobs:
           git pull origin main
           composer update
           php artisan migrate
+          sudo chmod 777 -R storage
           php artisan optimize:clear
 
         #-----------------------------------------
