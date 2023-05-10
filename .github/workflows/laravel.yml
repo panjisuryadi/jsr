@@ -21,7 +21,7 @@ jobs:
          port: ${{ secrets.SSH_PORT }}
          script: |
           cd /home/gold/public_html
-          git pull origin main
+          git pull 
           composer update
           php artisan migrate
           sudo chmod 777 -R storage
