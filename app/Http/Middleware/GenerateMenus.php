@@ -126,7 +126,7 @@ class GenerateMenus
                 'permission'    => ['access_jenisgroups'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link  py-',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 
@@ -217,6 +217,22 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+       // ParamaterPoins
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Paramater Poin'), [
+                'route' => 'paramaterpoin.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['paramaterpoins*'],
+                'permission'    => ['access_paramaterpoins'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
 
 
             // KondisiBarangs
@@ -385,15 +401,8 @@ class GenerateMenus
             ]);
 
 
-
-
-
-
-
-
-
       //============================Access Control Dropdown
-            $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Products', [
+            $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Inventory', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -415,7 +424,7 @@ class GenerateMenus
 
        // Submenu: products
             $products->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('List Products').'',
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('List Inventory').'',
                  [
                 'route' => 'products.index',
                 'class' => 'nav-item',
@@ -559,13 +568,6 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-3',
             ]);
-
-
-
-
-
-
-
 
 
            // Separator: Access Management
@@ -823,14 +825,6 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-
-
-
-
-
-
-
-
 
 
             // Access Permission Check

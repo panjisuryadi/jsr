@@ -1,8 +1,8 @@
 <!-- php artisan make:component library/Webcam -->
 {{-- <x-library.webcam /> --}}
   <?php
-$shutter = asset('js/webcamjs/shutter.ogg');
-$shutter = asset('js/webcamjs/shutter.mp3');
+$ogg = asset('js/webcamjs/shutter.ogg');
+$mp3 = asset('js/webcamjs/shutter.mp3');
 
    ?>
 <div class="flex flex-row grid grid-cols-1">
@@ -78,17 +78,13 @@ $shutter = asset('js/webcamjs/shutter.mp3');
                 $(".image-tag").val(data_uri);
                 document.getElementById('results').innerHTML =
                     '<img id="imageprev" src="'+data_uri+'"/>';
-
             });
-
-
-            Webcam.reset();
+           Webcam.reset();
         }
 
         function reset() {
              Webcam.reset();
-              Webcam.attach( '#camera' );
-             alert('off');
+                 alert('off');
         }
 
         function saveSnap(){

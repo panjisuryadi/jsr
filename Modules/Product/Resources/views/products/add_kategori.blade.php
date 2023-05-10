@@ -67,18 +67,12 @@
                             </div>
                         </div>
 
-
-
                         <input type="hidden" name="category_id" value="{{ $category->id }}">
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_unit" value="Gram">
                         <div class="grid grid-cols-3 gap-3">
                             <div class="border-right pr-3">
-
-
-
-
 
                                  <div class="form-group">
                                     <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
