@@ -289,12 +289,13 @@ public function index_data(Request $request)
             'product_sale'                => $product_sale,
             'berat_emas'                  => $input['berat_emas'],
             'berat_label'                 => $input['berat_label'],
-            'gudang'                      => $input['gudang'],
-            'brankas'                     => $input['brankas'],
-            'kode_baki'                   => $input['kode_baki'],
+            'gudang_id'                   => $input['gudang_id'],
+            'supplier_id'                 => $input['supplier_id'],
+            'etalase_id'                  => $input['etalase_id'],
+            'baki_id'                     => $input['baki_id'],
             'berat_total'                 => $input['berat_total']
         ]);
-       // dd($produk);
+      // dd($input);
       }
 
 

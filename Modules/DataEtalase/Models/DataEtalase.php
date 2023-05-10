@@ -10,25 +10,12 @@ class DataEtalase extends Model
 {
     use HasFactory;
     protected $table = 'dataetalases';
-    // protected $fillable = [
-    //     'name',
-    //    // 'image',
-    //    // 'code',
-    //     'description',
-    //     'start_date',
-    //     'end_date',
-
-    //  ];
     protected $guarded = [];
 
-  // public function products() {
-  //       return $this->hasMany(Product::class, 'category_id', 'id');
-  //   }
 
-  //   public function kategoriProduk() {
-  //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
-  //   }
-
+  public function product_item() {
+        return $this->hasMany(ProductItem::class, 'etalase_id', 'id');
+    }
     protected static function newFactory()
     {
         return \Modules\DataEtalase\database\factories\DataEtalaseFactory::new();

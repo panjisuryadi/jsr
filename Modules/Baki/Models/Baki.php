@@ -25,7 +25,9 @@ class Baki extends Model
     {
         return \Modules\Baki\database\factories\BakiFactory::new();
     }
-
+  public function product_item() {
+        return $this->hasMany(ProductItem::class, 'baki_id', 'id');
+    }
    public function gudang() {
         return $this->belongsTo(Gudang::class, 'gudang_id', 'id');
     }

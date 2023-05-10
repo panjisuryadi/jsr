@@ -28,4 +28,9 @@ class Gudang extends Model
         return $this->hasMany(Baki::class, 'gudang_id', 'id');
     }
 
+     public function product_item() {
+        return $this->hasMany(ProductItem::class, 'gudang_id', 'id');
+    }
+
+
 }
