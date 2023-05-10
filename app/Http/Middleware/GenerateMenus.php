@@ -233,7 +233,19 @@ class GenerateMenus
             ]);
 
 
-
+         // GoldParameters
+            $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Gold Parameters'), [
+                'route' => 'goldparameter.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['goldparameters*'],
+                'permission'    => ['access_goldparameters'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
             // KondisiBarangs
             $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Kondisi Barang'), [

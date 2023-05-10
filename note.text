@@ -24,3 +24,6 @@ public function up()
             $table->timestamps();
         });
     }
+
+
+1.setting web cam

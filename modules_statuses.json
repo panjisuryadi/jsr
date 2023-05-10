@@ -36,5 +36,6 @@
     "DataRekening": true,
     "DataEtalase": true,
     "GoldCategory": true,
-    "ParamaterPoin": true
+    "ParamaterPoin": true,
+    "GoldParameter": true
 }

@@ -57,7 +57,7 @@ $mp3 = asset('js/webcamjs/shutter.mp3');
         function configure(){
             Webcam.set({
                 width: 320,
-                height: 240,
+                height: 180,
                 autoplay: false,
                 image_format: 'jpeg',
                 jpeg_quality: 90,
