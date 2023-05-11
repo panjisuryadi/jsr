@@ -89,7 +89,7 @@ color: #bd4019 !important;
                                     <div class="p-0 col-lg-12">
                                         <div class="form-group">
                                             <label for="product_note">Supplier</label>
-                                         <select class="form-control" name="supplier_id" id="supplier_id" required>
+                                         <select class="form-control select2" name="supplier_id" id="supplier_id" required>
                                                 <option value="" selected disabled>Select Supplier</option>
                                                 @foreach(\Modules\People\Entities\Supplier::all() as $sup)
                                                  <option value="{{$sup->id}}" {{ old('supplier_id') == $sup->id ? 'selected' : '' }}>
@@ -112,7 +112,7 @@ color: #bd4019 !important;
                                         </div>
                                         <div class="form-group">
                                             <label for="karat_id">@lang('Karat') <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="karat_id" id="karat_id" required>
+                                            <select class="form-control select2" name="karat_id" id="karat_id" required>
                                                 <option value="" selected disabled>Select Karat</option>
                                                 @foreach(\Modules\Karat\Models\Karat::all() as $karat)
                                                 <option value="{{ $karat->id }}">{{ $karat->name }}</option>
@@ -121,7 +121,7 @@ color: #bd4019 !important;
                                         </div>
                                         <div class="form-group">
                                             <label for="round_id">@lang('Round') <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="round_id" id="round_id" required>
+                                            <select class="form-control select2" name="round_id" id="round_id" required>
                                                 <option value="" selected disabled>Select Round</option>
                                                 @foreach(\Modules\ItemRound\Models\ItemRound::all() as $round)
                                                 <option value="{{ $round->id }}">{{ $round->name }}</option>
@@ -136,7 +136,7 @@ color: #bd4019 !important;
                                         </div>
                                         <div class="form-group">
                                             <label for="shape_id">@lang('Shape') <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="shape_id" id="shape_id" required>
+                                            <select class="form-control select2" name="shape_id" id="shape_id" required>
                                                 <option value="" selected disabled>Select Shape</option>
                                                 @foreach(\Modules\ItemShape\Models\ItemShape::all() as $shape)
                                                 <option value="{{ $shape->id }}">{{ $shape->name }}</option>
@@ -145,7 +145,7 @@ color: #bd4019 !important;
                                         </div>
                                         <div class="form-group">
                                             <label for="certificate_id">@lang('Certificate') <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="certificate_id" id="certificate_id" required>
+                                            <select class="form-control select2" name="certificate_id" id="certificate_id" required>
                                                 <option value="" selected disabled>Select Certificate</option>
                                                 @foreach(\Modules\DiamondCertificate\Models\DiamondCertificate::all() as $certificate)
                                                 <option value="{{ $certificate->id }}">{{ $certificate->name }}</option>
@@ -242,7 +242,7 @@ color: #bd4019 !important;
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="gudang_id">@lang('Gudang') <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="gudang_id" id="gudang_id" required>
+                                            <select class="form-control select2" name="gudang_id" id="gudang_id" required>
                                                 <option value="" selected disabled>Select Gudang</option>
                                                 @foreach(\Modules\Gudang\Models\Gudang::all() as $gudang)
                                                  <option value="{{$gudang->id}}" {{ old('gudang_id') == $gudang->id ? 'selected' : '' }}>
@@ -255,7 +255,7 @@ color: #bd4019 !important;
                                     <div class="col-md-4">
                                      <div class="form-group">
                                             <label for="etalase_id">@lang('Etalase') <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="etalase_id" id="etalase_id" required>
+                                            <select class="form-control select2" name="etalase_id" id="etalase_id" required>
                                                 <option value="" selected disabled>Select Etalase</option>
                                                 @foreach(\Modules\DataEtalase\Models\DataEtalase::all() as $et)
                                                  <option value="{{$et->id}}" {{ old('etalase_id') == $et->id ? 'selected' : '' }}>
@@ -269,7 +269,7 @@ color: #bd4019 !important;
 
                                        <div class="form-group">
                                             <label for="baki_id">@lang('Baki') <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="baki_id" id="baki_id" required>
+                                            <select class="form-control select2" name="baki_id" id="baki_id" required>
                                                 <option value="" selected disabled>Kode Baki</option>
                                                 @foreach(\Modules\Baki\Models\Baki::all() as $bk)
                                                  <option value="{{$bk->id}}" {{ old('baki_id') == $bk->id ? 'selected' : '' }}>
@@ -307,6 +307,7 @@ color: #bd4019 !important;
         </div>
     </form>
 </div>
+<x-library.select2 />
 @endsection
 @section('third_party_scripts')
 <script src="{{ asset('js/dropzone.js') }}"></script>
