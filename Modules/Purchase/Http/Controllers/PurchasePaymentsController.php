@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductLocation;
 use Modules\Purchase\Entities\Purchase;
 use Modules\Purchase\Entities\PurchasePayment;
+use Modules\Purchase\Entities\PurchaseDetail;
 
 class PurchasePaymentsController extends Controller
 {

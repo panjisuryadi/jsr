@@ -19,18 +19,23 @@ class LocationsDataTable extends DataTable
             })
              ->addColumn('#', function ($data) {
                  return $data->id;
-            })  ->addColumn('main_location', function ($data) {
-                 return $data->name;
             })
-             ->addColumn('sub_location', function ($data) {
-                return view('locations::locations.partials.childs', compact('data'));
+             ->addColumn('type', function ($data) {
+                 if($data->type == 'storage'){
+                    return 'Penyimpanan';
+                 }else{
+                    return 'Etalase';
+                 }
+            })
+             ->addColumn('main_location', function ($data) {
+                return $data->parent_id != NULL || $data->parent_id != '' ? Locations::find($data->parent_id)->name : '-';
             });
     }
 
 
 
     public function query(Locations $model) {
-        return $model->newQuery()->ByParent()->with('childs');
+        return $model->newQuery();
     }
 
     public function html() {
@@ -56,13 +61,16 @@ class LocationsDataTable extends DataTable
 
     protected function getColumns() {
         return [
-            Column::make('#')
+            Column::make('#')->title('id')
                 ->className('w-5 text-center align-middle'),
 
-                Column::make('main_location')
+                Column::make('name')->title('location')
+                ->className('w-20 text-center align-middle'),
+                
+                Column::make('type')->title('Tipe')
                 ->className('w-20 text-center align-middle'),
 
-            Column::make('sub_location')
+            Column::make('main_location')
                 ->className('w-30 text-left align-middle'),
 
 

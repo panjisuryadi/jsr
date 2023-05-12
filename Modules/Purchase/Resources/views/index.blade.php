@@ -33,8 +33,43 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel">Selesaikan Pembelian</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form method="post" action="{{route('purchase.completepurchase')}}">
+        @csrf
+        <div class="modal-body">
+            <div id="modal-content">
+
+            </div>
+            <input type="hidden" id="purchase_id" name="purchase_id">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" >Confirm</button>
+        </form>
+        </div>
+        </div>
+    </div>
+    </div>
 @endsection
 
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
+<script>
+    function completepurchase(id,noref){
+        $('#purchase_id').val(id)
+        $('#modal-content').html('Konfirmasi Untuk Menyelesaikan Pembelian '+noref)
+        $('#exampleModal').modal('show')
+    }
+    function confirmcomplete(){
+        
+    }
+</script>
 @endpush

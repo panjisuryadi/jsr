@@ -19,6 +19,11 @@
             <a href="{{ route('purchases.edit', $data->id) }}" class="dropdown-item">
                 <i class="bi bi-pencil mr-2 text-primary" style="line-height: 1;"></i> Edit
             </a>
+            @if($data->status != 'Completed')
+            <a href="javascript:;" onclick="completepurchase('{{$data->id}}','{{$data->reference}}')" class="dropdown-item">
+                <i class="bi bi-bag-check mr-2 text-primary" style="line-height: 1;"></i> Complete Purchase
+            </a>
+            @endif
         @endcan
         @can('show_purchases')
             <a href="{{ route('purchases.show', $data->id) }}" class="dropdown-item">

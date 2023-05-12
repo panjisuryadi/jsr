@@ -26,6 +26,7 @@
                     <th class="align-middle">Discount</th>
                     <th class="align-middle">Tax</th>
                     <th class="align-middle">Sub Total</th>
+                    <!-- <th class="align-middle">Penyimpanan</th> -->
                     <th class="align-middle">Action</th>
                 </tr>
                 </thead>
@@ -62,6 +63,9 @@
                                 <td class="align-middle">
                                     {{ format_currency($cart_item->options->sub_total) }}
                                 </td>
+
+                                <!-- <td class="align-middle">
+                                </td> -->
 
                                 <td class="align-middle text-center">
                                     <a href="#" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
@@ -115,22 +119,53 @@
         </div>
     </div>
 
-    <input type="hidden" name="total_amount" value="{{ $total_with_shipping }}">
+    <input type="hidden" name="total_amount" id="total_amount" value="{{ $total_with_shipping }}">
 
     <div class="form-row">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
+            <div class="form-group">
+            @php
+            $main = \Modules\Locations\Entities\Locations::whereNull('parent_id')->get();
+            @endphp
+            <label for="">Location</label>
+            <select name="location_id" class="form-control" required>
+                <option value="" selected>-- @lang('Select') @lang('Locations') --</option>
+                @foreach($main as $p)
+                <option value="{{ $p->id }}" disabled>{{ $p->name }}</option>
+                    @if(!empty($p->childs))
+                        @foreach($p->childs as $loc1)
+                        <option value="{{ $loc1->id }}">> {{ $loc1->name }}</option>
+                            @if(!empty($loc1->childs))
+                                @foreach($loc1->childs as $loc2)
+                                <option value="{{ $loc2->id }}"> &nbsp;- {{ $loc2->name }}</option>
+                                    @if(!empty($loc2->childs))
+                                        @if(!empty($loc2->childs))
+                                            @foreach($loc2->childs as $loc3)
+                                            <option value="{{ $loc3->id }}">&nbsp; -> {{ $loc3->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    @endif
+                @endforeach
+            </select>
+            </div>
+            <input type="hidden" class="form-control" name="discount_percentage" min="0" max="100" value="{{ $global_discount }}" required>
+            <input type="hidden" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
+        </div>
+        <!-- <div class="col-lg-6">
             <div class="form-group">
                 <label for="tax_percentage">Order Tax (%)</label>
-                <input wire:model.lazy="global_tax" type="number" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="form-group">
                 <label for="discount_percentage">Discount (%)</label>
-                <input wire:model.lazy="global_discount" type="number" class="form-control" name="discount_percentage" min="0" max="100" value="{{ $global_discount }}" required>
             </div>
-        </div>
-        <div class="col-lg-4">
+        </div> -->
+        <div class="col-lg-6">
             <div class="form-group">
                 <label for="shipping_amount">Shipping</label>
                 <input wire:model.lazy="shipping" type="number" class="form-control" name="shipping_amount" min="0" value="0" required step="0.01">

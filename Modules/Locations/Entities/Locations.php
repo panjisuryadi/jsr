@@ -19,6 +19,10 @@ class Locations extends Model
    public function childs() {
         return $this->hasMany(Locations::class, 'parent_id');
     }
+   
+    public function parent() {
+        return $this->belongsTo(Locations::class, 'parent_id');
+    }
 
 
 

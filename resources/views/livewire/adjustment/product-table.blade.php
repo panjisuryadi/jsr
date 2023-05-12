@@ -22,9 +22,8 @@
                 <th class="align-middle">No</th>
                 <th class="align-middle">@lang('Product Name')</th>
                 <th class="align-middle">Code</th>
-                <th class="align-middle">Stock</th>
-                <th style="width: 5%;" class="align-middle">@lang('Quantity')</th>
-                <th class="align-middle">Type</th>
+                <th class="align-middle">Stock Data</th>
+                <th class="align-middle">@lang('Stock Rill')</th>
                 <th class="align-middle">@lang('Action')</th>
             </tr>
             </thead>
@@ -37,32 +36,13 @@
                         <td class="align-middle">{{ $product['product_code'] ?? $product['product']['product_code'] }}</td>
                         <td class="align-middle text-center">
                             <span class="badge badge-info">
-                                {{ $product['product_quantity'] ?? $product['product']['product_quantity'] }} {{ $product['product_unit'] ?? $product['product']['product_unit'] }}
+                                {{ $product['product_quantity'] ?? $product['stock'] }} {{ $product['product_unit'] ?? $product['product']['product_unit'] }}
                             </span>
                         </td>
                         <input type="hidden" name="product_ids[]" value="{{ $product['product']['id'] ?? $product['id'] }}">
+                        <input type="hidden" name="location_id[]" value="{{ $product['location_id'] }}">
                         <td class="align-middle">
-                            <input type="number" name="quantities[]" min="1" class="form-control form-control-sm" value="{{ $product['quantity'] ?? 1 }}">
-                        </td>
-                        <td class="align-middle">
-                            @if(isset($product['type']))
-                                @if($product['type'] == 'add')
-                                    <select name="types[]" class="form-control form-control-sm">
-                                        <option value="add" selected>(+) @lang('Addition')</option>
-                                        <option value="sub">(-)  @lang('Subtraction')</option>
-                                    </select>
-                                @elseif($product['type'] == 'sub')
-                                    <select name="types[]" class="form-control form-control-sm">
-                                        <option value="sub" selected>(-)  @lang('Subtraction')</option>
-                                        <option value="add">(+) @lang('Addition')</option>
-                                    </select>
-                                @endif
-                            @else
-                                <select name="types[]" class="form-control form-control-sm">
-                                    <option value="add">(+)  @lang('Addition')</option>
-                                    <option value="sub">(-)  @lang('Subtraction')</option>
-                                </select>
-                            @endif
+                            <input type="number" name="quantities[]" min="1" class="form-control form-control-sm" value="{{ $product['stock'] ?? 1 }}">
                         </td>
                         <td class="align-middle text-center">
                             <button type="button" class="btn btn-danger" wire:click="removeProduct({{ $key }})">

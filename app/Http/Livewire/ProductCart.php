@@ -16,6 +16,7 @@ class ProductCart extends Component
     public $global_tax;
     public $shipping;
     public $quantity;
+    public $location;
     public $check_quantity;
     public $discount_type;
     public $item_discount;
@@ -39,6 +40,7 @@ class ProductCart extends Component
             foreach ($cart_items as $cart_item) {
                 $this->check_quantity[$cart_item->id] = [$cart_item->options->stock];
                 $this->quantity[$cart_item->id] = $cart_item->qty;
+                $this->location[$cart_item->location] = $cart_item->location;
                 $this->discount_type[$cart_item->id] = $cart_item->options->product_discount_type;
                 if ($cart_item->options->product_discount_type == 'fixed') {
                     $this->item_discount[$cart_item->id] = $cart_item->options->product_discount;
@@ -92,7 +94,8 @@ class ProductCart extends Component
                 'stock'                 => $product['product_quantity'],
                 'unit'                  => $product['product_unit'],
                 'product_tax'           => $this->calculate($product)['product_tax'],
-                'unit_price'            => $this->calculate($product)['unit_price']
+                'unit_price'            => $this->calculate($product)['unit_price'],
+                'location'  => 0
             ]
         ]);
 
@@ -136,9 +139,28 @@ class ProductCart extends Component
                 'unit_price'            => $cart_item->options->unit_price,
                 'product_discount'      => $cart_item->options->product_discount,
                 'product_discount_type' => $cart_item->options->product_discount_type,
+                'location'              => $cart_item->options->location,
             ]
         ]);
     }
+    
+    // public function addlocation($row_id, $loc_id) {
+        
+    //     $cart_item = Cart::instance($this->cart_instance)->get($row_id);
+    //     Cart::instance($this->cart_instance)->update($row_id, [
+    //         'options' => [
+    //             'sub_total'             => $cart_item->price * $cart_item->qty,
+    //             'code'                  => $cart_item->options->code,
+    //             'stock'                 => $cart_item->options->stock,
+    //             'unit'                  => $cart_item->options->unit,
+    //             'product_tax'           => $cart_item->options->product_tax,
+    //             'unit_price'            => $cart_item->options->unit_price,
+    //             'product_discount'      => $cart_item->options->product_discount,
+    //             'product_discount_type' => $cart_item->options->product_discount_type,
+    //             'location'              => $loc_id,
+    //         ]
+    //     ]);
+    // }
 
     public function updatedDiscountType($value, $name) {
         $this->item_discount[$name] = 0;
@@ -210,6 +232,7 @@ class ProductCart extends Component
             'unit_price'            => $cart_item->options->unit_price,
             'product_discount'      => $discount_amount,
             'product_discount_type' => $this->discount_type[$product_id],
+            'location'              => $cart_item->options->location,
         ]]);
     }
 }

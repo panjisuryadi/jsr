@@ -5,10 +5,13 @@ namespace Modules\Purchase\Http\Controllers;
 use Modules\Purchase\DataTables\PurchaseDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Supplier;
 use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductLocation;
+use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\Purchase\Entities\Purchase;
 use Modules\Purchase\Entities\PurchaseDetail;
 use Modules\Purchase\Entities\PurchasePayment;
@@ -28,6 +31,13 @@ class PurchaseController extends Controller
     public function create() {
         abort_if(Gate::denies('create_purchases'), 403);
 
+        $setting = AdjustmentSetting::first();
+        if(isset($setting)){
+            if($setting->status == 1){
+                toast('Stock Opname Belum Selesai, selesaikan Stock Opname Terlebih Dahulu!', 'error');
+                return redirect()->back();
+            }
+        }
         Cart::instance('purchase')->destroy();
 
         return view('purchase::create');
@@ -35,6 +45,10 @@ class PurchaseController extends Controller
 
 
     public function store(StorePurchaseRequest $request) {
+
+
+         $params = $request->all();
+         //dd($params);
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -64,6 +78,9 @@ class PurchaseController extends Controller
             ]);
 
             foreach (Cart::instance('purchase')->content() as $cart_item) {
+
+
+                 // dd('purchase');
                 PurchaseDetail::create([
                     'purchase_id' => $purchase->id,
                     'product_id' => $cart_item->id,
@@ -76,13 +93,30 @@ class PurchaseController extends Controller
                     'product_discount_amount' => $cart_item->options->product_discount * 100,
                     'product_discount_type' => $cart_item->options->product_discount_type,
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
+                    'location_id' => $request->location_id,
                 ]);
 
                 if ($request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
+                    // dd('product');
                     $product->update([
                         'product_quantity' => $product->product_quantity + $cart_item->qty
                     ]);
+
+                    $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
+
+
+                    if(empty($prodloc)){
+                        $prodloc = new ProductLocation;
+                        $prodloc->product_id = $cart_item->id;
+                        $prodloc->location_id = $request->location_id;
+                        $prodloc->stock = $cart_item->qty;
+                        $prodloc->save();
+                    }else{
+                        $prodloc->stock = $prodloc->stock + $cart_item->qty;
+                        $prodloc->save();
+                    }
+
                 }
             }
 
@@ -221,9 +255,54 @@ class PurchaseController extends Controller
     public function destroy(Purchase $purchase) {
         abort_if(Gate::denies('delete_purchases'), 403);
 
-        $purchase->delete();
+        $detail = PurchaseDetail::where('purchase_id',$purchase->id)->get();
+        if(count($detail)){
+            foreach ($detail as $detail) {
+                $product = Product::findOrFail($detail->product_id);
+                $product->update([
+                    'product_quantity' => $product->product_quantity - $detail->quantity
+                ]);
 
+                $prodloc = ProductLocation::where('product_id',$product->id)->where('location_id',$detail->location_id)->first();
+                $prodloc->stock = $prodloc->stock - $detail->quantity;
+                $prodloc->save();
+            }
+        }
+        $purchase->delete();
         toast('Purchase Deleted!', 'warning');
+
+        return redirect()->route('purchases.index');
+    }
+
+    public function completepurchase(Request $request){
+        $purchase = Purchase::find($request->purchase_id);
+        $purchase->status = 'Completed';
+        if($purchase->save()){
+            $detail = PurchaseDetail::where('purchase_id',$purchase->id)->get();
+            if(count($detail)){
+                foreach ($detail as $detail) {
+                    $product = Product::findOrFail($detail->product_id);
+                    $product->update([
+                        'product_quantity' => $product->product_quantity + $detail->quantity
+                    ]);
+
+                    $prodloc = ProductLocation::where('product_id',$product->id)->where('location_id',$detail->location_id)->first();
+                    if(empty($prodloc)){
+                        $prodloc = new ProductLocation;
+                        $prodloc->product_id = $product->id;
+                        $prodloc->location_id = $detail->location_id;
+                        $prodloc->stock = $detail->quantity;
+                        $prodloc->save();
+                    }else{
+                        $prodloc->stock = $prodloc->stock + $detail->quantity;
+                        $prodloc->save();
+                    }
+                }
+            }
+        }
+
+
+        toast('Purchase '.$purchase->reference.' Completed!', 'info');
 
         return redirect()->route('purchases.index');
     }

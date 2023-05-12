@@ -16,6 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Product
     Route::resource('locations', 'LocationsController');
      Route::get('/locations/parent/{parent}', 'LocationsController@getParent')->name('locations.parent');
+     Route::get('/locations/getone/{id}', 'LocationsController@getone')->name('locations.getone');
     //Product Category
 
 });

@@ -14,7 +14,6 @@
     "PurchasesReturn": true,
     "Quotation": true,
     "Reports": true,
-    "Locations": true,
     "Karat": true,
     "DiamondCertificate": true,
     "ItemRound": true,
@@ -37,5 +36,7 @@
     "DataEtalase": true,
     "GoldCategory": true,
     "ParamaterPoin": true,
-    "GoldParameter": true
+    "GoldParameter": true,
+    "CostParameter": true,
+    "Locations": true
 }

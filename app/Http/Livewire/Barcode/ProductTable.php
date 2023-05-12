@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Barcode;
 use Livewire\Component;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Modules\Product\Entities\Product;
+use PDF;
 
 class ProductTable extends Component
 {
@@ -38,13 +39,14 @@ class ProductTable extends Component
         $this->barcodes = [];
 
         for ($i = 1; $i <= $quantity; $i++) {
-            $barcode = DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology,2 , 60, 'black', false);
+            $barcode = $product->product_code;
             array_push($this->barcodes, $barcode);
         }
     }
 
     public function getPdf() {
-        $pdf = \PDF::loadView('product::barcode.print', [
+        $pdf = PDF::loadView('product::barcode.print', [
+            'product' => $this->product,
             'barcodes' => $this->barcodes,
             'price' => $this->product->product_price,
             'name' => $this->product->product_name,

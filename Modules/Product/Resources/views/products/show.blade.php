@@ -89,7 +89,7 @@
                 <div class="card h-100">
 
                     <div class="card-body text-center">
-                        <div class="w-100 mb-0">
+                        <div class="py-2 d-flex flex-wrap align-items-center justify-content-center">
                      {!! \Milon\Barcode\Facades\DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology, 2, 110) !!}
                     </div>
                         @forelse($product->getMedia('images') as $media)

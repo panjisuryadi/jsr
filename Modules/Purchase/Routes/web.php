@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Sales
     Route::resource('purchases', 'PurchaseController');
+    Route::post('purchases/completepurchase', 'PurchaseController@completepurchase')->name('purchase.completepurchase');
 
     //Payments
     Route::get('/purchase-payments/{purchase_id}', 'PurchasePaymentsController@index')->name('purchase-payments.index');

@@ -14,11 +14,11 @@
 @section('content')
 
 
-<div class="modal" tabindex="-1" role="dialog" id="editCategoryModal">
+<div class="modal" tabindex="-1" role="dialog" id="editlocationModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Category</h5>
+                <h5 class="modal-title">Edit location</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -28,8 +28,15 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control" value="" placeholder="Category Name" required>
+                        <input type="text" name="name" class="form-control" value="" placeholder="location Name" required>
                     </div>
+                    <div class="form-group">
+                          <label for="typeedit">Tipe Gudang</label>
+                          <select name="type" id="typeedit" class="form-control">
+                              <option value="storage">Penyimpanan</option>
+                              <option value="storefront">Etalase</option>
+                          </select>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -55,15 +62,15 @@
                 </div>
                 <div class="card-body">
                   <ul class="list-group">
-                    @foreach ($locations as $category)
+                    @foreach ($locations as $location)
                       <li class="list-group-item">
                         <div class="d-flex justify-content-between">
-                          {{ $category->name }}
+                          {{ $location->name }}
 
                           <div class="button-group d-flex">
-                            <button type="button" class="btn btn-sm btn-primary mr-1 edit-category" data-toggle="modal" data-target="#editCategoryModal" data-id="{{ $category->id }}" data-name="{{ $category->name }}">Edit</button>
+                            <button type="button" class="btn btn-sm btn-primary mr-1 edit-location" data-toggle="modal" data-target="#editlocationModal" data-id="{{ $location->id }}" data-name="{{ $location->name }}" data-type="{{ $location->type }}">Edit</button>
 
-                            <form action="{{ route('locations.destroy', $category->id) }}" method="POST">
+                            <form action="{{ route('locations.destroy', $location->id) }}" method="POST">
                               @csrf
                               @method('DELETE')
 
@@ -72,15 +79,15 @@
                           </div>
                         </div>
 
-                        @if ($category->childs)
+                        @if ($location->childs)
                           <ul class="list-group mt-2">
-                            @foreach ($category->childs as $child)
+                            @foreach ($location->childs as $child)
                               <li class="list-group-item">
                                 <div class="d-flex justify-content-between">
                                   {{ $child->name }}
 
                                   <div class="button-group d-flex">
-                                    <button type="button" class="btn btn-sm btn-outline-warning mr-1 edit-category" data-toggle="modal" data-target="#editCategoryModal" data-id="{{ $child->id }}" data-name="{{ $child->name }}">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-outline-warning mr-1 edit-location" data-toggle="modal" data-target="#editlocationModal" data-id="{{ $child->id }}" data-name="{{ $child->name }}" data-type="{{ $child->type }}">Edit</button>
 
                                     <form action="{{ route('locations.destroy', $child->id) }}" method="POST">
                                       @csrf
@@ -90,6 +97,50 @@
                                     </form>
                                   </div>
                                 </div>
+                                @if ($child->childs)
+                                <ul class="list-group mt-2">
+                                  @foreach ($child->childs as $child2)
+                                    <li class="list-group-item">
+                                      <div class="d-flex justify-content-between">
+                                        {{ $child2->name }}
+
+                                        <div class="button-group d-flex">
+                                          <button type="button" class="btn btn-sm btn-outline-warning mr-1 edit-location" data-toggle="modal" data-target="#editlocationModal" data-id="{{ $child2->id }}" data-name="{{ $child2->name }}" data-type="{{ $child2->type }}">Edit</button>
+
+                                          <form action="{{ route('locations.destroy', $child2->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                      @if ($child2->childs)
+                                      <ul class="list-group mt-2">
+                                        @foreach ($child2->childs as $child3)
+                                          <li class="list-group-item">
+                                            <div class="d-flex justify-content-between">
+                                              {{ $child3->name }}
+
+                                              <div class="button-group d-flex">
+                                                <button type="button" class="btn btn-sm btn-outline-warning mr-1 edit-location" data-toggle="modal" data-target="#editlocationModal" data-id="{{ $child3->id }}" data-name="{{ $child3->name }}" data-type="{{ $child3->type }}" >Edit</button>
+
+                                                <form action="{{ route('locations.destroy', $child3->id) }}" method="POST">
+                                                  @csrf
+                                                  @method('DELETE')
+
+                                                  <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                                </form>
+                                              </div>
+                                            </div>
+                                          </li>
+                                        @endforeach
+                                      </ul>
+                                    @endif
+                                    </li>
+                                  @endforeach
+                                </ul>
+                              @endif
                               </li>
                             @endforeach
                           </ul>
@@ -110,10 +161,19 @@
                 <div class="card-body">
                   <form action="{{ route('locations.store') }}" method="POST">
                     @csrf
-  <livewire:locations.getlocation/>
+                    <livewire:locations.getlocation/>
 
- <div class="form-group">
+                    <div class="form-group">
+                      <label for="name">Name</label>
                       <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder=" Name" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="type">Tipe Gudang</label>
+                      <select name="type" id="type" class="form-control">
+                          <option value="storage">Penyimpanan</option>
+                          <option value="storefront">Etalase</option>
+                      </select>
                     </div>
 
                     <div class="form-group">
@@ -131,13 +191,15 @@
  @push('page_scripts')
 
 <script type="text/javascript">
-          $('.edit-category').on('click', function() {
+          $('.edit-location').on('click', function() {
             var id = $(this).data('id');
             var name = $(this).data('name');
+            var type = $(this).data('type');
             var url = "{{ url('locations') }}/" + id;
 
-            $('#editCategoryModal form').attr('action', url);
-            $('#editCategoryModal form input[name="name"]').val(name);
+            $('#editlocationModal form').attr('action', url);
+            $('#editlocationModal form input[name="name"]').val(name);
+            $('#typeedit').val(type).change();
           });
         </script>
 
