@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\Locations\Http\Controllers;
-
+use Carbon\Carbon;
 use Modules\Locations\DataTables\LocationsDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -11,6 +11,9 @@ use Modules\Locations\Entities\Locations;
 use Modules\Locations\Entities\UsersLocations;
 use Modules\Product\Entities\ProductLocation;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Yajra\DataTables\DataTables;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use DB;
 
 class LocationsController extends Controller
@@ -18,7 +21,40 @@ class LocationsController extends Controller
 
   use ValidatesRequests;
 
-    public function index(LocationsDataTable $dataTable) {
+
+
+  public function __construct()
+    {
+        // Page Title
+        $this->module_title = 'Location';
+        $this->module_name = 'locations';
+        $this->module_path = 'locations';
+        $this->module_icon = 'fas fa-sitemap';
+        $this->module_model = "Modules\Locations\Entities\Locations";
+
+    }
+
+
+
+  public function index() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $Alllocation = Locations::whereNull('parent_id')->get();
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.index',
+           compact('module_name',
+            'module_action',
+            'Alllocation',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+    public function index_datatable(LocationsDataTable $dataTable) {
         $Alllocation = Locations::whereNull('parent_id')->get();
         abort_if(Gate::denies('access_locations'), 403);
         return $dataTable->render('locations::locations.index',compact('Alllocation'));
@@ -39,8 +75,68 @@ class LocationsController extends Controller
     }
 
 
+public function ajax(Request $request)
+    {
+        return "okekkee";
+
+    }
 
 
+public function index_data(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::with('childs')->get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('locations::locations.partials.actions',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->editColumn('name', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                            <h3 class="text-sm font-medium text-gray-800">
+                                             ' .$data->name . '</h3>
+                                             </div>';
+                                return $tb;
+                            })
+
+                         ->addColumn('main_location', function ($data) {
+                                return $data->parent_id != NULL || $data->parent_id != '' ? Locations::find($data->parent_id)->name : '-';
+                            })
+
+                            ->addColumn('type', function ($data) {
+                                         if($data->type == 'storage'){
+                                            return 'Penyimpanan';
+                                         }else{
+                                            return 'Etalase';
+                                         }
+                                    })
+
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at', 'name', 'type', 'main_location', 'action'])
+                        ->make(true);
+    }
 
 
 

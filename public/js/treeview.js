@@ -1,3 +1,6 @@
+jQuery.noConflict();
+(function( $ ) {
+
 $.fn.extend({
     treed: function (o) {
 
@@ -56,3 +59,5 @@ $.fn.extend({
 
 $('#tree1').treed();
 
+
+})(jQuery);

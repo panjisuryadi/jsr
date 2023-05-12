@@ -12,6 +12,7 @@
 
 
 @section('content')
+<x-library.select2 />
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
@@ -38,7 +39,7 @@
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="supplier_id">Supplier <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="supplier_id" id="supplier_id" required>
+                                            <select class="form-control select2" name="supplier_id" id="supplier_id" required>
                                                 @foreach(\Modules\People\Entities\Supplier::all() as $supplier)
                                                     <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
                                                 @endforeach
@@ -62,7 +63,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="status">Status <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="status" id="status" required>
+                                        <select class="form-control select2" name="status" id="status" required>
                                             <option value="Pending">Pending</option>
                                             <option value="Ordered">Ordered</option>
                                             <option value="Completed">Completed</option>
@@ -73,7 +74,7 @@
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="payment_method" id="payment_method" required>
+                                            <select class="form-control select2" name="payment_method" id="payment_method" required>
                                                 <option value="Cash">Cash</option>
                                                 <option value="Credit Card">Credit Card</option>
                                                 <option value="Bank Transfer">Bank Transfer</option>

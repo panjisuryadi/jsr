@@ -17,7 +17,7 @@
                 </div>
             </div>
             <table class="table table-bordered">
-                <thead class="thead-dark">
+                <thead  style="background-color: {{settings()->header_color}} !important;" class="text-white p-1">
                 <tr>
                     <th class="align-middle">Product</th>
                     <th class="align-middle">Net Unit Price</th>
@@ -128,7 +128,7 @@
             $main = \Modules\Locations\Entities\Locations::whereNull('parent_id')->get();
             @endphp
             <label for="">Location</label>
-            <select name="location_id" class="form-control" required>
+            <select name="location_id" class="form-control select2" required>
                 <option value="" selected>-- @lang('Select') @lang('Locations') --</option>
                 @foreach($main as $p)
                 <option value="{{ $p->id }}" disabled>{{ $p->name }}</option>
@@ -155,16 +155,7 @@
             <input type="hidden" class="form-control" name="discount_percentage" min="0" max="100" value="{{ $global_discount }}" required>
             <input type="hidden" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
         </div>
-        <!-- <div class="col-lg-6">
-            <div class="form-group">
-                <label for="tax_percentage">Order Tax (%)</label>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label for="discount_percentage">Discount (%)</label>
-            </div>
-        </div> -->
+
         <div class="col-lg-6">
             <div class="form-group">
                 <label for="shipping_amount">Shipping</label>

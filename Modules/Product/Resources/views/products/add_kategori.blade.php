@@ -10,17 +10,17 @@
 @section('content')
 @push('page_css')
 <style type="text/css">
-.dropzone {
-height: 280px !important;
-min-height: 190px !important;
-border: 2px dashed #FF9800 !important;
-border-radius: 8px;
-background: #ff98003d !important;
-}
-.dropzone i.bi.bi-cloud-arrow-up {
-font-size: 5rem;
-color: #bd4019 !important;
-}
+    .dropzone {
+        height: 280px !important;
+        min-height: 190px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+    }
+    .dropzone i.bi.bi-cloud-arrow-up {
+        font-size: 5rem;
+        color: #bd4019 !important;
+    }
 </style>
 @endpush
 <div class="container-fluid">
