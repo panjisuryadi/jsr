@@ -14,7 +14,7 @@
                         @foreach($child2->childs as $child3)
                             <li>
                                 <span class="text-dark">&nbsp;{{ $child3->name }}</span>
-                            <!-- <span class="badge badge-circle badge-danger mb-1"> {{ $child3->id }}</span> -->
+
                             @if(count($child3->childs))
                                 <ul>
                                 @foreach($child3->childs as $child4)

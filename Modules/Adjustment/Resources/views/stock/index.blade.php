@@ -70,7 +70,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <select name="" id="category" class="form-control">
-                                            <option value="" selected>Semua Jenis Kain</option>
+                                            <option value="" selected>Semua Kategori</option>
                                             @foreach($categories as $categories)
                                             <option value="{{$categories->id}}">{{$categories->category_name}}</option>
                                             @endforeach
@@ -144,7 +144,7 @@
 
             $('#datatable').DataTable({
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 scrollX: true,
                 language: {
                     sEmptyTable:   "Tidak ada data yang tersedia pada tabel ini",

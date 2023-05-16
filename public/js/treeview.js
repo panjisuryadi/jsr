@@ -4,8 +4,8 @@ jQuery.noConflict();
 $.fn.extend({
     treed: function (o) {
 
-      var openedClass = 'fa-minus';
-      var closedClass = 'fa-plus';
+      var openedClass = 'bi-dash-square';
+      var closedClass = 'bi-plus-square';
 
       if (typeof o != 'undefined'){
         if (typeof o.openedClass != 'undefined'){
@@ -21,7 +21,7 @@ $.fn.extend({
         tree.addClass("tree");
         tree.find('li').has("ul").each(function () {
             var branch = $(this); //li with children ul
-            branch.prepend("<i class='indicator fas " + closedClass + "'></i>");
+            branch.prepend("<i class='bi " + closedClass + "'></i>&nbsp;");
             branch.addClass('branch');
             branch.on('click', function (e) {
                 if (this == e.target) {

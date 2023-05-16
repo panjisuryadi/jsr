@@ -19,7 +19,7 @@
                 </tr>
                 <tr>
                     <th>
-                        Jenis Kain
+                        Jenis
                     </th>
                     <td>
                         <span id="type_name"></span>

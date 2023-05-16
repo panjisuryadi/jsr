@@ -341,15 +341,10 @@ class AdjustmentController extends Controller
 
     public function getdata(Request $request){
         $get_data = Adjustment::whereNotNull('id');
-        // if(isset($request->category_id)){
-        //     $get_data = $get_data->where('category_id',$request->category_id);
-        // }
-        // if(isset($request->location_id)){
-        //     $get_data = $get_data->where('location_id',$request->location_id);
-        // }
-        // $get_data = $get_data->select('product_locations.*')->get();
 
         $get_data = $get_data->orderBy('created_at','desc')->get();
+
+       // dd($get_data);
         return Datatables::of($get_data)
             ->addColumn('action', function ($data) {
                 return view('adjustment::partials.actions', compact('data'));

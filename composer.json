@@ -26,6 +26,7 @@
         "spatie/laravel-permission": "^4.2",
         "brian2694/laravel-toastr": "^5.54",
          "intervention/image": "^2.5",
+          "simplesoftwareio/simple-qrcode": "~4",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {

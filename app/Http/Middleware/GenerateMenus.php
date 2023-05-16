@@ -85,7 +85,7 @@ class GenerateMenus
 
    // Main Kategori
             $Categories->add(
-                '<i class="text-sm c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Main Kategori'), [
+                '<i class="px-1 text-sm c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Main Kategori'), [
                 'route' => 'kategoriproduk.index',
                 'class' => 'nav-item',
             ])
@@ -100,7 +100,7 @@ class GenerateMenus
 
     // Submenu: Categories
             $Categories->add(
-                '<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('labels.menu.kategori_produk'), [
+                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.kategori_produk'), [
                 'route' => 'product-categories.index',
                 'class' => 'nav-item',
             ])
@@ -115,7 +115,7 @@ class GenerateMenus
 
 
    // GoldCategories
-            $Categories->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Gold Categories'), [
+            $Categories->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Gold Categories'), [
                 'route' => 'goldcategory.index',
                 'class' => 'nav-item',
             ])
@@ -129,7 +129,7 @@ class GenerateMenus
             ]);
     // DiamondCertificates
             $Categories->add(
-                '<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('labels.menu.diamond_certificate'), [
+                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.diamond_certificate'), [
                 'route' => 'diamondcertificate.index',
                 'class' => 'nav-item',
             ])
@@ -166,7 +166,7 @@ class GenerateMenus
 
 
       // JenisGroups
-            $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Jenis Group'), [
+            $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Jenis Group'), [
                 'route' => 'jenisgroup.index',
                 'class' => 'nav-item',
             ])
@@ -181,7 +181,7 @@ class GenerateMenus
 
 
      // Groups
-            $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Group'), [
+            $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Group'), [
                 'route' => 'group.index',
                 'class' => 'nav-item',
             ])
@@ -230,7 +230,7 @@ class GenerateMenus
 
 
             // DataSales
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Master Sales'), [
+            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Sales'), [
                 'route' => 'datasale.index',
                 'class' => 'nav-item',
             ])
@@ -244,7 +244,7 @@ class GenerateMenus
             ]);
 
             // DataEtalases
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Master Etalase'), [
+            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Etalase'), [
                 'route' => 'dataetalase.index',
                 'class' => 'nav-item',
             ])
@@ -258,7 +258,7 @@ class GenerateMenus
             ]);
 
           // DataRekenings
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Master Rekening'), [
+            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Rekening'), [
                 'route' => 'datarekening.index',
                 'class' => 'nav-item',
             ])
@@ -272,7 +272,7 @@ class GenerateMenus
             ]);
 
         // MarketPlaces
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Market Place'), [
+            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Market Place'), [
                 'route' => 'marketplace.index',
                 'class' => 'nav-item',
             ])
@@ -287,7 +287,7 @@ class GenerateMenus
 
 
             // KodeTransaksis
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Master Kode Transaksi'), [
+            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Kode Transaksi'), [
                 'route' => 'kodetransaksi.index',
                 'class' => 'nav-item',
             ])
@@ -334,7 +334,7 @@ class GenerateMenus
 
 
        // ParamaterPoins
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Paramater Poin'), [
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Paramater Poin'), [
                 'route' => 'paramaterpoin.index',
                 'class' => 'nav-item',
             ])
@@ -349,7 +349,7 @@ class GenerateMenus
 
 
          // GoldParameters
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Gold Parameters'), [
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Gold Parameters'), [
                 'route' => 'goldparameter.index',
                 'class' => 'nav-item',
             ])
@@ -365,7 +365,7 @@ class GenerateMenus
 
 
             // CostParameters
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i>
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
              '.__('Cost Parameters'), [
                 'route' => 'costparameter.index',
                 'class' => 'nav-item',
@@ -380,7 +380,7 @@ class GenerateMenus
             ]);
 
       // DataBanks
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Data Bank'), [
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Data Bank'), [
                 'route' => 'databank.index',
                 'class' => 'nav-item',
             ])
@@ -397,7 +397,7 @@ class GenerateMenus
 
         // Karats
             $Parameters->add(
-                '<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('labels.menu.carat'), [
+                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.carat'), [
                 'route' => 'karat.index',
                 'class' => 'nav-item',
             ])
@@ -411,7 +411,7 @@ class GenerateMenus
             ]);
 
 
-          $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Rounds'), [
+          $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Rounds'), [
                 'route' => 'itemround.index',
                 'class' => 'nav-item',
             ])
@@ -426,7 +426,7 @@ class GenerateMenus
 
 
             // ItemShapes
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Shapes'), [
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Shapes'), [
                 'route' => 'itemshape.index',
                 'class' => 'nav-item',
             ])
@@ -440,7 +440,7 @@ class GenerateMenus
             ]);
 
 
-             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Colours'), [
+             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Colours'), [
                 'route' => 'itemcolour.index',
                 'class' => 'nav-item',
             ])
@@ -478,7 +478,7 @@ class GenerateMenus
 
 
             // KondisiBarangs
-            $statusIventory->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Kondisi Barang'), [
+            $statusIventory->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Kondisi Barang'), [
                 'route' => 'kondisibarang.index',
                 'class' => 'nav-item',
             ])
@@ -493,7 +493,7 @@ class GenerateMenus
 
 
        // KondisiPembelians
-            $statusIventory->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Kondisi Pembelian'), [
+            $statusIventory->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Kondisi Pembelian'), [
                 'route' => 'kondisipembelian.index',
                 'class' => 'nav-item',
             ])
@@ -530,7 +530,7 @@ class GenerateMenus
 
 
             // menu gudang
-            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Gudang'), [
+            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Gudang'), [
                 'route' => 'gudang.index',
                 'class' => 'nav-item',
             ])
@@ -544,7 +544,7 @@ class GenerateMenus
             ]);
 
            // Bakis
-            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Baki'), [
+            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Baki'), [
                 'route' => 'baki.index',
                 'class' => 'nav-item',
             ])
@@ -559,7 +559,7 @@ class GenerateMenus
 
 
             // Bandrols
-            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-arrow-return-right text-sm"></i> '.__('Bandrol'), [
+            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Bandrol'), [
                 'route' => 'bandrol.index',
                 'class' => 'nav-item',
             ])
