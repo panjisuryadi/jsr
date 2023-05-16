@@ -63,7 +63,7 @@
                            @include('product::products.form.all')
                             @elseif($category->id == 3)
                            @include('product::products.form.perak')
-                            @elseif($category->id == 4 || $category->id == 5 || $category->id == 6)
+                            @elseif($category->id == 6 || $category->id == 7 || $category->id == 8)
                            @include('product::products.form.emas')
                             @else
                              @include('product::products.form.all')
