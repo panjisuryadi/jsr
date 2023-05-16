@@ -81,7 +81,7 @@ public function __construct()
         $module_name_singular = Str::singular($module_name);
         $category = Category::where('id', $id)->first();
         $module_action = 'List';
-         return view('product::products.add_kategori',
+         return view('product::products.add_product',
            compact('module_name',
             'category',
             'module_action',
@@ -280,10 +280,11 @@ public function index_data(Request $request)
 
        ProductItem::create([
             'product_id'                  => $produk,
-            'karat_id'                    => $input['karat_id'],
-            'certificate_id'              => $input['certificate_id'],
-            'shape_id'                    => $input['shape_id'],
-            'round_id'                    => $input['round_id'],
+            'karat_id'                    => $input['karat_id'] ?? null,
+            'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
+            'certificate_id'              => $input['certificate_id'] ?? null,
+            'shape_id'                    => $input['shape_id'] ?? null,
+            'round_id'                    => $input['round_id'] ?? null,
             'product_cost'                => $product_cost,
             'product_price'               => $product_price,
             'product_sale'                => $product_sale,
@@ -295,7 +296,7 @@ public function index_data(Request $request)
             'baki_id'                     => $input['baki_id'],
             'berat_total'                 => $input['berat_total']
         ]);
-      // dd($input);
+       //dd($input);
       }
 
 
