@@ -109,8 +109,8 @@ public function __construct()
                }
             }
         }else{
-            $data .= '<div class="col-lg-12">
-                <div class="text-center p-5">Produk Tidak Ditemukan</div>
+            $data .= '<div class="col-span-5 py-1 px-1">
+                <div class="text-left text-gray-800">Produk Tidak Ditemukan</div>
             </div>
             ';
         }
