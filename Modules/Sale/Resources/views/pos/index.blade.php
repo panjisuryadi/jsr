@@ -55,12 +55,12 @@
 
                     <div class="py-2 mb-1">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" value="member" name="member" id="members" checked>
+                            <input class="form-check-input" type="radio" value="{{ old('member') }}" name="member" id="members" checked>
                             <label class="form-check-label" for="members">Members</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="member"
-                            value="manual" id="manual">
+                            value="{{ old('manual') }}" id="manual">
                             <label class="form-check-label" for="manual">Non Members</label>
                         </div>
                     </div>

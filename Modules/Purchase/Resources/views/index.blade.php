@@ -19,13 +19,19 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ route('purchases.create') }}" class="btn btn-primary">
+
+               <div class="flex justify-between py-1 border-bottom">
+                        <div>
+                      <a href="{{ route('purchases.create') }}" class="btn btn-primary">
                             Add Purchase <i class="bi bi-plus"></i>
                         </a>
 
-                        <hr>
+                        </div>
+                        <div id="buttons">
+                        </div>
+                    </div>
 
-                        <div class="table-responsive">
+                 <div class="table-responsive pt-3">
                             {!! $dataTable->table() !!}
                         </div>
                     </div>
