@@ -31,13 +31,14 @@ class PosController extends Controller
     public function store(StorePosSaleRequest $request) {
         DB::transaction(function () use ($request) {
 
-            // dd($request);
+           // dd($request);
 
             $due_amount    = $request->total_amount - $request->paid_amount;
             $member        = $request->member;
             if ($member == 'member') {
                $customers     = $request->customer_id;
                $customers_name =  Customer::findOrFail($request->customer_id)->customer_name;
+                //dd($customers_name);
             } else {
 
                 $non_member = Customer::where('customer_email', 'non_member@hokkie.com')->first();
