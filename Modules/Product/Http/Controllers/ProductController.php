@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
+use Modules\Product\Entities\ProductLocation;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
+
 use Modules\Upload\Entities\Upload;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -60,6 +62,61 @@ public function __construct()
             'module_title',
             'module_icon', 'module_model'));
     }
+
+
+
+ public function getsalesProduct(Request $request){
+        $product = Product::where('product_price','>',0);
+        if(isset($request->cariproduk)){
+            $product = $product->where('product_name','LIKE','%'.$request->cariproduk.'%')->orwhere('product_code','LIKE','%'.$request->cariproduk.'%');
+        }
+        $product = $product->get();
+        $data = '';
+        if(count($product) > 0){
+            foreach($product as $product){
+                $stock = ProductLocation::join('locations','locations.id','product_locations.location_id')
+                ->where('type','storefront')->where('product_id',$product->id)->first();
+                if (empty($stock)) {
+                    $stock = 0;
+                }else{
+                    $stock = $stock->stock;
+                }
+                $data .= ' <a class="col-lg-3 col-md-6 pb-2" onclick="selectproduct('.$product->id.','.$stock.')" style="cursor:pointer;">
+                <div class="card border-0 shadow">
+                    <div class="position-relative">
+                        <img height="200" src="'.$product->getFirstMediaUrl('images').'" class="card-img-top" alt="Product Image">
+                        <div class="badge badge-info mb-3 position-absolute" style="left:10px;top:10px;">Stock: '. $stock .'</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <h6 style="font-size: 13px;" class="card-title mb-0">'. $product->product_name .'</h6>
+                            <span class="badge badge-success">
+                            '. $product->product_code .'
+                            </span>
+                            <h6 style="font-size: 13px;" class="card-title mb-0">'. $product->meter .'</h6>
+                        </div>
+                        <p class="card-text font-weight-bold">'. format_currency($product->product_price) .'</p>
+                    </div>
+                </div>
+            </a>';
+            }
+        }else{
+            $data .= '<div class="col-lg-12">
+                <div class="text-center p-5">Produk Tidak Ditemukan</div>
+            </div>
+            ';
+        }
+
+        return response()->json($data);
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -343,6 +400,20 @@ public function index_data(Request $request)
 
         return redirect()->route('products.index');
     }
+
+
+ public function getone($id){
+        $product = Product::find($id);
+        $stock = ProductLocation::join('locations','locations.id','product_locations.location_id')
+                ->where('type','storefront')->where('product_id',$id)->first();
+        return response()->json([
+            'product' => $product,
+            'stock' => $stock
+        ]);
+    }
+
+
+
 
 
     public function destroy(Product $product) {

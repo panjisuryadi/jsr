@@ -15,10 +15,10 @@ class StorePosSaleRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_id' => 'required|numeric',
-            'tax_percentage' => 'required|integer|min:0|max:100',
-            'discount_percentage' => 'required|integer|min:0|max:100',
-            'shipping_amount' => 'required|numeric',
+            'customer_id' => 'nullable|numeric',
+            'tax_percentage' => 'nullable|integer|min:0|max:100',
+            'discount_percentage' => 'nullable|integer|min:0|max:100',
+            'shipping_amount' => 'nullable|numeric',
             'total_amount' => 'required|numeric',
             'paid_amount' => 'required|numeric',
             'note' => 'nullable|string|max:1000'
