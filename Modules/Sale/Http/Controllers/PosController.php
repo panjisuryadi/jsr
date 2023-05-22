@@ -39,9 +39,26 @@ class PosController extends Controller
                $customers     = $request->customer_id;
                $customers_name =  Customer::findOrFail($request->customer_id)->customer_name;
             } else {
-               $customers     = 9999;
-               $customers_name = $request->customer_name;
+
+                $non_member = Customer::where('customer_email', 'non_member@hokkie.com')->first();
+
+                if ($non_member !== null) {
+                    $non_member->update(['customer_name' => 'Non Member']);
+                } else {
+                    $non_member = Customer::create([
+                            'customer_name'  => 'Non Member',
+                            'customer_phone' => '09393444',
+                            'customer_email' => 'non_member@hokkie.com',
+                            'city'           => 'bandung',
+                            'country'        => 'id',
+                            'address'        => 'dummy address'
+                    ]);
+                }
+               $customers = $non_member->id;
+               $customers_name = $non_member->customer_name;
             }
+
+
             if ($due_amount == $request->total_amount) {
                 $payment_status = 'Unpaid';
             } elseif ($due_amount > 0) {

@@ -21,10 +21,15 @@
     <div class="c-wrapper">
         <header class="c-header c-header-light c-header-fixed">
             @include('layouts.header')
+
+@if(! request()->routeIs('app.pos.*'))
             <div class="c-subheader justify-content-between px-3">
                 @yield('breadcrumb')
                 @include('includes.date')
             </div>
+@endif
+
+
         </header>
 
         <div class="c-body">

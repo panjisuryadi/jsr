@@ -3,8 +3,17 @@
 @section('title', 'POS')
 
 @section('third_party_stylesheets')
-
+ <style type="text/css">
+ .c-main {
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 1;
+    min-width: 0;
+    padding-top: 0.5rem !important;
+}
+ </style>
 @endsection
+
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
@@ -32,7 +41,7 @@
                             <input type="text" class="form-control" id="cariproduk" onkeyup="getproduct()" placeholder="@lang('Type product name or code') ....">
                         </div>
                     </div>
-                    <div class="row pt-3" id="productcontent">
+                    <div  id="productcontent" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full mt-3">
 
                     </div>
                 </div>
@@ -44,7 +53,7 @@
                         <form action="{{route('app.pos.store')}}" method="POST" id="addsales">
                             @csrf
 
-                    <div class="py-2">
+                    <div class="py-2 mb-1">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" value="member" name="member" id="members" checked>
                             <label class="form-check-label" for="members">Members</label>
@@ -56,8 +65,7 @@
                         </div>
                     </div>
 
-
-                        <div id="showMembers" class="form-group">
+                    <div id="showMembers" class="form-group">
                             <label for="customer_id">Customer <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -76,11 +84,9 @@
 
 
                        <div id="NonMember" style="display: none !important;" class="form-group">
-                            <label for="customer_name">Non Members <span class="text-danger">*</span></label>
-                       <input type="text" placeholder="Nama" class="form-control"  name="customer_name">
+                         {{--    <label for="customer_name">Non Members <span class="text-danger">*</span></label>
+                       <input type="text" placeholder="Nama" class="form-control"  name="customer_name"> --}}
                         </div>
-
-
 
                         <div class="table-responsive">
                             <table class="table" id="tablelist">
@@ -115,7 +121,7 @@
                                             <th>Shipping</th>
                                             <td>(+) <span id="shipping">Rp. 0</span></td>
                                         </tr> --}}
-                                        <tr class="text-primary">
+                                        <tr class="text-blue-500">
                                             <th>Grand Total</th>
 
                                             <th>
@@ -155,7 +161,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="payment_method">Metode Pembayaran</label>
-                                    <select class="form-control" name="payment_method" id="payment_method" required>
+                                    <select class="form-control select2" name="payment_method" id="payment_method" required>
                                         <option value="Cash">Cash</option>
                                         <option value="Credit Card">Credit Card</option>
                                         <option value="Bank Transfer">Bank Transfer</option>
@@ -195,7 +201,9 @@
             </div>
         </div>
     </div>
+
 @endsection
+
 @push('page_css')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 @endpush
@@ -255,7 +263,7 @@
                     },
                     success: function(data){
                         list = '<tr id="row'+data.product.id+'">\
-                                    <td align="center" class="align-middle">'+data.product.product_name+' | '+data.product.product_code+' | '+data.product.meter+'<input type="hidden" name="product_id[]" value="'+data.product.id+'"></input></td>\
+                                    <td align="center" class="align-middle">'+data.product.product_name+' | '+data.product.product_code+'<input type="hidden" name="product_id[]" value="'+data.product.id+'"></input></td>\
                                     <td align="center" class="align-middle"><input name="price[]" type="hidden" value="'+data.product.product_price+'"></input>Rp. '+data.product.product_price.toLocaleString()+'</td>\
                                     <td align="center" class="align-middle"><input class="form-control form-control-sm" min="0" max="'+data.stock.stock+'" value="1" type="number" style="min-width: 40px;max-width: 90px;" name="quantity[]" onkeyup="getsummary()"></input></td>\
                                     <td align="center" class="align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProduct('+data.product.id+')">\

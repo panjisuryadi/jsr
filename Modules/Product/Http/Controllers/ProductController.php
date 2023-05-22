@@ -81,24 +81,32 @@ public function __construct()
                 }else{
                     $stock = $stock->stock;
                 }
-                $data .= ' <a class="col-lg-3 col-md-6 pb-2" onclick="selectproduct('.$product->id.','.$stock.')" style="cursor:pointer;">
-                <div class="card border-0 shadow">
-                    <div class="position-relative">
-                        <img height="200" src="'.$product->getFirstMediaUrl('images').'" class="card-img-top" alt="Product Image">
-                        <div class="badge badge-info mb-3 position-absolute" style="left:10px;top:10px;">Stock: '. $stock .'</div>
+
+            if($stock) {
+                $data .= '<a class="pb-0" onclick="selectproduct('.$product->id.','.$stock.')" style="cursor:pointer;">
+                   <div
+                    class="relative overflow-hidden rounded-xl shadow-xl cursor-pointer m-0 dark:bg-gray-600 duration-300 ease-in-out transition-transform transform hover:-translate-y-2">
+                    <img class="object-cover w-full h-48"
+                      src="'.$product->getFirstMediaUrl('images').'"
+                      alt="Flower and sky" />
+                    <span
+                      class="absolute top-0 left-0 flex flex-col items-center mt-1 ml-1 px-1 py-1 rounded-lg z-10 bg-yellow-500 text-sm font-medium">
+                           <span class="small text-xs text-gray-200">'. $product->product_code .'</span>
+                    </span>
+                    <span
+                      class="absolute top-0 right-0 items-center inline-flex mt-1 mr-1 px-1 py-1 rounded-lg z-10 bg-white text-sm font-medium text-white select-none">
+                          <span class="small text-xs text-gray-500">Stock: '. $stock .'</span>
+                    </span>
+                    <div class="bg-gray-900 opacity-60 w-full absolute bottom-0 left-0 items-left py-2">
+                      <div class="px-2 text-md font-bold text-white">'. $product->product_name .'</div>
+                      <div class="px-2 text-xs text-white">'. format_currency($product->product_price) .'</div>
                     </div>
-                    <div class="card-body">
-                        <div class="mb-2">
-                            <h6 style="font-size: 13px;" class="card-title mb-0">'. $product->product_name .'</h6>
-                            <span class="badge badge-success">
-                            '. $product->product_code .'
-                            </span>
-                            <h6 style="font-size: 13px;" class="card-title mb-0">'. $product->meter .'</h6>
-                        </div>
-                        <p class="card-text font-weight-bold">'. format_currency($product->product_price) .'</p>
-                    </div>
-                </div>
-            </a>';
+
+
+                  </div>
+                  </a>';
+
+               }
             }
         }else{
             $data .= '<div class="col-lg-12">
