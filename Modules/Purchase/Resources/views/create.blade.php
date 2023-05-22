@@ -120,34 +120,26 @@
 @push('page_scripts')
     <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
-        $(document).ready(function () {
-            // $('#paid_amount').maskMoney({
-            //     prefix:'{{ settings()->currency->symbol }}',
-            //     thousands:'{{ settings()->currency->thousand_separator }}',
-            //     decimal:'{{ settings()->currency->decimal_separator }}',
-            //     precision : 0,
-            //     allowZero: true,
-            // });
 
-            $('#getTotalAmount').click(function () {
-                console.log($('#total_amount').val())
-                $('#paid_amount').val($('#total_amount').val());
-            });
-
-            // $('#purchase-form').submit(function () {
-                // var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
-                // $('#paid_amount').val(paid_amount);
-            // });
-        });
         $('#purchase-form').on('submit',function(e){
             var total = $('#total_amount').val()
             var paid = $('#paid_amount').val()
             console.log(paid)
-            // if(paid > total){
-            //     alert('Total Bayar Tidak Boleh Lebih Dari Grand Total!')
-            //     // $('#paid_amount').val(paid)
-            //     return false;
-            // }
+
         })
+
+
+
     </script>
+
+<script>
+    jQuery.noConflict();
+    (function( $ ) {
+        $(document).ready(function() {
+        $('#getTotalAmount').click(function(){
+            $('#paid_amount').val($('#total_amount').val())
+              });
+        });
+    })(jQuery);
+</script>
 @endpush
