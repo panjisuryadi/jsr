@@ -70,7 +70,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <a href="{{ route('customers.create') }}" class="btn btn-primary">
-                                        <i class="bi bi-person-plus"></i>
+                                       Add <i class="bi bi-person-plus"></i>
                                     </a>
                                 </div>
                                 <select name="customer_id" id="customer_id" class="form-control">
