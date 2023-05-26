@@ -1,0 +1,102 @@
+1. sharing cloud (Sharing Database)
+2. code produk (manual)
+
+Grouping Kategori di gabung
+- silver /paladium /perak = Gabung
+- Emas = putih/kuning/rosegold
+
+tambah master data jenisproduk
+di modul POS tambah PPN <<<
+
+
+
+Pastikan dropdwon karat == tidak ada bugs
+=======  Mutiara
+ karat - none
+ Round - none
+ dropdown sertifikat - none
+
+
+
+======== Berlian
+ada semua + Supplier
+tambah == parameter berlian  // master data
+tambah == jenis perhiasan /// master data
+- 0,001 <<
+
+======= Perak / Paladaium
+-- karat = none
+-- sertifkat dropdown /kolom sertifkat =  none
+-- shape = none
+ - Round = none
+
+====== Logam Mulia 
+ -- round = none
+ -- shape = none
+-- karat = none
+
+================
+
+
+Penting...!!!
+module POS ,ada status transaksi PENDING (cicil + DP + waktu Pelunasan + Ongkos kirim / Produksi)
+Pembelian Kostum Model 
+ - ongks Produksi
+ - Harga jual
+ - Tgl Transaksi + tgl Estimasi Pelunasan (serahi terima barang) + DP
+ - tambah kolom ongkos
+
+====== Emas / Rose Gold
+-- round = none
+-- shape = none
+-- karat = none
+-- sertifkat dropdown /kolom sertifkat =  none
+
++++ Master Data Kategori Emas
+
+
+===========================================
+
+Master supplier // optional ke semua produk
+--  code supplier
+
+master apliaksi Kantor Pusat
+Master data Nota = template
+
+code transaksi relasi ke Nota
+
+POS member / non member >> Radio Button /chekbox
+member = dropdown customer
+non member = kolom input 
+kode sales
+- tambah kolom kode kasir // di user 
+----====================
+
+----------
+Gadai = hutang 
+1.jenis 
+2.berat
+3.nama produk
+4.Kondisi perhiasan = note
+5.Estiminas1 harga
+6.Member (ada nota pembelian)  / atau No member
+7.Tangggal gadai
+
+
+// none member field hapus ,default = non member
+// card produk update
+
+modul pos : breadcump ,tanggal = hapus
+
+Modul pembelian 
+chekbx customer / suplier
+type dropdown : pembelian /perorangan /pabrik
+
+
+Menu Hokkie APPS
+1.nolate
+2.membership
+3.marketplace
+4.template nota 
+5.Monitoring Cabang
+6.Finance
