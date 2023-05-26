@@ -15,6 +15,46 @@
 
 @section('content')
     <div class="container-fluid">
+
+
+<div class="flex grid grid-cols-2 gap-4 text-center items-center">
+     <div onclick="location.href='{{ route('purchase.type', ['type' => 'NonMember']) }}';" class="cursor-pointer p-4 w-full">
+        <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
+        <div class="justify-center text-center items-center">
+        <?php
+        $image = asset('images/logo.png');
+         ?>
+      <img id="default_1" src="{{ $image }}" alt="images"
+        class="h-16 w-16 object-contain mx-auto" />
+        </div class="py-1">
+          <div class="leading-tight py-3">Membes / Non Member</div>
+        </div>
+      </div>
+
+     <div onclick="location.href='{{ route('purchase.type', ['type' => 'toko']) }}';" class="cursor-pointer p-4 w-full">
+        <div class="justify-center items-center border-2 border-red-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
+        <div class="justify-center text-center items-center">
+        <?php
+        $image = asset('images/logo.png');
+         ?>
+      <img id="default_1" src="{{ $image }}" alt="images"
+        class="h-16 w-16 object-contain mx-auto" />
+        </div class="py-1">
+          <div class="leading-tight py-3">Toko / Gudang</div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -31,7 +71,7 @@
                         </div>
                     </div>
 
-                 <div class="table-responsive pt-3">
+                 <div class="pt-3">
                             {!! $dataTable->table() !!}
                         </div>
                     </div>

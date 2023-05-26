@@ -10,25 +10,63 @@
     </ol>
 @endsection
 
-
+@push('page_css')
+<style type="text/css">
+    .dropzone {
+        height: 220px !important;
+        min-height: 220px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+    }
+    .dropzone i.bi.bi-cloud-arrow-up {
+        font-size: 5rem;
+        color: #bd4019 !important;
+    }
+</style>
+@endpush
 @section('content')
 <x-library.select2 />
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
-                <livewire:search-product/>
+                <div class="bg-white flex p-0">
+                    <div class="w-4/5">
+                        <livewire:purchase-product/>
+                        </div>
+                        <div class="w-1/5 py-4">
+                            <a href="{{ route('purchase-product.add') }}"
+                                id="Tambah"
+                                data-toggle="tooltip"
+                                class="btn btn-primary px-3">
+                                <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ __('Product') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
+
+
                     <div class="card-body">
+                     <div class="flex relative py-2">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="w-full border-b border-gray-300"></div>
+                                    </div>
+                                    <div class="relative flex justify-left">
+
+                                        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark"><small>Pembelian</small> Toko / Pabrik <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Tambah Produk tipe Pabrik /Toko."></i></span>
+                                    </div>
+                                </div>
+
                         @include('utils.alerts')
                         <form id="purchase-form" action="{{ route('purchases.store') }}" method="POST">
                             @csrf
 
-                            <div class="form-row">
+                            <div class="form-row mt-2">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="reference">Reference <span class="text-danger">*</span></label>
@@ -38,12 +76,34 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="supplier_id">Supplier <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="supplier_id" id="supplier_id" required>
+
+                                          <div class="py-1">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="supplier" id="sup1" checked>
+                                            <label class="form-check-label" for="sup1">Supplier</label>
+                                        </div>
+
+                                    <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="supplier"
+                                            id="sup2">
+                                            <label class="form-check-label" for="sup2">Non Supplier</label>
+                                        </div>
+                                    </div>
+
+                                    <div id="supplier1" style="display: none !important;" class="align-items-center justify-content-center">
+                                     <input type="text" class="form-control" placeholder="Nama Suplier" name="none_supplier" required >
+                                    </div>
+
+
+                                    <div id="supplier2" style="display: block !important;" class="align-items-center justify-content-center">
+                                       <select class="form-control select2" name="supplier_id" id="supplier_id" required>
                                                 @foreach(\Modules\People\Entities\Supplier::all() as $supplier)
                                                     <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
                                                 @endforeach
                                             </select>
+                                       </div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -115,10 +175,11 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @push('page_scripts')
-    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+<script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
         $('#purchase-form').on('submit',function(e){
             var total = $('#total_amount').val()
@@ -135,6 +196,40 @@
             $('#paid_amount').val($('#total_amount').val())
               });
         });
+
+        $('#sup1').change(function() {
+            $('#supplier2').toggle();
+            $('#supplier1').hide();
+        });
+        $('#sup2').change(function() {
+            $('#supplier1').toggle();
+            $('#supplier2').hide();
+        });
+
+
     })(jQuery);
+</script>
+
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+$(document).on('click', '#Tambah, #Edit', function(e){
+         e.preventDefault();
+        if($(this).attr('id') == 'Tambah')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case(' Products') }}');
+        }
+        if($(this).attr('id') == 'Edit')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case('Edit item') }}');
+        }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
 </script>
 @endpush

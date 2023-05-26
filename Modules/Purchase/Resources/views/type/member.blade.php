@@ -24,6 +24,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
+                             <h1>Pembelian Member</h1>
                         @include('utils.alerts')
                         <form id="purchase-form" action="{{ route('purchases.store') }}" method="POST">
                             @csrf

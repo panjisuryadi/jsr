@@ -30,8 +30,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('purchases', 'PurchaseController');
     Route::post('purchases/completepurchase', 'PurchaseController@completepurchase')->name('purchase.completepurchase');
 
+    //type
+    Route::get('/purchase-type/{type}', 'PurchaseController@type')->name('purchase.type');
+    Route::get('/purchase-product-add', 'PurchaseController@add')->name('purchase-product.add');
+
     //Payments
     Route::get('/purchase-payments/{purchase_id}', 'PurchasePaymentsController@index')->name('purchase-payments.index');
+
+
     Route::get('/purchase-payments/{purchase_id}/create', 'PurchasePaymentsController@create')->name('purchase-payments.create');
     Route::post('/purchase-payments/store', 'PurchasePaymentsController@store')->name('purchase-payments.store');
     Route::get('/purchase-payments/{purchase_id}/edit/{purchasePayment}', 'PurchasePaymentsController@edit')->name('purchase-payments.edit');

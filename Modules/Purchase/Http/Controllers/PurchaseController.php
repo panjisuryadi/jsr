@@ -17,9 +17,21 @@ use Modules\Purchase\Entities\PurchaseDetail;
 use Modules\Purchase\Entities\PurchasePayment;
 use Modules\Purchase\Http\Requests\StorePurchaseRequest;
 use Modules\Purchase\Http\Requests\UpdatePurchaseRequest;
-
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 class PurchaseController extends Controller
 {
+
+      public function __construct()
+    {
+        // Page Title
+        $this->module_title = 'Data Purchase';
+        $this->module_name = 'Purchase';
+        $this->module_path = 'purchase';
+        $this->module_icon = 'fas fa-sitemap';
+        $this->module_model = "Modules\Purchase\Entities\Purchase";
+
+    }
 
     public function index(PurchaseDataTable $dataTable) {
         abort_if(Gate::denies('access_purchases'), 403);
@@ -44,10 +56,49 @@ class PurchaseController extends Controller
     }
 
 
+
+        public function add()
+        {
+           $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Create';
+            abort_if(Gate::denies('add_'.$module_name.''), 403);
+              return view(''.$module_path.'::modal.create',
+               compact('module_name',
+                'module_action',
+                'module_title',
+                'module_icon', 'module_model'));
+        }
+
+
+
+          public function type(Request $request) {
+                $type = $request->type;
+                //dd($type);
+                abort_if(Gate::denies('create_purchases'), 403);
+                Cart::instance('purchase')->destroy();
+                    if ($type == 'NonMember') {
+                     return view('purchase::type.member');
+                    }
+                     elseif ($type == 'toko') {
+                     return view('purchase::type.toko');
+                    }
+                    else {
+                        return view('purchase::create');
+                    }
+
+            }
+
+
+
+
     public function store(StorePurchaseRequest $request) {
 
-
-         $params = $request->all();
+     $params = $request->all();
          //dd($params);
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;

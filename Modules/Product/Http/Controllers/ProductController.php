@@ -277,6 +277,48 @@ public function index_data(Request $request)
     }
 
 
+
+
+//store ajax version
+
+public function saveAjax(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $validator = \Validator::make($request->all(),[
+             'product_code' => 'required|max:191|unique:'.$module_model.',product_code',
+             'product_name' => 'required|max:191',
+             'product_price' => 'required|max:2147483647',
+             'product_sale' => 'required|max:2147483647',
+
+
+        ]);
+
+        if (!$validator->passes()) {
+            return response()->json(['error'=>$validator->errors()]);
+        }
+
+        $input = $request->all();
+        dd($input);
+        $input = $request->except('_token');
+        $input['product_code'] = $input['product_code'];
+        $input['product_name'] = $input['product_name'];
+        $input['product_price'] = preg_replace("/[^0-9]/", "", $input['product_price']);
+        $input['product_sale']  = preg_replace("/[^0-9]/", "", $input['product_sale']);
+        $$module_name_singular = $module_model::create($input);
+        $produk = $$module_name_singular->id;
+        $this->_saveProductsItem($input ,$produk);
+        return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
+    }
+
+
+
+
+
   public function save(StoreProductRequest $request)
     {
 
@@ -321,6 +363,8 @@ public function index_data(Request $request)
                 $$module_name_singular->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('images');
                     //$params['image'] = "$newFilename";
                 }
+
+
               if ($request->has('document')) {
                     foreach ($request->input('document', []) as $file) {
                         $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
@@ -333,6 +377,7 @@ public function index_data(Request $request)
 
              return redirect()->route('products.index');
     }
+
 
 
 
