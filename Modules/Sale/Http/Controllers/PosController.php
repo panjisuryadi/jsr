@@ -15,6 +15,8 @@ use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
 use Modules\Sale\Http\Requests\StorePosSaleRequest;
 
+
+
 class PosController extends Controller
 {
 

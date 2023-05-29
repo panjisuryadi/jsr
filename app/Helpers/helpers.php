@@ -1,6 +1,6 @@
 <?php
 
-
+use Illuminate\Support\Str;
 
 
 /*
@@ -98,6 +98,39 @@ if (!function_exists('date_today')) {
         return $str;
     }
 }
+
+
+
+if (!function_exists('uname')) {
+
+    function uname($string) {
+        return preg_replace('/(\S+) (\S{2}).*/', '$1$2', strtolower($string)) . random_int(0, 100);
+
+    }
+}
+
+
+if (!function_exists('randomEmail')) {
+    function randomEmail($string)
+    {
+      //$name = Str::random(8);
+        $name = uname($string);
+        $domain = ['gmail.com', 'yahoo.com', 'hotmail.com'];
+
+        $randomDomain = $domain[array_rand($domain)];
+
+        return $name . '@' . $randomDomain;
+    }
+
+}
+
+
+
+
+
+
+
+
 if (!function_exists('uploadFile')) {
 
  function uploadFile($file, $path, $existingPath = '', $filename = '')

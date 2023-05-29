@@ -170,7 +170,7 @@ public function index_data(Request $request)
         $module_action = 'List';
 
 
-        $$module_name = $module_model::with('category','product_item')->get();
+        $$module_name = $module_model::active()->with('category','product_item')->get();
 
         $data = $$module_name;
 

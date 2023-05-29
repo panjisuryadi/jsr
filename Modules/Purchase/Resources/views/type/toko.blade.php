@@ -23,28 +23,38 @@
         font-size: 5rem;
         color: #bd4019 !important;
     }
+
+ .c-main {
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 1;
+    min-width: 0;
+    padding-top: 0.7rem !important;
+}
 </style>
 @endpush
 @section('content')
 <x-library.select2 />
+
+
     <div class="container-fluid mb-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="bg-white flex p-0">
-                    <div class="w-4/5">
-                        <livewire:purchase-product/>
-                        </div>
-                        <div class="w-1/5 py-4">
-                            <a href="{{ route('purchase-product.add') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
-                                class="btn btn-primary px-3">
-                                <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ __('Product') }}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+<div class="card  py-3 px-3">
+<div class="flex relative py-2">
+    <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-b border-gray-300"></div>
+    </div>
+    <div class="relative flex justify-left">
+        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{  __('Purchase') }}</span>
+    </div>
+</div>
+
+{{-- <div class="grid grid-cols-2 gap-2 mt-2">
+   <livewire:purchase-product/>
+   <livewire:product.create>
+</div>
+</div> --}}
+
 
         <div class="row mt-4">
             <div class="col-md-12">
@@ -68,46 +78,51 @@
 
                             <div class="form-row mt-2">
                                 <div class="col-lg-4">
+                                 <livewire:purchase-product/>
+                                </div>
+
+                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <label for="reference">Reference <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required readonly value="PR">
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="from-group">
                                         <div class="form-group">
 
                                           <div class="py-1">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="supplier" id="sup1" checked>
+                                            <input class="form-check-input" type="radio"
+                                             name="supplier" value="1" id="sup1" checked>
                                             <label class="form-check-label" for="sup1">Supplier</label>
                                         </div>
 
                                     <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="supplier"
+                                            <input class="form-check-input" value="2" type="radio" name="supplier"
                                             id="sup2">
                                             <label class="form-check-label" for="sup2">Non Supplier</label>
                                         </div>
                                     </div>
 
                                     <div id="supplier1" style="display: none !important;" class="align-items-center justify-content-center">
-                                     <input type="text" class="form-control" placeholder="Nama Suplier" name="none_supplier" required >
+                                     <input type="text" class="form-control" placeholder="Nama Suplier" name="none_supplier" >
                                     </div>
 
 
                                     <div id="supplier2" style="display: block !important;" class="align-items-center justify-content-center">
-                                       <select class="form-control select2" name="supplier_id" id="supplier_id" required>
+                                       <select class="form-control select2" name="supplier_id" id="supplier_id" >
                                                 @foreach(\Modules\People\Entities\Supplier::all() as $supplier)
                                                     <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
                                                 @endforeach
                                             </select>
-                                       </div>
+                                    </div>
 
 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="date">Date <span class="text-danger">*</span></label>
@@ -116,6 +131,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             <livewire:product-cart :cartInstance="'purchase'"/>
 
@@ -164,11 +180,19 @@
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>
 
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-primary">
+
+                            <div class="flex justify-between mt-3">
+                                <div class="text-gray-700 text-center"></div>
+                                <div class="justify-end py-2">
+                                    <button type="submit" class="btn btn-danger">
                                     Create Purchase <i class="bi bi-check"></i>
-                                </button>
+                                    </button>
+                                </div>
                             </div>
+
+
+
+
                         </form>
                     </div>
                 </div>

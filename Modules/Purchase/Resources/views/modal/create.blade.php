@@ -1,4 +1,4 @@
-<div class="px-3">
+<div class="px-3 border-left">
     <x-library.alert />
     <form id="FormTambah" action="{{ route('products.saveajax') }}" method="POST" enctype="multipart/form-data">
         @csrf

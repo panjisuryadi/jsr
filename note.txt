@@ -6,7 +6,7 @@ Grouping Kategori di gabung
 - Emas = putih/kuning/rosegold
 
 tambah master data jenisproduk
-di modul POS tambah PPN <<<
+ di modul POS tambah PPN <<<
 
 
 
@@ -53,6 +53,8 @@ Pembelian Kostum Model
 -- sertifkat dropdown /kolom sertifkat =  none
 
 +++ Master Data Kategori Emas
+
+
 
 
 ===========================================

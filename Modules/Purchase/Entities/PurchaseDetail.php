@@ -22,6 +22,10 @@ class PurchaseDetail extends Model
         return $this->belongsTo(Purchase::class, 'purchase_id', 'id');
     }
 
+     public function customer() {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
     public function getPriceAttribute($value) {
         return $value / 100;
     }

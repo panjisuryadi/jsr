@@ -98,8 +98,7 @@ class PurchaseController extends Controller
 
     public function store(StorePurchaseRequest $request) {
 
-     $params = $request->all();
-         //dd($params);
+        $params = $request->all();
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -110,10 +109,30 @@ class PurchaseController extends Controller
                 $payment_status = 'Paid';
             }
 
-            $purchase = Purchase::create([
+          if ($request->supplier == 1) {
+              $supplier_name = $request->supplier_id;
+              } else {
+               $none_supplier  = $request->none_supplier;
+               $supplier_email = randomEmail($none_supplier);
+               $phone = $this->randomPhone();
+               $supplier_new =  Supplier::create([
+                            'supplier_name'  => $none_supplier,
+                            'supplier_phone' => $phone,
+                            'supplier_email' => $supplier_email,
+                            'city'           => 'Jakarta',
+                            'country'        => 'Indonesia',
+                            'address'        => 'Jln. Jakarta no 123'
+                        ]);
+
+                $supplier_name = $supplier_new->id;
+                // dd($supplier_name);
+
+           }
+
+        $purchase = Purchase::create([
                 'date' => $request->date,
-                'supplier_id' => $request->supplier_id,
-                'supplier_name' => Supplier::findOrFail($request->supplier_id)->supplier_name,
+                'supplier_id' => $supplier_name,
+                'supplier_name' => Supplier::findOrFail($supplier_name)->supplier_name,
                 'tax_percentage' => $request->tax_percentage,
                 'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
@@ -129,7 +148,6 @@ class PurchaseController extends Controller
             ]);
 
             foreach (Cart::instance('purchase')->content() as $cart_item) {
-
 
                  // dd('purchase');
                 PurchaseDetail::create([
@@ -155,7 +173,6 @@ class PurchaseController extends Controller
                     ]);
 
                     $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
-
 
                     if(empty($prodloc)){
                         $prodloc = new ProductLocation;
@@ -188,6 +205,15 @@ class PurchaseController extends Controller
 
         return redirect()->route('purchases.index');
     }
+
+
+
+
+
+
+
+
+
 
 
     public function show(Purchase $purchase) {
@@ -357,4 +383,34 @@ class PurchaseController extends Controller
 
         return redirect()->route('purchases.index');
     }
+
+
+
+private function randomPhone()
+    {
+        $countryCode = '+628'; // Change this to the desired country code
+        $phone = $countryCode;
+      // Generate random digits for the remaining 10 digits (excluding country code)
+        for ($i = 0; $i < 10; $i++) {
+            $phone .= rand(0, 9);
+        }
+        return $phone;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

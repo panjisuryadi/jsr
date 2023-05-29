@@ -17,6 +17,7 @@
         <div class="row">
             <div class="col-12">
                 <livewire:search-product/>
+
             </div>
         </div>
 

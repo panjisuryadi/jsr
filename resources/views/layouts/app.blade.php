@@ -18,7 +18,9 @@
 
     @include('layouts.sidebar')
     <div class="c-wrapper">
-            @if(! request()->routeIs('app.pos.*'))
+            @if(! request()->routeIs('app.pos.*')
+            && ! request()->routeIs('purchase.*')
+            )
             <header class="c-header c-header-light c-header-fixed">
                 @include('layouts.header')
                 <div class="c-subheader justify-content-between px-3">

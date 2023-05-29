@@ -62,7 +62,14 @@ class Product extends Model implements HasMedia
     }
 
 
-
+ public function scopeTemp($query)
+    {
+        $query->where('status', 3);
+    }
+ public function scopeActive($query)
+    {
+        $query->where('status', 0);
+    }
 
     public static function generateCode()
         {
