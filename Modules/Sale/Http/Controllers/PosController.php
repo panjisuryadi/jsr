@@ -42,9 +42,7 @@ class PosController extends Controller
                $customers_name =  Customer::findOrFail($request->customer_id)->customer_name;
                 //dd($customers_name);
             } else {
-
                 $non_member = Customer::where('customer_email', 'non_member@hokkie.com')->first();
-
                 if ($non_member !== null) {
                     $non_member->update(['customer_name' => 'Non Member']);
                 } else {

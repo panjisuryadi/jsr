@@ -34,7 +34,7 @@ public function __construct()
         $this->module_name = 'products';
 
         // directory path of the module
-        $this->module_path = 'products';
+        $this->module_path = 'product';
 
         // module icon
         $this->module_icon = 'fas fa-sitemap';
@@ -117,11 +117,6 @@ public function __construct()
 
         return response()->json($data);
     }
-
-
-
-
-
 
 
 
@@ -252,6 +247,42 @@ public function index_data(Request $request)
     }
 
 
+    public function createModal() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        abort_if(Gate::denies('create_products'), 403);
+         return view(''.$module_path.'::'.$module_name.'.modal.index',
+           compact('module_name',
+                    'module_title',
+                    'module_icon', 'module_model'));
+    }
+
+
+
+
+    public function add_products_modal_categories(Request $request ,$id) {
+        abort_if(Gate::denies('access_products'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $category = Category::where('id', $id)->first();
+        $module_action = 'List';
+          return view(''.$module_path.'::'.$module_name.'.modal.create',
+           compact('module_name',
+                    'module_title',
+                    'module_icon', 'module_model'));
+    }
+
+
+
+
     public function webcam() {
         abort_if(Gate::denies('create_products'), 403);
 
@@ -291,6 +322,7 @@ public function saveAjax(Request $request)
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
              'product_code' => 'required|max:191|unique:'.$module_model.',product_code',
+             'category_id' => 'required',
              'product_name' => 'required|max:191',
              'product_price' => 'required|max:2147483647',
              'product_sale' => 'required|max:2147483647',
@@ -303,7 +335,7 @@ public function saveAjax(Request $request)
         }
 
         $input = $request->all();
-        dd($input);
+       // dd($input);
         $input = $request->except('_token');
         $input['product_code'] = $input['product_code'];
         $input['product_name'] = $input['product_name'];

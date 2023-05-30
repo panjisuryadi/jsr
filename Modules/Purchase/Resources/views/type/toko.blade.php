@@ -31,6 +31,10 @@
     min-width: 0;
     padding-top: 0.7rem !important;
 }
+@media (min-width: 992px)
+.modal-xl {
+    max-width: 920px !important;
+}
 </style>
 @endpush
 @section('content')
@@ -200,6 +204,61 @@
         </div>
     </div>
 
+
+
+<div id="ModalKategori" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeaderkategori"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalContentKategori"> </div>
+         <div class="modal-footer" id="ModalFooterKategori"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="ModalBack" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeaderBack"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalContentBack"> </div>
+         <div class="modal-footer" id="ModalFooterBack"></div>
+
+        </div>
+    </div>
+</div>
+
+
+{{--
+<div id="ModalKategori" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeaderkategori"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+           <div class="modal-body p-0" id="ModalContentKategori"></div>
+           <div class="modal-footer" id="ModalFooterKategori"></div>
+        </div>
+    </div>
+</div> --}}
+
+
+
+
 @endsection
 
 @push('page_scripts')
@@ -212,16 +271,18 @@
         })
     </script>
 
-<script>
-    jQuery.noConflict();
-    (function( $ ) {
-        $(document).ready(function() {
+
+
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+
+  $(document).ready(function() {
         $('#getTotalAmount').click(function(){
             $('#paid_amount').val($('#total_amount').val())
               });
-        });
 
-        $('#sup1').change(function() {
+         $('#sup1').change(function() {
             $('#supplier2').toggle();
             $('#supplier1').hide();
         });
@@ -230,30 +291,57 @@
             $('#supplier2').hide();
         });
 
+        });
 
-    })(jQuery);
-</script>
 
-<script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+    $(document).on('click', '#Tambah', function(e){
          e.preventDefault();
+
         if($(this).attr('id') == 'Tambah')
         {
-            $('.modal-dialog').addClass('modal-lg');
+
+            $('.modal-dialog').removeClass('modal-xl');
             $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-lg');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case(' Products') }}');
         }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case('Edit item') }}');
-        }
+
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });
+
+
+    $(document).on('click', '#openModalKategori', function(e){
+          e.preventDefault();
+          $('#ModalGue').modal('hide');
+             var dataURL = $(this).attr('data-href');
+            //alert(dataURL);
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').addClass('modal-xl');
+            $('#ModalContentKategori').load($(this).attr('href'));
+            $('#ModalHeaderkategori').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
+            $('#ModalKategori').modal('show');
+
+    });
+
+
+
+    $(document).on('click', '#Back', function(e){
+           e.preventDefault();
+           $('#ModalBack').modal('hide');
+             var dataURL = $(this).attr('data-href');
+            //alert(dataURL);
+            $('.modal-dialog').removeClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-lg');
+            $('#ModalContentBack').load($(this).attr('href'));
+            $('#ModalHeaderBack').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
+            $('#ModalBack').modal('show');
+
+    });
+
+
 })(jQuery);
 </script>
 @endpush
