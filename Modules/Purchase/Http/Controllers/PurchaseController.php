@@ -1,13 +1,14 @@
 <?php
 
 namespace Modules\Purchase\Http\Controllers;
-
+use Carbon\Carbon;
 use Modules\Purchase\DataTables\PurchaseDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Modules\Purchase\Models\HistoryPurchases;
 use Modules\People\Entities\Supplier;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
@@ -20,6 +21,9 @@ use Modules\Purchase\Http\Requests\StorePurchaseRequest;
 use Modules\Purchase\Http\Requests\UpdatePurchaseRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
+
 class PurchaseController extends Controller
 {
 
@@ -27,17 +31,43 @@ class PurchaseController extends Controller
     {
         // Page Title
         $this->module_title = 'Data Purchase';
-        $this->module_name = 'Purchase';
+        $this->module_name = 'purchase';
         $this->module_path = 'purchase';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\Purchase\Entities\Purchase";
 
     }
 
-    public function index(PurchaseDataTable $dataTable) {
+
+
+
+  public function index() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        return view(''.$module_path.'::index',
+                                compact('module_name',
+                                        'module_action',
+                                        'module_title',
+                                        'module_path',
+                                        'module_icon', 'module_model'));
+
+
+
+    }
+
+
+
+    public function index_datatable(PurchaseDataTable $dataTable) {
+
         abort_if(Gate::denies('access_purchases'), 403);
 
-        return $dataTable->render('purchase::index');
+        return $dataTable->render('purchase::index_datatable');
     }
 
 
@@ -55,6 +85,263 @@ class PurchaseController extends Controller
 
         return view('purchase::create');
     }
+
+
+
+
+
+
+
+
+public function index_data(Request $request)
+
+    {
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'List';
+            $$module_name = $module_model::get();
+            $data = $$module_name;
+
+         return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_path.'::partials.aksi',
+                                 compact('module_name', 'data', 'module_model'));
+                                })
+                         ->addColumn('status', function ($data) {
+                           $module_name = $this->module_name;
+                                    return view(''.$module_name.'::partials.status',
+                                 compact('module_name', 'data'));
+                                })
+                          ->addColumn('payment_status', function ($data) {
+                           $module_name = $this->module_name;
+                                    return view(''.$module_name.'::partials.payment-status',
+                                 compact('module_name', 'data'));
+                                })
+
+                        ->addColumn('buyer', function ($data) {
+                           $module_name = $this->module_name;
+                                    return view(''.$module_name.'::partials.buyer',
+                                 compact('module_name', 'data'));
+                                })
+
+
+                          ->editColumn('name', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->reference . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                             ->editColumn('total_amount', function ($data) {
+                               $tb = '<div class="items-center text-center text-xs text-gray-800"> ' .format_currency($data->total_amount) . ' </div>';
+                                return $tb;
+                            })
+
+                             ->editColumn('paid_amount', function ($data) {
+                               $tb = '<div class="items-center text-center text-xs text-gray-800"> ' .format_currency($data->paid_amount) . ' </div>';
+                                return $tb;
+                            })
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['status', 'action',
+                            'buyer',
+                            'total_amount',
+                            'payment_status',
+                            'paid_amount',
+                             'reference'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
+
+public function History(Request $request)
+
+    {
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'List';
+            $$module_name = HistoryPurchases::latest()->get();
+            $data = $$module_name;
+
+            return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_path.'::partials.aksi_history',
+                                 compact('module_name', 'data', 'module_model'));
+                                })
+
+                          ->editColumn('username', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <span class="text-xs font-medium text-gray-800">
+                                     ' .$data->username . '</span>
+                                    </div>';
+                                return $tb;
+                            })
+
+                             ->editColumn('produk', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <span class="text-xs font-medium text-gray-800">
+                                     ' .$data->product->product_name . '</span>
+                                    </div>';
+                                return $tb;
+                            })
+
+                              ->editColumn('qty', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->qty . '
+                                    </div>';
+                                return $tb;
+                            })
+
+                          ->editColumn('reference', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->purchase->reference . '
+                                    </div>';
+                                return $tb;
+                            })
+
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['status', 'action',
+                            'username',
+                            'created_at',
+                            'reference',
+                            'qty',
+                            'updated_at',
+                             'produk'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
+
+
+
+public function index_data_type(Request $request)
+
+    {
+
+            $type = $request->type;
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'List';
+
+            if ($type == 'customer') {
+                $$module_name = $module_model::whereNull('supplier_id')->get();
+            }else if ($type == 'supplier'){
+                $$module_name = $module_model::whereNull('customer_id')->get();
+            }else{
+                 $$module_name = $module_model::get();
+            }
+
+            $data = $$module_name;
+
+         return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_path.'::partials.aksi',
+                                 compact('module_name', 'data', 'module_model'));
+                                })
+                         ->addColumn('status', function ($data) {
+                           $module_name = $this->module_name;
+                                    return view(''.$module_name.'::partials.status',
+                                 compact('module_name', 'data'));
+                                })
+                          ->addColumn('payment_status', function ($data) {
+                           $module_name = $this->module_name;
+                                    return view(''.$module_name.'::partials.payment-status',
+                                 compact('module_name', 'data'));
+                                })
+
+                        ->addColumn('buyer', function ($data) {
+                           $module_name = $this->module_name;
+                                    return view(''.$module_name.'::partials.buyer',
+                                 compact('module_name', 'data'));
+                                })
+
+
+                          ->editColumn('name', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->reference . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                             ->editColumn('total_amount', function ($data) {
+                               $tb = '<div class="items-center text-center text-xs text-gray-800"> ' .format_currency($data->total_amount) . ' </div>';
+                                return $tb;
+                            })
+
+                             ->editColumn('paid_amount', function ($data) {
+                               $tb = '<div class="items-center text-center text-xs text-gray-800"> ' .format_currency($data->paid_amount) . ' </div>';
+                                return $tb;
+                            })
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['status', 'action',
+                            'buyer',
+                            'total_amount',
+                            'payment_status',
+                            'paid_amount',
+                             'reference'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
+
 
 
 
@@ -100,7 +387,7 @@ class PurchaseController extends Controller
     public function store(StorePurchaseRequest $request) {
 
         $params = $request->all();
-        dd($params);
+       //dd($params);
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -125,7 +412,6 @@ class PurchaseController extends Controller
                             'country'        => 'Indonesia',
                             'address'        => 'Jln. Jakarta no 123'
                         ]);
-
                 $supplier_name = $supplier_new->id;
                 // dd($supplier_name);
 
@@ -150,7 +436,6 @@ class PurchaseController extends Controller
             ]);
 
             foreach (Cart::instance('purchase')->content() as $cart_item) {
-
                  // dd('purchase');
                 PurchaseDetail::create([
                     'purchase_id' => $purchase->id,
@@ -167,9 +452,19 @@ class PurchaseController extends Controller
                     'location_id' => $request->location_id,
                 ]);
 
+                  //add history purchases
+                 HistoryPurchases::create([
+                                'purchase_id' => $purchase->id,
+                                'product_id'  => $cart_item->id,
+                                'qty'         =>   $cart_item->qty,
+                                'username'    =>   auth()->user()->name,
+                                'user_id'     =>   auth()->user()->id,
+                                'status'      =>   1,
+                            ]);
+
                 if ($request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
-                    // dd('product');
+                    //dd('product');
                     $product->update([
                         'product_quantity' => $product->product_quantity + $cart_item->qty
                     ]);
@@ -191,7 +486,6 @@ class PurchaseController extends Controller
             }
 
             Cart::instance('purchase')->destroy();
-
             if ($purchase->paid_amount > 0) {
                 PurchasePayment::create([
                     'date' => $request->date,
@@ -204,12 +498,8 @@ class PurchaseController extends Controller
         });
 
         toast('Purchase Created!', 'success');
-
         return redirect()->route('purchases.index');
     }
-
-
-
 
 
 
@@ -217,7 +507,7 @@ class PurchaseController extends Controller
     public function saveTypeCustomer(StorePurchaseRequest $request) {
 
         $params = $request->all();
-      //  dd($params);
+      // dd($params);
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -271,6 +561,7 @@ class PurchaseController extends Controller
             foreach (Cart::instance('purchase')->content() as $cart_item) {
 
                  // dd('purchase');
+                //dd($params);
                 PurchaseDetail::create([
                     'purchase_id' => $purchase->id,
                     'product_id' => $cart_item->id,
@@ -285,6 +576,16 @@ class PurchaseController extends Controller
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                     'location_id' => $request->location_id,
                 ]);
+                //add history purchases
+                 HistoryPurchases::create([
+                                'purchase_id' => $purchase->id,
+                                'product_id'  => $cart_item->id,
+                                'qty'         =>   $cart_item->qty,
+                                'username'    =>   auth()->user()->name,
+                                'user_id'     =>   auth()->user()->id,
+                                'status'      =>   1,
+                            ]);
+
 
                 if ($request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
@@ -457,8 +758,8 @@ class PurchaseController extends Controller
                 $product->update([
                     'product_quantity' => $product->product_quantity - $detail->quantity
                 ]);
-
                 $prodloc = ProductLocation::where('product_id',$product->id)->where('location_id',$detail->location_id)->first();
+                dd($prodloc);
                 $prodloc->stock = $prodloc->stock - $detail->quantity;
                 $prodloc->save();
             }
@@ -471,9 +772,11 @@ class PurchaseController extends Controller
 
     public function completepurchase(Request $request){
         $purchase = Purchase::find($request->purchase_id);
+
         $purchase->status = 'Completed';
         if($purchase->save()){
             $detail = PurchaseDetail::where('purchase_id',$purchase->id)->get();
+             //dd($detail);
             if(count($detail)){
                 foreach ($detail as $detail) {
                     $product = Product::findOrFail($detail->product_id);

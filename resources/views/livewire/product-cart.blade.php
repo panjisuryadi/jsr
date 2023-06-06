@@ -23,8 +23,8 @@
                     <th class="align-middle">Net Unit Price</th>
                     <th class="align-middle">Stock</th>
                     <th class="align-middle">Quantity</th>
-                    <th class="align-middle">Discount</th>
-                    <th class="align-middle">Tax</th>
+                   {{--  <th class="align-middle">Discount</th>
+                    <th class="align-middle">Tax</th> --}}
                     <th class="align-middle">Sub Total</th>
                     <!-- <th class="align-middle">Penyimpanan</th> -->
                     <th class="align-middle">Action</th>
@@ -52,13 +52,13 @@
                                     @include('livewire.includes.product-cart-quantity')
                                 </td>
 
-                                <td class="align-middle">
+                               {{--  <td class="align-middle">
                                     {{ format_currency($cart_item->options->product_discount) }}
                                 </td>
 
                                 <td class="align-middle">
                                     {{ format_currency($cart_item->options->product_tax) }}
-                                </td>
+                                </td> --}}
 
                                 <td class="align-middle">
                                     {{ format_currency($cart_item->options->sub_total) }}
@@ -125,12 +125,14 @@
         <div class="col-lg-6">
             <div class="form-group">
             @php
-            $main = \Modules\Locations\Entities\Locations::whereNull('parent_id')->get();
+           // $main = \Modules\Locations\Entities\Locations::whereNull('parent_id')->get();
+            $locations = \Modules\Locations\Entities\Locations::where('name','LIKE','%Tempo%')->get();
             @endphp
             <label for="">Location</label>
-            <select name="location_id" class="form-control select2" disabled>
-                <option value="4" selected>-- @lang('Temporary') --</option>
-
+            <select name="location_id" class="form-control select2" readonly>
+                @foreach ($locations as $loc)
+                <option value="{{ $loc->id }}" selected>{{ $loc->name }}</option>
+                @endforeach
             </select>
             </div>
             <input type="hidden" class="form-control" name="discount_percentage" min="0" max="100" value="{{ $global_discount }}" required>

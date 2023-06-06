@@ -3,15 +3,14 @@
 @section('third_party_stylesheets')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 <style type="text/css">
-
 div.dataTables_wrapper div.dataTables_filter input {
-    margin-left: 0.5em;
-    display: inline-block;
-    width: 220px !important;
+margin-left: 0.5em;
+display: inline-block;
+width: 220px !important;
 }
 div.dataTables_wrapper div.dataTables_length select {
-    width: 70px !important;
-    display: inline-block;
+width: 70px !important;
+display: inline-block;
 }
 </style>
 @endsection
@@ -23,38 +22,30 @@ div.dataTables_wrapper div.dataTables_length select {
 @endsection
 @section('content')
 <div class="container-fluid">
-
     <div class="flex flex-wrap -m-4 text-center">
-   @foreach(\Modules\Product\Entities\Category::all() as $category)
-     <div onclick="location.href='{{ route('products.add_products_categories',$category->id) }}';" class="cursor-pointer p-4 md:w-1/4 sm:w-1/2 w-full">
-        <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-        <div class="justify-center text-center items-center">
-        <?php
-        if ($category->image) {
+        @foreach(\Modules\Product\Entities\Category::all() as $category)
+        <div onclick="location.href='{{ route('products.add_products_categories',$category->id) }}';" class="cursor-pointer p-4 md:w-1/4 sm:w-1/2 w-full">
+            <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
+                <div class="justify-center text-center items-center">
+                    <?php
+                    if ($category->image) {
                     $image = asset(imageUrl() . $category->image);
-                }else{
+                    }else{
                     $image = asset('images/logo.png');
-                }
-
-         ?>
-  <img id="default_1" src="{{ $image }}" alt="images"
-      class="h-16 w-16 object-contain mx-auto" />
-
-  </div>
-          <div class="leading-tight">{{ $category->category_name }}</div>
+                    }
+                    ?>
+                    <img id="default_1" src="{{ $image }}" alt="images"
+                    class="h-16 w-16 object-contain mx-auto" />
+                </div>
+                <div class="leading-tight">{{ $category->category_name }}</div>
+            </div>
         </div>
-      </div>
-
-    @endforeach
-
+        @endforeach
     </div>
-
-
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
                     <div class="flex justify-between pb-3 border-bottom">
                         <div>
                             <a href="{{ route('products.create') }}" class="btn btn-primary">
@@ -63,17 +54,16 @@ div.dataTables_wrapper div.dataTables_length select {
                         </div>
                         <div id="buttons"></div>
                     </div>
-                     <div class="table-responsive mt-1">
+                    <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
-                            <th style="width: 9%!important;">{{ Label_case('image') }}</th>
+                                    <th style="width: 9%!important;">{{ Label_case('image') }}</th>
                                     <th>{{ Label_case('product_name') }}</th>
                                     <th>{{ Label_case('price') }}</th>
-                <th style="width: 15%!important;" class="text-center">{{ Label_case('quantity') }}</th>
-     <th style="width: 15%!important;" class="text-center">{{ Label_case('weight') }}</th>
-
+                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('quantity') }}</th>
+                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('weight') }}</th>
                                     <th style="width: 14%!important;" class="text-center">
                                         Action
                                     </th>
@@ -87,17 +77,17 @@ div.dataTables_wrapper div.dataTables_length select {
     </div>
 </div>
 @endsection
- <x-library.datatable />
+<x-library.datatable />
 @push('page_scripts')
-   <script type="text/javascript">
-        $('#datatable').DataTable({
-           processing: true,
-           serverSide: true,
-           autoWidth: true,
-           responsive: true,
-           lengthChange: true,
-            searching: true,
-           "oLanguage": {
+<script type="text/javascript">
+    $('#datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        autoWidth: true,
+        responsive: true,
+        lengthChange: true,
+        searching: true,
+        "oLanguage": {
             "sSearch": "<i class='bi bi-search'></i> {{ __("labels.table.search") }} : ",
             "sLengthMenu": "_MENU_ &nbsp;&nbsp;Data Per {{ __("labels.table.page") }} ",
             "sInfo": "{{ __("labels.table.showing") }} _START_ s/d _END_ {{ __("labels.table.from") }} <b>_TOTAL_ data</b>",
@@ -109,60 +99,56 @@ div.dataTables_wrapper div.dataTables_length select {
                 "sPrevious": "{{ __("labels.table.prev") }}",
                 "sNext": "{{ __("labels.table.next") }}"
             }
-            },
-            "aaSorting": [[ 0, "desc" ]],
-            "columnDefs": [
-                {
-                    "targets": 'no-sort',
-                    "orderable": false,
-                }
-            ],
-            "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
-            dom: 'Blfrtip',
-            buttons: [
-                'excel',
-                'pdf',
-                'print'
-            ],
-            columns: [{
-                    "data": 'id',
-                    "sortable": false,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-
-                {
-                    data: 'product_image',
-                    name: 'product_image'
-                }, {
-                    data: 'product_name',
-                    name: 'product_name'
-                },
-                 {
-                    data: 'product_price',
-                    name: 'product_price'
-                }, {
-                    data: 'product_quantity',
-                    name: 'product_quantity'
-                }, {
-                    data: 'weight',
-                    name: 'weight'
-                },
-
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
-            ]
-        })
-        .buttons()
-        .container()
-        .appendTo("#buttons");
-    </script>
-
-
+        },
+        "aaSorting": [[ 0, "desc" ]],
+        "columnDefs": [
+        {
+            "targets": 'no-sort',
+            "orderable": false,
+        }
+        ],
+        "sPaginationType": "simple_numbers",
+        ajax: '{{ route("$module_name.index_data") }}',
+        dom: 'Blfrtip',
+        buttons: [
+        'excel',
+        'pdf',
+        'print'
+        ],
+        columns: [{
+            "data": 'id',
+            "sortable": false,
+            render: function(data, type, row, meta) {
+                return meta.row + meta.settings._iDisplayStart + 1;
+            }
+        },
+        {
+            data: 'product_image',
+            name: 'product_image'
+        }, {
+            data: 'product_name',
+            name: 'product_name'
+        },
+        {
+            data: 'product_price',
+            name: 'product_price'
+        }, {
+            data: 'product_quantity',
+            name: 'product_quantity'
+        }, {
+            data: 'weight',
+            name: 'weight'
+        },
+        {
+            data: 'action',
+            name: 'action',
+            orderable: false,
+            searchable: false
+        }
+        ]
+    })
+    .buttons()
+    .container()
+    .appendTo("#buttons");
+</script>
 @endpush

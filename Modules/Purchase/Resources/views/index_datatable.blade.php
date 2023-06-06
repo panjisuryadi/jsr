@@ -64,15 +64,11 @@
         <a class="nav-link active" data-toggle="tab" href="#tab_2">General</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#tab_3">Customer / Member</a>
+        <a class="nav-link" data-toggle="tab" href="#tab_3">Purchase Member</a>
     </li>
 
      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#tab_4">Supplier</a>
-    </li>
-
-     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#tab_5">History</a>
+        <a class="nav-link" data-toggle="tab" href="#tab_4">History</a>
     </li>
 
 </ul>
@@ -80,27 +76,28 @@
 <div class="tab-content p-2 mb-2">
 
 <div id="tab_2" class="container p-2 tab-pane active">
-
-  @include('purchase::table.all')
-
+     <div class="flex justify-between py-1 border-bottom">
+                        <div>
+                           dfd
+                        </div>
+                        <div id="buttons">
+                        </div>
+                    </div>
+<div class="table-responsive">
+                            {!! $dataTable->table() !!}
+                        </div>
 </div>
 
 
 <div id="tab_3" class="container p-2 tab-pane">
     <div class="pt-3">
-      @include('purchase::table.customer')
+        Purchase Member / Non Member
     </div>
 </div>
 
 <div id="tab_4" class="container p-2 tab-pane">
     <div class="pt-3">
-       @include('purchase::table.supplier')
-    </div>
-</div>
-
-<div id="tab_5" class="container p-2 tab-pane">
-    <div class="pt-3">
-       @include('purchase::table.history')
+       History Pembelian
     </div>
 </div>
 
@@ -110,6 +107,25 @@
 
 </div>
 
+
+
+
+
+
+
+
+
+
+            {{--    <div class="flex justify-between py-1 border-bottom">
+                        <div>
+                      <a href="{{ route('purchases.create') }}" class="btn btn-primary">
+                            Add Purchase <i class="bi bi-plus"></i>
+                        </a>
+
+                        </div>
+                        <div id="buttons">
+                        </div>
+                    </div> --}}
 
 
                     </div>
@@ -146,10 +162,8 @@
     </div>
 @endsection
 
-
 @push('page_scripts')
-
-
+    {!! $dataTable->scripts() !!}
 <script>
         function completepurchase(id,noref){
         $('#purchase_id').val(id)

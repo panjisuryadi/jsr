@@ -36,6 +36,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/purchase-type/{type}', 'PurchaseController@type')->name('purchase.type');
     Route::get('/purchase-product-add', 'PurchaseController@add')->name('purchase-product.add');
 
+
+    Route::get('/purchase-product-index-data', 'PurchaseController@index_data')->name('purchase.index_data');
+
+    Route::get('/purchase-history', 'PurchaseController@history')->name('purchase.history');
+
+    Route::get('/index-purchase-type/{type}', 'PurchaseController@index_data_type')->name('purchase.index_data_type');
+
+    Route::get('/purchase-index-table', 'PurchaseController@index_datatable')->name('purchase.index_datatable');
+
     //Payments
     Route::get('/purchase-payments/{purchase_id}', 'PurchasePaymentsController@index')->name('purchase-payments.index');
 

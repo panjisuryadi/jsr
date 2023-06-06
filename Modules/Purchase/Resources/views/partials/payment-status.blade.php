@@ -1,3 +1,4 @@
+   <div class="justify-center text-center items-center">
 @if ($data->payment_status == 'Partial')
     <span class="badge badge-warning">
         {{ $data->payment_status }}
@@ -11,3 +12,4 @@
         {{ $data->payment_status }}
     </span>
 @endif
+</div>
