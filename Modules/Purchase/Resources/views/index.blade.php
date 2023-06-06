@@ -27,7 +27,7 @@
       <img id="default_1" src="{{ $image }}" alt="images"
         class="h-16 w-16 object-contain mx-auto" />
         </div class="py-1">
-          <div class="leading-tight py-3">Membes / Non Member</div>
+          <div class="leading-tight py-3">Member / Non Member</div>
         </div>
       </div>
 

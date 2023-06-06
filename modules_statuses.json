@@ -38,5 +38,7 @@
     "ParamaterPoin": true,
     "GoldParameter": true,
     "CostParameter": true,
-    "Locations": true
+    "Locations": true,
+    "ParameterBerlian": true,
+    "JenisPerhiasan": true
 }

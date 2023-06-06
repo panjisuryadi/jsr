@@ -26,7 +26,7 @@ class PurchaseProduct extends Component
         $this->how_many = 5;
         $this->search_results = Collection::empty();
         $this->list_product = Product::temp()->take($this->how_many)->get();
-         $this->refreshData();
+        $this->refreshData();
     }
 
     public function refreshData()
@@ -43,6 +43,7 @@ class PurchaseProduct extends Component
         $this->search_results = Product::where('product_name', 'like', '%' . $this->query . '%')
             ->orWhere('product_code', 'like', '%' . $this->query . '%')
             ->take($this->how_many)->get();
+
     }
 
     public function loadMore() {
@@ -56,8 +57,14 @@ class PurchaseProduct extends Component
         $this->search_results = Collection::empty();
     }
 
+    public function clickQuery() {
+        $this->refreshData();
+
+    }
+
     public function selectProduct($product) {
         $this->emit('productSelected', $product);
+         $this->resetQuery();
     }
 
 
@@ -68,7 +75,8 @@ class PurchaseProduct extends Component
         if ($item) {
              $item->delete();
              $this->refreshData();
-             $this->emit('resetInput');
+            // $this->emit('resetInput');
+             $this->resetQuery();
         }
     }
 

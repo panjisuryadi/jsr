@@ -127,6 +127,25 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+    // JenisPerhiasans
+            $Categories->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Jenis Perhiasan'), [
+                'route' => 'jenisperhiasan.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['jenisperhiasans*'],
+                'permission'    => ['access_jenisperhiasans'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+
     // DiamondCertificates
             $Categories->add(
                 '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.diamond_certificate'), [
@@ -348,6 +367,9 @@ class GenerateMenus
             ]);
 
 
+
+
+
          // GoldParameters
             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Gold Parameters'), [
                 'route' => 'goldparameter.index',
@@ -378,6 +400,23 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+              // ParameterBerlians
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Parameter Berlian'), [
+                'route' => 'parameterberlian.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['parameterberlians*'],
+                'permission'    => ['access_parameterberlians'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2 pb-3',
+            ]);
+
+
 
       // DataBanks
             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Data Bank'), [
@@ -452,6 +491,8 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2 pb-3',
             ]);
+
+
 
 
 
@@ -857,16 +898,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2 pb-3',
             ]);
-
-
-
-
-
-
-
-
-
-
 
 
 

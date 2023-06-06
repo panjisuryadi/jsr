@@ -25,8 +25,8 @@ class CreateProductItemsTable extends Migration
             $table->integer('product_price');
             $table->integer('product_cost');
             $table->integer('product_sale');
-            $table->integer('berat_emas')->nullable();;
-            $table->integer('berat_accessories')->nullable();;
+            $table->integer('berat_emas')->nullable();
+            $table->integer('berat_accessories')->nullable();
             $table->integer('berat_label')->nullable();
             $table->integer('berat_total')->nullable();
             $table->string('gudang')->nullable();

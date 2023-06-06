@@ -12,7 +12,10 @@
         <div class="px-2">
             <div class="form-group" style="z-index: 4;">
                 <label for="reference">Pencarian <span class="text-danger">*</span></label>
-                <input class="form-control"  wire:keydown.escape="resetQuery" wire:model.debounce.500ms="query" type="text" placeholder="@lang('Type product name or code')">
+                <input class="form-control" wire:keydown.escape="resetQuery" wire:model.debounce.500ms="query"
+                wire:click="clickQuery"
+                type="text"
+                placeholder="@lang('Type product name or code')">
             </div>
         </div>
     </div>
@@ -45,13 +48,21 @@
                                 | {{ $result->category->category_name }} | {{ number_format($result->product_price) }}</span>
                             </div>
                         </div>
-                        <div class="flex justify-end">
+
+                    <div class="flex justify-end">
                             <a wire:click.prevent="selectProduct({{ $result }})"
                                 href="#" class="py-0 btn btn-sm btn-outline-success mr-1">
                                 Add
                             </a>
+                            @if($result->status == 3)
+                            <button wire:click="hapusItem({{ $result->id }})"
+                            class="py-0 btn btn-sm btn-outline-danger">
+                            Hapus
+                            </button>
+                            @endif
                         </div>
-                    </div>
+
+                </div>
                 </li>
                 @endforeach
                 @if($search_results->count() >= $how_many)
@@ -65,9 +76,7 @@
         </div>
     </div>
     @else
-    <div class="position-absolute mt-0"
-        style="width: 340px !important;z-index: 3;left: 0;bottom: 0;
-        border: 1px solid #f0f0ef !important;">
+      <div class="card position-absolute mt-0" style="width: 340px !important;z-index: 2;left: 0;right: 0;border: 0;border: 1px solid #f0f0ef !important;">
         <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-3 rounded relative" role="alert">
             <span class="block sm:inline"> @lang('No Product Found') ....</span>
             <span class="absolute top-0 bottom-0 right-0 px-2 py-3">

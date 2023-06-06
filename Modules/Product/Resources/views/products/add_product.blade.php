@@ -57,17 +57,23 @@
                         <input type="hidden" name="product_quantity" value="1">
                         <input type="hidden" name="product_unit" value="Gram">
 
-                            @if($category->id == 1)
-                              @include('product::products.form.mutiara')
-                            @elseif($category->id == 2)
-                           @include('product::products.form.all')
-                            @elseif($category->id == 3)
-                           @include('product::products.form.perak')
-                            @elseif($category->id == 6 || $category->id == 7 || $category->id == 8)
-                           @include('product::products.form.emas')
-                            @else
-                             @include('product::products.form.all')
-                            @endif
+
+                    @if(strpos($category->category_name, 'Mutiara') !== false)
+                    @include('product::products.form.mutiara')
+                    @elseif(strpos($category->category_name, 'Berlian') !== false)
+                  @include('product::products.form.berlian')
+                    @elseif (\Illuminate\Support\Str::contains($category->category_name, ['Perak', 'Paladium']))
+                   @include('product::products.form.perak')
+                    @elseif(strpos($category->category_name, 'Logam Mulia') !== false)
+                   @include('product::products.modal.lm')
+                     @elseif (strpos($category->category_name, 'Emas') !== false)
+                   @include('product::products.form.emas')
+                    @else
+                     @include('product::products.modal.all')
+                    @endif
+
+
+
 
 
                     </div>

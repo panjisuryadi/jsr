@@ -35,6 +35,24 @@
 .modal-xl {
     max-width: 920px !important;
 }
+
+    #camera{
+        width:100% !important;
+        height: 240px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+
+    }
+     #results{
+        width: 100% !important;
+        /*height: 240px !important;*/
+       /* border: 2px dashed #FF9800 !important;*/
+        border-radius: 8px;
+        background: #ff98003d !important;
+
+    }
+
 </style>
 @endpush
 @section('content')
@@ -77,6 +95,7 @@
                                 </div>
 
                         @include('utils.alerts')
+                         <script src="{{  asset('js/jquery.min.js') }}"></script>
                         <form id="purchase-form" action="{{ route('purchases.store') }}" method="POST">
                             @csrf
 
@@ -240,28 +259,13 @@
 </div>
 
 
-{{--
-<div id="ModalKategori" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalHeaderkategori"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-           <div class="modal-body p-0" id="ModalContentKategori"></div>
-           <div class="modal-footer" id="ModalFooterKategori"></div>
-        </div>
-    </div>
-</div> --}}
-
-
 
 
 @endsection
 
 @push('page_scripts')
+
+
 <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
         $('#purchase-form').on('submit',function(e){
@@ -270,8 +274,16 @@
            console.log(paid)
         })
     </script>
-
-
+<script type="text/javascript">
+    $('#up1').change(function() {
+        $('#upload2').toggle();
+        $('#upload1').hide();
+    });
+    $('#up2').change(function() {
+        $('#upload1').toggle();
+        $('#upload2').hide();
+    });
+</script>
 
 <script type="text/javascript">
 jQuery.noConflict();
@@ -296,24 +308,31 @@ jQuery.noConflict();
 
     $(document).on('click', '#Tambah', function(e){
          e.preventDefault();
+          $('#ModalKategori').modal('hide');
+          $("#ModalKategori").trigger("reset");
+         if($(this).attr('id') == 'Tambah')
+         {
 
-        if($(this).attr('id') == 'Tambah')
-        {
-
-            $('.modal-dialog').removeClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').addClass('modal-xl');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case(' Products') }}');
         }
 
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
+        $('#ModalGue').modal({
+                        backdrop: 'static',
+                        keyboard: true,
+                        show: true
+                });
     });
 
 
     $(document).on('click', '#openModalKategori', function(e){
           e.preventDefault();
-          $('#ModalGue').modal('hide');
+            $('#ModalGue').modal('hide');
+            $("#ModalGue").trigger("reset");
              var dataURL = $(this).attr('data-href');
             //alert(dataURL);
             $('.modal-dialog').removeClass('modal-sm');
@@ -321,27 +340,39 @@ jQuery.noConflict();
             $('.modal-dialog').addClass('modal-xl');
             $('#ModalContentKategori').load($(this).attr('href'));
             $('#ModalHeaderkategori').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
-            $('#ModalKategori').modal('show');
+            $('#ModalKategori').modal({
+                        backdrop: 'static',
+                        keyboard: true,
+                        show: true
+                });
+
+
 
     });
 
 
 
-    $(document).on('click', '#Back', function(e){
+    $(document).on('click', '#BackButton', function(e){
            e.preventDefault();
-           $('#ModalBack').modal('hide');
+            $('#ModalGue').modal('hide');
+            $("#ModalGue").trigger("reset");
+            $('#ModalKategori').modal('hide');
+            $("#ModalKategori").trigger("reset");
              var dataURL = $(this).attr('data-href');
             //alert(dataURL);
             $('.modal-dialog').removeClass('modal-xl');
             $('.modal-dialog').removeClass('modal-sm');
             $('.modal-dialog').addClass('modal-lg');
-            $('#ModalContentBack').load($(this).attr('href'));
+            $('#ModalContentBack').load(dataURL);
             $('#ModalHeaderBack').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
             $('#ModalBack').modal('show');
 
     });
 
 
+
 })(jQuery);
 </script>
+
+
 @endpush

@@ -10,45 +10,142 @@
     </ol>
 @endsection
 
+@push('page_css')
+<style type="text/css">
+    .dropzone {
+        height: 220px !important;
+        min-height: 220px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+    }
+    .dropzone i.bi.bi-cloud-arrow-up {
+        font-size: 5rem;
+        color: #bd4019 !important;
+    }
 
+ .c-main {
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 1;
+    min-width: 0;
+    padding-top: 0.7rem !important;
+}
+@media (min-width: 992px)
+.modal-xl {
+    max-width: 920px !important;
+}
+
+    #camera{
+        width:100% !important;
+        height: 240px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+
+    }
+     #results{
+        width: 100% !important;
+        /*height: 240px !important;*/
+       /* border: 2px dashed #FF9800 !important;*/
+        border-radius: 8px;
+        background: #ff98003d !important;
+
+    }
+
+</style>
+@endpush
 @section('content')
 <x-library.select2 />
+
+
     <div class="container-fluid mb-4">
-        <div class="row">
-            <div class="col-12">
-                <livewire:search-product/>
-            </div>
-        </div>
+
+<div class="card  py-3 px-3">
+<div class="flex relative py-2">
+    <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-b border-gray-300"></div>
+    </div>
+    <div class="relative flex justify-left">
+        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{  __('Purchase') }}</span>
+    </div>
+</div>
+
+{{-- <div class="grid grid-cols-2 gap-2 mt-2">
+   <livewire:purchase-product/>
+   <livewire:product.create>
+</div>
+</div> --}}
+
 
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
+
+
                     <div class="card-body">
-                             <h1>Pembelian Member</h1>
+                     <div class="flex relative py-2">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="w-full border-b border-gray-300"></div>
+                                    </div>
+                                    <div class="relative flex justify-left">
+
+                                        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark"><small>Pembelian</small> Member / Customer<i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Tambah Produk tipe Member."></i></span>
+                                    </div>
+                                </div>
+
                         @include('utils.alerts')
-                        <form id="purchase-form" action="{{ route('purchases.store') }}" method="POST">
+                         <script src="{{  asset('js/jquery.min.js') }}"></script>
+                        <form id="purchase-form" action="{{ route('purchase.save.customer') }}" method="POST">
                             @csrf
 
-                            <div class="form-row">
+                            <div class="form-row mt-2">
                                 <div class="col-lg-4">
+                                 <livewire:purchase-product/>
+                                </div>
+
+                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <label for="reference">Reference <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required readonly value="PR">
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="supplier_id">Supplier <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="supplier_id" id="supplier_id" required>
-                                                @foreach(\Modules\People\Entities\Supplier::all() as $supplier)
-                                                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+
+                                          <div class="py-1">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio"
+                                             name="customer" value="1" id="sup1" checked>
+                                            <label class="form-check-label" for="sup1">Customer</label>
+                                        </div>
+
+                                    <div class="form-check form-check-inline">
+                                            <input class="form-check-input" value="2" type="radio" name="customer"
+                                            id="sup2">
+                                            <label class="form-check-label" for="sup2">Non member</label>
+                                        </div>
+                                    </div>
+
+                                    <div id="supplier1" style="display: none !important;" class="align-items-center justify-content-center">
+                                     <input type="text" class="form-control" placeholder="Nama Customer" name="none_customer" >
+                                    </div>
+
+
+                                    <div id="supplier2" style="display: block !important;" class="align-items-center justify-content-center">
+                                       <select class="form-control select2" name="customer_id" id="customer_id" >
+                                                @foreach(\Modules\People\Entities\Customer::all() as $cust)
+                                                    <option value="{{ $cust->id }}">{{ $cust->customer_name }}</option>
                                                 @endforeach
                                             </select>
+                                    </div>
+
+
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="date">Date <span class="text-danger">*</span></label>
@@ -57,6 +154,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             <livewire:product-cart :cartInstance="'purchase'"/>
 
@@ -105,21 +203,87 @@
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>
 
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-primary">
+
+                            <div class="flex justify-between mt-3">
+                                <div class="text-gray-700 text-center"></div>
+                                <div class="justify-end py-2">
+                                    <button type="submit" class="btn btn-danger">
                                     Create Purchase <i class="bi bi-check"></i>
-                                </button>
+                                    </button>
+                                </div>
                             </div>
+
+
+
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+<div id="ModalKategori" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeaderkategori"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalContentKategori"> </div>
+         <div class="modal-footer" id="ModalFooterKategori"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="ModalBack" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeaderBack"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalContentBack"> </div>
+         <div class="modal-footer" id="ModalFooterBack"></div>
+
+        </div>
+    </div>
+</div>
+
+
+{{--
+<div id="ModalKategori" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeaderkategori"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+           <div class="modal-body p-0" id="ModalContentKategori"></div>
+           <div class="modal-footer" id="ModalFooterKategori"></div>
+        </div>
+    </div>
+</div> --}}
+
+
+
+
 @endsection
 
 @push('page_scripts')
-    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+
+
+<script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
         $('#purchase-form').on('submit',function(e){
             var total = $('#total_amount').val()
@@ -127,15 +291,105 @@
            console.log(paid)
         })
     </script>
+<script type="text/javascript">
+    $('#up1').change(function() {
+        $('#upload2').toggle();
+        $('#upload1').hide();
+    });
+    $('#up2').change(function() {
+        $('#upload1').toggle();
+        $('#upload2').hide();
+    });
+</script>
 
-<script>
-    jQuery.noConflict();
-    (function( $ ) {
-        $(document).ready(function() {
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+
+  $(document).ready(function() {
         $('#getTotalAmount').click(function(){
             $('#paid_amount').val($('#total_amount').val())
               });
+
+         $('#sup1').change(function() {
+            $('#supplier2').toggle();
+            $('#supplier1').hide();
         });
-    })(jQuery);
+        $('#sup2').change(function() {
+            $('#supplier1').toggle();
+            $('#supplier2').hide();
+        });
+
+        });
+
+
+    $(document).on('click', '#Tambah', function(e){
+         e.preventDefault();
+          $('#ModalKategori').modal('hide');
+          $("#ModalKategori").trigger("reset");
+         if($(this).attr('id') == 'Tambah')
+         {
+
+            $('.modal-dialog').removeClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-lg');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case(' Products') }}');
+        }
+
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+        $('#ModalGue').modal({
+                        backdrop: 'static',
+                        keyboard: true,
+                        show: true
+                });
+    });
+
+
+    $(document).on('click', '#openModalKategori', function(e){
+          e.preventDefault();
+            $('#ModalGue').modal('hide');
+            $("#ModalGue").trigger("reset");
+             var dataURL = $(this).attr('data-href');
+            //alert(dataURL);
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').addClass('modal-xl');
+            $('#ModalContentKategori').load($(this).attr('href'));
+            $('#ModalHeaderkategori').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
+            $('#ModalKategori').modal({
+                        backdrop: 'static',
+                        keyboard: true,
+                        show: true
+                });
+
+
+
+    });
+
+
+
+    $(document).on('click', '#BackButton', function(e){
+           e.preventDefault();
+            $('#ModalGue').modal('hide');
+            $("#ModalGue").trigger("reset");
+            $('#ModalKategori').modal('hide');
+            $("#ModalKategori").trigger("reset");
+             var dataURL = $(this).attr('data-href');
+            //alert(dataURL);
+            $('.modal-dialog').removeClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-lg');
+            $('#ModalContentBack').load(dataURL);
+            $('#ModalHeaderBack').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
+            $('#ModalBack').modal('show');
+
+    });
+
+
+
+})(jQuery);
 </script>
+
+
 @endpush

@@ -12,9 +12,10 @@ use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
 use Modules\Product\Entities\ProductLocation;
+use Modules\Locations\Entities\Locations;
+use Modules\Gudang\Models\Gudang;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
-
 use Modules\Upload\Entities\Upload;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -273,10 +274,15 @@ public function index_data(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $category = Category::where('id', $id)->first();
+        $locations = Locations::where('name','LIKE','%Tempo%')->first();
+        $code = Product::generateCode();
         $module_action = 'List';
           return view(''.$module_path.'::'.$module_name.'.modal.create',
            compact('module_name',
                     'module_title',
+                    'category',
+                    'locations',
+                    'code',
                     'module_icon', 'module_model'));
     }
 
@@ -321,9 +327,8 @@ public function saveAjax(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'product_code' => 'required|max:191|unique:'.$module_model.',product_code',
+             'product_name' => 'required|max:255|unique:'.$module_model.',product_name',
              'category_id' => 'required',
-             'product_name' => 'required|max:191',
              'product_price' => 'required|max:2147483647',
              'product_sale' => 'required|max:2147483647',
 
@@ -334,17 +339,52 @@ public function saveAjax(Request $request)
             return response()->json(['error'=>$validator->errors()]);
         }
 
-        $input = $request->all();
-       // dd($input);
         $input = $request->except('_token');
-        $input['product_code'] = $input['product_code'];
-        $input['product_name'] = $input['product_name'];
+        $input = $request->all();
         $input['product_price'] = preg_replace("/[^0-9]/", "", $input['product_price']);
-        $input['product_sale']  = preg_replace("/[^0-9]/", "", $input['product_sale']);
-        $$module_name_singular = $module_model::create($input);
-        $produk = $$module_name_singular->id;
-        $this->_saveProductsItem($input ,$produk);
-        return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
+        $input['product_cost'] = preg_replace("/[^0-9]/", "", $input['product_cost']);
+        $input['product_sale'] = preg_replace("/[^0-9]/", "", $input['product_sale']);
+        //dd($input);
+          $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
+          $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
+          $product_sale = preg_replace("/[^0-9]/", "", $input['product_sale']);
+          $$module_name_singular = $module_model::create([
+            'category_id'                       => $input['category_id'],
+            'product_stock_alert'               => $input['product_stock_alert'],
+            'product_name'                      => $input['product_name'],
+            'product_code'                      => Product::generateCode(),
+            'product_price'                     => $product_price,
+            'product_quantity'                  => $input['product_quantity'],
+            'product_barcode_symbology'         => $input['product_barcode_symbology'],
+            'product_unit'                      => $input['product_unit'],
+            'status'                            => $input['status'],
+            'product_cost'                      => $product_cost
+        ]);
+
+               if ($request->filled('image')) {
+                $img = $request->image;
+                $folderPath = "uploads/";
+                $image_parts = explode(";base64,", $img);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName ='webcam_'. uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('local')->put($file,$image_base64);
+                $$module_name_singular->addMedia(Storage::path('uploads/' . $fileName))
+                ->toMediaCollection('images');
+                }
+
+        if ($request->hasFile('document') && $request->file('document')->isValid()) {
+             $$module_name_singular->addMediaFromRequest('document')
+             ->toMediaCollection('images');
+        }
+
+
+
+            $produk = $$module_name_singular->id;
+            $this->_saveProductsItem($input ,$produk);
+            return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
     }
 
 
@@ -419,9 +459,14 @@ public function saveAjax(Request $request)
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $product_sale = preg_replace("/[^0-9]/", "", $input['product_sale']);
+          $gudang = Gudang::latest()->limit(1)->first()->id;
 
        ProductItem::create([
             'product_id'                  => $produk,
+            'location_id'                 => $input['location_id'] ?? null,
+            'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
+            'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
+            'customer_id'                 => $input['customer_id'] ?? null,
             'karat_id'                    => $input['karat_id'] ?? null,
             'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
             'certificate_id'              => $input['certificate_id'] ?? null,
@@ -432,10 +477,10 @@ public function saveAjax(Request $request)
             'product_sale'                => $product_sale,
             'berat_emas'                  => $input['berat_emas'],
             'berat_label'                 => $input['berat_label'],
-            'gudang_id'                   => $input['gudang_id'],
-            'supplier_id'                 => $input['supplier_id'],
-            'etalase_id'                  => $input['etalase_id'],
-            'baki_id'                     => $input['baki_id'],
+            'gudang_id'                   => $gudang ?? null,
+            'supplier_id'                 => $input['supplier_id'] ?? null,
+            'etalase_id'                  => $input['etalase_id'] ?? null,
+            'baki_id'                     => $input['baki_id'] ?? null,
             'berat_total'                 => $input['berat_total']
         ]);
        //dd($input);
