@@ -66,6 +66,22 @@ public function __construct()
 
 
 
+    public function codeGenerate()
+    {
+        //$string = Str::random(8); //
+         $existingCode = true;
+         $codeNumber = '';
+         $cabang = 'CBR';
+         $model =  'CCN';
+            while ($existingCode) {
+                $date = now()->format('dmY');
+                $randomNumber = mt_rand(100, 999);
+                $codeNumber = $cabang .'-'. $model .'-'. $randomNumber .'-'. $date;
+                $existingCode = Product::where('product_code', $codeNumber)->exists();
+            }
+          return response()->json(['code' => $codeNumber]);
+    }
+
  public function getsalesProduct(Request $request){
         $product = Product::where('product_price','>',0);
         if(isset($request->cariproduk)){
@@ -132,7 +148,7 @@ public function __construct()
     }
 
 
-    public function add_products_categories(Request $request ,$id) {
+    public function add_products_categories_single(Request $request ,$id) {
         abort_if(Gate::denies('access_products'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -151,6 +167,26 @@ public function __construct()
     }
 
 
+ public function add_products_categories(Request $request ,$id) {
+        abort_if(Gate::denies('access_products'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $category = Category::where('id', $id)->first();
+        $locations = Locations::where('name','LIKE','%Tempo%')->first();
+        $code = Product::generateCode();
+        $module_action = 'List';
+          return view(''.$module_path.'::'.$module_name.'.popup.create',
+           compact('module_name',
+                    'module_title',
+                    'category',
+                    'locations',
+                    'code',
+                    'module_icon', 'module_model'));
+    }
 
 
 
@@ -166,7 +202,8 @@ public function index_data(Request $request)
         $module_action = 'List';
 
 
-        $$module_name = $module_model::active()->with('category','product_item')->get();
+        $$module_name = $module_model::with('category','product_item')
+        ->latest()->get();
 
         $data = $$module_name;
 
@@ -180,9 +217,13 @@ public function index_data(Request $request)
            ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
+                           <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+                            ' . $data->category->category_name . '</div>
                             <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                            <p class="text-xs font-normal text-yellow-600 dark:text-gray-400">
-                            ' . $data->category->category_name . '</p>
+                             <div style="font-size:0.6rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
+                            ' . $data->product_code . '</div>
+
+
                         </div>
                     </div>';
                 return $tb;
@@ -220,18 +261,23 @@ public function index_data(Request $request)
             return $tb;
         })
 
+          ->editColumn('status', function ($data) {
+             $status = statusProduk($data->status);
+               return $status;
+              })
 
-           ->editColumn('updated_at', function ($data) {
-            $module_name = $this->module_name;
 
-            $diff = Carbon::now()->diffInHours($data->updated_at);
-            if ($diff < 25) {
-                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-            } else {
-                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-            }
-        })
-           ->rawColumns(['updated_at','product_image','weight',
+                   ->editColumn('updated_at', function ($data) {
+                    $module_name = $this->module_name;
+
+                    $diff = Carbon::now()->diffInHours($data->updated_at);
+                    if ($diff < 25) {
+                        return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                    } else {
+                        return tgljam($data->created_at);
+                    }
+                })
+           ->rawColumns(['updated_at','product_image','weight','status',
             'product_name','product_quantity','product_price', 'action'])
            ->make(true);
     }
@@ -327,8 +373,10 @@ public function saveAjax(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'product_name' => 'required|max:255|unique:'.$module_model.',product_name',
+             'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
              'category_id' => 'required',
+             'gold_kategori_id' => 'required',
+             'product_name' => 'required|max:255',
              'product_price' => 'required|max:2147483647',
              'product_sale' => 'required|max:2147483647',
 
@@ -352,7 +400,7 @@ public function saveAjax(Request $request)
             'category_id'                       => $input['category_id'],
             'product_stock_alert'               => $input['product_stock_alert'],
             'product_name'                      => $input['product_name'],
-            'product_code'                      => Product::generateCode(),
+            'product_code'                      => $input['product_code'],
             'product_price'                     => $product_price,
             'product_quantity'                  => $input['product_quantity'],
             'product_barcode_symbology'         => $input['product_barcode_symbology'],

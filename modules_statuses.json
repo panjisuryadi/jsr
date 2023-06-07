@@ -40,5 +40,6 @@
     "CostParameter": true,
     "Locations": true,
     "ParameterBerlian": true,
-    "JenisPerhiasan": true
+    "JenisPerhiasan": true,
+    "Cabang": true
 }

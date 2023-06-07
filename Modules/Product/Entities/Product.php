@@ -74,21 +74,16 @@ class Product extends Model implements HasMedia
     public static function generateCode()
         {
             $dateCode = self::PRODUKCODE . '-';
-
             $lastOrder = self::select([\DB::raw('MAX(products.product_code) AS last_code')])
                 ->where('product_code', 'like', $dateCode . '%')
                 ->first();
-
             $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
-
             $orderCode = $dateCode . '00001';
             if ($lastOrderCode) {
                 $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
                 $nextOrderNumber = sprintf('%05d', (int)$lastOrderNumber + 1);
-
                 $orderCode = $dateCode . $nextOrderNumber;
             }
-
 
             return $orderCode;
         }

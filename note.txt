@@ -22,7 +22,6 @@ Pastikan dropdwon karat == tidak ada bugs
 
 ======== Berlian
 ada semua + Supplier
-tambah == parameter berlian  // master data
 tambah == jenis perhiasan /// master data
 - 0,001 <<
 
@@ -104,3 +103,27 @@ Menu Hokkie APPS
 4.template nota 
 5.Monitoring Cabang
 6.Finance
+
+UPDATE TANGGAL 6 JUNI 2023
+Important ..!!!
+
+// kode barang
+kode cabang / kode group / 001 - 999 / tanggal
+==============================================
+parameter count berdasarkan tanggal input 001-999 (perhari)
+CBR-CCN-001-060623
+
+=====================
+qrcode + title
+
+===================
+input manual code sales di modul pembelian + POS
+
+pembelian == harga dollar default
+
+barang  ---->> kantor pusat
+kode barang = PST ------->>>  Gudang Cabang
+setelah di sebar ke gudang cabang .. di tambahkan kode cabang ,.tanpa merubah Label Barcode
+
+
+Pembelian + kode suplier + ke table supplier

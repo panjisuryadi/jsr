@@ -50,11 +50,31 @@ button, input, optgroup, select, textarea {
         transform: translate(-50%, -50%) rotate(360deg);
     }
 }
+@media (min-width: 992px)
+.modal-xl {
+    max-width: 920px !important;
+}
 
+    #camera{
+        width:100% !important;
+        height: 240px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+
+    }
+     #results{
+        width: 100% !important;
+        /*height: 240px !important;*/
+       /* border: 2px dashed #FF9800 !important;*/
+        border-radius: 8px;
+        background: #ff98003d !important;
+
+    }
 </style>
 
 <div class="px-3">
-    <x-library.alert />
+ <x-library.alert />
 
 <div class="flex relative mb-2">
         <div class="absolute inset-0 flex items-center">
@@ -83,7 +103,7 @@ button, input, optgroup, select, textarea {
  <div class="flex flex-row grid grid-cols-3 gap-4">
 
 
-<div class="p-2">
+<div class="p-2 mb-3">
 
 
 	<div class="form-check form-check-inline">
@@ -98,7 +118,7 @@ button, input, optgroup, select, textarea {
 
 
    <div id="upload" class="flex flex-row grid grid-cols-1">
-  <div x-data="{photoName: null, photoPreview: null}" class="items-center">
+  <div x-data="{photoName: null, photoPreview: null}" class="items-center mb-4">
     <?php
                 $field_name = 'document';
                 $field_lable = __($field_name);
@@ -150,7 +170,6 @@ button, input, optgroup, select, textarea {
 			<input id="Start" class="w-full btn btn-sm btn-danger" type=button value="Start" onClick="configure()">
 
 			<input id="snap" class="d-none w-full btn btn-sm btn-warning" type=button value="Capture" onClick="take_snapshot()">
-
 				<input type="hidden" name="image" class="image-tag">
 			</div>
 		</div>
@@ -166,40 +185,48 @@ button, input, optgroup, select, textarea {
 
 
 	<label for="product_name">@lang('Product Name') <span class="text-danger">*</span></label>
-	<input type="text" class="form-control"
+	<input type="text" class="form-control rounded-r-none"
 	name="product_name"
 	placeholder="Nama Produk"
 	value="{{ old('product_name') }}">
-<span class="invalid feedback" role="alert">
+	<span class="invalid feedback" role="alert">
 	<span class="text-danger error-text product_name_err"></span>
 </span>
-
 </div>
 
 <div class="form-group">
 	<label for="product_code">Code <span class="text-danger">*</span></label>
-	<input type="text" class="form-control" name="product_code" readonly value="{{ $code }}">
+	<div class="input-group">
+		<input type="text" id="code" class="form-control" name="product_code">
+		<span class="input-group-btn">
+			<button class="btn btn-info relative rounded-l-none" id="generate-code">Chek</button>
+		</span>
+	</div>
+	<span class="invalid feedback" role="alert">
+	<span class="text-danger error-text product_code_err"></span>
+</span>
 </div>
+
 
 </div>
 
     @if(strpos($category->category_name, 'Mutiara') !== false)
-    @include('product::products.modal.mutiara')
+    @include('product::products.popup.mutiara')
 
     @elseif(strpos($category->category_name, 'Berlian') !== false)
-    @include('product::products.modal.berlian')
+    @include('product::products.popup.berlian')
 
     @elseif (\Illuminate\Support\Str::contains($category->category_name, ['Perak', 'Paladium']))
-    @include('product::products.modal.perak')
+    @include('product::products.popup.perak')
 
     @elseif(strpos($category->category_name, 'Logam Mulia') !== false)
-    @include('product::products.modal.lm')
+    @include('product::products.popup.lm')
 
     @elseif (strpos($category->category_name, 'Emas') !== false)
-    @include('product::products.modal.emas')
+    @include('product::products.popup.emas')
 
     @else
-     @include('product::products.modal.all')
+     @include('product::products.popup.all')
     @endif
 
 
@@ -412,6 +439,9 @@ button, input, optgroup, select, textarea {
   </form>
 </div>
 
+{{--  <script src="{{  asset('js/jquery.min.js') }}"></script> --}}
+
+<script src="{{ asset('js/jquery-mask-money.js') }}"></script>
 <script>
     jQuery.noConflict();
     (function( $ ) {
@@ -438,7 +468,7 @@ button, input, optgroup, select, textarea {
                             this.reset();
                         });
                           setTimeout(function () {
-                              $('#ModalKategori').modal('hide');
+                              $('#ModalGue').modal('hide');
                             }, 3000);
 
                     }else{
@@ -455,10 +485,12 @@ button, input, optgroup, select, textarea {
                 $('.'+key+'_err').text(value);
             });
         }
+
+
         $(document).ready(function(){
-            var Tombol = "<a href='{{ route('products.create-modal') }}' id='Tambah' class='btn btn-success px-5'>{{ __('Back') }}</a>";
+            var Tombol = "<button type='button' class='btn btn-secondary px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
             Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanTambah'>{{ __('Create') }}</button>";
-            $('#ModalFooterKategori').html(Tombol);
+            $('#ModalFooter').html(Tombol);
             $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();
             $('#SimpanTambah').click(function(e){
                 e.preventDefault();
@@ -493,74 +525,9 @@ button, input, optgroup, select, textarea {
             precision: 0
           });
 
-    })(jQuery);
-
-
-
-</script>
-
-
-<script language="JavaScript">
-        function configure(){
-            Webcam.set({
-                width: 340,
-                height: 230,
-                autoplay: false,
-                image_format: 'jpeg',
-                jpeg_quality: 90,
-                force_flash: false
-            });
-            Webcam.attach( '#camera' );
-            $("#camera").attr("style", "display:block")
-            $('#hasilGambar').addClass('d-none');
-            $('#Start').addClass('d-none');
-            $('#snap').removeClass('d-none');
-        }
-        // preload shutter audio clip
-        var shutter = new Audio();
-        shutter.autoplay = false;
-        shutter.src = navigator.userAgent.match(/Firefox/) ? asset('js/webcamjs/shutter.ogg') : asset('js/webcamjs/shutter.mp3');
-
-        function take_snapshot() {
-            // play sound effect
-            shutter.play();
-           // take snapshot and get image data
-            Webcam.snap( function(data_uri) {
-                $(".image-tag").val(data_uri);
-                $("#camera").attr("style", "display:none")
-                $('#hasilGambar').removeClass('d-none').delay(5000);
-                document.getElementById('hasilGambar').innerHTML =
-                    '<img class="border-2 border-dashed border-yellow-600 rounded-xl" id="imageprev" src="'+data_uri+'"/><span class="absolute bottom-1 text-white right-4">Capture Sukses..!! </span>';
-                $('#snap').addClass('d-none');
-                $('#Start').removeClass('d-none');
-
-
-            });
-           Webcam.reset();
-        }
-
-        function reset() {
-             Webcam.reset();
-                 alert('off');
-        }
-
-        function saveSnap(){
-            // Get base64 value from <img id='imageprev'> source
-            var base64image =  document.getElementById("imageprev").src;
-
-             Webcam.upload( base64image, 'upload.php', function(code, text) {
-                 console.log('Save successfully');
-                 //console.log(text);
-            });
-
-        }
-
-
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-<script type="text/javascript">
         $('input[type="radio"]').click(function () {
           var inputValue = $(this).attr("value");
+         // alert(inputValue);
           if (inputValue == "up2") {
             $("#webcam").hide();
              $("#upload").show();
@@ -570,6 +537,41 @@ button, input, optgroup, select, textarea {
             $("#webcam").show();
           }
         });
-      </script>
+
+
+
+		$('#generate-code').click(function() {
+		    $(this).prop('disabled', true);
+		    // $('#generate-code').html('');
+		    $(this).addClass('loading');
+		    $.ajax({
+		        url: '{{ route('products.code_generate') }}',
+		        type: 'POST',
+		        dataType: 'json',
+		        headers: {
+		                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+		               },
+		        success: function(response) {
+		              console.log(response);
+		              $('#code').val(response.code);
+		            },
+		        complete: function() {
+		            $('#generate-code').prop('disabled', false);
+		            $('#generate-code').removeClass('loading');
+		        }
+		    });
+		});
+
+
+
+
+    })(jQuery);
+
+
+
+</script>
+
+
+
 
 

@@ -209,6 +209,84 @@ if (!function_exists('make_reference_id')) {
     }
 }
 
+
+
+if (!function_exists('statusProduk')) {
+    /**
+     * Prepare the Column Name for Lables.
+     */
+    function statusProduk($required)
+    {
+        $return_text = '';
+        if ($required == 0) {
+            $return_text = '<div class="items-center text-center">';
+             $return_text .= '<span class="rounded-lg bg-green-400 px-2 py-1 text-xs items-center text-center text-white">Active</span>';
+              $return_text .= '</div>';
+        }else{
+             $return_text = '<div class="items-center text-center">';
+             $return_text .= '<span class="rounded-lg bg-red-400 px-2 py-1 text-xs items-center text-center text-white text-xs small">Kosong</span>';
+              $return_text .= '</div>';
+
+
+        }
+        return $return_text;
+    }
+}
+
+
+
+ if (!function_exists('tgljam')) {
+        function tgljam($value)
+        {
+
+        $date = '';
+        $date = \Carbon\Carbon::parse($value);
+        $tgl = $date->format('d/m/Y');
+        $jam = $date->format('H:i');
+
+         return $date = '<div class="text-center"><span class="text-dark">'. $tgl.'</span><span class="ml-1 text-warning">'. $jam.'</span></div>';
+
+         }
+      }
+
+
+if (!function_exists('keBulan')) {
+    function keBulan($number)
+    {
+        $search_array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        $replace_array = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        $bn_number = str_replace($search_array, $replace_array, $number);
+        return $bn_number;
+    }
+}
+
+if (!function_exists('tanggal')) {
+    date_default_timezone_set("Asia/Jakarta");
+function tanggal($tgl, $tampil_hari=true){
+   $nama_hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu");
+   $nama_bulan = array(1=>"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+
+   $tahun = substr($tgl,0,4);
+   $bulan = $nama_bulan[(int)substr($tgl,5,2)];
+   $tanggal = substr($tgl,8,2);
+
+   $text = "";
+
+   if($tampil_hari){
+      $urutan_hari = date('w', mktime(0,0,0, substr($tgl,5,2), $tanggal, $tahun));
+      $hari = $nama_hari[$urutan_hari];
+      $text .= $hari.", ";
+   }
+
+   $text .= $tanggal ." ". $bulan ." ". $tahun;
+
+   return $text;
+}
+
+}
+
+
+
 if (!function_exists('array_merge_numeric_values')) {
     function array_merge_numeric_values() {
         $arrays = func_get_args();

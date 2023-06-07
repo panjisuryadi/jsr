@@ -16,6 +16,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
       Route::get("products/index_data", ['as' => "products.index_data", 'uses' => "ProductController@index_data"]);
+
+      Route::post("products/code-generate", ['as' => "products.code_generate", 'uses' => "ProductController@codeGenerate"]);
+
+
       Route::get("products/create-modal", ['as' => "products.create-modal", 'uses' => "ProductController@createModal"]);
 
       Route::get("products/getproduct", ['as' => "products.getsalesProduct", 'uses' => "ProductController@getsalesProduct"]);

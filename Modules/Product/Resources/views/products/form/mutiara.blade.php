@@ -50,8 +50,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="product_code">Code <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="product_code" readonly value="{{ $code }}">
+                                            <div class="input-group">
+                                                <input type="text" id="code" class="form-control" name="product_code" value="{{ $code }}">
+                                                <span class="input-group-btn">
+                                            <button class="btn btn-primary relative" id="generate-code">Chek</button>
+                                                </span>
+                                            </div>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="shape_id">@lang('Shape') <span class="text-danger">*</span></label>
                                             <select class="form-control select2" name="shape_id" id="shape_id" required>
@@ -61,15 +67,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                  {{--       <div class="form-group">
-                                            <label for="certificate_id">@lang('Certificate') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="certificate_id" id="certificate_id" required>
-                                                <option value="" selected disabled>Select Certificate</option>
-                                                @foreach(\Modules\DiamondCertificate\Models\DiamondCertificate::all() as $certificate)
-                                                <option value="{{ $certificate->id }}">{{ $certificate->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div> --}}
 
                                     </div>
                                 </div>
@@ -212,3 +209,6 @@
                                 </div>
                             </div>
                         </div>
+
+
+

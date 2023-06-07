@@ -1,4 +1,4 @@
-<div class="flex py-0 flex-row grid grid-cols-2 gap-2">
+<div class="flex py-0 flex-row grid grid-cols-3 gap-2">
 
     <div class="form-group">
         <label for="karat_id">@lang('Jenis Perhiasan') <span class="text-danger">*</span></label>
@@ -36,9 +36,15 @@
             @endforeach
         </select>
     </div>
-    <div class="form-group">
+
+<div class="col-span-2">
+   <div class="form-group">
         <label for="no_certificate">@lang('No .Certificate') <span class="text-danger">*</span></label>
         <input id="no_certificate" type="text" class="form-control" name="no_certificate" required value="{{ old('no_certificate') }}">
     </div>
+
+</div>
+
+
 
 </div>

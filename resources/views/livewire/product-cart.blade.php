@@ -36,10 +36,10 @@
                             <tr>
                                 <td class="align-middle">
                                     {{ $cart_item->name }} <br>
-                                    <span class="badge badge-success">
+                                    {{-- <span class="badge badge-success">
                                         {{ $cart_item->options->code }}
                                     </span>
-                                    @include('livewire.includes.product-cart-modal')
+                                    @include('livewire.includes.product-cart-modal') --}}
                                 </td>
 
                                 <td class="align-middle">{{ format_currency($cart_item->options->unit_price) }}</td>
@@ -89,17 +89,17 @@
     </div>
 
     <div class="row justify-content-md-end">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="table-responsive">
                 <table class="table table-striped">
                     <tr>
                         <th>Order Tax ({{ $global_tax }}%)</th>
                         <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
                     </tr>
-                    <tr>
+                   {{--  <tr>
                         <th>Discount ({{ $global_discount }}%)</th>
                         <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>Shipping</th>
                         <input type="hidden" value="{{ $shipping }}" name="shipping_amount">

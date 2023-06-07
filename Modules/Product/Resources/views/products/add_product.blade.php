@@ -21,6 +21,37 @@
         font-size: 5rem;
         color: #bd4019 !important;
     }
+
+
+.loading {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.loading:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
 </style>
 @endpush
 <div class="container-fluid">
@@ -72,10 +103,6 @@
                      @include('product::products.modal.all')
                     @endif
 
-
-
-
-
                     </div>
 
 
@@ -101,6 +128,33 @@
 @endsection
 @push('page_scripts')
 <script type="text/javascript">
+
+$('#generate-code').click(function() {
+
+    $(this).prop('disabled', true);
+    // $('#generate-code').html('');
+    $(this).addClass('loading');
+    $.ajax({
+        url: '{{ route('products.code_generate') }}',
+        type: 'POST',
+        dataType: 'json',
+        headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+               },
+        success: function(response) {
+              console.log(response);
+              $('#code').val(response.code);
+            },
+        complete: function() {
+            $('#generate-code').prop('disabled', false);
+            $('#generate-code').removeClass('loading');
+        }
+    });
+});
+
+
+
+
     $('#up1').change(function() {
         $('#upload2').toggle();
         $('#upload1').hide();
@@ -157,6 +211,10 @@
             @endif
         }
     }
+
+
+
+
 </script>
 {{-- <script src="{{  asset('js/jquery.min.js') }}"></script> --}}
 <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
@@ -184,5 +242,8 @@
         });
 
 })(jQuery);
+
+
+
 </script>
 @endpush

@@ -130,6 +130,10 @@
                                             <label for="product_code">Code <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="product_code" readonly value="{{ $code }}">
                                         </div>
+
+
+
+
                                         <div class="form-group">
                                             <label for="shape_id">@lang('Shape') <span class="text-danger">*</span></label>
                                             <select class="form-control select2" name="shape_id" id="shape_id" required>

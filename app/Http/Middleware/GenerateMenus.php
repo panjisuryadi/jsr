@@ -214,6 +214,22 @@ class GenerateMenus
             ]);
 
 
+            // Cabangs
+            $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Cabang'), [
+                'route' => 'cabang.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['cabangs*'],
+                'permission'    => ['access_cabangs'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
 
 /// === end menu group --------------------------------------------------
 
@@ -933,6 +949,45 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
+
+
+
+    // Access Purchases Dropdown
+            $purchaseReturns = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchase Returns').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => [
+                    'purchase-returns.*',
+                    'purchase-return-payments.*',
+
+                ],
+                'permission'    => ['access_purchase_returns'],
+            ]);
+            $purchaseReturns->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+            // Submenu: Purchase Return
+            $purchaseReturns->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
+             '.__('Purchase Return').'', [
+                'route' => 'purchase-returns.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 4,
+                'permission'    => ['create_purchase'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+
+
 
 
 
