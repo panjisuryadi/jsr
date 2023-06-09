@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\File;
 use Spatie\Permission\Traits\HasRoles;
+use Modules\UserCabang\Models\UserCabang;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -48,6 +49,15 @@ class User extends Authenticatable implements HasMedia
     ];
 
     protected $with = ['media'];
+
+
+
+
+     public function namacabang()
+        {
+            return $this->hasOne(UserCabang::class);
+        }
+
 
     public function registerMediaCollections(): void
     {

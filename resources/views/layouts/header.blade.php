@@ -6,10 +6,11 @@
     <i class="bi bi-list" style="font-size: 2rem;"></i>
 </button>
 <ul class="c-header-nav d-md-down-none">
-        <li class="c-header-nav-item px-3">
+        <li class="c-header-nav-item px-3 ">
             <a class="c-header-nav-link" href="#" target="_blank">
-                <i class="c-icon cil-external-link"></i>&nbsp;
+                <i class="c-icon cil-external-link relative"></i>&nbsp;
              {!! settings()->company_name !!}
+
             </a>
         </li>
         <li><x-library.widget /></li>
@@ -113,12 +114,16 @@ title="@lang('Informasi Harga Emas')"
                 <img class="w-7 h-7 c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
             </div>
             <div class="d-flex flex-column">
-                <span class="font-weight-bold">{{ auth()->user()->name }}</span>
-                <span class="font-italic">Online <i class="bi bi-circle-fill text-success" style="font-size: 11px;"></i></span>
+                <span class="font-weight-bold py-0">{{ auth()->user()->name }}</span>
+                <span style="font-size: 0.7rem !important;" class="text-gray-500 text-xs">Online <i class="bi bi-circle-fill text-success"
+                 style="font-size: 0.7rem !important;"></i></span>
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right pt-0">
-            <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
+            <div class="dropdown-header bg-light py-2"><strong>Account</strong>
+
+            </div>
+
             <a class="dropdown-item" href="{{ route('profile.edit') }}">
                 <i class="mfe-2  bi bi-person" style="font-size: 1.2rem;"></i> Profile
             </a>

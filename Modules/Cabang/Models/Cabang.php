@@ -25,9 +25,12 @@ class Cabang extends Model
   //       return $this->hasMany(Product::class, 'category_id', 'id');
   //   }
 
-  //   public function kategoriProduk() {
-  //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
-  //   }
+
+
+      public function usercabang() {
+        return $this->hasMany(UserCabang::class, 'user_id', 'id');
+    }
+
 
     protected static function newFactory()
     {

@@ -41,5 +41,6 @@
     "Locations": true,
     "ParameterBerlian": true,
     "JenisPerhiasan": true,
-    "Cabang": true
+    "Cabang": true,
+    "UserCabang": true
 }

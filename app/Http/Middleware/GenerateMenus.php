@@ -1183,6 +1183,21 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
+                    // UserCabangs
+            $accessControl->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('User Cabang'), [
+                'route' => 'usercabang.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 102,
+                'activematches' => ['usercabangs*'],
+                'permission'    => ['access_usercabangs'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
             // Access Permission Check
             $menu->filter(function ($item) {
                 if ($item->data('permission')) {

@@ -27,6 +27,7 @@ class SettingController extends Controller
     public function update(StoreSettingsRequest $request) {
            $settings       = Setting::findOrFail(1);
            $params = $request->all();
+           //dd($params);
            $params = $request->except('_token');
            $params['company_name'] = $params['company_name'];
            $params['company_email'] = $params['company_email'];
@@ -40,6 +41,7 @@ class SettingController extends Controller
            $params['link_color'] = $params['link_color'];
            $params['header_color'] = $params['header_color'];
            $params['btn_color'] = $params['btn_color'];
+           $params['cabang_id'] = $params['cabang_id'];
 
                if ($request->hasFile('site_logo')) {
                     $file = $request->file('site_logo');

@@ -29,9 +29,17 @@ class UsersDataTable extends DataTable
                 } else {
                     $html = '<span class="badge badge-warning">Deactivated</span>';
                 }
+               return $html;
 
-                return $html;
             })
+
+          ->addColumn('cabang', function ($data) {
+
+                return @$data->namacabang->cabang->name ?? '-';
+            })
+
+
+
             ->addColumn('image', function ($data) {
                 $url = $data->getFirstMediaUrl('avatars');
 
@@ -84,6 +92,9 @@ class UsersDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::computed('status')
+                ->className('text-center align-middle'),
+
+            Column::computed('cabang')
                 ->className('text-center align-middle'),
 
             Column::computed('action')

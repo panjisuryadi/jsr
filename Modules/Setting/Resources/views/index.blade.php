@@ -32,10 +32,27 @@
                                         <label for="company_email">@lang('Company Email') <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="company_email" value="{{ $settings->company_email }}" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="company_phone">@lang('Company Phone')  <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="company_phone" value="{{ $settings->company_phone }}" required>
-                                    </div>
+
+
+
+                <div class="flex flex-row grid grid-cols-2 gap-1">
+                    <div class="form-group">
+                        <label for="default_currency_id">Default @lang('Currency')  <span class="text-danger">*</span></label>
+                        <select name="cabang_id" id="default_currency_id" class="form-control" required>
+                            @foreach(\Modules\Cabang\Models\Cabang::all() as $cab)
+                            <option {{ $settings->cabang_id == $cab->id ? 'selected' : '' }} value="{{ $cab->id }}">{{ $cab->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company_phone">@lang('Company Phone')  <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="company_phone" value="{{ $settings->company_phone }}" required>
+                    </div>
+                </div>
+
+
+
                                     <div class="form-row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
@@ -212,22 +229,8 @@ if ($settings->site_logo) {
                         {{-- {!! settings()->site_logo !!} --}}
 
 
-<div class="grid grid-cols-4 gap-4">
-
-</div>
-
-{{--  'bg_sidebar' => '#d8d4d4',
-            'bg_sidebar_hover' => '#5a6893',
-            'bg_sidebar_aktif' => '#ffffff',
-            'bg_sidebar_link' => '#2a2a2a',
-            'bg_sidebar_link_hover' => '#fff',
-            'link_color' => '#ffffff',
-            'link_hover' => '#ffffff',
-            'header_color' => '#ffffff',
-            'btn_color' => '#ffffff', --}}
-
 <div class="container mx-auto">
-  <div class="grid grid-cols-4 gap-2">
+  <div class="flex flex-row grid grid-cols-4 gap-1">
      <div class="form-group">
         <label for="notification_email">Bg Colour <span class="text-danger">*</span></label>
         <input type="color" class="form-control" name="bg_sidebar" value="{{ $settings->bg_sidebar }}" required>

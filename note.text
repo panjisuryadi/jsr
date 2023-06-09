@@ -1,5 +1,6 @@
 # php artisan module:make-model ProductItem Product --migration
-# php artisan module:build Gudang --force
+# php artisan module:build UserCabang --force
+# php artisan module:make-migration add_cabang_to_settings_table Setting
 
 public function up()
     {
