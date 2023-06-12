@@ -179,7 +179,7 @@ button, input, optgroup, select, textarea {
 
 <div class="col-span-2">
 
-<div class="flex flex-row grid grid-cols-2 gap-2">
+<div class="flex flex-row grid grid-cols-3 gap-2">
 
 <div class="form-group">
 
@@ -194,7 +194,19 @@ button, input, optgroup, select, textarea {
 </span>
 </div>
 
-<div class="form-group">
+
+<div class="col-span-2">
+<div class="flex flex-row gap-2">
+   <div class="form-group w-40">
+        <label for="group_id">@lang('Group') <span class="text-danger">*</span></label>
+         <select class="form-control select2" name="group_id" id="group_id" required>
+            <option value="" selected disabled>Group</option>
+            @foreach(\Modules\Group\Models\Group::all() as $jp)
+            <option value="{{ $jp->code }}">{{ $jp->name }}</option>
+            @endforeach
+        </select>
+    </div>
+<div class="form-group w-90">
 	<label for="product_code">Code <span class="text-danger">*</span></label>
 	<div class="input-group">
 		<input type="text" id="code" class="form-control" name="product_code">
@@ -205,6 +217,10 @@ button, input, optgroup, select, textarea {
 	<span class="invalid feedback" role="alert">
 	<span class="text-danger error-text product_code_err"></span>
 </span>
+</div>
+</div>
+
+
 </div>
 
 
@@ -541,19 +557,28 @@ button, input, optgroup, select, textarea {
 
 
 		$('#generate-code').click(function() {
+			var group = $('#group_id').val();
+            //alert(group);
 		    $(this).prop('disabled', true);
-		    // $('#generate-code').html('');
 		    $(this).addClass('loading');
 		    $.ajax({
 		        url: '{{ route('products.code_generate') }}',
 		        type: 'POST',
+		        data:{group:group},
 		        dataType: 'json',
 		        headers: {
 		                "X-CSRF-TOKEN": "{{ csrf_token() }}"
 		               },
-		        success: function(response) {
+		         success: function(response) {
+		        	if (response.code === '0') {
+						     $('#code').prop('disabled', true);
+						 	 $('#code').val('produk harus di isi');
+						    } else {
+						      $('#code').val(response.code);
+						    }
+
 		              console.log(response);
-		              $('#code').val(response.code);
+
 		            },
 		        complete: function() {
 		            $('#generate-code').prop('disabled', false);

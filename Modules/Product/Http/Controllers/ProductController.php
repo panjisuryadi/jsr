@@ -66,17 +66,20 @@ public function __construct()
 
 
 
-    public function codeGenerate()
+    public function codeGenerate(Request $request)
     {
+         $group = $request->group;
+         if (!$group) {
+           return response()->json(['code' => '0']);
+         }
         //$string = Str::random(8); //
          $existingCode = true;
          $codeNumber = '';
          $cabang = 'CBR';
-         $model =  'CCN';
-            while ($existingCode) {
+         while ($existingCode) {
                 $date = now()->format('dmY');
                 $randomNumber = mt_rand(100, 999);
-                $codeNumber = $cabang .'-'. $model .'-'. $randomNumber .'-'. $date;
+                $codeNumber = $cabang .'-'. $group .'-'. $randomNumber .'-'. $date;
                 $existingCode = Product::where('product_code', $codeNumber)->exists();
             }
           return response()->json(['code' => $codeNumber]);

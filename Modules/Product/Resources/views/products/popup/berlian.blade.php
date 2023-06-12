@@ -1,5 +1,6 @@
 <div class="flex py-0 flex-row grid grid-cols-3 gap-2">
 
+
     <div class="form-group">
         <label for="karat_id">@lang('Jenis Perhiasan') <span class="text-danger">*</span></label>
          <select class="form-control select2" name="jenis_perhiasan_id" id="jenis_perhiasan_id" required>

@@ -37,7 +37,7 @@
 
                 <div class="flex flex-row grid grid-cols-2 gap-1">
                     <div class="form-group">
-                        <label for="default_currency_id">Default @lang('Currency')  <span class="text-danger">*</span></label>
+                        <label for="default_currency_id">@lang('Cabang')  <span class="text-danger">*</span></label>
                         <select name="cabang_id" id="default_currency_id" class="form-control" required>
                             @foreach(\Modules\Cabang\Models\Cabang::all() as $cab)
                             <option {{ $settings->cabang_id == $cab->id ? 'selected' : '' }} value="{{ $cab->id }}">{{ $cab->name }}</option>
