@@ -671,6 +671,23 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+
+            // Submenu: products
+            $products->add('
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Products Transfer').'',
+                 [
+                'route' => 'product-transfer.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'product-transfer*',
+                'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
        // Submenu: products
             $products->add(
                 '<i class="c-sidebar-nav-icon bi bi-upc-scan mb-2"></i>'.__('Print Barcode').'',

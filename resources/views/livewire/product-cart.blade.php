@@ -10,6 +10,9 @@
                 </div>
             </div>
         @endif
+{{--
+<h1 class="text-primary">{{ $add_produk; }}</h1> --}}
+
         <div class="table-responsive position-relative">
             <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                 <div class="spinner-border text-primary" role="status">
@@ -52,13 +55,6 @@
                                     @include('livewire.includes.product-cart-quantity')
                                 </td>
 
-                               {{--  <td class="align-middle">
-                                    {{ format_currency($cart_item->options->product_discount) }}
-                                </td>
-
-                                <td class="align-middle">
-                                    {{ format_currency($cart_item->options->product_tax) }}
-                                </td> --}}
 
                                 <td class="align-middle">
                                     {{ format_currency($cart_item->options->sub_total) }}
@@ -100,11 +96,11 @@
                         <th>Discount ({{ $global_discount }}%)</th>
                         <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
                     </tr> --}}
-                    <tr>
+                 {{--    <tr>
                         <th>Shipping</th>
                         <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
                         <td>(+) {{ format_currency($shipping) }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>Grand Total</th>
                         @php
@@ -120,30 +116,14 @@
     </div>
 
     <input type="hidden" name="total_amount" id="total_amount" value="{{ $total_with_shipping }}">
+     <input wire:model.lazy="shipping" type="hidden" class="form-control" name="shipping_amount" min="0" value="0" required step="0.01">
 
     <div class="form-row">
         <div class="col-lg-6">
-            <div class="form-group">
-            @php
-           // $main = \Modules\Locations\Entities\Locations::whereNull('parent_id')->get();
-            $locations = \Modules\Locations\Entities\Locations::where('name','LIKE','%Tempo%')->get();
-            @endphp
-            <label for="">Location</label>
-            <select name="location_id" class="form-control select2" readonly>
-                @foreach ($locations as $loc)
-                <option value="{{ $loc->id }}" selected>{{ $loc->name }}</option>
-                @endforeach
-            </select>
-            </div>
+
             <input type="hidden" class="form-control" name="discount_percentage" min="0" max="100" value="{{ $global_discount }}" required>
             <input type="hidden" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
         </div>
 
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label for="shipping_amount">Shipping</label>
-                <input wire:model.lazy="shipping" type="number" class="form-control" name="shipping_amount" min="0" value="0" required step="0.01">
-            </div>
-        </div>
     </div>
 </div>

@@ -80,6 +80,7 @@ button, input, optgroup, select, textarea {
     <input type="hidden" name="status" value="3">
     <input type="hidden" name="product_unit" value="Gram">
 
+
  <div class="flex flex-row grid grid-cols-3 gap-4">
 
 
@@ -160,26 +161,56 @@ button, input, optgroup, select, textarea {
 
 <div class="col-span-2">
 
-<div class="flex flex-row grid grid-cols-2 gap-2">
+<div class="flex flex-row grid grid-cols-3 gap-2">
 
 <div class="form-group">
+    <?php
+    $field_name = 'product_name';
+    $field_lable = label_case('product_name');
+    $field_placeholder = $field_lable;
+    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+    $required = "required";
+    ?>
+    <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+    <input class="form-control"
+    type="text"
+    name="{{ $field_name }}"
+    id="{{ $field_name }}"
+    value="{{old($field_name)}}"
+    placeholder="{{ $field_placeholder }}">
+    <span class="invalid feedback" role="alert">
+        <span class="text-danger error-text {{ $field_name }}_err"></span>
+    </span>
+</div>
 
-
-	<label for="product_name">@lang('Product Name') <span class="text-danger">*</span></label>
-	<input type="text" class="form-control"
-	name="product_name"
-	placeholder="Nama Produk"
-	value="{{ old('product_name') }}">
-<span class="invalid feedback" role="alert">
-	<span class="text-danger error-text product_name_err"></span>
+<div class="col-span-2">
+<div class="flex flex-row gap-2">
+   <div class="form-group w-40">
+        <label for="group_id">@lang('Group') <span class="text-danger">*</span></label>
+         <select class="form-control select2" name="group_id" id="group_id" required>
+            <option value="" selected disabled>Group</option>
+            @foreach(\Modules\Group\Models\Group::all() as $jp)
+            <option value="{{ $jp->code }}">{{ $jp->name }}</option>
+            @endforeach
+        </select>
+    </div>
+<div class="form-group w-90">
+    <label for="product_code">Code <span class="text-danger">*</span></label>
+    <div class="input-group">
+        <input type="text" id="code" class="form-control" name="product_code">
+        <span class="input-group-btn">
+            <button class="btn btn-info relative rounded-l-none" id="generate-code">Chek</button>
+        </span>
+    </div>
+    <span class="invalid feedback" role="alert">
+    <span class="text-danger error-text product_code_err"></span>
 </span>
+</div>
+</div>
+
 
 </div>
 
-<div class="form-group">
-	<label for="product_code">Code <span class="text-danger">*</span></label>
-	<input type="text" class="form-control" name="product_code" readonly value="{{ $code }}">
-</div>
 
 </div>
 
@@ -313,7 +344,7 @@ button, input, optgroup, select, textarea {
 
  {{-- harga ========= --}}
             <div class="form-row">
-                <div class="col-md-4">
+                <div class="col-md-6">
 
 				<div class="form-group">
 					<?php
@@ -339,7 +370,7 @@ button, input, optgroup, select, textarea {
 
 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
 
 					<div class="form-group">
 						<?php
@@ -363,33 +394,7 @@ button, input, optgroup, select, textarea {
 					</div>
 
                 </div>
-                <div class="col-md-4">
 
-
-                   <div class="form-group">
-						<?php
-						$field_name = 'product_sale';
-						$field_lable = label_case($field_name);
-						$field_placeholder = $field_lable;
-						$invalid = $errors->has($field_name) ? ' is-invalid' : '';
-						$required = "required";
-						?>
-						<label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-						<input class="form-control"
-						type="text"
-						name="{{ $field_name }}"
-						id="{{ $field_name }}"
-						value="{{old($field_name)}}"
-						placeholder="{{ $field_placeholder }}"
-						>
-						<span class="invalid feedback" role="alert">
-							<span class="text-danger error-text {{ $field_name }}_err"></span>
-						</span>
-					</div>
-
-
-
-                </div>
             </div>
   {{-- ========= --}}
 
@@ -432,11 +437,15 @@ button, input, optgroup, select, textarea {
                     console.log(data.error)
                     if($.isEmptyObject(data.error)){
                         $('#ResponseInput').html(data.success);
+                        console.log(data.produk);
+                        var value = data.produk;
+                        Livewire.emit('addProduk', value);
                         $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                         $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
                                $('#FormTambah').each(function(){
                             this.reset();
                         });
+
                           setTimeout(function () {
                               $('#ModalKategori').modal('hide');
                             }, 3000);
@@ -492,6 +501,40 @@ button, input, optgroup, select, textarea {
             decimal: ',',
             precision: 0
           });
+
+        $('#generate-code').click(function() {
+            var group = $('#group_id').val();
+            //alert(group);
+            $(this).prop('disabled', true);
+            $(this).addClass('loading');
+            $.ajax({
+                url: '{{ route('products.code_generate') }}',
+                type: 'POST',
+                data:{group:group},
+                dataType: 'json',
+                headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                       },
+                 success: function(response) {
+                    if (response.code === '0') {
+                             $('#code').prop('readonly', true);
+                             $('#code').val('Group harus di isi..!!');
+                            } else {
+                              $('#code').val(response.code);
+                            }
+
+                      console.log(response);
+
+                    },
+                complete: function() {
+                    $('#generate-code').prop('disabled', false);
+                    $('#generate-code').removeClass('loading');
+                }
+            });
+        });
+
+
+
 
     })(jQuery);
 

@@ -17,34 +17,11 @@ display: inline-block;
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">Products</li>
+    <li class="breadcrumb-item active">Products Transfer</li>
 </ol>
 @endsection
 @section('content')
 <div class="container-fluid">
-  {{--   <div class="flex flex-wrap -m-4 text-center mb-2">
-        @foreach(\Modules\Product\Entities\Category::all() as $category)
-        <a class="cursor-pointer p-2 md:w-1/4 sm:w-1/2 w-full" id="Tambah" href="{{ route('products.add_products_categories',$category->id) }}">
-        <div class="w-full">
-            <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-                <div class="justify-center text-center items-center">
-                    <?php
-                    if ($category->image) {
-                    $image = asset(imageUrl() . $category->image);
-                    }else{
-                    $image = asset('images/logo.png');
-                    }
-                    ?>
-                    <img id="default_1" src="{{ $image }}" alt="images"
-                    class="h-16 w-16 object-contain mx-auto" />
-                </div>
-                <div class="leading-tight no-underline  hover:no-underline">{{ $category->category_name }}</div>
-            </div>
-        </div>
-        </a>
-        @endforeach
-    </div>
- --}}
 
     <div class="row">
         <div class="col-12">
@@ -59,28 +36,30 @@ display: inline-block;
                         <div id="buttons"></div>
                     </div>
                     <div class="table-responsive mt-1">
-                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%!important;">NO</th>
-                                    <th style="width: 9%!important;">{{ Label_case('image') }}</th>
-                                    <th>{{ Label_case('product_name') }}</th>
-                                    <th>{{ Label_case('price') }}</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Status') }}</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
-                                    <th style="width: 14%!important;" class="text-center">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
+
+
+<table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+    <thead>
+        <tr>
+            <th style="width: 5%!important;">NO</th>
+            <th style="width: 9%!important;">{{ Label_case('image') }}</th>
+            <th>{{ Label_case('product_name') }}</th>
+            <th>{{ Label_case('price') }}</th>
+            <th style="width: 9%!important;" class="text-center">{{ Label_case('Status') }}</th>
+            <th style="width: 11%!important;" class="text-center lokasi">{{ Label_case('Lokasi') }}</th>
+             <th style="width: 16%!important;" class="text-center">{{ Label_case('Transfer') }}</th>
+            <th style="width: 14%!important;" class="text-center">
+                Action
+            </th>
+        </tr>
+    </thead>
+</table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 @endsection
@@ -116,8 +95,14 @@ display: inline-block;
         }
         ],
         "sPaginationType": "simple_numbers",
-        ajax: '{{ route("$module_name.index_data") }}',
-        dom: 'Blfrtip',
+        ajax: {
+          url: "{{ route("$module_name.transfer.index_data") }}",
+          data: function (d) {
+                d.location_id = $('#tes').val()
+
+            }
+        },
+      dom: 'Blfrtip',
         buttons: [
         'excel',
         'pdf',
@@ -143,9 +128,14 @@ display: inline-block;
         }, {
             data: 'status',
             name: 'status'
-        }, {
-            data: 'updated_at',
-            name: 'updated_at'
+        },
+         {
+            data: 'lokasi',
+            name: 'lokasi'
+        },
+          {
+            data: 'change',
+            name: 'change'
         },
         {
             data: 'action',
@@ -159,8 +149,8 @@ display: inline-block;
     .container()
     .appendTo("#buttons");
 
-
 </script>
+
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
@@ -183,7 +173,6 @@ $(document).on('click', '#Tambah, #Edit', function(e){
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });
-
 
 })(jQuery);
 </script>
@@ -245,5 +234,17 @@ $(document).on('click', '#Tambah, #Edit', function(e){
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<script src="{{  asset('js/jquery.min.js') }}"></script>
+
+<script>
+    $(document).ready(function() {
+      $('#location_id').on('change', function() {
+        var selectedValue = $(this).val();
+        alert('Selected value: ' + selectedValue);
+      });
+    });
+  </script>
+
+
 
 @endpush

@@ -8,7 +8,7 @@ use Modules\Product\Notifications\NotifyQuantityAlert;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
+use Modules\Product\Entities\ProductLocation;
 class Product extends Model implements HasMedia
 {
 
@@ -89,7 +89,9 @@ class Product extends Model implements HasMedia
         }
 
 
-
+     public function productlocation() {
+        return $this->hasMany(ProductLocation::class, 'product_id');
+    }
 
 
 

@@ -5,11 +5,11 @@ namespace App\Http\Livewire;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
-
+use Modules\Product\Entities\Product;
 class ProductCart extends Component
 {
 
-    public $listeners = ['productSelected', 'discountModalRefresh'];
+    public $listeners = ['productSelected','addProduk', 'discountModalRefresh'];
 
     public $cart_instance;
     public $global_discount;
@@ -21,8 +21,12 @@ class ProductCart extends Component
     public $discount_type;
     public $item_discount;
     public $data;
+    public $add_produk =0;
 
     public function mount($cartInstance, $data = null) {
+
+
+
         $this->cart_instance = $cartInstance;
 
         if ($data) {
@@ -61,15 +65,13 @@ class ProductCart extends Component
 
     public function render() {
         $cart_items = Cart::instance($this->cart_instance)->content();
-
-        return view('livewire.product-cart', [
+            return view('livewire.product-cart', [
             'cart_items' => $cart_items
         ]);
     }
 
     public function productSelected($product) {
         $cart = Cart::instance($this->cart_instance);
-
         $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
             return $cartItem->id == $product['id'];
         });
@@ -105,8 +107,19 @@ class ProductCart extends Component
         $this->item_discount[$product['id']] = 0;
     }
 
+
+
+
     public function removeItem($row_id) {
         Cart::instance($this->cart_instance)->remove($row_id);
+    }
+
+
+public function addProduk($value)
+    {
+       $this->add_produk = $value;
+       $product = Product::findOrFail($value);
+       $this->productSelected($product);
     }
 
     public function updatedGlobalTax() {
@@ -144,23 +157,6 @@ class ProductCart extends Component
         ]);
     }
     
-    // public function addlocation($row_id, $loc_id) {
-        
-    //     $cart_item = Cart::instance($this->cart_instance)->get($row_id);
-    //     Cart::instance($this->cart_instance)->update($row_id, [
-    //         'options' => [
-    //             'sub_total'             => $cart_item->price * $cart_item->qty,
-    //             'code'                  => $cart_item->options->code,
-    //             'stock'                 => $cart_item->options->stock,
-    //             'unit'                  => $cart_item->options->unit,
-    //             'product_tax'           => $cart_item->options->product_tax,
-    //             'unit_price'            => $cart_item->options->unit_price,
-    //             'product_discount'      => $cart_item->options->product_discount,
-    //             'product_discount_type' => $cart_item->options->product_discount_type,
-    //             'location'              => $loc_id,
-    //         ]
-    //     ]);
-    // }
 
     public function updatedDiscountType($value, $name) {
         $this->item_discount[$name] = 0;

@@ -36,12 +36,23 @@ Route::group(['middleware' => 'auth'], function () {
          'uses' => "ProductController@add_products_modal_categories"]);
 
 
-
-
     Route::resource('products', 'ProductController');
-
     //Product Category
      Route::get("product-categories/index_data", ['as' => "categories.index_data", 'uses' => "CategoriesController@index_data"]);
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
+
+
+ //Product Transfer
+     Route::get("product-transfer/index_data", ['as' => "products.transfer.index_data", 'uses' => "ProductTransferController@index_data"]);
+
+     Route::get("product-transfer/detail/{id}", ['as' => "products.transfer.detail", 'uses' => "ProductTransferController@detail"]);
+
+
+      Route::resource('product-transfer', 'ProductTransferController')->except('create', 'show');
+
+
+
+
+
 });
 

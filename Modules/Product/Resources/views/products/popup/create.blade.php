@@ -356,7 +356,7 @@ button, input, optgroup, select, textarea {
 
  {{-- harga ========= --}}
             <div class="form-row">
-                <div class="col-md-4">
+                <div class="col-md-6">
 
 				<div class="form-group">
 					<?php
@@ -382,7 +382,7 @@ button, input, optgroup, select, textarea {
 
 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
 
 					<div class="form-group">
 						<?php
@@ -406,7 +406,7 @@ button, input, optgroup, select, textarea {
 					</div>
 
                 </div>
-                <div class="col-md-4">
+          {{--       <div class="col-md-4">
 
 
                    <div class="form-group">
@@ -432,7 +432,7 @@ button, input, optgroup, select, textarea {
 
 
 
-                </div>
+                </div> --}}
             </div>
   {{-- ========= --}}
 
@@ -572,7 +572,7 @@ button, input, optgroup, select, textarea {
 		         success: function(response) {
 		        	if (response.code === '0') {
 						     $('#code').prop('disabled', true);
-						 	 $('#code').val('produk harus di isi');
+						 	 $('#code').val('Group harus di isi..!!');
 						    } else {
 						      $('#code').val(response.code);
 						    }

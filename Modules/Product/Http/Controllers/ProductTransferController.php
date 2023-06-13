@@ -13,6 +13,7 @@ use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
 use Modules\Product\Entities\ProductLocation;
 use Modules\Locations\Entities\Locations;
+use Modules\Product\Entities\TrackingProduct;
 use Modules\Gudang\Models\Gudang;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
@@ -22,7 +23,7 @@ use Illuminate\Support\Str;
 use Lang;
 use Yajra\DataTables\DataTables;
 use Image;
-class ProductController extends Controller
+class ProductTransferController extends Controller
 {
 
 
@@ -57,7 +58,7 @@ public function __construct()
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
         abort_if(Gate::denies('access_products'), 403);
-         return view('product::products.index',
+         return view('product::products.transfer.index',
            compact('module_name',
             'module_action',
             'module_title',
@@ -85,6 +86,9 @@ public function __construct()
           return response()->json(['code' => $codeNumber]);
     }
 
+
+
+
  public function getsalesProduct(Request $request){
         $product = Product::where('product_price','>',0);
         if(isset($request->cariproduk)){
@@ -95,7 +99,7 @@ public function __construct()
         if(count($product) > 0){
             foreach($product as $product){
                 $stock = ProductLocation::join('locations','locations.id','product_locations.location_id')
-                ->where('product_id',$product->id)->first();
+                ->where('type','storefront')->where('product_id',$product->id)->first();
                 if (empty($stock)) {
                     $stock = 0;
                 }else{
@@ -179,7 +183,7 @@ public function __construct()
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $category = Category::where('id', $id)->first();
-        $locations = Locations::where('name','LIKE','%Pusat%')->first();
+        $locations = Locations::where('name','LIKE','%Tempo%')->first();
         $code = Product::generateCode();
         $module_action = 'List';
           return view(''.$module_path.'::'.$module_name.'.popup.create',
@@ -214,41 +218,40 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('product::products.partials.actions',
+                            return view('product::products.transfer.aksi',
                             compact('module_name', 'data', 'module_model'));
                                 })
-           ->editColumn('product_name', function ($data) {
-                $tb = '<div class="flex items-center gap-x-2">
+
+                    ->editColumn('product_name', function ($data) {
+                         $tb = '<div class="flex items-center gap-x-2">
                         <div>
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                             ' . $data->category->category_name . '</div>
                             <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
                              <div style="font-size:0.6rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
                             ' . $data->product_code . '</div>
-
-
                         </div>
                     </div>';
                 return $tb;
             })
            ->addColumn('product_image', function ($data) {
             $url = $data->getFirstMediaUrl('images', 'thumb');
-            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
-        })
+                return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+             })
 
            ->addColumn('product_price', function ($data) {
               return format_currency($data->product_price);
-          })
+              })
            ->addColumn('product_quantity', function ($data) {
             return $data->product_quantity . ' ' . $data->product_unit;
-        })
+             })
 
            ->editColumn('product_quantity', function ($data) {
             $tb = '<div class="items-center small text-center">
             <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
             ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
-            return $tb;
-        })
+                return $tb;
+             })
 
            ->editColumn('weight', function ($data) {
               $berat = @$data->product_item[0]->berat_emas;
@@ -270,24 +273,37 @@ public function index_data(Request $request)
               })
 
 
-                   ->editColumn('updated_at', function ($data) {
-                    $module_name = $this->module_name;
 
-                    $diff = Carbon::now()->diffInHours($data->updated_at);
-                    if ($diff < 25) {
-                        return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                    } else {
-                        return tgljam($data->created_at);
-                    }
-                })
-           ->rawColumns(['updated_at','product_image','weight','status',
+            ->addColumn('change', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.transfer.change',
+                            compact('module_name', 'data', 'module_model'));
+                      })
+            ->addColumn('lokasi', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.transfer.lokasi',
+                            compact('module_name', 'data', 'module_model'));
+                      })
+
+                 ->filter(function ($instance) use ($request) {
+                         if (!empty($request->get('location_id'))) {
+
+                                $locations = $request->get('location_id');
+
+                           }
+
+                       })
+
+
+
+
+
+           ->rawColumns(['updated_at','product_image','weight','status','lokasi',
             'product_name','product_quantity','product_price', 'action'])
            ->make(true);
     }
-
-
-
-
 
 
     public function create() {
@@ -323,7 +339,7 @@ public function index_data(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $category = Category::where('id', $id)->first();
-        $locations = Locations::where('name','LIKE','%Pusat%')->first();
+        $locations = Locations::where('name','LIKE','%Tempo%')->first();
         $code = Product::generateCode();
         $module_action = 'List';
           return view(''.$module_path.'::'.$module_name.'.modal.create',
@@ -333,8 +349,9 @@ public function index_data(Request $request)
                     'locations',
                     'code',
                     'module_icon', 'module_model'));
-
     }
+
+
 
 
     public function webcam() {
@@ -377,9 +394,12 @@ public function saveAjax(Request $request)
         $validator = \Validator::make($request->all(),[
              'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
              'category_id' => 'required',
-             'product_name' => 'required',
+             'gold_kategori_id' => 'required',
+             'product_name' => 'required|max:255',
              'product_price' => 'required|max:2147483647',
-             'product_cost' => 'required|max:2147483647',
+             'product_sale' => 'required|max:2147483647',
+
+
         ]);
 
         if (!$validator->passes()) {
@@ -390,9 +410,11 @@ public function saveAjax(Request $request)
         $input = $request->all();
         $input['product_price'] = preg_replace("/[^0-9]/", "", $input['product_price']);
         $input['product_cost'] = preg_replace("/[^0-9]/", "", $input['product_cost']);
+        $input['product_sale'] = preg_replace("/[^0-9]/", "", $input['product_sale']);
         //dd($input);
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
+          $product_sale = preg_replace("/[^0-9]/", "", $input['product_sale']);
           $$module_name_singular = $module_model::create([
             'category_id'                       => $input['category_id'],
             'product_stock_alert'               => $input['product_stock_alert'],
@@ -420,18 +442,16 @@ public function saveAjax(Request $request)
                 ->toMediaCollection('images');
                 }
 
-            if ($request->hasFile('document') && $request->file('document')->isValid()) {
-                 $$module_name_singular->addMediaFromRequest('document')
-                 ->toMediaCollection('images');
-            }
+        if ($request->hasFile('document') && $request->file('document')->isValid()) {
+             $$module_name_singular->addMediaFromRequest('document')
+             ->toMediaCollection('images');
+        }
+
+
 
             $produk = $$module_name_singular->id;
             $this->_saveProductsItem($input ,$produk);
-            return response()->json([
-                'produk'=> $produk,
-                'success'=>'  '.$module_title.' Sukses disimpan.'
-
-                  ]);
+            return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
     }
 
 
@@ -454,13 +474,13 @@ public function saveAjax(Request $request)
         $input = $request->except(['document']);
         $input['product_price'] = preg_replace("/[^0-9]/", "", $input['product_price']);
         $input['product_cost'] = preg_replace("/[^0-9]/", "", $input['product_cost']);
-        // dd($input);
+         //dd($input);
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([
             'category_id'                       => $input['category_id'],
             'product_stock_alert'               => $input['product_stock_alert'],
-            'product_name'                      => $input['nama_produk'],
+            'product_name'                      => $input['product_name'],
             'product_code'                      => $input['product_code'],
             'product_price'                     => $product_price,
             'product_quantity'                  => $input['product_quantity'],
@@ -505,39 +525,44 @@ public function saveAjax(Request $request)
 
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
+          $product_sale = preg_replace("/[^0-9]/", "", $input['product_sale']);
           $gudang = Gudang::latest()->limit(1)->first()->id;
 
-               ProductItem::create([
-                    'product_id'                  => $produk,
-                    'location_id'                 => $input['location_id'] ?? null,
-                    'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
-                    'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
-                    'customer_id'                 => $input['customer_id'] ?? null,
-                    'karat_id'                    => $input['karat_id'] ?? null,
-                    'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
-                    'certificate_id'              => $input['certificate_id'] ?? null,
-                    'shape_id'                    => $input['shape_id'] ?? null,
-                    'round_id'                    => $input['round_id'] ?? null,
-                    'product_cost'                => $product_cost,
-                    'product_price'               => $product_price,
-                    'product_sale'                => null,
-                    'berat_emas'                  => $input['berat_emas'],
-                    'berat_label'                 => $input['berat_label'],
-                    'gudang_id'                   => $gudang ?? null,
-                    'supplier_id'                 => $input['supplier_id'] ?? null,
-                    'etalase_id'                  => $input['etalase_id'] ?? null,
-                    'baki_id'                     => $input['baki_id'] ?? null,
-                    'berat_total'                 => $input['berat_total']
-                ]);
-               //dd($input);
-              }
+       ProductItem::create([
+            'product_id'                  => $produk,
+            'location_id'                 => $input['location_id'] ?? null,
+            'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
+            'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
+            'customer_id'                 => $input['customer_id'] ?? null,
+            'karat_id'                    => $input['karat_id'] ?? null,
+            'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
+            'certificate_id'              => $input['certificate_id'] ?? null,
+            'shape_id'                    => $input['shape_id'] ?? null,
+            'round_id'                    => $input['round_id'] ?? null,
+            'product_cost'                => $product_cost,
+            'product_price'               => $product_price,
+            'product_sale'                => $product_sale,
+            'berat_emas'                  => $input['berat_emas'],
+            'berat_label'                 => $input['berat_label'],
+            'gudang_id'                   => $gudang ?? null,
+            'supplier_id'                 => $input['supplier_id'] ?? null,
+            'etalase_id'                  => $input['etalase_id'] ?? null,
+            'baki_id'                     => $input['baki_id'] ?? null,
+            'berat_total'                 => $input['berat_total']
+        ]);
+       //dd($input);
+      }
 
 
-    public function show(Product $product) {
+    public function detail($id) {
         abort_if(Gate::denies('show_products'), 403);
-
-        return view('product::products.show', compact('product'));
+        $product = Product::find($id);
+        $stock = ProductLocation::join('locations','locations.id','product_locations.location_id')
+                ->where('product_id',$id)->first();
+        return view('product::products.transfer.show', compact('product','stock'));
     }
+
+
 
 
 

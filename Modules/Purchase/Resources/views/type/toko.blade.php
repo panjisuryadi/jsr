@@ -59,26 +59,11 @@
 <x-library.select2 />
 
 
-    <div class="container-fluid mb-4">
+    <div class="container-fluid mb-1">
 
 <div class="card  py-3 px-3">
-<div class="flex relative py-2">
-    <div class="absolute inset-0 flex items-center">
-        <div class="w-full border-b border-gray-300"></div>
-    </div>
-    <div class="relative flex justify-left">
-        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{  __('Purchase') }}</span>
-    </div>
-</div>
 
-{{-- <div class="grid grid-cols-2 gap-2 mt-2">
-   <livewire:purchase-product/>
-   <livewire:product.create>
-</div>
-</div> --}}
-
-
-        <div class="row mt-4">
+        <div class="row mt-2">
             <div class="col-md-12">
                 <div class="card">
 
@@ -100,11 +85,11 @@
                             @csrf
 
                             <div class="form-row mt-2">
-                                <div class="col-lg-4">
+                             {{--    <div class="col-lg-4">
                                  <livewire:purchase-product/>
-                                </div>
+                                </div> --}}
 
-                                 <div class="col-lg-2">
+                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="reference">Reference <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required readonly value="PR">
@@ -153,50 +138,66 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
+                                    <div class="col-lg-3">
+                                        <div class="from-group">
+                                            <label for="date"></label>
+                                            <a href="{{ route('products.create-modal') }}"
+                                                id="Tambah" class="w-full py-2 btn btn-sm btn-outline-danger mt-2">
+                                                @lang('Add Product')
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
                             </div>
 
 
                             <livewire:product-cart :cartInstance="'purchase'"/>
 
-                            <div class="form-row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="status">Status <span class="text-danger">*</span></label>
-                                        <select class="form-control select2" name="status" id="status" required>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Ordered">Ordered</option>
-                                            <option value="Completed">Completed</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="form-group">
-                                            <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="payment_method" id="payment_method" required>
-                                                <option value="Cash">Cash</option>
-                                                <option value="Credit Card">Credit Card</option>
-                                                <option value="Bank Transfer">Bank Transfer</option>
-                                                <option value="Cheque">Cheque</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="paid_amount">Amount Paid <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <input id="paid_amount" type="text" class="form-control" name="paid_amount" required>
-                                            <div class="input-group-append">
-                                                <button id="getTotalAmount" class="btn btn-primary" type="button">
-                                                    <i class="bi bi-check-square"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+<div class="flex flex-row grid grid-cols-3 gap-2">
+    <div class="form-group">
+        @php
+        $locations = \Modules\Locations\Entities\Locations::where('name','LIKE','%Pusat%')->get();
+        @endphp
+        <label for="">Location</label>
+        <select name="location_id" class="form-control select2" readonly>
+            @foreach ($locations as $loc)
+            <option value="{{ $loc->id }}" selected>{{ $loc->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
+        <select class="form-control select2" name="payment_method" id="payment_method" required>
+            <option value="Cash">Cash</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="paid_amount">Amount Paid <span class="text-danger">*</span></label>
+        <div class="input-group">
+            <input id="paid_amount" type="text" class="form-control" name="paid_amount" required>
+            <div class="input-group-append">
+                <button id="getTotalAmount" class="btn btn-primary" type="button">
+                <i class="bi bi-check-square"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 
                             <div class="form-group">
                                 <label for="note">Note (If Needed)</label>

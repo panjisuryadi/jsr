@@ -61,7 +61,7 @@
                             <livewire:product-cart :cartInstance="'purchase'"/>
 
                             <div class="form-row">
-                                <div class="col-lg-4">
+                                <{{-- div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="status">Status <span class="text-danger">*</span></label>
                                         <select class="form-control select2" name="status" id="status" required>
@@ -70,7 +70,7 @@
                                             <option value="Completed">Completed</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">

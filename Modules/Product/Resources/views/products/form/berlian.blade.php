@@ -4,10 +4,7 @@
                                     <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
 
 
-
-
-
-                                    <div class="py-2">
+                                <div class="py-2">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="upload" id="up2" checked>
                                             <label class="form-check-label" for="up2">Upload</label>
