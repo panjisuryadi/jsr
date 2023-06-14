@@ -127,3 +127,6 @@ setelah di sebar ke gudang cabang .. di tambahkan kode cabang ,.tanpa merubah La
 
 
 Pembelian + kode suplier + ke table supplier
+
+
+stok transfer ==

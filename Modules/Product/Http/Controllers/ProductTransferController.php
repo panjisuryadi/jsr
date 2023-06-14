@@ -3,6 +3,7 @@
 namespace Modules\Product\Http\Controllers;
 use Carbon\Carbon;
 use Modules\Product\DataTables\ProductDataTable;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -264,23 +265,22 @@ public function index_data(Request $request)
             $tb = '<div class="items-center small text-center">
             <span class="bg-yellow-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
             ' .  $weight . '</span></div>';
-            return $tb;
-        })
+                 return $tb;
+              })
 
-          ->editColumn('status', function ($data) {
-             $status = statusProduk($data->status);
+             ->editColumn('status', function ($data) {
+                $status = statusProduk($data->status);
                return $status;
               })
 
-
-
-            ->addColumn('change', function ($data) {
+                 ->addColumn('change', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             return view('product::products.transfer.change',
                             compact('module_name', 'data', 'module_model'));
                       })
-            ->addColumn('lokasi', function ($data) {
+
+                ->addColumn('lokasi', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             return view('product::products.transfer.lokasi',
@@ -289,16 +289,10 @@ public function index_data(Request $request)
 
                  ->filter(function ($instance) use ($request) {
                          if (!empty($request->get('location_id'))) {
+                            $locations = $request->get('location_id');
+                      }
 
-                                $locations = $request->get('location_id');
-
-                           }
-
-                       })
-
-
-
-
+                    })
 
            ->rawColumns(['updated_at','product_image','weight','status','lokasi',
             'product_name','product_quantity','product_price', 'action'])
@@ -308,7 +302,6 @@ public function index_data(Request $request)
 
     public function create() {
         abort_if(Gate::denies('create_products'), 403);
-
         return view('product::products.create');
     }
 
@@ -363,7 +356,7 @@ public function index_data(Request $request)
 
     public function store(StoreProductRequest $request) {
          $params = $request->all();
-        $params = $request->except('_token');
+         $params = $request->except('_token');
          dd($params);
         $product = Product::create($request->except('document'));
 
@@ -392,12 +385,12 @@ public function saveAjax(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
-             'category_id' => 'required',
+             'product_code'     => 'required|max:255|unique:'.$module_model.',product_code',
+             'category_id'      => 'required',
              'gold_kategori_id' => 'required',
-             'product_name' => 'required|max:255',
-             'product_price' => 'required|max:2147483647',
-             'product_sale' => 'required|max:2147483647',
+             'product_name'     => 'required|max:255',
+             'product_price'    => 'required|max:2147483647',
+             'product_sale'     => 'required|max:2147483647',
 
 
         ]);
@@ -426,7 +419,7 @@ public function saveAjax(Request $request)
             'product_unit'                      => $input['product_unit'],
             'status'                            => $input['status'],
             'product_cost'                      => $product_cost
-        ]);
+             ]);
 
                if ($request->filled('image')) {
                 $img = $request->image;
@@ -446,8 +439,6 @@ public function saveAjax(Request $request)
              $$module_name_singular->addMediaFromRequest('document')
              ->toMediaCollection('images');
         }
-
-
 
             $produk = $$module_name_singular->id;
             $this->_saveProductsItem($input ,$produk);
@@ -615,6 +606,22 @@ public function saveAjax(Request $request)
 
 
 
+          public function type(Request $request) {
+                $type = $request->type;
+                //dd($type);
+                abort_if(Gate::denies('create_purchases'), 403);
+                Cart::instance('purchase')->destroy();
+                    if ($type == 'NonMember') {
+                     return view('product::products.transfer.type.member');
+                    }
+                     elseif ($type == 'toko') {
+                      return view('product::products.transfer.type.toko');
+                    }
+                    else {
+                         return view('product::products.transfer.type.index');
+                    }
+
+            }
 
 
     public function destroy(Product $product) {

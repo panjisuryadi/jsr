@@ -63,6 +63,8 @@
 
 <div class="card  py-3 px-3">
 
+
+
         <div class="row mt-2">
             <div class="col-md-12">
                 <div class="card">
@@ -84,88 +86,72 @@
                         <form id="purchase-form" action="{{ route('purchases.store') }}" method="POST">
                             @csrf
 
-                            <div class="form-row mt-2">
-                             {{--    <div class="col-lg-4">
-                                 <livewire:purchase-product/>
-                                </div> --}}
 
-                                 <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label for="reference">Reference <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="reference" required readonly value="PR">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="from-group">
-                                        <div class="form-group">
+<div class="flex flex-row grid grid-cols-3 gap-1 py-0">
+    <div class="px-0 col-span-2 mb-0 form-group">
+        <livewire:purchase-product/>
+        </div>
+        <div class="form-group mb-0">
+            <label for="code_sales">Code Sales <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="code_sales" required>
+        </div>
 
-                                          <div class="py-1">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio"
-                                             name="supplier" value="1" id="sup1" checked>
-                                            <label class="form-check-label" for="sup1">Supplier</label>
-                                        </div>
-
-                                    <div class="form-check form-check-inline">
-                                            <input class="form-check-input" value="2" type="radio" name="supplier"
-                                            id="sup2">
-                                            <label class="form-check-label" for="sup2">Non Supplier</label>
-                                        </div>
-                                    </div>
-
-                                    <div id="supplier1" style="display: none !important;" class="align-items-center justify-content-center">
-                                     <input type="text" class="form-control" placeholder="Nama Suplier" name="none_supplier" >
-                                    </div>
+    </div>
 
 
-                                    <div id="supplier2" style="display: block !important;" class="align-items-center justify-content-center">
-                                            <select class="form-control select2" name="supplier_id" id="supplier_id" >
-                                                @foreach(\Modules\People\Entities\Supplier::all() as $supplier)
-                                                <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
-                                                @endforeach
-                                            </select>
-                                    </div>
+<div class="flex flex-row grid grid-cols-3 gap-1 py-0">
+    <div class="form-group">
+        <label for="reference">Reference <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" name="reference" required readonly value="PR">
+    </div>
+    <div class="form-group">
+        <div class="py-1">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio"
+                name="supplier" value="1" id="sup1" checked>
+                <label class="form-check-label" for="sup1">Supplier</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" value="2" type="radio" name="supplier"
+                id="sup2">
+                <label class="form-check-label" for="sup2">Non Supplier</label>
+            </div>
+        </div>
+        <div id="supplier1" style="display: none !important;" class="align-items-center justify-content-center">
+            <input type="text" class="form-control" placeholder="Nama Suplier" name="none_supplier" >
+        </div>
+        <div id="supplier2" style="display: block !important;" class="align-items-center justify-content-center">
+            <select class="form-control select2" name="supplier_id" id="supplier_id" >
+                @foreach(\Modules\People\Entities\Supplier::all() as $supplier)
+                <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
 
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="from-group">
-                                        <div class="form-group">
-                                            <label for="date">Date <span class="text-danger">*</span></label>
-                                            <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                    <div class="col-lg-3">
-                                        <div class="from-group">
-                                            <label for="date"></label>
-                                            <a href="{{ route('products.create-modal') }}"
-                                                id="Tambah" class="w-full py-2 btn btn-sm btn-outline-danger mt-2">
-                                                @lang('Add Product')
-                                            </a>
-                                        </div>
-                                    </div>
+    <div class="from-group">
+            <div class="form-group">
+                <label for="date">Date <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
+            </div>
+        </div>
 
 
 
 
+</div>
 
 
-                            </div>
 
-
-                            <livewire:product-cart :cartInstance="'purchase'"/>
+<livewire:product-cart :cartInstance="'purchase'"/>
 
 
 <div class="flex flex-row grid grid-cols-3 gap-2">
     <div class="form-group">
         @php
-        $locations = \Modules\Locations\Entities\Locations::where('name','LIKE','%Pusat%')->get();
+        $locations = \Modules\Locations\Entities\Locations::where('name','NOT LIKE','%Pusat%')
+        ->where('name','NOT LIKE','%Temp%')
+        ->get();
         @endphp
         <label for="">Location</label>
         <select name="location_id" class="form-control select2" readonly>
@@ -173,6 +159,8 @@
             <option value="{{ $loc->id }}" selected>{{ $loc->name }}</option>
             @endforeach
         </select>
+
+
     </div>
     <div class="form-group">
         <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
@@ -200,7 +188,7 @@
 
 
                             <div class="form-group">
-                                <label for="note">Note (If Needed)</label>
+                                <label class="text-danger" for="note">Note (If Needed)</label>
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>
 
@@ -209,7 +197,7 @@
                                 <div class="text-gray-700 text-center"></div>
                                 <div class="justify-end py-2">
                                     <button type="submit" class="btn btn-danger">
-                                    Create Purchase <i class="bi bi-check"></i>
+                                    Create Product Transfer <i class="bi bi-check"></i>
                                     </button>
                                 </div>
                             </div>

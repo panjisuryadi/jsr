@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 
      Route::get("product-transfer/detail/{id}", ['as' => "products.transfer.detail", 'uses' => "ProductTransferController@detail"]);
 
-
+    Route::get('/products-transfer-type/{type}', 'ProductTransferController@type')->name('products.transfer.type');
       Route::resource('product-transfer', 'ProductTransferController')->except('create', 'show');
 
 

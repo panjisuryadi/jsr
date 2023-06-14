@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="card mb-0 border-0">
-        <div class="px-2 ">
+        <div class="px-0">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text p-0">
