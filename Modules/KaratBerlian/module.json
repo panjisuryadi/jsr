@@ -1,0 +1,13 @@
+{
+    "name": "KaratBerlian",
+    "alias": "karatberlian",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\KaratBerlian\\Providers\\KaratBerlianServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

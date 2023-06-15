@@ -433,6 +433,27 @@ class GenerateMenus
             ]);
 
 
+         // KaratBerlians
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Karat Berlian'), [
+                'route' => 'karatberlian.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['karatberlians*'],
+                'permission'    => ['access_karatberlians'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+
+
+
+
+
 
       // DataBanks
             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Data Bank'), [
@@ -507,6 +528,9 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2 pb-3',
             ]);
+
+
+       
 
 
 
