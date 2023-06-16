@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('purchases', 'PurchaseController');
 
 
+
     Route::post('purchases/completepurchase', 'PurchaseController@completepurchase')->name('purchase.completepurchase');
 
  Route::post('purchases/save-transfer-product', 'PurchaseController@savetransferProduct')->name('purchase.save.transfer.product');
