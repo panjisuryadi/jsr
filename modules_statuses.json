@@ -42,5 +42,6 @@
     "ParameterBerlian": true,
     "JenisPerhiasan": true,
     "Cabang": true,
-    "UserCabang": true
+    "UserCabang": true,
+    "KaratBerlian": true
 }
