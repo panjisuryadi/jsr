@@ -83,7 +83,7 @@
 
                         @include('utils.alerts')
                     <script src="{{  asset('js/jquery.min.js') }}"></script>
-                        <form id="purchase-form" action="{{ route('purchases.store') }}" method="POST">
+                        <form id="purchase-form" action="{{ route('purchase.save.transfer.product') }}" method="POST">
                             @csrf
 
 
@@ -92,8 +92,8 @@
         <livewire:purchase-product/>
         </div>
         <div class="form-group mb-0">
-            <label for="code_sales">Code Sales <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="code_sales" required>
+            <label for="kode_sales">Code Sales <span class="text-danger">*</span></label>
+            <input type="text" value="{{ auth()->user()->kode_user }}" class="form-control" name="kode_sales">
         </div>
 
     </div>

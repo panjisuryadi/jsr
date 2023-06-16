@@ -72,7 +72,6 @@ public function __construct()
          if (!$group) {
            return response()->json(['code' => '0']);
          }
-        //$string = Str::random(8); //
          $existingCode = true;
          $codeNumber = '';
          $cabang = 'CBR';
@@ -84,6 +83,10 @@ public function __construct()
             }
           return response()->json(['code' => $codeNumber]);
     }
+
+
+
+
 
  public function getsalesProduct(Request $request){
         $product = Product::where('product_price','>',0);

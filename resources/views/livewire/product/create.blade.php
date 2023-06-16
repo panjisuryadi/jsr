@@ -110,7 +110,7 @@
 
 document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
   element.addEventListener('keyup', function(e) {
-  let cursorPostion = this.selectionStart;
+    let cursorPostion = this.selectionStart;
     let value = parseInt(this.value.replace(/[^,\d]/g, ''));
     let originalLenght = this.value.length;
     if (isNaN(value)) {

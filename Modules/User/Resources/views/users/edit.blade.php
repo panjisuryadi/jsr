@@ -6,6 +6,41 @@
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"/>
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
           rel="stylesheet">
+
+<style type="text/css">
+ .loading {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.loading:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+</style>
+
+
 @endsection
 
 @section('breadcrumb')
@@ -24,29 +59,22 @@
             <div class="row">
                 <div class="col-lg-12">
                     @include('utils.alerts')
-                    <div class="form-group">
-                        <button class="btn btn-primary">Update User <i class="bi bi-check"></i></button>
-                    </div>
+
                 </div>
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="name">Name <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="name" required value="{{ $user->name }}">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="email">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="email" name="email" required value="{{ $user->email }}">
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group">
+<div class="flex flex-row grid grid-cols-3 gap-2">
+    <div class="form-group">
+        <label for="name">Name <span class="text-danger">*</span></label>
+        <input class="form-control" type="text" name="name" required value="{{ $user->name }}">
+    </div>
+    <div class="form-group">
+        <label for="email">Email <span class="text-danger">*</span></label>
+        <input class="form-control" type="email" name="email" required value="{{ $user->email }}">
+    </div>
+      <div class="form-group">
                                 <label for="role">Role <span class="text-danger">*</span></label>
                                 <select class="form-control" name="role" id="role" required>
                                     @foreach(\Spatie\Permission\Models\Role::where('name', '!=', 'Super Admin')->get() as $role)
@@ -54,16 +82,70 @@
                                     @endforeach
                                 </select>
                             </div>
+</div>
+<div class="flex flex-row grid grid-cols-2 gap-2">
 
-                            <div class="form-group">
+
+
+           <div class="form-group">
                                 <label for="is_active">Status <span class="text-danger">*</span></label>
                                 <select class="form-control" name="is_active" id="is_active" required>
                                     <option value="1" {{ $user->is_active == 1 ? 'selected' : ''}}>Active</option>
                                     <option value="2" {{ $user->is_active == 2 ? 'selected' : ''}}>Deactive</option>
                                 </select>
                             </div>
+    <div class="form-group w-90">
+        <label for="kode_user">Code Sales<span class="text-danger">*</span></label>
+        <div class="input-group">
+            <input type="text" id="code" class="form-control" name="kode_user" value="{{ $user->kode_user }}">
+            <span class="input-group-btn">
+                <button class="btn btn-info relative rounded-l-none" id="generate-code">Generate</button>
+            </span>
+        </div>
+        <span class="invalid feedback" role="alert">
+            <span class="text-danger error-text product_code_err"></span>
+        </span>
+    </div>
+</div>
+
+
+
+
+                        </div>
+
+
+
+ <div class="flex justify-between px-3 pb-2 border-bottom">
+                        <div>
+                        </div>
+                        <div class="form-group">
+                            <a class="px-5 btn btn-danger"
+                                href="{{ route("users.index") }}">
+                            @lang('Cancel')</a>
+                            <button class="px-4 btn btn-success">@lang('Update') <i class="bi bi-check"></i></button>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
                 </div>
                 <div class="col-lg-4">
                     <div class="card">
@@ -77,6 +159,18 @@
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
         </form>
     </div>
 @endsection
@@ -109,6 +203,38 @@
                 }
             }
         });
+
+        $('#generate-code').click(function() {
+           // var group = $('#group_id').val();
+            //alert(group);
+            $(this).prop('disabled', true);
+            $(this).addClass('loading');
+            $.ajax({
+                url: '{{ route('users.code') }}',
+                type: 'GET',
+            //    data:{group:group},
+                dataType: 'json',
+                     success: function(response) {
+                    if (response.code === '0') {
+                             $('#code').prop('disabled', true);
+                             $('#code').val('Kode Sales tidak boleh kosong..!!');
+                            } else {
+                              $('#code').val(response.code);
+                            }
+
+                      console.log(response);
+
+                    },
+                complete: function() {
+                    $('#generate-code').prop('disabled', false);
+                    $('#generate-code').removeClass('loading');
+                }
+            });
+        });
+
+
+
+
     </script>
 @endpush
 

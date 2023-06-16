@@ -4,6 +4,7 @@ namespace Modules\Purchase\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 
 class StorePurchaseRequest extends FormRequest
 {
@@ -17,12 +18,16 @@ class StorePurchaseRequest extends FormRequest
         return [
             'supplier_id' => 'numeric',
             'reference' => 'required|string|max:255',
-            // 'tax_percentage' => 'required|integer|min:0|max:100',
-            // 'discount_percentage' => 'required|integer|min:0|max:100',
+            'kode_sales' => ['required',
+                  function ($attribute, $value, $fail) {
+                            $user = User::where('kode_user', $value)->first();
+                            if (!$user) {
+                                $fail('Kode Sales tidak ada..!!.');
+                            }
+                  },],
             'shipping_amount' => 'required|numeric',
             'total_amount' => 'required|numeric',
             'paid_amount' => 'required|numeric',
-           // 'status' => 'required|string|max:255',
             'payment_method' => 'required|string|max:255',
             'note' => 'nullable|string|max:1000'
         ];

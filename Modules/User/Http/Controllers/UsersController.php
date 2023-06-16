@@ -76,11 +76,13 @@ class UsersController extends Controller
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|max:255|unique:users,email,'.$user->id,
+            'kode_user'    => 'required|unique:users,kode_user,'.$user->id,
         ]);
 
         $user->update([
             'name'     => $request->name,
             'email'    => $request->email,
+            'kode_user'    => $request->kode_user,
             'is_active' => $request->is_active
         ]);
 
@@ -105,6 +107,22 @@ class UsersController extends Controller
 
         return redirect()->route('users.index');
     }
+
+
+      public function codeGenerate()
+        {
+             $codeNumber =   User::generateCode();
+             $existingCode = User::where('kode_user', $codeNumber)->exists();
+             if ($existingCode) {
+               return response()->json(['code' => 'Kode Eksis']);
+             }
+             $existingCode = true;
+              return response()->json(['code' => $codeNumber]);
+        }
+
+
+
+
 
 
     public function destroy(User $user) {

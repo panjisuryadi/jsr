@@ -22,9 +22,12 @@ class User extends Authenticatable implements HasMedia
      *
      * @var array
      */
+
+    public const USERCODE = 'U';
     protected $fillable = [
         'name',
         'email',
+        'kode_user',
         'password',
         'is_active'
     ];
@@ -64,6 +67,23 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaCollection('avatars')
             ->useFallbackUrl('https://www.gravatar.com/avatar/' . md5($this->attributes['email']));
     }
+
+     public static function generateCode()
+        {
+            $dateCode = self::USERCODE . '-';
+            $lastOrder = self::select([\DB::raw('MAX(users.kode_user) AS last_code')])
+                ->where('kode_user', 'like', $dateCode . '%')
+                ->first();
+            $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
+            $orderCode = $dateCode . '00001';
+            if ($lastOrderCode) {
+                $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
+                $nextOrderNumber = sprintf('%05d', (int)$lastOrderNumber + 1);
+                $orderCode = $dateCode . $nextOrderNumber;
+            }
+
+            return $orderCode;
+        }
 
     public function scopeIsActive(Builder $builder) {
         return $builder->where('is_active', 1);
