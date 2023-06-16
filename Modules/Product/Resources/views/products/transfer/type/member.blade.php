@@ -5,7 +5,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('purchases.index') }}">Purchases</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('product-transfer.index') }}">Products  Transfer</a></li>
         <li class="breadcrumb-item active">Add</li>
     </ol>
 @endsection
@@ -59,26 +59,13 @@
 <x-library.select2 />
 
 
-    <div class="container-fluid mb-4">
+    <div class="container-fluid mb-1">
 
 <div class="card  py-3 px-3">
-<div class="flex relative py-2">
-    <div class="absolute inset-0 flex items-center">
-        <div class="w-full border-b border-gray-300"></div>
-    </div>
-    <div class="relative flex justify-left">
-        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{  __('Purchase') }}</span>
-    </div>
-</div>
-
-{{-- <div class="grid grid-cols-2 gap-2 mt-2">
-   <livewire:purchase-product/>
-   <livewire:product.create>
-</div>
-</div> --}}
 
 
-        <div class="row mt-4">
+
+        <div class="row mt-2">
             <div class="col-md-12">
                 <div class="card">
 
@@ -90,29 +77,34 @@
                                     </div>
                                     <div class="relative flex justify-left">
 
-                                        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark"><small>Pembelian</small> Member / Customer<i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Tambah Produk tipe Member."></i></span>
+                                        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark"><small>Pembelian</small> Member / Customer <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Tambah Produk tipe Member /Customer."></i></span>
                                     </div>
                                 </div>
 
                         @include('utils.alerts')
-                         <script src="{{  asset('js/jquery.min.js') }}"></script>
-                        <form id="purchase-form" action="{{ route('purchase.save.customer') }}" method="POST">
+                    <script src="{{  asset('js/jquery.min.js') }}"></script>
+                        <form id="purchase-form" action="{{ route('purchase.save.transfer.customer') }}" method="POST">
                             @csrf
 
-                            <div class="form-row mt-2">
-                               {{--  <div class="col-lg-4">
-                                 <livewire:purchase-product/>
-                                </div> --}}
 
-                                 <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label for="reference">Reference <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="reference" required readonly value="PR">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="from-group">
-                                        <div class="form-group">
+<div class="flex flex-row grid grid-cols-3 gap-1 py-0">
+    <div class="px-0 col-span-2 mb-0 form-group">
+        <livewire:purchase-product/>
+        </div>
+        <div class="form-group mb-0">
+            <label for="kode_sales">Code Sales <span class="text-danger">*</span></label>
+            <input type="text" value="{{ auth()->user()->kode_user }}" class="form-control" name="kode_sales">
+        </div>
+
+    </div>
+
+
+<div class="flex flex-row grid grid-cols-3 gap-1 py-0">
+    <div class="form-group">
+        <label for="reference">Reference <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" name="reference" required readonly value="PR">
+    </div>
+            <div class="form-group">
 
                                           <div class="py-1">
                                         <div class="form-check form-check-inline">
@@ -143,77 +135,67 @@
 
 
                                         </div>
-                                    </div>
-                                </div>
-                               <div class="col-lg-3">
-                                    <div class="from-group">
-                                        <div class="form-group">
-                                            <label for="date">Date <span class="text-danger">*</span></label>
-                                            <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
-                                        </div>
-                                    </div>
-                                </div>
+
+    <div class="from-group">
+            <div class="form-group">
+                <label for="date">Date <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
+            </div>
+        </div>
 
 
 
-                                    <div class="col-lg-3">
-                                        <div class="from-group">
-                                            <label for="date"></label>
-                                            <a href="{{ route('products.create-modal') }}"
-                                                id="Tambah" class="w-full py-2 btn btn-sm btn-outline-danger mt-2">
-                                                @lang('Add Product')
-                                            </a>
-                                        </div>
-                                    </div>
+
+</div>
 
 
-                            </div>
+
+<livewire:product-cart :cartInstance="'purchase'"/>
 
 
-                            <livewire:product-cart :cartInstance="'purchase'"/>
+<div class="flex flex-row grid grid-cols-3 gap-2">
+    <div class="form-group">
+        @php
+        $locations = \Modules\Locations\Entities\Locations::where('name','NOT LIKE','%Pusat%')
+        ->where('name','NOT LIKE','%Temp%')
+        ->get();
+        @endphp
+        <label for="">Location</label>
+        <select name="location_id" class="form-control select2" readonly>
+            @foreach ($locations as $loc)
+            <option value="{{ $loc->id }}" selected>{{ $loc->name }}</option>
+            @endforeach
+        </select>
 
-                            <div class="form-row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="status">Status <span class="text-danger">*</span></label>
-                                        <select class="form-control select2" name="status" id="status" required>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Ordered">Ordered</option>
-                                            <option value="Completed">Completed</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="form-group">
-                                            <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="payment_method" id="payment_method" required>
-                                                <option value="Cash">Cash</option>
-                                                <option value="Credit Card">Credit Card</option>
-                                                <option value="Bank Transfer">Bank Transfer</option>
-                                                <option value="Cheque">Cheque</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="paid_amount">Amount Paid <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <input id="paid_amount" type="text" class="form-control" name="paid_amount" required>
-                                            <div class="input-group-append">
-                                                <button id="getTotalAmount" class="btn btn-primary" type="button">
-                                                    <i class="bi bi-check-square"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+    </div>
+    <div class="form-group">
+        <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
+        <select class="form-control select2" name="payment_method" id="payment_method" required>
+            <option value="Cash">Cash</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="paid_amount">Amount Paid <span class="text-danger">*</span></label>
+        <div class="input-group">
+            <input id="paid_amount" type="text" class="form-control" name="paid_amount" required>
+            <div class="input-group-append">
+                <button id="getTotalAmount" class="btn btn-primary" type="button">
+                <i class="bi bi-check-square"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 
                             <div class="form-group">
-                                <label for="note">Note (If Needed)</label>
+                                <label class="text-danger" for="note">Note (If Needed)</label>
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>
 
@@ -222,7 +204,7 @@
                                 <div class="text-gray-700 text-center"></div>
                                 <div class="justify-end py-2">
                                     <button type="submit" class="btn btn-danger">
-                                    Create Purchase <i class="bi bi-check"></i>
+                                    Create Product Transfer <i class="bi bi-check"></i>
                                     </button>
                                 </div>
                             </div>
@@ -271,23 +253,6 @@
         </div>
     </div>
 </div>
-
-
-{{--
-<div id="ModalKategori" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalHeaderkategori"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-           <div class="modal-body p-0" id="ModalContentKategori"></div>
-           <div class="modal-footer" id="ModalFooterKategori"></div>
-        </div>
-    </div>
-</div> --}}
 
 
 
@@ -344,9 +309,9 @@ jQuery.noConflict();
          if($(this).attr('id') == 'Tambah')
          {
 
-            $('.modal-dialog').removeClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').addClass('modal-xl');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case(' Products') }}');
         }
 
@@ -404,6 +369,8 @@ jQuery.noConflict();
 
 })(jQuery);
 </script>
+
+
 
 
 @endpush

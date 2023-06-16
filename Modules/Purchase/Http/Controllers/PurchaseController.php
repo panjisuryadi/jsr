@@ -494,36 +494,133 @@ public function index_data_type(Request $request)
             }
         });
 
-        toast('Purchase Created!', 'success');
-        return redirect()->route('purchases.index');
+        toast('Product Transfer Created!', 'success');
+        return redirect()->route('product-transfer.index');
     }
 
 
 
+ public function savetransferCustomer(StorePurchaseRequest $request) {
+
+        $params = $request->all();
+      //  dd($params);
+        DB::transaction(function () use ($request) {
+            $due_amount = $request->total_amount - $request->paid_amount;
+            if ($due_amount == $request->total_amount) {
+                $payment_status = 'Unpaid';
+            } elseif ($due_amount > 0) {
+                $payment_status = 'Partial';
+            } else {
+                $payment_status = 'Paid';
+            }
+
+          if ($request->customer == 1) {
+              $customer_name = $request->customer_id;
+              } else {
+               $none_customer  = $request->none_customer;
+               $customer_email = randomEmail($none_customer);
+               $phone = $this->randomPhone();
+               $customer_new =  customer::create([
+                            'customer_name'  => $none_customer,
+                            'customer_phone' => $phone,
+                            'customer_email' => $customer_email,
+                            'city'           => 'Jakarta',
+                            'country'        => 'Indonesia',
+                            'address'        => 'Jln. Jakarta no 123'
+                        ]);
+
+                $customer_name = $customer_new->id;
+
+           }
+
+        $purchase = Purchase::create([
+                'date' => $request->date,
+                'kode_sales' => $request->kode_sales,
+                'supplier_id' => null,
+                'supplier_name' => 'none',
+                'customer_id' => $customer_name,
+                'customer_name' => Customer::findOrFail($customer_name)->customer_name,
+                'tax_percentage' => $request->tax_percentage,
+                'discount_percentage' => $request->discount_percentage,
+                'shipping_amount' => $request->shipping_amount * 100,
+                'paid_amount' => $request->paid_amount * 100,
+                'total_amount' => $request->total_amount * 100,
+                'due_amount' => $due_amount * 100,
+                'status' => 'Completed',
+                'payment_status' => $payment_status,
+                'payment_method' => $request->payment_method,
+                'note' => $request->note,
+                'tax_amount' => Cart::instance('purchase')->tax() * 100,
+                'discount_amount' => Cart::instance('purchase')->discount() * 100,
+            ]);
+
+            foreach (Cart::instance('purchase')->content() as $cart_item) {
+                 // dd('purchase');
+                PurchaseDetail::create([
+                    'purchase_id' => $purchase->id,
+                    'product_id' => $cart_item->id,
+                    'product_name' => $cart_item->name,
+                    'product_code' => $cart_item->options->code,
+                    'quantity' => $cart_item->qty,
+                    'price' => $cart_item->price * 100,
+                    'unit_price' => $cart_item->options->unit_price * 100,
+                    'sub_total' => $cart_item->options->sub_total * 100,
+                    'product_discount_amount' => $cart_item->options->product_discount * 100,
+                    'product_discount_type' => $cart_item->options->product_discount_type,
+                    'product_tax_amount' => $cart_item->options->product_tax * 100,
+                    'location_id' => $request->location_id,
+                ]);
+
+                  //add history purchases
+                 HistoryPurchases::create([
+                                'purchase_id' => $purchase->id,
+                                'product_id'  => $cart_item->id,
+                                'qty'         =>   $cart_item->qty,
+                                'username'    =>   auth()->user()->name,
+                                'user_id'     =>   auth()->user()->id,
+                                'status'      =>   1,
+                            ]);
 
 
 
+                if ($purchase->status == 'Completed') {
+                    $product = Product::findOrFail($cart_item->id);
+                 //dd($purchase->status);
+                    $product->update([
+                        'product_quantity' => $product->product_quantity + $cart_item->qty
+                    ]);
 
+                    $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
 
+                    if(empty($prodloc)){
+                        $prodloc = new ProductLocation;
+                        $prodloc->product_id = $cart_item->id;
+                        $prodloc->location_id = $request->location_id;
+                        $prodloc->stock = $cart_item->qty;
+                        $prodloc->save();
+                    }else{
+                        $prodloc->stock = $prodloc->stock + $cart_item->qty;
+                        $prodloc->save();
+                    }
 
+                }
+            }
 
+            Cart::instance('purchase')->destroy();
+            if ($purchase->paid_amount > 0) {
+                PurchasePayment::create([
+                    'date' => $request->date,
+                    'reference' => 'INV/'.$purchase->reference,
+                    'amount' => $purchase->paid_amount,
+                    'purchase_id' => $purchase->id,
+                    'payment_method' => $request->payment_method
+                ]);
+            }
+        });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        toast('Product Transfer Created!', 'success');
+        return redirect()->route('product-transfer.index');
+    }
 
 
 
