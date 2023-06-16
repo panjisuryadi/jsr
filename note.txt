@@ -26,6 +26,52 @@ tambah == jenis perhiasan /// master data
 - 0,001 <<
 
 ======= Perak / Paladaium
+
+
+tidak bisa tmbh produk baru di produk transfer
+
+--------------------------
+Gudang pusat (hanya bisa liat pusat)
+cabang by area 
+
+Gudang Pusat
+gudang roles
+- tambah lokasi
+- 
+
+kasir //module pembelian
+
+
+pembelian 
+ada pusat / toko atau pabrik
+
+cabang // buyback 
+modul byuyback form sama dengan yg pabrik di modul produk transfer // ada pencarian
+cari nama ..dan invoice ,id produk
+
+Modul Beli bukan dari toko >> dihancurkan
+--
+
+menu Iventory tambah menu RFID sama Reparasi,hancur barang
+
+list tabel ada pencarian berdasarkan kode produk atau nama
+
+
+penjualan POS search berdasarkan RFID
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- karat = none
 -- sertifkat dropdown /kolom sertifkat =  none
 -- shape = none
