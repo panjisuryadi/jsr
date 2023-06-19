@@ -89,6 +89,7 @@
 
 <div class="flex flex-row grid grid-cols-3 gap-1 py-0">
     <div class="px-0 col-span-2 mb-0 form-group">
+
         <livewire:purchase-product/>
         </div>
         <div class="form-group mb-0">
@@ -135,11 +136,7 @@
                 <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
             </div>
         </div>
-
-
-
-
-</div>
+      </div>
 
 
 

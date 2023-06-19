@@ -11,6 +11,7 @@ class PurchaseProduct extends Component
 
 
     public $query;
+    public $type;
     public $search_results;
     public $list_product;
     public $how_many;
@@ -23,6 +24,7 @@ class PurchaseProduct extends Component
     }
     public function mount() {
         $this->query = '';
+        $this->type = '';
         $this->how_many = 5;
         $this->search_results = Collection::empty();
         $this->list_product = Product::temp()->take($this->how_many)->get();

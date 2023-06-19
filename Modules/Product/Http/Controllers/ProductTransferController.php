@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
@@ -547,10 +548,13 @@ public function saveAjax(Request $request)
 
     public function detail($id) {
         abort_if(Gate::denies('show_products'), 403);
+
         $product = Product::find($id);
         $stock = ProductLocation::join('locations','locations.id','product_locations.location_id')
                 ->where('product_id',$id)->first();
-        return view('product::products.transfer.show', compact('product','stock'));
+        $tracking = TrackingProduct::with('products','location','user')
+                ->where('product_id',$id)->first();
+        return view('product::products.transfer.show', compact('product','stock','tracking'));
     }
 
 

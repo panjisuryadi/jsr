@@ -1,0 +1,13 @@
+{
+    "name": "BuysBack",
+    "alias": "buysback",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BuysBack\\Providers\\BuysBackServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

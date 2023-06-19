@@ -66,6 +66,46 @@ public function __construct()
 
 
 
+
+ public function listReparasi() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_products'), 403);
+         return view('product::products.reparasi',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+
+ public function listRfid() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_products'), 403);
+         return view('product::products.rfid',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+
+
+
+
     public function codeGenerate(Request $request)
     {
          $group = $request->group;
@@ -142,16 +182,15 @@ public function __construct()
     }
 
 
-
-
-
-
-
     public function index_data_table(ProductDataTable $dataTable) {
         abort_if(Gate::denies('access_products'), 403);
 
         return $dataTable->render('product::products.index');
     }
+
+
+
+
 
 
     public function add_products_categories_single(Request $request ,$id) {
@@ -171,6 +210,9 @@ public function __construct()
             'module_title',
             'module_icon', 'module_model'));
     }
+
+
+
 
 
  public function add_products_categories(Request $request ,$id) {

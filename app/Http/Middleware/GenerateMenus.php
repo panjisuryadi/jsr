@@ -199,7 +199,7 @@ class GenerateMenus
             ]);
 
 
-     // Groups
+             // Groups
             $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Group'), [
                 'route' => 'group.index',
                 'class' => 'nav-item',
@@ -213,6 +213,20 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+
+         // JenisBuyBacks
+        $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Buy Backs'), [
+                'route' => 'jenisbuyback.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['jenisbuybacks*'],
+                'permission'    => ['access_jenisbuybacks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
             // Cabangs
             $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Cabang'), [
@@ -382,10 +396,6 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-
-
-
-
          // GoldParameters
             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Gold Parameters'), [
                 'route' => 'goldparameter.index',
@@ -399,8 +409,6 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
-
-
 
             // CostParameters
             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
@@ -666,8 +674,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'order'         => 2,
                 'activematches' => [
                     'products*',
-
-
                 ],
                 'permission' => ['create_products',
                                       'print_barcodes',
@@ -712,6 +718,8 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+
+
        // Submenu: products
             $products->add(
                 '<i class="c-sidebar-nav-icon bi bi-upc-scan mb-2"></i>'.__('Print Barcode').'',
@@ -723,6 +731,39 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'order'         => 3,
                 'activematches' => 'barcode*',
                 'permission'    => ['print_barcodes'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2 pb-3',
+            ]);
+
+
+
+          // Submenu: RFID
+            $products->add(
+                '<i class="c-sidebar-nav-icon bi bi-credit-card-2-back mb-2"></i>'.__('RFID').'',
+             [
+                'route' => 'products.rfid',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'rfid*',
+                'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2 pb-3',
+            ]);
+          // Submenu: Reparasi
+            $products->add(
+                '<i class="c-sidebar-nav-icon bi bi-tools mb-2"></i>'.__('Reparasi').'',
+             [
+                'route' => 'products.reparasi',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'reparasi*',
+                'permission'    => ['access_products'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2 pb-3',
@@ -782,7 +823,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
- // Submenu: expense_categories
+            // Submenu: expense_categories
             $access_expenses->add(
                 '<i class="c-sidebar-nav-icon bi bi-journal-bookmark-fill mb-1"></i>
                  '.__('labels.menu.expense_categories').'', [
@@ -799,9 +840,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
-
-
- // customers Access Control Dropdown ==================================
+            // customers Access Control Dropdown ==================================
             $customers = $menu->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-people-fill"></i>
                 '.__('labels.menu.people').'', [
@@ -956,10 +995,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link py-2 pb-3',
             ]);
 
-
-
-
-
           // Access Purchases Dropdown
             $Purchases = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -1026,10 +1061,20 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link',
             ]);
 
-
-
-
-
+           // BuysBacks
+            $purchaseReturns->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+                '.__('Buys Backs'), [
+                'route' => 'buysback.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => ['buysbacks*'],
+                'permission'    => ['access_buysbacks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
 
 

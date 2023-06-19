@@ -1,3 +1,10 @@
+
+<style type="text/css">
+    .form-group {
+    margin-bottom: 0.3rem !important;
+}
+</style>
+
 <div class="flex py-0 flex-row grid grid-cols-2 gap-2">
 
     <div class="form-group">
@@ -39,6 +46,16 @@
     <div class="form-group">
         <label for="no_certificate">@lang('No .Certificate') <span class="text-danger">*</span></label>
         <input id="no_certificate" type="text" class="form-control" name="no_certificate" required value="{{ old('no_certificate') }}">
+    </div>
+
+     <div class="form-group">
+        <label for="no_certificate">@lang('Karat Berlian') <span class="text-danger">*</span></label>
+          <select class="form-control select2" name="karat_berlian_id" id="karat_berlian_id" required>
+            <option value="" selected disabled>Pilih Karat</option>
+            @foreach(\Modules\KaratBerlian\Models\KaratBerlian::all() as $karat)
+            <option value="{{ $karat->id }}">{{ $karat->name }}</option>
+            @endforeach
+        </select>
     </div>
 
 </div>

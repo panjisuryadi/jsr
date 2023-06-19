@@ -43,5 +43,7 @@
     "JenisPerhiasan": true,
     "Cabang": true,
     "UserCabang": true,
-    "KaratBerlian": true
+    "KaratBerlian": true,
+    "BuysBack": true,
+    "JenisBuyBack": true
 }

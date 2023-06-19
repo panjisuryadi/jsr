@@ -77,14 +77,21 @@
     </div>
     @else
       <div class="card position-absolute mt-0" style="width: 340px !important;z-index: 2;left: 0;right: 0;border: 0;border: 1px solid #f0f0ef !important;">
+
         <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-3 rounded relative" role="alert">
             <span class="block sm:inline"> @lang('No Product Found') ....</span>
-            <span class="absolute top-0 bottom-0 right-0 px-2 py-3">
-                <a  href="{{ route('products.create-modal') }}" id="Tambah" class="py-0 btn btn-sm btn-outline-danger mr-1">
-                    @lang('Add Product')
-                </a>
-            </span>
+             {{--    <span class="absolute top-0 bottom-0 right-0 px-2 py-3">
+                    @if(! request()->routeIs('product-transfer-type.*'))
+                    <a  href="{{ route('products.create-modal') }}" id="Tambah" class="py-0 btn btn-sm btn-outline-danger mr-1">
+                        @lang('Add New Product')
+                    </a>
+                    @endif
+                </span> --}}
         </div>
+
+
+
+
     </div>
     @endif
     @endif

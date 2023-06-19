@@ -31,7 +31,7 @@ class CreatePurchasesTable extends Migration
             $table->string('payment_status');
             $table->string('payment_method');
             $table->text('note')->nullable();
-            $table->foreign('supplier_id')->references('id')->on('suppliers')->nullOnDelete();
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->nullOnDelete()
             $table->timestamps();
         });
     }

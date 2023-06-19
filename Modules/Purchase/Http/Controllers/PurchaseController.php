@@ -13,6 +13,7 @@ use Modules\People\Entities\Supplier;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductLocation;
+use Modules\Product\Entities\TrackingProduct;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\Purchase\Entities\Purchase;
 use Modules\Purchase\Entities\PurchaseDetail;
@@ -474,6 +475,15 @@ public function index_data_type(Request $request)
                         $prodloc->location_id = $request->location_id;
                         $prodloc->stock = $cart_item->qty;
                         $prodloc->save();
+                        //add TrackingProduct
+                        TrackingProduct::create([
+                            'location_id' =>   $request->location_id,
+                            'product_id'  =>   $cart_item->id,
+                            'username'    =>   auth()->user()->name,
+                            'user_id'     =>   auth()->user()->id,
+                            'status'      =>    1,
+                            'note'        =>   'Perpindahan Barang pertama ',
+                          ]);
                     }else{
                         $prodloc->stock = $prodloc->stock + $cart_item->qty;
                         $prodloc->save();
@@ -481,6 +491,8 @@ public function index_data_type(Request $request)
 
                 }
             }
+
+
 
             Cart::instance('purchase')->destroy();
             if ($purchase->paid_amount > 0) {
@@ -583,7 +595,8 @@ public function index_data_type(Request $request)
 
 
 
-                if ($purchase->status == 'Completed') {
+            if ($purchase->status == 'Completed') {
+
                     $product = Product::findOrFail($cart_item->id);
                  //dd($purchase->status);
                     $product->update([
@@ -593,15 +606,28 @@ public function index_data_type(Request $request)
                     $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
 
                     if(empty($prodloc)){
+
+                        dd('product');
                         $prodloc = new ProductLocation;
                         $prodloc->product_id = $cart_item->id;
                         $prodloc->location_id = $request->location_id;
                         $prodloc->stock = $cart_item->qty;
                         $prodloc->save();
+
                     }else{
                         $prodloc->stock = $prodloc->stock + $cart_item->qty;
                         $prodloc->save();
                     }
+                    //add TrackingProduct
+                    TrackingProduct::create([
+                        'location_id' => $request->location_id,
+                        'product_id'  => $cart_item->id,
+                        'username'    =>   auth()->user()->name,
+                        'user_id'     =>   auth()->user()->id,
+                        'status'      =>    1,
+                        'note'        =>   'Perpindahan Barang pertama ',
+                      ]);
+
 
                 }
             }

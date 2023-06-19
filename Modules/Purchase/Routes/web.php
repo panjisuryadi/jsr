@@ -29,22 +29,21 @@ Route::group(['middleware' => 'auth'], function () {
     //Sales
     Route::resource('purchases', 'PurchaseController');
 
-
-
     Route::post('purchases/completepurchase', 'PurchaseController@completepurchase')->name('purchase.completepurchase');
 
- Route::post('purchases/save-transfer-product', 'PurchaseController@savetransferProduct')->name('purchase.save.transfer.product');
+    Route::post('purchases/save-transfer-product', 'PurchaseController@savetransferProduct')->name('purchase.save.transfer.product');
 
 
- Route::post('purchases/save-transfer-customer', 'PurchaseController@savetransferCustomer')->name('purchase.save.transfer.customer');
-
-
+    Route::post('purchases/save-transfer-customer', 'PurchaseController@savetransferCustomer')->name('purchase.save.transfer.customer');
 
     //save type
     Route::post('purchases/save-customer', 'PurchaseController@saveTypeCustomer')->name('purchase.save.customer');
 
     //type
     Route::get('/purchase-type/{type}', 'PurchaseController@type')->name('purchase.type');
+
+
+
     Route::get('/purchase-product-add', 'PurchaseController@add')->name('purchase-product.add');
 
 

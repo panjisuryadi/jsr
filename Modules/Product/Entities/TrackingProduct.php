@@ -3,9 +3,9 @@
 namespace Modules\Product\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use Modules\Product\Entities\Product;
 use Modules\Locations\Entities\Locations;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TrackingProduct extends Model
