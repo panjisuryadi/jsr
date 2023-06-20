@@ -13,7 +13,6 @@
     </a>
 
 
-
 @endcan
 @can('delete_products')
 <button id="delete" class="px-2 py-1 btn btn-outline-danger btn-sm" onclick="
