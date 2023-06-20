@@ -25,9 +25,8 @@
                             @csrf
                             @method('patch')
 
-             <div class="flex flex-row grid grid-cols-1 gap-4" >
 
-                            <div class="form-group">
+          <div class="form-group">
                                 <?php
                                 $field_name = 'rfid';
                                 $field_lable = label_case('rfid');
@@ -43,6 +42,18 @@
                                 </span>
 
                             </div>
+
+             <div class="flex flex-row grid grid-cols-2 gap-4" >
+
+ <div class="form-group">
+   @forelse($product->getMedia('images') as $media)
+                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="h-100 img-fluid img-thumbnail mb-2">
+                        @empty
+                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid img-thumbnail mb-2 h-100">
+                        @endforelse
+</div>
+
+
 
 
 

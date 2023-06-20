@@ -24,10 +24,7 @@
   <form id="FormEdit" action="{{ route(''.$module_name.'.sortir_update', $product) }}" method="POST">
                             @csrf
                             @method('patch')
-
-             <div class="flex flex-row grid grid-cols-1 gap-4" >
-
-                     <div class="form-group">
+    <div class="form-group">
                         @php
                         //$bb = \Modules\Locations\Entities\Locations::where('parent_id',null)->get();
                         $bb = \Modules\Locations\Entities\Locations::where('parent_id',9)->get();
@@ -39,12 +36,19 @@
                             @endforeach
                         </select>
                     </div>
+             <div class="flex flex-row grid grid-cols-2 gap-4" >
 
 
+ <div class="form-group">
+   @forelse($product->getMedia('images') as $media)
+                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="h-100 img-fluid img-thumbnail mb-2">
+                        @empty
+                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid img-thumbnail mb-2 h-100">
+                        @endforelse
+</div>
+                        <div class="form-group">
 
-                        <div class="w-100 form-group">
-
-                                  <table class="w-100 table table-bordered table-striped mb-0">
+ <table class="w-full table table-bordered table-striped p-1 mb-0">
                                 <tr>
                                     <th>Product Code</th>
                                     <td>{{ $product->product_code }}</td>
