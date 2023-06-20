@@ -946,7 +946,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
        // Submenu: adjustments
             $adjustments->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('List Adjustments').'',
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-1"></i>'.__('List Adjustments').'',
                  [
                 'route' => 'adjustments.index',
                 'class' => 'nav-item',
@@ -962,7 +962,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
   // Submenu: adjustments
             $adjustments->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Create Adjustments').'',
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-1"></i>'.__('Create Adjustments').'',
                  [
                 'route' => 'adjustments.create',
                 'class' => 'nav-item',
@@ -1009,6 +1009,27 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
+
+
+             $adjustments->add('
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
+                '.__('RFID').'',
+                 [
+                'route' => 'rfid.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'rfid*',
+                'permission'    => ['create_adjustments'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
+            ]);
+
+
+
+
 
           // Access Purchases Dropdown
             $Purchases = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [

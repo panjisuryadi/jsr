@@ -4,6 +4,9 @@
 # php artisan module:make-migration add_cabang_to_settings_table Setting
 # php artisan module:make-migration add_karatberlian_id_to_product_items_table
 # php artisan module:make-model BuysBackDetails BuysBack --migration
+
+#php artisan make:livewire Rfid/list
+
 public function up()
     {
         Schema::create('product_items', function (Blueprint $table) {

@@ -27,11 +27,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('stocktransfer/getlocation/{location_id}', 'StockTransferController@getlocation')->name('stocktransfer.getlocation');
     
     //Product Stock
+    Route::get('setting-rfid', 'RfidController@index')->name('rfid.index');
+
+
+
+
+
     Route::get('stocks', 'StocksController@index')->name('stocks.index');
     Route::get('stocks/getdata', 'StocksController@getdata')->name('stock.datatable');
     Route::get('stocks/getsummary', 'StocksController@getsummary')->name('stock.getsummary');
     Route::get('stocks/getone/{id}', 'StocksController@getone')->name('stock.getone');
     
+
+
     //adjustment setting
     Route::get('adjustments-setting', 'AdjustmentController@getsetting')->name('adjustment.getsetting');
     Route::get('adjustments/create/qrcode', 'AdjustmentController@create2')->name('adjustments.create.qrcode');
