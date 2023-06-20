@@ -43,7 +43,7 @@ display: inline-block;
                                     <th>{{ Label_case('product_name') }}</th>
                                     <th>{{ Label_case('price') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Status') }}</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
+                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Lokasi /Kondisi') }}</th>
                                     <th style="width: 21%!important;" class="text-center">
                                         Action
                                     </th>
@@ -120,8 +120,8 @@ display: inline-block;
             data: 'status',
             name: 'status'
         }, {
-            data: 'updated_at',
-            name: 'updated_at'
+            data: 'lokasi',
+            name: 'lokasi'
         },
         {
             data: 'action',

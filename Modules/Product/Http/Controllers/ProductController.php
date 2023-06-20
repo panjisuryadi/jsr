@@ -481,11 +481,13 @@ public function index_data_sortir(Request $request)
 
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
-                           $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            return view('product::products.partials.sortir_aksi',
+                              $module_name = $this->module_name;
+                              $module_model = $this->module_model;
+                                  return view('product::products.partials.sortir_aksi',
                             compact('module_name', 'data', 'module_model'));
                                 })
+
+
            ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
@@ -537,6 +539,12 @@ public function index_data_sortir(Request $request)
                return $status;
               })
 
+            ->addColumn('lokasi', function ($data) {
+              $module_name = $this->module_name;
+              $module_model = $this->module_model;
+                  return view('product::products.partials.lokasi',
+            compact('module_name', 'data', 'module_model'));
+                })
                ->editColumn('updated_at', function ($data) {
                     $module_name = $this->module_name;
 
@@ -547,14 +555,10 @@ public function index_data_sortir(Request $request)
                         return tgljam($data->created_at);
                     }
                 })
-           ->rawColumns(['updated_at','product_image','weight','status',
+           ->rawColumns(['updated_at','product_image','weight','status','lokasi',
             'product_name','product_quantity','product_price', 'action'])
            ->make(true);
     }
-
-
-
-
 
 
 
@@ -901,7 +905,7 @@ public function saveAjax(Request $request)
             $$module_name_singular = $module_model::findOrFail($id);
             $validator = \Validator::make($request->all(),
                 [
-                'jenis_buyback_id' => 'required',
+                'location_id' => 'required',
 
               ]);
 
@@ -921,8 +925,7 @@ public function saveAjax(Request $request)
                     }else{
                         ProductLocation::create([
                             'product_id' => $id,
-                            'location_id' => $params['location_id'],
-                            'stock' => 0
+                            'location_id' => $params['location_id']
                         ]);
                     }
 

@@ -1283,7 +1283,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link',
             ]);
 
-         $accessControl->add('<i class="c-sidebar-nav-icon cil-people"></i> '.__('Roles').'', [
+         $accessControl->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Roles').'', [
                 'route' => 'roles.index',
                 'class' => 'nav-item',
             ])
