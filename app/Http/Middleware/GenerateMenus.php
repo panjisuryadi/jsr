@@ -1283,8 +1283,21 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link',
             ]);
 
+         $accessControl->add('<i class="c-sidebar-nav-icon cil-people"></i> '.__('Roles').'', [
+                'route' => 'roles.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 102,
+                'activematches' => 'roles*',
+                'permission'    => ['access_user_management'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
 
-                    // UserCabangs
+
+             // UserCabangs
             $accessControl->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('User Cabang'), [
                 'route' => 'usercabang.index',
                 'class' => 'nav-item',

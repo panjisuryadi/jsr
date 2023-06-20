@@ -32,8 +32,8 @@
                         //$bb = \Modules\Locations\Entities\Locations::where('parent_id',null)->get();
                         $bb = \Modules\Locations\Entities\Locations::where('parent_id',5)->get();
                         @endphp
-                        <label for="jenis_buyback_id">Kondisi</label>
-                        <select name="jenis_buyback_id" class="form-control select2">
+                        <label for="location_id">Kondisi</label>
+                        <select name="location_id" class="form-control select2">
                             @foreach ($bb as $b)
                             <option value="{{ $b->id }}" selected>{{ $b->name }}</option>
                             @endforeach

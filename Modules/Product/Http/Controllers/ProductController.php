@@ -910,28 +910,21 @@ public function saveAjax(Request $request)
             }
 
             $params = $request->all();
-          //  dd($params);
+          // dd($params);
             $params = $request->except('_token');
-            $params['jenis_buyback_id'] = $params['jenis_buyback_id'];
-            $$module_name_singular->update($params);
-
-           $destination = ProductLocation::where('product_id',$id)->where('location_id',$detail->destination)->first();
+            // $params['jenis_buyback_id'] = $params['jenis_buyback_id'];
+            // $$module_name_singular->update($params);
+             $destination = ProductLocation::where('product_id',$id)->first();
                     if(isset($destination)){
-                        $destination->stock = $destination->stock+$detail->stock_sent;
+                        $destination->location_id = $params['location_id'];
                         $destination->save();
                     }else{
                         ProductLocation::create([
-                            'product_id' => $detail->product_id,
-                            'location_id' => $detail->destination,
-                            'stock' => $detail->stock_sent
+                            'product_id' => $id,
+                            'location_id' => $params['location_id'],
+                            'stock' => 0
                         ]);
                     }
-
-
-
-
-
-
 
 
             return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
