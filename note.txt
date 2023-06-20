@@ -173,3 +173,29 @@ list tabel ada pencarian berdasarkan kode produk atau nama
 penjualan POS search berdasarkan RFID
 
 
+
+Daily 19 jun
+
+1.module Buyback
+  - tabel buyback
+  - tabel detail buyback
+  - transaksi by type kostumer dan toko / Pabrik
+2. master data modul Jenis Buyback | eks = dihancurkan ,reparasi
+3. pages Produk RFID (belum beres )
+4. pages Produk Reparasi (belum beres )
+
+================================================================
+deploy apliaksi dan setup domain gtiofficial + ci /CD di server GTDS
+
+List detail progess Hokkie
+- https://github.com/ZAPPS-AI/hookie/actions
+
+Detail file yg di update dan di tambahkan di aplikasi hookie hari ini
+- https://github.com/ZAPPS-AI/hookie/commit/24fdc89e49417a5f23614dd31faad006e61d79a0
+
+
+
+
+Tambah module SORTIR ambil dari master data
+
+

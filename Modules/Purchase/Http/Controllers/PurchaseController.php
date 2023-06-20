@@ -120,6 +120,8 @@ public function index_data(Request $request)
                                     return view(''.$module_name.'::partials.status',
                                  compact('module_name', 'data'));
                                 })
+
+
                           ->addColumn('payment_status', function ($data) {
                            $module_name = $this->module_name;
                                     return view(''.$module_name.'::partials.payment-status',
@@ -133,10 +135,10 @@ public function index_data(Request $request)
                                 })
 
 
-                          ->editColumn('name', function ($data) {
+                          ->editColumn('reference', function ($data) {
                              $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->reference . '</h3>
+                                    <h3 class="text-sm font-medium text-gray-500">
+                                     ' .$data->purchaseDetails->first()->product_name . '</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -1022,20 +1024,25 @@ public function index_data_type(Request $request)
     public function destroy(Purchase $purchase) {
         abort_if(Gate::denies('delete_purchases'), 403);
 
-        $detail = PurchaseDetail::where('purchase_id',$purchase->id)->get();
-        if(count($detail)){
-            foreach ($detail as $detail) {
-                $product = Product::findOrFail($detail->product_id);
-                $product->update([
-                    'product_quantity' => $product->product_quantity - $detail->quantity
-                ]);
-                $prodloc = ProductLocation::where('product_id',$product->id)->where('location_id',$detail->location_id)->first();
-                dd($prodloc);
-                $prodloc->stock = $prodloc->stock - $detail->quantity;
-                $prodloc->save();
-            }
-        }
-        $purchase->delete();
+        $detail = Purchase::where('id',$purchase->id)->first();
+        $detail->delete();
+
+        // $detail = PurchaseDetail::where('purchase_id',$purchase->id)->first();
+        // $detail->delete();
+
+        // if(count($detail)){
+        //     foreach ($detail as $detail) {
+        //         $product = Product::findOrFail($detail->product_id);
+        //         $product->update([
+        //             'product_quantity' => $product->product_quantity - $detail->quantity
+        //         ]);
+        //         $prodloc = ProductLocation::where('product_id',$product->id)->where('location_id',$detail->location_id)->first();
+        //         dd($prodloc);
+        //         $prodloc->stock = $prodloc->stock - $detail->quantity;
+        //         $prodloc->save();
+        //     }
+        // }
+        // $purchase->delete();
         toast('Purchase Deleted!', 'warning');
 
         return redirect()->route('purchases.index');

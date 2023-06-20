@@ -10,7 +10,7 @@
         <thead>
             <tr>
                 <th style="width: 6%!important;">No</th>
-                <th style="width: 9%!important;" class="text-center">{{ Label_case('reference') }}</th>
+                <th style="width: 16%!important;" class="text-center">{{ Label_case('Produk') }}</th>
                 <th style="width: 20%!important;" class="text-center">{{ __('Customer / Supplier') }}</th>
                 <th style="width: 8%!important;" class="text-center">{{ __('Status') }}</th>
                 <th style="width: 13%!important;" class="text-center">{{ __('Total Amount') }}</th>

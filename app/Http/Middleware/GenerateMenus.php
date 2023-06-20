@@ -437,7 +437,7 @@ class GenerateMenus
                 'permission'    => ['access_parameterberlians'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-3',
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
 
 
@@ -534,7 +534,7 @@ class GenerateMenus
                 'permission'    => ['access_itemcolours'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-3',
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
 
 
@@ -544,10 +544,7 @@ class GenerateMenus
 
 
 
-//end master parameter
-
-
-
+    //end master parameter
  //==== Access Control Status Iventory
          $statusIventory = $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> Status Iventory', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -733,7 +730,25 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'permission'    => ['print_barcodes'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-3',
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
+            ]);
+
+
+
+          // Submenu: SORTIR
+            $products->add(
+                '<i class="c-sidebar-nav-icon bi bi-credit-card-2-back mb-2"></i>'.__('Sortir').'',
+             [
+                'route' => 'products.sortir',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'sortir*',
+                'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
 
 
@@ -751,7 +766,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'permission'    => ['access_products'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-3',
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
           // Submenu: Reparasi
             $products->add(
@@ -766,7 +781,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'permission'    => ['access_products'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-3',
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
 
 
@@ -958,7 +973,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'permission'    => ['create_adjustments'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-3',
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
 
 
@@ -975,7 +990,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'permission'    => ['create_adjustments'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-3',
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
 
 
@@ -992,7 +1007,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'permission'    => ['create_adjustments'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-3',
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
 
           // Access Purchases Dropdown

@@ -84,20 +84,36 @@
                         <form id="purchase-form" action="{{ route('purchases.store') }}" method="POST">
                             @csrf
 
-                            <div class="form-row mt-2">
-                             {{--    <div class="col-lg-4">
-                                 <livewire:purchase-product/>
-                                </div> --}}
 
-                                 <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label for="reference">Reference <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="reference" required readonly value="PR">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="from-group">
-                                        <div class="form-group">
+                <div class="flex flex-row grid grid-cols-3 gap-2">
+                    <div class="form-group">
+                        <label for="date">Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-1" for="kode_sales">Code Sales <span class="text-danger">*</span></label>
+                        <input type="text" value="{{ auth()->user()->kode_user }}" class="form-control" name="kode_sales">
+                    </div>
+                    <div class="from-group">
+                        <label for="date"></label>
+                        <a href="{{ route('products.create-modal') }}"
+                            id="Tambah" class="w-full py-2 btn btn-sm btn-outline-danger mt-2">
+                            @lang('Add Product')
+                        </a>
+                    </div>
+                </div>
+
+
+
+<div class="flex flex-row grid grid-cols-2 gap-2">
+    <div class="form-group">
+        <label for="reference">Reference <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" name="reference" required readonly value="PR">
+    </div>
+
+
+
+       <div class="form-group">
 
                                           <div class="py-1">
                                         <div class="form-check form-check-inline">
@@ -128,35 +144,15 @@
 
 
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="from-group">
-                                        <div class="form-group">
-                                            <label for="date">Date <span class="text-danger">*</span></label>
-                                            <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                    <div class="col-lg-3">
-                                        <div class="from-group">
-                                            <label for="date"></label>
-                                            <a href="{{ route('products.create-modal') }}"
-                                                id="Tambah" class="w-full py-2 btn btn-sm btn-outline-danger mt-2">
-                                                @lang('Add Product')
-                                            </a>
-                                        </div>
-                                    </div>
 
 
 
 
 
 
-                            </div>
+</div>
+
+
 
 
                             <livewire:product-cart :cartInstance="'purchase'"/>

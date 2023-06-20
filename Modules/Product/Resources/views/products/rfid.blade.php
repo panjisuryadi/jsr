@@ -22,29 +22,6 @@ display: inline-block;
 @endsection
 @section('content')
 <div class="container-fluid">
-  {{--   <div class="flex flex-wrap -m-4 text-center mb-2">
-        @foreach(\Modules\Product\Entities\Category::all() as $category)
-        <a class="cursor-pointer p-2 md:w-1/4 sm:w-1/2 w-full" id="Tambah" href="{{ route('products.add_products_categories',$category->id) }}">
-        <div class="w-full">
-            <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-                <div class="justify-center text-center items-center">
-                    <?php
-                    if ($category->image) {
-                    $image = asset(imageUrl() . $category->image);
-                    }else{
-                    $image = asset('images/logo.png');
-                    }
-                    ?>
-                    <img id="default_1" src="{{ $image }}" alt="images"
-                    class="h-16 w-16 object-contain mx-auto" />
-                </div>
-                <div class="leading-tight no-underline  hover:no-underline">{{ $category->category_name }}</div>
-            </div>
-        </div>
-        </a>
-        @endforeach
-    </div>
- --}}
 
     <div class="row">
         <div class="col-12">
@@ -52,7 +29,7 @@ display: inline-block;
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div class="font-semibold text-lg">
-                          <i class="bi bi-plus"></i>  List RFID
+                          <i class="bi bi-plus"></i>  Products <span class="uppercase">RFID</span>
                             </div>
 
                         <div id="buttons"></div>
@@ -67,7 +44,7 @@ display: inline-block;
                                     <th>{{ Label_case('price') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Status') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
-                                    <th style="width: 14%!important;" class="text-center">
+                                    <th style="width: 21%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -115,7 +92,7 @@ display: inline-block;
         }
         ],
         "sPaginationType": "simple_numbers",
-        ajax: '{{ route("$module_name.index_data") }}',
+        ajax: '{{ route("$module_name.ajax_rfid") }}',
         dom: 'Blfrtip',
         buttons: [
         'excel',
@@ -163,7 +140,7 @@ display: inline-block;
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah, #Edit, #Sortir', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -172,15 +149,30 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-lg');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
         }
+
         if($(this).attr('id') == 'Edit')
         {
             $('.modal-dialog').addClass('modal-xl');
             $('.modal-dialog').removeClass('modal-sm');
             $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-md');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }
+
+       if($(this).attr('id') == 'Sortir')
+        {
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-xl');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Products RFID {{ Label_case($module_title) }}');
+        }
+
+
+
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
+        $('#rfid').focus();
     });
 
 

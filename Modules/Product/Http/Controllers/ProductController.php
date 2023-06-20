@@ -105,6 +105,26 @@ public function __construct()
 
 
 
+ public function sortir() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_products'), 403);
+         return view('product::products.sortir',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+
+
+
 
     public function codeGenerate(Request $request)
     {
@@ -252,7 +272,6 @@ public function index_data(Request $request)
 
         $$module_name = $module_model::with('category','product_item')
         ->latest()->get();
-
         $data = $$module_name;
 
         return Datatables::of($$module_name)
@@ -294,7 +313,6 @@ public function index_data(Request $request)
             ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
             return $tb;
         })
-
            ->editColumn('weight', function ($data) {
               $berat = @$data->product_item[0]->berat_emas;
             if ($berat) {
@@ -314,8 +332,7 @@ public function index_data(Request $request)
                return $status;
               })
 
-
-                   ->editColumn('updated_at', function ($data) {
+               ->editColumn('updated_at', function ($data) {
                     $module_name = $this->module_name;
 
                     $diff = Carbon::now()->diffInHours($data->updated_at);
@@ -329,6 +346,214 @@ public function index_data(Request $request)
             'product_name','product_quantity','product_price', 'action'])
            ->make(true);
     }
+
+
+
+
+
+
+
+
+//data sortir
+
+public function index_data_rfid(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = $module_model::with('category','product_item')
+        ->latest()->get();
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.partials.rfid_aksi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+           ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                           <div style="font-size:0.7rem; line-heght:1 !important;" class="leading-0 text-yellow-600 dark:text-gray-400">
+                            ' . $data->category->category_name . '</div>
+                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                             <div style="font-size:0.7rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
+                            ' . $data->rfid . '</div>
+
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
+           ->addColumn('product_image', function ($data) {
+            $url = $data->getFirstMediaUrl('images', 'thumb');
+            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+             })
+
+           ->addColumn('product_price', function ($data) {
+              return format_currency($data->product_price);
+          })
+           ->addColumn('product_quantity', function ($data) {
+            return $data->product_quantity . ' ' . $data->product_unit;
+        })
+
+           ->editColumn('product_quantity', function ($data) {
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
+            return $tb;
+        })
+           ->editColumn('weight', function ($data) {
+              $berat = @$data->product_item[0]->berat_emas;
+            if ($berat) {
+                 $weight = @$data->product_item[0]->berat_emas;
+            } else {
+                $weight = '0';
+            }
+
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-yellow-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' .  $weight . '</span></div>';
+            return $tb;
+        })
+
+          ->editColumn('status', function ($data) {
+             $status = statusProduk($data->status);
+               return $status;
+              })
+
+               ->editColumn('updated_at', function ($data) {
+                    $module_name = $this->module_name;
+
+                    $diff = Carbon::now()->diffInHours($data->updated_at);
+                    if ($diff < 25) {
+                        return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                    } else {
+                        return tgljam($data->created_at);
+                    }
+                })
+           ->rawColumns(['updated_at','product_image','weight','status',
+            'product_name','product_quantity','product_price', 'action'])
+           ->make(true);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//data sortir
+
+public function index_data_sortir(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = $module_model::with('category','product_item')
+        ->latest()->get();
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.partials.sortir_aksi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+           ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                           <div style="font-size:0.7rem; line-heght:1 !important;" class="leading-0 text-yellow-600 dark:text-gray-400">
+                            ' . $data->category->category_name . '</div>
+                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                             <div style="font-size:0.7rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
+                            ' . $data->rfid . '</div>
+
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
+           ->addColumn('product_image', function ($data) {
+            $url = $data->getFirstMediaUrl('images', 'thumb');
+            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+             })
+
+           ->addColumn('product_price', function ($data) {
+              return format_currency($data->product_price);
+          })
+           ->addColumn('product_quantity', function ($data) {
+            return $data->product_quantity . ' ' . $data->product_unit;
+        })
+
+           ->editColumn('product_quantity', function ($data) {
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
+            return $tb;
+        })
+           ->editColumn('weight', function ($data) {
+              $berat = @$data->product_item[0]->berat_emas;
+            if ($berat) {
+                 $weight = @$data->product_item[0]->berat_emas;
+            } else {
+                $weight = '0';
+            }
+
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-yellow-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' .  $weight . '</span></div>';
+            return $tb;
+        })
+
+          ->editColumn('status', function ($data) {
+             $status = statusProduk($data->status);
+               return $status;
+              })
+
+               ->editColumn('updated_at', function ($data) {
+                    $module_name = $this->module_name;
+
+                    $diff = Carbon::now()->diffInHours($data->updated_at);
+                    if ($diff < 25) {
+                        return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                    } else {
+                        return tgljam($data->created_at);
+                    }
+                })
+           ->rawColumns(['updated_at','product_image','weight','status',
+            'product_name','product_quantity','product_price', 'action'])
+           ->make(true);
+    }
+
+
+
 
 
 
@@ -580,9 +805,126 @@ public function saveAjax(Request $request)
 
     public function show(Product $product) {
         abort_if(Gate::denies('show_products'), 403);
-
         return view('product::products.show', compact('product'));
     }
+
+   public function show_sortir(Product $product) {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model =$this->module_model;
+        $module_item = $this->module_item;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Store';
+        abort_if(Gate::denies('show_products'), 403);
+        return view('product::products.popup.show_sortir',
+            compact('product','module_title',
+                            'module_path',
+                            'module_name',
+                            'module_icon',
+                            'module_model',
+                            'module_item',
+                            'module_name')
+                             );
+    }
+
+
+ public function show_rfid(Product $product) {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model =$this->module_model;
+        $module_item = $this->module_item;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Store';
+        abort_if(Gate::denies('show_products'), 403);
+        return view('product::products.popup.show_rfid',
+            compact('product','module_title',
+                            'module_path',
+                            'module_name',
+                            'module_icon',
+                            'module_model',
+                            'module_item',
+                            'module_name')
+                             );
+    }
+
+
+
+    public function rfidUpdate(Request $request, $id)
+        {
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Update';
+            $$module_name_singular = $module_model::findOrFail($id);
+            $validator = \Validator::make($request->all(),
+                [
+                'rfid' => [
+                    'required',
+                    'unique:'.$module_model.',rfid,'.$id
+                ],
+
+              ]);
+
+           if (!$validator->passes()) {
+              return response()->json(['error'=>$validator->errors()]);
+            }
+
+            $input = $request->all();
+            $params = $request->except('_token');
+            $params['rfid'] = $params['rfid'];
+            $$module_name_singular->update($params);
+            return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+     }
+
+
+
+
+
+
+       public function sortirUpdate(Request $request, $id)
+        {
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Sortir Update';
+            $$module_name_singular = $module_model::findOrFail($id);
+            $validator = \Validator::make($request->all(),
+                [
+                'jenis_buyback_id' => 'required',
+
+              ]);
+
+           if (!$validator->passes()) {
+              return response()->json(['error'=>$validator->errors()]);
+            }
+
+            $params = $request->all();
+          //  dd($params);
+            $params = $request->except('_token');
+            $params['jenis_buyback_id'] = $params['jenis_buyback_id'];
+            $$module_name_singular->update($params);
+            return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+     }
+
+
+
+
+
+
+
+
 
 
 

@@ -28,11 +28,10 @@ display: inline-block;
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
-                        <div>
-                           {{--  <a href="{{ route('products.create') }}" class="btn btn-primary">
-                                Add Product <i class="bi bi-plus"></i>
-                            </a> --}}
-                        </div>
+                        <div class="font-semibold text-lg">
+                          <i class="bi bi-plus"></i>  Sortir Products
+                            </div>
+
                         <div id="buttons"></div>
                     </div>
                     <div class="table-responsive mt-1">
@@ -45,7 +44,7 @@ display: inline-block;
                                     <th>{{ Label_case('price') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Status') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
-                                    <th style="width: 14%!important;" class="text-center">
+                                    <th style="width: 21%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -93,7 +92,7 @@ display: inline-block;
         }
         ],
         "sPaginationType": "simple_numbers",
-        ajax: '{{ route("$module_name.index_data") }}',
+        ajax: '{{ route("$module_name.ajax_sortir") }}',
         dom: 'Blfrtip',
         buttons: [
         'excel',
@@ -141,7 +140,7 @@ display: inline-block;
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah, #Edit, #Sortir', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -150,15 +149,28 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-lg');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
         }
+
         if($(this).attr('id') == 'Edit')
         {
             $('.modal-dialog').addClass('modal-xl');
             $('.modal-dialog').removeClass('modal-sm');
             $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-md');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }
+
+       if($(this).attr('id') == 'Sortir')
+        {
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-xl');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Sortir {{ Label_case($module_title) }}');
+        }
+
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
+        $('#rfid').focus();
     });
 
 

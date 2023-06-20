@@ -12,7 +12,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Product
       Route::post("products/save", ['as' => "products.save", 'uses' => "ProductController@save"]);
+
+  //Product
       Route::post("products/saveajax", ['as' => "products.saveajax", 'uses' => "ProductController@saveAjax"]);
+
+
 
 
       Route::get("products/index_data", ['as' => "products.index_data", 'uses' => "ProductController@index_data"]);
@@ -20,6 +24,31 @@ Route::group(['middleware' => 'auth'], function () {
       Route::get("products/list-reparasi", ['as' => "products.reparasi", 'uses' => "ProductController@listReparasi"]);
 
      Route::get("products/list-rfid", ['as' => "products.rfid", 'uses' => "ProductController@listRfid"]);
+
+       Route::get("products/list-sortir", ['as' => "products.sortir", 'uses' => "ProductController@sortir"]);
+
+  Route::get("products/ajax-list-sortir", ['as' => "products.ajax_sortir", 'uses' => "ProductController@index_data_sortir"]);
+
+
+
+    Route::get("products/show-sortir/{product}", ['as' => "products.show_sortir", 'uses' => "ProductController@show_sortir"]);
+
+
+   Route::patch("products/sortir_update/{id}", ['as' => "products.sortir_update", 'uses' => "ProductController@sortirUpdate"]);
+
+
+
+///data RFID
+
+    Route::patch("products/rfid_update/{id}", ['as' => "products.rfid_update", 'uses' => "ProductController@rfidUpdate"]);
+
+
+
+     Route::get("products/ajax-list-rfid", ['as' => "products.ajax_rfid", 'uses' => "ProductController@index_data_rfid"]);
+
+    Route::get("products/show-rfid/{product}", ['as' => "products.show_rfid", 'uses' => "ProductController@show_rfid"]);
+
+//=============================================
 
       Route::post("products/code-generate", ['as' => "products.code_generate", 'uses' => "ProductController@codeGenerate"]);
 
