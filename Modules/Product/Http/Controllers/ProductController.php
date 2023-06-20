@@ -880,7 +880,7 @@ public function saveAjax(Request $request)
             $params = $request->except('_token');
             $params['rfid'] = $params['rfid'];
             $$module_name_singular->update($params);
-            return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+                    return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
      }
 
@@ -914,6 +914,26 @@ public function saveAjax(Request $request)
             $params = $request->except('_token');
             $params['jenis_buyback_id'] = $params['jenis_buyback_id'];
             $$module_name_singular->update($params);
+
+           $destination = ProductLocation::where('product_id',$id)->where('location_id',$detail->destination)->first();
+                    if(isset($destination)){
+                        $destination->stock = $destination->stock+$detail->stock_sent;
+                        $destination->save();
+                    }else{
+                        ProductLocation::create([
+                            'product_id' => $detail->product_id,
+                            'location_id' => $detail->destination,
+                            'stock' => $detail->stock_sent
+                        ]);
+                    }
+
+
+
+
+
+
+
+
             return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
      }
