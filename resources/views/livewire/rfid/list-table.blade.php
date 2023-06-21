@@ -59,9 +59,9 @@
 
         @else
 
-        <span class="text-danger">
+        <div class="w-ful txt-base flex-row py-2 px-2  text-danger">
             @lang('Please search & select products!')
-        </span>
+        </div>
 
         @endif
 

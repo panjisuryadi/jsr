@@ -37,8 +37,15 @@
 @push('page_scripts')
 <script type="text/javascript">
  setTimeout(function() { $('input[name="rfid"]').focus() }, 1000);
-
 </script>
+
+ <script>
+        window.livewire.on('reload', message => {
+           // alert('go');
+             setTimeout(function() { $('input[name="rfid"]').focus() }, 500);
+        });
+    </script>
+
 @endpush
 
 

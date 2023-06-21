@@ -14,7 +14,7 @@
                 <input name="rfid" class="form-control rounded rounded-lg sortir text-center" wire:keydown.enter="clickQuery"
                 type="text"
                 wire:model="search"
-                placeholder="@lang('Scanner RFID')">
+                placeholder="@lang('Scanner RFID')" autofocus>
             </div>
         </div>
     </div>

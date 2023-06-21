@@ -9,8 +9,9 @@ use Modules\Product\Entities\Product;
 class ListTable extends Component
 {
 
-    public $listeners = ['productSelected','addProduk', 'hitung', 'discountModalRefresh'];
+    public $listeners = ['productSelected','addProduk', 'discountModalRefresh'];
 
+    public $reload;
     public $cart_instance;
     public $global_discount;
     public $global_tax;
@@ -84,11 +85,13 @@ class ListTable extends Component
         });
 
         if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Product sudah ada dilist!');
+            session()->flash('message', 'Product sudah ada di List!');
+             $this->emit('reload');
             return;
         }
          if (!$product) {
             session()->flash('message', 'Product tidak ada!');
+             $this->emit('reload');
             return;
         }
 
@@ -124,6 +127,7 @@ class ListTable extends Component
 
     public function removeItem($row_id) {
         Cart::instance($this->cart_instance)->remove($row_id);
+        $this->emit('reload');
     }
 
 

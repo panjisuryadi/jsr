@@ -16,12 +16,17 @@ class Create extends Component
     public $search_results;
     public $list_product;
     public $how_many;
-    protected $listeners = ['produkTemp'];
+    protected $listeners = ['produkTemp','reload'];
     protected $queryString = ['search'];
 
     public function produkTemp()
     {
           $this->refreshData();
+    }
+
+    public function reload()
+    {
+          $this->resetForm();
     }
     public function mount() {
         $this->search = '';
