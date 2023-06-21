@@ -198,4 +198,30 @@ Detail file yg di update dan di tambahkan di aplikasi hookie hari ini
 
 Tambah module SORTIR ambil dari master data
 
+21 juni 2023
+=============================
+update module jenis perhiasan
+1. ct
+2. hallmark
+3. kadar /persentase /kandungan
+relasi 
+
+KATEGORI SELECT ONCHANGE AMBIL DATA jenis perhiasan..rumus
+
+kATEGOri berlian
+Round diganti clarity
+colour 
+shape / Cut
+
+ketika pilih shape atau cut
+1 kolom multiple 
+
+
+
+
+
+
+
+
+
 
