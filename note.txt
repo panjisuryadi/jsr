@@ -216,6 +216,7 @@ shape / Cut
 ketika pilih shape atau cut
 1 kolom multiple 
 
+tambah kode baki di simpan produk
 
 
 
