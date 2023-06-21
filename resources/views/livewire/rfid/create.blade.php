@@ -11,10 +11,10 @@
     <div class="card mb-0 border-0">
         <div class="px-0">
             <div class="form-group">
-                <input class="form-control rounded rounded-lg sortir text-center" wire:keydown.enter="clickQuery"
+                <input name="rfid" class="form-control rounded rounded-lg sortir text-center" wire:keydown.enter="clickQuery"
                 type="text"
                 wire:model="search"
-                placeholder="@lang('scanner RFID')">
+                placeholder="@lang('Scanner RFID')">
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
     letter-spacing: 0.1rem;
     background-color: #f0f0f0;
     border-style: dashed;
-    height: 11rem;
+    height: 21rem;
 }
 
 

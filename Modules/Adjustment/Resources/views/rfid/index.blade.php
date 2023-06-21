@@ -35,20 +35,23 @@
 @endsection
 
 @push('page_scripts')
+<script type="text/javascript">
+ setTimeout(function() { $('input[name="rfid"]').focus() }, 1000);
 
+</script>
 @endpush
 
 
 
 @push('page_css')
- <style type="text/css">
-
-.aksi{
-   width: 12% !important;
+<style type="text/css">
+ .c-main {
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 1;
+    min-width: 0;
+    padding-top: 0.5rem !important;
 }
-.tgl{
-   width: 10% !important;
-}
+ </style>
 
-   </style>
 @endpush

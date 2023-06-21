@@ -1013,7 +1013,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
              $adjustments->add('
                 <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
-                '.__('RFID').'',
+                '.__('Stok RFID').'',
                  [
                 'route' => 'rfid.index',
                 'class' => 'nav-item',

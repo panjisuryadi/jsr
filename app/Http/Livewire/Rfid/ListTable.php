@@ -9,7 +9,7 @@ use Modules\Product\Entities\Product;
 class ListTable extends Component
 {
 
-    public $listeners = ['productSelected','addProduk', 'discountModalRefresh'];
+    public $listeners = ['productSelected','addProduk', 'hitung', 'discountModalRefresh'];
 
     public $cart_instance;
     public $global_discount;
@@ -22,6 +22,8 @@ class ListTable extends Component
     public $item_discount;
     public $data;
     public $add_produk =0;
+    public $hitung =0;
+    public $jumlah =0;
 
     public function mount($cartInstance, $data = null) {
 
@@ -35,6 +37,7 @@ class ListTable extends Component
             $this->global_discount = $data->discount_percentage;
             $this->global_tax = $data->tax_percentage;
             $this->shipping = $data->shipping_amount;
+            $this->jumlah = $data->id;
 
             $this->updatedGlobalTax();
             $this->updatedGlobalDiscount();
@@ -45,6 +48,8 @@ class ListTable extends Component
                 $this->check_quantity[$cart_item->id] = [$cart_item->options->stock];
                 $this->quantity[$cart_item->id] = $cart_item->qty;
                 $this->location[$cart_item->location] = $cart_item->location;
+                $this->image[$cart_item->location] = $cart_item->location;
+
                 $this->discount_type[$cart_item->id] = $cart_item->options->product_discount_type;
                 if ($cart_item->options->product_discount_type == 'fixed') {
                     $this->item_discount[$cart_item->id] = $cart_item->options->product_discount;
@@ -53,7 +58,9 @@ class ListTable extends Component
                 }
             }
         } else {
+            $this->image = '';
             $this->global_discount = 0;
+            $this->jumlah = 0;
             $this->global_tax = 0;
             $this->shipping = 0.00;
             $this->check_quantity = [];
@@ -77,8 +84,11 @@ class ListTable extends Component
         });
 
         if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Product exists in the cart!');
-
+            session()->flash('message', 'Product sudah ada dilist!');
+            return;
+        }
+         if (!$product) {
+            session()->flash('message', 'Product tidak ada!');
             return;
         }
 
@@ -96,8 +106,10 @@ class ListTable extends Component
                 'stock'                 => $product['product_quantity'],
                 'unit'                  => $product['product_unit'],
                 'product_tax'           => $this->calculate($product)['product_tax'],
+                'rfid'                  => $product['rfid'],
                 'unit_price'            => $this->calculate($product)['unit_price'],
-                'location'  => 0
+                'location'  => 0,
+                'image'  => $product
             ]
         ]);
 

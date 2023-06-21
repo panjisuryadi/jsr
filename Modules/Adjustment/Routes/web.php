@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('stocktransfer/getlocation/{location_id}', 'StockTransferController@getlocation')->name('stocktransfer.getlocation');
     
     //Product Stock
-    Route::get('setting-rfid', 'RfidController@index')->name('rfid.index');
+    Route::get('rfid', 'RfidController@index')->name('rfid.index');
 
 
 

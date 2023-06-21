@@ -65,12 +65,9 @@ class Create extends Component
     }
 
     public function clickQuery() {
-        //dd($this->search);
-        $product = Product::where('product_code',$this->search)->first();
+         $product = Product::where('rfid',$this->search)->first();
          $this->emit('productSelected', $product);
          $this->resetForm();
-
-
     }
 
     public function selectProduct($product) {

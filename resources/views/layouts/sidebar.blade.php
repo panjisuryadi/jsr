@@ -1,5 +1,8 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show
-{{ request()->routeIs('app.pos.*')  ||  request()->routeIs('adjustments.*') ? 'c-sidebar-minimized' : '' }}" id="sidebar">
+{{
+ request()->routeIs('app.pos.*')  ||
+ request()->routeIs('rfid.*')  ||
+ request()->routeIs('adjustments.*') ? 'c-sidebar-minimized' : '' }}" id="sidebar">
     <div class="c-sidebar-brand d-md-down-none">
         <a href="{{ route('home') }}">
 <?php
