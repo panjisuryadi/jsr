@@ -27,7 +27,7 @@
     <div class="form-group">
                         @php
                         //$bb = \Modules\Locations\Entities\Locations::where('parent_id',null)->get();
-                        $bb = \Modules\Locations\Entities\Locations::where('parent_id',5)->get();
+                        $bb = \Modules\Locations\Entities\Locations::where('parent_id',9)->get();
                         @endphp
                         <label for="location_id">Kondisi</label>
                         <select name="location_id" class="form-control select2">
