@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('purchases/completepurchase', 'PurchaseController@completepurchase')->name('purchase.completepurchase');
 
-    Route::post('purchases/save-transfer-product', 'PurchaseController@savetransferProduct')->name('purchase.save.transfer.product');
+    Route::post('purchases/savesupplier', 'PurchaseController@savetransferProduct')->name('purchases.savesupplier');
 
 
     Route::post('purchases/save-transfer-customer', 'PurchaseController@savetransferCustomer')->name('purchase.save.transfer.customer');

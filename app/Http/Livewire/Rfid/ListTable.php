@@ -6,6 +6,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 use Modules\Product\Entities\Product;
+
 class ListTable extends Component
 {
 
@@ -18,6 +19,7 @@ class ListTable extends Component
     public $shipping;
     public $quantity;
     public $location;
+    public $product;
     public $check_quantity;
     public $discount_type;
     public $item_discount;
@@ -34,12 +36,10 @@ class ListTable extends Component
 
         if ($data) {
             $this->data = $data;
-
             $this->global_discount = $data->discount_percentage;
             $this->global_tax = $data->tax_percentage;
             $this->shipping = $data->shipping_amount;
             $this->jumlah = $data->id;
-
             $this->updatedGlobalTax();
             $this->updatedGlobalDiscount();
 
@@ -72,24 +72,102 @@ class ListTable extends Component
     }
 
     public function render() {
+        $product =  'product';
         $cart_items = Cart::instance($this->cart_instance)->content();
             return view('livewire.rfid.list-table', [
-            'cart_items' => $cart_items
+            'cart_items' => $cart_items,
+            'product' => $product
         ]);
     }
 
-    public function productSelected($product) {
+    public function productSelected($value) {
+
+           $cart = Cart::instance($this->cart_instance);
+            if ($value) {
+             //  dd($value);
+              foreach ($value as $product) {
+
+                 $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
+                         return $cartItem->id == $product['id'];
+                           //dd($product);
+                        });
+                if ($exists->isNotEmpty()) {
+                            session()->flash('message', 'Product sudah ada di List!');
+                             $this->emit('reload');
+                            return;
+                        }
+                if (!is_array($product)) {
+                        session()->flash('message', 'Product tidak ada!');
+                        $this->emit('reload');
+                        return;
+                    }
+
+                $cart->add([
+                            'id'      => $product['id'],
+                            'name'    => $product['product_name'],
+                            'qty'     => 1,
+                            'price'   => $this->calculate($product)['price'],
+                            'weight'  => 1,
+                            'options' => [
+                                'product_discount'      => 0.00,
+                                'product_discount_type' => 'fixed',
+                                'sub_total'             => $this->calculate($product)['sub_total'],
+                                'code'                  => $product['product_code'],
+                                'stock'                 => $product['product_quantity'],
+                                'unit'                  => $product['product_unit'],
+                                'product_tax'           => $this->calculate($product)['product_tax'],
+                                'rfid'                  => $product['rfid'],
+                                'unit_price'            => $this->calculate($product)['unit_price'],
+                                'location'  => 0,
+                                'gambar'  => 0
+
+                            ]
+                        ]);
+
+                 $this->check_quantity[$product['id']] = $product['product_quantity'];
+                 $this->quantity[$product['id']] = 1;
+                 $this->discount_type[$product['id']] = 'fixed';
+                 $this->item_discount[$product['id']] = 0;
+                 $this->emit('addRfid', $product['id']);
+            }
+
+            } else {
+                 session()->flash('message', 'Product tidak ada!');
+                        $this->emit('reload');
+                        return;
+            }
+
+
+
+    }
+
+    public function gambar($product) {
+          $img = $product['media'];
+             return $img;
+        }
+ public function productSelectedBackup($product) {
         $cart = Cart::instance($this->cart_instance);
         $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
-            return $cartItem->id == $product['id'];
+         return $cartItem->id == $product['id'];
+           //dd($product);
         });
-
         if ($exists->isNotEmpty()) {
             session()->flash('message', 'Product sudah ada di List!');
              $this->emit('reload');
             return;
         }
+        if ($exists->isEmpty()) {
+            session()->flash('message', 'Product tidak ada!');
+             $this->emit('reload');
+            return;
+        }
          if (!$product) {
+            session()->flash('message', 'Product tidak ada!');
+             $this->emit('reload');
+            return;
+        }
+
+         if ($product && $product["id"] == '') {
             session()->flash('message', 'Product tidak ada!');
              $this->emit('reload');
             return;
@@ -112,7 +190,7 @@ class ListTable extends Component
                 'rfid'                  => $product['rfid'],
                 'unit_price'            => $this->calculate($product)['unit_price'],
                 'location'  => 0,
-                'image'  => $product
+                'image'  =>$this->gambar($product)
             ]
         ]);
 
@@ -122,21 +200,20 @@ class ListTable extends Component
         $this->item_discount[$product['id']] = 0;
     }
 
-
-
-
     public function removeItem($row_id) {
         Cart::instance($this->cart_instance)->remove($row_id);
         $this->emit('reload');
     }
 
+        public function addProduk($value)
+            {
+               $this->add_produk = $value;
+               //dd($value);
+               //$product = Product::findOrFail($value);
+               $this->productSelected($value);
+            }
 
-public function addProduk($value)
-    {
-       $this->add_produk = $value;
-       $product = Product::findOrFail($value);
-       $this->productSelected($product);
-    }
+
 
     public function updatedGlobalTax() {
         Cart::instance($this->cart_instance)->setGlobalTax((integer)$this->global_tax);

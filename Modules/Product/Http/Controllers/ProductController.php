@@ -841,6 +841,7 @@ public function saveAjax(Request $request)
         $module_icon = $this->module_icon;
         $module_model =$this->module_model;
         $module_item = $this->module_item;
+        $code = mt_rand(10000000, 99999999);
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Store';
         abort_if(Gate::denies('show_products'), 403);
@@ -851,6 +852,7 @@ public function saveAjax(Request $request)
                             'module_icon',
                             'module_model',
                             'module_item',
+                            'code',
                             'module_name')
                              );
     }
@@ -884,7 +886,7 @@ public function saveAjax(Request $request)
             $params = $request->except('_token');
             $params['rfid'] = $params['rfid'];
             $$module_name_singular->update($params);
-                    return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+                    return response()->json(['success'=>'  '.$module_title.' Sukses di update.']);
 
      }
 
@@ -939,14 +941,6 @@ public function saveAjax(Request $request)
 
 
 
-
-
-
-
-
-
-
-
     public function edit(Product $product) {
         abort_if(Gate::denies('edit_products'), 403);
 
@@ -990,9 +984,6 @@ public function saveAjax(Request $request)
             'stock' => $stock
         ]);
     }
-
-
-
 
 
     public function destroy(Product $product) {

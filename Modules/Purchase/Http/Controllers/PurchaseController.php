@@ -12,6 +12,7 @@ use Modules\Purchase\Models\HistoryPurchases;
 use Modules\People\Entities\Supplier;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductItem;
 use Modules\Product\Entities\ProductLocation;
 use Modules\Product\Entities\TrackingProduct;
 use Modules\Adjustment\Entities\AdjustmentSetting;
@@ -384,7 +385,7 @@ public function index_data_type(Request $request)
     public function savetransferProduct(StorePurchaseRequest $request) {
 
         $params = $request->all();
-      //  dd($params);
+
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -397,6 +398,7 @@ public function index_data_type(Request $request)
 
           if ($request->supplier == 1) {
               $supplier_name = $request->supplier_id;
+
               } else {
                $none_supplier  = $request->none_supplier;
                $supplier_email = randomEmail($none_supplier);
@@ -413,12 +415,13 @@ public function index_data_type(Request $request)
                 // dd($supplier_name);
 
            }
-
+         $sp = Supplier::findOrFail($supplier_name)->supplier_name;
+        // dd($sp);
         $purchase = Purchase::create([
                 'date' => $request->date,
                 'kode_sales' => $request->kode_sales,
                 'supplier_id' => $supplier_name,
-                'supplier_name' => Supplier::findOrFail($supplier_name)->supplier_name,
+                'supplier_name' => $sp,
                 'tax_percentage' => $request->tax_percentage,
                 'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
@@ -434,7 +437,7 @@ public function index_data_type(Request $request)
             ]);
 
             foreach (Cart::instance('purchase')->content() as $cart_item) {
-                 // dd('purchase');
+
                 PurchaseDetail::create([
                     'purchase_id' => $purchase->id,
                     'product_id' => $cart_item->id,
@@ -469,7 +472,15 @@ public function index_data_type(Request $request)
                         'product_quantity' => $product->product_quantity + $cart_item->qty
                     ]);
 
-                    $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
+                  //Update lokasi Baki
+                  $produkItem = ProductItem::where('product_id',$cart_item->id)->first();
+                  $produkItem->update([
+                        'baki_id' => $request->baki_id
+                    ]);
+
+
+                  //dd('purchase');
+                  $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
 
                     if(empty($prodloc)){
                         $prodloc = new ProductLocation;
@@ -509,6 +520,7 @@ public function index_data_type(Request $request)
         });
 
         toast('Product Transfer Created!', 'success');
+        //return redirect()->back();
         return redirect()->route('product-transfer.index');
     }
 
@@ -605,6 +617,12 @@ public function index_data_type(Request $request)
                         'product_quantity' => $product->product_quantity + $cart_item->qty
                     ]);
 
+
+                   //Update lokasi Baki
+                  $produkItem = ProductItem::where('product_id',$cart_item->id)->first();
+                  $produkItem->update([
+                        'baki_id' => $request->baki_id
+                    ]);
                     $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
 
                     if(empty($prodloc)){
@@ -737,7 +755,7 @@ public function index_data_type(Request $request)
 
                 if ($request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
-                    dd('product');
+                  //  dd('product');
                     $product->update([
                         'product_quantity' => $product->product_quantity + $cart_item->qty
                     ]);

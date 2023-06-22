@@ -27,7 +27,8 @@
     <div class="form-group">
                         @php
                         //$bb = \Modules\Locations\Entities\Locations::where('parent_id',null)->get();
-                        $bb = \Modules\Locations\Entities\Locations::where('parent_id',9)->get();
+                        //$bb = \Modules\Locations\Entities\Locations::where('parent_id',9)->get();
+                        $bb = \Modules\Locations\Entities\Locations::where('parent_id',5)->get();
                         @endphp
                         <label for="location_id">Kondisi</label>
                         <select name="location_id" class="form-control select2">
@@ -75,21 +76,6 @@
                             </table>
 
                             </div>
-
-
- {{--          <div class="card-body text-center">
-                        <div class="py-2 d-flex flex-wrap align-items-center justify-content-center">
-                     {!! \Milon\Barcode\Facades\DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology, 2, 110) !!}
-                    </div>
-                        @forelse($product->getMedia('images') as $media)
-                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-fluid img-thumbnail mb-2">
-                        @empty
-                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid img-thumbnail mb-2">
-                        @endforelse
-                    </div> --}}
-
-
-
                     </div>
 
             </form>

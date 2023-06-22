@@ -198,27 +198,38 @@ Detail file yg di update dan di tambahkan di aplikasi hookie hari ini
 
 Tambah module SORTIR ambil dari master data
 
+
+
 21 juni 2023
 =============================
-update module jenis perhiasan
+1. update master data module jenis perhiasan
 1. ct
 2. hallmark
 3. kadar /persentase /kandungan
-relasi 
 
-KATEGORI SELECT ONCHANGE AMBIL DATA jenis perhiasan..rumus
+2. Grouping Kategori jenis
+Update form tambah produk
+-----------------------------
+Kategori SELECT ONCHANGE AMBIL DATA jenis perhiasan >> ambil dari master data  Rumus
 
-kATEGOri berlian
-Round diganti clarity
-colour 
-shape / Cut
-
+Modul Kategori berlian
++ Tambah Dropdown master data BAKI
++ Round diganti clarity >> master data
++ colour
+ganti dropdown shape / Cut
 ketika pilih shape atau cut
-1 kolom multiple 
+-  kolom multiple dropdown multiple
+===================================
 
-tambah kode baki di simpan produk
+3. Tambah kode baki di simpan produk
+
+4. perubahan alur Module Scanner RFID multiple
+ - scan RFID berdasarkan kategori BAKI
+ - multiple insert data,. xplode by length 8
+ - perubaan tampilan kiri list baki ,kanan hasil scanner
 
 
+5. Timbangan produk
 
 
 

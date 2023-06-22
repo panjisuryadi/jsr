@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Locations;
-
 use Modules\Locations\Entities\Locations;
-
 use Livewire\Component;
 
 class Location extends Component

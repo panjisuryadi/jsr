@@ -83,7 +83,7 @@
 
                         @include('utils.alerts')
                     <script src="{{  asset('js/jquery.min.js') }}"></script>
-                        <form id="purchase-form" action="{{ route('purchase.save.transfer.product') }}" method="POST">
+                        <form id="purchase-form" action="{{ route('purchases.savesupplier') }}" method="POST">
                             @csrf
 
 
@@ -143,7 +143,7 @@
 <livewire:product-cart :cartInstance="'purchase'"/>
 
 
-<div class="flex flex-row grid grid-cols-3 gap-2">
+<div class="flex flex-row grid grid-cols-4 gap-2">
     <div class="form-group">
         @php
         $locations = \Modules\Locations\Entities\Locations::where('name','NOT LIKE','%Pusat%')
@@ -159,6 +159,21 @@
 
 
     </div>
+
+
+    <div class="form-group">
+        @php
+        $baki = \Modules\Baki\Models\Baki::get();
+        @endphp
+        <label for="">Location</label>
+        <select name="baki_id" class="form-control select2" readonly>
+            @foreach ($baki as $bk)
+            <option value="{{ $bk->id }}" selected>{{ $bk->name }}</option>
+            @endforeach
+        </select>
+
+
+    </div>
     <div class="form-group">
         <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
         <select class="form-control select2" name="payment_method" id="payment_method" required>
@@ -169,6 +184,8 @@
             <option value="Other">Other</option>
         </select>
     </div>
+
+
     <div class="form-group">
         <label for="paid_amount">Amount Paid <span class="text-danger">*</span></label>
         <div class="input-group">

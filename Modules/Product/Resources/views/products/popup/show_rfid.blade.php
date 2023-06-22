@@ -27,6 +27,7 @@
 
 
           <div class="form-group">
+            {{ $code }}
                                 <?php
                                 $field_name = 'rfid';
                                 $field_lable = label_case('rfid');
@@ -46,7 +47,7 @@
              <div class="flex flex-row grid grid-cols-2 gap-4" >
 
  <div class="form-group">
-   @forelse($product->getMedia('images') as $media)
+                         @forelse($product->getMedia('images') as $media)
                             <img src="{{ $media->getUrl() }}" alt="Product Image" class="h-100 img-fluid img-thumbnail mb-2">
                         @empty
                             <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid img-thumbnail mb-2 h-100">

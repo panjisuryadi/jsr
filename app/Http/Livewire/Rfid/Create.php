@@ -11,12 +11,15 @@ class Create extends Component
 {
 
     public $query;
+    public $result;
     public $search;
+    //public $search = [];
     public $type;
     public $search_results;
     public $list_product;
     public $how_many;
-    protected $listeners = ['produkTemp','reload'];
+    public $listrfid = '';
+    protected $listeners = ['produkTemp','reload','addRfid'];
     protected $queryString = ['search'];
 
     public function produkTemp()
@@ -40,13 +43,20 @@ class Create extends Component
 
     public function refreshData()
     {
-        $this->list_product = Product::temp()->take($this->how_many)->latest()->get();
+        $this->list_product = Product::take($this->how_many)->latest()->get();
     }
 
     public function render() {
         $this->refreshData();
         return view('livewire.rfid.create');
     }
+
+    public function addRfid($value)
+        {
+           $this->listrfid = $value;
+        }
+
+
 
     public function updatedQuery() {
         $this->search_results = Product::where('product_code',$this->query)->first();
@@ -69,30 +79,51 @@ class Create extends Component
         $this->search_results = Collection::empty();
     }
 
-    public function clickQuery() {
-         $product = Product::where('rfid',$this->search)->first();
+    public function clickQueryBackup() {
          $this->emit('productSelected', $product);
          $this->resetForm();
     }
+
+      //572983278902945089029458
+     public function clickQuery() {
+              $string = "572983278902945089029458";
+              $length = 8;
+              $result = $this->pisah($this->search, $length);
+             //$result = $this->pisah($string, $length);
+              $product = array();
+              foreach ($result as $row)
+                {
+                 $product[] = Product::where('rfid',$row)->first();
+                }
+              $this->emit('addProduk', $product);
+              $this->resetForm();
+        }
 
     public function selectProduct($product) {
         $this->emit('productSelected', $product);
          $this->resetQuery();
     }
-
-
     public function hapusItem($itemId)
     {
         $item = Product::find($itemId);
         if ($item) {
              $item->delete();
              $this->refreshData();
-            // $this->emit('resetInput');
+            //$this->emit('resetInput');
              $this->resetQuery();
         }
     }
 
 
+    protected function pisah($string, $length)
+    {
+        $strlen = strlen($string);
+        $result = [];
+        for ($i = 0; $i < $strlen; $i += $length) {
+            $result[] = substr($string, $i, $length);
+        }
+        return $result;
+    }
 
 
 
