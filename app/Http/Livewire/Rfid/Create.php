@@ -88,7 +88,9 @@ class Create extends Component
      public function clickQuery() {
               $string = "572983278902945089029458";
               $length = 8;
-              $result = $this->pisah($this->search, $length);
+              $cari = $this->search;
+              $hasilcari = preg_replace('/\s+/', '', $cari);
+              $result = $this->pisah($hasilcari, $length);
              //$result = $this->pisah($string, $length);
               $product = array();
               foreach ($result as $row)
