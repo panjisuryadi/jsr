@@ -56,8 +56,6 @@ class Create extends Component
            $this->listrfid = $value;
         }
 
-
-
     public function updatedQuery() {
         $this->search_results = Product::where('product_code',$this->query)->first();
 
@@ -85,13 +83,12 @@ class Create extends Component
     }
 
       //572983278902945089029458
-     public function clickQuery() {
+      public function clickQuery() {
               $string = "572983278902945089029458";
-              $length = 8;
+              $length = 16;
               $cari = $this->search;
               $hasilcari = preg_replace('/\s+/', '', $cari);
               $result = $this->pisah($hasilcari, $length);
-             //$result = $this->pisah($string, $length);
               $product = array();
               foreach ($result as $row)
                 {
@@ -99,33 +96,35 @@ class Create extends Component
                 }
               $this->emit('addProduk', $product);
               $this->resetForm();
-        }
+            }
 
-    public function selectProduct($product) {
-        $this->emit('productSelected', $product);
-         $this->resetQuery();
-    }
-    public function hapusItem($itemId)
-    {
-        $item = Product::find($itemId);
-        if ($item) {
-             $item->delete();
-             $this->refreshData();
-            //$this->emit('resetInput');
-             $this->resetQuery();
-        }
-    }
+            public function selectProduct($product) {
+                $this->emit('productSelected', $product);
+                 $this->resetQuery();
+            }
 
 
-    protected function pisah($string, $length)
-    {
-        $strlen = strlen($string);
-        $result = [];
-        for ($i = 0; $i < $strlen; $i += $length) {
-            $result[] = substr($string, $i, $length);
-        }
-        return $result;
-    }
+            public function hapusItem($itemId)
+            {
+                $item = Product::find($itemId);
+                if ($item) {
+                     $item->delete();
+                     $this->refreshData();
+                    //$this->emit('resetInput');
+                     $this->resetQuery();
+                }
+            }
+
+
+            protected function pisah($string, $length)
+            {
+                $strlen = strlen($string);
+                $result = [];
+                for ($i = 0; $i < $strlen; $i += $length) {
+                    $result[] = substr($string, $i, $length);
+                }
+                return $result;
+            }
 
 
 
