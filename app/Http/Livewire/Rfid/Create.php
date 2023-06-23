@@ -85,7 +85,7 @@ class Create extends Component
       //572983278902945089029458
       public function clickQuery() {
               $string = "572983278902945089029458";
-              $length = 16;
+              $length = 24;
               $cari = $this->search;
               $hasilcari = preg_replace('/\s+/', '', $cari);
               $result = $this->pisah($hasilcari, $length);
