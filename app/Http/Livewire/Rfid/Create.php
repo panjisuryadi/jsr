@@ -35,7 +35,7 @@ class Create extends Component
         $this->search = '';
         $this->query = '';
         $this->type = '';
-        $this->how_many = 5;
+        $this->how_many = 10;
         $this->search_results = Collection::empty();
         $this->list_product = Product::temp()->take($this->how_many)->get();
         $this->refreshData();
@@ -64,7 +64,7 @@ class Create extends Component
     }
 
     public function loadMore() {
-        $this->how_many += 5;
+        $this->how_many += 10;
         $this->updatedQuery();
     }
 
