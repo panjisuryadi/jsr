@@ -37,20 +37,18 @@
                                 <input class="form-control" type="text" name="name" required value="{{ $role->name }}">
                             </div>
 
-                            <hr>
-{{--
-                            <div class="form-group">
-                                <label for="permissions">
-                                    Permissions <span class="text-danger">*</span>
-                                </label>
-                            </div> --}}
-
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
+                              <div class="px-4 flex relative py-2">
+                                    <div class="absolute inset-1 flex items-center">
+                                        <div class="w-full border-b border-gray-300"></div>
+                                    </div>
+                                    <div class="relative flex justify-left">
+                                <div class="tracking-widest bg-white pl-0 pr-1 custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="select-all">
-                                    <label class="custom-control-label" for="select-all">Give All Permissions</label>
+                                    <label class="font-semibold custom-control-label text-sm uppercase text-dark" for="select-all">Give All Permissions</label>
                                 </div>
-                            </div>
+
+                                    </div>
+                                </div>
 
                             <div class="row">
                                 <!-- Dashboard Permissions -->
@@ -210,7 +208,7 @@
       <div class="w-full px-2 flex flex-row grid grid-cols-2 gap-2">
                                 <div class="px-1">
                                     <div class="card h-auto border-0 shadow">
-                                        <div class="card-header uppercase text-gray-500 font-semibold">
+                                        <div class="card-header text-gray-500 font-semibold">
                                            {{ Label_case('Iventory') }}
                                         </div>
                                         <div class="card-body">
@@ -269,6 +267,13 @@
                                                                id="access_rfid" name="permissions[]"
                                                                value="access_rfid" {{ $role->hasPermissionTo('access_rfid') ? 'checked' : '' }}>
                                                         <label class="custom-control-label" for="access_rfid">RFID</label>
+                                                      </div>
+
+                                                     <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="access_approve_product" name="permissions[]"
+                                                               value="access_approve_product" {{ $role->hasPermissionTo('access_approve_product') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="access_approve_product">Approve Products</label>
                                                       </div>
 
 

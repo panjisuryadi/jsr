@@ -220,22 +220,21 @@ if (!function_exists('statusProduk')) {
         $return_text = '';
         if ($required == 0) {
             $return_text = '<div class="items-center text-center">';
-             $return_text .= '<span class="rounded-lg bg-green-400 px-2 py-1 text-xs items-center text-center text-white">Active</span>';
+             $return_text .= '<span class="rounded-lg bg-blue-400 px-2 py-1 text-xs items-center text-center text-white">Purchase</span>';
               $return_text .= '</div>';
         }
 
-        elseif ($required == 3){
+        //need aprovall
+        elseif ($required == 2){
              $return_text = '<div class="items-center text-center">';
-             $return_text .= '<span class="rounded-lg bg-yellow-400 px-2 py-1 text-xs items-center text-center text-white text-xs small">Transfer</span>';
+             $return_text .= '<span class="rounded-lg bg-yellow-400 px-2 py-1 text-xs items-center text-center text-white text-xs small">Need Approve</span>';
               $return_text .= '</div>';
 
 
-        } elseif ($required == 1){
+        } elseif ($required == 3){
              $return_text = '<div class="items-center text-center">';
-             $return_text .= '<span class="rounded-lg bg-green-400 px-2 py-1 text-xs items-center text-center text-white text-xs small">Active</span>';
+             $return_text .= '<span class="rounded-lg bg-green-400 px-2 py-1 text-xs items-center text-center text-white text-xs small">Approve</span>';
               $return_text .= '</div>';
-
-
         }
         return $return_text;
     }

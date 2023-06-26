@@ -676,7 +676,7 @@ public function saveAjax(Request $request)
             'product_quantity'                  => $input['product_quantity'],
             'product_barcode_symbology'         => $input['product_barcode_symbology'],
             'product_unit'                      => $input['product_unit'],
-            'status'                            => $input['status'],
+            'status'                            => 0,
             'product_cost'                      => $product_cost
         ]);
 

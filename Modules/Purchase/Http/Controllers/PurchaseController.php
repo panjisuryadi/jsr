@@ -14,6 +14,7 @@ use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
 use Modules\Product\Entities\ProductLocation;
+use Modules\Locations\Entities\Locations;
 use Modules\Product\Entities\TrackingProduct;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\Purchase\Entities\Purchase;
@@ -245,7 +246,7 @@ public function History(Request $request)
                             'qty',
                             'updated_at',
                              'produk'])
-                        ->make(true);
+                         ->make(true);
                      }
 
 
@@ -453,6 +454,9 @@ public function index_data_type(Request $request)
                     'location_id' => $request->location_id,
                 ]);
 
+
+               $locationname = Locations::where('id',$request->location_id)->first();
+
                   //add history purchases
                  HistoryPurchases::create([
                                 'purchase_id' => $purchase->id,
@@ -462,7 +466,15 @@ public function index_data_type(Request $request)
                                 'user_id'     =>   auth()->user()->id,
                                 'status'      =>   1,
                             ]);
-
+                   //Tracking Produk ke 2
+                   TrackingProduct::create([
+                    'location_id' =>  $request->location_id,
+                    'product_id'  =>  $cart_item->id,
+                    'username'    =>  auth()->user()->name,
+                    'user_id'     =>  auth()->user()->id,
+                    'status'      =>   1,
+                    'note'  =>  'Memindahkan Barang Ke Lokasi '.$locationname->name.' dibuat oleh '.auth()->user()->name.' ',
+                  ]);
 
 
                 if ($purchase->status == 'Completed') {
@@ -489,14 +501,7 @@ public function index_data_type(Request $request)
                         $prodloc->stock = $cart_item->qty;
                         $prodloc->save();
                         //add TrackingProduct
-                        TrackingProduct::create([
-                            'location_id' =>   $request->location_id,
-                            'product_id'  =>   $cart_item->id,
-                            'username'    =>   auth()->user()->name,
-                            'user_id'     =>   auth()->user()->id,
-                            'status'      =>    1,
-                            'note'        =>   'Perpindahan Barang pertama ',
-                          ]);
+
                     }else{
                         $prodloc->stock = $prodloc->stock + $cart_item->qty;
                         $prodloc->save();
@@ -595,6 +600,9 @@ public function index_data_type(Request $request)
                     'location_id' => $request->location_id,
                 ]);
 
+
+               $locationname = Locations::where('id',$request->location_id)->first();
+
                   //add history purchases
                  HistoryPurchases::create([
                                 'purchase_id' => $purchase->id,
@@ -604,10 +612,19 @@ public function index_data_type(Request $request)
                                 'user_id'     =>   auth()->user()->id,
                                 'status'      =>   1,
                             ]);
+                   //Tracking Produk ke 2
+                   TrackingProduct::create([
+                    'location_id' =>  $request->location_id,
+                    'product_id'  =>  $cart_item->id,
+                    'username'    =>  auth()->user()->name,
+                    'user_id'     =>  auth()->user()->id,
+                    'status'      =>   1,
+                    'note'  =>  'Memindahkan Barang Ke Lokasi '.$locationname->name.' dibuat oleh '.auth()->user()->name.' ',
+                  ]);
 
 
 
-            if ($purchase->status == 'Completed') {
+                if ($purchase->status == 'Completed') {
 
                     $product = Product::findOrFail($cart_item->id);
                  //dd($purchase->status);

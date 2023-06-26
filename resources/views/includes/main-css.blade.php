@@ -120,4 +120,12 @@ body {
     border-color: #929599 !important;
 }
 
+/*//chekbox*/
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #7e6423 !important;
+    background-color: #8d5c16 !important;
+}
+
+
 </style>

@@ -20,9 +20,13 @@ class UsersDataTable extends DataTable
                     'roles' => $data->getRoleNames()
                 ]);
             })
+
+
             ->addColumn('action', function ($data) {
                 return view('user::users.partials.actions', compact('data'));
             })
+
+
             ->addColumn('status', function ($data) {
                 if ($data->is_active == 1) {
                     $html = '<span class="badge badge-success">Active</span>';
@@ -89,7 +93,7 @@ class UsersDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::computed('role')
-                ->className('text-center align-middle'),
+                ->className('roles text-center align-middle'),
 
             Column::computed('status')
                 ->className('text-center align-middle'),

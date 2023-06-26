@@ -16,7 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Users
     Route::resource('users', 'UsersController')->except('show');
-
+    Route::get('roles/index-data', 'RolesController@index_data')->name('roles.index_data');
     Route::resource('roles', 'RolesController')->except('show');
     //Roles
     Route::get('permissions/edit/{id}', 'PermissionController@edit')->name('permissions.edit');

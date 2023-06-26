@@ -79,9 +79,9 @@ display: inline-block;
             <th style="width: 9%!important;">{{ Label_case('image') }}</th>
             <th>{{ Label_case('product_name') }}</th>
             <th>{{ Label_case('price') }}</th>
-            <th style="width: 9%!important;" class="text-center">{{ Label_case('Status') }}</th>
+            <th style="width: 14%!important;" class="text-center">{{ Label_case('Status') }}</th>
             <th style="width: 11%!important;" class="text-center lokasi">{{ Label_case('Lokasi') }}</th>
-             <th style="width: 16%!important;" class="text-center">{{ Label_case('Transfer') }}</th>
+
             <th style="width: 14%!important;" class="text-center">
                 Action
             </th>
@@ -167,10 +167,7 @@ display: inline-block;
             data: 'lokasi',
             name: 'lokasi'
         },
-          {
-            data: 'change',
-            name: 'change'
-        },
+
         {
             data: 'action',
             name: 'action',
