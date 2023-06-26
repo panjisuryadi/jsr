@@ -228,7 +228,6 @@ ketika pilih shape atau cut
  - multiple insert data,. xplode by length 8
  - perubaan tampilan kiri list baki ,kanan hasil scanner
 
-
 5. Timbangan produk
 
 

@@ -553,7 +553,7 @@ public function saveAjax(Request $request)
         $stock = ProductLocation::join('locations','locations.id','product_locations.location_id')
                 ->where('product_id',$id)->first();
         $tracking = TrackingProduct::with('products','location','user')
-                ->where('product_id',$id)->first();
+                ->where('product_id',$id)->get();
         return view('product::products.transfer.show', compact('product','stock','tracking'));
     }
 

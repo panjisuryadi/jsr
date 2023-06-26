@@ -222,9 +222,17 @@ if (!function_exists('statusProduk')) {
             $return_text = '<div class="items-center text-center">';
              $return_text .= '<span class="rounded-lg bg-green-400 px-2 py-1 text-xs items-center text-center text-white">Active</span>';
               $return_text .= '</div>';
-        }else{
+        }
+
+        elseif ($required == 3){
              $return_text = '<div class="items-center text-center">';
-             $return_text .= '<span class="rounded-lg bg-red-400 px-2 py-1 text-xs items-center text-center text-white text-xs small">Kosong</span>';
+             $return_text .= '<span class="rounded-lg bg-yellow-400 px-2 py-1 text-xs items-center text-center text-white text-xs small">Transfer</span>';
+              $return_text .= '</div>';
+
+
+        } elseif ($required == 1){
+             $return_text = '<div class="items-center text-center">';
+             $return_text .= '<span class="rounded-lg bg-green-400 px-2 py-1 text-xs items-center text-center text-white text-xs small">Active</span>';
               $return_text .= '</div>';
 
 
@@ -248,6 +256,24 @@ if (!function_exists('statusProduk')) {
 
          }
       }
+
+
+      if (!function_exists('tgl')) {
+        function tgl($value)
+        {
+
+        $date = '';
+        $date = \Carbon\Carbon::parse($value);
+        $tgl = $date->isoFormat('dddd, LL');
+        $jam = $date->format('H:i');
+
+         return $date = ''. $tgl.' | '. $jam.'';
+
+         }
+      }
+
+
+
 
 
 if (!function_exists('keBulan')) {

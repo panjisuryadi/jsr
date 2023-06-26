@@ -139,7 +139,7 @@ public function index_data(Request $request)
                           ->editColumn('reference', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-500">
-                                     ' .$data->purchaseDetails->first()->product_name . '</h3>
+                                     ' .@$data->purchaseDetails->first()->product_name . '</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -505,8 +505,6 @@ public function index_data_type(Request $request)
                 }
             }
 
-
-
             Cart::instance('purchase')->destroy();
             if ($purchase->paid_amount > 0) {
                 PurchasePayment::create([
@@ -677,7 +675,7 @@ public function index_data_type(Request $request)
     public function store(StorePurchaseRequest $request) {
 
         $params = $request->all();
-       //dd($params);
+       // dd($params);
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -742,6 +740,7 @@ public function index_data_type(Request $request)
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                     'location_id' => $request->location_id,
                 ]);
+                 $nama_supplier = Supplier::findOrFail($supplier_name)->supplier_name;
 
                   //add history purchases
                  HistoryPurchases::create([
@@ -752,15 +751,27 @@ public function index_data_type(Request $request)
                                 'user_id'     =>   auth()->user()->id,
                                 'status'      =>   1,
                             ]);
+                   //Tracking Produk
+                   TrackingProduct::create([
+                    'location_id' =>  $request->location_id,
+                    'product_id'  =>  $cart_item->id,
+                    'username'    =>  auth()->user()->name,
+                    'user_id'     =>  auth()->user()->id,
+                    'status'      =>   1,
+                    'note'  =>  'Purchase dari Toko '.$nama_supplier.' diterima oleh '.auth()->user()->name.' ',
+                  ]);
+
+
 
                 if ($request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
-                  //  dd('product');
+                   // dd('product');
                     $product->update([
                         'product_quantity' => $product->product_quantity + $cart_item->qty
                     ]);
 
                     $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
+
 
                     if(empty($prodloc)){
                         $prodloc = new ProductLocation;
@@ -768,6 +779,9 @@ public function index_data_type(Request $request)
                         $prodloc->location_id = $request->location_id;
                         $prodloc->stock = $cart_item->qty;
                         $prodloc->save();
+
+
+
                     }else{
                         $prodloc->stock = $prodloc->stock + $cart_item->qty;
                         $prodloc->save();
@@ -777,7 +791,7 @@ public function index_data_type(Request $request)
             }
 
             Cart::instance('purchase')->destroy();
-            if ($purchase->paid_amount > 0) {
+        if ($purchase->paid_amount > 0) {
                 PurchasePayment::create([
                     'date' => $request->date,
                     'reference' => 'INV/'.$purchase->reference,
