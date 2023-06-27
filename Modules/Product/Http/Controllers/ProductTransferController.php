@@ -59,7 +59,7 @@ public function __construct()
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_products'), 403);
+        abort_if(Gate::denies('access_product_transfer'), 403);
          return view('product::products.transfer.index',
            compact('module_name',
             'module_action',
@@ -151,14 +151,14 @@ public function __construct()
 
 
     public function index_data_table(ProductDataTable $dataTable) {
-        abort_if(Gate::denies('access_products'), 403);
+        abort_if(Gate::denies('access_approve_product'), 403);
 
         return $dataTable->render('product::products.index');
     }
 
 
     public function add_products_categories_single(Request $request ,$id) {
-        abort_if(Gate::denies('access_products'), 403);
+        abort_if(Gate::denies('access_product_transfer'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -177,7 +177,7 @@ public function __construct()
 
 
  public function add_products_categories(Request $request ,$id) {
-        abort_if(Gate::denies('access_products'), 403);
+        abort_if(Gate::denies('access_product_transfer'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -210,7 +210,6 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-
         $$module_name = $module_model::with('category','product_item')
         ->latest()->get();
 
@@ -236,6 +235,8 @@ public function index_data(Request $request)
                     </div>';
                 return $tb;
             })
+
+
            ->addColumn('product_image', function ($data) {
             $url = $data->getFirstMediaUrl('images', 'thumb');
                 return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
@@ -269,15 +270,22 @@ public function index_data(Request $request)
                  return $tb;
               })
 
-             ->editColumn('status', function ($data) {
-                $status = statusProduk($data->status);
-               return $status;
-              })
+             // ->editColumn('status', function ($data) {
+             //    $status = statusProduk($data->status);
+             //   return $status;
+             //  })
 
                  ->addColumn('change', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             return view('product::products.transfer.change',
+                            compact('module_name', 'data', 'module_model'));
+                      })
+
+                ->addColumn('status', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.transfer.approve',
                             compact('module_name', 'data', 'module_model'));
                       })
 
@@ -302,7 +310,7 @@ public function index_data(Request $request)
 
 
     public function create() {
-        abort_if(Gate::denies('create_products'), 403);
+        abort_if(Gate::denies('access_product_transfer'), 403);
         return view('product::products.create');
     }
 
@@ -314,7 +322,7 @@ public function index_data(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        abort_if(Gate::denies('create_products'), 403);
+        abort_if(Gate::denies('access_product_transfer'), 403);
          return view(''.$module_path.'::'.$module_name.'.modal.index',
            compact('module_name',
                     'module_title',
@@ -322,10 +330,26 @@ public function index_data(Request $request)
     }
 
 
+ public function approveModal(Request $request ,$id) {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $detail = $module_model::findOrFail($id);
+        abort_if(Gate::denies('access_approve_product'), 403);
+         return view(''.$module_path.'::'.$module_name.'.modal.approve',
+           compact('module_name',
+                    'module_title',
+                    'detail',
+                    'module_icon', 'module_model'));
+    }
+
 
 
     public function add_products_modal_categories(Request $request ,$id) {
-        abort_if(Gate::denies('access_products'), 403);
+        abort_if(Gate::denies('access_product_transfer'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -349,7 +373,7 @@ public function index_data(Request $request)
 
 
     public function webcam() {
-        abort_if(Gate::denies('create_products'), 403);
+        abort_if(Gate::denies('access_product_transfer'), 403);
 
         return view('product::products.webcam');
     }
@@ -547,7 +571,7 @@ public function saveAjax(Request $request)
 
 
     public function detail($id) {
-        abort_if(Gate::denies('show_products'), 403);
+        abort_if(Gate::denies('show_product_transfer'), 403);
 
         $product = Product::find($id);
         $stock = ProductLocation::join('locations','locations.id','product_locations.location_id')
@@ -562,11 +586,54 @@ public function saveAjax(Request $request)
 
 
 
+//approve produts  masih error
+public function ApproveProducts(Request $request, $id)
+    {
+        abort_if(Gate::denies('access_approve_product'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+        $$module_name_singular = Product::findOrFail($id);
+        $tracking = TrackingProduct::where('product_id',$id)->first();
+        $validator = \Validator::make($request->all(),[
+             'status' => 'required',
+
+
+        ]);
+
+       if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+
+        $input = $request->all();
+        $input = $request->except('_token');
+        $input['status'] = $input['status'];
+        $$module_name_singular->update($input);
+        //Tracking Approve Products
+         TrackingProduct::create([
+            'location_id' =>  $tracking->location_id,
+            'product_id'  =>  $id,
+            'username'    =>  auth()->user()->name,
+            'user_id'     =>  auth()->user()->id,
+            'status'      =>   2,
+            'note'  =>   'Barang di Approve  oleh '.auth()->user()->name.' ',
+          ]);
+
+
+        return response()->json(['success'=>'  '.$module_title.' Sukses di Approve.']);
+
+ }
+
+
+
 
 
     public function edit(Product $product) {
-        abort_if(Gate::denies('edit_products'), 403);
-
+        abort_if(Gate::denies('edit_product_transfer'), 403);
         return view('product::products.edit', compact('product'));
     }
 
@@ -607,13 +674,10 @@ public function saveAjax(Request $request)
             'stock' => $stock
         ]);
     }
-
-
-
           public function type(Request $request) {
                 $type = $request->type;
                 //dd($type);
-                abort_if(Gate::denies('create_purchases'), 403);
+                abort_if(Gate::denies('access_product_transfer'), 403);
                 Cart::instance('purchase')->destroy();
                     if ($type == 'NonMember') {
                      return view('product::products.transfer.type.member');
@@ -629,10 +693,8 @@ public function saveAjax(Request $request)
 
 
     public function destroy(Product $product) {
-        abort_if(Gate::denies('delete_products'), 403);
-
+        abort_if(Gate::denies('access_product_transfer'), 403);
         $product->delete();
-
         toast('Product Deleted!', 'warning');
         return redirect()->route('products.index');
     }

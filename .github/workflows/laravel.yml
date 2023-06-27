@@ -28,6 +28,8 @@ jobs:
           sudo chmod 777 -R storage
           sudo chmod 777 -R bootstrap/cache
           php artisan optimize:clear
+          php artisan cache:forget spatie.permission.cache
+
 
         #-----------------------------------------
         #php artisan optimize:clear

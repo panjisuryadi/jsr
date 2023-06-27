@@ -674,6 +674,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 ],
                 'permission' => ['create_products',
                                       'print_barcodes',
+                                      'access_product_transfer',
                                       'access_products'],
             ]);
             $products->link->attr([
@@ -709,7 +710,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->data([
                 'order'         => 3,
                 'activematches' => 'product-transfer*',
-                'permission'    => ['access_products'],
+                'permission'    => ['access_product_transfer'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',

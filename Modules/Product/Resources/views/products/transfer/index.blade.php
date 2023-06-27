@@ -185,7 +185,7 @@ display: inline-block;
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah, #Edit,#Approve', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -200,6 +200,13 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-sm');
             $('.modal-dialog').removeClass('modal-lg');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
+        }
+          if($(this).attr('id') == 'Approve')
+        {
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-xl');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Approve {{ Label_case($module_title) }}');
         }
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
