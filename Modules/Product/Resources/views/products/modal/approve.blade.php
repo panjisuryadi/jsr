@@ -1,6 +1,6 @@
   <div class="px-3">
   <x-library.alert />
-  <form id="FormEdit" action="{{ route('products.transfer.approvebarang', $detail) }}" method="POST">
+  <form id="FormEdit" action="{{ route('products.transfer.approvebarang', $detail->id) }}" method="POST">
                 @csrf
                 @method('patch')
 <div class="flex flex-row grid grid-cols-1 gap-4">

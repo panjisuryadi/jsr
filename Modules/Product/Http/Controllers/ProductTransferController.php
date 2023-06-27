@@ -17,8 +17,6 @@ use Modules\Product\Entities\ProductLocation;
 use Modules\Locations\Entities\Locations;
 use Modules\Product\Entities\TrackingProduct;
 use Modules\Gudang\Models\Gudang;
-use Modules\Product\Http\Requests\StoreProductRequest;
-use Modules\Product\Http\Requests\UpdateProductRequest;
 use Modules\Upload\Entities\Upload;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -379,7 +377,7 @@ public function index_data(Request $request)
     }
 
 
-    public function store(StoreProductRequest $request) {
+    public function store(Request $request) {
          $params = $request->all();
          $params = $request->except('_token');
          dd($params);
@@ -474,7 +472,7 @@ public function saveAjax(Request $request)
 
 
 
-  public function save(StoreProductRequest $request)
+  public function save(Request $request)
     {
 
 
@@ -638,7 +636,7 @@ public function ApproveProducts(Request $request, $id)
     }
 
 
-    public function update(UpdateProductRequest $request, Product $product) {
+    public function update(Request $request, Product $product) {
         $product->update($request->except('document'));
 
         if ($request->has('document')) {
