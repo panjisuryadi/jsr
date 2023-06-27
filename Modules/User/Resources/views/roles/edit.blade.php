@@ -26,16 +26,22 @@
                 <form action="{{ route('roles.update', $role->id) }}" method="POST">
                     @csrf
                     @method('patch')
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Update Role <i class="bi bi-check"></i>
-                        </button>
-                    </div>
+
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group">
+
+
+                        <div class="flex justify-between gap-3">
+                            <div class="form-group w-2/3">
                                 <label for="name">Role Name <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="name" required value="{{ $role->name }}">
                             </div>
+                            <div class="form-group w-1/3">
+                                <label for="name"></label>
+                                <button type="submit" class="mt-2 w-full btn btn-primary">Update Role <i class="bi bi-check"></i>
+                                </button>
+                            </div>
+                        </div>
 
                               <div class="px-4 flex relative py-2">
                                     <div class="absolute inset-1 flex items-center">

@@ -25,29 +25,35 @@
                 @include('utils.alerts')
                 <form action="{{ route('roles.store') }}" method="POST">
                     @csrf
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Create Role <i class="bi bi-check"></i>
-                        </button>
-                    </div>
+
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="name">Role Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="name" required>
-                            </div>
 
-                            <hr>
+<div class="flex justify-between gap-3">
+    <div class="form-group w-2/3">
+        <label for="name">Role Name <span class="text-danger">*</span></label>
+        <input class="form-control" type="text" name="name" required>
+    </div>
+    <div class="form-group w-1/3">
+         <label for="name"></label>
+        <button type="submit" class="mt-2 w-full btn btn-primary">Create Role <i class="bi bi-check"></i>
+        </button>
+    </div>
+</div>
 
-                            <div class="form-group">
-                                <label for="permissions">Permissions <span class="text-danger">*</span></label>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
+                                <div class="px-4 flex relative py-2">
+                                    <div class="absolute inset-1 flex items-center">
+                                        <div class="w-full border-b border-gray-300"></div>
+                                    </div>
+                                    <div class="relative flex justify-left">
+                                <div class="tracking-widest bg-white pl-0 pr-1 custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="select-all">
-                                    <label class="custom-control-label" for="select-all">Give All Permissions</label>
+                                    <label class="font-semibold custom-control-label text-sm uppercase text-dark" for="select-all">Give All Permissions</label>
                                 </div>
-                            </div>
+
+                                    </div>
+                                </div>
 
                             <div class="row">
                                 <!-- Dashboard Permissions -->
@@ -200,6 +206,146 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+<div class="w-full px-2 flex flex-row grid grid-cols-2 gap-2">
+        <div class="card h-auto border-0 shadow">
+            <div class="card-header text-gray-500 font-semibold">
+                {{ Label_case('Iventory') }}
+            </div>
+
+
+   <div class="px-3 py-2 grid grid-cols-2 gap-1 mb-2">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_adjustments" name="permissions[]"
+                value="access_adjustments" {{ old('access_adjustments') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_adjustments">Access</label>
+            </div>
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_print_barcode" name="permissions[]"
+                value="access_print_barcode" {{ old('access_print_barcode') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_print_barcode">{{ Label_case('print_barcode') }}</label>
+            </div>
+
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input"
+            id="access_sortir" name="permissions[]"
+            value="access_sortir" {{ old('access_sortir') ? 'checked' : '' }}>
+            <label class="custom-control-label" for="access_sortir">{{ Label_case('sortir') }}</label>
+        </div>
+
+
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input"
+            id="access_cuci" name="permissions[]"
+            value="access_cuci" {{ old('access_cuci') ? 'checked' : '' }}>
+            <label class="custom-control-label" for="access_cuci">{{ Label_case('cuci') }}</label>
+        </div>
+
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input"
+            id="access_retur" name="permissions[]"
+            value="access_retur"{{ old('access_retur') ? 'checked' : '' }}>
+            <label class="custom-control-label" for="access_retur">{{ Label_case('retur') }}</label>
+        </div>
+
+
+
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input"
+               id="access_hancur_barang" name="permissions[]"
+               value="access_hancur_barang" {{ old('access_hancur_barang') ? 'checked' : '' }}>
+        <label class="custom-control-label" for="access_hancur_barang">{{ Label_case('hancur_barang') }}</label>
+      </div>
+
+
+
+
+  <div class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input"
+           id="access_history_transfer" name="permissions[]"
+           value="access_history_transfer"{{ old('access_history_transfer') ? 'checked' : '' }}>
+    <label class="custom-control-label" for="access_history_transfer">{{ Label_case('history_transfer') }}</label>
+  </div>
+
+<div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input"
+               id="access_rfid" name="permissions[]"
+               value="access_rfid" {{ old('access_rfid') ? 'checked' : '' }}>
+        <label class="custom-control-label" for="access_rfid">RFID</label>
+      </div>
+
+
+<div class="custom-control custom-switch">
+<input type="checkbox" class="custom-control-input"
+       id="access_approve_product" name="permissions[]"
+       value="access_approve_product" {{ old('access_approve_product') ? 'checked' : '' }}>
+<label class="custom-control-label" for="access_approve_product">Approve Products</label>
+</div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+        <div class="card h-auto border-0 shadow">
+            <div class="card-header text-gray-500 font-semibold">
+                {{ Label_case('Products Transfer') }}
+            </div>
+
+
+   <div class="px-3 py-4 grid grid-cols-2 gap-3 mb-2">
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_product_transfer" name="permissions[]"
+                value="access_product_transfer" {{ old('access_product_transfer') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_product_transfer">{{ Label_case('access_product_transfer') }}</label>
+            </div>
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_product_transfer" name="permissions[]"
+                value="show_product_transfer" {{ old('show_product_transfer') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_product_transfer">{{ Label_case('show_product_transfer') }}</label>
+            </div>
+
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input"
+            id="edit_product_transfer" name="permissions[]"
+            value="edit_product_transfer" {{ old('edit_product_transfer') ? 'checked' : '' }}>
+            <label class="custom-control-label" for="edit_product_transfer">{{ Label_case('edit_product_transfer') }}</label>
+        </div>
+
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input"
+            id="delete_product_transfer" name="permissions[]"
+            value="delete_product_transfer" {{ old('delete_product_transfer') ? 'checked' : '' }}>
+            <label class="custom-control-label" for="delete_product_transfer">{{ Label_case('delete_product_transfer') }}</label>
+        </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+
+
+
 
                                 <!-- Adjustments Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
