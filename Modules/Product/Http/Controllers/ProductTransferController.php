@@ -44,8 +44,8 @@ public function __construct()
         // module model name, path
         $this->module_model = "Modules\Product\Entities\Product";
         $this->module_item = "Modules\Product\Entities\ProductItem";
-
-
+        //$this->middleware(['permission:access_product_transfer'])->only('show', 'view');
+        //$this->middleware(['permission:access_approve_product'])->only('ApproveProducts');
     }
 
 
@@ -585,6 +585,8 @@ public function saveAjax(Request $request)
 
 
 //approve produts  masih error
+// dari transfer ke gudang utama
+
 public function ApproveProducts(Request $request, $id)
     {
         abort_if(Gate::denies('access_approve_product'), 403);
@@ -600,29 +602,45 @@ public function ApproveProducts(Request $request, $id)
         $validator = \Validator::make($request->all(),[
              'status' => 'required',
 
-
         ]);
 
        if (!$validator->passes()) {
           return response()->json(['error'=>$validator->errors()]);
         }
 
-        $input = $request->all();
+        //$input = $request->all();
+        //dd($input);
         $input = $request->except('_token');
         $input['status'] = $input['status'];
-        $$module_name_singular->update($input);
-        //Tracking Approve Products
-         TrackingProduct::create([
-            'location_id' =>  $tracking->location_id,
-            'product_id'  =>  $id,
-            'username'    =>  auth()->user()->name,
-            'user_id'     =>  auth()->user()->id,
-            'status'      =>   2,
-            'note'  =>   'Barang di Approve  oleh '.auth()->user()->name.' ',
+        $input['note']   = $input['note'];
+        $input['location_id']   = $input['location_id'];
+        $$module_name_singular->update([
+            'status'      =>  $input['status'],
           ]);
 
+        $status   = pStatus($input['status']);
+          $prodloc = ProductLocation::where('product_id',$$module_name_singular->id)->where('location_id',$request->location_id)->first();
 
-        return response()->json(['success'=>'  '.$module_title.' Sukses di Approve.']);
+                if(empty($prodloc)){
+                        $prodloc = new ProductLocation;
+                        $prodloc->product_id = $$module_name_singular->id;
+                        $prodloc->location_id = $input['location_id'];
+                        $prodloc->save();
+                               }else{
+                        $prodloc->location_id = $input['location_id'];
+                        $prodloc->save();
+                    }
+
+            //Tracking Approve Products
+             TrackingProduct::create([
+                'location_id' =>  $input['location_id'],
+                'product_id'  =>  $id,
+                'username'    =>  auth()->user()->name,
+                'user_id'     =>  auth()->user()->id,
+                'status'      =>   $input['status'],
+                'note'  =>   'Barang di '.$status.'  oleh '.auth()->user()->name.' '.$input['note'].' ',
+              ]);
+            return response()->json(['success'=>'  '.$module_title.' Sukses di Approve.']);
 
  }
 

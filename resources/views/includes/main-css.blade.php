@@ -127,5 +127,10 @@ body {
     background-color: #8d5c16 !important;
 }
 
+.small {
+    font-size:0.6rem !important;
+
+}
+
 
 </style>

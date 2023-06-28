@@ -214,65 +214,7 @@ $(document).on('click', '#Tambah, #Edit,#Approve', function(e){
 
 })(jQuery);
 </script>
-<script language="JavaScript">
-        function configure(){
-            Webcam.set({
-                width: 340,
-                height: 230,
-                autoplay: false,
-                image_format: 'jpeg',
-                jpeg_quality: 90,
-                force_flash: false
-            });
-            Webcam.attach( '#camera' );
-            $("#camera").attr("style", "display:block")
-            $('#hasilGambar').addClass('d-none');
-            $('#Start').addClass('d-none');
-            $('#snap').removeClass('d-none');
-        }
-        // preload shutter audio clip
-        var shutter = new Audio();
-        shutter.autoplay = false;
-        shutter.src = navigator.userAgent.match(/Firefox/) ? asset('js/webcamjs/shutter.ogg') : asset('js/webcamjs/shutter.mp3');
 
-        function take_snapshot() {
-            // play sound effect
-            shutter.play();
-           // take snapshot and get image data
-            Webcam.snap( function(data_uri) {
-                $(".image-tag").val(data_uri);
-                $("#camera").attr("style", "display:none")
-                $('#hasilGambar').removeClass('d-none').delay(5000);
-                document.getElementById('hasilGambar').innerHTML =
-                    '<img class="border-2 border-dashed border-yellow-600 rounded-xl" id="imageprev" src="'+data_uri+'"/><span class="absolute bottom-1 text-white right-4">Capture Sukses..!! </span>';
-                $('#snap').addClass('d-none');
-                $('#Start').removeClass('d-none');
-
-
-            });
-           Webcam.reset();
-        }
-
-        function reset() {
-             Webcam.reset();
-                 alert('off');
-        }
-
-        function saveSnap(){
-            // Get base64 value from <img id='imageprev'> source
-            var base64image =  document.getElementById("imageprev").src;
-
-             Webcam.upload( base64image, 'upload.php', function(code, text) {
-                 console.log('Save successfully');
-                 //console.log(text);
-            });
-
-        }
-
-
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-<script src="{{  asset('js/jquery.min.js') }}"></script>
 
 <script>
     $(document).ready(function() {

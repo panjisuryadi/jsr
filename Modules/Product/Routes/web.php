@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
 
       Route::get("product-transfer/approve/{id}", ['as' => "products.transfer.approve", 'uses' => "ProductTransferController@approveModal"]);
 
-      Route::post("product-transfer/approve-barang", ['as' => "products.transfer.approvebarang", 'uses' => "ProductTransferController@ApproveProducts"]);
+      Route::patch("product-transfer/approve-barang/{id}", ['as' => "products.transfer.approvebarang", 'uses' => "ProductTransferController@ApproveProducts"]);
 
 
 

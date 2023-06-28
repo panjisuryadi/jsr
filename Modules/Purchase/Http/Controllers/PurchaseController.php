@@ -456,7 +456,6 @@ public function index_data_type(Request $request)
 
 
                $locationname = Locations::where('id',$request->location_id)->first();
-
                   //add history purchases
                  HistoryPurchases::create([
                                 'purchase_id' => $purchase->id,
@@ -464,7 +463,7 @@ public function index_data_type(Request $request)
                                 'qty'         =>   $cart_item->qty,
                                 'username'    =>   auth()->user()->name,
                                 'user_id'     =>   auth()->user()->id,
-                                'status'      =>   1,
+                                'status'      =>   2,
                             ]);
                    //Tracking Produk ke 2
                    TrackingProduct::create([
@@ -472,16 +471,16 @@ public function index_data_type(Request $request)
                     'product_id'  =>  $cart_item->id,
                     'username'    =>  auth()->user()->name,
                     'user_id'     =>  auth()->user()->id,
-                    'status'      =>   1,
+                    'status'      =>   2,
                     'note'  =>  'Memindahkan Barang Ke Lokasi '.$locationname->name.' dibuat oleh '.auth()->user()->name.' ',
                   ]);
 
 
                 if ($purchase->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
-                 //dd($purchase->status);
                     $product->update([
-                        'product_quantity' => $product->product_quantity + $cart_item->qty
+                        'product_quantity' => $product->product_quantity + $cart_item->qty,
+                        'status' => 2
                     ]);
 
                   //Update lokasi Baki
