@@ -970,9 +970,13 @@ public function saveAjax(Request $request)
 
     public function destroy(Product $product) {
         abort_if(Gate::denies('delete_products'), 403);
+        // $purchase = Purchase::whereHas('detail', function($q){
+        //     $q->where('product_id',168);
+        // })->first();
+        // dd($purchase);
+
+        //$purchase->delete();
         $product->delete();
-        // $purchase = Purchase::where('product_id',$product)->first();
-        // $purchase->delete();
         $tracking = TrackingProduct::where('product_id',$product)->first();
         if ($tracking) {
          $tracking->delete();

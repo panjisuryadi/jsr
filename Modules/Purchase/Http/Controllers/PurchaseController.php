@@ -386,6 +386,7 @@ public function index_data_type(Request $request)
     public function savetransferProduct(StorePurchaseRequest $request) {
 
         $params = $request->all();
+        //dd($params);
 
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
@@ -691,7 +692,7 @@ public function index_data_type(Request $request)
     public function store(StorePurchaseRequest $request) {
 
         $params = $request->all();
-       // dd($params);
+        //dd($params);
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -721,7 +722,7 @@ public function index_data_type(Request $request)
 
            }
 
-        $purchase = Purchase::create([
+          $purchase = Purchase::create([
                 'date' => $request->date,
                 'kode_sales' => $request->kode_sales,
                 'supplier_id' => $supplier_name,
@@ -773,7 +774,7 @@ public function index_data_type(Request $request)
                     'product_id'  =>  $cart_item->id,
                     'username'    =>  auth()->user()->name,
                     'user_id'     =>  auth()->user()->id,
-                    'status'      =>   1,
+                    'status'      =>   0,
                     'note'  =>  'Purchase dari Toko '.$nama_supplier.' diterima oleh '.auth()->user()->name.' ',
                   ]);
 
