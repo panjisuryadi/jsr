@@ -36,6 +36,8 @@
                 <tbody>
                     @if($cart_items->isNotEmpty())
                         @foreach($cart_items as $cart_item)
+                    {{--    {{ $cart_item }}
+ --}}
                             <tr>
                                 <td class="align-middle">
                                     {{ $cart_item->name }} <br>
@@ -92,15 +94,7 @@
                         <th>Order Tax ({{ $global_tax }}%)</th>
                         <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
                     </tr>
-                   {{--  <tr>
-                        <th>Discount ({{ $global_discount }}%)</th>
-                        <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
-                    </tr> --}}
-                 {{--    <tr>
-                        <th>Shipping</th>
-                        <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
-                        <td>(+) {{ format_currency($shipping) }}</td>
-                    </tr> --}}
+
                     <tr>
                         <th>Grand Total</th>
                         @php

@@ -441,11 +441,11 @@ public function index_data_type(Request $request)
 
                 PurchaseDetail::create([
                     'purchase_id' => $purchase->id,
-                    'product_id' => $cart_item->id,
+                    'product_id' =>  $cart_item->id,
                     'product_name' => $cart_item->name,
                     'product_code' => $cart_item->options->code,
-                    'quantity' => $cart_item->qty,
-                    'price' => $cart_item->price * 100,
+                    'quantity'      => $cart_item->qty,
+                    'price'         => $cart_item->price * 100,
                     'unit_price' => $cart_item->options->unit_price * 100,
                     'sub_total' => $cart_item->options->sub_total * 100,
                     'product_discount_amount' => $cart_item->options->product_discount * 100,
@@ -455,7 +455,7 @@ public function index_data_type(Request $request)
                 ]);
 
 
-               $locationname = Locations::where('id',$request->location_id)->first();
+                 $locationname = Locations::where('id',$request->location_id)->first();
                   //add history purchases
                  HistoryPurchases::create([
                                 'purchase_id' => $purchase->id,

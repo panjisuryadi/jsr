@@ -12,6 +12,8 @@ use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
 use Modules\Product\Entities\ProductLocation;
+use Modules\Product\Entities\TrackingProduct;
+use Modules\Purchase\Entities\Purchase;
 use Modules\Locations\Entities\Locations;
 use Modules\Gudang\Models\Gudang;
 use Modules\Product\Http\Requests\StoreProductRequest;
@@ -446,23 +448,6 @@ public function index_data_rfid(Request $request)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //data sortir
 
 public function index_data_sortir(Request $request)
@@ -834,28 +819,28 @@ public function saveAjax(Request $request)
     }
 
 
- public function show_rfid(Product $product) {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model =$this->module_model;
-        $module_item = $this->module_item;
-        $code = mt_rand(10000000, 99999999);
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'Store';
-        abort_if(Gate::denies('show_products'), 403);
-        return view('product::products.popup.show_rfid',
-            compact('product','module_title',
-                            'module_path',
-                            'module_name',
-                            'module_icon',
-                            'module_model',
-                            'module_item',
-                            'code',
-                            'module_name')
-                             );
-    }
+     public function show_rfid(Product $product) {
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model =$this->module_model;
+            $module_item = $this->module_item;
+            $code = mt_rand(10000000, 99999999);
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Store';
+            abort_if(Gate::denies('show_products'), 403);
+            return view('product::products.popup.show_rfid',
+                compact('product','module_title',
+                                'module_path',
+                                'module_name',
+                                'module_icon',
+                                'module_model',
+                                'module_item',
+                                'code',
+                                'module_name')
+                                 );
+        }
 
 
 
@@ -938,9 +923,6 @@ public function saveAjax(Request $request)
 
 
 
-
-
-
     public function edit(Product $product) {
         abort_if(Gate::denies('edit_products'), 403);
 
@@ -988,10 +970,19 @@ public function saveAjax(Request $request)
 
     public function destroy(Product $product) {
         abort_if(Gate::denies('delete_products'), 403);
-
         $product->delete();
+        // $purchase = Purchase::where('product_id',$product)->first();
+        // $purchase->delete();
+        $tracking = TrackingProduct::where('product_id',$product)->first();
+        if ($tracking) {
+         $tracking->delete();
+        }
+
 
         toast('Product Deleted!', 'warning');
         return redirect()->route('products.index');
     }
+
+
+
 }

@@ -226,7 +226,7 @@ public function index_data(Request $request)
                         <div>
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                             ' . $data->category->category_name . '</div>
-                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name ?? 'produk tidak ada' . '</h3>
                              <div style="font-size:0.6rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
                             ' . $data->product_code . '</div>
                         </div>
@@ -618,9 +618,8 @@ public function ApproveProducts(Request $request, $id)
             'status'      =>  $input['status'],
           ]);
 
-        $status   = pStatus($input['status']);
+          $status   = pStatus($input['status']);
           $prodloc = ProductLocation::where('product_id',$$module_name_singular->id)->where('location_id',$request->location_id)->first();
-
                 if(empty($prodloc)){
                         $prodloc = new ProductLocation;
                         $prodloc->product_id = $$module_name_singular->id;
@@ -640,6 +639,7 @@ public function ApproveProducts(Request $request, $id)
                 'status'      =>   $input['status'],
                 'note'  =>   'Barang di '.$status.'  oleh '.auth()->user()->name.' '.$input['note'].' ',
               ]);
+
             return response()->json(['success'=>'  '.$module_title.' Sukses di Approve.']);
 
  }

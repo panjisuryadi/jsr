@@ -155,7 +155,7 @@
 
 
 
-                            <livewire:product-cart :cartInstance="'purchase'"/>
+ <livewire:product-cart :cartInstance="'purchase'"/>
 
 
 <div class="flex flex-row grid grid-cols-3 gap-2">
