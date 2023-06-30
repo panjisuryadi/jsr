@@ -1,6 +1,7 @@
 <div class="flex px-3 py-4 flex-wrap -m-2 text-center no-underline">
-    @foreach(\Modules\Product\Entities\Category::all() as $category)
 
+
+    @foreach(\Modules\Product\Entities\Category::all() as $category)
     <div  class="no-underline cursor-pointer p-2 md:w-1/4 sm:w-1/2 w-full">
            <a class="w-full no-underline hover:no-underline" id="openModalKategori"
                 href="{{ route('products.add_products_modal_categories',$category->id) }}" >

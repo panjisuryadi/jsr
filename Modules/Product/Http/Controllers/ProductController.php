@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Modules\Product\Entities\Category;
+use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
 use Modules\Product\Entities\ProductLocation;
@@ -835,10 +836,12 @@ public function index_data_reparasi(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
+        $listcategories = KategoriProduk::with('category')->get();
         abort_if(Gate::denies('create_products'), 403);
          return view(''.$module_path.'::'.$module_name.'.modal.index',
            compact('module_name',
                     'module_title',
+                    'listcategories',
                     'module_icon', 'module_model'));
     }
 

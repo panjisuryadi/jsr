@@ -81,6 +81,26 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
+                          ->editColumn('ct', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->ct . '
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('hallmark', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->hallmark . '
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('kadar', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->kadar . '
+                                    </div>';
+                                return $tb;
+                            })
+
+
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -91,7 +111,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['updated_at', 'ct','kadar','hallmark', 'action', 'name'])
                         ->make(true);
                      }
 
@@ -149,10 +169,13 @@ public function store(Request $request)
           return response()->json(['error'=>$validator->errors()]);
         }
 
-        $input = $request->all();
-        $input = $request->except('_token');
-        $input['code'] = $input['code'];
-        $input['name'] = $input['name'];
+        $params = $request->all();
+        $params = $request->except('_token');
+        $params['code'] = $params['code'];
+        $params['name'] = $params['name'];
+        $params['ct'] = $params['ct'];
+        $params['hallmark'] = $params['hallmark'];
+        $params['kadar'] = $params['kadar'];
         $$module_name_singular = $module_model::create($input);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
@@ -257,6 +280,9 @@ public function update(Request $request, $id)
         $params = $request->except('_token');
         $params['code'] = $params['code'];
         $params['name'] = $params['name'];
+        $params['ct'] = $params['ct'];
+        $params['hallmark'] = $params['hallmark'];
+        $params['kadar'] = $params['kadar'];
         $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

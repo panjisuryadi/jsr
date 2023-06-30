@@ -41,24 +41,63 @@
                                 </span>
 
                             </div>
+                            </div>
+  <div class="flex flex-row grid grid-cols-3 gap-4">
+                            <div class="form-group">
+                                <?php
+                                $field_name = 'ct';
+                                $field_lable = label_case('Ct');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        value="{{$detail->ct }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
 
+                            </div>
+                            <div class="form-group">
+                                <?php
+                                $field_name = 'hallmark';
+                                $field_lable = label_case('hallmark');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        value="{{$detail->hallmark }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
 
+                            </div>
+                             <div class="form-group">
+                                <?php
+                                $field_name = 'kadar';
+                                $field_lable = label_case($field_name);
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" type="number"
+                        name="{{ $field_name }}"
+                        step=".01"
+                        id="{{ $field_name }}"
+                        value="{{$detail->kadar }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
 
-
-    {{--  <div class="form-group">
-                                        <label for="kategori_produk_id">Main Category <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
-                                            @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $main)
-                                                <option {{ $main->id == $category->kategori_produk_id ? 'selected' : '' }} value="{{ $main->id }}">{{ $main->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>--}}
-
-
-
-
-
-
+                            </div>
 
 
 

@@ -33,12 +33,14 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th class="text-lef">{{ __('Name') }}</th>
+         <th style="width: 10%!important;" class="text-center">{{ __('Code') }}</th>
+         <th class="text-lef">{{ __('Name') }}</th>
 
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
-                                    </th>
+        <th style="width: 10%!important;" class="text-center">{{ __('ct') }} </th>
+        <th style="width: 10%!important;" class="text-center">{{ __('hallmark') }} </th>
+        <th style="width: 10%!important;" class="text-center">{{ __('kadar') }} </th>
+
+
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
@@ -102,7 +104,10 @@
 
                 {data: 'code', name: 'code'},
                 {data: 'name', name: 'name'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'ct', name: 'ct'},
+                {data: 'hallmark', name: 'hallmark'},
+                {data: 'kadar', name: 'kadar'},
+
 
                 {
                     data: 'action',

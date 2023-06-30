@@ -10,15 +10,6 @@ class JenisPerhiasan extends Model
 {
     use HasFactory;
     protected $table = 'jenisperhiasans';
-    // protected $fillable = [
-    //     'name',
-    //    // 'image',
-    //    // 'code',
-    //     'description',
-    //     'start_date',
-    //     'end_date',
-
-    //  ];
     protected $guarded = [];
 
   // public function products() {
