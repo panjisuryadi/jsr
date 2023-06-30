@@ -754,7 +754,23 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-          // Submenu: RFID
+          // Submenu: Gudang Utama
+            $products->add(
+                '<i class="c-sidebar-nav-icon bi bi-credit-card-2-back mb-2"></i>'.__('Gudang Utama').'',
+             [
+                'route' => 'products.gudang.utama',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'rfid*',
+                'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2 pb-2',
+            ]);
+
+            // Submenu: RFID
             $products->add(
                 '<i class="c-sidebar-nav-icon bi bi-credit-card-2-back mb-2"></i>'.__('RFID').'',
              [
@@ -769,6 +785,9 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
+
+
+
           // Submenu: Reparasi
             $products->add(
                 '<i class="c-sidebar-nav-icon bi bi-tools mb-2"></i>'.__('Reparasi').'',

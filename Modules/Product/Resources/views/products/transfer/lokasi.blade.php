@@ -1,9 +1,10 @@
+ <div class="justify-center text-center items-center">
 <?php
   $location = $data->productlocation;
    ;?>
-<ul>
+<ul class="justify-center text-center items-center">
     @forelse($location as $item)
-  <li class="text-body-color mb-1 font-semibold flex text-xs" style="font-size: 0.8rem !important;">
+  <li class="justify-center text-center items-center text-body-color mb-1 font-semibold flex text-xs" style="font-size: 0.8rem !important;">
 {{--     <span class="text-primary mr-2 rounded-full text-base">
     >
     </span> --}}
@@ -15,3 +16,4 @@
 @endforelse
 
 </ul>
+</div>

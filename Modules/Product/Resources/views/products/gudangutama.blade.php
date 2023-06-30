@@ -29,7 +29,7 @@ display: inline-block;
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div class="font-semibold text-lg">
-                          <i class="bi bi-plus"></i>  Sortir Products
+                          <i class="bi bi-plus"></i>  List Gudang Utama
                             </div>
 
                         <div id="buttons"></div>
@@ -92,7 +92,7 @@ display: inline-block;
         }
         ],
         "sPaginationType": "simple_numbers",
-        ajax: '{{ route("$module_name.ajax_sortir") }}',
+        ajax: '{{ route("$module_name.ajax_gudang_utama") }}',
         dom: 'Blfrtip',
         buttons: [
         'excel',

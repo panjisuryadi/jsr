@@ -6,7 +6,7 @@
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('product-transfer.index') }}">Products Transfer</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item active">Tracking Products</li>
     </ol>
 @endsection
 
@@ -22,7 +22,7 @@
 
                     <div class="card-body">
 
-                            <ol class="relative border-l border-green-400 dark:border-green-700">
+                            <ol class="relative border-l mt-4 border-green-400 dark:border-green-700">
                             @forelse ($tracking as $row)
                             <li class="mb-10 ml-4">
                                 <div class="absolute w-3 h-3 bg-green-400 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
@@ -31,11 +31,11 @@
                                 <i class="bi bi-geo-alt"></i>{{ @$row->location->name }}
                                 | <span class="text-gray-500 text-xs font-normal">{{ @$row->products->product_name }}
                                 | <span class="text-gray-500 text-xs font-normal">{{ @$row->user->name }}</span>
-                                | {!!statusProduk($row->status) !!}
+                                | {!!statusTrackingProduk($row->status) !!}
                                 </span>
                                </h3>
-                                <p class="mb-4 text-xs font-normal text-gray-500 dark:text-gray-400">
-                                {{ @$row->note }}</p>
+                                <div class="mb-4 text-xs font-normal text-gray-500 dark:text-gray-400">
+                                {!!@$row->note !!}</div>
                             </li>
                             @empty
                             <p>No Data</p>

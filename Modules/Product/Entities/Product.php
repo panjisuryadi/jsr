@@ -29,6 +29,11 @@ class Product extends Model implements HasMedia
     }
 
 
+   public function product_location() {
+        return $this->hasMany(ProductLocation::class, 'product_id', 'id');
+    }
+
+
     public function category() {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
@@ -72,6 +77,23 @@ class Product extends Model implements HasMedia
     {
         $query->where('status', 0);
     }
+
+
+     public function scopeSortir($query)
+        {
+          $query->where('status', 2);
+
+        }
+
+
+
+ public function scopeApprove($query)
+    {
+        $query->where('status', 3);
+    }
+
+
+
 
     public static function generateCode()
         {

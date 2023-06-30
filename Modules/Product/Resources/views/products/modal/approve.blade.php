@@ -3,6 +3,8 @@
 <form id="FormEdit" action="{{ route('products.transfer.approvebarang', $detail->id) }}" method="POST">
 	@csrf
 	@method('patch')
+
+
 	<div class="flex flex-row grid grid-cols-1 gap-4">
 		<div class="flex px-3 items-center py-2 rounded rounded-lg border border-gray-500">
 			<img class="w-10 h-10 rounded-full mr-2" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Avatar of Writer">
@@ -19,7 +21,7 @@
 			$invalid = $errors->has($field_name) ? ' is-invalid' : '';
 			$required = "required";
 			?>
-			<label for="{{ $field_name }}">@lang('Status') <span class="text-danger">*</span></label>
+			<label class="mb-0" for="{{ $field_name }}">@lang('Status') <span class="text-danger">*</span></label>
 			<select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" required>
 				<option value="" selected disabled>@lang('Status')</option>
 				<option value="3">Approved</option>
@@ -29,20 +31,22 @@
 				<span class="text-danger error-text {{ $field_name }}_err"></span>
 			</div>
 		</div>
-
+{{--
 	<div class="form-group mb-0">
         @php
         $locations = \Modules\Locations\Entities\Locations::where('name','LIKE','%Utama%')->get();
         @endphp
-        <label for="">Location</label>
+
+
+        <label class="mb-0" for="">Lokasi</label>
         <select name="location_id" class="form-control select2">
             @foreach ($locations as $loc)
             <option value="{{ $loc->id }}" selected>{{ $loc->name }}</option>
             @endforeach
         </select>
-    </div>
+    </div>  --}}
 		<div class="form-group mb-2">
-			<label for="status">@lang('Note') <span class="text-danger">(Optional)</span></label>
+			<label class="mb-0" for="status">@lang('Note') <span class="text-danger">(Optional)</span></label>
 			<textarea name="note" id="note" rows="2" class="form-control"></textarea>
 		</div>
 	</div>

@@ -32,6 +32,8 @@ display: inline-block;
                            {{--  <a href="{{ route('products.create') }}" class="btn btn-primary">
                                 Add Product <i class="bi bi-plus"></i>
                             </a> --}}
+
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Iventory </span>
                         </div>
                         <div id="buttons"></div>
                     </div>
@@ -43,8 +45,16 @@ display: inline-block;
                                     <th style="width: 9%!important;">{{ Label_case('image') }}</th>
                                     <th>{{ Label_case('product_name') }}</th>
                                     <th>{{ Label_case('price') }}</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Status') }}</th>
+                                    <th style="width: 12%!important;" class="text-center">{{ Label_case('Status') }}</th>
+
+
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
+
+                      <th style="width: 10%!important;" class="text-center">{{ Label_case('Tracking') }}</th>
+
+
+
+
                                     <th style="width: 14%!important;" class="text-center">
                                         Action
                                     </th>
@@ -123,6 +133,9 @@ display: inline-block;
         }, {
             data: 'updated_at',
             name: 'updated_at'
+        },{
+            data: 'tracking',
+            name: 'tracking'
         },
         {
             data: 'action',

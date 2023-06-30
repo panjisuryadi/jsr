@@ -19,69 +19,45 @@
 
 </style>
 
-  <div class="px-3">
+
   <x-library.alert />
-  <form id="FormEdit" action="{{ route(''.$module_name.'.sortir_update', $product) }}" method="POST">
+  <form class="px-3" id="FormEdit" action="{{ route(''.$module_name.'.sortir_update', $product) }}" method="POST">
                             @csrf
                             @method('patch')
-    <div class="form-group">
-                        @php
-                        //$bb = \Modules\Locations\Entities\Locations::where('parent_id',null)->get();
-                        //$bb = \Modules\Locations\Entities\Locations::where('parent_id',9)->get();
-                        $bb = \Modules\Locations\Entities\Locations::where('parent_id',5)->get();
-                        @endphp
-                        <label for="location_id">Kondisi</label>
+<div class="flex flex-row grid grid-cols-1 gap-4">
+<div class="flex px-3 items-center py-2 rounded rounded-lg border border-gray-500">
+            <img class="w-20 h-20 rounded-full mr-2" src="{{ $product->getFirstMediaUrl('images') }}" alt="Avatar of Writer">
+            <div class="text-sm">
+                <p class="text-lg text-gray-900 font-semibold leading-none">{{ $product->product_name }}</p>
+                <p class="text-gray-400 font-semibold">{{ $product->product_code }}</p>
+                <p class="text-gray-600">{{ format_currency($product->product_cost) }}</p>
+                <p class="text-gray-600">{!!statusTrackingProduk($product->status) !!}</p>
+            </div>
+        </div>
+
+
+
+
+    <div class="form-group mb-0">
+                    @php
+                    $sortir = \Modules\Locations\Entities\Locations::where('name','LIKE','%Pusat%')->first();
+                    $bb = \Modules\Locations\Entities\Locations::where('parent_id',$sortir->id)->get();
+                     @endphp
+                        <label class="mb-0" for="location_id">Lokasi</label>
                         <select name="location_id" class="form-control select2">
                             @foreach ($bb as $b)
                             <option value="{{ $b->id }}" selected>{{ $b->name }}</option>
                             @endforeach
                         </select>
                     </div>
-             <div class="flex flex-row grid grid-cols-2 gap-4" >
 
-
- <div class="form-group">
-   @forelse($product->getMedia('images') as $media)
-                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="h-100 img-fluid img-thumbnail mb-2">
-                        @empty
-                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid img-thumbnail mb-2 h-100">
-                        @endforelse
-</div>
-                        <div class="form-group">
-
- <table class="w-full table table-bordered table-striped p-1 mb-0">
-                                <tr>
-                                    <th>Product Code</th>
-                                    <td>{{ $product->product_code }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Barcode Symbology</th>
-                                    <td>{{ $product->product_barcode_symbology }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Name</th>
-                                    <td>{{ $product->product_name }}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Cost</th>
-                                    <td>{{ format_currency($product->product_cost) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Price</th>
-                                    <td>{{ format_currency($product->product_price) }}</td>
-                                </tr>
-
-
-                            </table>
-
-                            </div>
-                    </div>
-
-            </form>
-
+    <div class="form-group mb-2">
+            <label class="mb-0" for="status">@lang('Note') <span class="text-danger">(Optional)</span></label>
+            <textarea name="note" id="note" rows="2" class="form-control"></textarea>
+        </div>
 
 </div>
+ </form>
 
 <script>
 jQuery.noConflict();
@@ -147,9 +123,6 @@ $(document).ready(function(){
     });
 
    setTimeout(function() { $('input[name="rfid"]').focus() }, 1000);
-
-
-
       $('#rfid').on('input', function() {
           var kolom = $(this).val();
           var rfid = kolom.length;
@@ -158,10 +131,7 @@ $(document).ready(function(){
                 }
         });
 
-
-
-
-});
+    });
 })(jQuery);
 </script>
 

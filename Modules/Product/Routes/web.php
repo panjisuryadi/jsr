@@ -25,9 +25,16 @@ Route::group(['middleware' => 'auth'], function () {
 
      Route::get("products/list-rfid", ['as' => "products.rfid", 'uses' => "ProductController@listRfid"]);
 
-       Route::get("products/list-sortir", ['as' => "products.sortir", 'uses' => "ProductController@sortir"]);
+     Route::get("products/list-sortir", ['as' => "products.sortir", 'uses' => "ProductController@sortir"]);
+     Route::get("products/ajax-list-sortir", ['as' => "products.ajax_sortir", 'uses' => "ProductController@index_data_sortir"]);
 
-  Route::get("products/ajax-list-sortir", ['as' => "products.ajax_sortir", 'uses' => "ProductController@index_data_sortir"]);
+  Route::get("products/gudang-utama", ['as' => "products.gudang.utama", 'uses' => "ProductController@index_gudang_utama"]);
+
+
+
+     Route::get("products/ajax-list-gudang-utama", ['as' => "products.ajax_gudang_utama", 'uses' => "ProductController@index_data_gudang_utama"]);
+
+     Route::get("products/ajax-list-reparasi", ['as' => "products.ajax_reparasi", 'uses' => "ProductController@index_data_reparasi"]);
 
 
 

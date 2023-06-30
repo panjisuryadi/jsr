@@ -211,6 +211,8 @@ if (!function_exists('make_reference_id')) {
 
 
 
+
+
 if (!function_exists('statusProduk')) {
     /**
      * Prepare the Column Name for Lables.
@@ -220,15 +222,70 @@ if (!function_exists('statusProduk')) {
         // status barang baru masuk
         $return_text = '';
         if ($required == 0) {
-
-             $return_text = '<span class="rounded-lg bg-blue-400 p-1 uppercase items-center text-center text-white">Purchase</span>';
+             $return_text = '<div class="rounded-lg bg-blue-400 px-2 py-1 uppercase items-center text-center text-white small">Purchase</div>';
 
         }
 
         //status Barang Aktif
         elseif ($required == 1){
 
-             $return_text = '<span class="rounded-lg bg-blue-400 p-1 uppercase items-center text-center text-white small">Aktif</span>';
+             $return_text = '<div class="rounded-lg bg-blue-400 px-2 py-1 uppercase items-center text-center text-white small">Aktif</div>';
+
+
+
+        }
+        //status belum di approve
+        elseif ($required == 2){
+             $return_text = '<div class="rounded-lg bg-yellow-400 px-2 py-1 uppercase items-center text-center text-white text-xs small">Need Approve</div>';
+
+        }
+        //status barang di Approve
+        elseif ($required == 3){
+
+             $return_text = '<div class="rounded-lg bg-green-400 px-2 py-1 uppercase items-center text-center text-white small">Approve</div>';
+
+        }
+
+        //status barang Rejected
+        elseif ($required == 4){
+
+             $return_text = '<div class="rounded-lg bg-red-500 px-2 py-1 uppercase items-center text-center text-white small">Rejected</div>';
+
+        }
+        return $return_text;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (!function_exists('statusTrackingProduk')) {
+    /**
+     * Prepare the Column Name for Lables.
+     */
+    function statusTrackingProduk($required)
+    {
+        // status barang baru masuk
+        $return_text = '';
+        if ($required == 0) {
+
+             $return_text = '<span class="rounded-lg bg-blue-400 px-1 uppercase items-center text-center text-white small">Purchase</span>';
+
+        }
+
+        //status Barang Aktif
+        elseif ($required == 1){
+
+             $return_text = '<span class="rounded-lg bg-blue-400 px-1 uppercase items-center text-center text-white small">Aktif</span>';
 
 
 
@@ -236,7 +293,7 @@ if (!function_exists('statusProduk')) {
         //status belum di approve
         elseif ($required == 2){
 
-             $return_text = '<span class="rounded-lg bg-yellow-400 p-1 uppercase items-center text-center text-white text-xs small">Need Approve</span>';
+             $return_text = '<span class="rounded-lg bg-yellow-400 px-1 uppercase items-center text-center text-white text-xs small">Need Approve</span>';
 
 
 
@@ -244,16 +301,26 @@ if (!function_exists('statusProduk')) {
         //status barang di Approve
         elseif ($required == 3){
 
-             $return_text = '<span class="rounded-lg bg-green-400 p-1 uppercase items-center text-center text-white small">Approve</span>';
+             $return_text = '<span class="rounded-lg bg-green-400 px-1 uppercase items-center text-center text-white small">Approve</span>';
 
         }
 
         //status barang Rejected
         elseif ($required == 4){
 
-             $return_text = '<span class="rounded-lg bg-red-500 p-1 uppercase items-center text-center text-white small">Rejected</span>';
+             $return_text = '<span class="rounded-lg bg-red-500 px-1 uppercase items-center text-center text-white small">Rejected</span>';
 
         }
+
+        //status barang Rejected
+        elseif ($required == 5){
+
+             $return_text = '<span class="rounded-lg bg-yellow-900 px-1 uppercase items-center text-center text-white small">Reparasi</span>';
+
+        }
+
+
+
         return $return_text;
     }
 }

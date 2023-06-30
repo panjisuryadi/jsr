@@ -81,7 +81,6 @@ display: inline-block;
             <th>{{ Label_case('price') }}</th>
             <th style="width: 14%!important;" class="text-center">{{ Label_case('Status') }}</th>
             <th style="width: 11%!important;" class="text-center lokasi">{{ Label_case('Lokasi') }}</th>
-
             <th style="width: 14%!important;" class="text-center">
                 Action
             </th>

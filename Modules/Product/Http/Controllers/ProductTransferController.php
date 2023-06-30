@@ -609,35 +609,24 @@ public function ApproveProducts(Request $request, $id)
         }
 
         //$input = $request->all();
-        //dd($input);
+       // dd($input);
         $input = $request->except('_token');
         $input['status'] = $input['status'];
         $input['note']   = $input['note'];
-        $input['location_id']   = $input['location_id'];
-        $$module_name_singular->update([
+        // $input['location_id']   = $input['location_id'];
+         $$module_name_singular->update([
             'status'      =>  $input['status'],
           ]);
-
           $status   = pStatus($input['status']);
-          $prodloc = ProductLocation::where('product_id',$$module_name_singular->id)->where('location_id',$request->location_id)->first();
-                if(empty($prodloc)){
-                        $prodloc = new ProductLocation;
-                        $prodloc->product_id = $$module_name_singular->id;
-                        $prodloc->location_id = $input['location_id'];
-                        $prodloc->save();
-                               }else{
-                        $prodloc->location_id = $input['location_id'];
-                        $prodloc->save();
-                    }
-
-            //Tracking Approve Products
+          $loc = ProductLocation::where('product_id', $$module_name_singular->id)->first();
+         //Tracking Approve Products
              TrackingProduct::create([
-                'location_id' =>  $input['location_id'],
+                'location_id' =>  $loc->location_id,
                 'product_id'  =>  $id,
                 'username'    =>  auth()->user()->name,
                 'user_id'     =>  auth()->user()->id,
                 'status'      =>   $input['status'],
-                'note'  =>   'Barang di '.$status.'  oleh '.auth()->user()->name.' '.$input['note'].' ',
+                'note'  =>   'Barang di <strong>'.$status.'</strong>  oleh '.auth()->user()->name.' '.$input['note'].' ',
               ]);
 
             return response()->json(['success'=>'  '.$module_title.' Sukses di Approve.']);

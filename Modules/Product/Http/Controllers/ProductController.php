@@ -125,6 +125,24 @@ public function __construct()
 
 
 
+ public function index_gudang_utama() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_products'), 403);
+         return view('product::products.gudangutama',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+
 
 
 
@@ -328,7 +346,12 @@ public function index_data(Request $request)
             ' .  $weight . '</span></div>';
             return $tb;
         })
-
+          ->addColumn('tracking', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.transfer.tracking_button',
+                            compact('module_name', 'data', 'module_model'));
+                      })
           ->editColumn('status', function ($data) {
              $status = statusProduk($data->status);
                return $status;
@@ -344,7 +367,7 @@ public function index_data(Request $request)
                         return tgljam($data->created_at);
                     }
                 })
-           ->rawColumns(['updated_at','product_image','weight','status',
+           ->rawColumns(['updated_at','product_image','weight','status','tracking',
             'product_name','product_quantity','product_price', 'action'])
            ->make(true);
     }
@@ -461,6 +484,10 @@ public function index_data_sortir(Request $request)
 
         $module_action = 'List';
         $$module_name = $module_model::with('category','product_item')
+         ->whereHas('product_location', function ($query) {
+                $sortir = Locations::where('name','LIKE','%Sortir%')->first();
+                 $query->where('location_id',$sortir->id);
+            })
         ->latest()->get();
         $data = $$module_name;
 
@@ -519,16 +546,18 @@ public function index_data_sortir(Request $request)
             return $tb;
         })
 
-          ->editColumn('status', function ($data) {
-             $status = statusProduk($data->status);
-               return $status;
-              })
+          ->addColumn('status', function ($data) {
+              $module_name = $this->module_name;
+              $module_model = $this->module_model;
+                  return view('product::products.partials.status',
+                          compact('module_name', 'data', 'module_model'));
+                })
 
             ->addColumn('lokasi', function ($data) {
               $module_name = $this->module_name;
               $module_model = $this->module_model;
                   return view('product::products.partials.lokasi',
-            compact('module_name', 'data', 'module_model'));
+                          compact('module_name', 'data', 'module_model'));
                 })
                ->editColumn('updated_at', function ($data) {
                     $module_name = $this->module_name;
@@ -544,6 +573,249 @@ public function index_data_sortir(Request $request)
             'product_name','product_quantity','product_price', 'action'])
            ->make(true);
     }
+
+
+
+
+//data Gudang Utama
+
+public function index_data_gudang_utama(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = $module_model::with('category','product_item')
+         ->whereHas('product_location', function ($query) {
+                $sortir = Locations::where('name','LIKE','%Utama%')->first();
+                 $query->where('location_id',$sortir->id);
+            })
+        ->latest()->get();
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                              $module_name = $this->module_name;
+                              $module_model = $this->module_model;
+                                  return view('product::products.partials.sortir_aksi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+
+           ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                           <div style="font-size:0.7rem; line-heght:1 !important;" class="leading-0 text-yellow-600 dark:text-gray-400">
+                            ' . $data->category->category_name . '</div>
+                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                             <div style="font-size:0.7rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
+                            ' . $data->rfid . '</div>
+
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
+           ->addColumn('product_image', function ($data) {
+            $url = $data->getFirstMediaUrl('images', 'thumb');
+            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+             })
+
+           ->addColumn('product_price', function ($data) {
+              return format_currency($data->product_price);
+          })
+           ->addColumn('product_quantity', function ($data) {
+            return $data->product_quantity . ' ' . $data->product_unit;
+        })
+
+           ->editColumn('product_quantity', function ($data) {
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
+            return $tb;
+        })
+           ->editColumn('weight', function ($data) {
+              $berat = @$data->product_item[0]->berat_emas;
+            if ($berat) {
+                 $weight = @$data->product_item[0]->berat_emas;
+            } else {
+                $weight = '0';
+            }
+
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-yellow-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' .  $weight . '</span></div>';
+            return $tb;
+        })
+
+          ->addColumn('status', function ($data) {
+              $module_name = $this->module_name;
+              $module_model = $this->module_model;
+                  return view('product::products.partials.status',
+                          compact('module_name', 'data', 'module_model'));
+                })
+
+            ->addColumn('lokasi', function ($data) {
+              $module_name = $this->module_name;
+              $module_model = $this->module_model;
+                  return view('product::products.partials.lokasi',
+                          compact('module_name', 'data', 'module_model'));
+                })
+
+              ->addColumn('tracking', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.transfer.tracking_button',
+                            compact('module_name', 'data', 'module_model'));
+                      })
+
+               ->editColumn('updated_at', function ($data) {
+                    $module_name = $this->module_name;
+
+                    $diff = Carbon::now()->diffInHours($data->updated_at);
+                    if ($diff < 25) {
+                        return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                    } else {
+                        return tgljam($data->created_at);
+                    }
+                })
+           ->rawColumns(['updated_at','product_image','weight','status','lokasi','tracking',
+            'product_name','product_quantity','product_price', 'action'])
+           ->make(true);
+    }
+
+
+
+
+
+
+
+
+
+
+//data sortir
+
+public function index_data_reparasi(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = $module_model::with('category','product_item')
+         ->whereHas('product_location', function ($query) {
+                $sortir = Locations::where('name','LIKE','%Reparasi%')->first();
+                 $query->where('location_id',$sortir->id);
+            })
+        ->latest()->get();
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                              $module_name = $this->module_name;
+                              $module_model = $this->module_model;
+                                  return view('product::products.partials.show_hapus',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+
+           ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                           <div style="font-size:0.7rem; line-heght:1 !important;" class="leading-0 text-yellow-600 dark:text-gray-400">
+                            ' . $data->category->category_name . '</div>
+                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                             <div style="font-size:0.7rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
+                            ' . $data->rfid . '</div>
+
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
+           ->addColumn('product_image', function ($data) {
+            $url = $data->getFirstMediaUrl('images', 'thumb');
+            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+             })
+
+           ->addColumn('product_price', function ($data) {
+              return format_currency($data->product_price);
+          })
+           ->addColumn('product_quantity', function ($data) {
+            return $data->product_quantity . ' ' . $data->product_unit;
+        })
+
+           ->editColumn('product_quantity', function ($data) {
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
+            return $tb;
+        })
+           ->editColumn('weight', function ($data) {
+              $berat = @$data->product_item[0]->berat_emas;
+            if ($berat) {
+                 $weight = @$data->product_item[0]->berat_emas;
+            } else {
+                $weight = '0';
+            }
+
+            $tb = '<div class="items-center small text-center">
+            <span class="bg-yellow-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
+            ' .  $weight . '</span></div>';
+            return $tb;
+        })
+
+          ->addColumn('status', function ($data) {
+              $module_name = $this->module_name;
+              $module_model = $this->module_model;
+                  return view('product::products.partials.status',
+                          compact('module_name', 'data', 'module_model'));
+                })
+
+            ->addColumn('lokasi', function ($data) {
+              $module_name = $this->module_name;
+              $module_model = $this->module_model;
+                  return view('product::products.partials.lokasi',
+                          compact('module_name', 'data', 'module_model'));
+                })
+
+              ->addColumn('tracking', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                               return view('product::products.transfer.tracking_button',
+                            compact('module_name', 'data', 'module_model'));
+                      })
+
+               ->editColumn('updated_at', function ($data) {
+                    $module_name = $this->module_name;
+                    $diff = Carbon::now()->diffInHours($data->updated_at);
+                    if ($diff < 25) {
+                        return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                    } else {
+                        return tgljam($data->created_at);
+                    }
+                })
+           ->rawColumns(['updated_at','product_image','weight','status','lokasi','tracking',
+            'product_name','product_quantity','product_price', 'action'])
+           ->make(true);
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -901,11 +1173,8 @@ public function saveAjax(Request $request)
             }
 
             $params = $request->all();
-          // dd($params);
             $params = $request->except('_token');
-            // $params['jenis_buyback_id'] = $params['jenis_buyback_id'];
-            // $$module_name_singular->update($params);
-             $destination = ProductLocation::where('product_id',$id)->first();
+            $destination = ProductLocation::where('product_id',$id)->first();
                     if(isset($destination)){
                         $destination->location_id = $params['location_id'];
                         $destination->save();
@@ -916,6 +1185,15 @@ public function saveAjax(Request $request)
                         ]);
                     }
 
+            $lok = Locations::where('id',$params['location_id'])->first();
+            TrackingProduct::create([
+                'location_id' =>  $params['location_id'],
+                'product_id'  =>  $id,
+                'username'    =>  auth()->user()->name,
+                'user_id'     =>  auth()->user()->id,
+                'status'      =>   $$module_name_singular->status,
+                'note'  =>   'Barang sudah di sortir dan di pindahkan ke <strong>'.$lok->name.'</strong>  oleh '.auth()->user()->name.'</br>Catatan : '.$params['note'].' ',
+              ]);
 
             return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

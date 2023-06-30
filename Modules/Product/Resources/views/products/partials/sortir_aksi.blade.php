@@ -1,16 +1,22 @@
-{{-- @can('edit_products')
-<a href="{{ route('products.edit', $data->id) }}" class="btn btn-outline-info btn-sm">
-    <i class="bi bi-pencil"></i>
-</a>
-@endcan --}}
+ <div class="justify-center text-center items-center">
 @can('show_products')
 
+@if($data->status == 2)
+<button class="relative btn btn-sm btn-outline-secondary" disabled>
+     &nbsp;@lang('Sortir')
+      <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip"
+      data-placement="top" title="Barang belum di Approve,tidak bisa sortir..!!"></i>
+</button>
+@else
  <a href="{{ route(''.$module_name.'.show_sortir', $data->id) }}"
     id="Sortir"
     data-toggle="tooltip"
-     class="btn btn-outline-info btn-sm">
+     class="btn btn-outline-info py-1 btn-sm">
         <i class="bi bi-eye"></i> &nbsp;@lang('Sortir')
+
     </a>
+@endif
+
 
 
 
@@ -29,3 +35,4 @@
     </form>
 </button>
 @endcan
+</div>
