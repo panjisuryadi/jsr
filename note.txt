@@ -136,11 +136,6 @@ Pembelian + kode suplier + ke table supplier
 stok transfer ==
 
 
-
-
-
-
-
 tidak bisa tmbh produk baru di produk transfer
 
 --------------------------

@@ -639,6 +639,7 @@ public function index_data_type(Request $request)
                         'baki_id' => $request->baki_id
                     ]);
                     $prodloc = ProductLocation::where('product_id',$cart_item->id)->where('location_id',$request->location_id)->first();
+                    $customer_name = Customer::findOrFail($customer_name)->customer_name;
 
                     if(empty($prodloc)){
 
@@ -653,16 +654,15 @@ public function index_data_type(Request $request)
                         $prodloc->stock = $prodloc->stock + $cart_item->qty;
                         $prodloc->save();
                     }
-                    //add TrackingProduct
-                    TrackingProduct::create([
-                        'location_id' => $request->location_id,
-                        'product_id'  => $cart_item->id,
-                        'username'    =>   auth()->user()->name,
-                        'user_id'     =>   auth()->user()->id,
-                        'status'      =>    1,
-                        'note'        =>   'Perpindahan Barang pertama ',
-                      ]);
-
+                 //Tracking Produk
+                   TrackingProduct::create([
+                    'location_id' =>  $request->location_id,
+                    'product_id'  =>  $cart_item->id,
+                    'username'    =>  auth()->user()->name,
+                    'user_id'     =>  auth()->user()->id,
+                    'status'      =>   0,
+                    'note'  =>  'Purchase Baru dari Customer '.$customer_name.' diterima oleh '.auth()->user()->name.' ',
+                  ]);
 
                 }
             }
@@ -775,7 +775,7 @@ public function index_data_type(Request $request)
                     'username'    =>  auth()->user()->name,
                     'user_id'     =>  auth()->user()->id,
                     'status'      =>   0,
-                    'note'  =>  'Purchase dari Toko '.$nama_supplier.' diterima oleh '.auth()->user()->name.' ',
+                    'note'  =>  'Purchase Baru dari Toko '.$nama_supplier.' diterima oleh '.auth()->user()->name.' ',
                   ]);
 
 

@@ -56,14 +56,13 @@ class GenerateMenus
                                       'access_karats',
                                       'access_kategoriproduks',
                                       'access_diamondcertificates',
+                                      'itemclarities',
                                       'access_products'],
             ]);
             $masterData->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
-
-
 
 
  //==== Access Control Dropdown Categories
@@ -493,6 +492,27 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
+
+
+
+          // Itemclarity
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
+             '.__('Parameter Clarity'), [
+                'route' => 'itemclarity.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['itemclarities*'],
+                'permission'    => ['access_itemclarities'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
 
 
           $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Rounds'), [
