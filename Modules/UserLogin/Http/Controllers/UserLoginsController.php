@@ -86,7 +86,7 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            return view('includes.hapus',
                             compact('module_name', 'data', 'module_model'));
                                 })
                           ->editColumn('user', function ($data) {
@@ -98,34 +98,29 @@ public function index_data(Request $request)
                                 return $tb;
                             })
 
-                             ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->os . '</h3>
-                                    </div>';
+                          ->editColumn('os', function ($data) {
+                             $tb = '<div class="text-sm text-gray-600">
+                                    OS : ' .$data->os . '</div>';
+                              $tb .= '<div class="text-sm text-left text-gray-600">
+                                    Browser : ' .$data->browser. '</div>';
                                 return $tb;
                             })
 
-                              ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->os . '</h3>
-                                    </div>';
-                                return $tb;
-                            })
-                         ->editColumn('location', function ($data) {
-                             $tb = '<div class="text-sm text-gray-800">
-                                    Ip : ' .$data->ip . '</div>';
-                            $tb .= '<div class="text-sm small text-gray-800">
-                                    Lokasi : ' .$data->location ?? '@' . '</div>';
+                          ->editColumn('location', function ($data) {
+                             $tb = '<div class="text-sm text-gray-600">
+                                   ' .$data->location . '</div>';
+                              $tb .= '<div class="text-sm text-left text-gray-600">
+                                    Ip : ' .$data->ip. '</div>';
                                 return $tb;
                             })
 
-                          ->editColumn('login_at', function ($data) {
-                                    return timestamp($data->login_at);
-                            })
-                           ->editColumn('logout_at', function ($data) {
-                                    return tgljam($data->logout_at);
+
+                         ->editColumn('login_at', function ($data) {
+                             $tb = '<div class="text-sm text-gray-600">
+                                    Login : ' .timestamp($data->login_at) . '</div>';
+                            $tb .= '<div class="text-sm text-left text-gray-600">
+                                    Logout : ' .tgl($data->logout_at) . '</div>';
+                                return $tb;
                             })
 
 
@@ -139,7 +134,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'login_at', 'location', 'logout_at', 'user'])
+                        ->rawColumns(['updated_at', 'action', 'login_at', 'location', 'os', 'user'])
                         ->make(true);
                      }
 

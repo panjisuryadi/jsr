@@ -16,13 +16,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
-                        <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a>
+                        <div class="text-lg font-semibold text-gray-500">
+
+                        <i class="bi bi-plus"></i>&nbsp;Log Aktifitas Users
+
 
                         </div>
                         <div id="buttons">
@@ -39,7 +36,7 @@
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
                                     </th>
-                                    <th style="width: 18%!important;" class="text-center">
+                                    <th style="width: 12%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>

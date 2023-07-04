@@ -31,15 +31,12 @@
                                     <th style="width: 6%!important;">No</th>
 
                                     <th class="text-lef">{{ __('Users') }}</th>
-                                    <th class="text-lef">{{ __('Operating Sistem') }}</th>
-                                    <th class="text-lef">{{ __('Browser') }}</th>
-                                    <th class="text-center" style="width: 15%!important;">{{ __('Lokasi') }}</th>
+                                    <th class="text-lef">{{ __('OS / Browser') }}</th>
+
                                     <th class="text-lef">{{ __('Login') }}</th>
 
-                                    <th  class="text-center">
-                                         {{ __('Logout') }}
-                                    </th>
-                                    <th style="width: 18%!important;" class="text-center">
+                                    <th class="text-center" style="width: 14%!important;">{{ __('Lokasi') }}</th>
+                                    <th style="width: 12%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -102,10 +99,9 @@
 
                 {data: 'user', name: 'user'},
                 {data: 'os', name: 'os'},
-                {data: 'browser', name: 'browser'},
-                {data: 'location', name: 'location'},
+
                 {data: 'login_at', name: 'login_at'},
-                {data: 'logout_at', name: 'logout_at'},
+                {data: 'location', name: 'location'},
 
                 {
                     data: 'action',
