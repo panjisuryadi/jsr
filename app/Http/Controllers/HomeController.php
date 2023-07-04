@@ -15,11 +15,12 @@ use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SalePayment;
 use Modules\SalesReturn\Entities\SaleReturn;
 use Modules\SalesReturn\Entities\SaleReturnPayment;
-
+use App\Models\ActivityLog;
 class HomeController extends Controller
 {
 
     public function index() {
+        activity()->log(' '.auth()->user()->name.' Dashoard ');
         $sales = Sale::completed()->sum('total_amount');
         $sale_returns = SaleReturn::completed()->sum('total_amount');
         $purchase_returns = PurchaseReturn::completed()->sum('total_amount');

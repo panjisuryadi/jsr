@@ -25,6 +25,7 @@ use Illuminate\Support\Str;
 use Lang;
 use Yajra\DataTables\DataTables;
 use Image;
+use App\Models\ActivityLog;
 class ProductController extends Controller
 {
 

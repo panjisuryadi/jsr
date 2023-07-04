@@ -1372,6 +1372,50 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+           // UserLogins
+            $accessControl->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('User Login'), [
+                'route' => 'userlogin.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 102,
+                'activematches' => ['userlogins*'],
+                'permission'    => ['access_userlogins'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // Companies
+            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Company'), [
+                'route' => 'company.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 102,
+                'activematches' => ['companies*'],
+                'permission'    => ['access_companies'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+        // LogActivities
+            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Log Activities'), [
+                'route' => 'logactivity.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 102,
+                'activematches' => ['logactivities*'],
+                'permission'    => ['access_logactivities'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
 
             // Access Permission Check
             $menu->filter(function ($item) {

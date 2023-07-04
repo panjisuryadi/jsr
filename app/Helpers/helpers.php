@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
-
+use Carbon\Carbon;
 
 /*
  *
@@ -96,6 +96,33 @@ if (!function_exists('date_today')) {
         $str = \Carbon\Carbon::now()->isoFormat('dddd, LL');
 
         return $str;
+    }
+}
+
+
+
+if (!function_exists('timestamp')) {
+
+    function timestamp($data)
+    {
+
+        $diff = Carbon::now()->diffInHours($data);
+            if ($diff < 25) {
+                return \Carbon\Carbon::parse($data)->diffForHumans();
+            } else {
+                return \Carbon\Carbon::parse($data)->isoFormat('L');
+            }
+
+    }
+}
+
+if (!function_exists('waktu')) {
+
+    function waktu($data)
+    {
+
+        return \Carbon\Carbon::parse($data)->isoFormat('L');
+
     }
 }
 

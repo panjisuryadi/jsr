@@ -12,6 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\File;
 use Spatie\Permission\Traits\HasRoles;
 use Modules\UserCabang\Models\UserCabang;
+use Modules\Company\Models\Company;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -61,7 +62,9 @@ class User extends Authenticatable implements HasMedia
             return $this->hasOne(UserCabang::class);
         }
 
-
+      public function company() {
+            return $this->hasMany(Company::class, 'id', 'user_id');
+        }
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatars')
