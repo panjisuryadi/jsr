@@ -86,9 +86,20 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
+
                             return view('includes.hapus',
                             compact('module_name', 'data', 'module_model'));
                                 })
+
+
+                         ->addColumn('location', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                             $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.lokasi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
                           ->editColumn('user', function ($data) {
 
                              $tb = '<div class="items-center text-center">
@@ -106,13 +117,6 @@ public function index_data(Request $request)
                                 return $tb;
                             })
 
-                          ->editColumn('location', function ($data) {
-                             $tb = '<div class="text-sm text-gray-600">
-                                   ' .$data->location . '</div>';
-                              $tb .= '<div class="text-sm text-left text-gray-600">
-                                    Ip : ' .$data->ip. '</div>';
-                                return $tb;
-                            })
 
 
                          ->editColumn('login_at', function ($data) {
