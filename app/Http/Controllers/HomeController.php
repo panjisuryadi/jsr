@@ -11,6 +11,7 @@ use Modules\Purchase\Entities\Purchase;
 use Modules\Purchase\Entities\PurchasePayment;
 use Modules\PurchasesReturn\Entities\PurchaseReturn;
 use Modules\PurchasesReturn\Entities\PurchaseReturnPayment;
+use Modules\UserLogin\Models\UserLogin;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SalePayment;
 use Modules\SalesReturn\Entities\SaleReturn;
@@ -20,7 +21,28 @@ class HomeController extends Controller
 {
 
     public function index() {
-        activity()->log(' '.auth()->user()->name.' Dashoard ');
+        activity()->log(' '.auth()->user()->name.' Masuk ke halaman Dashoard ');
+
+      $lastActivity = ActivityLog::latest()->Join('users', 'activity_log.causer_id', '=', 'users.id')
+            ->select(['activity_log.id', 'activity_log.description',  'activity_log.log_name',  'activity_log.created_at',
+                'users.name', 'activity_log.updated_at'])
+                      ->limit(5)
+            ->orderBy('activity_log.id', 'DESC')->get();
+
+        $userlogin = UserLogin::latest()
+        ->Join('users', 'user_logins.user_id', '=', 'users.id')
+        ->select(['user_logins.id',
+                'user_logins.ip',
+                'user_logins.os',
+                'user_logins.browser',
+                'users.name',
+                'user_logins.location',
+                'user_logins.status',
+                'user_logins.login_at',
+                'user_logins.logout_at',
+                'user_logins.created_at',
+                'users.name', 'user_logins.updated_at'])
+        ->limit(5)->get();
         $sales = Sale::completed()->sum('total_amount');
         $sale_returns = SaleReturn::completed()->sum('total_amount');
         $purchase_returns = PurchaseReturn::completed()->sum('total_amount');
@@ -36,6 +58,8 @@ class HomeController extends Controller
         $profit = $revenue - $product_costs;
 
         return view('home', [
+            'userlogin'     => $userlogin,
+            'lastActivity'     => $lastActivity,
             'revenue'          => $revenue,
             'sale_returns'     => $sale_returns / 100,
             'purchase_returns' => $purchase_returns / 100,

@@ -9,15 +9,6 @@
 @endsection
 
 @section('content')
-
-
-
-
-
-
-
-
-
     <div class="container-fluid">
 
 
@@ -150,6 +141,34 @@
             </div>
         </div>
         @endcan
+
+<div class="row flex py-0 flex-row grid grid-cols-2 px-3 py-2 gap-2">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header font-semibold">
+            @lang('Log Aktifitas')
+        </div>
+        <div class="card-body">
+          @include('partial.log_user')
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-header font-semibold">
+            @lang('Login Record')
+        </div>
+        <div class="card-body">
+              @include('partial.user_login')
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
     </div>
 @endsection
 
