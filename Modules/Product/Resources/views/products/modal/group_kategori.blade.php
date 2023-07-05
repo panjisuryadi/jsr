@@ -31,7 +31,7 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-            var Tombol = "<a href='{{ url()->previous() }}' id='Tambah' class='btn btn-danger px-5'>{{ __('Back') }}</a>";
+            var Tombol = "<a href='{{ route('products.create-modal') }}' id='GroupKategori' class='btn btn-danger px-5'>{{ __('Back') }}</a>";
             // Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanTambah'>{{ __('Create') }}</button>";
             $('#ModalFooterGroupKategori').html(Tombol);
             $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();

@@ -97,7 +97,7 @@
                     <div class="from-group">
                         <label for="date"></label>
                         <a href="{{ route('products.create-modal') }}"
-                            id="Tambah" class="w-full py-2 btn btn-sm btn-outline-danger mt-2">
+                            id="GroupKategori" class="w-full py-2 btn btn-sm btn-outline-danger mt-2">
                             @lang('Add Product')
                         </a>
                     </div>
@@ -237,11 +237,31 @@
         </div>
     </div>
 </div>
-<div id="ModalGroupKategori" class="modal fade" role="dialog">
+
+<div id="ModalBacktoKategori" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
              <div class="modal-header">
                 <h5 class="modal-title" id="ModalHeaderkategori"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalContentBacktoKategori"> </div>
+         <div class="modal-footer" id="ModalFooterKategori"></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="ModalGroupKategori" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeaderGroupkategori"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -330,7 +350,6 @@ jQuery.noConflict();
             $('.modal-dialog').addClass('modal-xl');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case(' Products') }}');
         }
-
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
         $('#ModalGue').modal({
@@ -341,10 +360,43 @@ jQuery.noConflict();
     });
 
 
+//group modal kategori
+
+  $(document).on('click', '#GroupKategori', function(e){
+         e.preventDefault();
+          $('#ModalBacktoKategori').modal('hide');
+          $("#ModalBacktoKategori").trigger("reset");
+               $('#ModalKategori').modal('hide');
+          $('#ModalKategori').modal('hide');
+          $("#ModalKategori").trigger("reset");
+         if($(this).attr('id') == 'GroupKategori')
+         {
+
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-xl');
+            $('#ModalHeaderGroupkategori').html('<i class="bi bi-grid-fill"></i> &nbspGroup {{ Label_case(' Kategori') }}');
+        }
+        $('#ModalContentGroupKategori').load($(this).attr('href'));
+        $('#ModalGroupKategori').modal('show');
+        $('#ModalGroupKategori').modal({
+                        backdrop: 'static',
+                        keyboard: true,
+                        show: true
+                });
+    });
+
+
+
+
+
+//modal detail kategori
+
     $(document).on('click', '#openModalKategori', function(e){
           e.preventDefault();
-            $('#ModalGue').modal('hide');
-            $("#ModalGue").trigger("reset");
+
+           $('#ModalBacktoKategori').modal('hide');
+            $("#ModalBacktoKategori").trigger("reset");
             $('#ModalGroupKategori').modal('hide');
             $("#ModalGroupKategori").trigger("reset");
              var dataURL = $(this).attr('data-href');
@@ -352,14 +404,50 @@ jQuery.noConflict();
             $('.modal-dialog').removeClass('modal-sm');
             $('.modal-dialog').removeClass('modal-lg');
             $('.modal-dialog').addClass('modal-xl');
-            $('#ModalContentGroupKategori').load($(this).attr('href'));
-            $('#ModalFooterGroupKategori').html('<i class="bi bi-grid-fill"></i> &nbsp Group Kategori {{ Label_case(' Products') }}');
-             $('#ModalGroupKategori').modal({
+            $('#ModalContentKategori').load($(this).attr('href'));
+            $('#ModalHeaderkategori').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
+            $('#ModalKategori').modal({
                         backdrop: 'static',
                         keyboard: true,
                         show: true
                 });
-            });
+           });
+
+
+
+
+//modal detail kategori
+
+    $(document).on('click', '#BacktoKategori', function(e){
+          e.preventDefault();
+            $('#ModalKategori').modal('hide');
+            $('#ModalKategori').modal('hide');
+            $('#ModalGroupKategori').modal('hide');
+            $("#ModalGroupKategori").trigger("reset");
+             var dataURL = $(this).attr('data-href');
+            //alert(dataURL);
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').addClass('modal-xl');
+            $('#ModalContentBacktoKategori').load($(this).attr('href'));
+            $('#ModalHeaderBacktokategori').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
+            $('#ModalBacktoKategori').modal({
+                        backdrop: 'static',
+                        keyboard: true,
+                        show: true
+                });
+           });
+
+
+
+
+
+
+
+
+
+
+
 
 
 

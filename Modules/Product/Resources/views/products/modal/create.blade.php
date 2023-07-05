@@ -417,6 +417,11 @@ button, input, optgroup, select, textarea {
   </form>
 </div>
 
+{{-- id="openModalKategori"
+                href="{{ route('products.view_main_kategori_modal',$category->id)) }}" --}}
+
+
+
 <script>
     jQuery.noConflict();
     (function( $ ) {
@@ -464,8 +469,10 @@ button, input, optgroup, select, textarea {
                 $('.'+key+'_err').text(value);
             });
         }
+
+
         $(document).ready(function(){
-            var Tombol = "<a href='{{ route('products.create-modal') }}' id='Tambah' class='btn btn-success px-5'>{{ __('Back') }}</a>";
+            var Tombol = "<a href='{{ route('products.view_main_kategori_modal',$category->id) }}' id='BacktoKategori' class='btn btn-warning px-5'>{{ __('Back') }}</a>";
             Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanTambah'>{{ __('Create') }}</button>";
             $('#ModalFooterKategori').html(Tombol);
             $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();

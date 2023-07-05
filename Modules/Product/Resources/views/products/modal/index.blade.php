@@ -29,7 +29,7 @@
 
 <script type="text/javascript">
       $(document).ready(function(){
-            var Tombol = "<a href='{{ route('products.create-modal') }}' id='Tambah' class='btn btn-success px-5'>{{ __('Back') }}</a>";
+            var Tombol = "<a href='{{ route('products.create-modal') }}' id='GroupKategori' class='btn btn-warning px-5'>{{ __('Back') }}</a>";
             Tombol += "<button type='button' class='px-5 btn btn-danger' id='SimpanTambah'>{{ __('Create') }}</button>";
             $('#ModalFooterKategori').html(Tombol);
             $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();
