@@ -988,6 +988,8 @@ public function saveAjax(Request $request)
 
             $produk = $$module_name_singular->id;
             $this->_saveProductsItem($input ,$produk);
+
+             activity()->log(' '.auth()->user()->name.' input barang baru '.$input['product_name'].'  ');
             return response()->json([
                 'produk'=> $produk,
                 'success'=>'  '.$module_title.' Sukses disimpan.'

@@ -679,6 +679,9 @@ public function index_data_type(Request $request)
             }
         });
 
+  activity()->log(' '.auth()->user()
+    ->name.' input pembelian INV/'.$purchase->reference.'   ');
+
         toast('Product Transfer Created!', 'success');
         return redirect()->route('product-transfer.index');
     }
