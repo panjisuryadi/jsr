@@ -871,6 +871,32 @@ public function index_data_reparasi(Request $request)
 
     }
 
+   //view main kategori modal
+    public function view_main_kategori_modal(Request $request ,$id) {
+        abort_if(Gate::denies('access_products'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $groupkategori = Category::where('kategori_produk_id', $id)->get();
+        $locations = Locations::where('name','LIKE','%Pusat%')->first();
+        $code = Product::generateCode();
+        $module_action = 'List';
+          return view(''.$module_path.'::'.$module_name.'.modal.group_kategori',
+           compact('module_name',
+                    'module_title',
+                    'groupkategori',
+                    'locations',
+                    'code',
+                    'module_icon', 'module_model'));
+
+    }
+
+
+
+
 
     public function webcam() {
         abort_if(Gate::denies('create_products'), 403);

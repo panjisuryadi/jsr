@@ -75,6 +75,13 @@ Route::group(['middleware' => 'auth'], function () {
         ['as' => "products.add_products_modal_categories",
          'uses' => "ProductController@add_products_modal_categories"]);
 
+//view modal main kategori
+  Route::get("view-main-categories/{id}",
+        ['as' => "products.view_main_kategori_modal",
+         'uses' => "ProductController@view_main_kategori_modal"]);
+
+
+
 
     Route::resource('products', 'ProductController');
     //Product Category
