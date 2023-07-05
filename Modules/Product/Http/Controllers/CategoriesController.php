@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\DataTables\ProductCategoriesDataTable;
+use Modules\KategoriProduk\Models\KategoriProduk;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
@@ -76,7 +77,8 @@ public function index_data()
         $module_action = 'List';
 
 
-        $$module_name = $module_model::withCount('products')->get();
+        $$module_name = $module_model::with('kategoriproduk')
+        ->withCount('products')->get();
 
         $data = $$module_name;
 
@@ -96,15 +98,17 @@ public function index_data()
                                 ' . $data->products_count . '</span></div>';
                                 return $tb;
                             })
-                             ->editColumn('category_name', function ($data) {
-                                $tb = '<div class="flex items-center gap-x-2">
-                                        <div>
-                                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->category_name . '</h3>
-                                            <p class="text-xs font-normal text-red-600 dark:text-gray-400"> ' . $data->category_code . '</p>
-                                        </div>
-                                    </div>';
-                                return $tb;
-                            })
+             ->editColumn('category_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                  <span class="px-2 rounded rounded-lg bg-green-200 small font-normal text-gray-600 dark:text-gray-400"> ' . $data->kategoriProduk->name . '</span>
+               <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->category_name . '</h3>
+                <div class="text-xs font-normal text-red-600 dark:text-gray-400"> ' . $data->category_code . '</div>
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
