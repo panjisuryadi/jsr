@@ -868,8 +868,7 @@ public function index_data_reparasi(Request $request)
                     'locations',
                     'code',
                     'module_icon', 'module_model'));
-
-    }
+         }
 
    //view main kategori modal
     public function view_main_kategori_modal(Request $request ,$id) {
@@ -891,12 +890,7 @@ public function index_data_reparasi(Request $request)
                     'locations',
                     'code',
                     'module_icon', 'module_model'));
-
-    }
-
-
-
-
+                 }
 
     public function webcam() {
         abort_if(Gate::denies('create_products'), 403);
@@ -989,7 +983,7 @@ public function saveAjax(Request $request)
             $produk = $$module_name_singular->id;
             $this->_saveProductsItem($input ,$produk);
 
-             activity()->log(' '.auth()->user()->name.' input barang baru '.$input['product_name'].'  ');
+             activity()->log(' '.auth()->user()->name.' input ');
             return response()->json([
                 'produk'=> $produk,
                 'success'=>'  '.$module_title.' Sukses disimpan.'

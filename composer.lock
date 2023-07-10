@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce5c1c3904203a4e6d975e843b2acfaf",
+    "content-hash": "9d2a481615751dd53ec2f77066924cd5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4156,6 +4156,54 @@
                 }
             ],
             "time": "2022-08-04T09:53:51+00:00"
+        },
+        {
+            "name": "n0izestr3am/sso-client",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/n0izestr3am/sso-client.git",
+                "reference": "fbf2d2b56cb815dcab1b776ed75cd1fbce637713"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/n0izestr3am/sso-client/zipball/fbf2d2b56cb815dcab1b776ed75cd1fbce637713",
+                "reference": "fbf2d2b56cb815dcab1b776ed75cd1fbce637713",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "n0izestr3am\\SSO\\Providers\\SSOServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "n0izestr3am\\SSO\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n0izestr3am",
+                    "email": "n0izestr3am@gmail.com"
+                }
+            ],
+            "description": " OAuth 2.0 Single Sign On Laravel (Client)",
+            "support": {
+                "issues": "https://github.com/n0izestr3am/sso-client/issues",
+                "source": "https://github.com/n0izestr3am/sso-client/tree/main"
+            },
+            "time": "2023-07-10T03:41:02+00:00"
         },
         {
             "name": "nasirkhan/module-manager",
@@ -11797,7 +11845,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "n0izestr3am/sso-client": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

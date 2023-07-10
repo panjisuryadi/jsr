@@ -144,6 +144,10 @@ if (settings()->site_logo) {
                                     <a class="btn btn-link px-0" href="{{ route('password.request') }}">
                                         Forgot password?
                                     </a>
+
+                                  {{--    <a class="btn btn-link px-0" href="{{ route('sso.login') }}">
+                                        Login SSO?
+                                    </a> --}}
                                 </div>
                                 <div class="col-8 text-right">
                                     <button
@@ -153,17 +157,7 @@ if (settings()->site_logo) {
                         </form>
                     </div>
                 </div>
-        {{--         @if(Route::has('register'))
-                <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
-                    <div class="card-body text-center">
-                        <div>
-                            <h2>Sign up</h2>
-                            <p>Sign in to start your session</p>
-                            <a class="btn btn-lg btn-outline-light mt-3" href="{{ route('register') }}">Register Now!</a>
-                        </div>
-                    </div>
-                </div>
-                @endif --}}
+
             </div>
         </div>
     </div>

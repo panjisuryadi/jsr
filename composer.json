@@ -22,6 +22,7 @@
         "lavary/laravel-menu": "^1.7",
         "livewire/livewire": "^2.5",
         "milon/barcode": "^8.0",
+        "n0izestr3am/sso-client": "dev-main",
         "nasirkhan/module-manager": "^0.4.0",
         "nwidart/laravel-modules": "8.2.*",
         "realrashid/sweet-alert": "^4.0",
