@@ -31,7 +31,12 @@
                                 <i class="bi bi-geo-alt"></i>{{ @$row->location->name }}
                                 | <span class="text-gray-500 text-xs font-normal">{{ @$row->products->product_name }}
                                 | <span class="text-gray-500 text-xs font-normal">{{ @$row->user->name }}</span>
-                                | {!!statusTrackingProduk($row->status) !!}
+
+
+                                | {!!statusTrackingProduk($row->status) !!} 
+                                {{--   @if($row->products->status == 1)
+                                {!!statusTrackingProduk($row->products->status) !!} 
+                                  @endif --}}
                                 </span>
                                </h3>
                                 <div class="mb-4 text-xs font-normal text-gray-500 dark:text-gray-400">

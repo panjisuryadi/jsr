@@ -19,8 +19,12 @@
 
 </style>
 
+<div class="w-full flex flex-row p-2">
+  <x-library.alert />    
 
-  <x-library.alert />
+</div>
+
+
   <form class="px-3" id="FormEdit" action="{{ route(''.$module_name.'.sortir_update', $product) }}" method="POST">
                             @csrf
                             @method('patch')
@@ -40,8 +44,10 @@
 
     <div class="form-group mb-0">
                     @php
-                    $sortir = \Modules\Locations\Entities\Locations::where('name','LIKE','%Pusat%')->first();
-                    $bb = \Modules\Locations\Entities\Locations::where('parent_id',$sortir->id)->get();
+         $sortir = \Modules\Locations\Entities\Locations::where('name','LIKE','%Pusat%')
+         ->first();
+         $bb = \Modules\Locations\Entities\Locations::where('parent_id',$sortir->id)
+         ->where('name', 'NOT LIKE', '%Sortir%')->get();
                      @endphp
                         <label class="mb-0" for="location_id">Lokasi</label>
                         <select name="location_id" class="form-control select2">
@@ -50,6 +56,9 @@
                             @endforeach
                         </select>
                     </div>
+
+
+
 
     <div class="form-group mb-2">
             <label class="mb-0" for="status">@lang('Note') <span class="text-danger">(Optional)</span></label>

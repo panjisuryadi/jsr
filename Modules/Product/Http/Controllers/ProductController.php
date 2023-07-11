@@ -292,7 +292,7 @@ public function index_data(Request $request)
         $module_action = 'List';
 
 
-        $$module_name = $module_model::with('category','product_item')
+        $$module_name = $module_model::active()->with('category','product_item')
         ->latest()->get();
         $data = $$module_name;
 
@@ -606,16 +606,6 @@ public function index_data_gudang_utama(Request $request)
                                   return view('product::products.partials.aksi',
                             compact('module_name', 'data', 'module_model'));
                                 })
-
-
-  // ->addColumn('tracking', function ($data) {
-  //                          $module_name = $this->module_name;
-  //                           $module_model = $this->module_model;
-  //                           return view('product::products.transfer.tracking_button',
-  //                           compact('module_name', 'data', 'module_model'));
-  //                     })
-
-
 
            ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
@@ -1276,8 +1266,10 @@ public function saveAjax(Request $request)
               return response()->json(['error'=>$validator->errors()]);
             }
 
-            $params = $request->all();
+           // $params = $request->all();
+            //dd($params);
             $params = $request->except('_token');
+            
             $destination = ProductLocation::where('product_id',$id)->first();
                     if(isset($destination)){
                         $destination->location_id = $params['location_id'];
@@ -1296,8 +1288,14 @@ public function saveAjax(Request $request)
                 'username'    =>  auth()->user()->name,
                 'user_id'     =>  auth()->user()->id,
                 'status'      =>   $$module_name_singular->status,
-                'note'  =>   'Barang sudah di sortir dan di pindahkan ke <strong>'.$lok->name.'</strong>  oleh '.auth()->user()->name.'</br>Catatan : '.$params['note'].' ',
+                'note'  =>   'Barang sudah di Sortir dan di pindahkan ke <strong>'.$lok->name.'</strong>  oleh '.auth()->user()->name.'</br>Catatan || '.$params['note'].' ',
               ]);
+
+
+             $produkItem = Product::where('id',$id)->first();
+             $produkItem->update([
+                        'status' => 1
+                    ]);
 
             return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

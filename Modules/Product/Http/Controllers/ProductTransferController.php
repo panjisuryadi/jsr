@@ -208,8 +208,13 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::with('category','product_item')
+           $$module_name = $module_model::with('category','product_item')
+         ->whereHas('product_location', function ($query) {
+                $sortir = Locations::where('name','LIKE','%Pusat%')->first();
+                 $query->where('location_id',$sortir->id);
+            })
         ->latest()->get();
+
 
         $data = $$module_name;
 
