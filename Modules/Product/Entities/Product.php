@@ -75,7 +75,12 @@ class Product extends Model implements HasMedia
 
  public function scopeActive($query)
     {
-        $query->where('status', 0);
+        $query->where('status', 1);
+    }
+
+   public function scopeNeedApprove($query)
+    {
+        $query->where('status', 2);
     }
 
 

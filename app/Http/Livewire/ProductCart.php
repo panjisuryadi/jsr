@@ -25,9 +25,11 @@ class ProductCart extends Component
 
     public function mount($cartInstance, $data = null) {
 
-
-
         $this->cart_instance = $cartInstance;
+       
+       
+
+        //dd($product);
 
         if ($data) {
             $this->data = $data;
@@ -64,6 +66,7 @@ class ProductCart extends Component
     }
 
     public function render() {
+     
         $cart_items = Cart::instance($this->cart_instance)->content();
             return view('livewire.product-cart', [
             'cart_items' => $cart_items

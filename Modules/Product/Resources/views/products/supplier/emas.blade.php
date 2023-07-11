@@ -2,9 +2,7 @@
                             <div class="border-right pr-3">
                                 <div class="form-group">
                                     <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
-
-
-                                <div class="py-2">
+                                    <div class="py-2">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="upload" id="up2" checked>
                                             <label class="form-check-label" for="up2">Upload</label>
@@ -29,74 +27,54 @@
                             </div>
                             <div class="col-span-2 bg-transparent">
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
+
+                                <div class="flex-wrap">
+
+                               <div class="grid grid-cols-2 gap-1">
+
+                                     <div class="form-group">
                                             <label for="product_name">@lang('Product Name') <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="product_name" required value="{{ old('product_name') }}">
                                         </div>
 
+                                    <div class="form-group">
+                                        <label for="product_note">Kategori Emas</label>
+                                        <select class="form-control select2" name="gold_kategori_id" id="gold_kategori_id" required>
+                                            <option value="" selected disabled>Select Kategori</option>
+                                            @foreach(\Modules\GoldCategory\Models\GoldCategory::all() as $sup)
+                                            <option value="{{$sup->id}}" {{ old('gold_kategori_id') == $sup->id ? 'selected' : '' }}>
+                                            {{$sup->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                </div>
+                                </div>
+
+                               <div class="flex-wrap">
+
+                               <div class="grid grid-cols-2 gap-1">
 
 
                                         <div class="form-group">
-                                            <label for="karat_id">@lang('Jenis Berlian') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="karat_id" id="karat_id" required>
-                                                <option value="" selected disabled>Select Jenis Berlian</option>
-                                             kkk
-                                            </select>
-                                        </div>
-                                          <div class="form-group">
-                                            <label for="karat_id">@lang('Parameter Berlian') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="karat_id" id="karat_id" required>
-                                                <option value="" selected disabled>Select Parameter Berlian</option>
-                                             kkk
-                                            </select>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label for="round_id">@lang('Round') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="round_id" id="round_id" required>
-                                                <option value="" selected disabled>Select Round</option>
-                                                @foreach(\Modules\ItemRound\Models\ItemRound::all() as $round)
-                                                <option value="{{ $round->id }}">{{ $round->name }}</option>
+                                            <label for="product_note">Supplier</label>
+                                            <select class="form-control select2" name="supplier_id" id="supplier_id" required>
+                                                <option value="" selected disabled>Select Supplier</option>
+                                                @foreach(\Modules\People\Entities\Supplier::all() as $sup)
+                                                <option value="{{$sup->id}}" {{ old('supplier_id') == $sup->id ? 'selected' : '' }}>
+                                                {{$sup->supplier_name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
 
-                                        
-                                    </div>
-                                    <div class="col-md-6">
+
+
                                         <div class="form-group">
                                             <label for="product_code">Code <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="product_code" readonly value="{{ $code }}">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="shape_id">@lang('Shape') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="shape_id" id="shape_id" required>
-                                                <option value="" selected disabled>Select Shape</option>
-                                                @foreach(\Modules\ItemShape\Models\ItemShape::all() as $shape)
-                                                <option value="{{ $shape->id }}">{{ $shape->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="certificate_id">@lang('Certificate') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="certificate_id" id="certificate_id" required>
-                                                <option value="" selected disabled>Select Certificate</option>
-                                                @foreach(\Modules\DiamondCertificate\Models\DiamondCertificate::all() as $certificate)
-                                                <option value="{{ $certificate->id }}">{{ $certificate->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="no_certificate">@lang('No .Certificate') <span class="text-danger">*</span></label>
-                                            <input id="no_certificate" type="text" class="form-control" name="no_certificate" required value="{{ old('no_certificate') }}">
-                                        </div>
-                                    </div>
+
                                 </div>
-
-
 
 
                                 <div class="flex relative py-1">

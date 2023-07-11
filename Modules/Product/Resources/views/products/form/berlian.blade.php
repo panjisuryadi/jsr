@@ -1,245 +1,160 @@
-              <div class="grid grid-cols-3 gap-3">
-                            <div class="border-right pr-3">
-                                <div class="form-group">
-                                    <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
-
-
-                                <div class="py-2">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="upload" id="up2" checked>
-                                            <label class="form-check-label" for="up2">Upload</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="upload"
-                                            id="up1">
-                                            <label class="form-check-label" for="up1">Webcam</label>
-                                        </div>
+                                <div class="flex py-0 flex-row grid grid-cols-3 gap-2">
+                                    <div class="form-group">
+                                        <label for="karat_id">@lang('Jenis Perhiasan') <span class="text-danger">*</span></label>
+                                        <select class="form-control select2" name="jenis_perhiasan_id" id="jenis_perhiasan_id" required>
+                                            <option value="" selected disabled>Jenis Perhiasan</option>
+                                            @foreach(\Modules\JenisPerhiasan\Models\JenisPerhiasan::all() as $jp)
+                                            <option value="{{ $jp->id }}">{{ $jp->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
-                                        <x-library.webcam />
+                                    <div class="form-group">
+                                        <label for="round_id">@lang('Clarity') <span class="text-danger">*</span></label>
+                                        <select class="form-control select2" name="round_id" id="round_id" required>
+                                            <option value="" selected disabled>Select Clarity</option>
+                                            @foreach(\Modules\ItemClarity\Models\ItemClarity::all() as $cl)
+                                            <option value="{{ $cl->id }}">{{ $cl->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div id="upload1" style="display: block !important;" class="align-items-center justify-content-center">
-                                        <div  class="h-320 dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
-                                            <div class="dz-message" data-dz-message>
-                                                <i class="text-red-800 bi bi-cloud-arrow-up"></i>
-                                            </div>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="baki_id">@lang('Baki') <span class="text-danger">*</span></label>
+                                        <select class="form-control select2" name="baki_id" id="baki_id" required>
+                                            <option value="" selected disabled>Select Baki</option>
+                                            @foreach(\Modules\Baki\Models\Baki::all() as $baki)
+                                            <option value="{{ $baki->id }}">{{ $baki->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="shape_id">@lang('Cut / Shape') <span class="text-danger">*</span></label>
+                                        <select class="form-control select2" name="shape_id" id="shape_id" required>
+                                            <option value="" selected disabled>Select Cut /  Shape</option>
+                                            @foreach(\Modules\ItemShape\Models\ItemShape::all() as $shape)
+                                            <option value="{{ $shape->id }}">{{ $shape->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="colour_id">@lang('Colour') <span class="text-danger">*</span></label>
+                                        <select class="form-control select2" name="colour_id" id="colour_id" required>
+                                            <option value="" selected disabled>Select Colour</option>
+                                            @foreach(\Modules\ItemColour\Models\ItemColour::all() as $color)
+                                            <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="no_certificate">@lang('Karat Berlian') <span class="text-danger">*</span></label>
+                                        <select class="form-control select2" name="karat_berlian_id" id="karat_berlian_id" required>
+                                            <option value="" selected disabled>Pilih Karat</option>
+                                            @foreach(\Modules\KaratBerlian\Models\KaratBerlian::all() as $karat)
+                                            <option value="{{ $karat->id }}">{{ $karat->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
                                 </div>
-                            </div>
-                            <div class="col-span-2 bg-transparent">
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="product_name">@lang('Product Name') <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="product_name" required value="{{ old('product_name') }}">
-                                        </div>
-
-
-                                       <div class="form-group">
-                                            <label for="product_note">Supplier</label>
-                                         <select class="form-control select2" name="supplier_id" id="supplier_id" required>
-                                                <option value="" selected disabled>Select Supplier</option>
-                                                @foreach(\Modules\People\Entities\Supplier::all() as $sup)
-                                                 <option value="{{$sup->id}}" {{ old('supplier_id') == $sup->id ? 'selected' : '' }}>
-                                                    {{$sup->supplier_name}}</option>
-
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="karat_id">@lang('Jenis Berlian') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="karat_id" id="karat_id" required>
-                                                <option value="" selected disabled>Select Jenis Berlian</option>
-                                             kkk
-                                            </select>
-                                        </div>
-                                          <div class="form-group">
-                                            <label for="karat_id">@lang('Parameter Berlian') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="karat_id" id="karat_id" required>
-                                                <option value="" selected disabled>Select Parameter Berlian</option>
-                                             kkk
-                                            </select>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label for="round_id">@lang('Round') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="round_id" id="round_id" required>
-                                                <option value="" selected disabled>Select Round</option>
-                                                @foreach(\Modules\ItemRound\Models\ItemRound::all() as $round)
-                                                <option value="{{ $round->id }}">{{ $round->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        
+                                <div id="shape1" class="flex py-0 px-0 flex-row grid grid-cols-1 gap-2 d-none">
+                                    <table style="width: 100% !important; padding: 0.5rem !important;" class="p-1 table table-bordered" id='myTable'>
+                                        <tbody>
+                                            <tr id="FacultyEmployees">
+                                                <th align="center" class="style1">Carat</th>
+                                                <th align="center" class="style1">Kadar</th>
+                                                <th align="center" class="style1">Aksi</th>
+                                            </tr>
+                                            <tr id="regFacEmpType1" data-child-type='regExemptEmpType1' data-parent-type='regFacEmpType1'>
+                                                <td align="center">
+                                                    <select class="form-control form-control-sm"
+                                                        name="round_id" id="round_id" required="">
+                                                        <option value="" selected="" disabled="">Select</option>
+                                                        <option value="1">c230</option>
+                                                    </select>
+                                                </td>
+                                                <td align="center">
+                                                    <select class="form-control form-control-sm"
+                                                        name="round_id" id="round_id" required="">
+                                                        <option value="" selected="" disabled="">Select</option>
+                                                        <option value="1">c230</option>
+                                                    </select>
+                                                </td>
+                                                <td colspan="2" class="text-center"><button type='button' class="btn btn-sm btn-outline-danger addRegular">+</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="flex py-0 flex-row grid grid-cols-2 gap-2">
+                                    <div class="form-group">
+                                        <label for="no_certificate">@lang('No .Certificate') <span class="text-danger">*</span></label>
+                                        <input id="no_certificate" type="text" class="form-control" name="no_certificate" required value="{{ old('no_certificate') }}">
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="product_code">Code <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="product_code" readonly value="{{ $code }}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="shape_id">@lang('Shape') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="shape_id" id="shape_id" required>
-                                                <option value="" selected disabled>Select Shape</option>
-                                                @foreach(\Modules\ItemShape\Models\ItemShape::all() as $shape)
-                                                <option value="{{ $shape->id }}">{{ $shape->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="certificate_id">@lang('Certificate') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="certificate_id" id="certificate_id" required>
-                                                <option value="" selected disabled>Select Certificate</option>
-                                                @foreach(\Modules\DiamondCertificate\Models\DiamondCertificate::all() as $certificate)
-                                                <option value="{{ $certificate->id }}">{{ $certificate->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="no_certificate">@lang('No .Certificate') <span class="text-danger">*</span></label>
-                                            <input id="no_certificate" type="text" class="form-control" name="no_certificate" required value="{{ old('no_certificate') }}">
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="certificate_id">@lang('Certificate') <span class="text-danger">*</span></label>
+                                        <select class="form-control select2" name="certificate_id" id="certificate_id" required>
+                                            <option value="" selected disabled>Select Certificate</option>
+                                            @foreach(\Modules\DiamondCertificate\Models\DiamondCertificate::all() as $certificate)
+                                            <option value="{{ $certificate->id }}">{{ $certificate->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                               
                                 </div>
 
 
 
+  @push('page_scripts')
+<script>
+jQuery.noConflict();
+(function($) {
 
-                                <div class="flex relative py-1">
-                                    <div class="absolute inset-0 flex items-center">
-                                        <div class="w-full border-b border-gray-300"></div>
-                                    </div>
-                                    <div class="relative flex justify-left">
-                                        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">Berat <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Detail Berat Barang."></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="flex row px-3 py-0">
-                                    {{-- =================================================================================== --}}
-                                    <div class="form-row">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="berat_emas">@lang('Berat') <span class="text-danger">*</span></label>
-                                                <input min="0" step="0.01" id="berat_emas" type="number" class="form-control" name="berat_emas" required value="{{ old('berat_emas') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="berat_accessories">@lang('Berat Accessories') <span class="text-danger">*</span></label>
-                                                <input min="0" step="0.01" id="berat_accessories" type="number" class="form-control" name="berat_accessories" required value="{{ old('berat_accessories') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="berat_label">@lang('Berat Label') <span class="text-danger">*</span></label>
-                                                <input min="0" step="0.01" id="berat_label" type="number" class="form-control" name="berat_label" required value="{{ old('berat_label') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="berat_total">@lang('Berat Total') <span class="text-danger">*</span></label>
-                                                <input min="0" step="0.01" id="berat_total" type="number" class="form-control" name="berat_total" required value="{{ old('berat_total') }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{-- =================================================================================== --}}
-                                </div>
-                                <div class="flex relative py-1">
-                                    <div class="absolute inset-0 flex items-center">
-                                        <div class="w-full border-b border-gray-300"></div>
-                                    </div>
-                                    <div class="relative flex justify-left">
-                                        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">Harga</span>
-                                    </div>
-                                </div>
-                                <div class="flex row px-3 py-0">
-                                    {{-- harga =================================================================================== --}}
-                                    <div class="form-row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="product_price">@lang('Price') <span class="text-danger">*</span></label>
-                                                <input id="product_price" type="text" class="form-control" name="product_price" required value="{{ old('product_price') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="product_cost">@lang('Cost') <span class="text-danger">*</span></label>
-                                                <input id="product_cost" type="text" class="form-control" name="product_cost" required value="{{ old('product_cost') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="product_sale">@lang('Jual') <span class="text-danger">*</span></label>
-                                                <input id="product_sale" type="text" class="form-control" name="product_sale" required value="{{ old('product_sale') }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{-- =================================================================================== --}}
-                                </div>
-                                <div class="flex relative py-0">
-                                    <div class="absolute inset-0 flex items-center">
-                                        <div class="w-full border-b border-gray-300"></div>
-                                    </div>
-                                    <div class="relative flex justify-left">
-                                        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">Lokasi <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Lokasi Penyimpanan (Gudang /Rak etc."></i></span>
-                                    </div>
-                                </div>
-                                {{-- =================================================================================== --}}
-                                <div class="form-row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="gudang_id">@lang('Gudang') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="gudang_id" id="gudang_id" required>
-                                                <option value="" selected disabled>Select Gudang</option>
-                                                @foreach(\Modules\Gudang\Models\Gudang::all() as $gudang)
-                                                 <option value="{{$gudang->id}}" {{ old('gudang_id') == $gudang->id ? 'selected' : '' }}>
-                                                    {{$gudang->code}}</option>
+    $(document).ready(function() {
+      $('#shape_id').change(function() {
+        var option = $(this).val();
+        alert(option);
+        if (option === '1') {
+         // $('#shape1').show();
+          $('#shape1').removeClass('d-none');
+        } else {
+           $('#shape2').addClass('d-none');
+           $('#shape2').hide();
+        }
+      });
+    });
 
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                     <div class="form-group">
-                                            <label for="etalase_id">@lang('Etalase') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="etalase_id" id="etalase_id" required>
-                                                <option value="" selected disabled>Select Etalase</option>
-                                                @foreach(\Modules\DataEtalase\Models\DataEtalase::all() as $et)
-                                                 <option value="{{$et->id}}" {{ old('etalase_id') == $et->id ? 'selected' : '' }}>
-                                                    {{$et->code}}</option>
+         $(document).ready(function () {
 
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
+            function addRow() {
+                var $myTable = $("#myTable").find('tbody');
+                var parent = $(this).parent("td").parent("tr").attr("id");
+                var newRowID = $myTable.children("tr").length + 1;
+                var $newRow = $("<tr id='regFacEmpType" + newRowID + "' data-parent-row='" + parent + "'>");
+                $newRow.append($(`<td align='center'>
+                    <select class="form-control form-control-sm" >
+                        <option value="" selected="" disabled="">Select</option>
+                        <option value="1">c230</option>
+                    </select>
+                    </td>`));
 
-                                       <div class="form-group">
-                                            <label for="baki_id">@lang('Baki') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2" name="baki_id" id="baki_id" required>
-                                                <option value="" selected disabled>Kode Baki</option>
-                                                @foreach(\Modules\Baki\Models\Baki::all() as $bk)
-                                                 <option value="{{$bk->id}}" {{ old('baki_id') == $bk->id ? 'selected' : '' }}>
-                                                    {{$bk->code}}</option>
+                $newRow.append($("<td></td>")
+                    .append($(`<select class="form-control form-control-sm" >
+                        <option value="" selected="" disabled="">Select</option>
+                        <option value="1">c230</option>
+                    </select>`)
+                    .bind("click", addRow)));
+                $newRow.append($("<td class='text-center'></td>").append($("<button class='removeRegular btn btn-sm btn-outline-danger' id='removeRegular" + newRowID +"' type='button'>-</button>").bind("click", function(){ removeRegularRow(newRowID); })));
+                $myTable.append($newRow);
+            };
 
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- =================================================================================== --}}
-                                <div class="flex row px-3 py-0">
-                                    <div class="p-0 col-lg-12">
-                                        <div class="form-group">
-                                            <label for="product_note">Note</label>
-                                            <textarea name="product_note" id="product_note" rows="4 " class="form-control"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            function removeRegularRow(index) {
+                        $("#regFacEmpType" + index).remove();
+                         };
+            $(".addRegular").on("click", addRow);
+        });
+
+})(jQuery);
+
+</script> 
+
+
+
+@endpush

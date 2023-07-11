@@ -69,6 +69,7 @@
 
 
                     <div class="card-body">
+
                      <div class="flex relative py-2">
                                     <div class="absolute inset-0 flex items-center">
                                         <div class="w-full border-b border-gray-300"></div>
@@ -105,7 +106,11 @@
 
 
 
-<div class="flex flex-row grid grid-cols-2 gap-2">
+<div class="flex flex-row grid grid-cols-3 gap-2">
+
+<div class="form-group"> <livewire:purchase-product/> </div>
+
+ 
     <div class="form-group">
         <label for="reference">Reference <span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="reference" required readonly value="PR">
@@ -113,7 +118,7 @@
 
 
 
-       <div class="form-group">
+                                 <div class="form-group">
 
                                           <div class="py-1">
                                         <div class="form-check form-check-inline">
@@ -156,7 +161,6 @@
 
 
  <livewire:product-cart :cartInstance="'purchase'"/>
-
 
 <div class="flex flex-row grid grid-cols-3 gap-2">
     <div class="form-group">

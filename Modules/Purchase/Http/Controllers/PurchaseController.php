@@ -799,9 +799,6 @@ public function index_data_type(Request $request)
                         $prodloc->location_id = $request->location_id;
                         $prodloc->stock = $cart_item->qty;
                         $prodloc->save();
-
-
-
                     }else{
                         $prodloc->stock = $prodloc->stock + $cart_item->qty;
                         $prodloc->save();

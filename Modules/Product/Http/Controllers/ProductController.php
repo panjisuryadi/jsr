@@ -603,9 +603,18 @@ public function index_data_gudang_utama(Request $request)
                         ->addColumn('action', function ($data) {
                               $module_name = $this->module_name;
                               $module_model = $this->module_model;
-                                  return view('product::products.partials.sortir_aksi',
+                                  return view('product::products.partials.aksi',
                             compact('module_name', 'data', 'module_model'));
                                 })
+
+
+  // ->addColumn('tracking', function ($data) {
+  //                          $module_name = $this->module_name;
+  //                           $module_model = $this->module_model;
+  //                           return view('product::products.transfer.tracking_button',
+  //                           compact('module_name', 'data', 'module_model'));
+  //                     })
+
 
 
            ->editColumn('product_name', function ($data) {
@@ -851,6 +860,7 @@ public function index_data_reparasi(Request $request)
 
     public function add_products_modal_categories(Request $request ,$id) {
         abort_if(Gate::denies('access_products'), 403);
+        $type = $request->type;
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -867,11 +877,69 @@ public function index_data_reparasi(Request $request)
                     'category',
                     'locations',
                     'code',
+                    'type',
                     'module_icon', 'module_model'));
          }
 
+//start tambah produk tanpa Modal 
+
+//tambah produk by kategori ID
+  public function add_products_by_categories(Request $request ,$id) {
+        abort_if(Gate::denies('access_products'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $category = Category::where('id', $id)->first();
+        $locations = Locations::where('name','LIKE','%Pusat%')->first();
+        $code = Product::generateCode();
+        $module_action = 'List';
+          return view(''.$module_path.'::'.$module_name.'.page.create',
+           compact('module_name',
+                    'module_title',
+                    'category',
+                    'locations',
+                    'code',
+                    'module_icon', 'module_model'));
+         }
+
+
+
+
+
    //view main kategori modal
-    public function view_main_kategori_modal(Request $request ,$id) {
+
+public function view_group_kategori_pages(Request $request ,$id) {
+        abort_if(Gate::denies('access_products'), 403);
+        $type = $request->type;
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $groupkategori = Category::where('kategori_produk_id', $id)->get();
+        $locations = Locations::where('name','LIKE','%Pusat%')->first();
+        $code = Product::generateCode();
+        $module_action = 'List';
+          return view(''.$module_path.'::'.$module_name.'.page.group_kategori',
+           compact('module_name',
+                    'module_title',
+                    'type',
+                    'groupkategori',
+                    'locations',
+                    'code',
+                    'module_icon', 'module_model'));
+                 }
+
+
+//=============================end tambah produk tanpa modal
+
+
+  //view main kategori modal
+public function view_main_kategori_modal(Request $request ,$id) {
         abort_if(Gate::denies('access_products'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -891,6 +959,11 @@ public function index_data_reparasi(Request $request)
                     'code',
                     'module_icon', 'module_model'));
                  }
+
+
+
+
+
 
     public function webcam() {
         abort_if(Gate::denies('create_products'), 403);
@@ -935,6 +1008,10 @@ public function saveAjax(Request $request)
              'product_name' => 'required',
              'product_price' => 'required|max:2147483647',
              'product_cost' => 'required|max:2147483647',
+             'berat_total' => 'required',
+             'berat_label' => 'required',
+             'berat_accessories' => 'required',
+             'berat_emas' => 'required',
         ]);
 
         if (!$validator->passes()) {
@@ -945,7 +1022,7 @@ public function saveAjax(Request $request)
         $input = $request->all();
         $input['product_price'] = preg_replace("/[^0-9]/", "", $input['product_price']);
         $input['product_cost'] = preg_replace("/[^0-9]/", "", $input['product_cost']);
-        //dd($input);
+       // dd($input);
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([
@@ -957,7 +1034,7 @@ public function saveAjax(Request $request)
             'product_quantity'                  => $input['product_quantity'],
             'product_barcode_symbology'         => $input['product_barcode_symbology'],
             'product_unit'                      => $input['product_unit'],
-            'status'                            => 0,
+            'status'                            => 0, //status Purchase 
             'product_cost'                      => $product_cost
         ]);
 
@@ -982,14 +1059,15 @@ public function saveAjax(Request $request)
 
             $produk = $$module_name_singular->id;
             $this->_saveProductsItem($input ,$produk);
-
-             activity()->log(' '.auth()->user()->name.' input ');
+             activity()->log(' '.auth()->user()->name.' input data pembelian');
             return response()->json([
-                'produk'=> $produk,
-                'success'=>'  '.$module_title.' Sukses disimpan.'
+                        'produk'=> $produk,
+                        'success'=>'  '.$module_title.' Sukses disimpan.'
 
                   ]);
-    }
+
+
+          }
 
 
 
@@ -1011,7 +1089,7 @@ public function saveAjax(Request $request)
         $input = $request->except(['document']);
         $input['product_price'] = preg_replace("/[^0-9]/", "", $input['product_price']);
         $input['product_cost'] = preg_replace("/[^0-9]/", "", $input['product_cost']);
-        // dd($input);
+        dd($input);
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([

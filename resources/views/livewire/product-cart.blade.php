@@ -34,6 +34,8 @@
                 </tr>
                 </thead>
                 <tbody>
+
+
                     @if($cart_items->isNotEmpty())
                         @foreach($cart_items as $cart_item)
                     {{--    {{ $cart_item }}

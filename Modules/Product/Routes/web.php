@@ -75,12 +75,30 @@ Route::group(['middleware' => 'auth'], function () {
         ['as' => "products.add_products_modal_categories",
          'uses' => "ProductController@add_products_modal_categories"]);
 
+
+
+//halaman add produk tanpa modal
+
+
+ Route::get("view-group-categories/{id}",
+        ['as' => "products.view_group_kategori_pages",
+         'uses' => "ProductController@view_group_kategori_pages"]);
+
+
+ Route::get("add-products-categories/{id}",
+        ['as' => "products.add_products_by_categories",
+         'uses' => "ProductController@add_products_by_categories"]);
+
+
+
+ //==============================      
+
+
+
 //view modal main kategori
   Route::get("view-main-categories/{id}",
         ['as' => "products.view_main_kategori_modal",
          'uses' => "ProductController@view_main_kategori_modal"]);
-
-
 
 
     Route::resource('products', 'ProductController');
