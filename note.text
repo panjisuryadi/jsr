@@ -1,8 +1,8 @@
 # php artisan module:make-model ProductItem Product --migration
-# php artisan module:build KaratBerlian --force
+# php artisan module:build Model --force
 # php artisan module:build Company --force
 # php artisan module:make-migration change_kadar_type_to_jenisperhiasans_table JenisPerhiasan
-# php artisan module:make-migration add_clarity_id_to_product_items_table Product
+# php artisan module:make-migration add_model_id_to_product_items_table Product
 # php artisan module:make-migration add_last_seen_to_users_table User
 # php artisan module:make-model BuysBackDetails BuysBack --migration
 

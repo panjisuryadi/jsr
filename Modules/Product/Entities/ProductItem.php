@@ -35,6 +35,10 @@ class ProductItem extends Model
         return $this->belongsTo(DataEtalase::class, 'etalase_id', 'id');
     }
 
+   public function model() {
+        return $this->belongsTo(DataEtalase::class, 'model_id', 'id');
+    }
+
 
     public function certificates() {
         return $this->belongsTo(DiamondCertificate::class, 'certificate_id', 'id');

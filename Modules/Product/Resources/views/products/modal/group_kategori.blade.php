@@ -1,4 +1,4 @@
-<div class=" px-3 py-2 grid grid-cols-3 gap-4 m-2 text-center no-underline">
+<div class=" px-3 py-2 grid grid-cols-4 gap-4 m-2 text-center no-underline">
     @foreach($groupkategori as $category)
     <div class="no-underline cursor-pointer p-2 w-full">
            <a class="w-full no-underline hover:no-underline"

@@ -12,7 +12,7 @@
 @section('content')
 <div class="container-fluid">
 
-<div class="flex grid grid-cols-2 gap-4 py-2 text-center items-center">
+{{-- <div class="flex grid grid-cols-2 gap-4 py-2 text-center items-center">
     <div onclick="location.href='{{ route('buys-back.type', ['type' => 'NonMember']) }}';" class="cursor-pointer p-1 w-full">
         <div class="justify-center items-center border-2 border-blue-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
             <div class="justify-center text-center items-center">
@@ -39,7 +39,7 @@
     </div>
 </div>
 
-
+ --}}
 
 
     <div class="row">
@@ -51,13 +51,13 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                         {{--   <a href="{{ route(''.$module_name.'.create') }}"
+         <a href="{{ route('buys-back.type', ['type' => 'toko']) }}"
                                 id="Tambah"
                                 data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
+                                 class="btn btn-primary btn-sm px-3">
                                  <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
                                 </a>
- --}}
+ 
                         </div>
                         <div id="buttons">
                         </div>

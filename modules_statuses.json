@@ -49,5 +49,6 @@
     "ItemClarity": true,
     "UserLogin": true,
     "LogActivity": true,
-    "Company": true
+    "Company": true,
+    "ProdukModel": true
 }

@@ -17,7 +17,7 @@
     <div class="container-fluid">
 
 
-<div class="flex grid grid-cols-2 gap-4 text-center items-center">
+{{-- <div class="flex grid grid-cols-2 gap-4 text-center items-center">
      <div onclick="location.href='{{ route('purchase.type', ['type' => 'NonMember']) }}';" class="cursor-pointer p-4 w-full">
         <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
         <div class="justify-center text-center items-center">
@@ -48,7 +48,7 @@
 
     </div>
 
-
+ --}}
 
 
 

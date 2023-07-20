@@ -23,7 +23,7 @@ display: inline-block;
 @section('content')
 <div class="container-fluid">
 
-<div class="flex flex-row px-0 py-1 grid grid-cols-3 gap-2 m-1 text-center no-underline">
+<div class="flex flex-row px-0 py-1 grid grid-cols-4 gap-2 m-1 text-center no-underline">
     @foreach($groupkategori as $category)
     <div class="no-underline cursor-pointer p-2 w-full">
            <a class="w-full no-underline hover:no-underline" 

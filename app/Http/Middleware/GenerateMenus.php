@@ -262,6 +262,7 @@ class GenerateMenus
                     'dataetalases*',
                     'kodetransaksis*',
                     'marketplaces*',
+                    'access_produkmodels*',
                 ],
                 'permission' => [
                                    'access_datasales',
@@ -269,11 +270,27 @@ class GenerateMenus
                                    'access_datarekenings',
                                    'access_marketplaces',
                                    'access_kodetransaksis',
-                                    'access_dataetalases'],
+                                   'access_produkmodels',
+                                    'access_dataetalases'
+                                ],
             ]);
             $dataMaster->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
+            ]);
+
+            // ProdukModels
+            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Produk Models'), [
+                'route' => 'produkmodel.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['produkmodels*'],
+                'permission'    => ['access_produkmodels'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 
@@ -718,6 +735,25 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+       // Submenu: products
+            $products->add('
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Add Product').'',
+                 [
+                'url' => 'purchase-type/toko',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'purchase*',
+                'permission'    => ['access_purchase'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
 
 
             // Submenu: products
