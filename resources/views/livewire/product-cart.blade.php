@@ -24,10 +24,10 @@
                 <tr>
                     <th class="align-middle">Product</th>
                     <th class="align-middle">Net Unit Price</th>
+                    <th class="align-middle text-center">Berat</th>
                     <th class="align-middle">Stock</th>
                     <th class="align-middle">Quantity</th>
-                   {{--  <th class="align-middle">Discount</th>
-                    <th class="align-middle">Tax</th> --}}
+                 
                     <th class="align-middle">Sub Total</th>
                     <!-- <th class="align-middle">Penyimpanan</th> -->
                     <th class="align-middle">Action</th>
@@ -38,18 +38,24 @@
 
                     @if($cart_items->isNotEmpty())
                         @foreach($cart_items as $cart_item)
-                    {{--    {{ $cart_item }}
- --}}
+
                             <tr>
                                 <td class="align-middle">
                                     {{ $cart_item->name }} <br>
+
+ 
+
                                     {{-- <span class="badge badge-success">
                                         {{ $cart_item->options->code }}
                                     </span>
                                     @include('livewire.includes.product-cart-modal') --}}
                                 </td>
 
-                                <td class="align-middle">{{ format_currency($cart_item->options->unit_price) }}</td>
+                                <td class="align-middle">{{ format_currency($cart_item->options->unit_price) }}</td>  
+
+                                <td class="align-middle text-center font-semibold">
+                                  {{ $cart_item->options->product_item }}
+                                </td>
 
                                 <td class="align-middle text-center">
                                     <span class="badge badge-info">{{ $cart_item->options->stock . ' ' . $cart_item->options->unit }}</span>

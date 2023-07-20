@@ -52,8 +52,7 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
          <a href="{{ route('buys-back.type', ['type' => 'toko']) }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
+                                    data-toggle="tooltip"
                                  class="btn btn-primary btn-sm px-3">
                                  <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
                                 </a>

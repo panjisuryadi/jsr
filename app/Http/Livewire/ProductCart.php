@@ -6,6 +6,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductItem;
 class ProductCart extends Component
 {
 
@@ -17,6 +18,7 @@ class ProductCart extends Component
     public $shipping;
     public $quantity;
     public $location;
+    public $product_item;
     public $check_quantity;
     public $discount_type;
     public $item_discount;
@@ -98,6 +100,7 @@ class ProductCart extends Component
                 'code'                  => $product['product_code'],
                 'stock'                 => $product['product_quantity'],
                 'unit'                  => $product['product_unit'],
+                'product_item'          => $this->beratTotal($product),
                 'product_tax'           => $this->calculate($product)['product_tax'],
                 'unit_price'            => $this->calculate($product)['unit_price'],
                 'location'  => 0
@@ -156,14 +159,28 @@ public function addProduk($value)
                 'product_discount'      => $cart_item->options->product_discount,
                 'product_discount_type' => $cart_item->options->product_discount_type,
                 'location'              => $cart_item->options->location,
+                'product_item'          => $cart_item->options->product_item,
             ]
         ]);
     }
     
 
-    public function updatedDiscountType($value, $name) {
+ 
+     public function beratTotal($product) {
+
+        $item = ProductItem::where('product_id', $product['id'])->first();
+       return $item['berat_total'] ?? '0';
+    }
+
+
+
+     public function updatedDiscountType($value, $name) {
         $this->item_discount[$name] = 0;
     }
+
+
+
+
 
     public function discountModalRefresh($product_id, $row_id) {
         $this->updateQuantity($row_id, $product_id);
@@ -232,6 +249,7 @@ public function addProduk($value)
             'product_discount'      => $discount_amount,
             'product_discount_type' => $this->discount_type[$product_id],
             'location'              => $cart_item->options->location,
+            'product_item'          => $cart_item->options->product_item,
         ]]);
     }
 }
