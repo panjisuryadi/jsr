@@ -132,28 +132,7 @@ margin-bottom: 0.5rem !important;
                             <div class="col-span-2 bg-transparent">
 
                           <div class="flex flex-row grid grid-cols-2 gap-2">
-                                   {{-- <div class="form-group">
-                                        <?php
-                                        $field_name = 'product_name';
-                                        $field_lable = label_case('product_name');
-                                        $field_placeholder = $field_lable;
-                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                        $required = "required";
-                                        ?>
-                                        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                        <input class="form-control"
-                                        type="text"
-                                        name="{{ $field_name }}"
-                                        id="{{ $field_name }}"
-                                        value="{{old($field_name)}}"
-                                        placeholder="{{ $field_placeholder }}">
-                                        <span class="invalid feedback" role="alert">
-                                            <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                        </span>
-                                    </div> --}}
-
-
-
+                                
                                     <div class="form-group">
                                             <label for="product_note">Model</label>
                                          <select class="form-control select2" name="produk_model" id="produk_model" required>

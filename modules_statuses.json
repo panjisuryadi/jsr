@@ -50,5 +50,6 @@
     "UserLogin": true,
     "LogActivity": true,
     "Company": true,
-    "ProdukModel": true
+    "ProdukModel": true,
+    "Timbangan": true
 }

@@ -708,10 +708,12 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'order'         => 2,
                 'activematches' => [
                     'products*',
+                    'timbangans*',
                 ],
                 'permission' => ['create_products',
                                       'print_barcodes',
                                       'access_product_transfer',
+                                      'access_timbangans',
                                       'access_products'],
             ]);
             $products->link->attr([
@@ -771,6 +773,24 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
+
+    // Timbangans
+    $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Timbangan'), [
+                'route' => 'timbangan.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['timbangans*'],
+                'permission'    => ['access_timbangans'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
 
 
 
@@ -874,6 +894,11 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
+      
+
 
 
 

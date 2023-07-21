@@ -54,14 +54,17 @@
                             @csrf
                         <div class="border-bottom">
     
-                            <div class="form-group">
+                          {{--   <div class="form-group">
                                 <label class="mb-1" for="reference">Sales <span class="text-danger">*</span>
                                     <span class="small">(ketik Nama atau Tags ID)</span></label>
                                 <input type="text" class="form-control" name="kode_sales" required>
-                            </div>
+                            </div> --}}
+
+                              <livewire:cari-sales />
+
                         </div>
                     
-                    <div class="py-2 mb-1">
+                    <div class="z-0 py-2 mb-1">
 
 
                         <div class="form-check form-check-inline">
@@ -75,7 +78,7 @@
                         </div>
                     </div>
 
-                    <div id="showMembers" class="form-group">
+                    <div id="showMembers" class="z-0 form-group">
                             <label for="customer_id">Customer <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -84,7 +87,6 @@
                                        {{-- <i class="bi bi-person-plus"></i> --}}
                                     </a>
                                 </div>
-
 
                                 <select name="customer_id" id="customer_id" class="form-control select2">
                                     <option value="" selected>Select Customer</option>
