@@ -2,7 +2,7 @@
   <x-library.alert />
   <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
                 @csrf
-             <div class="flex flex-row grid grid-cols-2 gap-4">
+             <div class="flex flex-row grid grid-cols-2 gap-4 mb-0">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'code';
@@ -25,53 +25,90 @@
 
 
             <div class="form-group">
-                                <?php
-                                $field_name = 'name';
-                                $field_lable = label_case('Name');
-                                $field_placeholder = $field_lable;
-                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                $required = "required";
-                                ?>
-                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control"
-                         type="text"
-                         name="{{ $field_name }}"
-                         id="{{ $field_name }}"
-                         placeholder="{{ $field_placeholder }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
+                <?php
+                $field_name = 'name';
+                $field_lable = label_case('Name');
+                $field_placeholder = $field_lable;
+                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                $required = "required";
+                ?>
+                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                <input class="form-control"
+                type="text"
+                name="{{ $field_name }}"
+                id="{{ $field_name }}"
+                placeholder="{{ $field_placeholder }}">
+                <span class="invalid feedback" role="alert">
+                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                </span>
+            </div>
 
-                            </div>
+        </div>
 
+  <div class="flex flex-row grid grid-cols-3 mb-0 gap-4">
 
-
-
-
-
-
-
-
-
-
-
-  {{--  <div class="form-group">
-                        <label for="jenis_group_id">@lang('Jenis Group') <span class="text-danger">*</span></label>
-                        <select class="form-control" name="jenis_group_id" id="jenis_group_id" required>
-                            <option value="" selected disabled>Select Jenis Group</option>
-                            @foreach(\Modules\JenisGroup\Models\JenisGroup::all() as $jg)
-                            <option value="{{ $jg->id }}">{{ $jg->code }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-
-
-
+<div class="form-group">
+                <?php
+                $field_name = 'ct';
+                $field_lable = label_case($field_name);
+                $field_placeholder = $field_lable;
+                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                $required = "required";
+                ?>
+                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                <input class="form-control"
+                type="text"
+                name="{{ $field_name }}"
+                id="{{ $field_name }}"
+                placeholder="{{ $field_placeholder }}">
+                <span class="invalid feedback" role="alert">
+                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                </span>
+            </div>
 
 
+<div class="form-group">
+                <?php
+                $field_name = 'hallmark';
+                $field_lable = label_case($field_name);
+                $field_placeholder = $field_lable;
+                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                $required = "required";
+                ?>
+                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                <input class="form-control"
+                type="text"
+                name="{{ $field_name }}"
+                id="{{ $field_name }}"
+                placeholder="{{ $field_placeholder }}">
+                <span class="invalid feedback" role="alert">
+                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                </span>
+            </div>
 
 
-                    </div>
+           <div class="form-group">
+                <?php
+                $field_name = 'kadar';
+                $field_lable = label_case($field_name);
+                $field_placeholder = $field_lable;
+                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                $required = "required";
+                ?>
+                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                <input class="form-control"
+                type="number"
+                name="{{ $field_name }}"
+                step=".01"
+                id="{{ $field_name }}"
+                placeholder="{{ $field_placeholder }}">
+                <span class="invalid feedback" role="alert">
+                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                </span>
+            </div>
+
+   </div>
+
 
             </form>
 
