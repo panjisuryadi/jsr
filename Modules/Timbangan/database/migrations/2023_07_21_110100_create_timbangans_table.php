@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('timbangans', function (Blueprint $table) {
             $table->id();
             //$table->unsignedBigInteger('jenis_group_id');
-            $table->decimal('old_weight', 5, 1)->default(0.01);
-            $table->decimal('new_weight', 5, 1)->default(0.01);
+            $table->decimal('old_weight', 5, 2)->default(0.01);
+            $table->decimal('new_weight', 5, 2)->default(0.01);
             $table->text('note')->nullable();
             $table->timestamps();
 
