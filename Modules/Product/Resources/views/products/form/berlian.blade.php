@@ -67,15 +67,24 @@
                                                 <td align="center">
                                                     <select class="form-control form-control-sm"
                                                         name="round_id" id="round_id" required="">
-                                                        <option value="" selected="" disabled="">Select</option>
-                                                        <option value="1">c230</option>
+                                                        <option value="" selected="" disabled="">Pilih CT</option>
+                                                       
+                                           @foreach(\Modules\JenisPerhiasan\Models\JenisPerhiasan::all() as $karat)
+                                            <option value="{{ $karat->id }}">{{ $karat->ct }}</option>
+                                            @endforeach
+
+
+
                                                     </select>
                                                 </td>
                                                 <td align="center">
                                                     <select class="form-control form-control-sm"
                                                         name="round_id" id="round_id" required="">
-                                                        <option value="" selected="" disabled="">Select</option>
-                                                        <option value="1">c230</option>
+                                                        <option value="" selected="" disabled="">Pilih Kadar</option>
+                                                          @foreach(\Modules\JenisPerhiasan\Models\JenisPerhiasan::all() as $kadar)
+                                                            <option value="{{ $kadar->id }}">{{ $kadar->kadar }}</option>
+                                                            @endforeach
+
                                                     </select>
                                                 </td>
                                                 <td colspan="2" class="text-center"><button type='button' class="btn btn-sm btn-outline-danger addRegular">+</button></td>
@@ -110,7 +119,7 @@ jQuery.noConflict();
     $(document).ready(function() {
       $('#shape_id').change(function() {
         var option = $(this).val();
-        alert(option);
+      //  alert(option);
         if (option === '1') {
          // $('#shape1').show();
           $('#shape1').removeClass('d-none');
@@ -118,6 +127,8 @@ jQuery.noConflict();
            $('#shape2').addClass('d-none');
            $('#shape2').hide();
         }
+
+        
       });
     });
 
@@ -130,15 +141,20 @@ jQuery.noConflict();
                 var $newRow = $("<tr id='regFacEmpType" + newRowID + "' data-parent-row='" + parent + "'>");
                 $newRow.append($(`<td align='center'>
                     <select class="form-control form-control-sm" >
-                        <option value="" selected="" disabled="">Select</option>
-                        <option value="1">c230</option>
+                        <option value="" selected="" disabled="">Pilih CT</option>
+                       @foreach(\Modules\JenisPerhiasan\Models\JenisPerhiasan::all() as $karat)
+                                            <option value="{{ $karat->id }}">{{ $karat->ct }}</option>
+                                            @endforeach
+
                     </select>
                     </td>`));
 
                 $newRow.append($("<td></td>")
                     .append($(`<select class="form-control form-control-sm" >
-                        <option value="" selected="" disabled="">Select</option>
-                        <option value="1">c230</option>
+                        <option value="" selected="" disabled="">Pilih Kadar</option>
+                         @foreach(\Modules\JenisPerhiasan\Models\JenisPerhiasan::all() as $karat)
+                                            <option value="{{ $karat->id }}">{{ $karat->kadar }}</option>
+                                            @endforeach
                     </select>`)
                     .bind("click", addRow)));
                 $newRow.append($("<td class='text-center'></td>").append($("<button class='removeRegular btn btn-sm btn-outline-danger' id='removeRegular" + newRowID +"' type='button'>-</button>").bind("click", function(){ removeRegularRow(newRowID); })));
