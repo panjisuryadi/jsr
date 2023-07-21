@@ -27,9 +27,7 @@
                     <th class="align-middle text-center">Berat</th>
                     <th class="align-middle">Stock</th>
                     <th class="align-middle">Quantity</th>
-                 
                     <th class="align-middle">Sub Total</th>
-                    <!-- <th class="align-middle">Penyimpanan</th> -->
                     <th class="align-middle">Action</th>
                 </tr>
                 </thead>

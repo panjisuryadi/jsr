@@ -16,7 +16,9 @@ use Modules\Product\Entities\ProductLocation;
 use Modules\Product\Entities\TrackingProduct;
 use Modules\Purchase\Entities\Purchase;
 use Modules\Locations\Entities\Locations;
+use Modules\ProdukModel\Models\ProdukModel;
 use Modules\Gudang\Models\Gudang;
+use Modules\Group\Models\Group;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
 use Modules\Upload\Entities\Upload;
@@ -995,7 +997,6 @@ public function saveAjax(Request $request)
         $validator = \Validator::make($request->all(),[
              'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
              'category_id' => 'required',
-             'product_name' => 'required',
              'product_price' => 'required|max:2147483647',
              'product_cost' => 'required|max:2147483647',
              'berat_total' => 'required',
@@ -1012,13 +1013,17 @@ public function saveAjax(Request $request)
         $input = $request->all();
         $input['product_price'] = preg_replace("/[^0-9]/", "", $input['product_price']);
         $input['product_cost'] = preg_replace("/[^0-9]/", "", $input['product_cost']);
-       // dd($input);
+        $model = ProdukModel::where('id', $input['produk_model'])->first();
+        $group = Group::where('id', $input['group_id'])->first();
+        $berat = number_format((float)($input['berat_total']), 5);
+       // dd($group->name .' '. $model->name);
+         // dd($berat);
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([
             'category_id'                       => $input['category_id'],
             'product_stock_alert'               => $input['product_stock_alert'],
-            'product_name'                      => $input['product_name'],
+            'product_name'                      => $group->name .' '. $model->name ?? 'unknown',
             'product_code'                      => $input['product_code'],
             'product_price'                     => $product_price,
             'product_quantity'                  => $input['product_quantity'],
@@ -1063,7 +1068,46 @@ public function saveAjax(Request $request)
 
 
 
-  public function save(StoreProductRequest $request)
+ 
+
+
+
+    private function _saveProductsItem($input ,$produk)
+    {
+
+          $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
+          $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
+          $gudang = Gudang::latest()->limit(1)->first()->id;
+               ProductItem::create([
+                    'product_id'                  => $produk,
+                    'location_id'                 => $input['location_id'] ?? null,
+                    'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
+                    'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
+                    'customer_id'                 => $input['customer_id'] ?? null,
+                    'karat_id'                    => $input['karat_id'] ?? null,
+                    'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
+                    'certificate_id'              => $input['certificate_id'] ?? null,
+                    'shape_id'                    => $input['shape_id'] ?? null,
+                    'round_id'                    => $input['round_id'] ?? null,
+                    'product_cost'                => $product_cost,
+                    'product_price'               => $product_price,
+                    'product_sale'                => null,
+                    'berat_emas'                  => $input['berat_emas'],
+                    'berat_label'                 => $input['berat_label'],
+                    'gudang_id'                   => $gudang ?? null,
+                    'supplier_id'                 => $input['supplier_id'] ?? null,
+                    'etalase_id'                  => $input['etalase_id'] ?? null,
+                    'baki_id'                     => $input['baki_id'] ?? null,
+                    'berat_total'                 => $input['berat_total']
+                ]);
+              // dd($input);
+              }
+
+
+
+
+
+ public function save(StoreProductRequest $request)
     {
 
 
@@ -1092,7 +1136,7 @@ public function saveAjax(Request $request)
             'product_barcode_symbology'         => $input['product_barcode_symbology'],
             'product_unit'                      => $input['product_unit'],
             'product_cost'                      =>  $product_cost
-        ]);
+              ]);
 
             if ($request->filled('image')) {
                 $img = $request->image;
@@ -1125,37 +1169,15 @@ public function saveAjax(Request $request)
 
 
 
-    private function _saveProductsItem($input ,$produk)
-    {
 
-          $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
-          $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
-          $gudang = Gudang::latest()->limit(1)->first()->id;
 
-               ProductItem::create([
-                    'product_id'                  => $produk,
-                    'location_id'                 => $input['location_id'] ?? null,
-                    'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
-                    'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
-                    'customer_id'                 => $input['customer_id'] ?? null,
-                    'karat_id'                    => $input['karat_id'] ?? null,
-                    'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
-                    'certificate_id'              => $input['certificate_id'] ?? null,
-                    'shape_id'                    => $input['shape_id'] ?? null,
-                    'round_id'                    => $input['round_id'] ?? null,
-                    'product_cost'                => $product_cost,
-                    'product_price'               => $product_price,
-                    'product_sale'                => null,
-                    'berat_emas'                  => $input['berat_emas'],
-                    'berat_label'                 => $input['berat_label'],
-                    'gudang_id'                   => $gudang ?? null,
-                    'supplier_id'                 => $input['supplier_id'] ?? null,
-                    'etalase_id'                  => $input['etalase_id'] ?? null,
-                    'baki_id'                     => $input['baki_id'] ?? null,
-                    'berat_total'                 => $input['berat_total']
-                ]);
-               //dd($input);
-              }
+
+
+
+
+
+
+
 
 
     public function show(Product $product) {
@@ -1340,7 +1362,7 @@ public function saveAjax(Request $request)
  public function getone($id){
         $product = Product::find($id);
         $stock = ProductLocation::join('locations','locations.id','product_locations.location_id')
-                ->where('type','storefront')->where('product_id',$id)->first();
+                 ->where('product_id',$id)->first();
         return response()->json([
             'product' => $product,
             'stock' => $stock
@@ -1358,6 +1380,8 @@ public function saveAjax(Request $request)
         //$purchase->delete();
         $product->delete();
         $tracking = TrackingProduct::where('product_id',$product)->first();
+        $items = ProductItem::where('product_id',$product)->first();
+        $items->delete();
         if ($tracking) {
          $tracking->delete();
         }

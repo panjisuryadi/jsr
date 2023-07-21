@@ -75,7 +75,7 @@ margin-bottom: 0.5rem !important;
         <div class="row">
             <div class="col-lg-12">
                 @include('utils.alerts')
-                   <x-library.alert />
+                 
             </div>
             <div class="col-lg-12">
                 @php
@@ -84,6 +84,11 @@ margin-bottom: 0.5rem !important;
                 @endphp
                 <div class="card">
                     <div class="card-body">
+
+                      <div class="flex flex-row">
+                            <x-library.alert />
+                      </div>
+
                         <div class="flex relative py-2 mb-4">
                             <div class="absolute inset-0 flex items-center">
                                 <div class="w-full border-b border-gray-300"></div>
@@ -127,7 +132,7 @@ margin-bottom: 0.5rem !important;
                             <div class="col-span-2 bg-transparent">
 
                           <div class="flex flex-row grid grid-cols-2 gap-2">
-                                   <div class="form-group">
+                                   {{-- <div class="form-group">
                                         <?php
                                         $field_name = 'product_name';
                                         $field_lable = label_case('product_name');
@@ -145,17 +150,29 @@ margin-bottom: 0.5rem !important;
                                         <span class="invalid feedback" role="alert">
                                             <span class="text-danger error-text {{ $field_name }}_err"></span>
                                         </span>
-                                    </div>
+                                    </div> --}}
+
 
 
                                     <div class="form-group">
+                                            <label for="product_note">Model</label>
+                                         <select class="form-control select2" name="produk_model" id="produk_model" required>
+                                                <option value="" selected disabled>Select Model</option>
+                                                     @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
+                                                            <option value="{{$sup->id}}" {{ old('produk_model') == $sup->name ? 'selected' : '' }}>
+                                                                {{$sup->name}}
+                                                            </option>
+                                                     @endforeach
+                                            </select>
+                                        </div>
+
+                                         <div class="form-group">
                                             <label for="product_note">Supplier</label>
                                          <select class="form-control select2" name="supplier_id" id="supplier_id" required>
                                                 <option value="" selected disabled>Select Supplier</option>
                                                 @foreach(\Modules\People\Entities\Supplier::all() as $sup)
                                                  <option value="{{$sup->id}}" {{ old('supplier_id') == $sup->id ? 'selected' : '' }}>
                                                     {{$sup->supplier_name}}</option>
-
                                                 @endforeach
                                             </select>
                                         </div>
@@ -177,7 +194,7 @@ margin-bottom: 0.5rem !important;
                                                 <select class="form-control select2" name="group_id" id="group_id" required>
                                                     <option value="" selected disabled>Group</option>
                                                     @foreach(\Modules\Group\Models\Group::all() as $jp)
-                                                    <option value="{{ $jp->code }}">{{ $jp->name }}</option>
+                                                    <option value="{{ $jp->id }}">{{ $jp->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -336,6 +353,30 @@ margin-bottom: 0.5rem !important;
 
                              <div class="flex flex-row grid grid-cols-2 gap-2">
                                    
+
+
+                                         <div class="form-group">
+                                                <?php
+                                                $field_name = 'product_cost';
+                                                $field_lable = label_case($field_name);
+                                                $field_placeholder = $field_lable;
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = "required";
+                                                ?>
+                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                                <input class="form-control"
+                                                type="text"
+                                                name="{{ $field_name }}"
+                                                id="{{ $field_name }}"
+                                                value="{{old($field_name)}}"
+                                                placeholder="{{ $field_placeholder }}"
+                                                >
+                                                <span class="invalid feedback" role="alert">
+                                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                                </span>
+                                            </div>
+
+
                                        <div class="form-group">
                                                 <?php
                                                 $field_name = 'product_price';
@@ -357,26 +398,7 @@ margin-bottom: 0.5rem !important;
                                                 </span>
                                             </div>
 
-                            <div class="form-group">
-                                                <?php
-                                                $field_name = 'product_cost';
-                                                $field_lable = label_case($field_name);
-                                                $field_placeholder = $field_lable;
-                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                $required = "required";
-                                                ?>
-                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                                <input class="form-control"
-                                                type="text"
-                                                name="{{ $field_name }}"
-                                                id="{{ $field_name }}"
-                                                value="{{old($field_name)}}"
-                                                placeholder="{{ $field_placeholder }}"
-                                                >
-                                                <span class="invalid feedback" role="alert">
-                                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                                </span>
-                                            </div>
+                          
 
                                     
                                 </div>
@@ -402,7 +424,7 @@ margin-bottom: 0.5rem !important;
                                 <a class="px-5 btn btn-danger"
                                     href="{{ route("products.index") }}">
                                 @lang('Cancel')</a>
-                                <button id="SimpanTambah" type="button" class="px-4 btn btn-primary">@lang('Create') @lang('Product') <i class="bi bi-check"></i></button>
+                                <button id="SimpanTambah" type="button" class="px-4 btn btn-primary">@lang('Save')  <i class="bi bi-check"></i></button>
                             </div>
                         </div>
                     </div>
@@ -651,12 +673,12 @@ jQuery.noConflict();
                             }, 2000);
                     }else{
                         printErrorMsg(data.error);
+                         $(this).closest('form').trigger("reset");
                     }
                 }
             });
         }
         function printErrorMsg (msg) {
-
             $.each( msg, function( key, value ) {
                 console.log(key);
                 $('#'+key+'').addClass("");

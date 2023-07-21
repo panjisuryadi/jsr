@@ -23,7 +23,7 @@ display: inline-block;
 @section('content')
 <div class="container-fluid">
 
-<div class="flex grid grid-cols-2 gap-4 text-center items-center">
+{{-- <div class="flex grid grid-cols-2 gap-4 text-center items-center">
      <div onclick="location.href='{{ route('products.transfer.type', ['type' => 'NonMember']) }}';" class="cursor-pointer p-4 w-full">
         <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
         <div class="justify-center text-center items-center">
@@ -53,7 +53,7 @@ display: inline-block;
 
 
     </div>
-
+ --}}
 
 
 
@@ -63,7 +63,7 @@ display: inline-block;
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div>
-                            <a href="{{ route('purchases.create') }}" class="btn btn-primary">
+                            <a href="{{ route('products.transfer.type', ['type' => 'toko']) }}" class="btn btn-primary">
                                 Transfer Product <i class="bi bi-plus"></i>
                             </a>
                         </div>

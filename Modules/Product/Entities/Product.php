@@ -67,18 +67,18 @@ class Product extends Model implements HasMedia
     }
 
 
- public function scopeTemp($query)
-    {
-        $query->where('status', 0);
-    }
+     public function scopeTemp($query)
+        {
+            $query->where('status', 0);
+        }
 
 
- public function scopeActive($query)
-    {
-        $query->where('status', 1);
-    }
+     public function scopeActive($query)
+        {
+            $query->where('status', 1);
+        }
 
-   public function scopeNeedApprove($query)
+    public function scopeNeedApprove($query)
     {
         $query->where('status', 2);
     }
@@ -90,14 +90,10 @@ class Product extends Model implements HasMedia
 
         }
 
-
-
- public function scopeApprove($query)
+   public function scopeApprove($query)
     {
         $query->where('status', 3);
     }
-
-
 
 
     public static function generateCode()

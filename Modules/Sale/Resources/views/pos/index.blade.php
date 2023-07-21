@@ -13,7 +13,7 @@
 }
  </style>
 @endsection
-
+{{-- <x-library.select2 /> --}}
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
@@ -52,8 +52,18 @@
                     <div class="card-body">
                         <form action="{{route('app.pos.store')}}" method="POST" id="addsales">
                             @csrf
-
+                        <div class="border-bottom">
+    
+                            <div class="form-group">
+                                <label class="mb-1" for="reference">Sales <span class="text-danger">*</span>
+                                    <span class="small">(ketik Nama atau Tags ID)</span></label>
+                                <input type="text" class="form-control" name="kode_sales" required>
+                            </div>
+                        </div>
+                    
                     <div class="py-2 mb-1">
+
+
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" value="member" name="member" id="members" checked>
                             <label class="form-check-label" for="members">Members</label>
@@ -70,15 +80,21 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <a href="{{ route('customers.create') }}" class="btn btn-primary">
-                                       Add <i class="bi bi-person-plus"></i>
+                                       Tambah baru ?
+                                       {{-- <i class="bi bi-person-plus"></i> --}}
                                     </a>
                                 </div>
-                                <select name="customer_id" id="customer_id" class="form-control">
+
+
+                                <select name="customer_id" id="customer_id" class="form-control select2">
                                     <option value="" selected>Select Customer</option>
                                     @foreach($customers as $customer)
                                         <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
                                     @endforeach
                                 </select>
+
+                            
+
                             </div>
                         </div>
 
@@ -208,6 +224,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 @endpush
 @push('page_scripts')
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
 
@@ -265,7 +282,7 @@
                         list = '<tr id="row'+data.product.id+'">\
                                     <td align="center" class="align-middle">'+data.product.product_name+' | '+data.product.product_code+'<input type="hidden" name="product_id[]" value="'+data.product.id+'"></input></td>\
                                     <td align="center" class="align-middle"><input name="price[]" type="hidden" value="'+data.product.product_price+'"></input>Rp. '+data.product.product_price.toLocaleString()+'</td>\
-                                    <td align="center" class="align-middle"><input class="form-control form-control-sm" min="0" max="'+data.stock.stock+'" value="1" type="number" style="min-width: 40px;max-width: 90px;" name="quantity[]" onkeyup="getsummary()"></input></td>\
+                                    <td align="center" class="align-middle"><input class="form-control form-control-sm" min="0" max="' +data.stock.stock+'" value="1" type="number" style="min-width: 40px;max-width: 90px;" name="quantity[]" onkeyup="getsummary()"></input></td>\
                                     <td align="center" class="align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProduct('+data.product.id+')">\
                                                 <i class="bi bi-trash"></i>\
                                             </button></td>\
@@ -335,3 +352,5 @@
 </script>
 
 @endpush
+
+{{-- <x-library.select2 /> --}}
