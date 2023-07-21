@@ -998,7 +998,7 @@ public function saveAjax(Request $request)
              'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
              'category_id' => 'required',
              'product_cost' => 'required|max:2147483647',
-             'product_price' => 'required|numeric|gt:product_cost',
+             'product_price' => 'required|gt:product_cost',
              'berat_total' => 'required',
              'berat_label' => 'required',
              'berat_accessories' => 'required',

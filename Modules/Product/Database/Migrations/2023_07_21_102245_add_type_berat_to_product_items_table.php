@@ -14,10 +14,10 @@ class AddTypeBeratToProductItemsTable extends Migration
     public function up()
     {
         Schema::table('product_items', function (Blueprint $table) {
-              $table->decimal('berat_total', 5, 1)->default(0.1)->after('gudang');
-              $table->decimal('berat_emas', 5, 1)->default(0.1)->after('berat_total');
-              $table->decimal('berat_accessories', 5, 1)->default(0.1)->after('berat_emas');
-              $table->decimal('berat_label', 5, 1)->default(0.1)->after('berat_accessories');
+              $table->decimal('berat_total', 5, 2)->default(0.01)->after('gudang');
+              $table->decimal('berat_emas', 5, 2)->default(0.01)->after('berat_total');
+              $table->decimal('berat_accessories', 5, 2)->default(0.01)->after('berat_emas');
+              $table->decimal('berat_label', 5, 2)->default(0.01)->after('berat_accessories');
         });
     }
 
