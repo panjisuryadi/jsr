@@ -133,6 +133,21 @@ margin-bottom: 0.5rem !important;
 
                           <div class="flex flex-row grid grid-cols-2 gap-2">
                                 
+                                       <div class="form-group">
+                                                <label for="group_id">@lang('Group')
+                                                    <span class="text-danger">*</span>
+                                                    <span class="small">Jenis Perhiasan</span>
+                                                </label>
+                                                <select class="form-control select2" name="group_id" id="group_id" required>
+                                                    <option value="" selected disabled>Group</option>
+                                                    @foreach(\Modules\Group\Models\Group::all() as $jp)
+                                                    <option value="{{ $jp->id }}">{{ $jp->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+
+
                                     <div class="form-group">
                                             <label for="product_note">Model</label>
                                          <select class="form-control select2" name="produk_model" id="produk_model" required>
@@ -145,16 +160,7 @@ margin-bottom: 0.5rem !important;
                                             </select>
                                         </div>
 
-                                         <div class="form-group">
-                                            <label for="product_note">Supplier</label>
-                                         <select class="form-control select2" name="supplier_id" id="supplier_id" required>
-                                                <option value="" selected disabled>Select Supplier</option>
-                                                @foreach(\Modules\People\Entities\Supplier::all() as $sup)
-                                                 <option value="{{$sup->id}}" {{ old('supplier_id') == $sup->id ? 'selected' : '' }}>
-                                                    {{$sup->supplier_name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+
 
 
 
@@ -167,16 +173,18 @@ margin-bottom: 0.5rem !important;
                                     <div class="col-span-2">
                                         <div class="flex flex-row gap-2">
 
+                                         <div class="form-group w-60">
+                                            <label for="product_note">Supplier</label>
+                                         <select class="form-control select2" name="supplier_id" id="supplier_id" required>
+                                                <option value="" selected disabled>Select Supplier</option>
+                                                @foreach(\Modules\People\Entities\Supplier::all() as $sup)
+                                                 <option value="{{$sup->id}}" {{ old('supplier_id') == $sup->id ? 'selected' : '' }}>
+                                                    {{$sup->supplier_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                            <div class="form-group w-60">
-                                                <label for="group_id">@lang('Group') <span class="text-danger">*</span></label>
-                                                <select class="form-control select2" name="group_id" id="group_id" required>
-                                                    <option value="" selected disabled>Group</option>
-                                                    @foreach(\Modules\Group\Models\Group::all() as $jp)
-                                                    <option value="{{ $jp->id }}">{{ $jp->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+
                                             <div class="form-group w-90">
                                                 <label for="product_code">Code <span class="text-danger">*</span></label>
                                                 <div class="input-group">

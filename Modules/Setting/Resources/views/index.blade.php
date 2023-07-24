@@ -288,7 +288,7 @@ if ($settings->site_logo) {
     </div>
 
   <div class="form-group">
-        <label for="toleransi_berat">Btn Success<span class="text-danger">*</span></label>
+        <label for="toleransi_berat">Toleransi Berat<span class="text-danger">*</span></label>
         <input type="number" step="0.1" class="form-control" name="toleransi_berat" value="{{ $settings->toleransi_berat }}" required>
     </div>
 
