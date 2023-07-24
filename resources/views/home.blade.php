@@ -11,22 +11,10 @@
 @section('content')
     <div class="container-fluid">
 
-
-{{--
-<div x-data="{ show: false }">
-        <button @click="show = !show">Show</button>
-        <h1 x-show="show">Alpine Js is working !</h1>
-    </div>
-    <hr>
-
-    <div x-data>
-        <button @click="alert('Alpine Js is working !')">Click</button>
-    </div>
-
- --}}
-
-
-
+@php
+use App\Models\User;
+$user = User::findOrFail(Auth::user()->id);
+ @endphp
 
         @can('show_total_stats')
         <div class="row">
@@ -142,6 +130,17 @@
         </div>
         @endcan
 
+
+ @if (Auth::user()->id !== 1)
+ @can('access_sortir')
+ @include('product::products.sortir_dashboard')
+ @endcan
+
+@endif
+
+
+ @can('show_logs_dashboard')
+
 <div class="row flex py-0 flex-row grid grid-cols-2 px-3 py-2 gap-2">
     <div class="card border-0 shadow-sm">
         <div class="card-header font-semibold">
@@ -160,7 +159,7 @@
         </div>
     </div>
 </div>
-
+  @endcan
 
 
 

@@ -4,6 +4,30 @@
                 @csrf
              <div class="flex flex-row grid grid-cols-1 gap-4">
 
+ <div class="form-group">
+                         <?php
+                                $field_name = 'type';
+                                $field_lable = label_case('Permissions');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+
+         <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+           <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}">
+                <option value="access_" >Access</option>
+                <option value="show_" >Show</option>
+                <option value="edit_" >Edit</option>
+                <option value="create_" >Create</option>
+                <option value="delete_" >Delete</option>
+            </select>
+
+               <span class="invalid feedback" role="alert">
+                 <span class="text-danger error-text {{ $field_name }}_err"></span>
+               </span>
+                </div>
+
+
         <div class="form-group">
                                 <?php
                                 $field_name = 'name';

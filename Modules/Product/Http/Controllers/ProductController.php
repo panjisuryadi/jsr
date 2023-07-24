@@ -1190,7 +1190,7 @@ public function saveAjax(Request $request)
         $module_item = $this->module_item;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Store';
-        abort_if(Gate::denies('show_products'), 403);
+        abort_if(Gate::denies('access_sortir'), 403);
         return view('product::products.popup.show_sortir',
             compact('product','module_title',
                             'module_path',

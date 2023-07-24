@@ -104,6 +104,17 @@
                                                         <label class="custom-control-label" for="show_monthly_cashflow">Monthly Cashflow</label>
                                                     </div>
                                                 </div>
+                                                <div class="col-12">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="show_logs_dashboard" name="permissions[]"
+                                                               value="show_logs_dashboard" {{ old('show_logs_dashboard') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="show_logs_dashboard">Show Logs Dashboard</label>
+                                                    </div>
+                                                </div>
+
+
+
                                             </div>
                                         </div>
                                     </div>

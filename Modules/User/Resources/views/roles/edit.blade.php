@@ -105,6 +105,17 @@
                                                         <label class="custom-control-label" for="show_monthly_cashflow">Monthly Cashflow</label>
                                                     </div>
                                                 </div>
+                                           <div class="col-12">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="show_logs_dashboard" name="permissions[]"
+                                                               value="show_logs_dashboard" {{ $role->hasPermissionTo('show_logs_dashboard') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="show_logs_dashboard">show logs dashboard</label>
+                                                    </div>
+                                                </div>
+
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -280,6 +291,13 @@
                                                                id="access_approve_product" name="permissions[]"
                                                                value="access_approve_product" {{ $role->hasPermissionTo('access_approve_product') ? 'checked' : '' }}>
                                                         <label class="custom-control-label" for="access_approve_product">Approve Products</label>
+                                                      </div>
+
+                                                 <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="show_tracking_products" name="permissions[]"
+                                                               value="show_tracking_products" {{ $role->hasPermissionTo('show_tracking_products') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="show_tracking_products">Tracking Products</label>
                                                       </div>
 
 

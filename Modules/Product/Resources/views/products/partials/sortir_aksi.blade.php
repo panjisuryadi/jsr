@@ -1,6 +1,4 @@
  <div class="justify-center text-center items-center">
-@can('show_products')
-
 @if($data->status == 2)
 <button class="relative btn btn-sm btn-outline-secondary" disabled>
      &nbsp;@lang('Sortir')
@@ -11,16 +9,23 @@
  <a href="{{ route(''.$module_name.'.show_sortir', $data->id) }}"
     id="Sortir"
     data-toggle="tooltip"
-     class="btn btn-outline-info py-1 btn-sm">
+     class="btn btn-outline-success py-1 btn-sm">
         <i class="bi bi-eye"></i> &nbsp;@lang('Sortir')
 
     </a>
+@can('show_tracking_products')
+<a href="{{ route('products.transfer.detail', $data->id) }}" class="btn btn-outline-info btn-sm">
+    <i class="bi bi-eye"></i> Tracking
+</a>
+@endcan
+
+
 @endif
 
 
 
 
-@endcan
+
 @can('delete_products')
 <button id="delete" class="px-2 py-1 btn btn-outline-danger btn-sm" onclick="
     event.preventDefault();

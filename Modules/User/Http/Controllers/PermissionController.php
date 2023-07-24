@@ -195,7 +195,8 @@ public function single(Request $request)
         }
 
         $input = $request->all();
-        $input['name'] = $input['name'];
+        $name = $input['type'].$input['name'];
+        $input['name'] = $name;
         $input = $request->except('_token');
         $name  = strip_tags($input['name']);
         Permissions::firstOrCreate(['name' => 'access_'.$name.'']);
@@ -251,11 +252,9 @@ public function update(Request $request, $id)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Update';
-        $$module_name_singular = Permission::findOrFail($id);
+        $$module_name_singular = $module_model::findOrFail($id);
         $validator = \Validator::make($request->all(),[
              'name' => 'required|max:191',
-
-
         ]);
 
        if (!$validator->passes()) {
@@ -264,11 +263,13 @@ public function update(Request $request, $id)
 
         $input = $request->all();
         $input = $request->except('_token');
-        $input['name'] = $input['name'];
+        $name = $input['type'].$input['name'];
+        //dd($name);
+        $input['name'] = $name;
         $$module_name_singular->update($input);
-        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+        return response()->json(['success'=>'  '.$module_title.'  Sukses diupdate.']);
 
- }
+           }
 
 
     public function destroy(Role $role) {
