@@ -161,8 +161,7 @@ public function store(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'code' => 'required|max:191|unique:'.$module_model.',code',
-             'name' => 'required|max:191',
+             'ct' => 'required|max:191|unique:'.$module_model.',ct'
 
         ]);
         if (!$validator->passes()) {
@@ -171,12 +170,12 @@ public function store(Request $request)
 
         $params = $request->all();
         $params = $request->except('_token');
-        $params['code'] = $params['code'];
-        $params['name'] = $params['name'];
         $params['ct'] = $params['ct'];
         $params['hallmark'] = $params['hallmark'];
+        $params['code'] = $params['ct'].'-'.$params['hallmark'];
+        $params['name'] = 'hallmark_'.$params['hallmark'];
         $params['kadar'] = $params['kadar'];
-        $$module_name_singular = $module_model::create($input);
+        $$module_name_singular = $module_model::create($params);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
     }
@@ -263,11 +262,11 @@ public function update(Request $request, $id)
         $$module_name_singular = $module_model::findOrFail($id);
         $validator = \Validator::make($request->all(),
             [
-            'code' => [
+            'ct' => [
                 'required',
-                'unique:'.$module_model.',code,'.$id
+                'unique:'.$module_model.',ct,'.$id
             ],
-            'name' => 'required|max:191',
+
 
 
         ]);
@@ -278,10 +277,10 @@ public function update(Request $request, $id)
 
         $input = $request->all();
         $params = $request->except('_token');
-        $params['code'] = $params['code'];
-        $params['name'] = $params['name'];
         $params['ct'] = $params['ct'];
         $params['hallmark'] = $params['hallmark'];
+        $params['code'] = $params['ct'].'-'.$params['hallmark'];
+        $params['name'] = 'hallmark_'.$params['hallmark'];
         $params['kadar'] = $params['kadar'];
         $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);

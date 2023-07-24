@@ -2,7 +2,7 @@
   <x-library.alert />
   <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
                 @csrf
-             <div class="flex flex-row grid grid-cols-2 gap-4 mb-0">
+ {{--             <div class="flex flex-row grid grid-cols-2 gap-4 mb-0">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'code';
@@ -43,7 +43,7 @@
                 </span>
             </div>
 
-        </div>
+        </div> --}}
 
   <div class="flex flex-row grid grid-cols-3 mb-0 gap-4">
 

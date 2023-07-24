@@ -3,7 +3,7 @@
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
-             <div class="flex flex-row grid grid-cols-2 gap-4">
+        {{--      <div class="flex flex-row grid grid-cols-2 gap-4">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'code';
@@ -41,7 +41,7 @@
                                 </span>
 
                             </div>
-                            </div>
+                            </div> --}}
   <div class="flex flex-row grid grid-cols-3 gap-4">
                             <div class="form-group">
                                 <?php
