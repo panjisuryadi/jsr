@@ -212,7 +212,7 @@ margin-bottom: 0.5rem !important;
                    @include('product::products.form.perak')
                         @elseif(strpos($category->category_name, 'Logam Mulia') !== false)
                    @include('product::products.modal.lm')
-                   @elseif (\Illuminate\Support\Str::contains($category->category_name, ['Emas']))
+                   @elseif (\Illuminate\Support\Str::contains($category->category_name, ['Emas', 'Perhiasan']))
                    @include('product::products.form.emas')
                     @else
                         @include('product::products.modal.all')
