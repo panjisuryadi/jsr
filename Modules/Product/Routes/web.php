@@ -90,11 +90,6 @@ Route::group(['middleware' => 'auth'], function () {
          'uses' => "ProductController@add_products_by_categories"]);
 
 
-
- //==============================      
-
-
-
 //view modal main kategori
   Route::get("view-main-categories/{id}",
         ['as' => "products.view_main_kategori_modal",
@@ -107,7 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
 
 
- //Product Transfer
+     //Product Transfer
      Route::get("product-transfer/index_data", ['as' => "products.transfer.index_data", 'uses' => "ProductTransferController@index_data"]);
 
      Route::get("product-transfer/detail/{id}", ['as' => "products.transfer.detail", 'uses' => "ProductTransferController@detail"]);

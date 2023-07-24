@@ -203,7 +203,7 @@ margin-bottom: 0.5rem !important;
 
 {{-- batas kategori form --}}
 
-  @if(strpos($category->category_name, 'Mutiara') !== false)
+               @if(strpos($category->category_name, 'Mutiara') !== false)
                     @include('product::products.form.mutiara')
                 @elseif(strpos($category->category_name, 'Berlian') !== false)
                   @include('product::products.form.berlian')
@@ -212,7 +212,7 @@ margin-bottom: 0.5rem !important;
                    @include('product::products.form.perak')
                         @elseif(strpos($category->category_name, 'Logam Mulia') !== false)
                    @include('product::products.modal.lm')
-                        @elseif (strpos($category->category_name, 'Emas') !== false)
+                   @elseif (\Illuminate\Support\Str::contains($category->category_name, ['Emas']))
                    @include('product::products.form.emas')
                     @else
                         @include('product::products.modal.all')
