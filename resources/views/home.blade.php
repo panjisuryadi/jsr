@@ -135,8 +135,7 @@ $user = User::findOrFail(Auth::user()->id);
  @can('access_sortir')
  @include('product::products.sortir_dashboard')
  @endcan
-
-@endif
+  @endif
 
 
  @can('show_logs_dashboard')
