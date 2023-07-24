@@ -31,7 +31,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-value-lg" id="totalcategory">{{$category}}</div>
-                        <div>Total Jenis Kain</div>
+                        <div>Total Kategori</div>
                         <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -111,7 +111,7 @@
                             <table id="datatable" class="table table-bordered dataTable no-footer">
                                 <thead>
                                     <th>Nama Product</th>
-                                    <th>Jenis Kain</th>
+                                    <th>Kategori</th>
                                     <th>Stock</th>
                                     <th>Location</th>
                                     <th>Action</th>
