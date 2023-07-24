@@ -17,7 +17,7 @@
             </div>
             <div
             class="font-semibold text-gray-600 no-underline hover:text-red-600 leading-tight">
-            {{ $category->category[0]->category_name }}
+            {{ $category->name }}
             </div>
         </div>
         </a>
