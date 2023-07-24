@@ -52,6 +52,7 @@ class GenerateMenus
                 'permission' => ['create_products',
                                       'access_product_categories',
                                       'access_itemrounds',
+                                      'access_masterdata',
                                       'access_itemshapes',
                                       'access_karats',
                                       'access_kategoriproduks',
