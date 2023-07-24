@@ -42,7 +42,7 @@ class HomeController extends Controller
                 'user_logins.logout_at',
                 'user_logins.created_at',
                 'users.name', 'user_logins.updated_at'])
-        ->limit(5)->get();
+        ->limit(4)->get();
         $sales = Sale::completed()->sum('total_amount');
         $sale_returns = SaleReturn::completed()->sum('total_amount');
         $purchase_returns = PurchaseReturn::completed()->sum('total_amount');
