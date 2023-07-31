@@ -19,7 +19,7 @@ class KategoriProduksController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'KategoriProduk';
+        $this->module_title = 'Main Kategori';
         $this->module_name = 'kategoriproduk';
         $this->module_path = 'kategoriproduks';
         $this->module_icon = 'fas fa-sitemap';
@@ -73,6 +73,14 @@ public function index_data()
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
+
+                            ->addColumn('image', function ($data) {
+                                $module_path = $this->module_path;
+                                 $module_name = $this->module_name;
+                  
+                               return view(''.$module_name.'::'.$module_path.'.image',
+                                compact('module_name', 'data'));
+                            })
                          
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
@@ -98,11 +106,28 @@ public function index_data()
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
-    {
-         $module_action = 'Create';
-         return view('kategoriproduk::kategoriproduks.create', compact('module_action'));
-    }
+
+
+
+public function create()
+        {
+           $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Create';
+            abort_if(Gate::denies('add_'.$module_name.''), 403);
+              return view(''.$module_name.'::'.$module_path.'.modal.create',
+               compact('module_name',
+                'module_action',
+                'module_title',
+                'module_icon', 'module_model'));
+        }
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -193,7 +218,7 @@ public function show($id)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.edit',
+          return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
             'detail',
@@ -224,25 +249,28 @@ public function show($id)
         $params['name'] = $params['name'];
         $params['description'] = $params['description'];
 
-       // if ($image = $request->file('image')) {
-       //                if ($$module_name_singular->image !== 'no_foto.png') {
-       //                    @unlink(imageUrl() . $$module_name_singular->image);
-       //                  }
-       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
-       //              $constraint->aspectRatio();
-       //              })->encode();
-       //   $normalpath = 'uploads/' . $gambar;
-       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-       //   Storage::disk($storage)->put($normalpath, (string) $normal);
-       //   $params['image'] = "$gambar";
-       //  }else{
-       //      unset($params['image']);
-       //  }
+
+
+      if ($image = $request->file('image')) {
+                      if ($$module_name_singular->image !== 'no_foto.png') {
+                          @unlink(imageUrl() . $$module_name_singular->image);
+                        }
+         $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+         $normal = Image::make($image)->resize(1000, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    })->encode();
+         $normalpath = 'uploads/' . $gambar;
+         Storage::disk('public')->put($normalpath, (string) $normal);
+         $params['image'] = "$gambar";
+        }else{
+            unset($params['image']);
+        }
+           //dd($params);
         $$module_name_singular->update($params);
-         toast(''. $module_title.' Updated!', 'success');
-         return redirect()->route(''.$module_name.'.index');
-    }
+         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+
+       }
     /**
      * Remove the specified resource from storage.
      * @param int $id

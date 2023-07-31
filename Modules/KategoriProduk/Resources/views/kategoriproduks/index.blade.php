@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                            <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
+                            <a href="{{ route(''.$module_name.'.create') }}" id="Tambah" class="btn btn-primary">
                                 Add {{$module_title}}<i class="bi bi-plus"></i>
                             </a>
                         </div>
@@ -29,6 +29,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
+                                    <th style="width: 12% !important;">Image</th>
                                     <th>Title</th>
                                     <th style="width: 15%!important;" class="text-center">
                                         Updated
@@ -93,11 +94,9 @@
                     }
                 },
 
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
+                {data: 'image', name: 'image'}, 
+                {data: 'name', name: 'name'},
+                 {
                     data: 'updated_at',
                     name: 'updated_at'
                 },
@@ -113,4 +112,31 @@
         .container()
         .appendTo("#buttons");
     </script>
+
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+$(document).on('click', '#Tambah, #Edit', function(e){
+         e.preventDefault();
+        if($(this).attr('id') == 'Tambah')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
+        }
+        if($(this).attr('id') == 'Edit')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
+        }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
+</script>
+
+
+
+
 @endpush
