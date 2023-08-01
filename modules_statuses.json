@@ -52,5 +52,6 @@
     "Company": true,
     "ProdukModel": true,
     "Timbangan": true,
-    "JenisPerak": true
+    "JenisPerak": true,
+    "ParameterKadar": true
 }

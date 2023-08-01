@@ -456,6 +456,23 @@ class GenerateMenus
             ]);
 
 
+
+          // ParameterKadars
+            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Parameter Kadar'), [
+                'route' => 'parameterkadar.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['parameterkadars*'],
+                'permission'    => ['access_parameterkadars'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
               // ParameterBerlians
             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Parameter Berlian'), [
                 'route' => 'parameterberlian.index',
