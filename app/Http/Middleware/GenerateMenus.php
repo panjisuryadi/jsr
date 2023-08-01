@@ -144,6 +144,19 @@ class GenerateMenus
             ]);
 
 
+  $Categories->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Perak'), [
+                'route' => 'jenisperak.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['jenisperaks*'],
+                'permission'    => ['access_jenisperaks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
 
 
     // DiamondCertificates

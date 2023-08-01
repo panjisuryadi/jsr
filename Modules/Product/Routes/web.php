@@ -90,7 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
          'uses' => "ProductController@add_products_by_categories"]);
 
 
-//view modal main kategori
+//get produk by kategori
   Route::get("view-main-categories/{id}",
         ['as' => "products.view_main_kategori_modal",
          'uses' => "ProductController@view_main_kategori_modal"]);
