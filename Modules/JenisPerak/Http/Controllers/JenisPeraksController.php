@@ -19,7 +19,7 @@ class JenisPeraksController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'JenisPerak';
+        $this->module_title = 'Jenis Perak';
         $this->module_name = 'jenisperak';
         $this->module_path = 'jenisperaks';
         $this->module_icon = 'fas fa-sitemap';
