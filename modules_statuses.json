@@ -53,5 +53,7 @@
     "ProdukModel": true,
     "Timbangan": true,
     "JenisPerak": true,
-    "ParameterKadar": true
+    "ParameterKadar": true,
+    "JenisMutiara": true,
+    "GoodsReceipt": true
 }

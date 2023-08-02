@@ -158,6 +158,22 @@ class GenerateMenus
             ]);
 
 
+            // JenisMutiaras
+    $Categories->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Mutiara'), [
+                'route' => 'jenismutiara.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['jenismutiaras*'],
+                'permission'    => ['access_jenismutiaras'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
 
     // DiamondCertificates
             $Categories->add(
