@@ -19,7 +19,7 @@ class GoodsReceiptsController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'GoodsReceipt';
+        $this->module_title = 'Goods Receipt';
         $this->module_name = 'goodsreceipt';
         $this->module_path = 'goodsreceipts';
         $this->module_icon = 'fas fa-sitemap';
