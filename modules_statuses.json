@@ -55,5 +55,6 @@
     "JenisPerak": true,
     "ParameterKadar": true,
     "JenisMutiara": true,
-    "GoodsReceipt": true
+    "GoodsReceipt": true,
+    "KategoriMutiara": true
 }

@@ -173,6 +173,21 @@ class GenerateMenus
             ]);
 
 
+          // KategoriMutiaras
+    $Categories->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Kategori Mutiara'), [
+                'route' => 'kategorimutiara.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['kategorimutiaras*'],
+                'permission'    => ['access_kategorimutiaras'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
 
 
     // DiamondCertificates
