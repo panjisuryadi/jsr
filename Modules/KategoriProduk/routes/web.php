@@ -14,7 +14,12 @@
 Route::group(['middleware' => 'auth'], function () {
     $module_name = 'kategoriproduk';
     $controller_name = 'KategoriProduksController';
+
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
+    //view by kategori produk
+ Route::get("$module_name/kategori/{id}", ['as' => "$module_name.view_kategori", 'uses' => "$controller_name@view_kategori"]);
+
+
     Route::resource("$module_name", "$controller_name");
 
 });

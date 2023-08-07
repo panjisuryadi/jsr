@@ -156,13 +156,14 @@ public function __construct()
          if (!$group) {
            return response()->json(['code' => '0']);
          }
+         $namagroup = Group::where('id', $group)->first()->code;
          $existingCode = true;
          $codeNumber = '';
          $cabang = 'CBR';
          while ($existingCode) {
                 $date = now()->format('dmY');
                 $randomNumber = mt_rand(100, 999);
-                $codeNumber = $cabang .'-'. $group .'-'. $randomNumber .'-'. $date;
+                $codeNumber = $cabang .'-'. $namagroup .'-'. $randomNumber .'-'. $date;
                 $existingCode = Product::where('product_code', $codeNumber)->exists();
             }
           return response()->json(['code' => $codeNumber]);
@@ -246,6 +247,7 @@ public function __construct()
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $category = Category::where('id', $id)->first();
+        
         $module_action = 'List';
          return view('product::products.add_product',
            compact('module_name',

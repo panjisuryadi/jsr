@@ -23,22 +23,22 @@ class GenerateMenus
          *
          * *********************************************************************
          */
-        \Menu::make('admin_sidebar', function ($menu) {
+        // \Menu::make('admin_sidebar', function ($menu) {
 
-            // GoodsReceipts
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('GoodsReceipts'), [
-                'route' => 'goodsreceipt.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 77,
-                'activematches' => ['goodsreceipts*'],
-                'permission'    => ['access_goodsreceipts'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-        })->sortBy('order');
+        //     // GoodsReceipts
+        //     $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('GoodsReceipts'), [
+        //         'route' => 'goodsreceipt.index',
+        //         'class' => 'nav-item',
+        //     ])
+        //     ->data([
+        //         'order'         => 77,
+        //         'activematches' => ['goodsreceipts*'],
+        //         'permission'    => ['access_goodsreceipts'],
+        //     ])
+        //     ->link->attr([
+        //         'class' => 'c-sidebar-nav-link py-2',
+        //     ]);
+        // })->sortBy('order');
 
         return $next($request);
     }

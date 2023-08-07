@@ -229,4 +229,15 @@ public function index_data()
         toast('Product Category Deleted!', 'warning');
         return redirect()->route('product-categories.index');
     }
+
+
+
+
+
+
+
+
+
+
+    
 }

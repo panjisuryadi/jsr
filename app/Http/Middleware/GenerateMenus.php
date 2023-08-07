@@ -559,7 +559,7 @@ class GenerateMenus
 
         // Karats
             $Parameters->add(
-                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.carat'), [
+                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Karat Emas'), [
                 'route' => 'karat.index',
                 'class' => 'nav-item',
             ])
@@ -1226,6 +1226,30 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
+          // GoodsReceipts
+            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Goods Receipts'), [
+                'route' => 'goodsreceipt.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 77,
+                'activematches' => ['goodsreceipts*'],
+                'permission'    => ['access_goodsreceipts'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+
+
+
+
+
+
+
+
 
     // Access Purchases Dropdown
             $purchaseReturns = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchase Returns').'', [
@@ -1278,7 +1302,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
- // Access Control Dropdown
+             // Access Control Dropdown
             $report = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Reports').'', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])

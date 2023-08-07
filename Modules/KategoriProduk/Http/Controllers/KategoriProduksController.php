@@ -24,6 +24,7 @@ class KategoriProduksController extends Controller
         $this->module_path = 'kategoriproduks';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\KategoriProduk\Models\KategoriProduk";
+        $this->module_categories = "Modules\Product\Entities\Category";
 
     }
 
@@ -311,5 +312,35 @@ public function show($id)
             }
 
     }
+
+
+   public function view_kategori($id)
+    {
+        $id = decode_id($id);
+        //dd($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_categories = $this->module_categories;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $main = $module_model::findOrFail($id);
+        $category = $module_categories::where('kategori_produk_id',$main->id)->get();
+       // dd($category);
+          return view('product::categories.page.create',
+           compact('module_name',
+            'module_action',
+            'main',
+            'category',
+            'module_title',
+            'module_icon', 'module_model'));
+
+           }
+
+
+
 
 }
