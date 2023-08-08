@@ -1,8 +1,8 @@
    <div class="flex justify-between py-1 border-bottom">
                         <div>
                         
-                         <a href="{{ route('purchase.type', ['type' => 'toko']) }}" class="btn btn-primary btn-sm">
-                                Add Purchase<i class="bi bi-plus"></i>
+                         <a href="{{ route('goodsreceipt.create') }}" class="btn btn-primary btn-sm">
+                                Add @lang('Goods Receipts')<i class="bi bi-plus"></i>
                             </a>
 
 

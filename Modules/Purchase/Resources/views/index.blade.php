@@ -63,9 +63,7 @@
     <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#tab_2">General</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#tab_3">Customer / Member</a>
-    </li>
+
 
      <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#tab_4">Supplier</a>
