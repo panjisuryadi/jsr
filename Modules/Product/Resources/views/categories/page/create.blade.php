@@ -256,6 +256,13 @@ margin-bottom: 0.5rem !important;
 
                      @if(strpos($main->name, 'Emas') !== false)
                          @include('product::categories.form.emas')
+
+                     @elseif(strpos($main->name, 'Mutiara') !== false)
+                         @include('product::categories.form.mutiara')
+
+                     @elseif(strpos($main->name, 'Perak') !== false)
+                         @include('product::categories.form.perak') 
+                            
                       @else
                          @include('product::products.modal.all')
                      @endif
@@ -264,7 +271,9 @@ margin-bottom: 0.5rem !important;
 
                   {{--  @if(strpos($category->category_name, 'Mutiara') !== false)
                     @include('product::products.form.mutiara')
+
                     @elseif(strpos($category->category_name, 'Berlian') !== false)
+
                     @include('product::products.form.berlian')
 
                   @elseif (\Illuminate\Support\Str::contains($category->category_name, ['Perak', 'Paladium']))

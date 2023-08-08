@@ -193,6 +193,22 @@ public function show($id)
 
     }
 
+
+
+// Fetch jenis Mutiara
+    public function getByid($mutiara=0){
+   $module_model = $this->module_model;
+        // Fetch 
+        $result['data'] = $module_model::orderby("name","asc")
+                    ->select('id','name')->where('jenis_mutiara_id',$mutiara)
+                    ->get();
+
+        return response()->json($result);
+
+    }
+
+
+
     /**
      * Show the form for editing the specified resource.
      * @param int $id
