@@ -1001,9 +1001,7 @@ public function saveAjax(Request $request)
              'category_id' => 'required',
              'product_cost' => 'required|max:2147483647',
              'product_price' => 'required|gt:product_cost',
-             'berat_total' => 'required',
-             'berat_label' => 'required',
-             'berat_accessories' => 'required',
+          
              'berat_emas' => 'required',
         ]);
 
@@ -1017,7 +1015,8 @@ public function saveAjax(Request $request)
         $input['product_cost'] = preg_replace("/[^0-9]/", "", $input['product_cost']);
         $model = ProdukModel::where('id', $input['produk_model'])->first();
         $group = Group::where('id', $input['group_id'])->first();
-        $berat = number_format((float)($input['berat_total']), 5);
+        $totalberat = $input['berat_total'] ?? $input['berat_emas'];
+        $berat = number_format((float)($totalberat), 5);
        // dd($group->name .' '. $model->name);
          // dd($berat);
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
@@ -1070,8 +1069,29 @@ public function saveAjax(Request $request)
 
 
 
-    private function _saveProductsItem($input ,$produk)
+       private function _saveProductsItem($input ,$produk)
     {
+
+// "product_barcode_symbology" => "C128"
+//   "product_stock_alert" => "5"
+//   "product_quantity" => "1"
+//   "product_unit" => "Gram"
+//   "upload" => "on"
+//   "image" => null
+//   "category_id" => "1"
+//   "group_id" => "4"
+//   "produk_model" => "1"
+//   "cabang_id" => "3"
+//   "baki_id" => "3"
+//   "supplier_id" => "2"
+//   "product_code" => "CBR-CCN-702-09082023"
+//   "jenis_mutiara_id" => "2"
+//   "kategori_mutiara_id" => "1"
+//   "berat_emas" => "0.07"
+//   "product_cost" => "Rp 300.000"
+//   "margin" => "10"
+//   "product_price" => "Rp. 4.000.000"
+//   "product_note" => null
 
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
@@ -1096,11 +1116,11 @@ public function saveAjax(Request $request)
                     'supplier_id'                 => $input['supplier_id'] ?? null,
                     'etalase_id'                  => $input['etalase_id'] ?? null,
                     'baki_id'                     => $input['baki_id'] ?? null,
+                    'produk_model_id'                => $input['produk_model'] ?? null,
                     'berat_total'                 => $input['berat_total']
                 ]);
               // dd($input);
               }
-
 
 
 

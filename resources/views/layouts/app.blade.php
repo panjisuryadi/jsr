@@ -16,11 +16,17 @@
     var base_url = '{{url('/')}}';
   </script>
 
-    @include('layouts.sidebar')
+    @if(! request()->routeIs('app.pos.*')
+            && ! request()->routeIs('exhibition.*')
+            )
+             @include('layouts.sidebar')
+            @endif
+
     <div class="c-wrapper">
             @if(! request()->routeIs('app.pos.*')
             && ! request()->routeIs('purchase.*')
             && ! request()->routeIs('rfid.*')
+           
             )
             <header class="c-header c-header-light c-header-fixed">
                 @include('layouts.header')

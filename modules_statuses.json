@@ -56,5 +56,6 @@
     "ParameterKadar": true,
     "JenisMutiara": true,
     "GoodsReceipt": true,
-    "KategoriMutiara": true
+    "KategoriMutiara": true,
+    "Exhibition": true
 }

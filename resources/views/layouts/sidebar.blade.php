@@ -2,6 +2,7 @@
 {{
  request()->routeIs('app.pos.*')  ||
  request()->routeIs('rfid.*')  ||
+ request()->routeIs('exhibition.*')  ||
  request()->routeIs('adjustments.*') ? 'c-sidebar-minimized' : '' }}" id="sidebar">
     <div class="c-sidebar-brand d-md-down-none">
         <a href="{{ route('home') }}">

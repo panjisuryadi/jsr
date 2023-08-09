@@ -11,52 +11,15 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-
-{{-- <div class="flex grid grid-cols-2 gap-4 py-2 text-center items-center">
-    <div onclick="location.href='{{ route('buys-back.type', ['type' => 'NonMember']) }}';" class="cursor-pointer p-1 w-full">
-        <div class="justify-center items-center border-2 border-blue-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-            <div class="justify-center text-center items-center">
-                <?php
-                $image = asset('images/logo.png');
-                ?>
-                <img id="default_1" src="{{ $image }}" alt="images"
-                class="h-16 w-16 object-contain mx-auto" />
-            </div class="py-1">
-            <div class="leading-tight py-3 font-semibold">Member / Non Member</div>
-        </div>
-    </div>
-    <div onclick="location.href='{{ route('buys-back.type', ['type' => 'toko']) }}';" class="cursor-pointer p-1 w-full">
-        <div class="justify-center items-center border-2 border-green-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-            <div class="justify-center text-center items-center">
-                <?php
-                $image = asset('images/logo.png');
-                ?>
-                <img id="default_1" src="{{ $image }}" alt="images"
-                class="h-16 w-16 object-contain mx-auto" />
-            </div class="py-1">
-            <div class="leading-tight font-semibold py-3">Toko / Gudang</div>
-        </div>
-    </div>
-</div>
-
- --}}
-
-
     <div class="row">
-
-
-
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-         <a href="{{ route(''.$module_name.'.create') }}"
-                                    data-toggle="tooltip"
-                                 class="btn btn-primary btn-sm px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a>
- 
+                            <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
+                                Add {{$module_title}}<i class="bi bi-plus"></i>
+                            </a>
                         </div>
                         <div id="buttons">
                         </div>
@@ -65,16 +28,13 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                   <th style="width: 17%!important;" class="text-center">{{ __('Date') }}</th>
-                                    <th class="text-lef">{{ __('Produk') }}</th>
-
+                                    <th style="width: 5%!important;">NO</th>
+                                    <th>Title</th>
                                     <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Jenis Barang') }}
+                                        Updated
                                     </th>
-
-                                    <th style="width: 21%!important;" class="text-center">
-                                        {{ __('Action') }}
+                                    <th style="width: 15%!important;" class="text-center">
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -121,7 +81,8 @@
             ajax: '{{ route("$module_name.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
-
+                'copy',
+                'csv',
                 'excel',
                 'pdf',
                 'print'
@@ -134,11 +95,14 @@
                     }
                 },
 
-                {data: 'date', name:  'date'},
-                {data: 'produk', name:  'produk'},
-                {data: 'status_barang', name: 'status_barang'},
-
-
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'updated_at',
+                    name: 'updated_at'
+                },
                 {
                     data: 'action',
                     name: 'action',
@@ -150,31 +114,5 @@
         .buttons()
         .container()
         .appendTo("#buttons");
-
-
-
     </script>
-
-<script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
-</script>
 @endpush
