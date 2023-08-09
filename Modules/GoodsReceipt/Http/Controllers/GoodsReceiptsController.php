@@ -113,11 +113,13 @@ public function index_data(Request $request)
             $module_icon = $this->module_icon;
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
+            $code = $module_model::generateCode();
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
+                'code',
                 'module_title',
                 'module_icon', 'module_model'));
         }

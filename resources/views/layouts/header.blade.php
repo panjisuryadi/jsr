@@ -33,6 +33,8 @@
     </li>
     @endcan
 
+
+
   <li class="c-header-nav-item dropdown d-md-down-none">
            <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
 title="@lang('Informasi Harga Emas')"
@@ -48,6 +50,24 @@ title="@lang('Informasi Harga Emas')"
          <iframe src="https://harga-emas.org/widget/widget.php?v_widget_type=current_gold_price&v_height=260"></iframe>
         </div>
     </li>
+
+<li class="c-header-nav-item dropdown d-md-down-none">
+           <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+title="@lang('Informasi Kurs hari ini')"
+           aria-haspopup="true" aria-expanded="false">
+         <img class="w-6 mb-1" src="{{  asset('images/icon/kurs.svg') }}">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
+            <div class="dropdown-header bg-light">
+                <strong>Kurs Dollar Hari Ini</strong>
+            </div>
+         <iframe src="https://kursdollar.org/widget/widget.php?v_widget_type=kurs_bi&v_height=260"></iframe>
+        </div>
+    </li>
+
+
+
+
     @can('show_notifications')
     <li class="c-header-nav-item dropdown d-md-down-none mr-2">
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
