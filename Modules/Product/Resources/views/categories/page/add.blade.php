@@ -94,7 +94,7 @@ margin-bottom: 0.5rem !important;
                                 <div class="w-full border-b border-gray-300"></div>
                             </div>
                             <div class="relative flex justify-left">
-    <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Produk <span class="px-1 hokkie font-semibold uppercase">Add</span></div>
+    <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Produk <span class="px-1 hokkie font-semibold uppercase">{{$pembelian->code}}</span></div>
                             </div>
                         </div>
 

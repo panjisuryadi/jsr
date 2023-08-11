@@ -87,6 +87,11 @@ Route::group(['middleware' => 'auth'], function () {
          'uses' => "ProductController@add_products_by_categories"]);
 
 
+ Route::get("add-products-pembelian/{id}",
+        ['as' => "products.add_products_pembelian",
+         'uses' => "ProductController@addProdukBuyBack"]);
+
+
 //get produk by kategori
   Route::get("view-main-categories/{id}",
         ['as' => "products.view_main_kategori_modal",

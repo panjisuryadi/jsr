@@ -1,12 +1,12 @@
 <div class="text-center">
-@can('edit_'.$module_name.'')
-    <a href="{{ route('products.index') }}"
-    id="Create"
+
+    <a href="{{ route('products.add_products_pembelian', encode_id($data->id)) }}"
+
     data-toggle="tooltip"
      class="btn btn-info btn-sm">
         <i class="bi bi-pencil"></i> &nbsp;@lang('Tambah Detail')
     </a>
-@endcan
+
 
     @can('delete_'.$module_name.'')
     <button id="delete" class="btn btn-danger btn-sm" onclick="

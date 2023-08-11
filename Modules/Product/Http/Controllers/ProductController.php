@@ -50,6 +50,7 @@ public function __construct()
         $this->module_model = "Modules\Product\Entities\Product";
         $this->module_item = "Modules\Product\Entities\ProductItem";
         $this->module_categories = "Modules\Product\Entities\Category";
+        $this->module_pembelian = "Modules\GoodsReceipt\Models\GoodsReceipt";
 
 
     }
@@ -843,11 +844,30 @@ public function index_data_reparasi(Request $request)
             'category',
             'module_title',
             'module_icon', 'module_model'));
+           }
 
 
+    public function addProdukBuyBack($id) {
+        $id = decode_id($id);
+        abort_if(Gate::denies('create_products'), 403);
 
-    }
-
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_pembelian = $this->module_pembelian;
+        $module_action = 'Create';
+        $category = Category::get();
+        $pembelian = $module_pembelian::where('id', $id)->first();
+       return view('product::categories.page.add',
+           compact('module_name',
+            'module_action',
+            'category',
+            'pembelian',
+            'module_title',
+            'module_icon', 'module_model'));
+           }
 
 
 public function create2()
