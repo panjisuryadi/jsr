@@ -6,9 +6,14 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 //use Modules\JenisGroup\Models\JenisGroup;
-class GoodsReceipt extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class GoodsReceipt extends Model implements HasMedia
 {
-    use HasFactory;
+
+    use HasFactory, InteractsWithMedia;
     protected $table = 'goodsreceipts';
     protected $guarded = [];
     public const GRCODE = 'PO';
@@ -21,6 +26,17 @@ class GoodsReceipt extends Model
   //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
   //   }
 
+    public function registerMediaCollections(): void {
+            $url = url('images/fallback_product_image.png');
+            $this->addMediaCollection('pembelian')
+                ->useFallbackUrl($url);
+        }
+
+        public function registerMediaConversions(Media $media = null): void {
+            $this->addMediaConversion('thumbnail')
+                ->width(50)
+                ->height(50);
+        }
 
       public static function generateCode()
         {
@@ -38,8 +54,6 @@ class GoodsReceipt extends Model
 
             return $orderCode;
         }
-
-
 
     protected static function newFactory()
     {

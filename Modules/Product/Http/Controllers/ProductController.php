@@ -49,6 +49,7 @@ public function __construct()
         // module model name, path
         $this->module_model = "Modules\Product\Entities\Product";
         $this->module_item = "Modules\Product\Entities\ProductItem";
+        $this->module_categories = "Modules\Product\Entities\Category";
 
 
     }
@@ -829,8 +830,71 @@ public function index_data_reparasi(Request $request)
     public function create() {
         abort_if(Gate::denies('create_products'), 403);
 
-        return view('product::products.create');
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_action = 'Create';
+        $category = Category::get();
+       return view('product::categories.page.add',
+           compact('module_name',
+            'module_action',
+            'category',
+            'module_title',
+            'module_icon', 'module_model'));
+
+
+
     }
+
+
+
+public function create2()
+    {
+       // $id = decode_id($id);
+        $id = 2;
+        //dd($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_categories = $this->module_categories;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $main = $module_model::findOrFail($id);
+        $category = Category::get();
+       // dd($category);
+          return view('product::categories.page.add',
+           compact('module_name',
+            'module_action',
+            'main',
+            'category',
+            'module_title',
+            'module_icon', 'module_model'));
+
+           }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function createModal() {
@@ -1034,7 +1098,7 @@ public function saveAjax(Request $request)
             'product_cost'                      => $product_cost
         ]);
 
-               if ($request->filled('image')) {
+         if ($request->filled('image')) {
                 $img = $request->image;
                 $folderPath = "uploads/";
                 $image_parts = explode(";base64,", $img);

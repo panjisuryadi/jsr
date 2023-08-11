@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use Modules\Upload\Entities\Upload;
 
 class GoodsReceiptsController extends Controller
 {
@@ -71,16 +72,30 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            return view('includes.action_gr',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('name', function ($data) {
+
+                            ->addColumn('image', function ($data) {
+                                $url = $data->getFirstMediaUrl('pembelian', 'thumbnail');
+                                return '<div class="items-center text-center">
+                                <img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/></div>';
+                                 })
+
+                        ->editColumn('date', function ($data) {
                              $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
+                                     ' .$data->date . '
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                              ->editColumn('berat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->berat_barang . ' 
                                     </div>';
                                 return $tb;
                             })
+                     
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -91,7 +106,12 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['updated_at',
+                         'date',
+                         'action',
+                         'berat',
+                         'image', 
+                         'name'])
                         ->make(true);
                      }
 
@@ -130,9 +150,9 @@ public function index_data(Request $request)
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function storesdsd(Request $request)
     {
-         abort_if(Gate::denies('create_goodsreceipt'), 403);
+        abort_if(Gate::denies('create_goodsreceipt'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -146,8 +166,8 @@ public function index_data(Request $request)
              'name' => 'required|min:3|max:191',
              'description' => 'required|min:3|max:191',
          ]);
-       // $params = $request->all();
-        //dd($params);
+        $params = $request->all();
+        dd($params);
         $params = $request->except('_token');
         $params['name'] = $params['name'];
         $params['description'] = $params['description'];
@@ -169,6 +189,93 @@ public function index_data(Request $request)
          toast(''. $module_title.' Created!', 'success');
          return redirect()->route(''.$module_name.'.index');
     }
+
+
+
+
+
+public function store(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+          $request->validate([
+             'code' => 'required|max:191|unique:'.$module_model.',code',
+             'no_invoice' => 'required',
+             'qty' => 'required',
+             'berat_barang' => 'required',
+             'date' => 'required',
+             'berat_real' => 'required',
+             'pengirim' => 'required',
+             'qty_diterima' => 'required',
+             'status' => 'required',
+             'supplier_id' => 'required',
+         ]);
+        //$input = $request->all();
+         $input = $request->except('_token');
+        //dd($input);
+        //$input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+
+
+        if ($image = $request->file('document')) {
+         $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+
+            dd($gambar);
+         $normal = Image::make($image)->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    })->encode();
+         $normalpath = 'uploads/' . $gambar;
+         if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+         Storage::disk($storage)->put($normalpath, (string) $normal);
+         $input['image'] = "$gambar";
+        }else{
+           $input['image'] = 'no_foto.png';
+        }
+
+
+
+
+        $$module_name_singular = $module_model::create([
+            'code'                       => $input['code'],
+            'no_invoice'                 => $input['no_invoice'],
+            'qty'                        => $input['qty'],
+            'qty_diterima'               => $input['qty_diterima'],
+            'date'                       => $input['date'],
+            'status'                     => $input['status'],
+            'supplier_id'                => $input['supplier_id'],
+            'berat_barang'               => $input['berat_barang'],
+            'berat_real'                 => $input['berat_real'],
+            'pengirim'                   => $input['pengirim']
+        ]);
+
+         // if ($request->filled('image')) {
+         //        $img = $request->image;
+         //        $folderPath = "uploads/";
+         //        $image_parts = explode(";base64,", $img);
+         //        $image_type_aux = explode("image/", $image_parts[0]);
+         //        $image_type = $image_type_aux[1];
+         //        $image_base64 = base64_decode($image_parts[1]);
+         //        $fileName ='webcam_'. uniqid() . '.jpg';
+         //        $file = $folderPath . $fileName;
+         //        Storage::disk('local')->put($file,$image_base64);
+         //        $$module_name_singular->addMedia(Storage::path('uploads/' . $fileName))
+         //        ->toMediaCollection('pembelian');
+         //        }
+
+          
+
+         activity()->log(' '.auth()->user()->name.' input data pembelian');
+         
+          toast(''. $module_title.' Created!', 'success');
+           return redirect()->route(''.$module_name.'.index');
+  
+         }
+
+
+
 
 
 
