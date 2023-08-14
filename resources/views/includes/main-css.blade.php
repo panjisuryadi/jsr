@@ -33,6 +33,17 @@ body {
     color: #FF9800 !important;
     letter-spacing: 0.2rem;
    }
+
+.btn-jsr {
+    color: {{settings()->btn_color}} !important;
+    letter-spacing: 0.2rem;
+   }
+
+   .border-jsr {
+    border-color:{{settings()->btn_color}} !important;
+   }
+
+
 .c-sidebar {
     color: {{settings()->link_color}} !important;
     background:{{settings()->bg_sidebar}} !important;
