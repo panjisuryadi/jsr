@@ -916,6 +916,27 @@ public function create2()
     }
 
 
+  public function add_produk_modal_from_pembelian($id) {
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_pembelian = $this->module_pembelian;
+        $module_name_singular = Str::singular($module_name);
+        $listcategories = KategoriProduk::with('category')->get();
+        $pembelian = $module_pembelian::where('id', $id)->first();
+        abort_if(Gate::denies('create_products'), 403);
+         return view(''.$module_path.'::'.$module_name.'.modal.catlist',
+           compact('module_name',
+                    'module_title',
+                    'listcategories',
+                    'pembelian',
+                    'module_icon', 'module_model'));
+    }
+
+
 
 
     public function add_products_modal_categories(Request $request ,$id) {
@@ -945,6 +966,7 @@ public function create2()
 
 //tambah produk by kategori ID
   public function add_products_by_categories(Request $request ,$id) {
+        $id = decode_id($id);
         abort_if(Gate::denies('access_products'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -964,9 +986,6 @@ public function create2()
                     'code',
                     'module_icon', 'module_model'));
          }
-
-
-
 
 
    //view main kategori modal
@@ -1120,7 +1139,9 @@ public function saveAjax(Request $request)
             }
 
             $produk = $$module_name_singular->id;
+
             $this->_saveProductsItem($input ,$produk);
+
              activity()->log(' '.auth()->user()->name.' input data pembelian');
             return response()->json([
                         'produk'=> $produk,
@@ -1130,7 +1151,6 @@ public function saveAjax(Request $request)
 
 
           }
-
 
 
 
@@ -1164,6 +1184,9 @@ public function saveAjax(Request $request)
                     'produk_model_id'             => $input['produk_model'] ?? null,
                     'berat_total'                 => $input['berat_total']
                 ]);
+
+                 
+
               // dd($input);
               }
 
@@ -1228,16 +1251,6 @@ public function saveAjax(Request $request)
 
              return redirect()->route('products.index');
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1324,10 +1337,10 @@ public function saveAjax(Request $request)
             $$module_name_singular->update($params);
                     return response()->json(['success'=>'  '.$module_title.' Sukses di update.']);
 
-     }
+                    }
 
 
-
+     
 
 
 

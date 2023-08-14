@@ -256,7 +256,7 @@ margin-bottom: 0.5rem !important;
                                 </div>
 
 
-                      @include('product::categories.form.emas')
+         @include('product::categories.form.emas')
 
                     {{--  @if(strpos($main->name, 'Emas') !== false)
                          @include('product::categories.form.emas')

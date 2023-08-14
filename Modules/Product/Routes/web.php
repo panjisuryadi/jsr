@@ -59,6 +59,11 @@ Route::group(['middleware' => 'auth'], function () {
 
       Route::get("products/create-modal", ['as' => "products.create-modal", 'uses' => "ProductController@createModal"]);
 
+
+
+  Route::get("products/add_produk_modal_from_pembelian/{id}", ['as' => "products.add_produk_modal_from_pembelian", 'uses' => "ProductController@add_produk_modal_from_pembelian"]);
+
+
       Route::get("products/getproduct", ['as' => "products.getsalesProduct", 'uses' => "ProductController@getsalesProduct"]);
       Route::get("products/getone/{id}", ['as' => "products.getone", 'uses' => "ProductController@getone"]);
 
@@ -77,9 +82,19 @@ Route::group(['middleware' => 'auth'], function () {
 //halaman add produk tanpa modal
 
 
+
+
+ Route::get("product/add-form-pembelian/{id}",
+        ['as' => "products.view_group_kategori_pages",
+         'uses' => "ProductController@view_group_kategori_pages"]);
+
+
  Route::get("view-group-categories/{id}",
         ['as' => "products.view_group_kategori_pages",
          'uses' => "ProductController@view_group_kategori_pages"]);
+
+
+
 
 
  Route::get("add-products-categories/{id}",

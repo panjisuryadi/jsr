@@ -52,6 +52,25 @@
         </div>
     </div>
 </div>
+
+
+<div id="ModalGroupKategori" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title" id="ModalHeaderGroupkategori"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalContentGroupKategori"> </div>
+         <div class="modal-footer" id="ModalFooterGroupKategori"></div>
+
+        </div>
+    </div>
+</div>
+
+
 @endsection
 
 <x-library.datatable />
@@ -128,23 +147,33 @@
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+//group modal kategori
+
+  $(document).on('click', '#GroupKategori', function(e){
          e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
+          $('#ModalBacktoKategori').modal('hide');
+          $("#ModalBacktoKategori").trigger("reset");
+               $('#ModalKategori').modal('hide');
+          $('#ModalKategori').modal('hide');
+          $("#ModalKategori").trigger("reset");
+         if($(this).attr('id') == 'GroupKategori')
+         {
+
+            $('.modal-dialog').removeClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
+            $('.modal-dialog').addClass('modal-xl');
+            $('#ModalHeaderGroupkategori').html('<i class="bi bi-grid-fill"></i> &nbspGroup {{ Label_case(' Kategori') }}');
         }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
+        $('#ModalContentGroupKategori').load($(this).attr('href'));
+        $('#ModalGroupKategori').modal('show');
+        $('#ModalGroupKategori').modal({
+                        backdrop: 'static',
+                        keyboard: true,
+                        show: true
+                });
     });
+
+
 })(jQuery);
 </script>
 @endpush
