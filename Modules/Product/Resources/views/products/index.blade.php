@@ -32,7 +32,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
     <div class="no-underline cursor-pointer px-0 py-2 w-full">
            <a class="w-full no-underline hover:no-underline" id="openModalKategori"
                 href="{{ route('kategoriproduk.view_kategori',encode_id($category->id)) }}" >
-        <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-2 py-3 rounded-lg transform transition duration-500 hover:scale-110">
+        <div class="justify-center items-center border-2 border-gray-400 bg-white  px-2 py-3 rounded-lg transform transition duration-500 hover:scale-110">
             <div class="justify-center text-center items-center">
                 <?php
                 if ($category->image) {
