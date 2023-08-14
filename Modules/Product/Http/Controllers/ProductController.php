@@ -110,9 +110,6 @@ public function __construct()
     }
 
 
-
-
-
  public function sortir() {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

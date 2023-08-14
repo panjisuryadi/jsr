@@ -26,21 +26,21 @@
                         <div class="p-1">
                             <div class="form-group">
                                 <label class="mb-1" for="supplier_name">{{__('Supplier Name')}}  <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="supplier_name" required>
+                                <input type="text" placeholder="{{__('Supplier Name')}}" class="form-control" name="supplier_name" required>
                             </div>
 
                                <div class="form-group">
                                         <label class="mb-1"  for="toko">{{__('Store')}}  <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="toko" required>
+                                        <input type="text" placeholder="{{__('Store')}}" class="form-control" name="toko" required>
                                     </div>
                              <div class="form-group">
-                                <label class="mb-1" for="supplier_email">Email <span class="text-danger">*</span></label>
-                                <input type="email" class="form-control" name="supplier_email" required>
+                                <label class="mb-1" for="supplier_email">Email</label>
+                                <input type="email" placeholder="{{__('Email')}}" class="form-control" name="supplier_email" >
                             </div>
 
                               <div class="form-group">
                                         <label class="mb-1"  for="city">{{__('City')}}  <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="city" required>
+                                        <input type="text" placeholder="{{__('City')}}" class="form-control" name="city" required>
                                     </div>  
 
                                     

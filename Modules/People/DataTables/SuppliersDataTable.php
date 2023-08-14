@@ -51,7 +51,7 @@ class SuppliersDataTable extends DataTable
             Column::make('supplier_name')
                 ->className('text-center align-middle'),
 
-            Column::make('supplier_email')
+            Column::make('toko')
                 ->className('text-center align-middle'),
 
             Column::make('supplier_phone')
