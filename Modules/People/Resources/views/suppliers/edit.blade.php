@@ -38,7 +38,7 @@
                                         <input type="text" class="form-control" name="toko" value="{{ $supplier->toko }}">
                                     </div>
                              <div class="form-group">
-                                <label class="mb-1" for="supplier_email">Email <span class="text-danger">*</span></label>
+                                <label class="mb-1" for="supplier_email">Email  <span class="small text-danger">(Boleh dikosongkan)</span></label>
                                 <input type="email" class="form-control" name="supplier_email" value="{{ $supplier->supplier_email }}">
                             </div>
 

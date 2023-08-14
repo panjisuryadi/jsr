@@ -34,7 +34,8 @@
                                         <input type="text" placeholder="{{__('Store')}}" class="form-control" name="toko" required>
                                     </div>
                              <div class="form-group">
-                                <label class="mb-1" for="supplier_email">Email</label>
+                                <label class="mb-1" for="supplier_email">Email
+                                    <span class="small text-danger">(Boleh dikosongkan)</span></label>
                                 <input type="email" placeholder="{{__('Email')}}" class="form-control" name="supplier_email" >
                             </div>
 
