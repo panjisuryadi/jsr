@@ -49,12 +49,12 @@
 
     <div class="form-group">
         <label for="notification_email">Btn Cancel<span class="text-danger">*</span></label>
-        <input type="color" class="form-control" name="btn_color" value="{{ $settings->btn_cancel }}" required>
+        <input type="color" class="form-control" name="btn_cancel" value="{{ $settings->btn_cancel }}" required>
     </div>
 
     <div class="form-group">
         <label for="notification_email">Btn Success<span class="text-danger">*</span></label>
-        <input type="color" class="form-control" name="btn_color" value="{{ $settings->btn_sukses }}" required>
+        <input type="color" class="form-control" name="btn_sukses" value="{{ $settings->btn_sukses }}" required>
     </div>
 
 

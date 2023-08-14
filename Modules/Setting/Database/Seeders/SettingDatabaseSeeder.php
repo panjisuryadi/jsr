@@ -22,20 +22,24 @@ class SettingDatabaseSeeder extends Seeder
             'notification_email' => 'notification@test.com',
             'default_currency_id' => 1,
             'default_currency_position' => 'prefix',
-            'bg_sidebar' => '#9E7D27',
+            'bg_sidebar' => '#ee0086',
             'bg_sidebar_hover' => '#FFC82B',
             'bg_sidebar_aktif' => '#f7d584',
             'bg_sidebar_link' => '#fff',
             'bg_sidebar_link_hover' => '#333',
-            'link_color' => '#cb9d30',
-            'link_hover' => '#cb9d30',
-            'header_color' => '#cb9d30',
-            'btn_color' => '#cb9d30',
+            'link_color' => '#ee0086',
+            'link_hover' => '#ee0086',
+            'header_color' => '#ee0086',
+            'btn_color' => '#ee0086',
             'btn_cancel' => '#c41c10',
             'btn_sukses' => '#0b8c4d',
             'footer_text' => 'Hokkie POS © 2021 || Developed by Global tekno digital Solusi',
             'company_address' => 'Bandung, Indonesia'
         ]);
     }
+
+    
+
+
 }
 

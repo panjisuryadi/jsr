@@ -34,7 +34,7 @@
 
 .btn-link {
     font-weight: 400;
-    color:  {{settings()->btn_color}} !important;
+    color:  {{settings()->link_color}} !important;
     text-decoration: none;
 }
 
@@ -93,7 +93,6 @@ if (settings()->site_logo) {
 
 
 <div class="flex justify-between px-1 py-1 pb-3 border-bottom">
-
 
     <div class="w-2/5 flex justify-center items-center">  <img class="items-center object-contain h-32" src="{{ $logo }}" alt="Logo"></div>
     <div class="w-4/5 mt-3">
