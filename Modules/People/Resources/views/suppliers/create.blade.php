@@ -17,57 +17,64 @@
             <div class="row">
                 <div class="col-lg-12">
                     @include('utils.alerts')
-                    <div class="form-group">
-                        <button class="btn btn-primary">Create Supplier <i class="bi bi-check"></i></button>
-                    </div>
+                  
                 </div>
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="supplier_name">Supplier Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="supplier_name" required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="supplier_email">Email <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" name="supplier_email" required>
-                                    </div>
-                                </div>
+                    <div class="flex flex-row grid grid-cols-2 gap-2">
+                        <div class="p-1">
+                            <div class="form-group">
+                                <label class="mb-1" for="supplier_name">{{__('Supplier Name')}}  <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="supplier_name" required>
                             </div>
 
-                            <div class="form-row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="supplier_phone">Phone <span class="text-danger">*</span></label>
+                               <div class="form-group">
+                                        <label class="mb-1"  for="toko">{{__('Store')}}  <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="toko" required>
+                                    </div>
+                             <div class="form-group">
+                                <label class="mb-1" for="supplier_email">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" name="supplier_email" required>
+                            </div>
+
+                              <div class="form-group">
+                                        <label class="mb-1"  for="city">{{__('City')}}  <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="city" required>
+                                    </div>  
+
+                                    
+                        </div>
+
+
+                        <div class="p-1">
+                           
+
+                                 <div class="form-group">
+                                        <label class="mb-1" for="supplier_phone">{{__('Phone')}} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="supplier_phone" required>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="city">City <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="city" required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="country">Country <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="country" required>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-row">
-                                <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="address">Address <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="address" required>
+                                        <label class="mb-1" for="address">{{__('Address')}} <span class="text-danger">*</span></label>
+                                        
+                                        <textarea rows="5" name="address" class="form-control"></textarea>
                                     </div>
-                                </div>
-                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+<div class="flex justify-between px-3 pb-2 py-2 border-top">
+    <div></div>
+    <div class="form-group">
+        <button class="btn btn-primary">Create Supplier <i class="bi bi-check"></i></button>
+    </div>
+</div>
+                    
                         </div>
                     </div>
                 </div>

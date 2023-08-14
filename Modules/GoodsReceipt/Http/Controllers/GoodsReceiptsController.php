@@ -70,9 +70,10 @@ public function index_data(Request $request)
 
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
-                           $module_name = $this->module_name;
+                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action_gr',
+                            $module_path = $this->module_path;
+                              return view(''.$module_name.'::'.$module_path.'.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
 
@@ -236,21 +237,20 @@ public function store(Request $request)
 
 
         if ($image = $request->file('document')) {
-         $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+         $gambar = 'pembelian_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
 
             dd($gambar);
          $normal = Image::make($image)->resize(600, null, function ($constraint) {
                     $constraint->aspectRatio();
                     })->encode();
          $normalpath = 'uploads/' . $gambar;
-         if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-         Storage::disk($storage)->put($normalpath, (string) $normal);
+     
+         Storage::disk('local')->put($normalpath, (string) $normal);
          $input['image'] = "$gambar";
+         dd($gambar);
         }else{
            $input['image'] = 'no_foto.png';
         }
-
-
 
 
         $$module_name_singular = $module_model::create([
@@ -263,6 +263,7 @@ public function store(Request $request)
             'supplier_id'                => $input['supplier_id'],
             'berat_barang'               => $input['berat_barang'],
             'berat_real'                 => $input['berat_real'],
+            'count'                      => $input['qty'],
             'pengirim'                   => $input['pengirim']
         ]);
 

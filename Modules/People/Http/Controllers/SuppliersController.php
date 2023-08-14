@@ -34,16 +34,17 @@ class SuppliersController extends Controller
             'supplier_phone' => 'required|max:255',
             'supplier_email' => 'required|email|max:255',
             'city'           => 'required|string|max:255',
-            'country'        => 'required|string|max:255',
             'address'        => 'required|string|max:500',
+            'toko'           => 'required|string|max:255',
         ]);
 
         Supplier::create([
             'supplier_name'  => $request->supplier_name,
+            'toko'           => $request->toko,
             'supplier_phone' => $request->supplier_phone,
             'supplier_email' => $request->supplier_email,
             'city'           => $request->city,
-            'country'        => $request->country,
+            'country'        => 'Indonesia',
             'address'        => $request->address
         ]);
 
@@ -71,20 +72,21 @@ class SuppliersController extends Controller
         abort_if(Gate::denies('edit_suppliers'), 403);
 
         $request->validate([
+            'toko'           => 'required|string|max:255',
             'supplier_name'  => 'required|string|max:255',
             'supplier_phone' => 'required|max:255',
             'supplier_email' => 'required|email|max:255',
             'city'           => 'required|string|max:255',
-            'country'        => 'required|string|max:255',
             'address'        => 'required|string|max:500',
         ]);
 
         $supplier->update([
             'supplier_name'  => $request->supplier_name,
+            'toko'           => $request->toko,
             'supplier_phone' => $request->supplier_phone,
             'supplier_email' => $request->supplier_email,
             'city'           => $request->city,
-            'country'        => $request->country,
+            'country'        => 'Indonesia',
             'address'        => $request->address
         ]);
 
