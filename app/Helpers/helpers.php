@@ -449,21 +449,6 @@ if (!function_exists('pstatus')) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  if (!function_exists('tgljam')) {
         function tgljam($value)
         {

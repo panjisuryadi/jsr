@@ -83,8 +83,14 @@ public function index_data(Request $request)
                                  })
 
                         ->editColumn('date', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .$data->date . '
+                             $tb = '<div class="text-xs items-center text-center">
+                                     ' .tanggal($data->date) . '
+                                    </div>';
+                                return $tb;
+                            }) 
+                            ->editColumn('code', function ($data) {
+                             $tb = '<div class="text-xs text-blue-500 font-semibold items-center text-center">
+                                     ' .$data->code . '
                                     </div>';
                                 return $tb;
                             }) 
@@ -92,6 +98,13 @@ public function index_data(Request $request)
                               ->editColumn('berat', function ($data) {
                              $tb = '<div class="items-center text-center">
                                      ' .$data->berat_barang . ' 
+                                    </div>';
+                                return $tb;
+                            })  
+
+                           ->editColumn('qty', function ($data) {
+                             $tb = '<div class="font-semibold items-center text-center">
+                                     ' .$data->qty . ' 
                                     </div>';
                                 return $tb;
                             })
@@ -109,8 +122,10 @@ public function index_data(Request $request)
                         ->rawColumns(['updated_at',
                          'date',
                          'action',
+                         'code',
                          'berat',
                          'image', 
+                         'qty', 
                          'name'])
                         ->make(true);
                      }
