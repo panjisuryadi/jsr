@@ -850,7 +850,6 @@ public function index_data_reparasi(Request $request)
     public function addProdukBuyBack($id) {
         $id = decode_id($id);
         abort_if(Gate::denies('create_products'), 403);
-
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -860,6 +859,7 @@ public function index_data_reparasi(Request $request)
         $module_action = 'Create';
         $category = Category::get();
         $pembelian = $module_pembelian::where('id', $id)->first();
+        //dd($pembelian->code);
        return view('product::categories.page.add',
            compact('module_name',
             'module_action',
@@ -896,24 +896,6 @@ public function create2()
             'module_icon', 'module_model'));
 
            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1085,7 +1067,6 @@ public function saveAjax(Request $request)
              'category_id' => 'required',
              'product_cost' => 'required|max:2147483647',
              'product_price' => 'required|gt:product_cost',
-          
              'berat_emas' => 'required',
         ]);
 
@@ -1101,12 +1082,13 @@ public function saveAjax(Request $request)
         $group = Group::where('id', $input['group_id'])->first();
         $totalberat = $input['berat_total'] ?? $input['berat_emas'];
         $berat = number_format((float)($totalberat), 5);
-       // dd($group->name .' '. $model->name);
-         // dd($berat);
+         // dd($group->name .' '. $model->name);
+         dd($input);
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([
             'category_id'                       => $input['category_id'],
+            'kode_pembelian'                    => $input['kode_pembelian'],
             'product_stock_alert'               => $input['product_stock_alert'],
             'product_name'                      => $group->name .' '. $model->name ?? 'unknown',
             'product_code'                      => $input['product_code'],
@@ -1156,27 +1138,6 @@ public function saveAjax(Request $request)
        private function _saveProductsItem($input ,$produk)
     {
 
-// "product_barcode_symbology" => "C128"
-//   "product_stock_alert" => "5"
-//   "product_quantity" => "1"
-//   "product_unit" => "Gram"
-//   "upload" => "on"
-//   "image" => null
-//   "category_id" => "1"
-//   "group_id" => "4"
-//   "produk_model" => "1"
-//   "cabang_id" => "3"
-//   "baki_id" => "3"
-//   "supplier_id" => "2"
-//   "product_code" => "CBR-CCN-702-09082023"
-//   "jenis_mutiara_id" => "2"
-//   "kategori_mutiara_id" => "1"
-//   "berat_emas" => "0.07"
-//   "product_cost" => "Rp 300.000"
-//   "margin" => "10"
-//   "product_price" => "Rp. 4.000.000"
-//   "product_note" => null
-
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $gudang = Gudang::latest()->limit(1)->first()->id;
@@ -1200,7 +1161,7 @@ public function saveAjax(Request $request)
                     'supplier_id'                 => $input['supplier_id'] ?? null,
                     'etalase_id'                  => $input['etalase_id'] ?? null,
                     'baki_id'                     => $input['baki_id'] ?? null,
-                    'produk_model_id'                => $input['produk_model'] ?? null,
+                    'produk_model_id'             => $input['produk_model'] ?? null,
                     'berat_total'                 => $input['berat_total']
                 ]);
               // dd($input);
@@ -1481,14 +1442,12 @@ public function saveAjax(Request $request)
 
         //$purchase->delete();
         $product->delete();
-        $tracking = TrackingProduct::where('product_id',$product)->first();
-        $items = ProductItem::where('product_id',$product)->first();
-        $items->delete();
-        if ($tracking) {
-         $tracking->delete();
-        }
-
-
+        // $tracking = TrackingProduct::where('product_id',$product)->first();
+        // $items = ProductItem::where('product_id',$product)->first();
+        // $items->delete();
+        // if ($tracking) {
+        //  $tracking->delete();
+        // }
         toast('Product Deleted!', 'warning');
         return redirect()->route('products.index');
     }

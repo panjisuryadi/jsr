@@ -3,10 +3,9 @@
     <a href="{{ route('products.add_products_pembelian', encode_id($data->id)) }}"
 
     data-toggle="tooltip"
-     class="btn btn-info btn-sm">
-        <i class="bi bi-plus"></i> &nbsp;@lang('Detail')
+     class="btn btn-info btn-sm py-1">
+        @lang('Add Detail')
     </a>
-
 
     @can('delete_'.$module_name.'')
     <button id="delete" class="btn btn-danger btn-sm" onclick="

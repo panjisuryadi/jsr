@@ -101,6 +101,18 @@ public function index_data(Request $request)
                                      ' .$data->berat_barang . ' 
                                     </div>';
                                 return $tb;
+                            }) 
+
+                          ->editColumn('detail', function ($data) {
+                             $tb = '<div class="font-semibold items-center text-center">
+
+                             <div data-toggle="tooltip" data-placement="top" title="sisa barang" class="bg-green-400 px-1 items-center text-center rounded-lg">
+                                    ' .$data->count . ' 
+
+                             </div>
+                                  
+                                    </div>';
+                                return $tb;
                             })  
 
                            ->editColumn('qty', function ($data) {
@@ -127,6 +139,7 @@ public function index_data(Request $request)
                          'berat',
                          'image', 
                          'qty', 
+                         'detail', 
                          'name'])
                         ->make(true);
                      }
@@ -229,6 +242,7 @@ public function store(Request $request)
              'qty_diterima' => 'required',
              'status' => 'required',
              'supplier_id' => 'required',
+             'parameter_kadar_id' => 'required',
          ]);
         //$input = $request->all();
          $input = $request->except('_token');
@@ -247,12 +261,11 @@ public function store(Request $request)
      
          Storage::disk('local')->put($normalpath, (string) $normal);
          $input['image'] = "$gambar";
-         dd($gambar);
+        // dd($gambar);
         }else{
            $input['image'] = 'no_foto.png';
         }
-
-
+        //dd($input);
         $$module_name_singular = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
@@ -261,6 +274,7 @@ public function store(Request $request)
             'date'                       => $input['date'],
             'status'                     => $input['status'],
             'supplier_id'                => $input['supplier_id'],
+            'parameter_kadar_id'         => $input['parameter_kadar_id'],
             'berat_barang'               => $input['berat_barang'],
             'berat_real'                 => $input['berat_real'],
             'count'                      => $input['qty'],
@@ -282,7 +296,6 @@ public function store(Request $request)
          //        }
 
           
-
          activity()->log(' '.auth()->user()->name.' input data pembelian');
          
           toast(''. $module_title.' Created!', 'success');

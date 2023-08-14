@@ -94,12 +94,13 @@ margin-bottom: 0.5rem !important;
                                 <div class="w-full border-b border-gray-300"></div>
                             </div>
                             <div class="relative flex justify-left">
-    <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Produk <span class="px-1 hokkie font-semibold uppercase">{{$pembelian->code}}</span></div>
+    <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Tambah Barang No PO :  <span class="px-1 hokkie font-semibold uppercase">{{$pembelian->code}}</span></div>
                             </div>
                         </div>
 
                         {{-- <input type="hidden" name="category_id" value="{{ $category->id }}"> --}}
 
+                        <input type="hidden" name="kode_pembelian" value="{{$pembelian->code}}">
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">

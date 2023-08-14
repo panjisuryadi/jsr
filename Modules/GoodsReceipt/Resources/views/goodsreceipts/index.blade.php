@@ -38,9 +38,11 @@
                                    <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
                                     <th class="text-left">{{ __('Berat') }}</th>
                                     <th class="text-left">{{ __('Qty') }}</th>
-                             
-                                    <th style="width: 25%!important;" class="text-center">{{ __('Action') }}
+                                    <th style="width: 6%!important;" class="text-center">{{ __('Detail') }}
                                     </th>
+                                    <th style="width: 22%!important;" class="text-center">{{ __('Action') }}
+                                    </th> 
+
                                 </tr>
                             </thead>
                         </table>
@@ -104,6 +106,7 @@
                 {data: 'code', name: 'code'},
                 {data: 'berat', name: 'berat'},
                 {data: 'qty', name: 'qty'},
+                {data: 'detail', name: 'detail'},
 
 
                 {
