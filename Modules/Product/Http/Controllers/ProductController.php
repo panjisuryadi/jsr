@@ -973,10 +973,12 @@ public function create2()
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_categories = $this->module_categories;
+        $module_pembelian = $this->module_pembelian;
         $module_name_singular = Str::singular($module_name);
         $main = KategoriProduk::where('id', $id)->first();
         $category = Category::where('kategori_produk_id', $id)->get();
         $locations = Locations::where('name','LIKE','%Pusat%')->first();
+        $pembelian = $module_pembelian::where('code', $no_pembelian)->first();
         $code = Product::generateCode();
         $module_action = 'List';
           return view(''.$module_path.'::categories.page.create',
@@ -987,6 +989,7 @@ public function create2()
                     'main',
                     'category',
                     'no_pembelian',
+                    'pembelian',
                     'code',
                     'module_icon', 'module_model'));
          }

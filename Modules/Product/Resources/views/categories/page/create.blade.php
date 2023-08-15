@@ -97,8 +97,6 @@ margin-bottom: 0.5rem !important;
     <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Main Kategori <span class="px-1 hokkie font-semibold uppercase">{{ @$main->name }}</span></div>
 
 
-
-
                             </div>
                         </div>
 
@@ -399,10 +397,12 @@ margin-bottom: 0.5rem !important;
                             </div>
                             <div class="form-group">
 
-                               <a href="{{ route('products.create-modal') }}"
+                               <a href="{{ route('products.add_produk_modal_from_pembelian', encode_id($pembelian->id)) }}"
                                     id="GroupKategori" class="px-4 py-2 btn btn-sm btn-outline-warning">
                                     @lang('Add Product')
                                 </a>
+
+
                                 <a class="px-5 btn btn-danger"
                                     href="{{ route("products.index") }}">
                                 @lang('Cancel')</a>

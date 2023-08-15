@@ -1,4 +1,14 @@
-<div class=" px-3 py-2 grid grid-cols-4 gap-4 m-2 text-center no-underline">
+
+<div class="flex row px-1 py-1 grid grid-cols-2 gap-2 m-2 no-underline">
+    <div class="text-left font-semibold">
+        Tambah Produk untuk PO  {{$pembelian->code}}
+    </div>
+
+<div></div>
+</div>
+
+<div class="flex rowpx-1 py-1 grid grid-cols-4 gap-2 m-2 text-center no-underline">
+
 
     {{-- {{$pembelian->code}} --}}
     @foreach($listcategories as $category)
