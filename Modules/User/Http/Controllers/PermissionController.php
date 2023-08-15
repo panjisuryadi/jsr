@@ -195,11 +195,11 @@ public function single(Request $request)
         }
 
         $input = $request->all();
-        $name = $input['type'].$input['name'];
-        $input['name'] = $name;
+        $name = $input['type'].label_case($input['name']);
+        //dd($name);
+        $permission_name = $name;
         $input = $request->except('_token');
-        $name  = strip_tags($input['name']);
-        Permissions::firstOrCreate(['name' => 'access_'.$name.'']);
+        Permissions::firstOrCreate(['name' => $permission_name]);
             return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
     }
 
@@ -263,9 +263,10 @@ public function update(Request $request, $id)
 
         $input = $request->all();
         $input = $request->except('_token');
-        $name = $input['type'].$input['name'];
+        $name = $input['type'].label_case($input['name']);
+        $permission_name = $name;
         //dd($name);
-        $input['name'] = $name;
+        $input['name'] = $permission_name;
         $$module_name_singular->update($input);
         return response()->json(['success'=>'  '.$module_title.'  Sukses diupdate.']);
 

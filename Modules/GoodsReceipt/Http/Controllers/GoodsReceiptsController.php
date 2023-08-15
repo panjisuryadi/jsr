@@ -78,12 +78,12 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                            ->addColumn('image', function ($data) {
-                                $url = $data->getFirstMediaUrl('pembelian', 'thumbnail');
-                                return '<div class="items-center text-center">
-                                <img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/></div>';
-                                 })
-
+                         ->editColumn('image', function ($data) {
+                               $images ='<div class="content-center items-center">
+                               <img class="w-10 h-10 rounded" src="'.  asset(imageUrl(). @$data->images) . '"
+                               style="height:50px; width:50px;">';
+                                return $images;
+                            })
                         ->editColumn('date', function ($data) {
                              $tb = '<div class="text-xs items-center text-center">
                                      ' .tanggal($data->date) . '
@@ -214,17 +214,34 @@ public function store(Request $request)
         //$input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
         if ($image = $request->file('images')) {
          $gambar = 'pembelian_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-            dd($gambar);
+           // dd($gambar);
          $normal = Image::make($image)->resize(600, null, function ($constraint) {
                     $constraint->aspectRatio();
                     })->encode();
          $normalpath = 'uploads/' . $gambar;
-         Storage::disk('local')->put($normalpath, (string) $normal);
-         $input['images'] = "$gambar";
-        // dd($gambar);
+         Storage::disk('public')->put($normalpath, (string) $normal);
+                $input['images'] = "$gambar";
+         //dd($xx);
         }else{
-           $input['image'] = 'no_foto.png';
+           $input['images'] = 'no_foto.png';
         }
+
+
+      if ($request->filled('image')) {
+            $img = $request->image;
+            $folderPath = "uploads/";
+            $image_parts = explode(";base64,", $img);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName ='webcam_'. uniqid() . '.jpg';
+            $file = $folderPath . $fileName;
+            Storage::disk('public')->put($file,$image_base64);
+             $input['images'] =  "$fileName";
+          
+            }
+
+
         //dd($input);
         $$module_name_singular = $module_model::create([
             'code'                       => $input['code'],
@@ -238,25 +255,13 @@ public function store(Request $request)
             'berat_barang'               => $input['berat_barang'],
             'berat_real'                 => $input['berat_real'],
             'count'                      => $input['qty'],
+            'images'                     => $input['images'],
             'pengirim'                   => $input['pengirim']
         ]);
 
-         // if ($request->filled('image')) {
-         //        $img = $request->image;
-         //        $folderPath = "uploads/";
-         //        $image_parts = explode(";base64,", $img);
-         //        $image_type_aux = explode("image/", $image_parts[0]);
-         //        $image_type = $image_type_aux[1];
-         //        $image_base64 = base64_decode($image_parts[1]);
-         //        $fileName ='webcam_'. uniqid() . '.jpg';
-         //        $file = $folderPath . $fileName;
-         //        Storage::disk('local')->put($file,$image_base64);
-         //        $$module_name_singular->addMedia(Storage::path('uploads/' . $fileName))
-         //        ->toMediaCollection('pembelian');
-         //        }
-
+        
           
-         activity()->log(' '.auth()->user()->name.' input data pembelian');
+           activity()->log(' '.auth()->user()->name.' input data pembelian');
          
           toast(''. $module_title.' Created!', 'success');
            return redirect()->route(''.$module_name.'.index');
@@ -296,12 +301,6 @@ public function store_ajax(Request $request)
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
     }
-
-
-
-
-
-
 
 
 
