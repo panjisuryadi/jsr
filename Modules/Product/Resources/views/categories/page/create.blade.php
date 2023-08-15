@@ -95,10 +95,14 @@ margin-bottom: 0.5rem !important;
                             </div>
                             <div class="relative flex justify-left">
     <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Main Kategori <span class="px-1 hokkie font-semibold uppercase">{{ @$main->name }}</span></div>
+
+
+
+
                             </div>
                         </div>
 
-                        {{-- <input type="hidden" name="category_id" value="{{ $category->id }}"> --}}
+                        <input type="hidden" name="kode_pembelian" value="{{trim($no_pembelian)}}">
 
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
@@ -187,34 +191,34 @@ margin-bottom: 0.5rem !important;
                            
                              </div>
 
-  <div class="flex flex-row grid grid-cols-2 gap-2">
+                      <div class="flex flex-row grid grid-cols-2 gap-2">
 
-<div class="form-group">
-    <label for="product_note">@lang('Cabang')</label>
-    <select class="form-control select2" name="cabang_id" id="cabang_id" required>
-        <option value="" selected disabled>Select Cabang</option>
-        @foreach(\Modules\Cabang\Models\Cabang::all() as $cb)
-        <option value="{{$sup->id}}" {{ old('cabang_id') == $cb->name ? 'selected' : '' }}>
-            {{$cb->name}}
-        </option>
-        @endforeach
-    </select>
-</div>
+                    <div class="form-group">
+                        <label for="product_note">@lang('Cabang')</label>
+                        <select class="form-control select2" name="cabang_id" id="cabang_id" required>
+                            <option value="" selected disabled>Select Cabang</option>
+                            @foreach(\Modules\Cabang\Models\Cabang::all() as $cb)
+                            <option value="{{$sup->id}}" {{ old('cabang_id') == $cb->name ? 'selected' : '' }}>
+                                {{$cb->name}}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
 
 
-<div class="form-group">
-    <label for="baki_id">@lang('Baki')</label>
-    <select class="form-control select2" name="baki_id" id="baki_id" required>
-        <option value="" selected disabled>Select Model</option>
-        @foreach(\Modules\Baki\Models\Baki::all() as $cb)
-        <option value="{{$sup->id}}" {{ old('baki_id') == $cb->name ? 'selected' : '' }}>
-            {{$cb->name}}
-        </option>
-        @endforeach
-    </select>
-</div>
+                    <div class="form-group">
+                        <label for="baki_id">@lang('Baki')</label>
+                        <select class="form-control select2" name="baki_id" id="baki_id" required>
+                            <option value="" selected disabled>Select Model</option>
+                            @foreach(\Modules\Baki\Models\Baki::all() as $cb)
+                            <option value="{{$sup->id}}" {{ old('baki_id') == $cb->name ? 'selected' : '' }}>
+                                {{$cb->name}}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-</div>
+                    </div>
 
 
 

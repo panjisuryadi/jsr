@@ -94,10 +94,10 @@ margin-bottom: 0.5rem !important;
                                 <div class="w-full border-b border-gray-300"></div>
                             </div>
                             <div class="relative flex justify-left">
-                                <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Add Product Kategori <span class="px-1 hokkie font-semibold uppercase">{{ @$category->category_name }}</span></div>
+                                <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Add  Kategori <span class="px-1 hokkie font-semibold uppercase">{{ @$mainkategori->name }}</span></div>
                             </div>
                         </div>
-                        <input type="hidden" name="category_id" value="{{ $category->id }}">
+                        <input type="hidden" name="category_id" value="{{ $mainkategori->id }}">
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">
@@ -203,7 +203,7 @@ margin-bottom: 0.5rem !important;
 
 {{-- batas kategori form --}}
 
-               @if(strpos($category->category_name, 'Mutiara') !== false)
+        {{--        @if(strpos($category->category_name, 'Mutiara') !== false)
                     @include('product::products.form.mutiara')
                 @elseif(strpos($category->category_name, 'Berlian') !== false)
                   @include('product::products.form.berlian')
@@ -216,7 +216,7 @@ margin-bottom: 0.5rem !important;
                    @include('product::products.form.emas')
                     @else
                         @include('product::products.modal.all')
-                    @endif
+                    @endif --}}
 
 
 

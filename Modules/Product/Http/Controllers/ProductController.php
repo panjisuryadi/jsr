@@ -964,22 +964,29 @@ public function create2()
 //tambah produk by kategori ID
   public function add_products_by_categories(Request $request ,$id) {
         $id = decode_id($id);
+        $no_pembelian = $request->get('po') ?? '0';
+        //dd($no_pembelian);
         abort_if(Gate::denies('access_products'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $module_categories = $this->module_categories;
         $module_name_singular = Str::singular($module_name);
-        $category = Category::where('id', $id)->first();
+        $main = KategoriProduk::where('id', $id)->first();
+        $category = Category::where('kategori_produk_id', $id)->get();
         $locations = Locations::where('name','LIKE','%Pusat%')->first();
         $code = Product::generateCode();
         $module_action = 'List';
-          return view(''.$module_path.'::'.$module_name.'.page.create',
+          return view(''.$module_path.'::categories.page.create',
            compact('module_name',
                     'module_title',
                     'category',
                     'locations',
+                    'main',
+                    'category',
+                    'no_pembelian',
                     'code',
                     'module_icon', 'module_model'));
          }
@@ -1099,7 +1106,7 @@ public function saveAjax(Request $request)
         $totalberat = $input['berat_total'] ?? $input['berat_emas'];
         $berat = number_format((float)($totalberat), 5);
          // dd($group->name .' '. $model->name);
-         dd($input);
+        // dd($input);
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([

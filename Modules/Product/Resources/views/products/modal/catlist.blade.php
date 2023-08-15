@@ -2,9 +2,14 @@
 
     {{-- {{$pembelian->code}} --}}
     @foreach($listcategories as $category)
+
+    
     <div class="no-underline cursor-pointer p-2 w-full">
            <a class="w-full no-underline hover:no-underline" id="openModalKategori"
-                href="{{ route('products.add_products_by_categories',encode_id($category->id)) }}" >
+                href="{{route('products.add_products_by_categories',[
+                                 'id'=>encode_id($category->id),
+                                 'po'=>$pembelian->code]
+                                 )}}">
         <div class="justify-center items-center border-2 border-yellow-500 bg-white  px-2 py-3 rounded-lg transform transition duration-500 hover:scale-110">
             <div class="justify-center text-center items-center">
                 <?php

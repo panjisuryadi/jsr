@@ -173,6 +173,14 @@
     "Select an option": "-- pilih --",
     "Draft": "Draft",
     "Published": "dipublish",
+
+
+
+    "Goods Receipt": "Pembelian",
+
+
+
+
     "password confirmation": "Konfirmasi Kata sandi",
     "The :attribute must contain at least one letter.": ":attribute harus mengandung setidaknya satu huruf.",
     "The :attribute must contain at least one symbol.": ":attribute harus mengandung setidaknya satu simbol.",

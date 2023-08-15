@@ -20,8 +20,9 @@
                            <a href="{{ route(''.$module_name.'.create') }}"
                                 id=""
                                 data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                 class="btn btn-primary px-3 py-1">
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;
+                                 {{ __($module_title) }}
                                 </a>
 
                         </div>
