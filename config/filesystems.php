@@ -30,28 +30,64 @@ return [
 
     'disks' => [
 
-        'local' => [
+      'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root'   => storage_path('app'),
+            //'root'   => public_path() . '/uploads',
         ],
 
-        'public' => [
+        'public_uploads' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root'   => public_path() . '/uploads',
+        ],
+
+      'public' => [
+                'driver' => 'local',
+                'root' => storage_path('app/public'),
+                'url' => env('APP_URL').'/storage',
+                'visibility' => 'public',
+            ],
+
+       'ftp' => [
+            'driver'   => 'ftp',
+            'host'     => env('FTP_HOST'),
+            'username' => env('FTP_USER'),
+            'password' => env('FTP_PASS'),
+        ],
+
+       'images' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/public/images'),
+            'url'        => '/storage/images',
+            'visibility' => 'public',
+        ],
+
+        'files' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/public/files'),
+            'url'        => '/storage/files',
             'visibility' => 'public',
         ],
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
+            'key'    => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'url'    => env('AWS_URL'),
         ],
+       'is3' => [
+                'driver' => 's3',
+                'key' => env('AWS_ACCESS_KEY_ID'),
+                'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                'region' => env('AWS_DEFAULT_REGION'),
+                'bucket' => env('AWS_BUCKET'),
+                'url' => env('AWS_URL'),
+                'endpoint' => env('AWS_URL'),
+                'bucket_endpoint' => false,
+                'use_path_style_endpoint' => true,
+            ],
 
     ],
 

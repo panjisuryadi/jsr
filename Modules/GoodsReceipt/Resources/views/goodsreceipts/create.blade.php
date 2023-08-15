@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Create GoodsReceipt')
+
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -7,8 +8,10 @@
     <li class="breadcrumb-item active">Add</li>
 </ol>
 @endsection
+
 @section('content')
 @push('page_css')
+
 <style type="text/css">
     .dropzone {
         height: 280px !important;
@@ -21,6 +24,7 @@
         font-size: 5rem;
         color: #bd4019 !important;
     }
+
 </style>
 @endpush
 <div class="container-fluid">
@@ -64,13 +68,10 @@
     <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
         <x-library.webcam />
     </div>
-    <div id="upload1" style="display: block !important;" class="align-items-center justify-content-center">
-        <div  class="h-320 dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
-            <div class="dz-message" data-dz-message>
-                <i class="text-red-800 bi bi-cloud-arrow-up"></i>
-            </div>
-        </div>
-    </div>
+  <div id="upload1" class="drop-zone">
+    <div class="drop-zone__prompt">  <i class="text-red-800 text-3xl bi bi-cloud-arrow-up"></i></div>
+    <input type="file" name="images" class="drop-zone__input">
+  </div>
 </div>
 
 </div>
@@ -134,11 +135,6 @@
     </select>
 
 
-
-
-
-
-
 </div>
 
 
@@ -170,7 +166,7 @@
  <div class="form-group">
         <?php
         $field_name = 'berat_barang';
-        $field_lable = label_case('berat_kotor');
+        $field_lable = label_case('berat');
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
@@ -365,7 +361,7 @@
     <label class="mb-1" for="user_id">PIC</label>
    <select class="form-control select2" name="user_id" id="user_id">
         <option value="" selected disabled>Select PIC</option>
-        @foreach(\App\Models\User::all() as $sup)
+        @foreach($kasir as $sup)
          <option value="{{$sup->id}}" {{ old('user_id') == $sup->id ? 'selected' : '' }}>
             {{$sup->name}} |  {{$sup->kode_user}} </option>
         @endforeach
@@ -409,13 +405,11 @@
     </form>
 </div>
 @endsection
-
+<x-library.dropzone />
 <x-library.select2 />
 <x-toastr />
 
-@section('third_party_scripts')
-<script src="{{ asset('js/dropzone.js') }}"></script>
-@endsection
+
 @push('page_scripts')
 <script type="text/javascript">
     $('#up1').change(function() {
@@ -427,57 +421,8 @@
         $('#upload2').hide();
     });
 </script>
-<script>
-    var uploadedDocumentMap = {}
-    Dropzone.options.documentDropzone = {
-        url: '{{ route('dropzone.upload') }}',
-        maxFilesize: 1,
-        acceptedFiles: '.jpg, .jpeg, .png',
-        maxFiles: 3,
-        addRemoveLinks: true,
-        dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        success: function (file, response) {
-            $('form').append('<input type="hidden" name="document" value="' + response.name + '">');
-            uploadedDocumentMap[file.name] = response.name;
-        },
-        removedfile: function (file) {
-            file.previewElement.remove();
-            var name = '';
-            if (typeof file.file_name !== 'undefined') {
-                name = file.file_name;
-            } else {
-                name = uploadedDocumentMap[file.name];
-            }
-            $.ajax({
-                type: "POST",
-                url: "{{ route('dropzone.delete') }}",
-                data: {
-                    '_token': "{{ csrf_token() }}",
-                    'file_name': `${name}`
-                },
-            });
-            $('form').find('input[name="document"][value="' + name + '"]').remove();
-        },
-        init: function () {
-            @if(isset($product) && $product->getMedia('images'))
-            var files = {!! json_encode($product->getMedia('images')) !!};
-            for (var i in files) {
-                var file = files[i];
-                this.options.addedfile.call(this, file);
-                this.options.thumbnail.call(this, file, file.original_url);
-                file.previewElement.classList.add('dz-complete');
-                $('form').append('<input type="hidden" name="document" value="' + file.file_name + '">');
-            }
-            @endif
-        }
-    }
-</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
-
-
-
 @endpush
+

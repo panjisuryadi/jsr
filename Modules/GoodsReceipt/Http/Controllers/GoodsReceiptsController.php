@@ -2,6 +2,7 @@
 
 namespace Modules\GoodsReceipt\Http\Controllers;
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -163,12 +164,14 @@ public function index_data(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $code = $module_model::generateCode();
+            $kasir = User::role('Operator')->orderBy('name')->get();
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
                 'code',
+                'kasir',
                 'module_title',
                 'module_icon', 'module_model'));
         }
@@ -179,45 +182,6 @@ public function index_data(Request $request)
      * @param Request $request
      * @return Renderable
      */
-    public function storesdsd(Request $request)
-    {
-        abort_if(Gate::denies('create_goodsreceipt'), 403);
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-
-        $module_action = 'Store';
-
-        $request->validate([
-             'name' => 'required|min:3|max:191',
-             'description' => 'required|min:3|max:191',
-         ]);
-        $params = $request->all();
-        dd($params);
-        $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
-        //  if ($image = $request->file('image')) {
-        //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
-        //             $constraint->aspectRatio();
-        //             })->encode();
-        //  $normalpath = 'uploads/' . $gambar;
-        //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-        //  Storage::disk($storage)->put($normalpath, (string) $normal);
-        //  $params['image'] = "$gambar";
-        // }else{
-        //    $params['image'] = 'no_foto.png';
-        // }
-
-
-         $$module_name_singular = $module_model::create($params);
-         toast(''. $module_title.' Created!', 'success');
-         return redirect()->route(''.$module_name.'.index');
-    }
 
 
 
@@ -248,19 +212,15 @@ public function store(Request $request)
          $input = $request->except('_token');
         //dd($input);
         //$input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-
-
-        if ($image = $request->file('document')) {
+        if ($image = $request->file('images')) {
          $gambar = 'pembelian_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-
             dd($gambar);
          $normal = Image::make($image)->resize(600, null, function ($constraint) {
                     $constraint->aspectRatio();
                     })->encode();
          $normalpath = 'uploads/' . $gambar;
-     
          Storage::disk('local')->put($normalpath, (string) $normal);
-         $input['image'] = "$gambar";
+         $input['images'] = "$gambar";
         // dd($gambar);
         }else{
            $input['image'] = 'no_foto.png';
