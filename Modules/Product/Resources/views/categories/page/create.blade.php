@@ -313,7 +313,7 @@ margin-bottom: 0.5rem !important;
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                                <input class="form-control"
+                                                <input class="form-control pc"
                                                 type="text"
                                                 name="{{ $field_name }}"
                                                 id="{{ $field_name }}"
@@ -335,7 +335,7 @@ margin-bottom: 0.5rem !important;
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                                <input class="form-control"
+                                                <input class="form-control margin"
                                                 type="number"
                                                 name="{{ $field_name }}"
                                                 id="{{ $field_name }}"
@@ -386,8 +386,12 @@ margin-bottom: 0.5rem !important;
                                     <div class="p-0 col-lg-12">
                                         <div class="form-group">
                                             <label for="product_note">Note</label>
+
                                             <textarea name="product_note" id="product_note" rows="4 " class="form-control"></textarea>
                                         </div>
+                                     
+                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -469,6 +473,9 @@ margin-bottom: 0.5rem !important;
             $('#upload2').hide();
         });
 
+
+
+
      </script>
 
     <script>
@@ -531,6 +538,7 @@ jQuery.noConflict();
         decimal: ',',
         precision: 0
     });
+
     $('#product_sale').maskMoney({
         prefix: '{{ settings()->currency->symbol }}',
         thousands: '{{ settings()->currency->thousand_separator }}',
@@ -543,6 +551,21 @@ jQuery.noConflict();
         decimal: '{{ settings()->currency->decimal_separator }}',
         precision: 0,
     });
+
+
+
+
+    $(".margin").on("keyup",function(event) {
+            var pc = $("#product_cost").maskMoney('destroy').val().replace(/Rp\s|[.,]/g, '');
+            var margin = $('#margin').val();
+            $('#product_price').val((margin * pc ? margin * pc : 0));
+            console.log(pc);
+        
+           // $("#product_price").val(pc);
+     
+    });
+
+
     $('#generate-code').click(function() {
         var group = $('#group_id').val();
         //alert(group);
