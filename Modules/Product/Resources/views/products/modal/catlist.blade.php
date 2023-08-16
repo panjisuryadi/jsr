@@ -13,9 +13,10 @@
     {{-- {{$pembelian->code}} --}}
     @foreach($listcategories as $category)
 
-    
+
+    {{-- {{ route('goodsreceipt.show', encode_id($pembelian->id)) }} --}}
     <div class="no-underline cursor-pointer p-2 w-full">
-           <a class="w-full no-underline hover:no-underline" id="openModalKategori"
+        <a class="w-full no-underline hover:no-underline" id="openModalKategori"
                 href="{{route('products.add_products_by_categories',[
                                  'id'=>encode_id($category->id),
                                  'po'=>$pembelian->code]
@@ -45,20 +46,20 @@
 </div>
 
 <script type="text/javascript">
-      $(document).ready(function(){
-            var Tombol = "<a href='{{ route('products.create-modal') }}' id='GroupKategori' class='btn btn-warning px-5'>{{ __('Back') }}</a>";
-            Tombol += "<button type='button' class='px-5 btn btn-danger' id='SimpanTambah'>{{ __('Create') }}</button>";
-            $('#ModalFooterKategori').html(Tombol);
-            $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();
-            $('#SimpanTambah').click(function(e){
-                e.preventDefault();
-                Tambah();
-            });
-            $('#FormTambah').submit(function(e){
-                e.preventDefault();
-                Tambah();
-            });
-        });
+      // $(document).ready(function(){
+      //       var Tombol = "<a href='{{ route('products.create-modal') }}' id='GroupKategori' class='btn btn-warning px-5'>{{ __('Back') }}</a>";
+      //       Tombol += "<button type='button' class='px-5 btn btn-danger' id='SimpanTambah'>{{ __('Create') }}</button>";
+      //       $('#ModalFooterKategori').html(Tombol);
+      //       $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();
+      //       $('#SimpanTambah').click(function(e){
+      //           e.preventDefault();
+      //           Tambah();
+      //       });
+      //       $('#FormTambah').submit(function(e){
+      //           e.preventDefault();
+      //           Tambah();
+      //       });
+      //   });
 
 
 

@@ -121,6 +121,8 @@ margin-bottom: 0.5rem !important;
                                             <label class="form-check-label" for="up1">Webcam</label>
                                         </div>
                                     </div>
+
+
                                     <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
                                         <x-library.webcam />
                                     </div>
@@ -152,11 +154,7 @@ margin-bottom: 0.5rem !important;
                                                             </option>
                                                      @endforeach
 
-
-
-
-
-                                                </select>
+                                            </select>
                                             </div> 
 
 
@@ -189,41 +187,8 @@ margin-bottom: 0.5rem !important;
                            
                              </div>
 
-                      <div class="flex flex-row grid grid-cols-2 gap-2">
 
-                    <div class="form-group">
-                        <label for="product_note">@lang('Cabang')</label>
-                        <select class="form-control select2" name="cabang_id" id="cabang_id" required>
-                            <option value="" selected disabled>Select Cabang</option>
-                            @foreach(\Modules\Cabang\Models\Cabang::all() as $cb)
-                            <option value="{{$sup->id}}" {{ old('cabang_id') == $cb->name ? 'selected' : '' }}>
-                                {{$cb->name}}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="baki_id">@lang('Baki')</label>
-                        <select class="form-control select2" name="baki_id" id="baki_id" required>
-                            <option value="" selected disabled>Select Model</option>
-                            @foreach(\Modules\Baki\Models\Baki::all() as $cb)
-                            <option value="{{$sup->id}}" {{ old('baki_id') == $cb->name ? 'selected' : '' }}>
-                                {{$cb->name}}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    </div>
-
-
-
-
-
-
-                                <div class="flex flex-row grid grid-cols-2 gap-2">
+     <div class="flex flex-row grid grid-cols-2 gap-2">
                                      
                                     <div class="col-span-2">
                                         <div class="flex flex-row gap-2">
@@ -256,7 +221,9 @@ margin-bottom: 0.5rem !important;
                                     </div>
                                 </div>
 
+                           
                      @if(strpos($main->name, 'Emas') !== false)
+                        
                          @include('product::categories.form.emas')
 
                      @elseif(strpos($main->name, 'Mutiara') !== false)
@@ -290,6 +257,9 @@ margin-bottom: 0.5rem !important;
 
                     {{-- end batas kategori --}}
       
+
+      {{-- berat total x  harga emas hari ini = Biaya produk >> biaya produk + margin =  --}}
+      
                             <div class="flex relative py-1">
                                     <div class="absolute inset-0 flex items-center">
                                         <div class="w-full border-b border-gray-300"></div>
@@ -302,13 +272,34 @@ margin-bottom: 0.5rem !important;
 
                              <div class="flex flex-row grid grid-cols-2 gap-2">
                                    
+                                         <div class="form-group">
+                                                <?php
+                                                $field_name = 'harga_emas';
+                                                $field_lable = label_case($field_name);
+                                                $field_placeholder = $field_lable;
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = "required";
+                                                ?>
+                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="small text-danger">(Harga Emas Hari ini)</span></label>
+                                                <input class="form-control harga_emas"
+                                                type="text"
+                                                name="{{ $field_name }}"
+                                                id="{{ $field_name }}"
+                                                value="{{old($field_name)}}"
+                                                placeholder="{{ $field_placeholder }}"
+                                                >
+                                                <span class="invalid feedback" role="alert">
+                                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                                </span>
+                                            </div>
+
 
 
                                          <div class="form-group">
                                                 <?php
                                                 $field_name = 'product_cost';
-                                                $field_lable = label_case($field_name);
-                                                $field_placeholder = $field_lable;
+                                                $field_lable = label_case('Biaya Produk');
+                                                $field_placeholder =label_case('Harga Emas x Berat');
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                 $required = "required";
                                                 ?>
@@ -324,6 +315,17 @@ margin-bottom: 0.5rem !important;
                                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                                 </span>
                                             </div>
+                            
+
+
+                                    
+                                   </div>
+
+
+                           <div class="flex flex-row grid grid-cols-2 gap-2">
+                                   
+
+
 
 
                                        <div class="form-group">
@@ -334,14 +336,54 @@ margin-bottom: 0.5rem !important;
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                 $required = "required";
                                                 ?>
-                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                             <div class="flex justify-between py-0 px-0">
+                                               
+                                                <div>
+                                                     <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                                </div>
+                                 
+                              <div class="py-0">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input margin" type="radio" name="margin" id="nominal" checked>
+                                            <label class="form-check-label" for="nominal">Nominal</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input margin" type="radio" name="margin"
+                                            id="persentase">
+                                            <label class="form-check-label" for="persentase">Persentase</label>
+                                        </div>
+                                    </div>
+
+
+
+
+                                            </div>
+
+
+
+                                             <div id="m2" >
                                                 <input class="form-control margin"
                                                 type="number"
                                                 name="{{ $field_name }}"
                                                 id="{{ $field_name }}"
                                                 value="{{old($field_name)}}"
-                                                placeholder="{{ $field_placeholder }}"
+                                                placeholder="Margin Nominal"
                                                 >
+                                                </div>
+
+                                               <div id="m1" style="display: none !important;" >
+                                                <input class="form-control margin"
+                                                type="number"
+                                                name="{{ $field_name }}"
+                                                id="{{ $field_name }}"
+                                                value="{{old($field_name)}}"
+                                                placeholder="Persentase (%)"
+                                                >
+                                                </div>
+
+
+
+
                                                 <span class="invalid feedback" role="alert">
                                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                                 </span>
@@ -350,21 +392,18 @@ margin-bottom: 0.5rem !important;
 
 
 
-                                    
-                                   </div>
 
-
-                           <div class="flex flex-row grid grid-cols-1 gap-2">
-                                   
                                         <div class="form-group">
                                                 <?php
                                                 $field_name = 'product_price';
-                                                $field_lable = label_case($field_name);
+                                                $field_lable = label_case('Harga Jual');
                                                 $field_placeholder = $field_lable;
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                 $required = "required";
                                                 ?>
-                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}
+                                                    <span class="small text-danger">Product cost + margin</span>
+                                                </label>
                                                 <input class="form-control"
                                                 type="text"
                                                 name="{{ $field_name }}"
@@ -372,6 +411,10 @@ margin-bottom: 0.5rem !important;
                                                 value="{{old($field_name)}}"
                                                 placeholder="{{ $field_placeholder }}"
                                                 >
+
+                                            <span id="grand_total" class="text-lg text-danger"></span>
+
+
                                                 <span class="invalid feedback" role="alert">
                                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                                 </span>
@@ -474,6 +517,19 @@ margin-bottom: 0.5rem !important;
         });
 
 
+       $('#nominal').change(function() {
+          toastr.success('Margin Nominal dipilih');
+            $('#m2').toggle();
+            $('#m1').hide();
+        });
+
+        $('#persentase').change(function() {
+           toastr.success('margin Persentase dipilih');
+            $('#m1').toggle();
+            $('#m2').hide();
+        });
+
+
 
 
      </script>
@@ -545,25 +601,60 @@ jQuery.noConflict();
         decimal: '{{ settings()->currency->decimal_separator }}',
         precision: 0,
     });
-    $('#product_price').maskMoney({
+    $('#product_price2').maskMoney({
+        prefix: '{{ settings()->currency->symbol }}',
+        thousands: '{{ settings()->currency->thousand_separator }}',
+        decimal: '{{ settings()->currency->decimal_separator }}',
+        precision: 0,
+    }); 
+
+    $('#harga_emas2').maskMoney({
         prefix: '{{ settings()->currency->symbol }}',
         thousands: '{{ settings()->currency->thousand_separator }}',
         decimal: '{{ settings()->currency->decimal_separator }}',
         precision: 0,
     });
 
-
-
-
-    $(".margin").on("keyup",function(event) {
-            var pc = $("#product_cost").maskMoney('destroy').val().replace(/Rp\s|[.,]/g, '');
-            var margin = $('#margin').val();
-            $('#product_price').val((margin * pc ? margin * pc : 0));
-            console.log(pc);
+    $(".berat_total").on("keyup",function(event) {
+            var berat_total = $("#berat_total").maskMoney('destroy').val().replace(/Rp\s|[.,]/g, '');
+            var harga_emas = $('#harga_emas').val();
+            var total = harga_emas  *  berat_total;
+            $('#product_cost').val(total);
+          
+            console.log(total);
         
            // $("#product_price").val(pc);
      
     });
+
+
+
+
+$(document).ready(function() {
+        $("#margin").keyup(function() {
+            var product_cost  = $("#product_cost").val();
+            var margin = $("#margin").val();
+
+            var total = parseInt(product_cost) * parseInt(margin);
+            $("#grand_total").val(total);
+        });
+    });
+
+
+// $(document).on("change keyup blur", "#chDiscount", function() {
+//   var amd = $('#cBalance').val();
+//   var disc = $('#chDiscount').val();
+//   if (disc != '' && amd != '') {
+//     $('#result').val((parseInt(amd)) - (parseInt(disc)));
+//   }else{
+//     $('#result').val(parseInt(amd));
+//   }
+// });
+
+
+
+
+
 
 
     $('#generate-code').click(function() {

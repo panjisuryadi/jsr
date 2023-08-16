@@ -151,6 +151,78 @@ public function index_data(Request $request)
 
 
 
+public function get_produk(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                              return view(''.$module_name.'::'.$module_path.'.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+                         ->editColumn('image', function ($data) {
+                               $images ='<div class="content-center items-center">
+                               <img class="w-10 h-10 rounded" src="'.  asset(imageUrl(). @$data->images) . '"
+                               style="height:50px; width:50px;">';
+                                return $images;
+                            })
+                      
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at',
+                         'date',
+                         'action',
+                         'code',
+                         'berat',
+                         'image', 
+                         'qty', 
+                         'detail', 
+                         'name'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Show the form for creating a new resource.
      * @return Renderable
@@ -313,7 +385,7 @@ public function store_ajax(Request $request)
 public function show($id)
     {
 
-
+        $id = decode_id($id);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -324,7 +396,7 @@ public function show($id)
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
         //dd($detail);
-          return view(''.$module_name.'::'.$module_path.'.show',
+          return view(''.$module_name.'::'.$module_path.'.detail',
            compact('module_name',
             'module_action',
             'detail',
