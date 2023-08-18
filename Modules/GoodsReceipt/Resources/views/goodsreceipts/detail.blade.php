@@ -71,7 +71,8 @@
 
              <div class="flex justify-between w-full">
                 <p class="poppins leading-5 text-gray-600">{{ Label_case('penerima') }}</p>
-                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ @$detail->user }}</p>
+                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">
+                    {{ @$detail->user->name }}</p>
             </div>
     <div class="flex justify-between w-full">
                 <p class="poppins leading-5 text-gray-600">{{ Label_case('Sortir') }}</p>

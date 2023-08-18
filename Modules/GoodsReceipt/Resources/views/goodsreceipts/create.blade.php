@@ -166,7 +166,7 @@
  <div class="form-group">
         <?php
         $field_name = 'berat_barang';
-        $field_lable = label_case('berat');
+        $field_lable = label_case('berat_surat_jalan');
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
@@ -189,7 +189,7 @@
  <div class="form-group">
         <?php
         $field_name = 'berat_real';
-        $field_lable = label_case('berat_bersih');
+        $field_lable = label_case('berat_real');
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
