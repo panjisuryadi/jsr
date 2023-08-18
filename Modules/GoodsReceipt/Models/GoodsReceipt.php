@@ -5,7 +5,8 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Modules\JenisGroup\Models\JenisGroup;
+use Modules\People\Entities\Supplier;
+use App\Models\User;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -22,9 +23,13 @@ class GoodsReceipt extends Model implements HasMedia
   //       return $this->hasMany(Product::class, 'category_id', 'id');
   //   }
 
-  //   public function kategoriProduk() {
-  //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
-  //   }
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+     public function supplier() {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+    }
 
     public function registerMediaCollections(): void {
             $url = url('images/fallback_product_image.png');

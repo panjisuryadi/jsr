@@ -12,90 +12,98 @@
 @section('content')
 <div class="container-fluid">
 
-{{$detail}}
-
-<div class="px-0 py-1 grid grid-cols-2 gap-4 m-2 text-center no-underline">
-    
-
-       <div class="relative bg-white py-1 px-3 rounded-lg  my-4 shadow-xl">
-           
-            <div class="mt-2">
-                <div class="text-xl text-left font-semibold my-2">{{tgl($detail->date)}}</div>
-                <div class="flex space-x-2 text-gray-400 text-sm">
-                   
-                     <p>Berat Barang : {{$detail->berat_barang}}</p> 
-                    
+  {{--   {{ $detail }} --}}
+<div class="bg-white px-0 py-2 grid grid-cols-1 rounded-lg gap-4 m-1 shadow-md mb-3 no-underline">
+    <div class="overflow-hidden">
+            <div class="flex justify-between w-full">
+                <div class="px-6 py-2">
+                    <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
+                    <h3 class="text-lg font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
                 </div>
+                  <div class="px-6 py-2">
+              <div class="mt-3 text-gray-600">Supplier</div>
+                 <div class="leading-4 mt-0 font-semibold text-gray-500">{{ $detail->supplier->supplier_name }}</div>
+                 <div class="leading-4 text-gray-500">{{ $detail->supplier->address }}</div>
 
-                <div class="flex space-x-2 text-gray-400 text-sm my-3">
-                  <p>Berat Real : {{$detail->berat_real}}</p> 
                 </div>
-             
-            
             </div>
-        </div>
 
 
+        <div class="border-t grid grid-cols-2 gap-4 m-2 border-gray-200 px-6 py-4">
+            <div>
+            <div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('tanggal') }}</p>
+                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ tanggal($detail->date) }}</p>
+            </div>
+           <div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('no_invoice') }}</p>
+                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ $detail->no_invoice }}</p>
+            </div>
+  <div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('berat') }}</p>
+                <p class="poppins font-semibold leading-5 text-blue-800">{{ $detail->berat_barang }}
+                   <small class="text-gray-700">Gram</small></p>
+            </div>
+  <div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('berat_real') }}</p>
+                <p class="poppins font-semibold leading-5 text-green-800">{{ $detail->berat_real }}
+                    <small class="text-gray-700">Gram</small></p>
+            </div>
+<div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('qty') }}</p>
+                <p class="poppins font-semibold leading-5 text-gray-800">{{ $detail->qty }}</p>
+            </div>
+
+<div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('qty_diterima') }}</p>
+                <p class="poppins font-semibold leading-5 text-gray-800">{{ $detail->qty_diterima }}</p>
+            </div>
 
 
+            </div>
 
+            <div>
 
-       <div class="relative bg-white py-1 px-3 rounded-lg  my-4 shadow-xl">
-           
-            <div class="mt-2">
-                <div class="text-xl text-left font-semibold my-2">{{$detail->code}}</div>
-                <div class="flex space-x-2 text-gray-400 text-sm">
-                    <!-- svg  -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                     <p>{{$detail->count}}</p> 
-                </div>
-               
+              <div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('pengirim') }}</p>
+                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ $detail->pengirim }}</p>
+            </div>
 
-<div class="flex justify-between">
-  <div>01</div>
+             <div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('penerima') }}</p>
+                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ @$detail->user }}</p>
+            </div>
+    <div class="flex justify-between w-full">
+                <p class="poppins leading-5 text-gray-600">{{ Label_case('Sortir') }}</p>
+                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ $detail->count }}</p>
+            </div>
+<div class="mt-4 flex justify-between w-full">
 
-  <div>  
-   <a
-                         href="{{ route('products.add_produk_modal_from_pembelian', encode_id($detail->id)) }}"
-                          id="GroupKategori"
-                          data-toggle="tooltip"
-                          class="btn btn-success btn-md px-3 py-1">
-                            @lang('Add Detail')
-                        </a> 
-
-
-  </div>
+    <div></div>
+    <div>
+    <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
+        id="GroupKategori"
+        class="bg-blue-600 py-2 px-6 mt-2 rounded-lg hover:no-underline hover:text-gray-300">
+        <i class="bi bi-plus"></i>@lang('Tambah Detail Barang')
+    </a>
 </div>
 
-            
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
 </div>
 
 
+
+            </div>
+        </div>
+    </div>
+</div>
 
     <div class="row">
-
-
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                    {{--        <a href="{{ route(''.$module_name.'.create') }}"
+                         {{--   <a href="{{ route(''.$module_name.'.create') }}"
                                 id=""
                                 data-toggle="tooltip"
                                  class="btn btn-primary px-3 py-1">
@@ -183,9 +191,10 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.get_produk") }}',
+            ajax: '{{ route("$module_name.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
+
                 'excel',
                 'pdf',
                 'print'
@@ -221,6 +230,7 @@
 
 
     </script>
+
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {

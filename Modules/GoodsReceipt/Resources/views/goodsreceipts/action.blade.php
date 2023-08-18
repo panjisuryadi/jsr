@@ -1,13 +1,5 @@
 <div class="text-center">
 
-{{--     <a
-     href="{{ route('products.add_produk_modal_from_pembelian', encode_id($data->id)) }}"
-      id="GroupKategori"
-      data-toggle="tooltip"
-      class="btn btn-info btn-sm py-1">
-        @lang('Add Detail')
-    </a>   --}}
-
   <a href="{{ route("$module_name.show",encode_id($data->id)) }}"
 
     data-toggle="tooltip"
@@ -15,6 +7,8 @@
         @lang('Add Detail')
     </a> 
 
+
+   
 
     @can('delete_'.$module_name.'')
     <button id="delete" class="btn btn-danger btn-sm" onclick="
