@@ -14,6 +14,9 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Upload\Entities\Upload;
+use Modules\Product\Entities\Category;
+use Modules\Product\Entities\Product;
+use Modules\KategoriProduk\Models\KategoriProduk;
 
 class GoodsReceiptsController extends Controller
 {
@@ -26,6 +29,8 @@ class GoodsReceiptsController extends Controller
         $this->module_path = 'goodsreceipts';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\GoodsReceipt\Models\GoodsReceipt";
+        $this->module_categories = "Modules\Product\Entities\Category";
+
 
     }
 
@@ -251,6 +256,7 @@ public function store(Request $request)
             'date'                       => $input['date'],
             'status'                     => $input['status'],
             'supplier_id'                => $input['supplier_id'],
+            'user_id'                    => $input['user_id'],
             'parameter_kadar_id'         => $input['parameter_kadar_id'],
             'berat_barang'               => $input['berat_barang'],
             'berat_real'                 => $input['berat_real'],
@@ -313,7 +319,7 @@ public function store_ajax(Request $request)
 public function show($id)
     {
 
-
+        $id = decode_id($id);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -324,7 +330,7 @@ public function show($id)
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
         //dd($detail);
-          return view(''.$module_name.'::'.$module_path.'.show',
+          return view(''.$module_name.'::'.$module_path.'.detail',
            compact('module_name',
             'module_action',
             'detail',
@@ -333,6 +339,69 @@ public function show($id)
 
     }
 
+//add produk detail modal
+   public function add_produk_modal($id)
+    {
+
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $listcategories = KategoriProduk::with('category')->get();
+        $pembelian = $module_model::findOrFail($id);
+        //dd($detail);
+          return view(''.$module_name.'::'.$module_path.'.modal.catlist',
+           compact('module_name',
+            'module_action',
+            'pembelian',
+            'listcategories',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
+ public function add_products_by_categories(Request $request ,$id) {
+        $id = decode_id($id);
+        $no_pembelian = $request->get('po') ?? '0';
+        //dd($no_pembelian);
+        abort_if(Gate::denies('access_products'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_categories = $this->module_categories;
+        $module_name_singular = Str::singular($module_name);
+        $main = KategoriProduk::where('id', $id)->first();
+        $produkkategori = Category::where('kategori_produk_id', $id)->get();
+        $categories = Category::where('kategori_produk_id', $id)->get();
+        $pembelian = $module_model::where('code', $no_pembelian)->first();
+        $code = Product::generateCode();
+        $module_action = 'List';
+         return view(''.$module_name.'::'.$module_path.'.form.create',
+           compact('module_name',
+                    'module_title',
+                    'produkkategori',
+                    'categories',
+                    'main',
+                    'no_pembelian',
+                    'pembelian',
+                    'code',
+                    'module_icon', 'module_model'));
+         }
+
+
+
+
+
+
+
     /**
      * Show the form for editing the specified resource.
      * @param int $id
@@ -340,6 +409,7 @@ public function show($id)
      */
     public function edit($id)
     {
+         $id = decode_id($id);
        $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
