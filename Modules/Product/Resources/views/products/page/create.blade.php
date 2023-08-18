@@ -473,6 +473,22 @@ margin-bottom: 0.5rem !important;
             $('#upload2').hide();
         });
 
+
+        
+       $('#nominal').change(function() {
+          toastr.success('Margin Nominal dipilih');
+            $('#m2').toggle();
+            $('#m1').hide();
+        });
+
+        $('#persentase').change(function() {
+           toastr.success('margin Persentase dipilih');
+            $('#m1').toggle();
+            $('#m2').hide();
+        });
+
+
+
      </script>
 
     <script>

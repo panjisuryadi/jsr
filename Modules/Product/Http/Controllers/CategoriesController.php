@@ -98,17 +98,17 @@ public function index_data()
                                 ' . $data->products_count . '</span></div>';
                                 return $tb;
                             })
-             ->editColumn('category_name', function ($data) {
-                $tb = '<div class="flex items-center gap-x-2">
-                        <div>
-                  <span class="px-2 rounded rounded-lg bg-green-200 small font-normal text-gray-600 dark:text-gray-400"> ' . $data->kategoriProduk->name . '</span>
-               <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->category_name . '</h3>
-                <div class="text-xs font-normal text-red-600 dark:text-gray-400"> ' . $data->category_code . '</div>
+                                 ->editColumn('category_name', function ($data) {
+                                    $tb = '<div class="flex items-center gap-x-2">
+                                            <div>
+                                      <span class="px-2 rounded rounded-lg bg-green-200 small font-normal text-gray-600 dark:text-gray-400"> ' . $data->kategoriProduk->name . '</span>
+                                   <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->category_name . '</h3>
+                                    <div class="text-xs font-normal text-red-600 dark:text-gray-400"> ' . $data->category_code . '</div>
 
-                        </div>
-                    </div>';
-                return $tb;
-            })
+                                            </div>
+                                        </div>';
+                                    return $tb;
+                                })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -122,6 +122,8 @@ public function index_data()
                         ->rawColumns(['updated_at','image','category_name','products_count', 'action'])
                         ->make(true);
     }
+
+
 
 
     public function store(Request $request) {
@@ -140,6 +142,7 @@ public function index_data()
         $params = $request->except('_token');
         $params['category_code'] = $params['category_code'];
         $params['category_name'] = $params['category_name'];
+        $params['slug']          = Str::slug($params['category_name']);
         $params['kategori_produk_id'] = $params['kategori_produk_id'];
 
      if ($image = $request->file('image')) {
@@ -189,6 +192,7 @@ public function index_data()
         $params = $request->except('_token');
         $params['category_code'] = $params['category_code'];
         $params['category_name'] = $params['category_name'];
+        $params['slug']          = Str::slug($params['category_name']);
         $params['kategori_produk_id'] = $params['kategori_produk_id'];
        if ($image = $request->file('image')) {
                       if ($$module_name_singular->image !== 'no_foto.png') {
@@ -198,6 +202,8 @@ public function index_data()
          $normal = Image::make($image)->resize(1000, null, function ($constraint) {
                     $constraint->aspectRatio();
                     })->encode();
+
+
          $normalpath = 'uploads/' . $gambar;
         if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
          Storage::disk($storage)->put($normalpath, (string) $normal);
