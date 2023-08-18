@@ -409,14 +409,14 @@ label {
 <script>
 jQuery.noConflict();
 (function($) {
-    $('#product_cost').maskMoney({
+    $('#product_cost3').maskMoney({
         prefix: 'Rp ',
         thousands: '.',
         decimal: ',',
         precision: 0
     });
 
-    $('#product_sale').maskMoney({
+    $('#product_sales').maskMoney({
         prefix: '{{ settings()->currency->symbol }}',
         thousands: '{{ settings()->currency->thousand_separator }}',
         decimal: '{{ settings()->currency->decimal_separator }}',
@@ -435,48 +435,6 @@ jQuery.noConflict();
         decimal: '{{ settings()->currency->decimal_separator }}',
         precision: 0,
     });
-
-    $(".berat_total").on("keyup",function(event) {
-            var berat_total = $("#berat_total").maskMoney('destroy').val().replace(/Rp\s|[.,]/g, '');
-            var harga_emas = $('#harga_emas').val();
-            var total = harga_emas  *  berat_total;
-            $('#product_cost').val(total);
-          
-            console.log(total);
-        
-           // $("#product_price").val(pc);
-     
-    });
-
-
-
-
-$(document).ready(function() {
-        $("#margin").keyup(function() {
-            var product_cost  = $("#product_cost").val();
-            var margin = $("#margin").val();
-
-            var total = parseInt(product_cost) * parseInt(margin);
-            $("#grand_total").val(total);
-        });
-    });
-
-
-// $(document).on("change keyup blur", "#chDiscount", function() {
-//   var amd = $('#cBalance').val();
-//   var disc = $('#chDiscount').val();
-//   if (disc != '' && amd != '') {
-//     $('#result').val((parseInt(amd)) - (parseInt(disc)));
-//   }else{
-//     $('#result').val(parseInt(amd));
-//   }
-// });
-
-
-
-
-
-
 
     $('#generate-code').click(function() {
         var group = $('#group_id').val();

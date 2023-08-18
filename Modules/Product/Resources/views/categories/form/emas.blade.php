@@ -65,8 +65,11 @@
         name="{{ $field_name }}"
         min="0" step="0.01"
         id="{{ $field_name }}"
-        value="{{old($field_name)}}"
+        wire:model.lazy="berat_total"
+        wire:keyup="calculateHargaEmas"
+        value="{{$berat_total}}"
         placeholder="{{ $field_placeholder }}">
+
         <span class="invalid feedback" role="alert">
             <span class="text-danger error-text {{ $field_name }}_err"></span>
         </span>
@@ -102,6 +105,8 @@
                                                 name="{{ $field_name }}"
                                                 id="{{ $field_name }}"
                                                 value="{{old($field_name)}}"
+                                                wire:model.lazy="harga_emas"
+                                                wire:keyup="calculateHargaEmas"
                                                 placeholder="{{ $field_placeholder }}"
                                                 >
                                                 <span class="invalid feedback" role="alert">
@@ -119,12 +124,14 @@
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                 $required = "required";
                                                 ?>
-                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}
+
+                                                    <span class="text-danger">*</span></label>
                                                 <input class="form-control pc"
                                                 type="text"
                                                 name="{{ $field_name }}"
                                                 id="{{ $field_name }}"
-                                                value="{{old($field_name)}}"
+                                                value="{{$totalRupiah}}"
                                                 placeholder="{{ $field_placeholder }}"
                                                 >
                                                 <span class="invalid feedback" role="alert">
@@ -141,7 +148,7 @@
                            <div class="flex flex-row grid grid-cols-2 gap-2">
                                    
 
-      <div class="form-group">
+                                         <div class="form-group">
                                                 <?php
                                                 $field_name = 'margin';
                                                 $field_lable = label_case($field_name);
@@ -235,11 +242,4 @@
                                         
                                     
                                    </div>                                 
-
-
-
-
-
-
-
 
