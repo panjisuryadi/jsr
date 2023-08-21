@@ -132,10 +132,10 @@
                                             <input type="text" class="form-control" name="product_code" readonly value="{{ $code }}">
                                         </div>
 
-<div x-data="passwordGenerator">
-    <button x-on:click="generatePassword">Generate Password</button>
-    <input type="text" x-model="password">
-</div>
+                            <div x-data="passwordGenerator">
+                                <button x-on:click="generatePassword">Generate Password</button>
+                                <input type="text" x-model="password">
+                            </div>
 
 
 

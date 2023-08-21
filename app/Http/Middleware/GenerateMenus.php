@@ -802,20 +802,20 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
        // Submenu: products
-            $products->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Add Product').'',
-                 [
-                'url' => 'purchase-type/toko',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'purchase*',
-                'permission'    => ['access_purchase'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+            // $products->add('
+            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Add Product').'',
+            //      [
+            //     'url' => 'purchase-type/toko',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 3,
+            //     'activematches' => 'purchase*',
+            //     'permission'    => ['access_purchase'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2',
+            // ]);
 
 
 

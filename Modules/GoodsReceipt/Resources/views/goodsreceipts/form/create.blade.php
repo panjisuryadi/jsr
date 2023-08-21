@@ -99,12 +99,13 @@ label {
                             <div class="relative flex justify-left">
     <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Main Kategori <span class="px-1 hokkie font-semibold uppercase">{{ @$main->name }}</span></div>
 
-
                             </div>
                         </div>
 
-                        <input type="hidden" name="kode_pembelian" value="{{trim($no_pembelian)}}">
+         {{-- {{$pembelian}} --}}
 
+          <input type="hidden" name="kode_pembelian" value="{{trim($no_pembelian)}}">
+          <input type="hidden" name="supplier_id" value="{{$pembelian->supplier_id}}">
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">
@@ -138,9 +139,9 @@ label {
                             </div>
                             <div class="col-span-2 bg-transparent">
 
-                             {{--    <livewire:product.pilih-kategori/> --}}
-                            <div class="flex flex-row grid grid-cols-3 gap-2">
-  <livewire:product.pilih-kategori :categories="$categories"/>
+       {{--    <livewire:product.pilih-kategori/> --}}
+                            <div class="flex flex-row grid grid-cols-2 gap-2">
+ <livewire:product.pilih-kategori :categories="$categories"/>
  <div class="form-group">
                                                 <label for="group_id">@lang('Group')
                                                     <span class="text-danger">*</span>
@@ -156,56 +157,9 @@ label {
 
 
 
-                                    <div class="form-group">
-                                            <label for="product_note">Model</label>
-                                         <select class="form-control select2" name="produk_model" id="produk_model" required>
-                                                <option value="" selected disabled>Select Model</option>
-                                                     @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
-                                                            <option value="{{$sup->id}}" {{ old('produk_model') == $sup->name ? 'selected' : '' }}>
-                                                                {{$sup->name}}
-                                                            </option>
-                                                     @endforeach
-                                            </select>
-                                        </div>
+                             
                            
                              </div>
-
-
-
-
-
-
-                      <div class="flex flex-row grid grid-cols-2 gap-2">
-
-                    <div class="form-group">
-                        <label for="product_note">@lang('Cabang')</label>
-                        <select class="form-control select2" name="cabang_id" id="cabang_id" required>
-                            <option value="" selected disabled>Select Cabang</option>
-                            @foreach(\Modules\Cabang\Models\Cabang::all() as $cb)
-                            <option value="{{$sup->id}}" {{ old('cabang_id') == $cb->name ? 'selected' : '' }}>
-                                {{$cb->name}}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="baki_id">@lang('Baki')</label>
-                        <select class="form-control select2" name="baki_id" id="baki_id" required>
-                            <option value="" selected disabled>Select Baki</option>
-                            @foreach(\Modules\Baki\Models\Baki::all() as $bk)
-                            <option value="{{$bk->id}}" {{ old('baki_id') == $bk->name ? 'selected' : '' }}>
-                                {{$bk->name}}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    </div>
-
-
-
 
 
 
@@ -214,17 +168,17 @@ label {
                                     <div class="col-span-2">
                                         <div class="flex flex-row gap-2">
 
-                                         <div class="form-group w-60">
-                                            <label for="product_note">Supplier</label>
-                                           <select class="form-control select2" name="supplier_id" id="supplier_id" required>
-                                                <option value="" selected disabled>Select Supplier</option>
-                                                @foreach(\Modules\People\Entities\Supplier::all() as $sup)
-                                                 <option value="{{$sup->id}}" {{ old('supplier_id') == $sup->id ? 'selected' : '' }}>
-                                                    {{$sup->supplier_name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
+                                            <div class="w-60 form-group">
+                                                <label for="product_note">Model</label>
+                                                <select class="form-control select2" name="produk_model" id="produk_model" required>
+                                                    <option value="" selected disabled>Select Model</option>
+                                                    @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
+                                                    <option value="{{$sup->id}}" {{ old('produk_model') == $sup->name ? 'selected' : '' }}>
+                                                        {{$sup->name}}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 
                                             <div class="form-group w-90">
                                                 <label for="product_code">Code <span class="text-danger">*</span></label>
@@ -243,9 +197,8 @@ label {
                                 </div>
 
 
-             <livewire:product.kategori />
-
-                
+                                <livewire:product.kategori />
+            
 
                                 <div class="flex row px-3 py-0">
                                     <div class="p-0 col-lg-12">
@@ -409,7 +362,7 @@ label {
 <script>
 jQuery.noConflict();
 (function($) {
-    $('#product_cost3').maskMoney({
+    $('#format_harga_emas').maskMoney({
         prefix: 'Rp ',
         thousands: '.',
         decimal: ',',
@@ -605,4 +558,6 @@ jQuery.noConflict();
 })(jQuery);
 
 </script>
+
+
 @endpush

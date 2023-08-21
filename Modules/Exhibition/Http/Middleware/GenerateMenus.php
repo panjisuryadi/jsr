@@ -23,22 +23,22 @@ class GenerateMenus
          *
          * *********************************************************************
          */
-        \Menu::make('admin_sidebar', function ($menu) {
+        // \Menu::make('admin_sidebar', function ($menu) {
 
-            // Exhibitions
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Exhibitions'), [
-                'route' => 'exhibition.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 77,
-                'activematches' => ['exhibitions*'],
-                'permission'    => ['access_exhibitions'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-        })->sortBy('order');
+        //     // Exhibitions
+        //     $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Exhibitions'), [
+        //         'route' => 'exhibition.index',
+        //         'class' => 'nav-item',
+        //     ])
+        //     ->data([
+        //         'order'         => 77,
+        //         'activematches' => ['exhibitions*'],
+        //         'permission'    => ['access_exhibitions'],
+        //     ])
+        //     ->link->attr([
+        //         'class' => 'c-sidebar-nav-link py-2',
+        //     ]);
+        // })->sortBy('order');
 
         return $next($request);
     }

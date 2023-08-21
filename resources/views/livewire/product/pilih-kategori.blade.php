@@ -1,6 +1,7 @@
 <div class="form-group">
     <label class="mb-1">Product Category</label>
-  <select wire:model="selectedOption" class="form-control" name="category" wire:change="selectOption($event.target.value)">
+  <select id="category" wire:model="selectedOption" 
+  class="form-control" name="category" wire:change="selectOption($event.target.value)">
      <option value="">All Products</option>
         @foreach($categories as $category)
         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -11,5 +12,14 @@
 </div>
 
 
-
-
+@push('page_scripts')
+{{-- <script>
+    $(document).ready(function() {
+        $('#category').select2();
+        $('#category').on('change', function (e) {
+            var data = $('#category').select2("val");
+            @this.set('category', data);
+        });
+    });
+</script> --}}
+@endpush

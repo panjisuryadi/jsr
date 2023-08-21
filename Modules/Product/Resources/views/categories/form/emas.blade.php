@@ -60,13 +60,13 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control berat_total"
+        <input class="form-control"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+        min="0" value="0"
+        required step="0.01"
         id="{{ $field_name }}"
-        wire:model.lazy="berat_total"
-        wire:keyup="calculateHargaEmas"
+        wire:model="inputBeratTotal"
         value="{{$berat_total}}"
         placeholder="{{ $field_placeholder }}">
 
@@ -79,7 +79,9 @@
 
 
 
-    <div class="flex relative py-1">
+                      {{-- HARGA --}}
+
+                            <div class="flex relative py-1">
                                     <div class="absolute inset-0 flex items-center">
                                         <div class="w-full border-b border-gray-300"></div>
                                     </div>
@@ -99,14 +101,14 @@
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                 $required = "required";
                                                 ?>
-                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="small text-danger">(Harga Emas Hari ini)</span></label>
-                                                <input class="form-control harga_emas"
+                                                <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="small text-danger">&nbsp;(Harga Emas Hari ini)</span></label>
+                                                <input class="form-control"
                                                 type="text"
                                                 name="{{ $field_name }}"
                                                 id="{{ $field_name }}"
                                                 value="{{old($field_name)}}"
-                                                wire:model.lazy="harga_emas"
-                                                wire:keyup="calculateHargaEmas"
+                                                wire:model="inputHargaEmas"
+
                                                 placeholder="{{ $field_placeholder }}"
                                                 >
                                                 <span class="invalid feedback" role="alert">
@@ -129,14 +131,17 @@
                                                     <span class="text-danger">*</span></label>
                                                 <input class="form-control pc"
                                                 type="text"
-                                                name="{{ $field_name }}"
+                                                name="product_cost_rp"
                                                 id="{{ $field_name }}"
-                                                value="{{$totalRupiah}}"
+                                                value="{{ $productCost }}"
                                                 placeholder="{{ $field_placeholder }}"
                                                 >
-                                                <span class="invalid feedback" role="alert">
+
+                               <input type="hidden" name="{{ $field_name }}" value="{{ $price }}">
+
+                                                <div class="invalid feedback" role="alert">
                                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                                </span>
+                                                </div>
                                             </div>
                             
 
@@ -145,10 +150,14 @@
                                    </div>
 
 
+
+
+
                            <div class="flex flex-row grid grid-cols-2 gap-2">
                                    
+        
 
-                                         <div class="form-group">
+                                     <div class="form-group">
                                                 <?php
                                                 $field_name = 'margin';
                                                 $field_lable = label_case($field_name);
@@ -162,7 +171,7 @@
                                                      <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                                 </div>
                                  
-                              <div class="py-0">
+                                <div class="py-0">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input margin" type="radio" name="margin" id="nominal" checked>
                                             <label class="form-check-label" for="nominal">Nominal</label>
@@ -173,13 +182,7 @@
                                             <label class="form-check-label" for="persentase">Persentase</label>
                                         </div>
                                     </div>
-
-
-
-
-                                            </div>
-
-
+                                 </div>
 
                                              <div id="m2" >
                                                 <input class="form-control margin"
@@ -209,10 +212,6 @@
                                                 </span>
                                             </div>
 
-
-
-
-
                                         <div class="form-group">
                                                 <?php
                                                 $field_name = 'product_price';
@@ -241,5 +240,21 @@
                                             </div>
                                         
                                     
-                                   </div>                                 
+                                   </div>  
+<div class="flex flex-row grid grid-cols-1 gap-2">
 
+<div class="flex justify-end px-2 py-4">
+  <div></div>
+
+  <div>
+  <div class="font-semibold text-gray-500 text-danger leading-5 text-xs">
+    Total Biaya Produk: {{ $productCost }}
+  </div>
+  <div class="font-semibold text-gray-500 leading-5 text-danger text-xs">Grand Total: {{ $productCost }}</div>
+  </div>
+</div>
+
+
+</div>
+
+                           {{-- HARGA --}}

@@ -7,7 +7,7 @@
 <div></div>
 </div>
 
-<div class="flex rowpx-1 py-1 grid grid-cols-4 gap-2 m-2 text-center no-underline">
+<div class="flex rowpx-1 py-1 grid grid-cols-2 gap-2 m-2 text-center no-underline">
 
 
     {{-- {{$pembelian->code}} --}}
