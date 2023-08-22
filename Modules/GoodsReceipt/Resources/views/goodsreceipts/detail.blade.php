@@ -12,10 +12,11 @@
 @section('content')
 <div class="container-fluid">
 
-  {{--   {{ $detail }} --}}
-<div class="bg-white px-0 py-2 grid grid-cols-1 rounded-lg gap-4 m-1 shadow-md mb-3 no-underline">
-    <div class="overflow-hidden">
-            <div class="flex justify-between w-full">
+
+<div class="bg-white grid grid-cols-3 gap-4">
+
+  <div class="text-gray-600 px-2 py-2">
+             <div class="flex justify-between w-full">
                 <div class="px-6 py-2">
                     <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
                     <h3 class="text-lg font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
@@ -29,9 +30,8 @@
             </div>
 
 
-        <div class="border-t grid grid-cols-2 gap-4 m-2 border-gray-200 px-6 py-4">
-            <div>
-            <div class="flex justify-between w-full">
+<div class="px-6 py-2">
+ <div class="flex justify-between w-full">
                 <p class="poppins leading-5 text-gray-600">{{ Label_case('tanggal') }}</p>
                 <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ tanggal($detail->date) }}</p>
             </div>
@@ -59,12 +59,7 @@
                 <p class="poppins font-semibold leading-5 text-gray-800">{{ $detail->qty_diterima }}</p>
             </div>
 
-
-            </div>
-
-            <div>
-
-              <div class="flex justify-between w-full">
+         <div class="flex justify-between w-full">
                 <p class="poppins leading-5 text-gray-600">{{ Label_case('pengirim') }}</p>
                 <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ $detail->pengirim }}</p>
             </div>
@@ -78,10 +73,25 @@
                 <p class="poppins leading-5 text-gray-600">{{ Label_case('Sortir') }}</p>
                 <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ $detail->count }}</p>
             </div>
-<div class="mt-4 flex justify-between w-full">
 
-    <div></div>
-    <div>
+</div>
+
+
+
+
+  </div>
+
+
+
+
+
+
+  <div class="text-gray-600 col-span-2 px-2 py-2">
+
+
+
+ <div class="flex justify-between w-full">
+<div></div>
     <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
         id="GroupKategori"
         class="bg-blue-600 py-2 px-6 mt-2 rounded-lg hover:no-underline hover:text-gray-300">
@@ -89,19 +99,9 @@
     </a>
 </div>
 
-</div>
 
 
-
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
+       <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                          {{--   <a href="{{ route(''.$module_name.'.create') }}"
@@ -117,6 +117,10 @@
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
+
+
+
+{{-- 
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
@@ -133,12 +137,30 @@
 
                                 </tr>
                             </thead>
-                        </table>
+                        </table> --}}
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+
+
+
+@foreach($list as $row)
+ {{$row->product_code}}<br>
+@endforeach
+
+
+
+
+
+  </div>
+</div>
+
+
+
+
+  {{--   {{ $detail }} --}}
+
+
+
 </div>
 
 

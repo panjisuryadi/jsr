@@ -1089,11 +1089,10 @@ public function saveAjax(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
-             'category_id' => 'required',
-             'product_cost' => 'required|max:2147483647',
-             'product_price' => 'required|gt:product_cost',
-             'berat_emas' => 'required',
+            // 'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
+             'category' => 'required',
+           
+           
         ]);
 
         if (!$validator->passes()) {
@@ -1109,11 +1108,36 @@ public function saveAjax(Request $request)
         $totalberat = $input['berat_total'] ?? $input['berat_emas'];
         $berat = number_format((float)($totalberat), 5);
          // dd($group->name .' '. $model->name);
-        // dd($input);
+       // dd($input);
+
+        // "kode_pembelian" => "PO-00001"
+        //   "supplier_id" => "2"
+        //   "product_barcode_symbology" => "C128"
+        //   "product_stock_alert" => "5"
+        //   "product_quantity" => "1"
+        //   "product_unit" => "Gram"
+        //   "upload" => "on"
+        //   "image" => null
+        //   "category" => "6"
+        //   "group_id" => "5"
+        //   "produk_model" => "2"
+        //   "product_code" => "CBR-GLG-275-22082023"
+        //   "berat_accessories" => "0.04"
+        //   "berat_tag" => "0.04"
+        //   "berat_emas" => "0.04"
+        //   "berat_total" => "0.12"
+        //   "harga_emas" => "10000"
+        //   "product_cost_rp" => "Rp 1.200"
+        //   "product_cost" => "1200"
+        //   "flexRadioDefault" => "on"
+        //   "product_price" => "1300"
+        //   "product_note" => null
+
+
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([
-            'category_id'                       => $input['category_id'],
+            'category_id'                       => $input['category'],
             'kode_pembelian'                    => $input['kode_pembelian'],
             'product_stock_alert'               => $input['product_stock_alert'],
             'product_name'                      => $group->name .' '. $model->name ?? 'unknown',
@@ -1179,11 +1203,13 @@ public function saveAjax(Request $request)
                     'certificate_id'              => $input['certificate_id'] ?? null,
                     'shape_id'                    => $input['shape_id'] ?? null,
                     'round_id'                    => $input['round_id'] ?? null,
+                    'round_id'                    => $input['round_id'] ?? null,
+                    'tag_label'                   => $input['berat_tag'] ?? null,
                     'product_cost'                => $product_cost,
                     'product_price'               => $product_price,
                     'product_sale'                => null,
                     'berat_emas'                  => $input['berat_emas'],
-                    'berat_label'                 => $input['berat_label'],
+                    'berat_label'                 => '0',
                     'gudang_id'                   => $gudang ?? null,
                     'supplier_id'                 => $input['supplier_id'] ?? null,
                     'etalase_id'                  => $input['etalase_id'] ?? null,

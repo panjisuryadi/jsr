@@ -30,6 +30,7 @@ class GoodsReceiptsController extends Controller
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\GoodsReceipt\Models\GoodsReceipt";
         $this->module_categories = "Modules\Product\Entities\Category";
+        $this->module_products = "Modules\Product\Entities\Product";
 
 
     }
@@ -149,11 +150,6 @@ public function index_data(Request $request)
                          'name'])
                         ->make(true);
                      }
-
-
-
-
-
 
 
     /**
@@ -325,15 +321,19 @@ public function show($id)
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $module_model = $this->module_model;
+        $module_products = $this->module_products;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-        //dd($detail);
+        $list = $module_products::where('kode_pembelian',$detail->code)->get();
+      //  dd($detail->code);
           return view(''.$module_name.'::'.$module_path.'.detail',
            compact('module_name',
             'module_action',
             'detail',
+            'list',
             'module_title',
             'module_icon', 'module_model'));
 
@@ -398,19 +398,15 @@ public function show($id)
 
 
 
-
-
-
-
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Renderable
+     * @return Renderables
      */
     public function edit($id)
     {
-         $id = decode_id($id);
-       $module_title = $this->module_title;
+        $id = decode_id($id);
+        $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;

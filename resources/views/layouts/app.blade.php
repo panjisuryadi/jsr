@@ -17,7 +17,7 @@
   </script>
 
     @if(! request()->routeIs('app.pos.*')
-            && ! request()->routeIs('exhibition.*')
+            && ! request()->routeIs('goodsreceipt.*')
             )
              @include('layouts.sidebar')
             @endif
@@ -26,6 +26,7 @@
             @if(! request()->routeIs('app.pos.*')
             && ! request()->routeIs('purchase.*')
             && ! request()->routeIs('rfid.*')
+            && ! request()->routeIs('goodsreceipt.*')
            
             )
             <header class="c-header c-header-light c-header-fixed">

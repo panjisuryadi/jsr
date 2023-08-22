@@ -21,24 +21,109 @@ class Kategori extends Component
    
 
     public $hargaEmas = 0;
-    public $formattedHargaEmas = 0;
+    public $formattedHargaEmas = '';
     public $inputHargaEmas = 0;
     public $inputBeratTotal = 0.00;
     public $discount = 0;
     public $price = 0;
     public $hargaEmasBeratTotal = 0;
     public $productCost = 0;
+    public $inputMargin = 0;
+    public $inputMarginPersentase = 0;
+    public $produkPriceResult = 0;
+
+    public $berat_accessories = 0;
+    public $berat_emas = 0;
+    public $berat_tag = 0;
+    // public $berat_total = 0;
+    public $beratTotalFinal = 0;
+    public $margin_nominal;
+    public $margin_persentase;
+    public $hasilnominal = 0;
+    public $grandtotal = 0;
+
+    public $show = false;
 
     protected $listeners = ['optionSelected' => 'handleOptionSelected'];
 
 
+    public function mount() {
+       
+        // $this->hargaEmas = 0;
+        // $this->berat_total = 0;
+        
+    }
+
+   public function toggleMarginNominal()
+    {
+        dd($this->nominal);
+        // $this->nominal = !$this->nominal;
+        // if ($this->nominal) {
+        //     $this->persentase = false;
+        // }
+    }
+
+    public function toggleMarginPersentase()
+    {
+         //dd('xx');
+        $this->persentase = !$this->persentase;
+        if ($this->persentase) {
+            $this->nominal = false;
+        }
+    }
 
 
     public function updatedinputHargaEmas()
     {
-        $this->calculatePrice();
+       // $this->beratTotalFinal;
+       // dd($this->beratTotalFinal);
+        $hasil = (int)$this->inputHargaEmas * $this->beratTotalFinal;
+        ////
+        $discountAmount = $hasil * ($this->discount / 100);
+        $this->price = $hasil - $discountAmount;
+
+        $this->hargaEmasBeratTotal = $hasil;
+        $this->productCost = 'Rp ' . number_format($this->hargaEmasBeratTotal, 0, ',', '.');
+       // $this->calculatePrice();
     }
 
+
+  
+
+    public function recalculateTotal()
+    {
+        $this->beratTotalFinal = $this->berat_accessories + $this->berat_tag + $this->berat_emas;
+    }
+
+    public function calculateMarginNominal()
+    {
+        $this->resetInput();
+        $this->hasilnominal = (int)$this->price + $this->margin_nominal;
+        //dd($this->price);
+        $this->grandtotal = $this->hasilnominal;
+        $this->produkPriceResult = 'Rp ' . number_format($this->hasilnominal, 0, ',', '.');
+    }
+
+    
+  public function calculateMarginPersentase()
+    {
+       // dd('xxxx');
+        $this->resetInput();
+        $this->hasilnominal = $this->price / (int)$this->margin_persentase;
+        $this->grandtotal = $this->hasilnominal;
+       // dd($this->grandtotal);
+        $this->produkPriceResult = 'Rp ' . number_format($this->grandtotal, 0, ',', '.');
+    }
+
+  
+
+    public function updatedinputMargin()
+    {
+       // $this->resetInput();
+        $this->calculateMargin();
+    }
+
+  
 
 
     public function updatedinputBeratTotal()
@@ -79,22 +164,53 @@ class Kategori extends Component
         //$totalValue = $this->inputHargaEmas + $this->inputBeratTotal;
 
        //input harga emas di x berat total
-        $totalValue = $this->inputHargaEmas * $this->inputBeratTotal;
+        $beratTotalFinal = (int)$this->inputHargaEmas * $this->inputBeratTotal;
         ////
-        $discountAmount = $totalValue * ($this->discount / 100);
-        $this->price = $totalValue - $discountAmount;
+        $discountAmount = $beratTotalFinal * ($this->discount / 100);
+        $this->price = $beratTotalFinal - $discountAmount;
 
-        $this->hargaEmasBeratTotal = $totalValue;
+        $this->hargaEmasBeratTotal = $beratTotalFinal;
         $this->productCost = 'Rp ' . number_format($this->hargaEmasBeratTotal, 0, ',', '.');
              
 
     }
 
 
-    public function hydrate() {
-        $this->total_amount = $this->hitungMargin();
-        
-    }
+    private function calculateBerat()
+      {
+       //input harga emas di x berat total
+      
+        $hasil = (int)$this->berat_accessories 
+        + (int)$this->berat_emas + (int)$this->berat_tag;
+        ////
+        $this->beratTotalFinal = $hasil;
+       
+       }
+
+
+    private function calculateMargin()
+      {
+       //input harga emas di x berat total
+       
+        $produkPrice = (int)$this->price + (int)$this->inputMargin;
+        ////
+        $this->totalprodukPrice = $produkPrice;
+        $this->produkPriceResult = 'Rp ' . number_format($this->totalprodukPrice, 0, ',', '.');
+       }
+
+
+
+
+
+
+          public function resetInput()
+            {
+                $this->grandtotal = '';
+                $this->produkPriceResult = '';
+          
+              
+            }
+
 
     public function calculateHargaEmas()
     {
@@ -108,12 +224,6 @@ class Kategori extends Component
        // return $harga + $this->margin;
     }
 
-   public function mount() {
-       
-        $this->hargaEmas = 0;
-        $this->berat_total = 0;
-        $this->margin = 0.00;
-    }
 
 
     public function handleOptionSelected($value)
