@@ -86,15 +86,7 @@
 
 
 
-  <div class="text-gray-600 col-span-2 px-2 py-2">
-
-
-
- <div class="flex justify-between w-full">
-<div></div>
-    
-</div>
-
+  <div class="text-gray-600 col-span-2 px-2 py-2 border-l">
 
 
        <div class="card-body">
