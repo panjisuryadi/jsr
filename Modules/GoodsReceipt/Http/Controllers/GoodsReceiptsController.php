@@ -59,6 +59,96 @@ class GoodsReceiptsController extends Controller
 
 
 
+
+
+
+public function index_data_product(Request $request ,$kode_pembelian)
+
+    {
+       // $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        //$$module_name = $module_model::get();
+
+        $$module_name = $module_model::select('goodsreceipts.*'
+            ,'products.product_name','product_items.berat_total')
+           ->leftJoin('products', 'goodsreceipts.code', '=', 'products.kode_pembelian')
+           ->leftJoin('product_items', 'products.id', '=', 'product_items.product_id')
+            ->where('products.kode_pembelian',$kode_pembelian)
+            ->get();
+
+
+        $data = $$module_name;
+
+
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                              return view(''.$module_name.'::'.$module_path.'.actiondetail',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->editColumn('date', function ($data) {
+                             $tb = '<div class="text-xs items-left text-left">
+                                     ' .tanggal($data->date) . '
+                                    </div>';
+                                return $tb;
+                            }) 
+                           ->editColumn('name', function ($data) {
+                             $tb = '<div class="text-xs items-left text-left">
+                                     ' .$data->product_name . '
+                                    </div>';
+                                return $tb;
+                            }) 
+                           ->editColumn('qty', function ($data) {
+                             $tb = '<div class="text-sm font-semibold items-center text-center">
+                                     ' .$data->berat_total . '
+                                    </div>';
+                                return $tb;
+                            }) 
+                         ->editColumn('image', function ($data) {
+                               $images ='<div class="content-center items-center">
+                               <img class="w-10 h-10 rounded" src="'.  asset(imageUrl(). @$data->images) . '"
+                               style="height:50px; width:50px;">';
+                                return $images;
+                            })
+                  
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at',
+                         'date',
+                         'action',
+                         'code',
+                         'berat',
+                         'image', 
+                         'qty', 
+                         'detail', 
+                         'name'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
 public function index_data(Request $request)
 
     {

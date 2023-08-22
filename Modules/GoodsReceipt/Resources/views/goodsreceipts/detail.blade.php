@@ -92,17 +92,13 @@
 
  <div class="flex justify-between w-full">
 <div></div>
-    <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
-        id="GroupKategori"
-        class="bg-blue-600 py-2 px-6 mt-2 rounded-lg hover:no-underline hover:text-gray-300">
-        <i class="bi bi-plus"></i>@lang('Tambah Detail Barang')
-    </a>
+    
 </div>
 
 
 
        <div class="card-body">
-                    <div class="flex justify-between py-1 border-bottom">
+                    <div class="flex justify-between py-1 border-bottom mb-2">
                         <div>
                          {{--   <a href="{{ route(''.$module_name.'.create') }}"
                                 id=""
@@ -113,41 +109,43 @@
                                 </a>
  --}}
                         </div>
-                        <div id="buttons">
+                        <div id="buttons" class="mb-2">
+                          <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
+                                id="GroupKategori"
+                                class="bg-blue-600 py-1 px-4 rounded-lg hover:no-underline hover:text-gray-300">
+                                <i class="bi bi-plus"></i>@lang('Tambah')
+                            </a>
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
 
 
-
-{{-- 
-                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+ <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                    <th class="w-5 text-center">{{ __('Image') }}</th>
-                                    <th style="width: 18%!important;"  class="text-left">{{ __('Date') }}</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th class="text-left">{{ __('Berat') }}</th>
-                                    <th class="text-left">{{ __('Qty') }}</th>
-                                    <th style="width: 6%!important;" class="text-center">{{ __('Detail') }}
-                                    </th>
-                                    <th style="width: 22%!important;" class="text-center">{{ __('Action') }}
+                                    <th  style="width:8%!important;"  class="w-5 text-center">{{ __('Image') }}</th>
+                                    <th style="width: 20%!important;"  class="text-left">{{ __('Tanggal') }}</th>  
+                                    <th style="width: 20%!important;"  class="text-left">{{ __('Product') }}</th>
+                              
+                                    <th  style="width: 10%!important;" class="text-left">{{ __('Qty') }}</th>
+                                
+                                    <th style="width: 10%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
 
                                 </tr>
                             </thead>
-                        </table> --}}
+                        </table>
                     </div>
                 </div>
 
 
-
+{{-- 
 @foreach($list as $row)
  {{$row->product_code}}<br>
 @endforeach
 
-
+ --}}
 
 
 
@@ -214,13 +212,13 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("$module_name.index_data_product",$detail->code) }}',
             dom: 'Blfrtip',
             buttons: [
 
-                'excel',
-                'pdf',
-                'print'
+                // 'excel',
+                // 'pdf',
+                // 'print'
             ],
             columns: [{
                     "data": 'id',
@@ -229,15 +227,10 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
-
                 {data: 'image', name: 'image'},
                 {data: 'date', name: 'date'},
-                {data: 'code', name: 'code'},
-                {data: 'berat', name: 'berat'},
+                {data: 'name', name: 'name'},
                 {data: 'qty', name: 'qty'},
-                {data: 'detail', name: 'detail'},
-
-
                 {
                     data: 'action',
                     name: 'action',

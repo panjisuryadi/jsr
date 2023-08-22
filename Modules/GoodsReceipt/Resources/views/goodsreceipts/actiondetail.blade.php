@@ -4,7 +4,8 @@
 
     data-toggle="tooltip"
      class="btn btn-info btn-sm py-1">
-        @lang('Add Detail')
+       <i class="bi bi-eye"></i>
+      
     </a> 
 
 
@@ -25,9 +26,3 @@
     </button>
 @endcan
 
-
-
-
-
-
-</div>
