@@ -26,17 +26,27 @@
             @if(! request()->routeIs('app.pos.*')
             && ! request()->routeIs('purchase.*')
             && ! request()->routeIs('rfid.*')
-            && ! request()->routeIs('goodsreceipt.add_products_by_categories')
-           
+          
+         
             )
             <header class="c-header c-header-light c-header-fixed">
                 @include('layouts.header')
-                <div class="c-subheader justify-content-between px-3">
-                    @yield('breadcrumb')
-                    @include('includes.date')
-                </div>
+
+                  @if(! request()->routeIs('goodsreceipt.add_products_by_categories')
+                    && ! request()->routeIs('goodsreceipt.show')
+                  )
+                    <div class="c-subheader justify-content-between px-3">
+                        @yield('breadcrumb')
+                        @include('includes.date')
+                    </div>
+                  @endif
+
+
             </header>
             @endif
+
+
+
         <div class="c-body">
             <main class="c-main">
                 @yield('content')

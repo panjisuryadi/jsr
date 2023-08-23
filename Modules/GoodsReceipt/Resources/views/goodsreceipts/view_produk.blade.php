@@ -48,7 +48,7 @@
         <div class="flex">
           <span class="title-font font-medium text-2xl text-gray-900">
             {{ number_format($detail->product_price) }}</span>
-          <button class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Print</button>
+          <button class="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Print Barcode</button>
         
         </div>
       </div>

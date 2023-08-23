@@ -17,7 +17,7 @@
 
   <div class="text-gray-600 px-2 py-2">
              <div class="flex justify-between w-full">
-                <div class="px-6 py-2">
+                <div class="px-3 py-2">
                     <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
                     <h3 class="text-lg font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
                 </div>
@@ -30,48 +30,50 @@
             </div>
 
 
-<div class="px-6 py-2">
+<div class="text-sm px-3 py-2">
  <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('tanggal') }}</p>
-                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ tanggal($detail->date) }}</p>
+                <p class="poppins leading-6 text-gray-600">{{ Label_case('tanggal') }}</p>
+                <p class="poppins dark:text-gray-300 leading-6 text-gray-800">{{ tanggal($detail->date) }}</p>
             </div>
            <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('no_invoice') }}</p>
-                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ $detail->no_invoice }}</p>
+                <p class="poppins leading-6 text-gray-600">{{ Label_case('no_invoice') }}</p>
+                <p class="poppins dark:text-gray-300 leading-6 text-gray-800">{{ $detail->no_invoice }}</p>
             </div>
   <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('berat') }}</p>
-                <p class="poppins font-semibold leading-5 text-blue-800">{{ $detail->berat_barang }}
+                <p class="poppins leading-6 text-gray-600">{{ Label_case('berat') }}</p>
+                <p class="poppins font-semibold leading-6 text-blue-800">{{ $detail->berat_barang }}
                    <small class="text-gray-700">Gram</small></p>
             </div>
   <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('berat_real') }}</p>
-                <p class="poppins font-semibold leading-5 text-green-800">{{ $detail->berat_real }}
+                <p class="poppins leading-6 text-gray-600">{{ Label_case('berat_real') }}</p>
+                <p class="poppins font-semibold leading-6 text-green-800">{{ $detail->berat_real }}
                     <small class="text-gray-700">Gram</small></p>
             </div>
 <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('qty') }}</p>
-                <p class="poppins font-semibold leading-5 text-gray-800">{{ $detail->qty }}</p>
+                <p class="poppins leading-6 text-gray-600">{{ Label_case('qty') }}</p>
+                <p class="poppins font-semibold leading-6 text-gray-800">{{ $detail->qty }}</p>
             </div>
 
 <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('qty_diterima') }}</p>
-                <p class="poppins font-semibold leading-5 text-gray-800">{{ $detail->qty_diterima }}</p>
+                <p class="poppins leading-6 text-gray-600">{{ Label_case('qty_diterima') }}</p>
+                <p class="poppins font-semibold leading-6 text-gray-800">{{ $detail->qty_diterima }}</p>
             </div>
 
          <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('pengirim') }}</p>
-                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ $detail->pengirim }}</p>
+                <p class="poppins leading-6 text-gray-600">{{ Label_case('pengirim') }}</p>
+                <p class="poppins dark:text-gray-300 leading-6 text-gray-800">{{ $detail->pengirim }}</p>
             </div>
 
              <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('penerima') }}</p>
-                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">
+                <p class="poppins leading-6 text-gray-600">{{ Label_case('penerima') }}</p>
+                <p class="poppins dark:text-gray-300 leading-6 text-gray-800">
                     {{ @$detail->user->name }}</p>
             </div>
     <div class="flex justify-between w-full">
-                <p class="poppins leading-5 text-gray-600">{{ Label_case('Sortir') }}</p>
-                <p class="poppins dark:text-gray-300 leading-5 text-gray-800">{{ $detail->count }}</p>
+                <p class="poppins leading-6 text-gray-600"></p>
+
+                <span class="rounded rounded-md px-2 py-1 bg-yellow-300 poppins font-semibold leading-6 text-xs text-gray-800">
+                    {{ $detail->count }} / {{ $detail->qty }}</span>
             </div>
 
 </div>
@@ -92,30 +94,29 @@
        <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom mb-2">
                         <div>
-                         {{--   <a href="{{ route(''.$module_name.'.create') }}"
-                                id=""
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3 py-1">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;
-                                 {{ __($module_title) }}
-                                </a>
- --}}
+                        <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
+                                id="Save"
+                                class="bg-blue-400 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
+                                <i class="bi bi-plus"></i>@lang('Print Barcode')
+                            </a>
+
+
                         </div>
                         <div id="buttons" class="mb-2">
 
+                      
 
                           <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
                                 id="Save"
-                                class="bg-green-600 py-1 px-4 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
+                                class="bg-green-600 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
                                 <i class="bi bi-plus"></i>@lang('Simpan')
                             </a>
 
                        <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
                                 id="GroupKategori"
-                                class="bg-blue-600 py-1 px-4 rounded-lg hover:no-underline hover:text-gray-300">
+                                class="bg-blue-600 py-1 px-2 rounded-lg hover:no-underline hover:text-gray-300">
                                 <i class="bi bi-plus"></i>@lang('Tambah')
                             </a>
-
 
                         </div>
                     </div>
