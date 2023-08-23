@@ -194,7 +194,7 @@
             searching: true,
            "oLanguage": {
             "sSearch": "<i class='bi bi-search'></i> {{ __("labels.table.search") }} : ",
-            "sLengthMenu": "_MENU_ &nbsp;&nbsp;Data Per {{ __("labels.table.page") }} ",
+            "sLengthMenu": "_MENU_ &nbsp;&nbsp; ",
             "sInfo": "{{ __("labels.table.showing") }} _START_ s/d _END_ {{ __("labels.table.from") }} <b>_TOTAL_ data</b>",
             "sInfoFiltered": "(filter {{ __("labels.table.from") }} _MAX_ total data)",
             "sZeroRecords": "{{ __("labels.table.not_found") }}",
