@@ -14,7 +14,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="card col-lg-12">
+            <div class="px-0 bg-white col-lg-12">
 {{-- {{ @$detail }} --}}
     <div class="mx-auto flex flex-wrap">
       <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://dummyimage.com/400x400">
@@ -30,10 +30,10 @@
           </span>
       
         </div>
-        <p class="leading-relaxed">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.</p>
+        <p class="leading-relaxed text-gray-600">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.</p>
         <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
       
-          <div class="flex ml-6 items-center">
+        {{--   <div class="flex ml-6 items-center">
             <span class="mr-3">Size</span>
             <div class="relative">
              fdfdfd
@@ -43,7 +43,7 @@
                 </svg>
               </span>
             </div>
-          </div>
+          </div> --}}
         </div>
         <div class="flex">
           <span class="title-font font-medium text-2xl text-gray-900">
