@@ -103,12 +103,13 @@ public function index_data_product(Request $request ,$kode_pembelian)
                                     </div>';
                                 return $tb;
                             }) 
-                           ->editColumn('name', function ($data) {
-                             $tb = '<div class="text-xs items-left text-left">
-                                     ' .$data->product_name . '
-                                    </div>';
-                                return $tb;
-                            }) 
+           ->editColumn('name', function ($data) {
+             $tb = '<div class="text-xs items-left text-left">
+                     <div class="text-blue-500">' .$data->product_name . '</div>
+                     <div class="text-blue-500">' .$data->code . '</div>
+                    </div>';
+                return $tb;
+            }) 
                            ->editColumn('qty', function ($data) {
                              $tb = '<div class="text-sm font-semibold items-center text-center">
                                      ' .$data->berat_total . '

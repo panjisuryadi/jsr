@@ -38,13 +38,18 @@ class Kategori extends Component
     // public $berat_total = 0;
     public $beratTotalFinal = 0;
     public $margin_nominal;
+    public $margin_gram;
     public $margin_persentase;
     public $hasilnominal = 0;
     public $grandtotal = 0;
 
     public $show = false;
+    public $tipeMarginGram;
 
-    protected $listeners = ['optionSelected' => 'handleOptionSelected'];
+    protected $listeners = [
+                            'optionSelected' => 'handleOptionSelected'
+
+                             ];
 
 
     public function mount() {
@@ -54,13 +59,11 @@ class Kategori extends Component
         
     }
 
-   public function toggleMarginNominal()
+   public function tipeMargin($value)
     {
-        dd($this->nominal);
-        // $this->nominal = !$this->nominal;
-        // if ($this->nominal) {
-        //     $this->persentase = false;
-        // }
+           //dd($value);
+            $this->tipeMarginGram = $value;
+
     }
 
     public function toggleMarginPersentase()
@@ -95,7 +98,17 @@ class Kategori extends Component
         $this->beratTotalFinal = $this->berat_accessories + $this->berat_tag + $this->berat_emas;
     }
 
-    public function calculateMarginNominal()
+    public function calculateMarginGram()
+    {
+        $this->resetInput();
+        $this->hasilnominal = $this->margin_gram * $this->beratTotalFinal;
+        $this->grandtotal = $this->hasilnominal + $this->hargaEmasBeratTotal;
+       // dd($this->hargaEmasBeratTotal);
+        $this->produkPriceResult = 'Rp ' . number_format($this->grandtotal, 0, ',', '.');
+    } 
+
+
+     public function calculateMarginNominal()
     {
         $this->resetInput();
         $this->hasilnominal = (int)$this->price + $this->margin_nominal;
@@ -110,7 +123,7 @@ class Kategori extends Component
        // dd('xxxx');
         $this->resetInput();
         $this->hasilnominal = $this->price / (int)$this->margin_persentase;
-        $this->grandtotal = $this->hasilnominal;
+        $this->grandtotal = $this->hasilnominal + $this->hargaEmasBeratTotal;
        // dd($this->grandtotal);
         $this->produkPriceResult = 'Rp ' . number_format($this->grandtotal, 0, ',', '.');
     }

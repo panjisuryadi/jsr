@@ -102,11 +102,21 @@
  --}}
                         </div>
                         <div id="buttons" class="mb-2">
+
+
                           <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
+                                id="Save"
+                                class="bg-green-600 py-1 px-4 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
+                                <i class="bi bi-plus"></i>@lang('Simpan')
+                            </a>
+
+                       <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
                                 id="GroupKategori"
                                 class="bg-blue-600 py-1 px-4 rounded-lg hover:no-underline hover:text-gray-300">
                                 <i class="bi bi-plus"></i>@lang('Tambah')
                             </a>
+
+
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
@@ -120,7 +130,7 @@
                                     <th style="width: 20%!important;"  class="text-left">{{ __('Tanggal') }}</th>  
                                     <th style="width: 20%!important;"  class="text-left">{{ __('Product') }}</th>
                               
-                                    <th  style="width: 10%!important;" class="text-left">{{ __('Qty') }}</th>
+                                    <th  style="width: 10%!important;" class="text-left">{{ __('Berat') }}</th>
                                 
                                     <th style="width: 10%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
