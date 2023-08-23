@@ -22,8 +22,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/add_produk_modal/{id}", ['as' => "$module_name.add_produk_modal", 'uses' => "$controller_name@add_produk_modal"]);
 
-    
-  Route::get("$module_name/view_produk/{id}", ['as' => "$module_name.view_produk", 'uses' => "$controller_name@view_produk"]);
+
+   Route::get("$module_name/view_produk/{id}", ['as' => "$module_name.view_produk", 'uses' => "$controller_name@view_produk"]);
+   
+ Route::get("$module_name/print_produk/{kode_pembelian}", ['as' => "$module_name.print_produk", 'uses' => "$controller_name@print_produk"]);
 
    Route::get("$module_name/index_data_product/{kode_pembelian}", ['as' => "$module_name.index_data_product", 'uses' => "$controller_name@index_data_product"]);
 

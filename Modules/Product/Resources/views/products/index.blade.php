@@ -24,7 +24,7 @@ display: inline-block;
 <div class="container-fluid">
 
 
-<div class=" px-0 py-2 grid grid-cols-4 gap-4 m-2 text-center no-underline">
+<div class=" px-0 py-2 grid grid-cols-2 gap-4 m-2 text-center no-underline">
 <?php  
 $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 ?>  

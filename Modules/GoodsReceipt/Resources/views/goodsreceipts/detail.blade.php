@@ -94,7 +94,7 @@
        <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom mb-2">
                         <div>
-                        <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
+                        <a href="{{ route(''.$module_name.'.print_produk',$detail->code) }}"
                                 id="Save"
                                 class="bg-blue-400 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
                                 <i class="bi bi-plus"></i>@lang('Print Barcode')
@@ -103,8 +103,6 @@
 
                         </div>
                         <div id="buttons" class="mb-2">
-
-                      
 
                           <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
                                 id="Save"

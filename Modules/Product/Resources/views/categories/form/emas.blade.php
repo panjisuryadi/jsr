@@ -47,6 +47,7 @@
         min="0" step="0.01"
         wire:model="berat_accessories"
         wire:change="recalculateTotal"
+        wire:keyup="recalculateTotal"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}"
@@ -70,6 +71,7 @@
         name="{{ $field_name }}"
         wire:model="berat_tag"
         wire:change="recalculateTotal"
+        wire:keyup="recalculateTotal"
         min="0" step="0.01"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
@@ -95,6 +97,7 @@
         id="{{ $field_name }}"
         wire:model="berat_emas"
         wire:change="recalculateTotal"
+        wire:keyup="recalculateTotal"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
         <span class="invalid feedback" role="alert">
@@ -152,6 +155,7 @@
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         wire:model="inputHargaEmas"
+
         placeholder="{{ $field_placeholder }}"
         >
         <span class="invalid feedback" role="alert">

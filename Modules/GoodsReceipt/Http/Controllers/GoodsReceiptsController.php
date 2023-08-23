@@ -473,6 +473,52 @@ public function view_produk($id)
 
 
 
+
+public function print_produk($kode_pembelian)
+    {
+
+        //$kode_pembelian = decode_id($kode_pembelian);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_model = $this->module_model;
+        $module_products = $this->module_products;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $detail = $module_products::select('products.*',
+                                'goodsreceipts.code AS code',
+                                'goodsreceipts.berat_barang'
+                                 )
+                    ->where('products.kode_pembelian',$kode_pembelian)
+                    ->leftJoin('goodsreceipts', 'products.kode_pembelian', '=', 'goodsreceipts.code')
+                    ->get();
+
+
+      //  dd($detail->code);
+          return view(''.$module_name.'::'.$module_path.'.print_produk',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 //add produk detail modal
    public function add_produk_modal($id)
     {
