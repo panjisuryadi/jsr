@@ -27,12 +27,16 @@
         </span>
     </div>
 </div>
+
+
+
+
 <div class="flex flex-row grid grid-cols-2 gap-2">
     
     <div class="form-group">
         <?php
         $field_name = 'berat_emas';
-        $field_lable = label_case('Berat');
+        $field_lable = label_case('Emas');
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
@@ -43,6 +47,9 @@
         name="{{ $field_name }}"
         min="0" step="0.01"
         id="{{ $field_name }}"
+        wire:model="berat_emas"
+        wire:change="recalculateTotal"
+        wire:keyup="recalculateTotal"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
         <span class="invalid feedback" role="alert">
@@ -50,24 +57,21 @@
         </span>
     </div>
     
-
-
     <div class="form-group">
         <?php
         $field_name = 'berat_total';
-        $field_lable = label_case('berat_total');
+        $field_lable = label_case('Total');
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control berat_total"
+        <input class="form-control"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
         id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
+        value="{{$beratTotalFinal}}" readonly>
+
         <span class="invalid feedback" role="alert">
             <span class="text-danger error-text {{ $field_name }}_err"></span>
         </span>
