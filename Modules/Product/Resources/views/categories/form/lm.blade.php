@@ -76,6 +76,8 @@
 </div>
 
 {{-- HARGA --}}
+
+
 <div class="flex relative py-1">
     <div class="absolute inset-0 flex items-center">
         <div class="w-full border-b border-gray-300"></div>
@@ -149,24 +151,40 @@
                     <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                 </div>
                 
-        <div class="py-0">
+          <div class="py-0">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="flexRadioDefault"
-                id="flexRadioDefault1" wire:click="$set('show', false)" checked>
+                id="flexRadioDefault1" wire:click="tipeMargin('gram')">
+                <label class="form-check-label" for="gram">Gram</label>
+            </div> 
+
+             <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                id="flexRadioDefault1" wire:click="tipeMargin('nominal')" checked>
                 <label class="form-check-label" for="nominal">Nominal</label>
-            </div>
+            </div> 
+
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  wire:click="$set('show', true)">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  wire:click="tipeMargin('persentase')">
                 <label class="form-check-label" for="margin">Persentase</label>
             </div>
             
-        </div>
+           </div>
 
 
             </div>
 
-       @if (!$show)
-        <input class="form-control"
+        @if($tipeMarginGram == 'gram')
+         <input class="form-control"
+                type="number"
+                id="{{ $field_name }}"
+                wire:model="margin_gram"
+                min="1" max="100" step="1"
+                wire:keyup="calculateMarginGram"
+                placeholder="Margin Gram"
+                >
+        @elseif($tipeMarginGram == 'nominal')
+           <input class="form-control"
                 type="number"
                 id="{{ $field_name }}"
                 wire:model="margin_nominal"
@@ -174,8 +192,8 @@
                 wire:keyup="calculateMarginNominal"
                 placeholder="Margin Nominal"
                 >
-         @else
-         <input class="form-control"
+        @elseif($tipeMarginGram == 'persentase')
+          <input class="form-control"
                 type="number"
                 id="{{ $field_name }}"
                 wire:model="margin_persentase"
@@ -183,10 +201,17 @@
                 wire:keyup="calculateMarginPersentase"
                 placeholder="Margin Persentase"
                 >
-   
-         @endif
-
-      
+        @else
+          <input class="form-control"
+                type="number"
+                id="{{ $field_name }}"
+                wire:model="margin_nominal"
+                min="1" max="100" step="1"
+                wire:keyup="calculateMarginNominal"
+                placeholder="Margin Nominal"
+                >
+        @endif
+  
             <span class="invalid feedback" role="alert">
                 <span class="text-danger error-text {{ $field_name }}_err"></span>
             </span>
@@ -222,10 +247,10 @@
         <div class="flex justify-end px-2 py-4">
             <div></div>
             <div>
-                <div class="font-semibold text-gray-500 leading-5 text-xs">
-                    Total Biaya Produk: {{ $productCost }}
+                <div class="font-semibold text-gray-500  leading-5 text-xs">
+                    Biaya Produk: {{ $productCost }}
                 </div>
-                <div class="font-semibold text-gray-500 leading-5 text-xs">Grand Total: {{ $produkPriceResult }}</div>
+                <div class="font-semibold text-gray-500 leading-5  text-xs">Harga : {{ $produkPriceResult }}</div>
             </div>
         </div>
     </div>

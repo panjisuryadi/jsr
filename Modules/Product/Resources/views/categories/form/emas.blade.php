@@ -260,10 +260,7 @@
                 placeholder="Margin Nominal"
                 >
         @endif
-
-
-
-      
+  
             <span class="invalid feedback" role="alert">
                 <span class="text-danger error-text {{ $field_name }}_err"></span>
             </span>

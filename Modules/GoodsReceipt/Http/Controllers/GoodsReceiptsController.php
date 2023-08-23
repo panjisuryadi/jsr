@@ -78,7 +78,10 @@ public function index_data_product(Request $request ,$kode_pembelian)
         //$$module_name = $module_model::get();
 
         $$module_name = $module_model::select('goodsreceipts.*'
-            ,'products.product_name','product_items.berat_total')
+            ,
+            'products.id AS id_produk',
+            'products.product_name',
+            'product_items.berat_total')
            ->leftJoin('products', 'goodsreceipts.code', '=', 'products.kode_pembelian')
            ->leftJoin('product_items', 'products.id', '=', 'product_items.product_id')
             ->where('products.kode_pembelian',$kode_pembelian)
@@ -429,6 +432,46 @@ public function show($id)
             'module_icon', 'module_model'));
 
     }
+
+public function view_produk($id)
+    {
+
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_model = $this->module_model;
+        $module_products = $this->module_products;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $detail = $module_products::select('products.*',
+                                'goodsreceipts.code AS code',
+                                'goodsreceipts.berat_barang'
+                                 )
+                    ->where('products.id',$id)
+                    ->leftJoin('goodsreceipts', 'products.kode_pembelian', '=', 'goodsreceipts.code')
+                    ->first();
+
+
+        $list = $module_products::where('kode_pembelian',$detail->code)->get();
+      //  dd($detail->code);
+          return view(''.$module_name.'::'.$module_path.'.view_produk',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'list',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+
+
 
 //add produk detail modal
    public function add_produk_modal($id)

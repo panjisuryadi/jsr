@@ -9,6 +9,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Modules\Product\Entities\ProductLocation;
+use Modules\GoodsReceipt\Models\GoodsReceipt;
 class Product extends Model implements HasMedia
 {
 
@@ -36,6 +37,9 @@ class Product extends Model implements HasMedia
 
     public function category() {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+    public function pembelian() {
+        return $this->belongsTo(GoodsReceipt::class, 'kode_pembelian', 'code');
     }
 
     public function registerMediaCollections(): void {

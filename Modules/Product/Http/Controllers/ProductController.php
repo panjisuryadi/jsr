@@ -413,7 +413,7 @@ public function index_data_rfid(Request $request)
                            <div style="font-size:0.7rem; line-heght:1 !important;" class="leading-0 text-yellow-600 dark:text-gray-400">
                             ' . $data->category->category_name . '</div>
                             <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                             <div style="font-size:0.7rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
+                             <div style="font-size:0.7rem !important;" class="text-xs font-normal text-gray-800 dark:text-gray-400">
                             ' . $data->rfid . '</div>
 
 
@@ -1192,31 +1192,31 @@ public function saveAjax(Request $request)
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $gudang = Gudang::latest()->limit(1)->first()->id;
-               ProductItem::create([
-                    'product_id'                  => $produk,
-                    'location_id'                 => $input['location_id'] ?? null,
-                    'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
-                    'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
-                    'customer_id'                 => $input['customer_id'] ?? null,
-                    'karat_id'                    => $input['karat_id'] ?? null,
-                    'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
-                    'certificate_id'              => $input['certificate_id'] ?? null,
-                    'shape_id'                    => $input['shape_id'] ?? null,
-                    'round_id'                    => $input['round_id'] ?? null,
-                    'round_id'                    => $input['round_id'] ?? null,
-                    'tag_label'                   => $input['berat_tag'] ?? null,
-                    'product_cost'                => $product_cost,
-                    'product_price'               => $product_price,
-                    'product_sale'                => null,
-                    'berat_emas'                  => $input['berat_emas'],
-                    'berat_label'                 => '0',
-                    'gudang_id'                   => $gudang ?? null,
-                    'supplier_id'                 => $input['supplier_id'] ?? null,
-                    'etalase_id'                  => $input['etalase_id'] ?? null,
-                    'baki_id'                     => $input['baki_id'] ?? null,
-                    'produk_model_id'             => $input['produk_model'] ?? null,
-                    'berat_total'                 => $input['berat_total']
-                ]);
+           ProductItem::create([
+                'product_id'                  => $produk,
+                'location_id'                 => $input['location_id'] ?? null,
+                'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
+                'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
+                'customer_id'                 => $input['customer_id'] ?? null,
+                'karat_id'                    => $input['karat_id'] ?? null,
+                'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
+                'certificate_id'              => $input['certificate_id'] ?? null,
+                'shape_id'                    => $input['shape_id'] ?? null,
+                'round_id'                    => $input['round_id'] ?? null,
+                'round_id'                    => $input['round_id'] ?? null,
+                'tag_label'                   => $input['berat_tag'] ?? null,
+                'product_cost'                => $product_cost,
+                'product_price'               => $product_price,
+                'product_sale'                => null,
+                'berat_emas'                  => $input['berat_emas'],
+                'berat_label'                 => '0',
+                'gudang_id'                   => $gudang ?? null,
+                'supplier_id'                 => $input['supplier_id'] ?? null,
+                'etalase_id'                  => $input['etalase_id'] ?? null,
+                'baki_id'                     => $input['baki_id'] ?? null,
+                'produk_model_id'             => $input['produk_model'] ?? null,
+                'berat_total'                 => $input['berat_total']
+            ]);
 
                  
 

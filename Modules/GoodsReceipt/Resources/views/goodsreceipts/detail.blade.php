@@ -132,7 +132,7 @@
                               
                                     <th  style="width: 10%!important;" class="text-left">{{ __('Berat') }}</th>
                                 
-                                    <th style="width: 10%!important;" class="text-center">{{ __('Action') }}
+                                    <th style="width: 13%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
 
                                 </tr>

@@ -1,6 +1,6 @@
 <div class="text-center">
 
-  <a href="{{ route("$module_name.show",encode_id($data->id)) }}"
+  <a href="{{ route("$module_name.view_produk",encode_id($data->id_produk)) }}"
 
     data-toggle="tooltip"
      class="btn btn-info btn-sm py-1">
