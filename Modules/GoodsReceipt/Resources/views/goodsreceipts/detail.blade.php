@@ -94,7 +94,7 @@
        <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom mb-2">
                         <div>
-                        <a href="{{ route(''.$module_name.'.print_produk',$detail->code) }}"
+                        <a target="_blank" href="{{ route(''.$module_name.'.print_produk',$detail->code) }}"
                                 id="Save"
                                 class="bg-blue-400 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
                                 <i class="bi bi-plus"></i>@lang('Print Barcode')

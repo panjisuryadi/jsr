@@ -17,7 +17,7 @@ use Modules\Upload\Entities\Upload;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\KategoriProduk\Models\KategoriProduk;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class GoodsReceiptsController extends Controller
 {
 

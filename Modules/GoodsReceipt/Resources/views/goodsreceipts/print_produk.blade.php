@@ -1,25 +1,31 @@
-@extends('layouts.app')
+@extends('layouts.print')
 @section('title', $module_title)
-@section('third_party_stylesheets')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-@endsection
-@section('breadcrumb')
-<ol class="breadcrumb border-0 m-0">
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">{{$module_title}}</li>
-</ol>
-@endsection
+
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid w-full">
 
-          <div class="px-2 py-2">
-             <div class="card">
-                    <div class="card-body">
-                     {{ $detail }}
+<div class="flex items-center justify-center mx-auto bg-white grid grid-cols-3 gap-4">
+    {{-- {{$pembelian->code}} --}}
+  @foreach($detail as $barcode)
+    {{-- {{ route('goodsreceipt.show', encode_id($pembelian->id)) }} --}}
+<div class="no-underline cursor-pointer p-2 text-center items-center">
+    <div class="mt-3 mb-1" style="font-size: 15px;color: #000;">
+        {{ $barcode->product_name }}
+    </div>
+    <div class="flex items-center justify-center">
+        {!! QrCode::generate($barcode->product_code); !!}
+    </div>
+    <p style="font-size: 15px;color: #000;">
+        Price:: {{ format_currency($barcode->product_price) }}
+    </p>
+</div>
 
-                </div>
-              </div>
-            </div>
+    @endforeach
+</div>
+
+
+           
+    
 </div>
 
 
