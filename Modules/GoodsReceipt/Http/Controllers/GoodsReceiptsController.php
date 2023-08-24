@@ -212,7 +212,7 @@ public function index_data(Request $request)
                              $tb = '<div class="font-semibold items-center text-center">
 
                              <div data-toggle="tooltip" data-placement="top" title="sisa barang" class="bg-green-400 px-1 items-center text-center rounded-lg">
-                                    ' .$data->count . ' 
+                                    ' .$data->count . '  / ' .$data->qty . '
 
                              </div>
                                   

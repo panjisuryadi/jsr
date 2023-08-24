@@ -39,7 +39,7 @@
                                    <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
                                     <th class="text-left">{{ __('Berat') }}</th>
                                     <th class="text-left">{{ __('Qty') }}</th>
-                                    <th style="width: 6%!important;" class="text-center">{{ __('Detail') }}
+                                    <th style="width: 9%!important;" class="text-center">{{ __('Detail') }}
                                     </th>
                                     <th style="width: 22%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
