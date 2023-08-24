@@ -305,7 +305,7 @@ public function store(Request $request)
              'qty_diterima' => 'required',
              'status' => 'required',
              'supplier_id' => 'required',
-             'parameter_kadar_id' => 'required',
+
          ]);
         //$input = $request->all();
          $input = $request->except('_token');
@@ -351,7 +351,7 @@ public function store(Request $request)
             'status'                     => $input['status'],
             'supplier_id'                => $input['supplier_id'],
             'user_id'                    => $input['user_id'],
-            'parameter_kadar_id'         => $input['parameter_kadar_id'],
+            'parameter_kadar_id'         => null,
             'berat_barang'               => $input['berat_barang'],
             'berat_real'                 => $input['berat_real'],
             'count'                      => $input['qty'],

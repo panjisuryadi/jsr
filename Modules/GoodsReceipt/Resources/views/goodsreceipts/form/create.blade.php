@@ -298,7 +298,7 @@ margin-bottom: 0.2rem !important;
                 }
                 }
                 </script>
-                {{-- <script src="{{  asset('js/jquery.min.js') }}"></script> --}}
+
                 <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
                 <script>
@@ -471,25 +471,7 @@ margin-bottom: 0.2rem !important;
             });
 
 
-
-      $("#berat_tag").keydown( function(e){
-             var b = $("#berat_tag").val();
-               if (b == 0) {
-                    e.preventDefault();
-                    return false;
-                }
-        });
-       $("#berat_emas").keydown( function(e){
-             var b = $("#berat_emas").val();
-               if (b == 0) {
-                    e.preventDefault();
-                    return false;
-                }
-        });
-
-
-
-            $('#FormTambah').on('keyup keypress', function(e) {
+     $('#FormTambah').on('keyup keypress', function(e) {
                 var keyCode = e.keyCode || e.which;
                 if (keyCode === 13) {
                     e.preventDefault();

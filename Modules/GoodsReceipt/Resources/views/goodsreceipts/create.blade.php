@@ -218,31 +218,8 @@
 
 
 
-<div class="flex flex-row grid grid-cols-4 gap-2"> 
+<div class="flex flex-row grid grid-cols-3 gap-2">
 
-<div class="form-group">
-     <?php
-        $field_name = 'parameter_kadar_id';
-        $field_lable = label_case('Supplier');
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-    <label class="mb-1" for="parameter_kadar_id">Parameter Kadar</label>
-   <select class="form-control select2" name="parameter_kadar_id" id="parameter_kadar_id" >
-        <option value="" selected disabled>Select Kadar</option>
-        @foreach(\Modules\ParameterKadar\Models\ParameterKadar::all() as $sup)
-         <option value="{{$sup->id}}" {{ old('parameter_kadar_id') == $sup->id ? 'selected' : '' }}>
-          {{$sup->kadar}} %</option>
-        @endforeach
-    </select>
-     @if ($errors->has($field_name))
-            <span class="invalid feedback"role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
-            </span>
-            @endif
-</div>
 
 
 
