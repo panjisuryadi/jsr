@@ -192,7 +192,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::active()->get();
 
         $data = $$module_name;
 
@@ -547,6 +547,26 @@ public function store(Request $request)
          toast(''. $module_title.' Updated!', 'success');
          return redirect()->route(''.$module_name.'.index');
     }
+
+
+ public function update_status(Request $request, $id)
+     {
+                $id = decode_id($id);
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_title = $this->module_title;
+                $penerimaan = $module_model::findOrFail($id);
+                $penerimaan->status = 2;
+                $penerimaan->save();
+                toast(''. $module_title.' Updated!', 'success');
+                activity()->log(' '.auth()->user()->name.' Update  pembelian');
+                 return redirect()->route(''.$module_name.'.riwayat_penerimaan');
+        }
+
+
+
+
+
 
 
 

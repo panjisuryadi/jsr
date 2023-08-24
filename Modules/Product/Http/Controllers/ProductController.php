@@ -1416,6 +1416,7 @@ public function saveAjax(Request $request)
 
 
     public function update(UpdateProductRequest $request, Product $product) {
+        //dd($product);
         $product->update($request->except('document'));
 
         if ($request->has('document')) {

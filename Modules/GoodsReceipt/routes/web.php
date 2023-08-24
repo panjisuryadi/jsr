@@ -32,6 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
    Route::get("$module_name/view_produk/{id}", ['as' => "$module_name.view_produk", 'uses' => "$controller_name@view_produk"]);
+
+    Route::patch("$module_name/update_status/{id}", ['as' => "$module_name.update_status", 'uses' => "$controller_name@update_status"]);
    
  Route::get("$module_name/print_produk/{kode_pembelian}", ['as' => "$module_name.print_produk", 'uses' => "$controller_name@print_produk"]);
 

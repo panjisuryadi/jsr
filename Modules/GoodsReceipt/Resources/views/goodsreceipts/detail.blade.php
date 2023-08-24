@@ -110,12 +110,21 @@
 
                         </div>
                         <div id="buttons" class="mb-2">
+                       @if($detail->status == 1)
+                    <form id="product-form" action="{{ route(''.$module_name.'.update_status',encode_id($detail->id)) }}" method="POST">
+                        @csrf
+                        @method('patch')
+                        <button
+                        id="Save"
+                        onclick="return confirm('yakin akan di simpan?')"
+                        class="bg-green-600 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
+                        <i class="bi bi-plus"></i>@lang('Simpan')
+                        </button>
+                    </form>
+                    @else
+                   <div class="mb-2 text-green-500 font-medium border-solid border-2 border-green-500  px-3 py-1 uppercase">complete</div>
+                       @endif
 
-                          <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
-                                id="Save"
-                                class="bg-green-600 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
-                                <i class="bi bi-plus"></i>@lang('Simpan')
-                            </a>
 
                         @if($detail->count >0)
                            <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
@@ -281,6 +290,31 @@ $(document).on('click', '#GroupKategori, #DetailProduk', function(e){
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 })(jQuery);
