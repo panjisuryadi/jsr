@@ -215,7 +215,15 @@ public function index_data(Request $request)
                                 })
 
                           ->editColumn('image', function ($data) {
-                                            $url = $data->getFirstMediaUrl('pembelian', 'thumb');
+                                        if ($data->images) {
+                                           $url = asset(imageUrl(). @$data->images);
+                                        } else {
+                                           $url = $data->getFirstMediaUrl('pembelian', 'thumb');
+                                        }
+
+
+
+
                                             return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
                                              })
 
@@ -472,19 +480,6 @@ public function store(Request $request)
          $input = $request->except('_token','document');
         //dd($input);
         //Store Image Media Libraty Spati
-      if ($request->filled('image')) {
-            $img = $request->image;
-            $folderPath = "uploads/";
-            $image_parts = explode(";base64,", $img);
-            $image_type_aux = explode("image/", $image_parts[0]);
-            $image_type = $image_type_aux[1];
-            $image_base64 = base64_decode($image_parts[1]);
-            $fileName ='webcam_'. uniqid() . '.jpg';
-            $file = $folderPath . $fileName;
-            Storage::disk('public')->put($file,$image_base64);
-             $input['images'] =  "$fileName";
-          
-            }
 
 
         //dd($input);
@@ -510,6 +505,25 @@ public function store(Request $request)
                 $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('pembelian');
             }
         }
+
+
+            if ($request->filled('image')) {
+            $img = $request->image;
+            $folderPath = "uploads/";
+            $image_parts = explode(";base64,", $img);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName ='webcam_'. uniqid() . '.jpg';
+            $file = $folderPath . $fileName;
+             $$module_name_singular->addMedia($image_base64)->toMediaCollection('pembelian');
+            // Storage::disk('public')->put($file,$image_base64);
+            //  $input['images'] =  "$fileName";
+
+             // $category->addMediaFromRequest('image')->toMediaCollection('reedempoint');
+
+            }
+
           
            activity()->log(' '.auth()->user()->name.' input data pembelian');
          
@@ -517,6 +531,44 @@ public function store(Request $request)
            return redirect()->route(''.$module_name.'.index');
   
          }
+
+
+
+
+
+
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return Renderables
+     */
+    public function edit($id)
+    {
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Edit';
+        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+        $kasir = User::role('Kasir')->orderBy('name')->get();
+          return view(''.$module_name.'::'.$module_path.'.edit',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'kasir',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+
+
+
 
 
 
@@ -534,13 +586,21 @@ public function store(Request $request)
         $request->validate([
             'no_invoice' => 'required|min:3|max:191',
                  ]);
-        $params = $request->except('_token','upload','image');
+        $params = $request->except('_token','upload','image','document');
         $params['no_invoice'] = $params['no_invoice'];
         $params['count'] = 0;
         $params['date'] = $params['date'];
 
 
-        if ($request->filled('images')) {
+        if ($request->filled('image')) {
+
+             if (count($$module_name_singular->getMedia('pembelian')) > 0) {
+                foreach ($$module_name_singular->getMedia('pembelian') as $media) {
+                    if (!in_array($media->file_name, $request->input('document', []))) {
+                        $media->delete();
+                    }
+                }
+            }
             $img = $request->image;
             $folderPath = "uploads/";
             $image_parts = explode(";base64,", $img);
@@ -549,16 +609,40 @@ public function store(Request $request)
             $image_base64 = base64_decode($image_parts[1]);
             $fileName ='webcam_'. uniqid() . '.jpg';
             $file = $folderPath . $fileName;
-            Storage::disk('public')->put($file,$image_base64);
-             $params['images'] =  "$fileName";
-
-            }
+            $storage = Storage::disk('public')->put($file,$image_base64);
+            $params['images'] =  "$fileName";
+              }
             else{
             unset($params['images']);
              }
 
-         activity()->log(' '.auth()->user()->name.' Edit Data pembelian');
+
         $$module_name_singular->update($params);
+
+        if ($request->has('document')) {
+
+             $produkItem =  $module_model::findOrFail($id);
+             $produkItem->update([
+                        'images' => null
+                    ]);
+
+            if (count($$module_name_singular->getMedia('pembelian')) > 0) {
+                foreach ($$module_name_singular->getMedia('pembelian') as $media) {
+                    if (!in_array($media->file_name, $request->input('document', []))) {
+                        $media->delete();
+                    }
+                }
+            }
+
+            $media = $$module_name_singular->getMedia('pembelian')->pluck('file_name')->toArray();
+
+            foreach ($request->input('document', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('pembelian');
+                }
+            }
+        }
+         activity()->log(' '.auth()->user()->name.' Edit Data pembelian');
          toast(''. $module_title.' Updated!', 'success');
          return redirect()->route(''.$module_name.'.index');
     }
@@ -795,34 +879,6 @@ public function print_produk($kode_pembelian)
                     'module_icon', 'module_model'));
          }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderables
-     */
-    public function edit($id)
-    {
-        $id = decode_id($id);
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'Edit';
-        abort_if(Gate::denies('edit_'.$module_name.''), 403);
-        $detail = $module_model::findOrFail($id);
-        $kasir = User::role('Kasir')->orderBy('name')->get();
-          return view(''.$module_name.'::'.$module_path.'.edit',
-           compact('module_name',
-            'module_action',
-            'detail',
-            'kasir',
-            'module_title',
-            'module_icon', 'module_model'));
-    }
 
 
 

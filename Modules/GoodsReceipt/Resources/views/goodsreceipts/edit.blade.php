@@ -30,7 +30,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
+                    <script src="{{  asset('js/jquery.min.js') }}"></script>
+                    <form action="{{ route(''.$module_name.'.update', $detail) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('patch')
                         <div class="row">
@@ -47,28 +48,34 @@
                                             </div>
                                         </div>
                                         <div class="flex flex-row grid grid-cols-3 gap-2">
-                                            <div class="px-0 py-2">
-                                                <div class="form-group">
-                                                    <div class="py-1">
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="upload" id="up2" checked>
-                                                            <label class="form-check-label" for="up2">Upload</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="upload"
-                                                            id="up1">
-                                                            <label class="form-check-label" for="up1">Webcam</label>
-                                                        </div>
+                                        <div class="px-0 py-2">
+                                            <div class="form-group">
+                                                <div class="py-1">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="upload" id="up2" checked>
+                                                        <label class="form-check-label" for="up2">Upload</label>
                                                     </div>
-                                                    <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
-                                                        <x-library.webcam />
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="upload"
+                                                        id="up1">
+                                                        <label class="form-check-label" for="up1">Webcam</label>
                                                     </div>
-                                                    <div id="upload1" class="drop-zone">
-                                                        <div class="drop-zone__prompt">  <i class="text-red-800 text-3xl bi bi-cloud-arrow-up"></i></div>
-                                                        <input type="file" name="images" class="drop-zone__input">
+                                                </div>
+                                                <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
+                                                    <x-library.webcam />
+                                                </div>
+                                                <div id="upload1"">
+                                                    <div class="form-group">
+
+                                                        <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
+                                                            <div class="dz-message" data-dz-message>
+                                                                <i class="bi bi-cloud-arrow-up"></i>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                             <div class="col-span-2 px-2">
                                                 <div class="flex flex-row grid grid-cols-2 gap-1">
                                                     <div class="form-group">
@@ -317,13 +324,69 @@
     </div>
 </div>
 @endsection
-<x-library.dropzone />
 <x-library.select2 />
 <x-toastr />
+@section('third_party_scripts')
+<script src="{{ asset('js/dropzone.js') }}"></script>
+@endsection
+@push('page_scripts')
+<script>
+    var uploadedDocumentMap = {}
+    Dropzone.options.documentDropzone = {
+        url: '{{ route('dropzone.upload') }}',
+        maxFilesize: 1,
+        acceptedFiles: '.jpg, .jpeg, .png',
+        maxFiles: 3,
+        addRemoveLinks: true,
+        dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        success: function (file, response) {
+            $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
+            uploadedDocumentMap[file.name] = response.name;
+        },
+        removedfile: function (file) {
+            file.previewElement.remove();
+            var name = '';
+            if (typeof file.file_name !== 'undefined') {
+                name = file.file_name;
+            } else {
+                name = uploadedDocumentMap[file.name];
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ route('dropzone.delete') }}",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'file_name': `${name}`
+                },
+            });
+            $('form').find('input[name="document[]"][value="' + name + '"]').remove();
+        },
+        init: function () {
+            @if(isset($detail) && $detail->getMedia('pembelian'))
+            var files = {!! json_encode($detail->getMedia('pembelian')) !!};
+            for (var i in files) {
+                var file = files[i];
+                this.options.addedfile.call(this, file);
+                this.options.thumbnail.call(this, file, file.original_url);
+                file.previewElement.classList.add('dz-complete');
+                $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+            }
+            @endif
+        }
+    }
+</script>
 
+@endpush
 
 @push('page_scripts')
+
 <script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+
     $('#up1').change(function() {
         $('#upload2').toggle();
         $('#upload1').hide();
@@ -332,8 +395,27 @@
         $('#upload1').toggle();
         $('#upload2').hide();
     });
+
+$(document).ready(function() {
+    $('.numeric').keypress(function(e) {
+            var verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
+            if (verified) {e.preventDefault();}
+    });
+});
+
+
+$("#qty_diterima").on('input', function() {
+  if ($('#qty_diterima').val() > $('#qty').val()) {
+      var bla = $('#qty').val();
+     $("#qty_diterima").val(bla);
+    return false;
+  }
+});
+
+})(jQuery);
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 @endpush
+
