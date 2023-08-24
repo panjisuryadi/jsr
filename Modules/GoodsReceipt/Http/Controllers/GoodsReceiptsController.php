@@ -376,15 +376,6 @@ public function index_data_completed(Request $request)
                                 return $tb;
                             })
 
-
-
-
-
-
-
-
-
-
                            ->editColumn('qty', function ($data) {
                              $tb = '<div class="items-left text-left">
                                     <div>Diterima : ' .$data->qty_diterima . '</div>
@@ -478,28 +469,9 @@ public function store(Request $request)
              'supplier_id' => 'required',
 
          ]);
-        //$input = $request->all();
-         $input = $request->except('_token');
+         $input = $request->except('_token','document');
         //dd($input);
-        //$input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        if ($image = $request->file('images')) {
-         $gambar = 'pembelian_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-           // dd($gambar);
-         $normal = Image::make($image)->resize(600, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    })->encode();
-         $normalpath = 'uploads/' . $gambar;
-         Storage::disk('public')->put($normalpath, (string) $normal);
-                $input['images'] = "$gambar";
-         //dd($xx);
-        }else{
-           $input['images'] = 'no_foto.png';
-        }
-
-
-
-
-
+        //Store Image Media Libraty Spati
       if ($request->filled('image')) {
             $img = $request->image;
             $folderPath = "uploads/";
@@ -529,7 +501,7 @@ public function store(Request $request)
             'berat_barang'               => $input['berat_barang'],
             'berat_real'                 => $input['berat_real'],
             'count'                      => 0,
-            'images'                     => $input['images'],
+            'images'                     => null,
             'pengirim'                   => $input['pengirim']
         ]);
 

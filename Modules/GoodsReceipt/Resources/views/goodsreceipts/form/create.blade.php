@@ -156,7 +156,13 @@ margin-bottom: 0.2rem !important;
                                                     </option>
                                                     @endforeach
                                                 </select>
+
+                                                 <span class="invalid feedback" role="alert">
+                                                    <span class="text-danger error-text product_code_err"></span>
+                                                </span>
                                             </div>
+
+
                                             <div class="form-group">
                                                 <label for="product_code">Code <span class="text-danger">*</span></label>
                                                 <div class="input-group">
@@ -471,13 +477,17 @@ margin-bottom: 0.2rem !important;
             });
 
 
-     $('#FormTambah').on('keyup keypress', function(e) {
-                var keyCode = e.keyCode || e.which;
-                if (keyCode === 13) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
+             $('#FormTambah').on('keyup keypress', function(e) {
+                        var keyCode = e.keyCode || e.which;
+                        if (keyCode === 13) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    });
+
+
+
+
 
         })(jQuery);
                 </script>

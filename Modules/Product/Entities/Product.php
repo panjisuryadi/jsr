@@ -39,7 +39,7 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
     public function pembelian() {
-        return $this->belongsTo(GoodsReceipt::class, 'kode_pembelian', 'code');
+        return $this->belongsTo(GoodsReceipt::class, 'goodsreceipt_id', 'id');
     }
 
     public function registerMediaCollections(): void {

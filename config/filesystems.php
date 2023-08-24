@@ -30,10 +30,16 @@ return [
 
     'disks' => [
 
-      'local' => [
+        'local' => [
             'driver' => 'local',
-            'root'   => storage_path('app'),
-            //'root'   => public_path() . '/uploads',
+            'root'   => public_path() . '/uploads',
+        ],
+
+        'public' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
         ],
 
         'uploads' => [
@@ -43,12 +49,6 @@ return [
             'visibility' => 'public',
         ],
 
-      'public' => [
-                'driver' => 'local',
-                'root' => storage_path('app/public'),
-                'url' => env('APP_URL').'/storage',
-                'visibility' => 'public',
-            ],
 
        'ftp' => [
             'driver'   => 'ftp',

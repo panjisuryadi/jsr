@@ -19,9 +19,9 @@ class GoodsReceipt extends Model implements HasMedia
     protected $guarded = [];
     public const GRCODE = 'PO';
 
-  // public function products() {
-  //       return $this->hasMany(Product::class, 'category_id', 'id');
-  //   }
+  public function products() {
+        return $this->hasMany(Product::class, 'goodsreceipt_id', 'id');
+    }
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');

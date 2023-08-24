@@ -41,7 +41,7 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control pc"
+        <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
         min="0" step="0.01"
@@ -66,7 +66,7 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
+        <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
         wire:model="berat_tag"
@@ -90,7 +90,7 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
+        <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
         min="0" step="0.01"
@@ -149,7 +149,7 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="small text-danger">&nbsp;(Harga Emas beli per gram)</span></label>
-        <input class="form-control"
+        <input class="form-control numeric"
         type="text"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
@@ -172,7 +172,7 @@
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}
             <span class="text-danger">*</span></label>
-            <input class="form-control pc"
+            <input class="form-control"
             type="text"
             name="product_cost_rp"
             id="{{ $field_name }}"
@@ -228,7 +228,7 @@
             </div>
 
         @if($tipeMarginGram == 'gram')
-         <input class="form-control"
+         <input class="form-control numeric"
                 type="number"
                 id="{{ $field_name }}"
                 wire:model="margin_gram"
@@ -237,7 +237,7 @@
                 placeholder="Margin Gram"
                 >
         @elseif($tipeMarginGram == 'nominal')
-           <input class="form-control"
+           <input class="form-control numeric"
                 type="number"
                 id="{{ $field_name }}"
                 wire:model="margin_nominal"
@@ -246,7 +246,7 @@
                 placeholder="Margin Nominal"
                 >
         @elseif($tipeMarginGram == 'persentase')
-          <input class="form-control"
+          <input class="form-control numeric"
                 type="number"
                 id="{{ $field_name }}"
                 wire:model="margin_persentase"
@@ -255,7 +255,7 @@
                 placeholder="Margin Persentase"
                 >
         @else
-          <input class="form-control"
+          <input class="form-control numeric"
                 type="number"
                 id="{{ $field_name }}"
                 wire:model="margin_nominal"
@@ -308,3 +308,51 @@
         </div>
     </div>
     {{-- HARGA --}}
+
+
+    @push('page_scripts')
+
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+
+$(document).ready(function() {
+    $('.numeric').keypress(function(e) {
+            var verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
+            if (verified) {e.preventDefault();}
+    });
+});
+
+
+$("#qty_diterima").on('input', function() {
+  if ($('#qty_diterima').val() > $('#qty').val()) {
+      var bla = $('#qty').val();
+     $("#qty_diterima").val(bla);
+    return false;
+  }
+});
+
+
+  $('#FormTambah').on('keyup keypress', function(e) {
+                        var keyCode = e.keyCode || e.which;
+                        if (keyCode === 13) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    });
+
+
+
+
+
+
+
+
+
+
+})(jQuery);
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+
+@endpush
