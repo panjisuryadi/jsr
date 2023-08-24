@@ -110,18 +110,21 @@ class Kategori extends Component
     public function calculateMarginGram()
     {
         $this->resetInput();
+
+
         $this->hasilnominal = $this->margin_gram * $this->beratTotalFinal;
         $this->grandtotal = $this->hasilnominal + $this->hargaEmasBeratTotal;
-       // dd($this->hargaEmasBeratTotal);
         $this->produkPriceResult = 'Rp ' . number_format($this->grandtotal, 0, ',', '.');
     } 
 
 
      public function calculateMarginNominal()
     {
+
         $this->resetInput();
+
         $this->hasilnominal = (int)$this->price + $this->margin_nominal;
-        //dd($this->price);
+       //dd($this->margin_nominal);
         $this->grandtotal = $this->hasilnominal;
         $this->produkPriceResult = 'Rp ' . number_format($this->hasilnominal, 0, ',', '.');
     }

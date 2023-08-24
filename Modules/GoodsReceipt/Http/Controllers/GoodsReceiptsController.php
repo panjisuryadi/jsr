@@ -240,7 +240,7 @@ public function index_data(Request $request)
                              $tb = '<div class="font-semibold items-center text-center">
 
                              <div class="bg-green-400 px-1 items-center text-center rounded-lg">
-                                    ' .$qty . '  / ' .$data->qty_diterima . '
+                                    ' .$data->count . '  / ' .$data->qty_diterima . '
 
                              </div>
                                   
@@ -341,7 +341,7 @@ public function index_data_completed(Request $request)
                              $tb = '<div class="font-semibold items-center text-center">
 
                              <div class="bg-green-400 px-1 items-center text-center rounded-lg">
-                                    ' .$qty . '  / ' .$data->qty_diterima . '
+                                    ' .$data->count . '  / ' .$data->qty_diterima . '
 
                              </div>
 
@@ -491,7 +491,7 @@ public function store(Request $request)
             'parameter_kadar_id'         => null,
             'berat_barang'               => $input['berat_barang'],
             'berat_real'                 => $input['berat_real'],
-            'count'                      => $input['qty'],
+            'count'                      => 0,
             'images'                     => $input['images'],
             'pengirim'                   => $input['pengirim']
         ]);
@@ -527,7 +527,7 @@ public function store(Request $request)
                  ]);
         $params = $request->except('_token','upload','image');
         $params['no_invoice'] = $params['no_invoice'];
-        $params['count'] = $params['qty_diterima'];
+        $params['count'] = 0;
         $params['date'] = $params['date'];
 
 

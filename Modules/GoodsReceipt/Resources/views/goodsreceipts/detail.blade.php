@@ -73,12 +73,12 @@
                 <p class="poppins text-gray-600"></p>
 
                 <span class="rounded rounded-md px-2 py-1 bg-yellow-300 poppins font-semibold text-xs text-gray-800">
-                    @if($detail->count == 0)
+               {{--      @if($detail->count == 0)
                     {{ $detail->qty_diterima }}
                     @else
                      {{ $detail->count }}
-                    @endif
-                    / {{ $detail->qty_diterima }}</span>
+                    @endif --}}
+                   {{ $detail->count }} / {{ $detail->qty_diterima }}</span>
 
 
             </div>
@@ -126,7 +126,7 @@
                        @endif
 
 
-                        @if($detail->count >0)
+                        @if($detail->count <= $detail->qty_diterima )
                            <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
                                 id="GroupKategori"
                                 class="bg-blue-600 py-1 px-2 rounded-lg hover:no-underline hover:text-gray-300">

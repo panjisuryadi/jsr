@@ -12,7 +12,7 @@
 
 @section('content')
 @push('page_css')
-{{--
+
 <style type="text/css">
     .dropzone {
         height: 280px !important;
@@ -26,7 +26,7 @@
         color: #bd4019 !important;
     }
 
-</style> --}}
+</style>
 @endpush
 <div class="container-fluid">
 <script src="{{  asset('js/jquery.min.js') }}"></script>

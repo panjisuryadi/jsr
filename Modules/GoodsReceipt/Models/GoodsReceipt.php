@@ -47,7 +47,7 @@ class GoodsReceipt extends Model implements HasMedia
        public static function countProduk($code)
         {
             $inventory = self::where('code', $code)->firstOrFail();
-            $inventory->count = $inventory->count - 1;
+            $inventory->count = $inventory->count + 1;
             $inventory->save();
         }
 
