@@ -1438,7 +1438,7 @@ public function saveAjax(Request $request)
 
         toast('Product Updated!', 'info');
 
-        return redirect()->route('products.index');
+        return redirect()->back();
     }
 
 

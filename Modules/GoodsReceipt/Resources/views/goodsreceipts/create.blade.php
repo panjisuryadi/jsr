@@ -220,10 +220,6 @@
 
 <div class="flex flex-row grid grid-cols-3 gap-2">
 
-
-
-
-
  <div class="form-group">
         <?php
         $field_name = 'qty';
