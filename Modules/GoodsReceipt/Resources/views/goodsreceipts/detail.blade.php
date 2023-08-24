@@ -247,36 +247,34 @@
 
     </script>
 
+
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-//group modal kategori
-
-  $(document).on('click', '#GroupKategori', function(e){
+$(document).on('click', '#GroupKategori, #DetailProduk', function(e){
          e.preventDefault();
-          $('#ModalBacktoKategori').modal('hide');
-          $("#ModalBacktoKategori").trigger("reset");
-               $('#ModalKategori').modal('hide');
-          $('#ModalKategori').modal('hide');
-          $("#ModalKategori").trigger("reset");
-         if($(this).attr('id') == 'GroupKategori')
-         {
-
-            $('.modal-dialog').removeClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
+        if($(this).attr('id') == 'GroupKategori')
+        {
             $('.modal-dialog').addClass('modal-xl');
-            $('#ModalHeaderGroupkategori').html('<i class="bi bi-grid-fill"></i> &nbspGroup {{ Label_case(' Kategori') }}');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah Product');
         }
-        $('#ModalContentGroupKategori').load($(this).attr('href'));
-        $('#ModalGroupKategori').modal('show');
-        $('#ModalGroupKategori').modal({
-                        backdrop: 'static',
-                        keyboard: true,
-                        show: true
-                });
+        if($(this).attr('id') == 'DetailProduk')
+        {
+            $('.modal-dialog').addClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Detail Product');
+        }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
     });
 
 
 })(jQuery);
 </script>
+
+
+
 @endpush

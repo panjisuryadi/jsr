@@ -452,6 +452,7 @@ public function view_produk($id)
         $module_action = 'Show';
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_products::select('products.*',
+                                'products.id AS id_produk',
                                 'goodsreceipts.code AS code',
                                 'goodsreceipts.berat_barang'
                                  )
@@ -460,12 +461,14 @@ public function view_produk($id)
                     ->first();
 
 
+        $produk = $module_products::findOrFail($detail->id_produk);
         $list = $module_products::where('kode_pembelian',$detail->code)->get();
       //  dd($detail->code);
           return view(''.$module_name.'::'.$module_path.'.view_produk',
            compact('module_name',
             'module_action',
             'detail',
+            'produk',
             'list',
             'module_title',
             'module_icon', 'module_model'));

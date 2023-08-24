@@ -2,6 +2,7 @@
 
   <a href="{{ route("$module_name.view_produk",encode_id($data->id_produk)) }}"
     data-toggle="tooltip"
+    id="DetailProduk"
      class="btn btn-info btn-sm py-1">
        <i class="bi bi-eye"></i>
 
