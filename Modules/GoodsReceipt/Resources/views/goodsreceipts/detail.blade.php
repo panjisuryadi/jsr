@@ -73,7 +73,14 @@
                 <p class="poppins leading-6 text-gray-600"></p>
 
                 <span class="rounded rounded-md px-2 py-1 bg-yellow-300 poppins font-semibold leading-6 text-xs text-gray-800">
-                    {{ $detail->count }} / {{ $detail->qty_diterima }}</span>
+                    @if($detail->count == 0)
+                    {{ $detail->qty_diterima }}
+                    @else
+                     {{ $detail->count }}
+                    @endif
+                    / {{ $detail->qty_diterima }}</span>
+
+
             </div>
 
 </div>

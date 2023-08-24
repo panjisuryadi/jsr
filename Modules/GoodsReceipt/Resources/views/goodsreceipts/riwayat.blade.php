@@ -98,7 +98,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("$module_name.index_data_completed") }}',
             dom: 'Blfrtip',
             buttons: [
 

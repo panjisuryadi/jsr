@@ -21,8 +21,14 @@ Route::group(['middleware' => 'auth'], function () {
       Route::get("$module_name/riwayat-penerimaan", ['as' => "$module_name.riwayat_penerimaan", 'uses' => "$controller_name@riwayat_penerimaan"]);
 
 
+  Route::get("$module_name/index_data_completed", ['as' => "$module_name.index_data_completed", 'uses' => "$controller_name@index_data_completed"]);
+
+
 
     Route::get("$module_name/add_produk_modal/{id}", ['as' => "$module_name.add_produk_modal", 'uses' => "$controller_name@add_produk_modal"]);
+
+
+
 
 
    Route::get("$module_name/view_produk/{id}", ['as' => "$module_name.view_produk", 'uses' => "$controller_name@view_produk"]);
