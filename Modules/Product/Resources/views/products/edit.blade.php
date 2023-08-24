@@ -9,13 +9,25 @@
         <li class="breadcrumb-item active">Edit</li>
     </ol>
 @endsection
+@push('page_css')
 
 <style type="text/css">
-    .form-group {
+    .dropzone {
+        height: 280px !important;
+        min-height: 190px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+    }
+    .dropzone i.bi.bi-cloud-arrow-up {
+        font-size: 5rem;
+        color: #bd4019 !important;
+    }
+   .form-group {
     margin-bottom: 0.5rem !important;
 }
 </style>
-
+@endpush
 
 @section('content')
     <div class="container-fluid mb-4">

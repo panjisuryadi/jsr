@@ -10,6 +10,21 @@
 </ol>
 @endsection
 @section('content')
+
+@push('page_css')
+<style type="text/css">
+.c-main {
+    padding-top: 0.5rem!important;
+}
+.table th, .table td {
+    padding: 0.5rem !important;
+    vertical-align: top;
+    border-top: 1px solid;
+    border-top-color: #d8dbe0;
+}
+
+</style>
+@endpush
 <div class="container-fluid">
 
 
@@ -124,7 +139,7 @@
                    @endif
 
                     @if($detail->status == 2)
-                       <div class="mb-2 text-green-500 font-medium border-solid border-2 border-green-500  px-3 py-1 uppercase">complete</div>
+                      {{--  <div class="mb-2 text-green-500 font-medium border-solid border-2 border-green-500  px-3 py-1 uppercase">complete</div> --}}
                       @endif
 
                         @if($detail->count <= $detail->qty_diterima )

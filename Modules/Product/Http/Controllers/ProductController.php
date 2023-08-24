@@ -1091,7 +1091,7 @@ public function saveAjax(Request $request)
         $module_pembelian = $this->module_pembelian;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-            // 'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
+            //'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
              'category' => 'required',
              'produk_model_id' => 'required',
            
