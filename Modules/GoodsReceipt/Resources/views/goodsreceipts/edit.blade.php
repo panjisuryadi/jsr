@@ -189,7 +189,7 @@
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'qty';
-                                                        $field_lable = label_case('qty');
+                                                        $field_lable = label_case('qty Nota');
                                                         $field_placeholder = $field_lable;
                                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                         $required = "required";
@@ -198,7 +198,7 @@
                                                         <input class="form-control"
                                                         type="number"
                                                         name="{{ $field_name }}"
-                                                        min="0"
+                                                        min="1"
                                                         id="{{ $field_name }}"
                                                         value="{{ $detail->qty }}"
                                                         placeholder="{{ $field_placeholder }}">
@@ -221,7 +221,7 @@
                                                         <input class="form-control"
                                                         type="number"
                                                         name="{{ $field_name }}"
-                                                        min="0"
+                                                        min="1"
                                                         id="{{ $field_name }}"
                                                         value="{{ $detail->qty_diterima }}"
                                                         placeholder="{{ $field_placeholder }}">

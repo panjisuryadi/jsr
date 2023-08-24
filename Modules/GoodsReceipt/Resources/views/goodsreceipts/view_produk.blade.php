@@ -11,7 +11,7 @@
                     {{ @$detail->product_code }}
                     </h2>
                     <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ @$detail->product_name }}</h1>
-                    <div class="mb-4">
+                    <div class="mb-1">
                         <div class="items-center">
                             <span class="text-gray-600 ml-1">Berat : {{ @$detail->berat_barang }}</span>
                         </div>

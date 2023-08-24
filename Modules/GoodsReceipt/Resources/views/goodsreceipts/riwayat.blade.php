@@ -31,8 +31,8 @@
                                     <th style="width: 18%!important;"  class="text-left">{{ __('Date') }}</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
                                     <th style="width: 13%!important;"  class="text-left">{{ __('Berat') }}</th>
-                                    <th style="width: 14%!important;" class="text-left">{{ __('Qty') }}</th>
-                                    <th style="width: 13%!important;" class="text-center">{{ __('Stat Input') }}
+
+                                    <th style="width: 13%!important;" class="text-center">{{ __('Status') }}
                                     </th>
                                     <th style="width: 22%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
@@ -118,8 +118,8 @@
                 {data: 'date', name: 'date'},
                 {data: 'code', name: 'code'},
                 {data: 'berat', name: 'berat'},
-                {data: 'qty', name: 'qty'},
-                {data: 'detail', name: 'detail'},
+                {data: 'status', name: 'status'},
+
 
 
                 {

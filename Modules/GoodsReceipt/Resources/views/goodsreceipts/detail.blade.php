@@ -237,8 +237,8 @@
             "sEmptyTable": "{{ __("labels.table.empty") }}",
             "sLoadingRecords": "Harap Tunggu...",
             "oPaginate": {
-                "sPrevious": "{{ __("labels.table.prev") }}",
-                "sNext": "{{ __("labels.table.next") }}"
+                "sPrevious": "{{ __("Prev") }}",
+                "sNext": "{{ __("Next") }}"
             }
             },
             "aaSorting": [[ 0, "desc" ]],
@@ -308,28 +308,18 @@ $(document).on('click', '#GroupKategori, #DetailProduk', function(e){
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$(document).ready(function(){
+    $('#chk1').on('change',function(){
+            if($('#chk1').prop('checked'))
+            {
+                var ids=$(this).parent().parent().html();
+                alert(ids);
+            }
+            else
+            {
+            }
+        });
+    })
 
 
 

@@ -124,7 +124,14 @@ public function index_data_product(Request $request ,$kode_pembelian)
                                      ' .tanggal($data->date) . '
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
+
+                             ->editColumn('chekbox', function ($data) {
+                             $tb = '<div class="text-xs items-left text-left">
+                                <input type="checkbox" value="chkbox1" id="chk1">
+                                    </div>';
+                                return $tb;
+                            })
                            ->editColumn('name', function ($data) {
                              $tb = '<div class="text-xs items-left text-left">
 
@@ -351,6 +358,33 @@ public function index_data_completed(Request $request)
                                 return $tb;
                             })
 
+                            ->editColumn('status', function ($data) {
+                            if ($data->status == 2) {
+                               $qty = 'Retur';
+                            } else {
+                               $qty = 'AKtif';
+                            }
+
+                             $tb = '<div class="font-semibold items-center text-center">
+
+                             <div class="bg-green-400 px-1 items-center text-center rounded-lg">
+                                    ' .$qty . '
+
+                             </div>
+
+                                    </div>';
+                                return $tb;
+                            })
+
+
+
+
+
+
+
+
+
+
                            ->editColumn('qty', function ($data) {
                              $tb = '<div class="items-left text-left">
                                     <div>Diterima : ' .$data->qty_diterima . '</div>
@@ -374,6 +408,7 @@ public function index_data_completed(Request $request)
                          'action',
                          'code',
                          'berat',
+                         'status',
                          'image',
                          'qty',
                          'detail',
@@ -878,6 +913,7 @@ public function update_ajax(Request $request, $id)
         $module_action = 'Delete';
 
         $$module_name_singular = $module_model::findOrFail($id);
+
 
         $$module_name_singular->delete();
          toast(''. $module_title.' Deleted!', 'success');

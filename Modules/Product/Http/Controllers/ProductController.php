@@ -1093,7 +1093,7 @@ public function saveAjax(Request $request)
         $validator = \Validator::make($request->all(),[
             //'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
              'category' => 'required',
-             'produk_model_id' => 'required',
+
            
            
         ]);

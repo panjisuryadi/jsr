@@ -1,10 +1,5 @@
-Perbaikan modul penerimaan barang 
-Add product .
-Emas 
-1. Kolom baki dan supplier hilang 
-2. Kolom cabang hilang 
-3. Exhibition hilang 
-4. Modul mutiara dan perak hilang
-5. Di add produk logam mulia nambah harga dan biaya produk , margin 
-6. Di add produk emas nambah berat aksesoris .
-7 . Rincian penerimaan barang detail, begitu add detail di klik kosong dl .
+validasi penerimaan barang
+min -1
+qty terima barang tidak boleh lebih besar dari pada qty nota
+delete nota ..delete all produk yg terelasi ke nota
+jika retur langsung masuk ke table history penerimaan barang

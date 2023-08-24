@@ -103,13 +103,11 @@
 
 
 <div class="flex justify-between w-full">
-   <div></div>
-<div class="form-group">
-                        <button class="btn btn-primary">Update Product <i class="bi bi-check"></i></button>
-                    </div>
-
+    <div></div>
+    <div class="form-group">
+        <button class="btn btn-primary">Update Product <i class="bi bi-check"></i></button>
+    </div>
 </div>
-
 </div>
 </div>
 

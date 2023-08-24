@@ -62,6 +62,11 @@ class GoodsReceipt extends Model implements HasMedia
             $query->where('status', 2);
         }
 
+        public function scopeRetur($query)
+        {
+            $query->where('status', 3);
+        }
+
       public static function generateCode()
         {
             $dateCode = self::GRCODE . '-';
