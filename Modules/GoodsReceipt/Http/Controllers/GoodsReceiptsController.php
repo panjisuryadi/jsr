@@ -97,6 +97,7 @@ public function index_data_product(Request $request ,$kode_pembelian)
                             $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             $module_path = $this->module_path;
+                            $module_products = $this->module_products;
                               return view(''.$module_name.'::'.$module_path.'.actiondetail',
                             compact('module_name', 'data', 'module_model'));
                                 })
@@ -106,22 +107,25 @@ public function index_data_product(Request $request ,$kode_pembelian)
                                     </div>';
                                 return $tb;
                             }) 
-           ->editColumn('name', function ($data) {
-             $tb = '<div class="text-xs items-left text-left">
-                     <div class="text-blue-500">' .$data->product_name . '</div>
-                     <div class="text-blue-500">' .$data->code . '</div>
-                    </div>';
-                return $tb;
-            }) 
+                           ->editColumn('name', function ($data) {
+                             $tb = '<div class="text-xs items-left text-left">
+                                     <div class="text-gray-400 small">' .tanggal($data->date) . '</div>
+                                     <div class="text-gray-500">' .$data->code . '</div>
+                                     <div class="text-blue-500">' .$data->product_name . '</div>
+                                    </div>';
+                                return $tb;
+                            })
                            ->editColumn('qty', function ($data) {
                              $tb = '<div class="text-sm font-semibold items-center text-center">
                                      ' .$data->berat_total . '
                                     </div>';
                                 return $tb;
                             }) 
-                         ->editColumn('image', function ($data) {
+                           ->editColumn('image', function ($data) {
+                             $module_products = $this->module_products;
+                             $produk = $module_products::findOrFail($data->id_produk);
                                $images ='<div class="content-center items-center">
-                               <img class="w-10 h-10 rounded" src="'.  asset(imageUrl(). @$data->images) . '"
+                               <img class="w-10 h-10 rounded" src="'. $produk->getFirstMediaUrl('images') . '"
                                style="height:50px; width:50px;">';
                                 return $images;
                             })

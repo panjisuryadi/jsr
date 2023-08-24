@@ -1087,6 +1087,7 @@ public function saveAjax(Request $request)
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $module_pembelian = $this->module_pembelian;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
             // 'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
@@ -1107,33 +1108,6 @@ public function saveAjax(Request $request)
         $group = Group::where('id', $input['group_id'])->first();
         $totalberat = $input['berat_total'] ?? $input['berat_emas'];
         $berat = number_format((float)($totalberat), 5);
-         // dd($group->name .' '. $model->name);
-       // dd($input);
-
-        // "kode_pembelian" => "PO-00001"
-        //   "supplier_id" => "2"
-        //   "product_barcode_symbology" => "C128"
-        //   "product_stock_alert" => "5"
-        //   "product_quantity" => "1"
-        //   "product_unit" => "Gram"
-        //   "upload" => "on"
-        //   "image" => null
-        //   "category" => "6"
-        //   "group_id" => "5"
-        //   "produk_model" => "2"
-        //   "product_code" => "CBR-GLG-275-22082023"
-        //   "berat_accessories" => "0.04"
-        //   "berat_tag" => "0.04"
-        //   "berat_emas" => "0.04"
-        //   "berat_total" => "0.12"
-        //   "harga_emas" => "10000"
-        //   "product_cost_rp" => "Rp 1.200"
-        //   "product_cost" => "1200"
-        //   "flexRadioDefault" => "on"
-        //   "product_price" => "1300"
-        //   "product_note" => null
-
-
           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([
@@ -1170,7 +1144,7 @@ public function saveAjax(Request $request)
             }
 
             $produk = $$module_name_singular->id;
-
+            $module_pembelian::countProduk($$module_name_singular->kode_pembelian);
             $this->_saveProductsItem($input ,$produk);
 
              activity()->log(' '.auth()->user()->name.' input data pembelian');

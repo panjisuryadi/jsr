@@ -43,6 +43,15 @@ class GoodsReceipt extends Model implements HasMedia
                 ->height(50);
         }
 
+
+       public static function countProduk($code)
+        {
+            $inventory = self::where('code', $code)->firstOrFail();
+            $inventory->count = $inventory->count - 1;
+            $inventory->save();
+        }
+
+
       public static function generateCode()
         {
             $dateCode = self::GRCODE . '-';

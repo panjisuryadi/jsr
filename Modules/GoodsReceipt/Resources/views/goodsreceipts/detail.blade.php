@@ -121,17 +121,17 @@
                     <div class="table-responsive mt-1">
 
 
- <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+ <table id="datatable" style="width: 100%" class="table table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
                                     <th  style="width:8%!important;"  class="w-5 text-center">{{ __('Image') }}</th>
-                                    <th style="width: 20%!important;"  class="text-left">{{ __('Tanggal') }}</th>  
-                                    <th style="width: 20%!important;"  class="text-left">{{ __('Product') }}</th>
+
+                                    <th style="width: 30%!important;text-align: left;"  class="text-left">{{ __('Product') }}</th>
                               
                                     <th  style="width: 10%!important;" class="text-left">{{ __('Berat') }}</th>
                                 
-                                    <th style="width: 13%!important;" class="text-center">{{ __('Action') }}
+                                    <th style="width: 18%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
 
                                 </tr>
@@ -229,7 +229,6 @@
                     }
                 },
                 {data: 'image', name: 'image'},
-                {data: 'date', name: 'date'},
                 {data: 'name', name: 'name'},
                 {data: 'qty', name: 'qty'},
                 {

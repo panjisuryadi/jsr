@@ -1,12 +1,18 @@
 <div class="text-center">
 
   <a href="{{ route("$module_name.view_produk",encode_id($data->id_produk)) }}"
-
     data-toggle="tooltip"
      class="btn btn-info btn-sm py-1">
        <i class="bi bi-eye"></i>
-      
+
     </a> 
+
+<a href="{{ route("products.edit",$data->id_produk) }}"
+    data-toggle="tooltip"
+     class="btn btn-warning btn-sm py-1">
+       <i class="bi bi-pencil"></i>
+
+    </a>
 
 
    
