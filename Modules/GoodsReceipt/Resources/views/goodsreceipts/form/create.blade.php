@@ -240,70 +240,59 @@ margin-bottom: 0.2rem !important;
                         @endsection
                 @push('page_scripts')
                 <script type="text/javascript">
-                $('#up1').change(function() {
-                $('#upload2').toggle();
-                $('#upload1').hide();
-                });
-                $('#up2').change(function() {
-                $('#upload1').toggle();
-                $('#upload2').hide();
-                });
-                // $('#nominal').change(function() {
-                //    toastr.success('Margin Nominal dipilih');
-                //      $('#margin').val("");
-                //      $('#m2').toggle();
-                //      $('#m1').hide();
-                //  });
-                //  $('#persentase').change(function() {
-                //     toastr.success('margin Persentase dipilih');
-                //      $('#margin').val("");
-                //      $('#m1').toggle();
-                //      $('#m2').hide();
-                //  });
+                    $('#up1').change(function() {
+                        $('#upload2').toggle();
+                        $('#upload1').hide();
+                    });
+                    $('#up2').change(function() {
+                        $('#upload1').toggle();
+                        $('#upload2').hide();
+                    });
+
                 </script>
                 <script>
-                var uploadedDocumentMap = {}
-                Dropzone.options.documentDropzone = {
-                url: '{{ route('dropzone.upload') }}',
-                maxFilesize: 1,
-                acceptedFiles: '.jpg, .jpeg, .png',
-                maxFiles: 3,
-                addRemoveLinks: true,
-                dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
-                headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                success: function (file, response) {
-                $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
-                uploadedDocumentMap[file.name] = response.name;
-                },
+                    var uploadedDocumentMap = {}
+                    Dropzone.options.documentDropzone = {
+                        url: '{{ route('dropzone.upload') }}',
+                        maxFilesize: 1,
+                        acceptedFiles: '.jpg, .jpeg, .png',
+                        maxFiles: 3,
+                        addRemoveLinks: true,
+                        dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        success: function (file, response) {
+                            $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
+                            uploadedDocumentMap[file.name] = response.name;
+                        },
                 removedfile: function (file) {
-                file.previewElement.remove();
-                var name = '';
-                if (typeof file.file_name !== 'undefined') {
-                name = file.file_name;
-                } else {
-                name = uploadedDocumentMap[file.name];
-                }
-                $.ajax({
-                type: "POST",
-                url: "{{ route('dropzone.delete') }}",
-                data: {
-                '_token': "{{ csrf_token() }}",
-                'file_name': `${name}`
-                },
-                });
+                    file.previewElement.remove();
+                    var name = '';
+                    if (typeof file.file_name !== 'undefined') {
+                        name = file.file_name;
+                    } else {
+                        name = uploadedDocumentMap[file.name];
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('dropzone.delete') }}",
+                        data: {
+                            '_token': "{{ csrf_token() }}",
+                            'file_name': `${name}`
+                        },
+                    });
                 $('form').find('input[name="document[]"][value="' + name + '"]').remove();
                 },
                 init: function () {
                 @if(isset($product) && $product->getMedia('images'))
                 var files = {!! json_encode($product->getMedia('images')) !!};
                 for (var i in files) {
-                var file = files[i];
-                this.options.addedfile.call(this, file);
-                this.options.thumbnail.call(this, file, file.original_url);
-                file.previewElement.classList.add('dz-complete');
-                $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+                    var file = files[i];
+                    this.options.addedfile.call(this, file);
+                    this.options.thumbnail.call(this, file, file.original_url);
+                    file.previewElement.classList.add('dz-complete');
+                    $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
                 }
                 @endif
                 }
@@ -315,89 +304,89 @@ margin-bottom: 0.2rem !important;
                 <script>
                 jQuery.noConflict();
                 (function($) {
-                $('#format_harga_emas').maskMoney({
-                prefix: 'Rp ',
-                thousands: '.',
-                decimal: ',',
-                precision: 0
-                });
-                $('#product_sales').maskMoney({
-                prefix: '{{ settings()->currency->symbol }}',
-                thousands: '{{ settings()->currency->thousand_separator }}',
-                decimal: '{{ settings()->currency->decimal_separator }}',
-                precision: 0,
-                });
-                $('#product_price2').maskMoney({
-                prefix: '{{ settings()->currency->symbol }}',
-                thousands: '{{ settings()->currency->thousand_separator }}',
-                decimal: '{{ settings()->currency->decimal_separator }}',
-                precision: 0,
-                });
-                $('#harga_emas2').maskMoney({
-                prefix: '{{ settings()->currency->symbol }}',
-                thousands: '{{ settings()->currency->thousand_separator }}',
-                decimal: '{{ settings()->currency->decimal_separator }}',
-                precision: 0,
-                });
-                $('#generate-code').click(function() {
-                var group = $('#group_id').val();
+                    $('#format_harga_emas').maskMoney({
+                        prefix: 'Rp ',
+                        thousands: '.',
+                        decimal: ',',
+                        precision: 0
+                    });
+                    $('#product_sales').maskMoney({
+                        prefix: '{{ settings()->currency->symbol }}',
+                        thousands: '{{ settings()->currency->thousand_separator }}',
+                        decimal: '{{ settings()->currency->decimal_separator }}',
+                        precision: 0,
+                    });
+                    $('#product_price2').maskMoney({
+                        prefix: '{{ settings()->currency->symbol }}',
+                        thousands: '{{ settings()->currency->thousand_separator }}',
+                        decimal: '{{ settings()->currency->decimal_separator }}',
+                        precision: 0,
+                    });
+                    $('#harga_emas2').maskMoney({
+                        prefix: '{{ settings()->currency->symbol }}',
+                        thousands: '{{ settings()->currency->thousand_separator }}',
+                        decimal: '{{ settings()->currency->decimal_separator }}',
+                        precision: 0,
+                    });
+                    $('#generate-code').click(function() {
+                        var group = $('#group_id').val();
                 //alert(group);
                 $(this).prop('disabled', true);
                 $(this).addClass('loading');
                 $.ajax({
-                url: '{{ route('products.code_generate') }}',
-                type: 'POST',
-                data: { group: group },
-                dataType: 'json',
-                headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                success: function(response) {
-                if (response.code === '0') {
-                $('#code').prop('readonly', true);
-                $('#code').val('Group harus di isi..!!');
-                } else {
-                $('#code').val(response.code);
-                }
-                console.log(response);
-                },
-                complete: function() {
-                $('#generate-code').prop('disabled', false);
-                $('#generate-code').removeClass('loading');
-                }
+                    url: '{{ route('products.code_generate') }}',
+                    type: 'POST',
+                    data: { group: group },
+                    dataType: 'json',
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.code === '0') {
+                            $('#code').prop('readonly', true);
+                            $('#code').val('Group harus di isi..!!');
+                        } else {
+                            $('#code').val(response.code);
+                        }
+                        console.log(response);
+                    },
+                    complete: function() {
+                        $('#generate-code').prop('disabled', false);
+                        $('#generate-code').removeClass('loading');
+                    }
                 });
-                });
+            });
                 //group modal kategori
                 $(document).on('click', '#GroupKategori', function(e){
-                e.preventDefault();
-                $('#ModalBacktoKategori').modal('hide');
-                $("#ModalBacktoKategori").trigger("reset");
-                $('#ModalKategori').modal('hide');
-                $('#ModalKategori').modal('hide');
-                $("#ModalKategori").trigger("reset");
-                if($(this).attr('id') == 'GroupKategori')
-                {
-                $('.modal-dialog').removeClass('modal-lg');
-                $('.modal-dialog').removeClass('modal-sm');
-                $('.modal-dialog').addClass('modal-xl');
-                $('#ModalHeaderGroupkategori').html('<i class="bi bi-grid-fill"></i> &nbspGroup {{ Label_case(' Kategori') }}');
-                }
-                $('#ModalContentGroupKategori').load($(this).attr('href'));
-                $('#ModalGroupKategori').modal('show');
-                $('#ModalGroupKategori').modal({
-                backdrop: 'static',
-                keyboard: true,
-                show: true
-                });
+                    e.preventDefault();
+                    $('#ModalBacktoKategori').modal('hide');
+                    $("#ModalBacktoKategori").trigger("reset");
+                    $('#ModalKategori').modal('hide');
+                    $('#ModalKategori').modal('hide');
+                    $("#ModalKategori").trigger("reset");
+                    if($(this).attr('id') == 'GroupKategori')
+                    {
+                        $('.modal-dialog').removeClass('modal-lg');
+                        $('.modal-dialog').removeClass('modal-sm');
+                        $('.modal-dialog').addClass('modal-xl');
+                        $('#ModalHeaderGroupkategori').html('<i class="bi bi-grid-fill"></i> &nbspGroup {{ Label_case(' Kategori') }}');
+                    }
+                    $('#ModalContentGroupKategori').load($(this).attr('href'));
+                    $('#ModalGroupKategori').modal('show');
+                    $('#ModalGroupKategori').modal({
+                        backdrop: 'static',
+                        keyboard: true,
+                        show: true
+                    });
                 });
                 //modal detail kategori
                 $(document).on('click', '#openModalKategori', function(e){
-                e.preventDefault();
-                $('#ModalBacktoKategori').modal('hide');
-                $("#ModalBacktoKategori").trigger("reset");
-                $('#ModalGroupKategori').modal('hide');
-                $("#ModalGroupKategori").trigger("reset");
-                var dataURL = $(this).attr('data-href');
+                    e.preventDefault();
+                    $('#ModalBacktoKategori').modal('hide');
+                    $("#ModalBacktoKategori").trigger("reset");
+                    $('#ModalGroupKategori').modal('hide');
+                    $("#ModalGroupKategori").trigger("reset");
+                    var dataURL = $(this).attr('data-href');
                 //alert(dataURL);
                 $('.modal-dialog').removeClass('modal-sm');
                 $('.modal-dialog').removeClass('modal-lg');
@@ -405,88 +394,109 @@ margin-bottom: 0.2rem !important;
                 $('#ModalContentKategori').load($(this).attr('href'));
                 $('#ModalHeaderkategori').html('<i class="bi bi-grid-fill"></i> &nbspKategori {{ Label_case(' Products') }}');
                 $('#ModalKategori').modal({
-                backdrop: 'static',
-                keyboard: true,
-                show: true
+                    backdrop: 'static',
+                    keyboard: true,
+                    show: true
                 });
-                });
+            });
                 function Tambah()
                 {
                 $.ajax({
-                url: $('#FormTambah').attr('action'),
-                type: "POST",
-                data: new FormData($('#FormTambah')[0]),
-                processData: false,
-                contentType: false,
-                cache: false,
-                mimeType:'multipart/form-data',
-                dataType:'json',
-                success: function(data) {
-                console.log(data.error)
-                if($.isEmptyObject(data.error)){
-                $('#ResponseInput').html(data.success);
-                console.log(data.produk);
-                var value = data.produk;
-                Livewire.emit('addProduk', value);
-                console.log(value);
-                $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
-                setTimeout(function() {
-                window.location.href = "{{ route('goodsreceipt.show',encode_id($pembelian->id)) }}";
-                }, 2000);
-                }else{
-                printErrorMsg(data.error);
-                $(this).closest('form').trigger("reset");
-                }
-                }
+                    url: $('#FormTambah').attr('action'),
+                    type: "POST",
+                    data: new FormData($('#FormTambah')[0]),
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    mimeType:'multipart/form-data',
+                    dataType:'json',
+                    success: function(data) {
+                        console.log(data.error)
+                        if($.isEmptyObject(data.error)){
+                            $('#ResponseInput').html(data.success);
+                            console.log(data.produk);
+                            var value = data.produk;
+                            Livewire.emit('addProduk', value);
+                            console.log(value);
+                            $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
+                            setTimeout(function() {
+                                window.location.href = "{{ route('goodsreceipt.show',encode_id($pembelian->id)) }}";
+                            }, 2000);
+                        }else{
+                            printErrorMsg(data.error);
+                            $(this).closest('form').trigger("reset");
+                        }
+                    }
                 });
-                }
-                function printErrorMsg (msg) {
+            }
+            function printErrorMsg (msg) {
                 $.each( msg, function( key, value ) {
-                console.log(key);
-                $('#'+key+'').addClass("");
-                $('#'+key+'').addClass("is-invalid");
-                $('.'+key+'_err').text(value);
+                    console.log(key);
+                    $('#'+key+'').addClass("");
+                    $('#'+key+'').addClass("is-invalid");
+                    $('.'+key+'_err').text(value);
                 });
-                }
-                $('#SimpanTambah').click(function(e){
+            }
+            $('#SimpanTambah').click(function(e){
                 e.preventDefault();
                 Tambah();
-                });
-                $('#FormTambah').submit(function(e){
+            });
+            $('#FormTambah').submit(function(e){
                 e.preventDefault();
                 Tambah();
-                });
-                $(document).ready(function() {
+            });
+            $(document).ready(function() {
                 $('#category_id').change(function() {
-                var option = $(this).find(':selected').attr('data-name')
+                    var option = $(this).find(':selected').attr('data-name')
                 //alert(option);
                 
                 if (option === 'Logam Mulia') {
-                toastr.success(option);
-                $('#lm_form').removeClass('d-none');
-                $('#lm_form').show();
-                $('#emas_form').hide();
+                    toastr.success(option);
+                    $('#lm_form').removeClass('d-none');
+                    $('#lm_form').show();
+                    $('#emas_form').hide();
                 }
                 else if(option == null) {
                 // alert('Kategori tidak Boleh kosong');
                 toastr.warning('Kategori belum di pilih ..!!!');
                 
-                } else {
+            } else {
                 $('#lm_form').addClass('d-none');
                 $('#lm_form').hide();
                 $('#emas_form').removeClass('d-none');
                 $('#emas_form').show();
+            }
+
+        });
+            });
+
+
+
+      $("#berat_tag").keydown( function(e){
+             var b = $("#berat_tag").val();
+               if (b == 0) {
+                    e.preventDefault();
+                    return false;
                 }
-                
-                });
-                });
-                $('#FormTambah').on('keyup keypress', function(e) {
+        });
+       $("#berat_emas").keydown( function(e){
+             var b = $("#berat_emas").val();
+               if (b == 0) {
+                    e.preventDefault();
+                    return false;
+                }
+        });
+
+
+
+            $('#FormTambah').on('keyup keypress', function(e) {
                 var keyCode = e.keyCode || e.which;
                 if (keyCode === 13) {
-                e.preventDefault();
-                return false;
+                    e.preventDefault();
+                    return false;
                 }
-                });
-                })(jQuery);
+            });
+
+        })(jQuery);
                 </script>
                 @endpush

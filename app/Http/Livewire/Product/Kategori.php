@@ -95,8 +95,17 @@ class Kategori extends Component
 
     public function recalculateTotal()
     {
+         //dd($this->berat_accessories);
+        if ($this->berat_accessories == null && $this->berat_tag == null && $this->berat_emas == null) {
+            $this->berat_accessories = 0;
+            $this->berat_tag = 0;
+            $this->berat_emas = 0;
+        }
+
         $this->beratTotalFinal = $this->berat_accessories + $this->berat_tag + $this->berat_emas;
     }
+
+
 
     public function calculateMarginGram()
     {
