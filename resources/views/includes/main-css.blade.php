@@ -1,5 +1,6 @@
 <!-- Dropezone CSS -->
 <link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
+<link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
 <!-- CoreUI CSS -->
 <link rel="stylesheet" href="{{ url('/') }}{{ mix('css/backend.css') }}" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ url('/') }}{{ mix('css/app.css') }}" crossorigin="anonymous">
@@ -29,6 +30,10 @@ body {
 }
 
 
+.poppins {
+    font-family: 'Poppins', sans-serif !important;
+    line-height: 1.5 !important;
+   }
 .hokkie {
     color: #FF9800 !important;
     letter-spacing: 0.2rem;

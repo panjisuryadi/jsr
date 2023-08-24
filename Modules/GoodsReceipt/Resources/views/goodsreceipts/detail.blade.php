@@ -16,63 +16,63 @@
 <div class="bg-white grid grid-cols-3 gap-4">
 
   <div class="text-gray-600 px-2 py-2">
-             <div class="flex justify-between w-full">
+             <div class="flex justify-between w-full py-1">
                 <div class="px-3 py-2">
                     <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
                     <h3 class="text-lg font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
                 </div>
                   <div class="px-6 py-2">
               <div class="mt-3 text-gray-600">Supplier</div>
-                 <div class="leading-4 mt-0 font-semibold text-gray-500">{{ $detail->supplier->supplier_name }}</div>
-                 <div class="leading-4 text-gray-500">{{ $detail->supplier->address }}</div>
+                 <div class="leading-5 mt-0 font-semibold text-gray-500">{{ $detail->supplier->supplier_name }}</div>
+                 <div class="leading-5 text-gray-500">{{ $detail->supplier->address }}</div>
 
                 </div>
             </div>
 
 
-<div class="text-sm px-3 py-2">
- <div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600">{{ Label_case('tanggal') }}</p>
-                <p class="poppins dark:text-gray-300 leading-6 text-gray-800">{{ tanggal($detail->date) }}</p>
+<div class="text-sm px-3 py-2 poppins">
+ <div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('tanggal') }}</p>
+                <p class="poppins text-gray-800">{{ tanggal($detail->date) }}</p>
             </div>
-           <div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600">{{ Label_case('no_invoice') }}</p>
-                <p class="poppins dark:text-gray-300 leading-6 text-gray-800">{{ $detail->no_invoice }}</p>
+           <div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('no_invoice') }}</p>
+                <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->no_invoice }}</p>
             </div>
-  <div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600">{{ Label_case('berat') }}</p>
-                <p class="poppins font-semibold leading-6 text-blue-800">{{ $detail->berat_barang }}
+  <div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('berat') }}</p>
+                <p class="poppins font-semibold text-blue-800">{{ $detail->berat_barang }}
                    <small class="text-gray-700">Gram</small></p>
             </div>
-  <div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600">{{ Label_case('berat_real') }}</p>
-                <p class="poppins font-semibold leading-6 text-green-800">{{ $detail->berat_real }}
+  <div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('berat_real') }}</p>
+                <p class="poppins font-semibold text-green-800">{{ $detail->berat_real }}
                     <small class="text-gray-700">Gram</small></p>
             </div>
-<div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600">{{ Label_case('qty') }}</p>
-                <p class="poppins font-semibold leading-6 text-gray-800">{{ $detail->qty }}</p>
+<div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('qty') }}</p>
+                <p class="poppins font-semibold text-gray-800">{{ $detail->qty }}</p>
             </div>
 
-<div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600">{{ Label_case('qty_diterima') }}</p>
-                <p class="poppins font-semibold leading-6 text-gray-800">{{ $detail->qty_diterima }}</p>
+<div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('qty_diterima') }}</p>
+                <p class="poppins font-semibold text-gray-800">{{ $detail->qty_diterima }}</p>
             </div>
 
-         <div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600">{{ Label_case('pengirim') }}</p>
-                <p class="poppins dark:text-gray-300 leading-6 text-gray-800">{{ $detail->pengirim }}</p>
+         <div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('pengirim') }}</p>
+                <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->pengirim }}</p>
             </div>
 
-             <div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600">{{ Label_case('penerima') }}</p>
-                <p class="poppins dark:text-gray-300 leading-6 text-gray-800">
+             <div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('penerima') }}</p>
+                <p class="poppins dark:text-gray-300 text-gray-800">
                     {{ @$detail->user->name }}</p>
             </div>
-    <div class="flex justify-between w-full">
-                <p class="poppins leading-6 text-gray-600"></p>
+    <div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600"></p>
 
-                <span class="rounded rounded-md px-2 py-1 bg-yellow-300 poppins font-semibold leading-6 text-xs text-gray-800">
+                <span class="rounded rounded-md px-2 py-1 bg-yellow-300 poppins font-semibold text-xs text-gray-800">
                     @if($detail->count == 0)
                     {{ $detail->qty_diterima }}
                     @else
