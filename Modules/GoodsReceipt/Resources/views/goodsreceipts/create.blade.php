@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Create GoodsReceipt')
 
+
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -11,7 +12,7 @@
 
 @section('content')
 @push('page_css')
-
+{{--
 <style type="text/css">
     .dropzone {
         height: 280px !important;
@@ -25,7 +26,7 @@
         color: #bd4019 !important;
     }
 
-</style>
+</style> --}}
 @endpush
 <div class="container-fluid">
 <script src="{{  asset('js/jquery.min.js') }}"></script>
@@ -59,6 +60,7 @@
             <input class="form-check-input" type="radio" name="upload" id="up2" checked>
             <label class="form-check-label" for="up2">Upload</label>
         </div>
+
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="upload"
             id="up1">
@@ -68,9 +70,15 @@
     <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
         <x-library.webcam />
     </div>
-  <div id="upload1" class="drop-zone">
-    <div class="drop-zone__prompt">  <i class="text-red-800 text-3xl bi bi-cloud-arrow-up"></i></div>
-    <input type="file" name="images" class="drop-zone__input">
+  <div id="upload1"">
+  <div class="form-group">
+                            <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
+                            <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
+                                <div class="dz-message" data-dz-message>
+                                    <i class="bi bi-cloud-arrow-up"></i>
+                                </div>
+                            </div>
+                        </div>
   </div>
 </div>
 
@@ -378,10 +386,62 @@
     </form>
 </div>
 @endsection
-<x-library.dropzone />
 <x-library.select2 />
 <x-toastr />
+@section('third_party_scripts')
+<script src="{{ asset('js/dropzone.js') }}"></script>
+@endsection
+@push('page_scripts')
+<script>
+    var uploadedDocumentMap = {}
+    Dropzone.options.documentDropzone = {
+        url: '{{ route('dropzone.upload') }}',
+        maxFilesize: 1,
+        acceptedFiles: '.jpg, .jpeg, .png',
+        maxFiles: 3,
+        addRemoveLinks: true,
+        dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        success: function (file, response) {
+            $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
+            uploadedDocumentMap[file.name] = response.name;
+        },
+        removedfile: function (file) {
+            file.previewElement.remove();
+            var name = '';
+            if (typeof file.file_name !== 'undefined') {
+                name = file.file_name;
+            } else {
+                name = uploadedDocumentMap[file.name];
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ route('dropzone.delete') }}",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'file_name': `${name}`
+                },
+            });
+            $('form').find('input[name="document[]"][value="' + name + '"]').remove();
+        },
+        init: function () {
+            @if(isset($product) && $product->getMedia('pembelian'))
+            var files = {!! json_encode($product->getMedia('pembelian')) !!};
+            for (var i in files) {
+                var file = files[i];
+                this.options.addedfile.call(this, file);
+                this.options.thumbnail.call(this, file, file.original_url);
+                file.previewElement.classList.add('dz-complete');
+                $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+            }
+            @endif
+        }
+    }
+</script>
 
+@endpush
 
 @push('page_scripts')
 <script type="text/javascript">

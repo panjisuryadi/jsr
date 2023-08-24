@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Modules\Product\Http\Controllers;
 use Carbon\Carbon;
 use Modules\Product\DataTables\ProductDataTable;

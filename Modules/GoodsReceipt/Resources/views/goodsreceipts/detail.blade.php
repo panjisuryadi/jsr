@@ -109,9 +109,9 @@
 
 
                         </div>
-                        <div id="buttons" class="mb-2">
-                       @if($detail->status == 1)
-                    <form id="product-form" action="{{ route(''.$module_name.'.update_status',encode_id($detail->id)) }}" method="POST">
+                 <div id="buttons" class="mb-2 flex flex-row ">
+                @if($detail->status == 1)
+                 <form id="product-form" action="{{ route(''.$module_name.'.update_status',encode_id($detail->id)) }}" method="POST">
                         @csrf
                         @method('patch')
                         <button

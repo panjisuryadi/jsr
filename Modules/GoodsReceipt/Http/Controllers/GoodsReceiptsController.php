@@ -205,12 +205,11 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                         ->editColumn('image', function ($data) {
-                               $images ='<div class="content-center items-center">
-                               <img class="w-10 h-10 rounded" src="'.  asset(imageUrl(). @$data->images) . '"
-                               style="height:50px; width:50px;">';
-                                return $images;
-                            })
+                          ->editColumn('image', function ($data) {
+                                            $url = $data->getFirstMediaUrl('pembelian', 'thumb');
+                                            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+                                             })
+
                         ->editColumn('date', function ($data) {
                              $tb = '<div class="text-xs items-center text-center">
                                      ' .tanggal($data->date) . '
@@ -461,6 +460,9 @@ public function store(Request $request)
         }
 
 
+
+
+
       if ($request->filled('image')) {
             $img = $request->image;
             $folderPath = "uploads/";
@@ -494,7 +496,11 @@ public function store(Request $request)
             'pengirim'                   => $input['pengirim']
         ]);
 
-        
+         if ($request->has('document')) {
+            foreach ($request->input('document', []) as $file) {
+                $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('pembelian');
+            }
+        }
           
            activity()->log(' '.auth()->user()->name.' input data pembelian');
          
