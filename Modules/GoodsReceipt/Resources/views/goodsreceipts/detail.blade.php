@@ -141,7 +141,7 @@
                     <div class="table-responsive mt-1">
 
 
- <table id="datatable" style="width: 100%" class="table table-hover table-responsive-sm">
+ <table id="datatable" style="width: 100%" class="table table-striped table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
