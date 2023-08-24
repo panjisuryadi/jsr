@@ -110,7 +110,7 @@
 
                         </div>
                  <div id="buttons" class="mb-2 flex flex-row ">
-                @if($detail->status == 1)
+               @if($detail->count == $detail->qty_diterima )
                  <form id="product-form" action="{{ route(''.$module_name.'.update_status',encode_id($detail->id)) }}" method="POST">
                         @csrf
                         @method('patch')
@@ -121,10 +121,11 @@
                         <i class="bi bi-plus"></i>@lang('Simpan')
                         </button>
                     </form>
-                    @else
-                   <div class="mb-2 text-green-500 font-medium border-solid border-2 border-green-500  px-3 py-1 uppercase">complete</div>
-                       @endif
+                   @endif
 
+                    @if($detail->status == 2)
+                       <div class="mb-2 text-green-500 font-medium border-solid border-2 border-green-500  px-3 py-1 uppercase">complete</div>
+                      @endif
 
                         @if($detail->count <= $detail->qty_diterima )
                            <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
