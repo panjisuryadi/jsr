@@ -371,6 +371,47 @@ public function store(Request $request)
 
 
 
+    public function update(Request $request, $id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+        $$module_name_singular = $module_model::findOrFail($id);
+        $request->validate([
+            'no_invoice' => 'required|min:3|max:191',
+                 ]);
+        $params = $request->except('_token','upload','image');
+        $params['no_invoice'] = $params['no_invoice'];
+        $params['date'] = $params['date'];
+
+
+        if ($request->filled('images')) {
+            $img = $request->image;
+            $folderPath = "uploads/";
+            $image_parts = explode(";base64,", $img);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName ='webcam_'. uniqid() . '.jpg';
+            $file = $folderPath . $fileName;
+            Storage::disk('public')->put($file,$image_base64);
+             $params['images'] =  "$fileName";
+
+            }
+            else{
+            unset($params['images']);
+             }
+
+         activity()->log(' '.auth()->user()->name.' Edit Data pembelian');
+        $$module_name_singular->update($params);
+         toast(''. $module_title.' Updated!', 'success');
+         return redirect()->route(''.$module_name.'.index');
+    }
+
 
 
 //store ajax version
@@ -602,56 +643,16 @@ public function print_produk($kode_pembelian)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
+        $kasir = User::role('Kasir')->orderBy('name')->get();
           return view(''.$module_name.'::'.$module_path.'.edit',
            compact('module_name',
             'module_action',
             'detail',
+            'kasir',
             'module_title',
             'module_icon', 'module_model'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'Update';
-        $$module_name_singular = $module_model::findOrFail($id);
-        $request->validate([
-            'name' => 'required|min:3|max:191',
-                 ]);
-        $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
-
-       // if ($image = $request->file('image')) {
-       //                if ($$module_name_singular->image !== 'no_foto.png') {
-       //                    @unlink(imageUrl() . $$module_name_singular->image);
-       //                  }
-       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
-       //              $constraint->aspectRatio();
-       //              })->encode();
-       //   $normalpath = 'uploads/' . $gambar;
-       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-       //   Storage::disk($storage)->put($normalpath, (string) $normal);
-       //   $params['image'] = "$gambar";
-       //  }else{
-       //      unset($params['image']);
-       //  }
-        $$module_name_singular->update($params);
-         toast(''. $module_title.' Updated!', 'success');
-         return redirect()->route(''.$module_name.'.index');
-    }
 
 
 

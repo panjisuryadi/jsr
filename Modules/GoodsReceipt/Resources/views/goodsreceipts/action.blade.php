@@ -4,11 +4,15 @@
 
     data-toggle="tooltip"
      class="btn btn-info btn-sm py-1">
-        @lang('Add Detail')
+        @lang('Detail')
     </a> 
 
+    <a href="{{ route("$module_name.edit",encode_id($data->id)) }}"
 
-   
+    data-toggle="tooltip"
+     class="btn btn-warning btn-sm py-1">
+        @lang('Edit')
+    </a>
 
     @can('delete_'.$module_name.'')
     <button id="delete" class="btn btn-danger btn-sm" onclick="
@@ -17,7 +21,7 @@
         document.getElementById('destroy{{ $data->id }}').submit()
         }
         ">
-        <i class="bi bi-trash"></i>
+       @lang('Hapus')
         <form id="destroy{{ $data->id }}" class="d-none" action="{{ route(''.$module_name.'.destroy', $data->id) }}" method="POST">
             @csrf
             @method('delete')
