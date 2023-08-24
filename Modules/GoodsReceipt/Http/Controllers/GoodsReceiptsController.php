@@ -594,13 +594,6 @@ public function store(Request $request)
 
         if ($request->filled('image')) {
 
-             if (count($$module_name_singular->getMedia('pembelian')) > 0) {
-                foreach ($$module_name_singular->getMedia('pembelian') as $media) {
-                    if (!in_array($media->file_name, $request->input('document', []))) {
-                        $media->delete();
-                    }
-                }
-            }
             $img = $request->image;
             $folderPath = "uploads/";
             $image_parts = explode(";base64,", $img);
