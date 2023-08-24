@@ -17,14 +17,7 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id=""
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3 py-1">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;
-                                 {{ __($module_title) }}
-                                </a>
-
+                          <h3>Riwayat Penerimaan Barang</h3>
                         </div>
                         <div id="buttons">
                         </div>

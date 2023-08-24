@@ -56,8 +56,21 @@ class GoodsReceiptsController extends Controller
             'module_icon', 'module_model'));
     }
 
-
-
+ public function riwayat_penerimaan() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.riwayat',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
 
 
 
@@ -81,6 +94,9 @@ public function index_data_product(Request $request ,$kode_pembelian)
             ,
             'products.id AS id_produk',
             'products.product_name',
+            'products.product_code',
+            'products.product_cost',
+            'products.product_price',
             'product_items.berat_total')
            ->leftJoin('products', 'goodsreceipts.code', '=', 'products.kode_pembelian')
            ->leftJoin('product_items', 'products.id', '=', 'product_items.product_id')
@@ -109,15 +125,22 @@ public function index_data_product(Request $request ,$kode_pembelian)
                             }) 
                            ->editColumn('name', function ($data) {
                              $tb = '<div class="text-xs items-left text-left">
-                                     <div class="text-gray-400 small">' .tanggal($data->date) . '</div>
-                                     <div class="text-gray-500">' .$data->code . '</div>
+
+                                     <div class="text-gray-500">' .$data->product_code . '</div>
                                      <div class="text-blue-500">' .$data->product_name . '</div>
+                                     <div class="text-gray-500">' .$data->berat_total . ' / 005</div>
+
                                     </div>';
                                 return $tb;
                             })
                            ->editColumn('qty', function ($data) {
-                             $tb = '<div class="text-sm font-semibold items-center text-center">
-                                     ' .$data->berat_total . '
+                             $tb = '<div class="small text-gray-500 items-center text-center">
+                                     Beli ;' .$data->product_cost . '
+
+                                    </div>';
+                                     $tb .= '<div class="small text-gray-500  items-center text-center">
+                                     Jual :' .$data->product_price . '
+
                                     </div>';
                                 return $tb;
                             }) 
@@ -203,16 +226,22 @@ public function index_data(Request $request)
 
                               ->editColumn('berat', function ($data) {
                              $tb = '<div class="items-center text-center">
-                                     ' .$data->berat_barang . ' 
+                                     ' .$data->berat_barang . ' Gram
                                     </div>';
                                 return $tb;
                             }) 
 
                           ->editColumn('detail', function ($data) {
+                            if ($data->count == 0) {
+                               $qty = $data->qty_diterima;
+                            } else {
+                               $qty = $data->count;
+                            }
+
                              $tb = '<div class="font-semibold items-center text-center">
 
-                             <div data-toggle="tooltip" data-placement="top" title="sisa barang" class="bg-green-400 px-1 items-center text-center rounded-lg">
-                                    ' .$data->count . '  / ' .$data->qty . '
+                             <div class="bg-green-400 px-1 items-center text-center rounded-lg">
+                                    ' .$qty . '  / ' .$data->qty_diterima . '
 
                              </div>
                                   
@@ -221,8 +250,9 @@ public function index_data(Request $request)
                             })  
 
                            ->editColumn('qty', function ($data) {
-                             $tb = '<div class="font-semibold items-center text-center">
-                                     ' .$data->qty . ' 
+                             $tb = '<div class="items-left text-left">
+                                    <div>Diterima : ' .$data->qty_diterima . '</div>
+                                    <div>Nota :' .$data->qty . '</div>
                                     </div>';
                                 return $tb;
                             })
@@ -386,6 +416,7 @@ public function store(Request $request)
                  ]);
         $params = $request->except('_token','upload','image');
         $params['no_invoice'] = $params['no_invoice'];
+        $params['count'] = $params['qty_diterima'];
         $params['date'] = $params['date'];
 
 

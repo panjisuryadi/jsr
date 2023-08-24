@@ -1227,8 +1227,23 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
           // GoodsReceipts
-            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Goods Receipts'), [
+     $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Goods Receipts'), [
                 'route' => 'goodsreceipt.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 77,
+                'activematches' => ['goodsreceipts*'],
+                'permission'    => ['access_goodsreceipts'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+       // Riwayat Penerimaan
+     $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+                '.__('Riwayat Penerimaan'), [
+                'route' => 'goodsreceipt.riwayat_penerimaan',
                 'class' => 'nav-item',
             ])
             ->data([

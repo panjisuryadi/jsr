@@ -1147,7 +1147,7 @@ public function saveAjax(Request $request)
             $module_pembelian::countProduk($$module_name_singular->kode_pembelian);
             $this->_saveProductsItem($input ,$produk);
 
-             activity()->log(' '.auth()->user()->name.' input data pembelian');
+             activity()->log(' '.auth()->user()->name.' Input data pembelian');
             return response()->json([
                         'produk'=> $produk,
                         'success'=>'  '.$module_title.' Sukses disimpan.'
