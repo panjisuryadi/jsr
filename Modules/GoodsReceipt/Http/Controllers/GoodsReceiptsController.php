@@ -93,6 +93,7 @@ public function index_data_product(Request $request ,$kode_pembelian)
         $$module_name = $module_model::select('goodsreceipts.*'
             ,
             'products.id AS id_produk',
+            'karats.name AS krt',
             'products.product_name',
             'products.product_code',
             'products.product_cost',
@@ -100,6 +101,7 @@ public function index_data_product(Request $request ,$kode_pembelian)
             'product_items.berat_total')
            ->leftJoin('products', 'goodsreceipts.code', '=', 'products.kode_pembelian')
            ->leftJoin('product_items', 'products.id', '=', 'product_items.product_id')
+           ->leftJoin('karats', 'product_items.karat_id', '=', 'karats.id')
             ->where('products.kode_pembelian',$kode_pembelian)
             ->get();
 
@@ -127,19 +129,19 @@ public function index_data_product(Request $request ,$kode_pembelian)
                              $tb = '<div class="text-xs items-left text-left">
 
                                      <div class="text-gray-500">' .$data->product_code . '</div>
-                                     <div class="text-blue-500">' .$data->product_name . '</div>
-                                     <div class="text-gray-500">' .$data->berat_total . ' / 005</div>
+                                     <div class="text-blue-600">' .$data->product_name . '</div>
+                                     <div class="text-gray-500">' .$data->berat_total . ' / ' .$data->krt . '</div>
 
                                     </div>';
                                 return $tb;
                             })
                            ->editColumn('qty', function ($data) {
-                             $tb = '<div class="small text-gray-500 items-center text-center">
-                                     Beli ;' .$data->product_cost . '
+                             $tb = '<div class="text-xs text-gray-500 items-center text-center">
+                                     Beli ;' .number_format($data->product_cost) . '
 
                                     </div>';
-                                     $tb .= '<div class="small text-gray-500  items-center text-center">
-                                     Jual :' .$data->product_price . '
+                                     $tb .= '<div class="text-xs text-gray-500  items-center text-center">
+                                     Jual :' .number_format($data->product_price) . '
 
                                     </div>';
                                 return $tb;
