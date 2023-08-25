@@ -87,7 +87,6 @@ margin-bottom: 0.2rem !important;
                         <div class="flex flex-row">
                             <x-library.alert />
                         </div>
-
                         <div class="flex relative py-2 mb-4">
                             <div class="absolute inset-0 flex items-center">
                                 <div class="w-full border-b border-gray-300"></div>

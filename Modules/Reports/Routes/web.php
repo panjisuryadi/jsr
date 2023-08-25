@@ -15,9 +15,19 @@ Route::group(['middleware' => 'auth'], function () {
     //Profit Loss Report
     Route::get('/profit-loss-report', 'ReportsController@profitLossReport')
         ->name('profit-loss-report.index');
+
+
     //Payments Report
     Route::get('/payments-report', 'ReportsController@paymentsReport')
         ->name('payments-report.index');
+      
+    //Payments Report
+    Route::get('/piutang-report', 'ReportsController@piutangsReport')
+        ->name('piutang-report.index');
+  //Payments Report
+    Route::get('/hutang-report', 'ReportsController@hutangReport')
+        ->name('hutang-report.index');
+
     //Sales Report
     Route::get('/sales-report', 'ReportsController@salesReport')
         ->name('sales-report.index');

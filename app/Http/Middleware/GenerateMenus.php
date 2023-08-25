@@ -1335,12 +1335,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
-
-
-
-
-
-
             // Submenu: Users
             $report->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i> '.__('Profit Loss Report').'', [
                 'route' => 'profit-loss-report.index',
@@ -1358,6 +1352,32 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
    // Submenu: Users
             $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Payments Report').'', [
                 'route' => 'payments-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+          // Submenu: laporan Piutang
+            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('laporan Piutang').'', [
+                'route' => 'piutang-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+          // Submenu: laporan hutang
+            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Hutang').'', [
+                'route' => 'hutang-report.index',
                 'class' => 'nav-item',
             ])
             ->data([

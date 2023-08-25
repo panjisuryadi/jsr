@@ -140,7 +140,6 @@ public function index_data_product(Request $request ,$kode_pembelian)
                                      <div class="text-gray-500">' .$data->product_code . '</div>
                                      <div class="text-blue-600">' .$data->product_name . '</div>
                                      <div class="text-gray-500">' .$data->berat_total . ' / ' .$data->krt . '</div>
-
                                     </div>';
                                 return $tb;
                             })
@@ -165,7 +164,8 @@ public function index_data_product(Request $request ,$kode_pembelian)
                             })
                   
                    
-                        ->rawColumns(['updated_at',
+                        ->rawColumns([
+                        'updated_at',
                          'date',
                          'action',
                          'checkbox',
