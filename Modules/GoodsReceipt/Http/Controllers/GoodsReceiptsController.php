@@ -127,10 +127,11 @@ public function index_data_product(Request $request ,$kode_pembelian)
                                 return $tb;
                             })
 
-                             ->editColumn('chekbox', function ($data) {
-                             $tb = '<div class="text-xs items-left text-left">
-                                <input type="checkbox" value="chkbox1" id="chk1">
-                                    </div>';
+                             ->editColumn('checkbox', function ($data) {
+                             $tb = '<div class="checkbox">
+                                          <input type="checkbox" id="tr-checkbox1">
+                                          <label for="tr-checkbox1"></label>
+                                        </div>';
                                 return $tb;
                             })
                            ->editColumn('name', function ($data) {
@@ -167,6 +168,7 @@ public function index_data_product(Request $request ,$kode_pembelian)
                         ->rawColumns(['updated_at',
                          'date',
                          'action',
+                         'checkbox',
                          'code',
                          'berat',
                          'image', 

@@ -23,6 +23,59 @@
     border-top-color: #d8dbe0;
 }
 
+
+.checkbox {
+  position: relative;
+}
+
+.checkbox [type="checkbox"] {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.checkbox [type="checkbox"] + label {
+  position: relative;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 2px solid;
+  cursor: pointer;
+  border-radius: 2px;
+  will-change: color;
+  transition: .2s color ease-in-out;
+}
+
+table thead .checkbox [type="checkbox"] + label:hover,
+table thead .checkbox [type="checkbox"] + label:hover:after {
+  color: #d80;
+}
+
+table tbody .checkbox [type="checkbox"] + label:hover,
+table tbody .checkbox [type="checkbox"] + label:hover:after {
+  color: #8d0;
+}
+
+.checkbox [type="checkbox"] + label:after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 12px;
+  top: 60%;
+  left: 50%;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  margin-top: -2px;
+  opacity: 0;
+  transform: translate(-50%, 0%) rotate(45deg) scale(.75);
+  will-change: opacity, transform, color;
+  transition: .17s opacity ease-in-out, .2s transform ease-in-out, .2s color ease-in-out;
+}
+
+.checkbox [type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}
 </style>
 @endpush
 <div class="container-fluid">
@@ -161,6 +214,12 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
+                                    <th style="width: 6%!important;">
+                                     <div class="checkbox">
+                                          <input type="checkbox" id="selectAll">
+                                          <label for="selectAll"></label>
+                                        </div>
+                                    </th>
                                     <th  style="width:8%!important;"  class="w-5 text-center">{{ __('Image') }}</th>
 
                                     <th style="width: 30%!important;text-align: left;"  class="text-left">{{ __('Product') }}</th>
@@ -264,6 +323,7 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
+                {data: 'checkbox', name: 'checkbox'},
                 {data: 'image', name: 'image'},
                 {data: 'name', name: 'name'},
                 {data: 'qty', name: 'qty'},
@@ -308,18 +368,29 @@ $(document).on('click', '#GroupKategori, #DetailProduk', function(e){
     });
 
 
-$(document).ready(function(){
-    $('#chk1').on('change',function(){
-            if($('#chk1').prop('checked'))
-            {
-                var ids=$(this).parent().parent().html();
-                alert(ids);
-            }
-            else
-            {
-            }
-        });
-    })
+
+$(document).ready(function() {
+  var $selectAll = $('#selectAll'); 
+  var $table = $('#datatable');
+  var $tdCheckbox = $table.find('tbody input:checkbox'); 
+  var tdCheckboxChecked = 0; 
+
+  $selectAll.on('click', function () {
+    $tdCheckbox.prop('checked', this.checked);
+  });
+
+  
+  $tdCheckbox.on('change', function(e){
+    tdCheckboxChecked = $table.find('tbody input:checkbox:checked').length; 
+    $selectAll.prop('checked', (tdCheckboxChecked === $tdCheckbox.length));
+  })
+});
+
+
+
+
+
+
 
 
 
