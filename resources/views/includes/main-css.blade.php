@@ -153,5 +153,10 @@ body {
 
 }
 
-
+.btn-sm, .btn-group-sm > .btn {
+    padding: 0.16rem 0.5rem !important;
+    font-size: 0.7rem !important;
+    line-height: 1.6 !important;
+    border-radius: 0.2rem;
+}
 </style>
