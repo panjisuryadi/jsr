@@ -135,7 +135,7 @@ title="@lang('Informasi Kurs hari ini')"
             </div>
             <div class="d-flex flex-column">
                 <span class="font-weight-bold py-0">{{ auth()->user()->name }}</span>
-                <span style="font-size: 0.7rem !important;" class="text-gray-500 text-xs">Online <i class="bi bi-circle-fill text-success"
+                <span style="font-size: 0.7rem !important;" class="online text-xs">Online <i class="bi bi-circle-fill text-success"
                  style="font-size: 0.7rem !important;"></i></span>
             </div>
         </a>

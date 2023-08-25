@@ -214,9 +214,11 @@
 
 
 
-<div class="flex flex-row grid grid-cols-3 gap-2">
+<div class="flex flex-row grid grid-cols-2 gap-2">
 
- <div class="form-group">
+<div class="flex flex-row">
+    
+<div class="form-group px-1">
         <?php
         $field_name = 'qty';
         $field_lable = label_case('qty');
@@ -239,7 +241,7 @@
             </span>
             @endif
     </div>
- <div class="form-group">
+ <div class="form-group px-0">
         <?php
         $field_name = 'qty_diterima';
         $field_lable = label_case('qty_diterima');
@@ -263,6 +265,11 @@
             @endif
     </div>
 
+
+
+</div>
+
+ 
 
 
 <div class="form-group">
