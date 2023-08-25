@@ -76,6 +76,15 @@ table tbody .checkbox [type="checkbox"] + label:hover:after {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(45deg) scale(1);
 }
+
+.dataTables_wrapper .dataTables_processing {
+position: absolute;
+top: 55% !important;
+  background: transparent !important;
+  border: none;
+  font-weight: bold;
+}
+
 </style>
 @endpush
 <div class="container-fluid">
@@ -288,6 +297,10 @@ table tbody .checkbox [type="checkbox"] + label:hover:after {
            lengthChange: true,
             searching: true,
            "oLanguage": {
+
+            "sprocessing": "<span class='fa-stack fa-lg'>\n\
+                            <i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i>\n\
+                       </span>&emsp;Processing ...",
             "sSearch": "<i class='bi bi-search'></i> {{ __("labels.table.search") }} : ",
             "sLengthMenu": "_MENU_ &nbsp;&nbsp; ",
             "sInfo": "{{ __("labels.table.showing") }} _START_ s/d _END_ {{ __("labels.table.from") }} <b>_TOTAL_ data</b>",
