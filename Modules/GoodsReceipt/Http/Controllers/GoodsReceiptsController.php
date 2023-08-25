@@ -589,16 +589,16 @@ public function store(Request $request)
             $image_base64 = base64_decode($image_parts[1]);
             $fileName ='webcam_'. uniqid() . '.jpg';
             $file = $folderPath . $fileName;
-           // $storage = Storage::disk('minio')->put($file,$image_base64);
+            $storage = Storage::disk('public')->put($file,$image_base64);
 
-            $path = \Storage::cloud()->put($file,$image_base64);
-            $url=\Storage::cloud()->temporaryUrl($path, \Carbon\Carbon::now()->addMinutes(1));
-            $jResponse['data'] = array(
-                "url"=>$url,
-                "path"=>$path
-            );
+            // $path = \Storage::cloud()->put($file,$image_base64);
+            // $url=\Storage::cloud()->temporaryUrl($path, \Carbon\Carbon::now()->addMinutes(1));
+            // $jResponse['data'] = array(
+            //     "url"=>$url,
+            //     "path"=>$path
+            // );
 
-             dd($jResponse);
+            //  dd($jResponse);
 
             //dd($storage);
             $params['images'] =  "$fileName";
