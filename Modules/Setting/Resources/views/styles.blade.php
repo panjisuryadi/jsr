@@ -58,6 +58,34 @@
     </div>
 
 
+<div class="form-group">
+        <label for="notification_email">Bg sidebar dropdown Aktif<span class="text-danger">*</span></label>
+        <input type="color" class="form-control" name="bg_dropdown_aktif" value="{{ $settings->bg_dropdown_aktif }}" required>
+    </div>
+
+
+<div class="form-group">
+        <label for="notification_email">Bg Header Top<span class="text-danger">*</span></label>
+        <input type="color" class="form-control" name="bg_header_top" value="{{ $settings->bg_header_top }}" required>
+    </div>
+
+<div class="form-group">
+        <label for="notification_email">Link Header top<span class="text-danger">*</span></label>
+        <input type="color" class="form-control" name="link_header_top" value="{{ $settings->link_header_top }}" required>
+    </div>
+
+<div class="form-group">
+        <label for="bg_footer">Link Header top<span class="text-danger">*</span></label>
+        <input type="color" class="form-control" name="bg_footer" value="{{ $settings->bg_footer }}" required>
+    </div>
+
+
+<div class="form-group">
+        <label for="bg_footer">Link Footer<span class="text-danger">*</span></label>
+        <input type="color" class="form-control" name="link_footer" value="{{ $settings->link_footer }}" required>
+    </div>
+
+
 
 
   </div>

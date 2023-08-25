@@ -34,6 +34,11 @@ body {
     font-family: 'Poppins', sans-serif !important;
     line-height: 1.5 !important;
    }
+/*dropdown aktif background*/
+.c-sidebar .c-sidebar-nav-dropdown.c-show {
+    background: {{ $settings->bg_dropdown_aktif }} !important;
+}
+
 .hokkie {
     color: #FF9800 !important;
     letter-spacing: 0.2rem;
