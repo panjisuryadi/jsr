@@ -48,12 +48,12 @@
 
 table thead .checkbox [type="checkbox"] + label:hover,
 table thead .checkbox [type="checkbox"] + label:hover:after {
-  color: #d80;
+  color: #e73e9d;
 }
 
 table tbody .checkbox [type="checkbox"] + label:hover,
 table tbody .checkbox [type="checkbox"] + label:hover:after {
-  color: #8d0;
+  color: #701347;
 }
 
 .checkbox [type="checkbox"] + label:after {
