@@ -202,7 +202,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::active()->get();
+        $$module_name = $module_model::active()->latest()->get();
 
         $data = $$module_name;
 
@@ -215,18 +215,14 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                          ->editColumn('image', function ($data) {
+                             ->editColumn('image', function ($data) {
                                         if ($data->images) {
                                            $url = asset(imageUrl(). @$data->images);
                                         } else {
                                            $url = $data->getFirstMediaUrl('pembelian', 'thumb');
                                         }
-
-
-
-
-                                            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
-                                             })
+                               return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+                                 })
 
                         ->editColumn('date', function ($data) {
                              $tb = '<div class="text-xs items-center text-center">
@@ -310,7 +306,7 @@ public function index_data_completed(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::history()->get();
+        $$module_name = $module_model::history()->latest()->get();
 
         $data = $$module_name;
         return Datatables::of($$module_name)
@@ -321,13 +317,14 @@ public function index_data_completed(Request $request)
                               return view(''.$module_name.'::'.$module_path.'.acthistory',
                             compact('module_name', 'data', 'module_model'));
                                 })
-
-                         ->editColumn('image', function ($data) {
-                               $images ='<div class="content-center items-center">
-                               <img class="w-10 h-10 rounded" src="'.  asset(imageUrl(). @$data->images) . '"
-                               style="height:50px; width:50px;">';
-                                return $images;
-                            })
+                           ->editColumn('image', function ($data) {
+                                        if ($data->images) {
+                                           $url = asset(imageUrl(). @$data->images);
+                                        } else {
+                                           $url = $data->getFirstMediaUrl('pembelian', 'thumb');
+                                        }
+                               return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+                                 })
                         ->editColumn('date', function ($data) {
                              $tb = '<div class="text-xs items-center text-center">
                                      ' .tanggal($data->date) . '
@@ -551,13 +548,6 @@ public function store(Request $request)
             'module_title',
             'module_icon', 'module_model'));
     }
-
-
-
-
-
-
-
 
 
     public function update(Request $request, $id)
