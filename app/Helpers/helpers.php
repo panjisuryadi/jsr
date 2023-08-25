@@ -482,6 +482,59 @@ if (!function_exists('pstatus')) {
 
 
 
+if (!function_exists('statusPo')) {
+    /**
+     * Prepare the Column Name for Lables.
+     */
+    function statusPo($required)
+    {
+        // status barang baru masuk
+        $return_text = '';
+        if ($required == 0) {
+             $return_text = '<div class="w-full btn btn-sm text-xs btn-outline-secondary items-center text-center">Uncompleted</div>';
+
+        }
+
+        //status Barang Aktif
+        elseif ($required == 1){
+             $return_text = '<div class="w-full btn btn-sm text-xs btn-outline-success items-center text-center">Aktif</div>';
+
+        }
+
+          //status Barang Aktif
+        elseif ($required == 2){
+             $return_text = '<div class="w-full btn btn-sm text-xs btn-outline-primary items-center text-center">Completed</div>';
+
+        }
+   
+        //status barang di kembalikan
+        elseif ($required == 3){
+             $return_text = '<div class="w-full btn btn-sm text-xs btn-outline-danger items-center text-center">Di Retur</div>';
+
+        }
+
+        return $return_text;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if (!function_exists('keBulan')) {
     function keBulan($number)
     {

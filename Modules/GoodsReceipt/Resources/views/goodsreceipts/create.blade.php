@@ -269,7 +269,7 @@
     <label class="mb-0" for="status">Status <span class="text-danger">*</span></label>
     <select class="form-control select2" name="status" id="status">
         <option value="1">Di Terima</option>
-        <option value="2">Di Retur</option>
+        <option value="3">Di Retur </option>
     </select>
 </div>
 

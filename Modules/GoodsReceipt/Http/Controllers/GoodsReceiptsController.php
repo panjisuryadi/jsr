@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Modules\GoodsReceipt\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
@@ -309,16 +310,15 @@ public function index_data_completed(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::completed()->get();
+        $$module_name = $module_model::history()->get();
 
         $data = $$module_name;
-
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
                             $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             $module_path = $this->module_path;
-                              return view(''.$module_name.'::'.$module_path.'.action',
+                              return view(''.$module_name.'::'.$module_path.'.acthistory',
                             compact('module_name', 'data', 'module_model'));
                                 })
 
@@ -354,32 +354,19 @@ public function index_data_completed(Request $request)
                             } else {
                                $qty = $data->count;
                             }
-
-                             $tb = '<div class="font-semibold items-center text-center">
-
-                             <div class="bg-green-400 px-1 items-center text-center rounded-lg">
-                                    ' .$data->count . '  / ' .$data->qty_diterima . '
-
-                             </div>
-
-                                    </div>';
+                                $tb = '<div class="font-semibold items-center text-center">
+                                    <div class="bg-green-400 px-1 items-center text-center rounded-lg">
+                                        ' .$data->count . '  / ' .$data->qty_diterima . '
+                                    </div>
+                                </div>';
                                 return $tb;
-                            })
+                                })
 
                             ->editColumn('status', function ($data) {
-                            if ($data->status == 2) {
-                               $qty = 'Retur';
-                            } else {
-                               $qty = 'AKtif';
-                            }
-
-                             $tb = '<div class="font-semibold items-center text-center">
-
-                             <div class="bg-green-400 px-1 items-center text-center rounded-lg">
-                                    ' .$qty . '
-
-                             </div>
-
+                           $tb = '<div class="font-semibold items-center text-center">
+                             
+                                    ' .statusPo($data->status) . '
+                                      
                                     </div>';
                                 return $tb;
                             })

@@ -47,8 +47,8 @@
 
 <div class="text-sm px-3 py-2 poppins">
  <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('tanggal') }}</p>
-                <p class="poppins text-gray-800">{{ tanggal($detail->date) }}</p>
+                <p class="text-gray-600">{{ Label_case('tanggal') }}</p>
+                <p class="text-gray-900">{{ tanggal($detail->date) }}</p>
             </div>
            <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('no_invoice') }}</p>

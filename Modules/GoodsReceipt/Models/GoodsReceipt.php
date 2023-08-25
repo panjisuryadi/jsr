@@ -57,10 +57,20 @@ class GoodsReceipt extends Model implements HasMedia
             $query->where('status', 1);
         }
 
+
         public function scopeCompleted($query)
         {
             $query->where('status', 2);
         }
+
+
+       public function scopeHistory($query)
+        {
+            $query->whereNotIn('status', [1]);
+
+
+        }
+
 
         public function scopeRetur($query)
         {

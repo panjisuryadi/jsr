@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Modules\Product\Http\Controllers;
 use Carbon\Carbon;
 use Modules\Product\DataTables\ProductDataTable;
@@ -1095,8 +1096,7 @@ public function saveAjax(Request $request)
              'category' => 'required',
              'produk_model' => 'required',
              'group_id' => 'required',
-
-           
+       
            
         ]);
 
@@ -1112,10 +1112,11 @@ public function saveAjax(Request $request)
         $group = Group::where('id', $input['group_id'])->first();
         $totalberat = $input['berat_total'] ?? $input['berat_emas'];
         $berat = number_format((float)($totalberat), 5);
-          $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
-          $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
+           $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
+           $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([
             'category_id'                       => $input['category'],
+            'goodsreceipt_id'                   => $input['goodsreceipt_id'],
             'kode_pembelian'                    => $input['kode_pembelian'],
             'product_stock_alert'               => $input['product_stock_alert'],
             'product_name'                      => $group->name .' '. $model->name ?? 'unknown',

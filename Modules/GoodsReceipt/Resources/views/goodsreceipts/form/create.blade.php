@@ -13,6 +13,10 @@
 .form-group {
 margin-bottom: 0.5rem !important;
 }
+
+.c-main {
+    padding-top: 0.5rem !important;
+}
 </style>
 <style type="text/css">
 .dropzone {
@@ -25,6 +29,7 @@ background: #ff98003d !important;
 .dropzone i.bi.bi-cloud-arrow-up {
 font-size: 5rem;
 color: #bd4019 !important;
+fon
 }
 .loading {
 pointer-events: none;
@@ -93,7 +98,11 @@ margin-bottom: 0.2rem !important;
                         {{-- {{$pembelian}} --}}
                         <input type="hidden" name="kode_pembelian" value="{{trim($no_pembelian)}}">
 
-                        <input type="hidden" name="supplier_id" value="{{$pembelian->supplier_id}}">
+                        <input type="hidden" name="supplier_id" value="{{$pembelian->supplier_id}}">  
+
+                         <input type="hidden" name="goodsreceipt_id" value="{{$pembelian->id}}">
+
+
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">
@@ -473,21 +482,17 @@ margin-bottom: 0.2rem !important;
                 $('#emas_form').show();
             }
 
+           });
+         });
+
+
+        $('#FormTambah').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
         });
-            });
-
-
-             $('#FormTambah').on('keyup keypress', function(e) {
-                        var keyCode = e.keyCode || e.which;
-                        if (keyCode === 13) {
-                            e.preventDefault();
-                            return false;
-                        }
-                    });
-
-
-
-
 
         })(jQuery);
                 </script>
