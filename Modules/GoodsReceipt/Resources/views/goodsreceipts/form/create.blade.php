@@ -87,14 +87,21 @@ margin-bottom: 0.2rem !important;
                         <div class="flex flex-row">
                             <x-library.alert />
                         </div>
+
                         <div class="flex relative py-2 mb-4">
                             <div class="absolute inset-0 flex items-center">
                                 <div class="w-full border-b border-gray-300"></div>
                             </div>
                             <div class="relative flex justify-left">
-                                <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Main Kategori <span class="px-1 hokkie font-semibold uppercase">{{ @$main->name }}</span></div>
+                                <div class="bg-white pl-0 pr-3 font-semibold text-sm capitalize text-dark">Main Kategori <span class="px-1 hokkie font-semibold uppercase">{{ @$main->name }}</span>
+                                </div>
+
+
                             </div>
+
+
                         </div>
+
                         {{-- {{$pembelian}} --}}
                         <input type="hidden" name="kode_pembelian" value="{{trim($no_pembelian)}}">
 
@@ -205,11 +212,11 @@ margin-bottom: 0.2rem !important;
                                         </div>
                                         <div class="form-group">
                                             <a href="{{ route('products.add_produk_modal_from_pembelian', encode_id($pembelian->id)) }}"
-                                                id="GroupKategori" class="px-4 py-2 btn btn-sm btn-outline-warning">
+                                                id="GroupKategori" class="px-4 py-2 btn  btn-outline-warning">
                                                 @lang('Add Product')
                                             </a>
                                             <a class="px-5 btn btn-danger"
-                                                href="{{ route("products.index") }}">
+                                                href="{{ route("goodsreceipt.index") }}">
                                             @lang('Cancel')</a>
                                             <button id="SimpanTambah" type="button" class="px-4 btn btn-primary">@lang('Save')  <i class="bi bi-check"></i></button>
                                         </div>
