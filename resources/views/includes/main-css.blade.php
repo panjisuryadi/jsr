@@ -36,7 +36,7 @@ body {
    }
 /*dropdown aktif background*/
 .c-sidebar .c-sidebar-nav-dropdown.c-show {
-    background: {{ $settings->bg_dropdown_aktif }} !important;
+    background: {{settings()->bg_dropdown_aktif}} !important;
 }
 
 .hokkie {
