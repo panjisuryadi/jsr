@@ -75,7 +75,7 @@
     </div>
 
 <div class="form-group">
-        <label for="bg_footer">Link Header top<span class="text-danger">*</span></label>
+        <label for="bg_footer">BG Footer<span class="text-danger">*</span></label>
         <input type="color" class="form-control" name="bg_footer" value="{{ $settings->bg_footer }}" required>
     </div>
 

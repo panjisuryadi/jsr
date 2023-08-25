@@ -503,9 +503,9 @@ public function store(Request $request)
             $image_base64 = base64_decode($image_parts[1]);
             $fileName ='webcam_'. uniqid() . '.jpg';
             $file = $folderPath . $fileName;
-             $$module_name_singular->addMedia($image_base64)->toMediaCollection('pembelian');
-            // Storage::disk('public')->put($file,$image_base64);
-            //  $input['images'] =  "$fileName";
+             // $$module_name_singular->addMedia($image_base64)->toMediaCollection('pembelian');
+            Storage::disk('minio')->put($file,$image_base64);
+            $input['images'] =  "$fileName";
 
              // $category->addMediaFromRequest('image')->toMediaCollection('reedempoint');
 
@@ -589,7 +589,18 @@ public function store(Request $request)
             $image_base64 = base64_decode($image_parts[1]);
             $fileName ='webcam_'. uniqid() . '.jpg';
             $file = $folderPath . $fileName;
-            $storage = Storage::disk('public')->put($file,$image_base64);
+           // $storage = Storage::disk('minio')->put($file,$image_base64);
+
+            $path = \Storage::cloud()->put($file,$image_base64);
+            $url=\Storage::cloud()->temporaryUrl($path, \Carbon\Carbon::now()->addMinutes(1));
+            $jResponse['data'] = array(
+                "url"=>$url,
+                "path"=>$path
+            );
+
+             dd($jResponse);
+
+            //dd($storage);
             $params['images'] =  "$fileName";
               }
             else{
