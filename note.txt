@@ -1,5 +1,15 @@
-validasi penerimaan barang
-min -1
-qty terima barang tidak boleh lebih besar dari pada qty nota
-delete nota ..delete all produk yg terelasi ke nota
-jika retur langsung masuk ke table history penerimaan barang
+
+- tambah view goodreciepts // button
+
+1. jika pilih Retur redirect + form data ke  view form retur 
+2. tambah migrasi kolom harga di goodrecipts
+==============================================
+
+
+tabel multiple input : GooD Receipts / Penerimaan Barang
+--------------------------------------------------------
+1. karat
+2. harga
+3. qty
+4. Qty Nota
+5. Total
