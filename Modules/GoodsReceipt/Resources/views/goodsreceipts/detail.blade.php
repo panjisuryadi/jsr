@@ -314,12 +314,22 @@ top: 55% !important;
             }
             },
             "aaSorting": [[ 0, "desc" ]],
-            "columnDefs": [
-                {
-                    "targets": 'no-sort',
-                    "orderable": false,
-                }
-            ],
+     
+            'columnDefs': [
+                     {
+                        "targets": 'no-sort',
+                        "orderable": false,
+                        'checkboxes': {
+                           'selectRow': true,
+                           'selectCallback': function(){
+                              printSelectedRows();
+                           }
+                        }
+                     }
+                  ],
+                  'select': {
+                     'style': 'multi'
+                  },
             "sPaginationType": "simple_numbers",
             ajax: '{{ route("$module_name.index_data_product",$detail->code) }}',
             dom: 'Blfrtip',
@@ -352,7 +362,13 @@ top: 55% !important;
         .container()
         .appendTo("#buttons");
 
+// Print 
+function printSelectedRows(){
+   var rows_selected = $('#datatable').DataTable().column(0).checkboxes.selected();
 
+   // Output form data to a console     
+   $('#example-console-rows').text(rows_selected.join(","));
+};
 
     </script>
 

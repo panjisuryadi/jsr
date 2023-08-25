@@ -128,7 +128,7 @@ public function index_data_product(Request $request ,$kode_pembelian)
                             })
 
                              ->editColumn('checkbox', function ($data) {
-                             $tb = '<div class="checkbox">
+                             $tb = '<div class="checkbox mt-3">
                                           <input type="checkbox" id="tr-checkbox1">
                                           <label for="tr-checkbox1"></label>
                                         </div>';
