@@ -163,16 +163,7 @@ public function index_data_product(Request $request ,$kode_pembelian)
                                 return $images;
                             })
                   
-                           ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
-
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                            }
-                        })
+                   
                         ->rawColumns(['updated_at',
                          'date',
                          'action',

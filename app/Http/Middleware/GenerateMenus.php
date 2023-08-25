@@ -1212,18 +1212,18 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
-            // Submenu: Users
-            $Purchases->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i> '.__('All Purchase').'', [
-                'route' => 'purchases.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 4,
-                'permission'    => ['create_purchase'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link',
-            ]);
+            // // Submenu: Users
+            // $Purchases->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i> '.__('All Purchase').'', [
+            //     'route' => 'purchases.index',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 4,
+            //     'permission'    => ['create_purchase'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link',
+            // ]);
 
 
           // GoodsReceipts
