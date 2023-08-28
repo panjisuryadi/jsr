@@ -15,7 +15,7 @@
 
 
 
-#php artisan make:livewire Exhibition/list
+#php artisan make:livewire GoodsReceipt/goodsreceipt
 
 public function up()
     {

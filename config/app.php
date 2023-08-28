@@ -239,6 +239,7 @@ return [
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
         'Location' => Stevebauman\Location\Facades\Location::class,
+        'Html' => Spatie\Html\Facades\Html::class,
     ],
 
 ];

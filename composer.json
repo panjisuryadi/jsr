@@ -30,6 +30,7 @@
         "realrashid/sweet-alert": "^4.0",
         "simplesoftwareio/simple-qrcode": "~4",
         "spatie/laravel-activitylog": "^3.17",
+        "spatie/laravel-html": "^3.2",
         "spatie/laravel-medialibrary": "^9.0.0",
         "spatie/laravel-permission": "^4.2",
         "stevebauman/location": "^6.5",

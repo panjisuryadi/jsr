@@ -18,6 +18,7 @@
 
     @if(! request()->routeIs('app.pos.*')
             && ! request()->routeIs('goodsreceipt.add_products_by_categories')
+            && ! request()->routeIs('goodsreceipt.create')
             )
              @include('layouts.sidebar')
             @endif
@@ -34,6 +35,7 @@
 
                   @if(! request()->routeIs('goodsreceipt.add_products_by_categories')
                     && ! request()->routeIs('goodsreceipt.show')
+                    && ! request()->routeIs('goodsreceipt.create')
                   )
                     <div class="c-subheader justify-content-between px-3">
                         @yield('breadcrumb')

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\People\Entities\Supplier;
+use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use App\Models\User;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -21,6 +22,10 @@ class GoodsReceipt extends Model implements HasMedia
 
   public function products() {
         return $this->hasMany(Product::class, 'goodsreceipt_id', 'id');
+    }
+
+  public function goodsreceiptitem() {
+        return $this->hasMany(GoodsReceiptItem::class, 'goodsreceipt_id', 'id');
     }
 
     public function user() {

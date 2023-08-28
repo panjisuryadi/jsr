@@ -5,7 +5,29 @@ use Carbon\Carbon;
 
 
 
+/*
+ *
+ * fielf_required
+ * Show a * if field is required
+ *
+ * ------------------------------------------------------------------------
+ */
+if (!function_exists('fielf_required')) {
 
+    /**
+     * Prepare the Column Name for Lables.
+     */
+    function fielf_required($required)
+    {
+        $return_text = '';
+
+        if ($required != '') {
+            $return_text = '<span class="text-danger">*</span>';
+        }
+
+        return $return_text;
+    }
+}
 
 
 
