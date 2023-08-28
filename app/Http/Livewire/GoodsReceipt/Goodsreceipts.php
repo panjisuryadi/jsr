@@ -8,13 +8,15 @@ namespace App\Http\Livewire\GoodsReceipt;
         use Illuminate\Http\Request;
         use Illuminate\Support\Facades\Validator;
         use Modules\GoodsReceipt\Models\GoodsReceipt;
-
+        use Livewire\WithFileUploads;
         class Goodsreceipts extends Component
         {
+             use WithFileUploads;
             public $goodsreceipt,
              $berat_barang,
              $code,
              $no_invoice,
+             $harga,
              $qty,
              $qty_diterima,
              $pengirim,
@@ -48,6 +50,7 @@ namespace App\Http\Livewire\GoodsReceipt;
                 $this->qty = '';
                 $this->berat_barang = '';
                 $this->berat_real = '';
+                $this->harga = '';
                 $this->pengirim = '';
             }
 
@@ -57,12 +60,16 @@ namespace App\Http\Livewire\GoodsReceipt;
                         $rules = [
                               'no_invoice.0'     => 'required',
                               'no_invoice.*'     => 'required',
+                              'harga.0'     => 'required',
+                              'harga.*'     => 'required',
                               'qty.0'     => 'required',
                               'qty.*'     => 'required'
                         ];
 
                         foreach($this->inputs as $key => $value)
                         {
+                            $rules['harga.0'] = 'required';
+                            $rules['harga.'.$value] = 'required';
                             $rules['qty.0'] = 'required';
                             $rules['no_invoice.0'] = 'required';
                             $rules['qty.'.$value] = 'required';
@@ -80,6 +87,8 @@ namespace App\Http\Livewire\GoodsReceipt;
                       {
                         $messages['qty.0'] = 'required';
                         $messages['qty.'.$value] = 'required';
+                        $messages['harga.0'] = 'kosong';
+                        $messages['harga.'.$value] = 'kosong';
                         $messages['no_invoice.0'] = 'required';
                         $messages['no_invoice.'.$value] = 'required';
                       }
@@ -99,18 +108,27 @@ namespace App\Http\Livewire\GoodsReceipt;
             {
 
                  $this->validate();
-
-
-                // foreach ($this->code as $key => $value) {
-                //     GoodsReceipt::create(['code' => $this->code[$key], 'no_invoice' => $this->no_invoice[$key]]);
-                // }
+                foreach ($this->no_invoice as $key => $value) {
+                    $harga = preg_replace("/[^0-9]/", "", $this->harga[$key]);
+                   // dd($harga);
+                    //GoodsReceipt::create(['code' => $this->code[$key], 'no_invoice' => $this->no_invoice[$key]]);
+                }
 
                 $this->inputs = [];
 
                 $this->resetInputFields();
 
                 session()->flash('message', 'Created Successfully.');
+
+
+                      }
+
+
+             public function convertRupiah()
+            {
+                $this->product_price = 'Rp ' . number_format($this->price, 0, ',', '.');
             }
+
 
 
 }

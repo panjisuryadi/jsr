@@ -7,7 +7,7 @@
     <form wire:submit.prevent="store">
         @csrf
         <div class="flex justify-between">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-2 gap-2">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
                 <div class="form-group">
                     <?php
                     $field_name = 'no_invoice.0';
@@ -29,6 +29,25 @@
 
 
    <div class="form-group">
+                    <?php
+                    $field_name = 'harga.0';
+                    $field_lable = label_case('harga');
+                    $field_placeholder = $field_lable;
+                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                    $required = 'wire:model="'.$field_name.'" type-currency="IDR"';
+                    ?>
+                    {{ html()->text($field_name)->placeholder($field_placeholder)
+                        ->value(old($field_name))
+                    ->class('form-control   '.$invalid.'')->attributes(["$required"]) }}
+                    @if ($errors->has($field_name))
+                    <span class="invalid feedback"role="alert">
+                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                        class="text-danger">
+                    </span>
+                    @endif
+                </div>
+
+ <div class="form-group">
                     <?php
                     $field_name = 'qty.0';
                     $field_lable = label_case('qty');
@@ -64,7 +83,7 @@
         </div>
         @foreach($inputs as $key => $value)
         <div class="flex justify-between">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-2 gap-2">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
                 <div class="form-group">
                     <?php
                     $field_name = 'no_invoice.'.$value.'';
@@ -78,13 +97,38 @@
                         ->value(old($field_name))
                     ->class('form-control   '.$invalid.'')
                     ->attributes(["$required"]) }}
-                    @error('qty.'.$value)
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                    @if ($errors->has($field_name))
+                    <span class="invalid feedback"role="alert">
+                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                        class="text-danger">
+                    </span>
+                    @endif
                 </div>
+
+
   <div class="form-group">
+                    <?php
+                    $field_name = 'harga.'.$value.'';
+                    $field_lable = label_case('harga');
+                    $field_placeholder = $field_lable;
+                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                    $required = 'wire:model="'.$field_name.'" type-currency="IDR"';
+                    ?>
+                    {{ html()->text($field_name)
+                        ->placeholder($field_placeholder)
+                        ->value(old($field_name))
+                    ->class('form-control   '.$invalid.'')
+                    ->attributes(["$required"]) }}
+                      @if ($errors->has($field_name))
+                    <span class="invalid feedback"role="alert">
+                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                        class="text-danger">
+                    </span>
+                    @endif
+                </div>
+
+
+<div class="form-group">
                     <?php
                     $field_name = 'qty.'.$value.'';
                     $field_lable = label_case('qty');
@@ -97,11 +141,12 @@
                         ->value(old($field_name))
                     ->class('form-control   '.$invalid.'')
                     ->attributes(["$required"]) }}
-                    @error('qty.'.$value)
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                     @if ($errors->has($field_name))
+                    <span class="invalid feedback"role="alert">
+                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                        class="text-danger">
+                    </span>
+                    @endif
                 </div>
 
 
@@ -143,3 +188,30 @@
 
     </form>
 </div>
+
+
+@push('page_scripts')
+<script type="text/javascript">
+
+document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+  element.addEventListener('keyup', function(e) {
+    let cursorPostion = this.selectionStart;
+    let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+    let originalLenght = this.value.length;
+    if (isNaN(value)) {
+      this.value = "";
+    } else {
+      this.value = value.toLocaleString('id-ID', {
+        currency: 'IDR',
+        style: 'currency',
+        minimumFractionDigits: 0
+      });
+      cursorPostion = this.value.length - originalLenght + cursorPostion;
+      this.setSelectionRange(cursorPostion, cursorPostion);
+    }
+  });
+});
+
+</script>
+
+@endpush
