@@ -413,7 +413,7 @@ public function index_data_completed(Request $request)
             $kasir = User::role('Kasir')->orderBy('name')->get();
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.livewire.create',
+              return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
                 'code',

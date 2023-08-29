@@ -11,7 +11,7 @@ namespace App\Http\Livewire\GoodsReceipt;
         use Livewire\WithFileUploads;
         class Goodsreceipts extends Component
         {
-             use WithFileUploads;
+            use WithFileUploads;
             public $goodsreceipt,
              $berat_barang,
              $code,
@@ -22,6 +22,7 @@ namespace App\Http\Livewire\GoodsReceipt;
              $pengirim,
              $berat_real,
              $employee_id;
+
             public $updateMode = false;
             public $inputs = [];
             public $i = 1;
@@ -108,7 +109,7 @@ namespace App\Http\Livewire\GoodsReceipt;
             {
 
                  $this->validate();
-                foreach ($this->no_invoice as $key => $value) {
+                 foreach ($this->no_invoice as $key => $value) {
                     $harga = preg_replace("/[^0-9]/", "", $this->harga[$key]);
                    // dd($harga);
                     //GoodsReceipt::create(['code' => $this->code[$key], 'no_invoice' => $this->no_invoice[$key]]);
@@ -119,8 +120,6 @@ namespace App\Http\Livewire\GoodsReceipt;
                 $this->resetInputFields();
 
                 session()->flash('message', 'Created Successfully.');
-
-
                       }
 
 
