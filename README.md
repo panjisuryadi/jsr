@@ -21,18 +21,4 @@
 
 ##  Gold POS GTDS
 
-- **Products Management & Barcode Printing**
-- **Stock Management**
-- **Make Quotation & Send Via Email**
-- **Purchase Management**
-- **Sale Management**
-- **Purchase & Sale Return Management**
-- **Expense Management**
-- **Customer & Supplier Management**
-- **User Management (Roles & Permissions)**
-- **Product Multiple Images**
-- **Multiple Currency Settings**
-- **System Settings**
-- **Reports**
-
 
