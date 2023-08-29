@@ -340,11 +340,12 @@
         ?>
         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger small">(Nominal)</span></label>
         <input class="form-control numeric"
-        type="number"
+        type="text"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+        min="0"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
+        type-currency="IDR"
         placeholder="0">
         <span class="invalid feedback" role="alert">
             <span class="text-danger error-text {{ $field_name }}_err"></span>
@@ -549,9 +550,10 @@ $(document).ready(function(){
        $("#jatuh_tempo").removeClass('d-none');
        $("#cicil").addClass('d-none');
     }else if($( "option:selected", this ).val()=="lunas"){
-         $("#jatuh_tempo").addClass('d-none');
-         $("#cicil").removeClass('d-none');
-         $('select[name="cicil"]').attr('disabled', 'disabled');
+         $("#cicil").addClass('d-none');
+          $("#jatuh_tempo").addClass('d-none');
+         // $("#cicil").removeClass('d-none');
+         // $('select[name="cicil"]').attr('disabled', 'disabled');
  
     }else{
         $("#jatuh_tempo").addClass('d-none');
@@ -562,7 +564,24 @@ $(document).ready(function(){
 });
 
 
-
+document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+  element.addEventListener('keyup', function(e) {
+    let cursorPostion = this.selectionStart;
+    let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+    let originalLenght = this.value.length;
+    if (isNaN(value)) {
+      this.value = "";
+    } else {
+      this.value = value.toLocaleString('id-ID', {
+        currency: 'IDR',
+        style: 'currency',
+        minimumFractionDigits: 0
+      });
+      cursorPostion = this.value.length - originalLenght + cursorPostion;
+      this.setSelectionRange(cursorPostion, cursorPostion);
+    }
+  });
+});
 
 })(jQuery);
 </script>
@@ -570,4 +589,5 @@ $(document).ready(function(){
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 @endpush
+
 

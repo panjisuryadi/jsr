@@ -441,37 +441,24 @@ public function store(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-          $request->validate([
-             'code' => 'required|max:191|unique:'.$module_model.',code',
-             'no_invoice' => 'required',
-             'qty' => 'required',
-             'berat_barang' => 'required',
-             'date' => 'required',
-             'berat_real' => 'required',
-             'pengirim' => 'required',
-             'qty_diterima' => 'required',
-             'status' => 'required',
-             'supplier_id' => 'required',
 
-         ]);
-         $input = $request->except('_token','document');
-        //dd($input);
+        $input = $request->except('_token','document');
+         //dd($input);
         //Store Image Media Libraty Spati
-
-
+         $selisih_rupiah = preg_replace("/[^0-9]/", "", $input['selisih_rupiah']);
         //dd($input);
         $$module_name_singular = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
-            'qty'                        => $input['qty'],
-            'qty_diterima'               => $input['qty_diterima'],
             'date'                       => $input['date'],
             'status'                     => $input['status'],
             'supplier_id'                => $input['supplier_id'],
             'user_id'                    => $input['user_id'],
-            'parameter_kadar_id'         => null,
-            'berat_barang'               => $input['berat_barang'],
+            'berat_kotor'                => $input['berat_kotor'],
             'berat_real'                 => $input['berat_real'],
+            'selisih'                    => $input['selisih'],
+            'selisih_rupiah'             => $selisih_rupiah,
+            'note'                       => $input['note'],
             'count'                      => 0,
             'images'                     => null,
             'pengirim'                   => $input['pengirim']
