@@ -198,10 +198,10 @@
     </div>
 <div class="form-group">
     <label class="mb-0" for="status">Tipe Pembayaran <span class="text-danger">*</span></label>
-    <select class="form-control " name="tipe_pembayaran" id="status">
-        <option value="1">Cicil</option>
-        <option value="3">Jatuh Tempo</option>
-        <option value="3">Lunas</option>
+    <select  class="form-control" name="tipe_pembayaran" id="tipe_pembayaran">
+        <option value="cicil">Cicil</option>
+        <option value="jatuh_tempo">Jatuh Tempo</option>
+        <option value="lunas">Lunas</option>
     </select>
 </div>   
 
@@ -216,13 +216,38 @@
  
 
 
-<div class="form-group">
+<div id="cicil" class="form-group">
     <label class="mb-0" for="status">Cicil <span class="text-danger">*</span></label>
-    <select class="form-control select2" name="status" id="status">
+    <select class="form-control select2" name="cicil" id="cicil">
         <option value="1">1 kali</option>
-        <option value="3">2 kali </option>
+        <option value="2">2 kali </option>
     </select>
 </div>
+
+
+
+  <div id="jatuh_tempo" class="form-group d-none">
+            <?php
+            $field_name = 'date';
+            $field_lable = __('Tanggal');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = '';
+            ?>
+            <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
+            <input type="date" name="{{ $field_name }}"
+            class="form-control {{ $invalid }}"
+            name="{{ $field_name }}"
+            value="{{ old($field_name) }}"
+            placeholder="{{ $field_placeholder }}" {{ $required }}>
+            @if ($errors->has($field_name))
+            <span class="invalid feedback"role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+            @endif
+        </div>
+
 
 {{-- <div class="form-group">
     <label class="mb-0" for="status">cicil <span class="text-danger">*</span></label>
@@ -329,16 +354,6 @@
 
 
 </div>
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -524,6 +539,30 @@ $("#qty_diterima").on('input', function() {
     return false;
   }
 });
+
+
+
+
+$(document).ready(function(){
+    $('#tipe_pembayaran').on('change', function() {
+     if($( "option:selected", this ).val()=="jatuh_tempo"){
+       $("#jatuh_tempo").removeClass('d-none');
+       $("#cicil").addClass('d-none');
+    }else if($( "option:selected", this ).val()=="lunas"){
+         $("#jatuh_tempo").addClass('d-none');
+         $("#cicil").removeClass('d-none');
+         $('select[name="cicil"]').attr('disabled', 'disabled');
+ 
+    }else{
+        $("#jatuh_tempo").addClass('d-none');
+        $("#cicil").removeClass('d-none'); 
+    }
+   
+    });
+});
+
+
+
 
 })(jQuery);
 </script>
