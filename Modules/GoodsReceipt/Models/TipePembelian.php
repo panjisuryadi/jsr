@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 
 
-class GoodsReceiptItem extends Model
+class TipePembelian extends Model
 {
 
-    protected $table = 'goodsreceipt_items';
+    protected $table = 'tipe_pembelian';
     protected $guarded = [];
 
 
-    public function goodsreceiptitem() {
+    public function pembelian() {
         return $this->belongsTo(GoodsReceipt::class, 'goodsreceipt_id', 'id');
     }
 

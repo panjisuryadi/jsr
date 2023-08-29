@@ -126,14 +126,28 @@
 
 
 <div class="form-group">
-    <label class="mb-0" for="supplier_id">Supplier</label>
-    <select class="form-control select2" name="supplier_id">
+    <?php
+            $field_name = 'supplier_id';
+            $field_lable = __('Supplier');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = '';
+            ?>
+    <label class="mb-0" for="{{ $field_name }}">Supplier</label>
+    <select class="form-control select2" name="{{ $field_name }}">
         <option value="" selected disabled>Select Supplier</option>
         @foreach(\Modules\People\Entities\Supplier::all() as $row)
         <option value="{{$row->id}}" {{ old('supplier_id') == $row->id ? 'selected' : '' }}>
         {{$row->supplier_name}} </option>
         @endforeach
     </select>
+  @if ($errors->has($field_name))
+            <span class="invalid feedback"role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+            @endif
+
 </div>
 
 
@@ -166,23 +180,36 @@
 <div class="flex flex-row grid grid-cols-3 gap-2">
     
 <div class="form-group">
-    <label class="mb-0" for="kadar_id">Parameter Kadar</label>
-    <select class="form-control select2" name="kadar_id">
+    <?php
+            $field_name = 'parameterkadar_id';
+            $field_lable = __('Parameter Kadar');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = '';
+            ?>
+    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+    <select class="form-control select2" name="{{ $field_name }}">
         <option value="" selected disabled>Select Kadar</option>
         @foreach(\Modules\ParameterKadar\Models\ParameterKadar::all() as $row)
-        <option value="{{$row->id}}" {{ old('kadar_id') == $row->id ? 'selected' : '' }}>
+        <option value="{{$row->id}}" {{ old('parameterkadar_id') == $row->id ? 'selected' : '' }}>
         {{$row->kadar}} </option>
         @endforeach
     </select>
+      @if ($errors->has($field_name))
+            <span class="invalid feedback"role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+            @endif
 </div>
 
 <div class="form-group">
-    <label class="mb-0" for="category_id">Kategori</label>
-    <select class="form-control select2" name="category_id">
+    <label class="mb-0" for="kategoriproduk_id">Kategori</label>
+    <select class="form-control select2" name="kategoriproduk_id">
         <option value="" selected disabled>Select Category</option>
-        @foreach(\Modules\Product\Entities\Category::all() as $row)
-        <option value="{{$row->id}}" {{ old('category_id') == $row->id ? 'selected' : '' }}>
-        {{$row->category_name}} </option>
+        @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $row)
+        <option value="{{$row->id}}" {{ old('kategoriproduk_id') == $row->id ? 'selected' : '' }}>
+        {{$row->name}} </option>
         @endforeach
     </select>
 </div>
@@ -243,7 +270,7 @@
             @endif
     </div>
 <div class="form-group">
-    <label class="mb-0" for="status">Tipe Pembayaran <span class="text-danger">*</span></label>
+    <label class="mb-0" for="tipe_pembayaran">Tipe Pembayaran <span class="text-danger">*</span></label>
     <select  class="form-control" name="tipe_pembayaran" id="tipe_pembayaran">
         <option value="cicil">Cicil</option>
         <option value="jatuh_tempo">Jatuh Tempo</option>
@@ -262,9 +289,9 @@
  
 
 
-<div id="cicil" class="form-group">
+<div id="cicilan" class="form-group">
     <label class="mb-0" for="status">Cicil <span class="text-danger">*</span></label>
-    <select class="form-control select2" name="cicil" id="cicil">
+    <select class="form-control select2" name="cicilan" id="cicilan">
         <option value="1">1 kali</option>
         <option value="2">2 kali </option>
     </select>
@@ -272,9 +299,9 @@
 
 
 
-  <div id="jatuh_tempo" class="form-group d-none">
+  <div id="tgl_jatuh_tempo" class="form-group d-none">
             <?php
-            $field_name = 'jatuh_tempo';
+            $field_name = 'tgl_jatuh_tempo';
             $field_lable = __('Tanggal');
             $field_placeholder = Label_case($field_lable);
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -294,15 +321,6 @@
             @endif
         </div>
 
-
-{{-- <div class="form-group">
-    <label class="mb-0" for="status">cicil <span class="text-danger">*</span></label>
-    <select class="form-control select2" name="status" id="status">
-        <option value="1">Di Terima</option>
-        <option value="3">Di Retur </option>
-    </select>
-</div>
- --}}
 
 
 </div>
@@ -593,17 +611,17 @@ $("#qty_diterima").on('input', function() {
 $(document).ready(function(){
     $('#tipe_pembayaran').on('change', function() {
      if($( "option:selected", this ).val()=="jatuh_tempo"){
-       $("#jatuh_tempo").removeClass('d-none');
-       $("#cicil").addClass('d-none');
+       $("#tgl_jatuh_tempo").removeClass('d-none');
+       $("#cicilan").addClass('d-none');
     }else if($( "option:selected", this ).val()=="lunas"){
-         $("#cicil").addClass('d-none');
-          $("#jatuh_tempo").addClass('d-none');
+          $("#cicilan").addClass('d-none');
+          $("#tgl_jatuh_tempo").addClass('d-none');
          // $("#cicil").removeClass('d-none');
          // $('select[name="cicil"]').attr('disabled', 'disabled');
  
     }else{
-        $("#jatuh_tempo").addClass('d-none');
-        $("#cicil").removeClass('d-none'); 
+        $("#tgl_jatuh_tempo").addClass('d-none');
+        $("#cicilan").removeClass('d-none');
     }
    
     });

@@ -117,8 +117,8 @@ top: 55% !important;
                 <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->no_invoice }}</p>
             </div>
   <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('berat') }}</p>
-                <p class="poppins font-semibold text-blue-800">{{ $detail->berat_barang }}
+                <p class="poppins text-gray-600">{{ Label_case('berat kotor') }}</p>
+                <p class="poppins font-semibold text-blue-800">{{ $detail->berat_kotor }}
                    <small class="text-gray-700">Gram</small></p>
             </div>
   <div class="flex justify-between w-full py-1">
@@ -130,12 +130,30 @@ top: 55% !important;
                 <p class="poppins text-gray-600">{{ Label_case('qty') }}</p>
                 <p class="poppins font-semibold text-gray-800">{{ $detail->qty }}</p>
             </div>
-
 <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('qty_diterima') }}</p>
-                <p class="poppins font-semibold text-gray-800">{{ $detail->qty_diterima }}</p>
+                <p class="poppins text-gray-600">{{ Label_case('selisih') }}</p>
+                <div style="font-size: 0.7rem !important;" class="poppins text-gray-800">
+                  <div> Gram : {{ $detail->selisih }}</div>
+                    <div>Nominal : {{ $detail->selisih_rupiah }}</div>
+                </div>
             </div>
 
+<div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('kadar') }}</p>
+     <p class="poppins font-semibold text-gray-800">{{ $detail->goodsreceiptitem[0]->kadar }}</p>
+            </div>
+
+    <div class="flex justify-between w-full py-1">
+                <p class="poppins text-gray-600">{{ Label_case('Tipe Pembayaran') }}</p>
+      @if($detail->pembelian[0]->tipe_pembayaran =='cicil')
+     <p class="poppins text-gray-800">
+       Cicilan : {{ $detail->pembelian[0]->cicil }} Kali</p>
+    </div>
+      @elseif($detail->pembelian[0]->tipe_pembayaran =='jatuh_tempo')
+ <p class="poppins text-gray-800">
+       Jatuh Tempo : {{ tgl($detail->pembelian[0]->jatuh_tempo) }}</p>
+    </div>
+                 @endif
          <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('pengirim') }}</p>
                 <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->pengirim }}</p>
@@ -150,12 +168,8 @@ top: 55% !important;
                 <p class="poppins text-gray-600"></p>
 
                 <span class="rounded rounded-md px-2 py-1 bg-yellow-300 poppins font-semibold text-xs text-gray-800">
-               {{--      @if($detail->count == 0)
-                    {{ $detail->qty_diterima }}
-                    @else
-                     {{ $detail->count }}
-                    @endif --}}
-                   {{ $detail->count }} / {{ $detail->qty_diterima }}</span>
+
+                   {{ $detail->count }} / {{ $detail->qty }}</span>
 
 
             </div>

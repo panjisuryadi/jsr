@@ -18,6 +18,9 @@ use Modules\Upload\Entities\Upload;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\KategoriProduk\Models\KategoriProduk;
+use Modules\ParameterKadar\Models\ParameterKadar;
+use Modules\GoodsReceipt\Models\TipePembelian;
+use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class GoodsReceiptsController extends Controller
 {
@@ -259,15 +262,15 @@ public function index_data(Request $request)
 
                           ->editColumn('detail', function ($data) {
                             if ($data->count == 0) {
-                               $qty = $data->qty_diterima;
+                               $qty = $data->qty;
                             } else {
                                $qty = $data->count;
                             }
 
-                             $tb = '<div class="font-semibold items-center text-center">
+                             $tb = '<div class="small items-center text-center">
 
                              <div class="bg-green-400 px-1 items-center text-center rounded-lg">
-                                    ' .$data->count . '  / ' .$data->qty_diterima . '
+                                    ' .$data->count . '  / ' .$data->qty . '
 
                              </div>
                                   
@@ -462,10 +465,16 @@ public function store(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-
+        $request->validate([
+             'no_invoice' => 'required|min:3|max:191',
+             'supplier_id' => 'required',
+             'tanggal' => 'required',
+             'parameterkadar_id' => 'required',
+             'kategoriproduk_id' => 'required',
+         ]);
         $input = $request->except('_token','document');
+
          //dd($input);
-        //Store Image Media Libraty Spati
          $selisih_rupiah = preg_replace("/[^0-9]/", "", $input['selisih_rupiah']);
          $harga_beli = preg_replace("/[^0-9]/", "", $input['harga_beli']);
         //dd($selisih_rupiah);
@@ -474,6 +483,9 @@ public function store(Request $request)
             'no_invoice'                 => $input['no_invoice'],
             'date'                       => $input['tanggal'],
             'status'                     => 0,
+            'parameterkadar_id'          => $input['parameterkadar_id'],
+            'kategoriproduk_id'          => $input['kategoriproduk_id'],
+            'tipe_pembayaran'            => $input['tipe_pembayaran'],
             'supplier_id'                => $input['supplier_id'],
             'user_id'                    => $input['user_id'],
             'berat_kotor'                => $input['berat_kotor'],
@@ -483,8 +495,16 @@ public function store(Request $request)
             'selisih_rupiah'             => $selisih_rupiah,
             'note'                       => $input['note'],
             'count'                      => 0,
+            'qty'                       => $input['qty'],
             'pengirim'                   => $input['pengirim']
         ]);
+
+
+            $goodsreceipt = $$module_name_singular->id;
+
+            $this->_saveTipePembelian($input ,$goodsreceipt);
+            $this->_saveGoodsReceiptItem($input ,$goodsreceipt);
+
 
          if ($request->has('document')) {
             foreach ($request->input('document', []) as $file) {
@@ -513,6 +533,43 @@ public function store(Request $request)
            return redirect()->route(''.$module_name.'.index');
   
          }
+
+
+
+
+
+
+       private function _saveTipePembelian($input ,$goodsreceipt)
+        {
+
+
+
+           TipePembelian::create([
+                'goodsreceipt_id'             => $goodsreceipt,
+                'tipe_pembayaran'             => $input['tipe_pembayaran'] ?? null,
+                'jatuh_tempo'                 => $input['tgl_jatuh_tempo'] ?? null,
+                'cicil'                       => $input['cicilan'] ?? 0,
+                'lunas'                       => $input['lunas'] ?? null,
+
+                ]);
+              // dd($input);
+              }
+
+
+    private function _saveGoodsReceiptItem($input ,$goodsreceipt)
+        {
+          $kadar = ParameterKadar::where('id',$input['parameterkadar_id'])->first();
+           GoodsReceiptItem::create([
+                'goodsreceipt_id'             => $goodsreceipt,
+                'kadar'                       => $kadar->kadar ?? null,
+                ]);
+              // dd($input);
+              }
+
+
+
+
+
 
 
 

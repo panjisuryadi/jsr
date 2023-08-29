@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\People\Entities\Supplier;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
+use Modules\GoodsReceipt\Models\TipePembelian;
 use App\Models\User;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -26,6 +27,10 @@ class GoodsReceipt extends Model implements HasMedia
 
   public function goodsreceiptitem() {
         return $this->hasMany(GoodsReceiptItem::class, 'goodsreceipt_id', 'id');
+    }
+
+    public function pembelian() {
+        return $this->hasMany(TipePembelian::class, 'goodsreceipt_id', 'id');
     }
 
     public function user() {
