@@ -64,7 +64,7 @@
         <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
             <x-library.webcam />
         </div>
-        <div id="upload1"">
+        <div id="upload1">
             <div class="form-group">
 
                 <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
@@ -166,11 +166,6 @@
 
 
 
-
-
-
-
-
     </div>
 
 
@@ -182,7 +177,7 @@
         <?php
         $field_name = 'harga_beli';
         $field_lable = label_case('harga_beli');
-        $field_placeholder = $field_lable;
+        $field_placeholder = 0;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
