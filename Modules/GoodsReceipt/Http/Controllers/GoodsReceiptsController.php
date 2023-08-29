@@ -195,7 +195,8 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::active()->latest()->get();
+       // $$module_name = $module_model::active()->latest()->get();
+        $$module_name = $module_model::latest()->get();
 
         $data = $$module_name;
 
@@ -208,19 +209,24 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                             ->editColumn('image', function ($data) {
-                                        if ($data->images) {
-                                           $url = asset(imageUrl(). @$data->images);
-                                        } else {
-                                           $url = $data->getFirstMediaUrl('pembelian', 'thumb');
-                                        }
-                               return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
-                                 })
+                     ->editColumn('image', function ($data) {
+                                if ($data->images) {
+                                   $url = asset(imageUrl(). @$data->images);
+                                } else {
+                                   $url = $data->getFirstMediaUrl('pembelian', 'thumb');
+                                }
+                       return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+                         })
 
                         ->editColumn('date', function ($data) {
-                             $tb = '<div class="text-xs items-center text-center">
-                                     ' .tanggal($data->date) . '
+                                 $tb = '<div class="text-xs font-semibold">
+                                     ' .$data->code . '
                                     </div>';
+                                  $tb .= '<div class="text-xs text-left">
+                                     ' .tanggal($data->date) . '
+                                    </div>';   
+
+                                  
                                 return $tb;
                             }) 
                             ->editColumn('code', function ($data) {
@@ -230,10 +236,24 @@ public function index_data(Request $request)
                                 return $tb;
                             }) 
 
-                              ->editColumn('berat', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .$data->berat_barang . ' Gram
+                           ->editColumn('berat', function ($data) {
+                              $tb = '<div class="text-xs">
+                                     Berat Kotor :' .$data->berat_kotor . '
                                     </div>';
+                                  $tb .= '<div class="text-xs text-left">
+                                    Berat Real :' .$data->berat_real . '
+                                    </div>';   
+                                return $tb;
+                            }) 
+
+
+                        ->editColumn('harga', function ($data) {
+                              $tb = '<div class="text-xs">
+                                    Gram : <span class="font-semibold">' .$data->selisih . '</span>
+                                    </div>';
+                                    $tb .= '<div class="text-xs text-left">
+                                      Nominal :<span class="font-semibold">' .number_format($data->selisih_rupiah) . '</span>
+                                    </div>';   
                                 return $tb;
                             }) 
 
@@ -278,6 +298,7 @@ public function index_data(Request $request)
                          'action',
                          'code',
                          'berat',
+                         'harga',
                          'image', 
                          'qty', 
                          'detail', 
@@ -446,21 +467,22 @@ public function store(Request $request)
          //dd($input);
         //Store Image Media Libraty Spati
          $selisih_rupiah = preg_replace("/[^0-9]/", "", $input['selisih_rupiah']);
-        //dd($input);
+         $harga_beli = preg_replace("/[^0-9]/", "", $input['harga_beli']);
+        //dd($selisih_rupiah);
         $$module_name_singular = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
-            'date'                       => $input['date'],
-            'status'                     => $input['status'],
+            'date'                       => $input['tanggal'],
+            'status'                     => 0,
             'supplier_id'                => $input['supplier_id'],
             'user_id'                    => $input['user_id'],
             'berat_kotor'                => $input['berat_kotor'],
             'berat_real'                 => $input['berat_real'],
             'selisih'                    => $input['selisih'],
+            'harga_beli'                 => $harga_beli,
             'selisih_rupiah'             => $selisih_rupiah,
             'note'                       => $input['note'],
             'count'                      => 0,
-            'images'                     => null,
             'pengirim'                   => $input['pengirim']
         ]);
 
@@ -481,17 +503,13 @@ public function store(Request $request)
             $fileName ='webcam_'. uniqid() . '.jpg';
             $file = $folderPath . $fileName;
              // $$module_name_singular->addMedia($image_base64)->toMediaCollection('pembelian');
-            Storage::disk('minio')->put($file,$image_base64);
+            Storage::disk('public')->put($file,$image_base64);
             $input['images'] =  "$fileName";
-
-             // $category->addMediaFromRequest('image')->toMediaCollection('reedempoint');
-
             }
 
-          
-           activity()->log(' '.auth()->user()->name.' input data pembelian');
+             activity()->log(' '.auth()->user()->name.' input data pembelian');
          
-          toast(''. $module_title.' Created!', 'success');
+             toast(''. $module_title.' Created!', 'success');
            return redirect()->route(''.$module_name.'.index');
   
          }

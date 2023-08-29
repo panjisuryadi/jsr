@@ -2,7 +2,17 @@
 @section('title', $module_title)
 @section('third_party_stylesheets')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+
 @endsection
+@push('page_css')
+<style type="text/css">
+    
+table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTable>thead .sorting_desc, table.dataTable>thead .sorting_asc_disabled, table.dataTable>thead .sorting_desc_disabled {
+    text-align: left !important;
+
+}
+</style>
+@endpush
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -35,11 +45,11 @@
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
                                     <th class="w-5 text-center">{{ __('Image') }}</th>
-                                    <th style="width: 18%!important;"  class="text-left">{{ __('Date') }}</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th style="width: 13%!important;"  class="text-left">{{ __('Berat') }}</th>
-                                    <th style="width: 14%!important;" class="text-left">{{ __('Qty') }}</th>
-                                    <th style="width: 13%!important;" class="text-center">{{ __('Stat Input') }}
+                                    <th style="width: 22%!important;"  class="text-left">{{ __('Date') }}</th>
+                                 
+                                    <th style="width: 18%!important;"  class="text-left">{{ __('Berat') }}</th>
+                                    <th style="width: 19%!important;" class="text-left">{{ __('Selisih') }}</th>
+                                    <th style="width: 8%!important;" class="text-center">{{ __('Input') }}
                                     </th>
                                     <th style="width: 22%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
@@ -123,9 +133,8 @@
 
                 {data: 'image', name: 'image'},
                 {data: 'date', name: 'date'},
-                {data: 'code', name: 'code'},
                 {data: 'berat', name: 'berat'},
-                {data: 'qty', name: 'qty'},
+                {data: 'harga', name: 'harga'},
                 {data: 'detail', name: 'detail'},
 
 

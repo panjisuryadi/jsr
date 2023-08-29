@@ -45,5 +45,21 @@ tabel piutang
 7.jumlah
 
 
+- Potong Nota 
+- Kadar
+
+
+
+tabel Retur
+=============
+1.nomor_nota
+2.berat
+3.qty
+4.id_supplier
+5.tanggal
+
+
+
+- masalah yg timbul ketika request retur  per kategori 
 
 

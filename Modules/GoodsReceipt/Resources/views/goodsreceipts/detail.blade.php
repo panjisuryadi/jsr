@@ -204,14 +204,14 @@ top: 55% !important;
                       {{--  <div class="mb-2 text-green-500 font-medium border-solid border-2 border-green-500  px-3 py-1 uppercase">complete</div> --}}
                       @endif
 
-                        @if($detail->count <= $detail->qty_diterima )
+                   
                            <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
                                 id="GroupKategori"
                                 class="bg-blue-600 py-1 px-2 rounded-lg hover:no-underline hover:text-gray-300">
                                 <i class="bi bi-plus"></i>@lang('Tambah')
                             </a>
 
-                        @endif
+                     
 
 
                         </div>

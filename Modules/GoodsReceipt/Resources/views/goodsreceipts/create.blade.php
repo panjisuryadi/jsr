@@ -127,22 +127,19 @@
 
 <div class="form-group">
     <label class="mb-0" for="supplier_id">Supplier</label>
- <select class="form-control select2" name="supplier_id">
+    <select class="form-control select2" name="supplier_id">
         <option value="" selected disabled>Select Supplier</option>
         @foreach(\Modules\People\Entities\Supplier::all() as $row)
-         <option value="{{$row->id}}" {{ old('supplier_id') == $row->id ? 'selected' : '' }}>
-            {{$row->supplier_name}} </option>
+        <option value="{{$row->id}}" {{ old('supplier_id') == $row->id ? 'selected' : '' }}>
+        {{$row->supplier_name}} </option>
         @endforeach
     </select>
-
-
 </div>
-
 
 
   <div class="form-group">
             <?php
-            $field_name = 'date';
+            $field_name = 'tanggal';
             $field_lable = __('Tanggal');
             $field_placeholder = Label_case($field_lable);
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -163,10 +160,58 @@
         </div>
 
 
-
-
-
     </div>
+
+
+<div class="flex flex-row grid grid-cols-3 gap-2">
+    
+<div class="form-group">
+    <label class="mb-0" for="kadar_id">Parameter Kadar</label>
+    <select class="form-control select2" name="kadar_id">
+        <option value="" selected disabled>Select Kadar</option>
+        @foreach(\Modules\ParameterKadar\Models\ParameterKadar::all() as $row)
+        <option value="{{$row->id}}" {{ old('kadar_id') == $row->id ? 'selected' : '' }}>
+        {{$row->kadar}} </option>
+        @endforeach
+    </select>
+</div>
+
+<div class="form-group">
+    <label class="mb-0" for="category_id">Kategori</label>
+    <select class="form-control select2" name="category_id">
+        <option value="" selected disabled>Select Category</option>
+        @foreach(\Modules\Product\Entities\Category::all() as $row)
+        <option value="{{$row->id}}" {{ old('category_id') == $row->id ? 'selected' : '' }}>
+        {{$row->category_name}} </option>
+        @endforeach
+    </select>
+</div>
+
+
+    
+ <div class="form-group">
+        <?php
+        $field_name = 'qty';
+        $field_lable = label_case('Qty');
+        $field_placeholder = 0;
+        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+        $required = "required";
+        ?>
+        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <input class="form-control numeric"
+        type="number"
+        name="{{ $field_name }}"
+        min="0" step="0.01"
+        id="{{ $field_name }}"
+        value="{{old($field_name)}}"
+        placeholder="{{ $field_placeholder }}">
+        <span class="invalid feedback" role="alert">
+            <span class="text-danger error-text {{ $field_name }}_err"></span>
+        </span>
+    </div>
+
+
+</div>
 
 
 
@@ -183,13 +228,14 @@
         ?>
         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
         <input class="form-control numeric"
-        type="number"
+        type="text"
         name="{{ $field_name }}"
         min="0"
+        type-currency="IDR"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
-        @if ($errors->has($field_name))
+           @if ($errors->has($field_name))
             <span class="invalid feedback"role="alert">
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
                 class="text-danger">
@@ -228,7 +274,7 @@
 
   <div id="jatuh_tempo" class="form-group d-none">
             <?php
-            $field_name = 'date';
+            $field_name = 'jatuh_tempo';
             $field_lable = __('Tanggal');
             $field_placeholder = Label_case($field_lable);
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
