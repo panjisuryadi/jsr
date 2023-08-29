@@ -13,3 +13,37 @@ tabel multiple input : GooD Receipts / Penerimaan Barang
 3. qty
 4. Qty Nota
 5. Total
+
+
+modul penerimaan barang 
+ketika status cicil + jatuh tempo = Hutang (Module Hutang )
+insert ke modul hutang parameter
+
+- relasi tabel hutang + piutang 
+tabel hutang
+=============
+1.harga_beli
+2.tanggal_jatuh_tempo
+3.cicil
+4.nomor_nota
+5.id_supplier
+6.berat
+7.jumlah
+
+ketika status Lunas (ada selisih)
+masuk ke piutang 
+- modul Piutang
+
+tabel piutang
+=============
+1.nomor_nota
+2.keterangan
+3.selisih_emas
+4.selisih_nominal
+5.id_supplier
+6.tanggal
+7.jumlah
+
+
+
+
