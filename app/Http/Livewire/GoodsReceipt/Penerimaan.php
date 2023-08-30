@@ -100,12 +100,12 @@ namespace App\Http\Livewire\GoodsReceipt;
                 }
 
 
-            public function updated($propertyName)
-                {
-                    if ($this->inputs) {
-                        $this->validateOnly($propertyName);
-                    }
-                }
+            // public function updated($propertyName)
+            //     {
+            //         if ($this->inputs) {
+            //             $this->validateOnly($propertyName);
+            //         }
+            //     }
 
             public function store()
             {

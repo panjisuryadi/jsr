@@ -17,7 +17,7 @@
                         $required = 'wire:model="'.$field_name.'"';
                         ?>
                 <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                <select class="form-control" name="{{ $field_name }}">
+                <select class="form-control" name="karat_id[]">
                     <option value="" selected disabled>Select Karat</option>
                     @foreach(\Modules\Karat\Models\Karat::all() as $row)
                     <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
@@ -42,7 +42,7 @@
                     $required = 'wire:model="'.$field_name.'"';
                     ?>
             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-            <select class="form-control" name="{{ $field_name }}">
+            <select class="form-control" name="kategori_id[]">
                 <option value="" selected disabled>Select Category</option>
                 @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $row)
                 <option value="{{$row->id}}" {{ old($field_name) == $row->id ? 'selected' : '' }}>
@@ -64,12 +64,15 @@
                     $field_lable = label_case('qty');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = '';
+                    $required = 'wire:model="'.$field_name.'"';
                     ?>
                  <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control   '.$invalid.'')->attributes(["$required"]) }}
+               <input class="form-control"
+               type="number"
+                name="qty[]"
+                id="{{ $field_name }}"
+
+                placeholder="Qty">
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -102,7 +105,7 @@
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         $required = 'wire:model="'.$field_name.'"';
                         ?>
-                    <select class="form-control" name="inputs[{{ $key}}][karat_id]">
+                    <select class="form-control" name="karat_id[]">
                     <option value="" selected disabled>Select Karat</option>
                     @foreach(\Modules\Karat\Models\Karat::all() as $row)
                     <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
@@ -127,7 +130,7 @@
             $required = 'wire:model="'.$field_name.'"';
             ?>
    
-    <select class="form-control" name="inputs[{{ $key}}][kategori]">
+    <select class="form-control" name="kategori_id[]">
         <option value="" selected disabled>Select Category</option>
         @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $row)
         <option value="{{$row->id}}" {{ old($field_name) == $row->id ? 'selected' : '' }}>
@@ -152,11 +155,11 @@
                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                 $required = '';
                 ?>
-                {{ html()->number($field_name)
-                    ->placeholder($field_placeholder)
-                    ->value(old($field_name))
-                ->class('form-control   '.$invalid.'')
-                ->attributes(["$required"]) }}
+               <input class="form-control" type="number"
+                name="qty[]"
+                id="{{ $field_name }}"
+                wire:model={{ $field_name }}
+                placeholder="Qty">
                  @if ($errors->has($field_name))
                 <span class="invalid feedback"role="alert">
                     <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -164,6 +167,8 @@
                 </span>
                 @endif
             </div>
+
+
 
 
             </div>
