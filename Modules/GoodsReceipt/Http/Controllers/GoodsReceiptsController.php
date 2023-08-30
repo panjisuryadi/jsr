@@ -474,9 +474,9 @@ public function store(Request $request)
          ]);
          $input = $request->except('_token','document');
          //dd($input);
-         $selisih_rupiah = preg_replace("/[^0-9]/", "", $input['selisih_rupiah']);
-         $harga_beli = preg_replace("/[^0-9]/", "", $input['harga_beli']);
-        //dd($selisih_rupiah);
+        // $selisih_rupiah = preg_replace("/[^0-9]/", "", $input['selisih_rupiah']);
+        // dd($selisih_rupiah);
+ 
         $$module_name_singular = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
@@ -490,8 +490,7 @@ public function store(Request $request)
             'berat_kotor'                => $input['berat_kotor'],
             'berat_real'                 => $input['berat_real'],
             'selisih'                    => $input['selisih'],
-            'harga_beli'                 => $harga_beli,
-            'selisih_rupiah'             => $selisih_rupiah,
+            'total_emas'                 => $input['total_emas'],
             'note'                       => $input['note'],
             'count'                      => 0,
             'qty'                       => $input['qty'],

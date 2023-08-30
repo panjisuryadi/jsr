@@ -243,7 +243,7 @@
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+        min="0" step="0.001"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
@@ -262,18 +262,19 @@
 <div class="flex grid grid-cols-2 gap-2">
  <div class="form-group">
         <?php
-        $field_name = 'harga_beli';
-        $field_lable = label_case('harga_beli');
+        $field_name = 'total_emas';
+        $field_lable = label_case('total_emas');
         $field_placeholder = 0;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
-        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}
+            <span class="text-danger small"> (yg harus dibayar)</span></label>
         <input class="form-control numeric"
-        type="text"
+        type="number"
         name="{{ $field_name }}"
-        min="0"
-        type-currency="IDR"
+         min="0" step="0.001"
+       
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
@@ -341,7 +342,7 @@
 </div>
 
 
-<div class="flex flex-row grid grid-cols-4 gap-2">
+<div class="flex flex-row grid grid-cols-3 gap-2">
     
  <div class="form-group">
         <?php
@@ -355,7 +356,7 @@
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+        min="0" step="0.001"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
@@ -377,7 +378,7 @@
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+        min="0" step="0.001"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
@@ -399,7 +400,7 @@
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+        min="0" step="0.001"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="0">
@@ -409,27 +410,7 @@
     </div>
 
 
- <div class="form-group">
-        <?php
-        $field_name = 'selisih_rupiah';
-        $field_lable = label_case('selisih');
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger small">(Nominal)</span></label>
-        <input class="form-control numeric"
-        type="text"
-        name="{{ $field_name }}"
-        min="0"
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        type-currency="IDR"
-        placeholder="0">
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
-    </div>
+
 
 
 

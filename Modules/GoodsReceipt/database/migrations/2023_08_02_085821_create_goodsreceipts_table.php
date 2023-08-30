@@ -21,11 +21,9 @@ return new class extends Migration
             $table->date('date');
             $table->string('code');
             $table->string('no_invoice');
-            $table->decimal('berat_kotor', 12, 2)->default(0.01);
-            $table->decimal('berat_real', 12, 2)->default(0.01);
-            $table->decimal('selisih', 12, 2)->default(0.01);
-            $table->decimal('selisih_rupiah', 12, 2)->nullable();
-            $table->decimal('harga_beli', 12, 2)->nullable();
+            $table->decimal('berat_kotor', 12, 3)->default(0.001);
+            $table->decimal('berat_real', 12, 3)->default(0.001);
+            $table->decimal('selisih', 12, 3)->default(0.001);
             $table->string('pengirim')->nullable();
             $table->text('note')->nullable();
             $table->tinyInteger('status')->default(0);

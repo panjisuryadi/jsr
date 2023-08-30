@@ -89,14 +89,13 @@ top: 55% !important;
 @endpush
 <div class="container-fluid">
 
-
 <div class="bg-white grid grid-cols-3 gap-4">
 
   <div class="text-gray-600 px-2 py-2">
              <div class="flex justify-between w-full py-1">
                 <div class="px-3 py-2">
                     <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
-                    <h3 class="text-lg font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
+                    <h3 class="text-md font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
                 </div>
                   <div class="px-6 py-2">
               <div class="mt-3 text-gray-600">Supplier</div>
@@ -126,15 +125,27 @@ top: 55% !important;
                 <p class="poppins font-semibold text-green-800">{{ $detail->berat_real }}
                     <small class="text-gray-700">Gram</small></p>
             </div>
-<div class="flex justify-between w-full py-1">
+           <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('qty') }}</p>
                 <p class="poppins font-semibold text-gray-800">{{ $detail->qty }}</p>
             </div>
+    <div class="flex justify-between w-full py-1">
+                <div class="poppins text-gray-600">
+                    <div> {{ Label_case('Total_Emas') }}</div>
+                   <div style="font-size:0.7rem !important;" class="mt-0 small text-blue-600">Total Emas yg harus di bayar
+                   </div>
+
+                </div>
+                <div class="mt-2 poppins font-semibold text-gray-800">{{ $detail->total_emas }}</div>
+            </div>
+
+
+
 <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('selisih') }}</p>
                 <div style="font-size: 0.7rem !important;" class="poppins text-gray-800">
                   <div> Gram : {{ $detail->selisih }}</div>
-                    <div>Nominal : {{ $detail->selisih_rupiah }}</div>
+                 
                 </div>
             </div>
 
@@ -192,27 +203,38 @@ top: 55% !important;
 
        <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom mb-2">
-                        <div>
-                        <a target="_blank" href="{{ route(''.$module_name.'.print_produk',$detail->code) }}"
-                                id="Save"
-                                class="bg-blue-400 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
-                                <i class="bi bi-plus"></i>@lang('Print Barcode')
-                            </a>
+
+  <div class="flex flex-row">
+
+<a class="flex" href="{{ route('goodsreceipt.index') }}">
+    <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
+        <i class="bi bi-house text-gray-600"></i>
+    </div>
+ </a>
+
+
+<a class="flex" target="_blank" 
+   id="Save"
+href="{{ route(''.$module_name.'.print_produk',$detail->code) }}">
+    <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
+        <i class="bi bi-printer text-gray-600"></i>
+    </div>
+ </a>
 
 
                         </div>
                  <div id="buttons" class="mb-2 flex flex-row ">
-               @if($detail->count == $detail->qty_diterima )
-                 <form id="product-form" action="{{ route(''.$module_name.'.update_status',encode_id($detail->id)) }}" method="POST">
-                        @csrf
-                        @method('patch')
-                        <button
-                        id="Save"
-                        onclick="return confirm('yakin akan di simpan?')"
-                        class="bg-green-600 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
-                        <i class="bi bi-plus"></i>@lang('Simpan')
-                        </button>
-                    </form>
+                       @if($detail->count == $detail->qty_diterima )
+                         <form id="product-form" action="{{ route(''.$module_name.'.update_status',encode_id($detail->id)) }}" method="POST">
+                                @csrf
+                                @method('patch')
+                                <button
+                                id="Save"
+                                onclick="return confirm('yakin akan di simpan?')"
+                                class="bg-green-600 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
+                                <i class="bi bi-plus"></i>@lang('Simpan')
+                                </button>
+                            </form>
                    @endif
 
                     @if($detail->status == 2)
@@ -258,8 +280,6 @@ top: 55% !important;
                         </table>
                     </div>
                 </div>
-
-
 {{-- 
 @foreach($list as $row)
  {{$row->product_code}}<br>
@@ -429,13 +449,6 @@ $(document).ready(function() {
     $selectAll.prop('checked', (tdCheckboxChecked === $tdCheckbox.length));
   })
 });
-
-
-
-
-
-
-
 
 
 })(jQuery);
