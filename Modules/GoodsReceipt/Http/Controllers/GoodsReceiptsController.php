@@ -472,8 +472,7 @@ public function store(Request $request)
              'parameterkadar_id' => 'required',
              'kategoriproduk_id' => 'required',
          ]);
-        $input = $request->except('_token','document');
-
+         $input = $request->except('_token','document');
          //dd($input);
          $selisih_rupiah = preg_replace("/[^0-9]/", "", $input['selisih_rupiah']);
          $harga_beli = preg_replace("/[^0-9]/", "", $input['harga_beli']);
@@ -498,10 +497,7 @@ public function store(Request $request)
             'qty'                       => $input['qty'],
             'pengirim'                   => $input['pengirim']
         ]);
-
-
             $goodsreceipt = $$module_name_singular->id;
-
             $this->_saveTipePembelian($input ,$goodsreceipt);
             $this->_saveGoodsReceiptItem($input ,$goodsreceipt);
 
@@ -543,14 +539,12 @@ public function store(Request $request)
         {
 
 
-
-           TipePembelian::create([
+       TipePembelian::create([
                 'goodsreceipt_id'             => $goodsreceipt,
                 'tipe_pembayaran'             => $input['tipe_pembayaran'] ?? null,
                 'jatuh_tempo'                 => $input['tgl_jatuh_tempo'] ?? null,
                 'cicil'                       => $input['cicilan'] ?? 0,
                 'lunas'                       => $input['lunas'] ?? null,
-
                 ]);
               // dd($input);
               }
@@ -565,16 +559,6 @@ public function store(Request $request)
                 ]);
               // dd($input);
               }
-
-
-
-
-
-
-
-
-
-
 
 
     /**

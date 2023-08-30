@@ -150,8 +150,11 @@ top: 55% !important;
        Cicilan : {{ $detail->pembelian[0]->cicil }} Kali</p>
     </div>
       @elseif($detail->pembelian[0]->tipe_pembayaran =='jatuh_tempo')
- <p class="poppins text-gray-800">
-       Jatuh Tempo : {{ tgl($detail->pembelian[0]->jatuh_tempo) }}</p>
+ <div style="font-size:0.7rem !important;" class="poppins text-gray-800">
+    <div> Jatuh Tempo : </div>
+    <div>{{ tgl($detail->pembelian[0]->jatuh_tempo) }}</div>
+      
+   </div>
     </div>
                  @endif
          <div class="flex justify-between w-full py-1">

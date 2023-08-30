@@ -204,14 +204,29 @@
 </div>
 
 <div class="form-group">
-    <label class="mb-0" for="kategoriproduk_id">Kategori</label>
-    <select class="form-control select2" name="kategoriproduk_id">
+        <?php
+            $field_name = 'kategoriproduk_id';
+            $field_lable = __('Kategori');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = '';
+            ?>
+    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+    <select class="form-control select2" name="{{ $field_name }}">
         <option value="" selected disabled>Select Category</option>
         @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $row)
-        <option value="{{$row->id}}" {{ old('kategoriproduk_id') == $row->id ? 'selected' : '' }}>
+        <option value="{{$row->id}}" {{ old($field_name) == $row->id ? 'selected' : '' }}>
         {{$row->name}} </option>
         @endforeach
     </select>
+       @if ($errors->has($field_name))
+            <span class="invalid feedback"role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+            @endif
+
+
 </div>
 
 
