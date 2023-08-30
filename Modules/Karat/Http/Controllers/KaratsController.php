@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
+
+
 class KaratsController extends Controller
 {
 
@@ -98,42 +100,58 @@ public function index_data()
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
-    {
-         $module_action = 'Create';
-         return view('karat::karats.create', compact('module_action'));
-    }
+
+        public function create()
+        {
+           $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Create';
+            abort_if(Gate::denies('add_'.$module_name.''), 403);
+              return view(''.$module_name.'::'.$module_path.'.modal.create',
+               compact('module_name',
+                'module_action',
+                'module_title',
+                'module_icon', 'module_model'));
+        }
+
 
     /**
      * Store a newly created resource in storage.
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+public function store(Request $request)
     {
-         abort_if(Gate::denies('create_karat'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
+        $validator = \Validator::make($request->all(),[
+            
+             'name' => 'required|max:191',
 
-        $module_action = 'Store';
+        ]);
+        if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
 
-        $request->validate([
-             'name' => 'required|min:3|max:191',
-             'description' => 'required|min:3|max:191',
-         ]);
-       // $params = $request->all();
-        //dd($params);
-        $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
-         $$module_name_singular = $module_model::create($params);
-         toast(''. $module_title.' Created!', 'success');
-         return redirect()->route(''.$module_name.'.index');
+        $input = $request->all();
+        $input = $request->except('_token');
+        $input['kode'] = $input['kode'];
+        $input['name'] = $input['name'];
+        $$module_name_singular = $module_model::create($input);
+
+        return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
     }
+
+
+
 
     /**
      * Show the specified resource.
@@ -179,7 +197,7 @@ public function show($id)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.edit',
+          return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
             'detail',
@@ -193,7 +211,8 @@ public function show($id)
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+  //update ajax version
+public function update(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -203,16 +222,27 @@ public function show($id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
-        $request->validate([
-            'name' => 'required|min:3|max:191',
-                 ]);
+        $validator = \Validator::make($request->all(),
+            [
+           
+            'name' => 'required|max:191',
+
+
+        ]);
+
+       if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+
+        $input = $request->all();
         $params = $request->except('_token');
+        $params['kode'] = $params['kode'];
         $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
-        $$module_name_singular->update($params);
-         toast(''. $module_title.' Updated!', 'success');
-         return redirect()->route(''.$module_name.'.index');
-    }
+            $$module_name_singular->update($params);
+        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+ }
+
     /**
      * Remove the specified resource from storage.
      * @param int $id

@@ -13,7 +13,7 @@ class Karat extends Model
     protected $table = 'karats';
     protected $fillable = [
         'name',
-       // 'image',
+        'kode',
         'description',
         'start_date',
         'end_date',

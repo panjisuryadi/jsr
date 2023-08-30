@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                            <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
+                            <a id="Tambah" href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
                                 Add {{$module_title}}<i class="bi bi-plus"></i>
                             </a>
                         </div>
@@ -27,13 +27,17 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%!important;">
+                                    <th style="width: 7%!important;">
                                         NO
                                     </th>
+                                     <th style="width:11%;">
+                                        Kode
+                                    </th> 
+
                                     <th>
-                                        Title
+                                        Karat
                                     </th>
-                                    <th>
+                                    <th style="width:20%;">
                                         Updated
                                     </th>
                                     <th style="width: 19%!important;" class="text-center">
@@ -96,6 +100,10 @@
                 },
 
                 {
+                    data: 'kode',
+                    name: 'kode'
+                }, 
+                {
                     data: 'name',
                     name: 'name'
                 },
@@ -115,4 +123,27 @@
         .container()
         .appendTo("#buttons");
     </script>
+
+    <script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+$(document).on('click', '#Tambah, #Edit', function(e){
+         e.preventDefault();
+        if($(this).attr('id') == 'Tambah')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
+        }
+        if($(this).attr('id') == 'Edit')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
+        }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
+</script>
 @endpush
