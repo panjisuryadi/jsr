@@ -813,7 +813,7 @@ public function print_produk($kode_pembelian)
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_products::select('products.*',
                                 'goodsreceipts.code AS code',
-                                'goodsreceipts.berat_barang'
+                                'goodsreceipts.qty'
                                  )
                     ->where('products.kode_pembelian',$kode_pembelian)
                     ->leftJoin('goodsreceipts', 'products.kode_pembelian', '=', 'goodsreceipts.code')

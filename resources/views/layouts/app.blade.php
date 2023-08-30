@@ -19,6 +19,7 @@
     @if(! request()->routeIs('app.pos.*')
             && ! request()->routeIs('goodsreceipt.add_products_by_categories')
             && ! request()->routeIs('goodsreceipt.create')
+            && ! request()->routeIs('goodsreceipt.show')
             )
              @include('layouts.sidebar')
             @endif

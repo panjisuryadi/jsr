@@ -173,8 +173,6 @@ top: 55% !important;
                 <span class="rounded rounded-md px-2 py-1 bg-yellow-300 poppins font-semibold text-xs text-gray-800">
 
                    {{ $detail->count }} / {{ $detail->qty }}</span>
-
-
             </div>
 
 </div>
