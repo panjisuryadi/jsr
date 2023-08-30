@@ -466,14 +466,27 @@
         </div>
 
 <div class="form-group">
-    <label class="mb-0" for="user_id">PIC</label>
-   <select class="form-control select2" name="user_id" id="user_id">
+     <?php
+            $field_name = 'user_id';
+            $field_lable = __('pic');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = '';
+            ?>
+    <label class="mb-0" for="{{ $field_name }}">PIC</label>
+   <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}">
         <option value="" selected disabled>Select PIC</option>
         @foreach($kasir as $sup)
          <option value="{{$sup->id}}" {{ old('user_id') == $sup->id ? 'selected' : '' }}>
             {{$sup->name}} |  {{$sup->kode_user}} </option>
         @endforeach
     </select>
+   @if ($errors->has($field_name))
+    <span class="invalid feedback"role="alert">
+        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+        class="text-danger">
+    </span>
+    @endif
 </div>
 
 {{-- batas --}}

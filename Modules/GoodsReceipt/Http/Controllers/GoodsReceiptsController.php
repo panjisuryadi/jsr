@@ -470,6 +470,7 @@ public function store(Request $request)
              'supplier_id' => 'required',
              'tanggal' => 'required',
              'parameterkadar_id' => 'required',
+             'user_id' => 'required',
              'kategoriproduk_id' => 'required',
          ]);
          $input = $request->except('_token','document');
