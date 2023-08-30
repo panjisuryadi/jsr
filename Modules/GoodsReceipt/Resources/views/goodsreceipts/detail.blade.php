@@ -151,7 +151,10 @@ top: 55% !important;
 
 <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('Karat') }}</p>
-     <p class="poppins font-semibold text-gray-800">{{ $detail->goodsreceiptitem[0]->kadar }}</p>
+
+     <p class="poppins font-semibold text-gray-800">{{ @$detail->goodsreceiptitem[0]->kadar }}</p>
+
+
             </div>
 
     <div class="flex justify-between w-full py-1">

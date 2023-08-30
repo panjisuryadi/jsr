@@ -154,6 +154,7 @@ public function __construct()
     public function codeGenerate(Request $request)
     {
          $group = $request->group;
+         $karat = $request->karat;
          if (!$group) {
            return response()->json(['code' => '0']);
          }
