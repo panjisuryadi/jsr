@@ -40,7 +40,7 @@
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
@@ -65,7 +65,7 @@
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
