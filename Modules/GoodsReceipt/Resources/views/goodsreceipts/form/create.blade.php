@@ -104,11 +104,8 @@ margin-bottom: 0.2rem !important;
                         {{-- {{$pembelian}} --}}
                         <input type="hidden" name="kode_pembelian" value="{{trim($no_pembelian)}}">
 
-                        <input type="hidden" name="supplier_id" value="{{$pembelian->supplier_id}}">  
-
-                         <input type="hidden" name="goodsreceipt_id" value="{{$pembelian->id}}">
-
-
+                        <input type="hidden" name="supplier_id" value="{{$pembelian->supplier_id}}"> 
+                        <input type="hidden" name="goodsreceipt_id" value="{{$pembelian->id}}">
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">
@@ -140,6 +137,7 @@ margin-bottom: 0.2rem !important;
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-span-2 bg-transparent">
                                 {{--    <livewire:product.pilih-kategori/> --}}
                                     <div class="flex flex-row grid grid-cols-2 gap-2">
@@ -192,6 +190,8 @@ margin-bottom: 0.2rem !important;
                                             </div>
                                             
                                         </div>
+
+                                        
                                         <livewire:product.kategori />
                                             
                                             <div class="flex row px-3 py-0">

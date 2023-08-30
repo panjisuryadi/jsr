@@ -141,7 +141,7 @@
         {{$row->supplier_name}} </option>
         @endforeach
     </select>
-  @if ($errors->has($field_name))
+       @if ($errors->has($field_name))
             <span class="invalid feedback"role="alert">
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
                 class="text-danger">
@@ -176,8 +176,9 @@
 
     </div>
 
+<livewire:goods-receipt.penerimaan/>
 
-<div class="flex flex-row grid grid-cols-3 gap-2">
+{{-- <div class="flex flex-row grid grid-cols-3 gap-2">
     
 <div class="form-group">
     <?php
@@ -253,7 +254,7 @@
     </div>
 
 
-</div>
+</div> --}}
 
 
 
@@ -261,7 +262,7 @@
 
 <div class="flex grid grid-cols-2 gap-2">
 
-    
+
  <div class="form-group">
         <?php
         $field_name = 'total_emas';

@@ -47,6 +47,7 @@ class Kategori extends Component
     public $tipeMarginGram;
 
     protected $listeners = [
+        
                             'optionSelected' => 'handleOptionSelected'
 
                              ];

@@ -48,8 +48,6 @@ tabel piutang
 - Potong Nota 
 - Kadar
 
-
-
 tabel Retur
 =============
 1.nomor_nota
@@ -59,7 +57,19 @@ tabel Retur
 5.tanggal
 
 
-
 - masalah yg timbul ketika request retur  per kategori 
 
+- kategori 
+- karat
+- qty
+
+modul penentuan Harga
+
+1.kadar
+2.harga emas 
+3.margin
+
+
+tabel pembelian dan iventory
+ - distribusi == option ke retail & Sales
 

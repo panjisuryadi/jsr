@@ -466,41 +466,52 @@ public function store(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        $request->validate([
-             'no_invoice' => 'required|min:3|max:191',
-             'supplier_id' => 'required',
-             'tanggal' => 'required',
-             'karat_id' => 'required',
-             'user_id' => 'required',
-             'kategoriproduk_id' => 'required',
-         ]);
+        // $request->validate([
+        //      'no_invoice' => 'required|min:3|max:191',
+        //      'supplier_id' => 'required',
+        //      'tanggal' => 'required',
+       
+        //      'user_id' => 'required',
+             
+        //  ]);
          $input = $request->except('_token','document');
-         //dd($input);
+
+         //dd($input['karat_id']);
         // $selisih_rupiah = preg_replace("/[^0-9]/", "", $input['selisih_rupiah']);
         // dd($selisih_rupiah);
- 
-        $$module_name_singular = $module_model::create([
-            'code'                       => $input['code'],
-            'no_invoice'                 => $input['no_invoice'],
-            'date'                       => $input['tanggal'],
-            'status'                     => 0,
-            'karat_id'                   => $input['karat_id'],
-            'kategoriproduk_id'          => $input['kategoriproduk_id'],
-            'tipe_pembayaran'            => $input['tipe_pembayaran'],
-            'supplier_id'                => $input['supplier_id'],
-            'user_id'                    => $input['user_id'],
-            'berat_kotor'                => $input['berat_kotor'],
-            'berat_real'                 => $input['berat_real'],
-            'selisih'                    => $input['selisih'] ?? null,
-            'total_emas'                 => $input['total_emas'],
-            'note'                       => $input['note'],
-            'count'                      => 0,
-            'qty'                        => $input['qty'],
-            'pengirim'                   => $input['pengirim']
-        ]);
-            $goodsreceipt = $$module_name_singular->id;
-            $this->_saveTipePembelian($input ,$goodsreceipt);
-            $this->_saveGoodsReceiptItem($input ,$goodsreceipt);
+
+         foreach ($request->inputs as $key => $value) {
+                 //  dd($value);
+                    GoodsReceiptItem::create([
+                          'goodsreceipt_id' => 1, 
+                          'karat_id' => ['karat_id'][$key], 
+                          'kategoriproduk_id' => ['kategori_id'][$key],
+                          'qty' => ['qty'][$key]
+                           ]);
+                }
+
+        // $$module_name_singular = $module_model::create([
+        //     'code'                       => $input['code'],
+        //     'no_invoice'                 => $input['no_invoice'],
+        //     'date'                       => $input['tanggal'],
+        //     'status'                     => 0,
+        //     'karat_id'                   => $input['karat_id'],
+        //     'kategoriproduk_id'          => $input['kategoriproduk_id'],
+        //     'tipe_pembayaran'            => $input['tipe_pembayaran'],
+        //     'supplier_id'                => $input['supplier_id'],
+        //     'user_id'                    => $input['user_id'],
+        //     'berat_kotor'                => $input['berat_kotor'],
+        //     'berat_real'                 => $input['berat_real'],
+        //     'selisih'                    => $input['selisih'] ?? null,
+        //     'total_emas'                 => $input['total_emas'],
+        //     'note'                       => $input['note'],
+        //     'count'                      => 0,
+        //     'qty'                        => $input['qty'],
+        //     'pengirim'                   => $input['pengirim']
+        // ]);
+        //     $goodsreceipt = $$module_name_singular->id;
+        //     $this->_saveTipePembelian($input ,$goodsreceipt);
+        //     $this->_saveGoodsReceiptItem($input ,$goodsreceipt);
 
 
          if ($request->has('document')) {
@@ -554,10 +565,15 @@ public function store(Request $request)
     private function _saveGoodsReceiptItem($input ,$goodsreceipt)
         {
           $kadar = Karat::where('id',$input['karat_id'])->first();
-           GoodsReceiptItem::create([
-                'goodsreceipt_id'             => $goodsreceipt,
-                'kadar'                       => $kadar->name ?? null,
-                ]);
+          foreach ($input['karat_id'] as $key => $value) {
+                   dd($value);
+                    //GoodsReceipt::create(['code' => $this->code[$key], 'no_invoice' => $this->no_invoice[$key]]);
+                }
+           // GoodsReceiptItem::create([
+           //      'goodsreceipt_id'             => $goodsreceipt,
+           //      'kadar'                       => $kadar->name ?? null,
+           //      ]);
+
               // dd($input);
               }
 
