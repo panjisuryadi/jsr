@@ -770,7 +770,7 @@ public function view_produk($id)
         $detail = $module_products::select('products.*',
                                 'products.id AS id_produk',
                                 'goodsreceipts.code AS code',
-                                'goodsreceipts.berat_barang'
+                                'goodsreceipts.berat_kotor'
                                  )
                     ->where('products.id',$id)
                     ->leftJoin('goodsreceipts', 'products.kode_pembelian', '=', 'goodsreceipts.code')
@@ -818,7 +818,6 @@ public function print_produk($kode_pembelian)
                     ->where('products.kode_pembelian',$kode_pembelian)
                     ->leftJoin('goodsreceipts', 'products.kode_pembelian', '=', 'goodsreceipts.code')
                     ->get();
-
 
       //  dd($detail->code);
           return view(''.$module_name.'::'.$module_path.'.print_produk',
