@@ -489,7 +489,7 @@ public function store(Request $request)
             'user_id'                    => $input['user_id'],
             'berat_kotor'                => $input['berat_kotor'],
             'berat_real'                 => $input['berat_real'],
-            'selisih'                    => $input['selisih'],
+            'selisih'                    => $input['selisih'] ?? null,
             'total_emas'                 => $input['total_emas'],
             'note'                       => $input['note'],
             'count'                      => 0,
