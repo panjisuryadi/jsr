@@ -19,6 +19,7 @@ use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\ParameterKadar\Models\ParameterKadar;
+use Modules\Karat\Models\Karat;
 use Modules\GoodsReceipt\Models\TipePembelian;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -469,7 +470,7 @@ public function store(Request $request)
              'no_invoice' => 'required|min:3|max:191',
              'supplier_id' => 'required',
              'tanggal' => 'required',
-             'parameterkadar_id' => 'required',
+             'karat_id' => 'required',
              'user_id' => 'required',
              'kategoriproduk_id' => 'required',
          ]);
@@ -483,7 +484,7 @@ public function store(Request $request)
             'no_invoice'                 => $input['no_invoice'],
             'date'                       => $input['tanggal'],
             'status'                     => 0,
-            'parameterkadar_id'          => $input['parameterkadar_id'],
+            'karat_id'                   => $input['karat_id'],
             'kategoriproduk_id'          => $input['kategoriproduk_id'],
             'tipe_pembayaran'            => $input['tipe_pembayaran'],
             'supplier_id'                => $input['supplier_id'],
@@ -494,7 +495,7 @@ public function store(Request $request)
             'total_emas'                 => $input['total_emas'],
             'note'                       => $input['note'],
             'count'                      => 0,
-            'qty'                       => $input['qty'],
+            'qty'                        => $input['qty'],
             'pengirim'                   => $input['pengirim']
         ]);
             $goodsreceipt = $$module_name_singular->id;
@@ -552,10 +553,10 @@ public function store(Request $request)
 
     private function _saveGoodsReceiptItem($input ,$goodsreceipt)
         {
-          $kadar = ParameterKadar::where('id',$input['parameterkadar_id'])->first();
+          $kadar = Karat::where('id',$input['karat_id'])->first();
            GoodsReceiptItem::create([
                 'goodsreceipt_id'             => $goodsreceipt,
-                'kadar'                       => $kadar->kadar ?? null,
+                'kadar'                       => $kadar->name ?? null,
                 ]);
               // dd($input);
               }

@@ -181,18 +181,18 @@
     
 <div class="form-group">
     <?php
-            $field_name = 'parameterkadar_id';
-            $field_lable = __('Parameter Kadar');
+            $field_name = 'karat_id';
+            $field_lable = __('Parameter Karat');
             $field_placeholder = Label_case($field_lable);
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
             $required = '';
             ?>
     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
     <select class="form-control select2" name="{{ $field_name }}">
-        <option value="" selected disabled>Select Kadar</option>
-        @foreach(\Modules\ParameterKadar\Models\ParameterKadar::all() as $row)
-        <option value="{{$row->id}}" {{ old('parameterkadar_id') == $row->id ? 'selected' : '' }}>
-        {{$row->kadar}} </option>
+        <option value="" selected disabled>Select Karat</option>
+        @foreach(\Modules\Karat\Models\Karat::all() as $row)
+        <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+        {{$row->name}} | {{$row->kode}} </option>
         @endforeach
     </select>
       @if ($errors->has($field_name))
