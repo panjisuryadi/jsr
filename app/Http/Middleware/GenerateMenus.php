@@ -762,12 +762,63 @@ class GenerateMenus
 
 
 
+
+
+
+// pembelian
+            $Purchases = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                    'purchase-payments*',
+
+                ],
+                'permission'    => ['access_purchases'],
+            ]);
+            $Purchases->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+          // GoodsReceipts
+     $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Goods Receipts'), [
+                'route' => 'goodsreceipt.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['goodsreceipts*'],
+                'permission'    => ['access_goodsreceipts'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+       // Riwayat Penerimaan
+     $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+                '.__('Riwayat Penerimaan'), [
+                'route' => 'goodsreceipt.riwayat_penerimaan',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['goodsreceipts*'],
+                'permission'    => ['access_goodsreceipts'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
       //============================Access Control Dropdown
 $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Inventory', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
-                'order'         => 2,
+                'order'         => 3,
                 'activematches' => [
                     'products*',
                     'timbangans*',
@@ -784,41 +835,21 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
-       // Submenu: products
+       // Submenu: iventory
             $products->add('
                 <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('List Inventory').'',
                  [
-                'route' => 'products.index',
+                'route' => 'iventory.index',
                 'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 3,
-                'activematches' => 'products*',
-                'permission'    => ['access_products'],
+                'activematches' => 'iventories*',
+                'permission'    => ['access_iventories'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
-
-
-       // Submenu: products
-            // $products->add('
-            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Add Product').'',
-            //      [
-            //     'url' => 'purchase-type/toko',
-            //     'class' => 'nav-item',
-            // ])
-            // ->data([
-            //     'order'         => 3,
-            //     'activematches' => 'purchase*',
-            //     'permission'    => ['access_purchase'],
-            // ])
-            // ->link->attr([
-            //     'class' => 'c-sidebar-nav-link py-2',
-            // ]);
-
-
-
 
             // Submenu: products
             $products->add('
@@ -1091,7 +1122,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
-                'order'         => 2,
+                'order'         => 3,
                 'activematches' => [
                     'adjustments*',
 
@@ -1194,72 +1225,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-          // Access Purchases Dropdown
-            $Purchases = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 4,
-                'activematches' => [
-                    'purchase-payments*',
-
-                ],
-                'permission'    => ['access_purchases'],
-            ]);
-            $Purchases->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
-            // // Submenu: Users
-            // $Purchases->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i> '.__('All Purchase').'', [
-            //     'route' => 'purchases.index',
-            //     'class' => 'nav-item',
-            // ])
-            // ->data([
-            //     'order'         => 4,
-            //     'permission'    => ['create_purchase'],
-            // ])
-            // ->link->attr([
-            //     'class' => 'c-sidebar-nav-link',
-            // ]);
-
-
-          // GoodsReceipts
-     $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Goods Receipts'), [
-                'route' => 'goodsreceipt.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 77,
-                'activematches' => ['goodsreceipts*'],
-                'permission'    => ['access_goodsreceipts'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-       // Riwayat Penerimaan
-     $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Riwayat Penerimaan'), [
-                'route' => 'goodsreceipt.riwayat_penerimaan',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 77,
-                'activematches' => ['goodsreceipts*'],
-                'permission'    => ['access_goodsreceipts'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-
-
-
+          
 
 
 

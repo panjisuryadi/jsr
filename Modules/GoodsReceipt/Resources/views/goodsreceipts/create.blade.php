@@ -42,13 +42,9 @@
                     </div>
 
 
-
-
                     <div class="relative flex justify-left">
                         <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{__('Goods Receipts')}} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="{{__('Goods Receipts')}}"></i>
                         </span>
-
-
 
 
                     </div>

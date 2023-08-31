@@ -500,6 +500,20 @@ if (!function_exists('pstatus')) {
          }
       }
 
+   if (!function_exists('tanggal2')) {
+        function tanggal2($value)
+        {
+
+        $date = '';
+        $date = \Carbon\Carbon::parse($value);
+        $tgl = $date->isoFormat('dddd, LL');
+        $jam = $date->format('H:i');
+
+         return $date = ''. $tgl.' ';
+
+         }
+      }
+
 
 
 

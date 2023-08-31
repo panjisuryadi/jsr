@@ -57,5 +57,6 @@
     "JenisMutiara": true,
     "GoodsReceipt": true,
     "KategoriMutiara": true,
-    "Exhibition": true
+    "Exhibition": true,
+    "Iventory": true
 }

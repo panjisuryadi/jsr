@@ -23,6 +23,8 @@ use Modules\Karat\Models\Karat;
 use Modules\GoodsReceipt\Models\TipePembelian;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
+
 class GoodsReceiptsController extends Controller
 {
 
@@ -126,7 +128,7 @@ public function index_data_product(Request $request ,$kode_pembelian)
                                 })
                           ->editColumn('date', function ($data) {
                              $tb = '<div class="text-xs items-left text-left">
-                                     ' .tanggal($data->date) . '
+                                     ' .tgl1($data->date) . '
                                     </div>';
                                 return $tb;
                             })
