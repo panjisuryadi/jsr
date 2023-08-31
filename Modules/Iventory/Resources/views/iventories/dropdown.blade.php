@@ -13,8 +13,7 @@
                                  'id'=>encode_id($data->id),
                                  'distribusi'=>'sales']
                                  )}}">Sales</a>
-   
-  </div>
+       </div>
 </div>
 
 

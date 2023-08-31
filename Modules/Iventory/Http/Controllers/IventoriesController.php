@@ -17,7 +17,7 @@ use Modules\GoodsReceipt\Models\TipePembelian;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\KategoriProduk\Models\KategoriProduk;
-
+use Modules\Product\Entities\Category;
 
 
 
@@ -275,6 +275,31 @@ public function show($id)
 
 
 
+     public function type($distribusi) {
+
+      
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_pembelian = $this->module_pembelian;
+        $module_name_singular = Str::singular($module_name);
+        $categories = Category::get();
+        $module_action = 'List';
+      
+         return view(''.$module_name.'::'.$module_path.'.'.$distribusi.'.type',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'distribusi',
+            'categories',
+            'module_icon', 'module_model'));
+        }
+
+
+
+
 public function kategori($id) {
         $id = decode_id($id);
         $module_title = $this->module_title;
@@ -291,7 +316,8 @@ public function kategori($id) {
             'module_action',
             'module_title',
             'kategori',
-            'module_icon', 'module_model'));
+            'module_icon', 
+            'module_model'));
           }
 
 
@@ -305,15 +331,17 @@ public function kategori($id) {
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $module_pembelian = $this->module_pembelian;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-       // $kategori = KategoriProduk::findOrFail($id);
+        $detail = $module_pembelian::findOrFail($id);
         abort_if(Gate::denies('access_'.$module_name.''), 403);
          return view(''.$module_name.'::'.$module_path.'.'.$distribusi.'.index',
            compact('module_name',
             'module_action',
             'module_title',
             'distribusi',
+            'detail',
             'module_icon', 'module_model'));
         }
 

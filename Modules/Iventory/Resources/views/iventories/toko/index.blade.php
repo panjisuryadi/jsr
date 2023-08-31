@@ -39,7 +39,122 @@
                         <div id="buttons">
                         </div>
                     </div>
-                    <div class="table-responsive mt-1">
+
+
+<div class="flex flex-row grid grid-cols-2 gap-1">
+    
+<div class="py-2 px-2">
+    
+<div class="flex justify-between mt-3 mb-6">
+        <h1 class="text-lg font-bold">Invoice</h1>
+        <div class="text-gray-700">
+            <div>Date: {{tgl($detail->date)}}</div>
+            <div>Invoice #: {{$detail->code}}</div>
+        </div>
+    </div>
+
+<table class="w-full mb-8 poppins">
+        <thead>
+            <tr>
+                <th class="text-left font-bold text-gray-700">
+                {{Label_case('no_invoice')}}</th>
+                <th class="text-right font-semibold text-gray-800">
+                {{$detail->no_invoice}}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-left text-gray-700"> {{Label_case('berat_kotor')}}</td>
+                <td class="text-right text-gray-700"> {{$detail->berat_kotor}}</td>
+            </tr>
+              <tr>
+                <td class="text-left text-gray-700"> {{Label_case('supplier_id')}}</td>
+                <td class="text-right text-gray-700"> {{$detail->supplier_id}}</td>
+            </tr> 
+
+             <tr>
+                <td class="text-left text-gray-700"> {{Label_case('Kategori')}}</td>
+                <td class="text-right text-gray-700"> {{$detail->kategoriproduk_id}}</td>
+            </tr>
+
+             <tr>
+                <td class="text-left text-gray-700"> {{Label_case('total_emas')}}</td>
+                <td class="text-right text-gray-700"> {{$detail->total_emas}}</td>
+            </tr>  
+
+             <tr>
+                <td class="text-left text-gray-700"> {{Label_case('tipe_pembayaran')}}</td>
+                <td class="text-right text-gray-700"> {{$detail->tipe_pembayaran}}</td>
+            </tr>
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-left font-bold text-gray-700">{{Label_case('Qty')}}</td>
+                <td class="text-right font-bold text-gray-700">{{$detail->qty}}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+    {{$detail->pembelian}}
+
+</div>
+
+
+<div class="px-1 border-l">
+    
+
+
+
+
+
+{{-- {{$detail->goodsreceiptitem}} --}}
+
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Kategori</th>
+      <th scope="col">Karat</th>
+      <th scope="col">Qty</th>
+    </tr>
+  </thead>
+  <tbody>
+
+ @foreach($detail->goodsreceiptitem as $item) 
+    <tr>
+      <th scope="row">1</th>
+      <td>{{$item->kategoriproduk_id}}</td>
+      <td>{{$item->karat_id}}</td>
+      <td>{{$item->qty}}</td>
+    </tr>
+
+@endforeach
+
+  </tbody>
+</table>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+                  {{--   <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
@@ -61,7 +176,7 @@
                                 </tr>
                             </thead>
                         </table>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
