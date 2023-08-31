@@ -261,27 +261,26 @@ public function index_data(Request $request)
                                 return $tb;
                             }) 
 
-                          ->editColumn('detail', function ($data) {
-                            if ($data->count == 0) {
-                               $qty = $data->qty;
-                            } else {
-                               $qty = $data->count;
-                            }
-
-                             $tb = '<div class="small items-center text-center">
-
-                             <div class="bg-green-400 px-1 items-center text-center rounded-lg">
-                                    ' .$data->count . '  / ' .$data->qty . '
-
-                             </div>
-                                  
-                                    </div>';
-                                return $tb;
-                            })  
+        ->editColumn('pembayaran', function ($data) {
+               if ($data->pembelian[0]->tipe_pembayaran == 'jatuh_tempo') 
+                     {
+                         $pembayaran =  tgljam($data->pembelian[0]->jatuh_tempo);
+                     }
+                     elseif ($data->pembelian[0]->tipe_pembayaran == 'cicl')
+                     {
+                         $pembayaran =  tgljam($data->pembelian[0]->cicil);
+                     }else{
+                         $pembayaran =  'Lunas';
+                     }
+                $tb = '<div class="items-center text-center">
+                       <div class="font-semibold uppercase text-md text-gray-800"> ' .$pembayaran. '</div>
+                         </div>';
+                     return $tb;
+                     })  
 
                            ->editColumn('qty', function ($data) {
                              $tb = '<div class="items-left text-left">
-                                    <div>Diterima : ' .$data->qty_diterima . '</div>
+                                    <div>Diterima : '.$data->qty_diterima . '</div>
                                     <div>Nota :' .$data->qty . '</div>
                                     </div>';
                                 return $tb;
@@ -304,6 +303,7 @@ public function index_data(Request $request)
                          'berat',
                          'harga',
                          'image', 
+                         'pembayaran', 
                          'qty', 
                          'detail', 
                          'name'])
@@ -471,7 +471,8 @@ public function store(Request $request)
              'supplier_id' => 'required',
              'tanggal' => 'required',
              'total_emas' => 'required',
-       
+             'karat_id.0' => 'required',
+             'karat_id.*' => 'required',
              'user_id' => 'required',
              
          ]);
@@ -536,36 +537,31 @@ public function store(Request $request)
 
 
 
-       private function _saveTipePembelian($input ,$goodsreceipt)
+private function _saveTipePembelian($input ,$goodsreceipt)
         {
+        TipePembelian::create([
+        'goodsreceipt_id'             => $goodsreceipt,
+        'tipe_pembayaran'             => $input['tipe_pembayaran'] ?? null,
+        'jatuh_tempo'                 => $input['tgl_jatuh_tempo'] ?? null,
+        'cicil'                       => $input['cicilan'] ?? 0,
+        'lunas'                       => $input['lunas'] ?? null,
+        ]);
+    
+      }
 
 
-       TipePembelian::create([
-                'goodsreceipt_id'             => $goodsreceipt,
-                'tipe_pembayaran'             => $input['tipe_pembayaran'] ?? null,
-                'jatuh_tempo'                 => $input['tgl_jatuh_tempo'] ?? null,
-                'cicil'                       => $input['cicilan'] ?? 0,
-                'lunas'                       => $input['lunas'] ?? null,
-                ]);
-              // dd($input);
-              }
+ private function _saveGoodsReceiptItem($input ,$goodsreceipt)
+     {
+       foreach ($input['karat_id'] as $key => $value) {
+          GoodsReceiptItem::create([
+              'goodsreceipt_id' => $goodsreceipt,
+              'karat_id' => $input['karat_id'][$key],
+              'kategoriproduk_id' => 4,
+              'qty' =>$input['qty'][$key]
+               ]);
 
-
-
-
-             private function _saveGoodsReceiptItem($input ,$goodsreceipt)
-                 {
-                   foreach ($input['karat_id'] as $key => $value) {
-                      GoodsReceiptItem::create([
-                          'goodsreceipt_id' => $goodsreceipt,
-                          'karat_id' => $input['karat_id'][$key],
-                          'kategoriproduk_id' => 4,
-                          'qty' =>$input['qty'][$key]
-                           ]);
-
-                     }
-
-                }
+         }
+    }
 
     /**
      * Show the form for editing the specified resource.

@@ -49,7 +49,7 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                                  
                                     <th style="width: 18%!important;"  class="text-left">{{ __('Berat') }}</th>
                                     <th style="width: 19%!important;" class="text-left">{{ __('Selisih') }}</th>
-                                    <th style="width: 8%!important;" class="text-center">{{ __('Input') }}
+                                    <th style="width: 8%!important;" class="text-center">{{ __('Pembayaran') }}
                                     </th>
                                     <th style="width: 22%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
@@ -134,8 +134,8 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                 {data: 'image', name: 'image'},
                 {data: 'date', name: 'date'},
                 {data: 'berat', name: 'berat'},
-                {data: 'harga', name: 'harga'},
-                {data: 'detail', name: 'detail'},
+                {data: 'qty', name: 'qty'},
+                {data: 'pembayaran', name: 'pembayaran'},
 
 
                 {

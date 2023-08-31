@@ -25,6 +25,7 @@ namespace App\Http\Livewire\GoodsReceipt;
              $karat_id;
 
             public $updateMode = false;
+            public $pilih_tipe_pembayaran = 'cicil';
             public $inputs = [];
             public $i = 1;
 
@@ -100,12 +101,21 @@ namespace App\Http\Livewire\GoodsReceipt;
                 }
 
 
-            // public function updated($propertyName)
-            //     {
-            //         if ($this->inputs) {
-            //             $this->validateOnly($propertyName);
-            //         }
-            //     }
+
+
+            public function changeEvent($value)
+                {
+                    $this->pilih_tipe_pembayaran = $value;
+                }
+
+
+
+            public function updated($propertyName)
+                {
+                    if ($this->inputs) {
+                        $this->validateOnly($propertyName);
+                    }
+                }
 
             public function store()
             {

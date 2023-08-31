@@ -1,4 +1,4 @@
-           <div class="py-2">
+<div>
             @if (session()->has('message'))
             <div class="alert alert-success">
                 {{ session('message') }}
@@ -84,7 +84,7 @@
 
 
             </div>
-            <div class="px-1 mt-4">
+            <div class="px-1 py-4">
                 <button class="btn text-white text-xl btn-info btn-md" wire:click.prevent="add({{$i}})" wire:loading.attr="disabled">
                 <span wire:loading.remove wire:target="add"><i class="bi bi-plus"></i></span>
                 <span wire:loading wire:target="add" class="text-center">
@@ -94,7 +94,7 @@
             </div>
         </div>
         @foreach($inputs as $key => $value)
-        <div class="flex justify-between mt-0">
+        <div class="flex justify-between">
             <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
        
              <div class="form-group">
@@ -147,6 +147,7 @@
 
       <div class="form-group">
                 <?php
+
                 $field_name = 'inputs['.$value.']qty';
                 $field_name = 'qty.'.$value.'';
                 $field_lable = label_case('qty');
