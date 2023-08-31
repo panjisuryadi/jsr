@@ -240,18 +240,15 @@ href="{{ route(''.$module_name.'.print_produk',$detail->code) }}">
                             </form>
                    @endif
 
-                    @if($detail->status == 2)
-                      {{--  <div class="mb-2 text-green-500 font-medium border-solid border-2 border-green-500  px-3 py-1 uppercase">complete</div> --}}
-                      @endif
-
-                   
-                           <a href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}"
-                                id="GroupKategori"
-                                class="bg-blue-600 py-1 px-2 rounded-lg hover:no-underline hover:text-gray-300">
-                                <i class="bi bi-plus"></i>@lang('Tambah')
-                            </a>
-
-                     
+      
+                        <a 
+                        class="flex" 
+                        id="GroupKategori"
+                        href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}">
+                            <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
+                                <i class="bi bi-plus text-gray-600"></i>
+                            </div>
+                        </a>
 
 
                         </div>
