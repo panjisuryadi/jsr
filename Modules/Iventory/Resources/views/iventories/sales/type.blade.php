@@ -55,77 +55,85 @@
                     </div>
 
 
-<div class="card-body">
-                    <div class="flex flex-row grid grid-cols-2 gap-1">
-                        <div class="p-2">
-                       
-                        </div>
+<div class="card-body px-1">
 
-                        <div class="p-2">
+<div class="bg-white w-full rounded-lg border border-1 px-3 py-5 mx-auto">
+    <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center">
 
-                        <div>Tgl</div>
-                        <div>Kepada</div>
-
-                        </div>
-                    </div>
-
-     
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Code</th>
-      <th scope="col">NO Nota</th>
-      <th scope="col">Berat Kotor</th>
-      <th scope="col">Berat Bersih</th>
-      <th scope="col">kadar</th>
-      <th scope="col">JUmlah</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr> 
-
-    <tr>
-      <th colspan="2"></th>
-      <td>
-          <div>Jumlah</div>
-        <div>Diskon</div>
-        <div>Total</div>
+        </div>
+        <div class="text-gray-700">
+            <div class="font-bold text-xl mb-2">INVOICE</div>
+            <div class="text-sm">Tanggal: 01/05/2023</div>
+            <div class="text-sm">Kepada #: INV12345</div>
+        </div>
+    </div>
 
 
-      </td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-     
-    </tr>
-   
-  </tbody>
-</table>
+    <table class="w-full text-left mb-3 table table-bordered p-3">
+        <thead>
+            <tr>
+   <th class="text-gray-700 font-bold uppercase py-2">No</th>
+      <th class="text-gray-700 font-bold uppercase py-2">Code</th>
+      <th class="text-gray-700 font-bold uppercase py-2">NO Nota</th>
+      <th class="text-gray-700 font-bold uppercase py-2">Berat Kotor</th>
+      <th class="text-gray-700 font-bold uppercase py-2">Berat Bersih</th>
+      <th class="text-gray-700 font-bold uppercase py-2">kadar</th>
+      <th class="text-gray-700 font-bold uppercase py-2">Jumlah</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="py-4 text-gray-700">1</td>
+                <td class="py-4 text-gray-700">PO-0004</td>
+                 <td class="py-4 text-gray-700">DE9800</td>
+                <td class="py-4 text-gray-700">900.87</td>
+                <td class="py-4 text-gray-700">899.90</td>
+                <td class="py-4 text-gray-700">28</td>
+
+                <td class="py-4 text-gray-700">9800</td>
+            </tr>
+
+        </tbody>
+    </table>
 
 
-<table class="table table-bordered">
-   <tbody>
-    <tr>
-      
-      <td style="width:50%;"></td>
-      <td>PIC</td>
-      <td>SALES</td>
-          
-    </tr> 
+  <table class="w-full table table-borderless">
+                        <tbody>
+                            <tr class="content">
+                                  <td class="w-50"></td>
+                                  <td class="font-normal">
+                         <div class="font-semibold text-gray-700 uppercase">Jumlah</div>
+                         <div class="font-semibold text-gray-700 uppercase">Diskon</div>
+                         <div class="font-semibold text-gray-700 uppercase">Total</div>
 
-   
-  </tbody>
-</table>
+                                </td>
+                                <td class="font-normal">
+                            <div class="font-semibold text-gray-700 uppercase">809</div>
+                            <div class="text-gray-700 text-sm">20%</div>
+                            <div class="text-gray-700 text-sm">8990</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+  <table class="w-full table table-borderless">
+                        <tbody>
+                            <tr class="content">
+                                  <td class="w-50"></td>
+                                  <td class="font-normal">
+                                 <div class="font-semibold text-gray-500 uppercase">pic</div>
+                                 <div class="text-gray-800 text-lg">Gunawan</div>
+                                </td>
+                                <td class="font-normal">
+                                 <div class="font-semibold text-gray-500 uppercase">sales</div>
+                                 <div class="text-gray-800 text-lg">Rahman</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+</div>
 
 
 
