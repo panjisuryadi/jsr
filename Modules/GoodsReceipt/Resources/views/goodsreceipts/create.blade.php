@@ -40,10 +40,27 @@
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full border-b border-gray-300"></div>
                     </div>
+
+
+
+
                     <div class="relative flex justify-left">
                         <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{__('Goods Receipts')}} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="{{__('Goods Receipts')}}"></i>
                         </span>
+
+
+
+
                     </div>
+
+
+ <a class="flex" href="{{ route('goodsreceipt.index') }}">
+    <div class="absolute bottom-7 right-0 flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
+        <i class="bi bi-house text-gray-600"></i>
+    </div>
+ </a>
+
+
                 </div>
 
 <div class="flex flex-row grid grid-cols-3 gap-2">

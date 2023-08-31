@@ -181,7 +181,7 @@
         @endforeach
 
 
-
+{{-- <span class="text-xl text-blue-500">{{$total_qty}} </span> --}}
 
 </div>
 
