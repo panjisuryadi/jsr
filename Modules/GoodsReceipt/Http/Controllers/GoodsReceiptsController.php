@@ -264,17 +264,22 @@ public function index_data(Request $request)
         ->editColumn('pembayaran', function ($data) {
                if ($data->pembelian[0]->tipe_pembayaran == 'jatuh_tempo') 
                      {
-                         $pembayaran =  tgljam($data->pembelian[0]->jatuh_tempo);
-                     }
-                     elseif ($data->pembelian[0]->tipe_pembayaran == 'cicl')
+                         $info =  'Jatuh Tempo';
+                         $pembayaran =  tgljam(@$data->pembelian[0]->jatuh_tempo);
+                     }else if ($data->pembelian[0]->tipe_pembayaran == 'cicil') 
                      {
-                         $pembayaran =  tgljam($data->pembelian[0]->cicil);
-                     }else{
+                         $info =  'Cicilan';
+                         $pembayaran =  @$data->pembelian[0]->cicil .' kali';
+                     }
+                     else{
+                         
+                         $info =  '';
                          $pembayaran =  'Lunas';
                      }
-                $tb = '<div class="items-center text-center">
-                       <div class="font-semibold uppercase text-md text-gray-800"> ' .$pembayaran. '</div>
-                         </div>';
+          $tb = '<div class="items-left text-left">
+                   <div class="small text-gray-800">'.$info.'</div>
+                   <div class="text-gray-800">' .$pembayaran. '</div>
+                   </div>';
                      return $tb;
                      })  
 
