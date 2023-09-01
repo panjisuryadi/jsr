@@ -32,7 +32,7 @@ namespace App\Http\Livewire\Product;
  
             public $updateMode = false;
             public $total_qty = 0;
-            public $pilih_po = 1;
+            public $pilih_po = 300;
             public $pilih_tipe_pembayaran = 'cicil';
             public $inputs = [];
             public $i = 1;
@@ -78,8 +78,7 @@ namespace App\Http\Livewire\Product;
                public function rules()
                 {
                         $rules = [
-                              'karat_id.0'     => 'required',
-                              'karat_id.*'     => 'required', 
+                            
                               'jumlah.0'     => 'required',
                               'jumlah.*'     => 'required', 
                               'berat_kotor.0'     => 'required',
@@ -102,8 +101,7 @@ namespace App\Http\Livewire\Product;
                         {
                             $rules['code.0'] = 'required';
                             $rules['code.'.$value] = 'required';  
-                            $rules['karat_id.0'] = 'required';
-                            $rules['karat_id.'.$value] = 'required';
+                          
                             $rules['no_nota.0'] = 'required';
                             $rules['no_nota.'.$value] = 'required';
                             $rules['kadar.0'] = 'required';
@@ -172,10 +170,10 @@ namespace App\Http\Livewire\Product;
                 }
 
                 $this->inputs = [];
-
                 $this->resetInputFields();
-
                 session()->flash('message', 'Created Successfully.');
+                return redirect(route('iventory'));
+
                       }
 
 

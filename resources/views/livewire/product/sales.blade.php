@@ -75,11 +75,11 @@
        <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                       {{ $field_lable }}<span class="text-danger">*</span></label>
     <select  class="form-control form-control-sm" 
-    name="{{ $field_name }}"
+    name="{{ $field_name }}" wire:model="karat_id.0"
     wire:click="pilihPo($event.target.value)">
-        <option value="" selected disabled>Select Karat</option>
+      
         @foreach(\Modules\Karat\Models\Karat::all() as $row)
-        <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+        <option value="{{$row->kode}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
         {{$row->name}} | {{$row->kode}} </option>
         @endforeach
     </select>
@@ -105,12 +105,8 @@
                       {{ $field_lable }}<span class="text-danger">*</span></label>
 
            {{-- <span class="text-blue-400 text-4xl">{{$pilih_po}}</span> --}}
-<select class="form-control form-control-sm" name="code.0">
-  <option value="1">P-000{{$pilih_po}}</option>
-
-  
-</select>
-
+                    {{ html()->text($field_name)->value($pilih_po)
+                    ->class('form-control form-control-sm '.$invalid.'') }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -275,7 +271,7 @@
                  name="{{ $field_name }}">
                 <option value="" selected disabled>Select Karat</option>
                 @foreach(\Modules\Karat\Models\Karat::all() as $row)
-                <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+                <option value="{{$row->kode}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
                 {{$row->name}} | {{$row->kode}} </option>
                 @endforeach
               </select>
@@ -298,9 +294,8 @@
                     $required = 'wire:model="'.$field_name.'"';
                     ?>
                    
-              <select class="form-control form-control-sm" name="code.0">
-                <option value="1">P-000{{$pilih_po}}</option>
-               </select>
+               {{ html()->text($field_name)->value($pilih_po)
+                    ->class('form-control form-control-sm '.$invalid.'') }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
