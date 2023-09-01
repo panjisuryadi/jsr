@@ -57,17 +57,22 @@
 
 <div class="card-body px-1">
 
-<div class="bg-white w-full rounded-lg border border-1 px-3 py-5 mx-auto">
-    <div class="flex items-center justify-between mb-8">
-        <div class="flex items-center">
 
-        </div>
-        <div class="text-gray-700">
-            <div class="font-bold text-xl mb-2">INVOICE</div>
-            <div class="text-sm">Tanggal: 01/05/2023</div>
-            <div class="text-sm">Kepada #: INV12345</div>
-        </div>
-    </div>
+
+
+
+
+
+
+
+
+<div class="bg-white w-full rounded-lg border border-1 px-3 py-5 mx-auto">
+ 
+
+
+<livewire:product.sales/>
+
+{{-- 
 
 
     <table class="w-full text-left mb-3 table table-bordered p-3">
@@ -96,42 +101,9 @@
 
         </tbody>
     </table>
+ --}}
 
 
-  <table class="w-full table table-borderless">
-                        <tbody>
-                            <tr class="content">
-                                  <td class="w-50"></td>
-                                  <td class="font-normal">
-                         <div class="font-semibold text-gray-700 uppercase">Jumlah</div>
-                         <div class="font-semibold text-gray-700 uppercase">Diskon</div>
-                         <div class="font-semibold text-gray-700 uppercase">Total</div>
-
-                                </td>
-                                <td class="font-normal">
-                            <div class="font-semibold text-gray-700 uppercase">809</div>
-                            <div class="text-gray-700 text-sm">20%</div>
-                            <div class="text-gray-700 text-sm">8990</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-  <table class="w-full table table-borderless">
-                        <tbody>
-                            <tr class="content">
-                                  <td class="w-50"></td>
-                                  <td class="font-normal">
-                                 <div class="font-semibold text-gray-500 uppercase">pic</div>
-                                 <div class="text-gray-800 text-lg">Gunawan</div>
-                                </td>
-                                <td class="font-normal">
-                                 <div class="font-semibold text-gray-500 uppercase">sales</div>
-                                 <div class="text-gray-800 text-lg">Rahman</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
 
 </div>
 
