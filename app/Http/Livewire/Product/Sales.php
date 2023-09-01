@@ -27,9 +27,15 @@ namespace App\Http\Livewire\Product;
              $jumlah,
              $kadar,
              $no_nota,
+             $pilih_po,
              $karat_id;
         
-         
+            public $kode_result = [
+                1 => 'p-00001',
+                2 => 'P-00002',
+                3 => 'P-00004'
+            ];
+               
 
             public $updateMode = false;
             public $total_qty = 0;
@@ -145,7 +151,12 @@ namespace App\Http\Livewire\Product;
                     $this->pilih_tipe_pembayaran = $value;
                 }
 
+             public function pilihPo($value)
+                {
 
+                    //dd($value);
+                    $this->pilih_po = $value;
+                }
 
             public function updated($propertyName)
                 {

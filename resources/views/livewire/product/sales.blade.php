@@ -65,7 +65,7 @@
 
 <div class="form-group">
     <?php
-            
+         
             $field_name = 'karat_id.0';
             $field_lable = __('Parameter Karat');
             $field_placeholder = Label_case($field_lable);
@@ -74,7 +74,9 @@
             ?>
        <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                       {{ $field_lable }}<span class="text-danger">*</span></label>
-    <select class="form-control form-control-sm" name="{{ $field_name }}">
+    <select  class="form-control form-control-sm" 
+    name="{{ $field_name }}"
+    wire:click="pilihPo($event.target.value)">
         <option value="" selected disabled>Select Karat</option>
         @foreach(\Modules\Karat\Models\Karat::all() as $row)
         <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
@@ -102,9 +104,7 @@
                      <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                       {{ $field_lable }}<span class="text-danger">*</span></label>
 
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+                    {{$pilih_po}}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -264,7 +264,9 @@
             $required = 'wire:model="'.$field_name.'"';
             ?>
           
-              <select class="form-control form-control-sm" name="{{ $field_name }}">
+              <select class="form-control form-control-sm" 
+                 wire:click="pilihPo($event.target.value)">
+                 name="{{ $field_name }}">
                 <option value="" selected disabled>Select Karat</option>
                 @foreach(\Modules\Karat\Models\Karat::all() as $row)
                 <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
@@ -290,8 +292,7 @@
                     $required = 'wire:model="'.$field_name.'"';
                     ?>
                    
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
+                  {{$pilih_po}}
                     ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
