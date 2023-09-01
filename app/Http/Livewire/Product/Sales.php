@@ -27,18 +27,12 @@ namespace App\Http\Livewire\Product;
              $jumlah,
              $kadar,
              $no_nota,
-             $pilih_po,
+           
              $karat_id;
-        
-            public $kode_result = [
-                1 => 'p-00001',
-                2 => 'P-00002',
-                3 => 'P-00004'
-            ];
-               
-
+ 
             public $updateMode = false;
             public $total_qty = 0;
+            public $pilih_po = 1;
             public $pilih_tipe_pembayaran = 'cicil';
             public $inputs = [];
             public $i = 1;
@@ -76,6 +70,7 @@ namespace App\Http\Livewire\Product;
                 $this->jumlah = '';
                 $this->kadar = '';
                 $this->no_nota = '';
+                $this->pilih_po = '';
               
             }
 

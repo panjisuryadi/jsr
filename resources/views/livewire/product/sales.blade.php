@@ -104,7 +104,13 @@
                      <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                       {{ $field_lable }}<span class="text-danger">*</span></label>
 
-                    {{$pilih_po}}
+           {{-- <span class="text-blue-400 text-4xl">{{$pilih_po}}</span> --}}
+<select class="form-control form-control-sm" name="code.0">
+  <option value="1">P-000{{$pilih_po}}</option>
+
+  
+</select>
+
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -292,8 +298,9 @@
                     $required = 'wire:model="'.$field_name.'"';
                     ?>
                    
-                  {{$pilih_po}}
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+              <select class="form-control form-control-sm" name="code.0">
+                <option value="1">P-000{{$pilih_po}}</option>
+               </select>
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
