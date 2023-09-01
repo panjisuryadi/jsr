@@ -412,7 +412,7 @@
 
 
             </div>
-            <div class="px-1 pt-4">
+            <div class="px-1 pt-1">
                 <button class="btn text-white text-xl btn-danger btn-sm" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
                 <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
                 <span wire:loading wire:target="remove({{$key}})" class="text-center">

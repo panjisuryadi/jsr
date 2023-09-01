@@ -26,6 +26,7 @@ namespace App\Http\Livewire\Product;
              $berat_bersih,
              $jumlah,
              $kadar,
+             $no_nota,
              $karat_id;
         
          
@@ -68,6 +69,7 @@ namespace App\Http\Livewire\Product;
                 $this->berat_bersih = '';
                 $this->jumlah = '';
                 $this->kadar = '';
+                $this->no_nota = '';
               
             }
 
@@ -78,7 +80,15 @@ namespace App\Http\Livewire\Product;
                               'karat_id.0'     => 'required',
                               'karat_id.*'     => 'required', 
                               'jumlah.0'     => 'required',
-                              'jumlah.*'     => 'required',
+                              'jumlah.*'     => 'required', 
+                              'berat_kotor.0'     => 'required',
+                              'berat_kotor.*'     => 'required',  
+                              'berat_bersih.0'     => 'required',
+                              'berat_bersih.*'     => 'required',
+                              'no_nota.0'     => 'required',
+                              'no_nota.*'     => 'required',
+                               'kadar.0'     => 'required',
+                              'kadar.*'     => 'required',
                               'kategori.0'     => 'required',
                               'code.*'         => 'required',  
                               'code.0'         => 'required',
@@ -89,14 +99,22 @@ namespace App\Http\Livewire\Product;
 
                         foreach($this->inputs as $key => $value)
                         {
-                            $rules['kategori.0'] = 'required';
-                            $rules['kategori.'.$value] = 'required';  
-                            $rules['jumlah.0'] = 'required';
-                            $rules['jumlah.'.$value] = 'required';
-                            $rules['qty.0'] = 'required';
-                            $rules['qty.'.$value] = 'required';
+                            $rules['code.0'] = 'required';
+                            $rules['code.'.$value] = 'required';  
                             $rules['karat_id.0'] = 'required';
                             $rules['karat_id.'.$value] = 'required';
+                            $rules['no_nota.0'] = 'required';
+                            $rules['no_nota.'.$value] = 'required';
+                            $rules['kadar.0'] = 'required';
+                            $rules['kadar.'.$value] = 'required';
+                            $rules['karat_id.0'] = 'required';
+                            $rules['karat_id.'.$value] = 'required'; 
+                            $rules['berat_bersih.0'] = 'required';
+                            $rules['berat_bersih.'.$value] = 'required';
+                            $rules['berat_kotor.0'] = 'required';
+                            $rules['berat_kotor.'.$value] = 'required';   
+                            $rules['jumlah.0'] = 'required';
+                            $rules['jumlah.'.$value] = 'required';
 
                         }
                         return $rules;
