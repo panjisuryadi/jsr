@@ -87,21 +87,12 @@ namespace App\Http\Livewire\Product;
                               'berat_bersih.*'     => 'required',
                               'no_nota.0'     => 'required',
                               'no_nota.*'     => 'required',
-                               'kadar.0'     => 'required',
-                              'kadar.*'     => 'required',
-                              'kategori.0'     => 'required',
-                              'code.*'         => 'required',  
-                              'code.0'         => 'required',
-                              'kategori.*'     => 'required',
-                              'qty.0'          => 'required',
-                              'qty.*'          => 'required'
+                              'kadar.0'     => 'required',
+                              'kadar.*'     => 'required'
                         ];
 
                         foreach($this->inputs as $key => $value)
                         {
-                            $rules['code.0'] = 'required';
-                            $rules['code.'.$value] = 'required';  
-                          
                             $rules['no_nota.0'] = 'required';
                             $rules['no_nota.'.$value] = 'required';
                             $rules['kadar.0'] = 'required';
@@ -127,8 +118,7 @@ namespace App\Http\Livewire\Product;
                       {
                         $messages['qty.0'] = 'required';
                         $messages['qty.'.$value] = 'required';
-                        $messages['kategori.0'] = 'kosong';
-                        $messages['kategori.'.$value] = 'kosong';
+                      
                         $messages['karat_id.0'] = 'required';
                         $messages['karat_id.'.$value] = 'required';
                       }
@@ -162,17 +152,17 @@ namespace App\Http\Livewire\Product;
             public function store()
             {
 
-                 $this->validate();
-                 foreach ($this->no_invoice as $key => $value) {
-                    $harga = preg_replace("/[^0-9]/", "", $this->harga[$key]);
-                   // dd($harga);
-                    //GoodsReceipt::create(['code' => $this->code[$key], 'no_invoice' => $this->no_invoice[$key]]);
-                }
+                $this->validate();
+                //  foreach ($this->no_invoice as $key => $value) {
+                //     $harga = preg_replace("/[^0-9]/", "", $this->harga[$key]);
+                //    // dd($harga);
+                //     //GoodsReceipt::create(['code' => $this->code[$key], 'no_invoice' => $this->no_invoice[$key]]);
+                // }
 
                 $this->inputs = [];
                 $this->resetInputFields();
                 session()->flash('message', 'Created Successfully.');
-                return redirect(route('iventory'));
+                return redirect(route('iventory.index'));
 
                       }
 
