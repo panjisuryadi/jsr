@@ -30,19 +30,20 @@
                     </div>
                     <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
-                            <thead>
-                                <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ __('Kode Sales') }}</th>
-                                    <th class="text-lef">{{ __('Nama Sales') }}</th>
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
-                                    </th>
-                                    <th style="width: 18%!important;" class="text-center">
-                                        {{ __('Action') }}
-                                    </th>
-                                </tr>
-                            </thead>
+                <thead>
+                    <tr>
+                        <th style="width: 6%!important;">No</th>
+                        <th class="text-left">{{ __('Nama Sales') }}</th>
+                        <th class="text-left">{{ __('Address') }}</th>
+                        <th class="text-left">{{ __('Phone') }}</th>
+                        <th style="width: 15%!important;" class="text-center">
+                             {{ __('Updated') }}
+                        </th>
+                        <th style="width: 18%!important;" class="text-center">
+                            {{ __('Action') }}
+                        </th>
+                    </tr>
+                </thead>
                         </table>
                     </div>
                 </div>
@@ -99,8 +100,9 @@
                     }
                 },
 
-                {data: 'code', name: 'code'},
                 {data: 'name', name: 'name'},
+                {data: 'address', name: 'address'},
+                {data: 'phone', name: 'phone'},
                 {data: 'updated_at', name: 'updated_at'},
 
                 {

@@ -339,20 +339,7 @@ class GenerateMenus
             ]);
 
 
-            // DataSales
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Sales'), [
-                'route' => 'datasale.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['datasales*'],
-                'permission'    => ['access_datasales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
+        
             // DataEtalases
             $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Etalase'), [
                 'route' => 'dataetalase.index',
@@ -822,12 +809,14 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'activematches' => [
                     'products*',
                     'penentuanhargas*',
+                    'datasales*',
                 ],
                 'permission' => ['create_products',
                                       'print_barcodes',
                                       'access_product_transfer',
                                       'access_timbangans',
                                       'access_penentuanhargas',
+                                      'access_datasales',
                                       'access_products'],
             ]);
             $products->link->attr([
@@ -853,6 +842,9 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+          
+
+
 
 
 
@@ -869,6 +861,23 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
+           // DataSales
+            $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
+                'route' => 'datasale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['datasales*'],
+                'permission'    => ['access_datasales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
 
 
             // // Submenu: products

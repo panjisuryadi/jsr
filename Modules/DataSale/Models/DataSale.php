@@ -10,15 +10,7 @@ class DataSale extends Model
 {
     use HasFactory;
     protected $table = 'datasales';
-    // protected $fillable = [
-    //     'name',
-    //    // 'image',
-    //    // 'code',
-    //     'description',
-    //     'start_date',
-    //     'end_date',
-
-    //  ];
+   
     protected $guarded = [];
 
   // public function products() {

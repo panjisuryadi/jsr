@@ -136,7 +136,7 @@ public function store(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'code' => 'required|max:191|unique:'.$module_model.',code',
+             'phone' => 'required|max:191|unique:'.$module_model.',phone',
              'name' => 'required|max:191',
 
         ]);
@@ -146,7 +146,8 @@ public function store(Request $request)
 
         $input = $request->all();
         $input = $request->except('_token');
-        $input['code'] = $input['code'];
+        $input['address'] = $input['address'];
+        $input['phone'] = $input['phone'];
         $input['name'] = $input['name'];
         $$module_name_singular = $module_model::create($input);
 
@@ -236,11 +237,12 @@ public function update(Request $request, $id)
         $validator = \Validator::make($request->all(),
             [
 
-            'code' => [
+            'phone' => [
                 'required',
-                'unique:'.$module_model.',code,'.$id
+                'unique:'.$module_model.',phone,'.$id
             ],
             'name' => 'required|max:191',
+            'address' => 'required|max:191',
 
 
         ]);
@@ -252,7 +254,8 @@ public function update(Request $request, $id)
         $input = $request->all();
         $params = $request->except('_token');
         $params['name'] = $params['name'];
-        $params['code'] = $params['code'];
+        $params['address'] = $params['address'];
+        $params['phone'] = $params['phone'];
         $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

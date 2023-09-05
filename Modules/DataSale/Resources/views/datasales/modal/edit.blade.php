@@ -3,25 +3,8 @@
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
-             <div class="flex flex-row grid grid-cols-2 gap-4">
-                            <div class="form-group">
-                                <?php
-                                $field_name = 'code';
-                                $field_lable = label_case('Kode Sales');
-                                $field_placeholder = $field_lable;
-                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                $required = "required";
-                                ?>
-                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                        name="{{ $field_name }}"
-                        id="{{ $field_name }}"
-                        value="{{$detail->code }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
-
-                            </div>
+             <div class="flex flex-row grid grid-cols-1 gap-4">
+                        
 
                         <div class="form-group">
                                 <?php
@@ -42,7 +25,43 @@
 
                             </div>
 
+                      <div class="form-group">
+                                <?php
+                                $field_name = 'phone';
+                                $field_lable = label_case($field_name);
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        value="{{$detail->phone }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
 
+                            </div> 
+
+                             <div class="form-group">
+                                <?php
+                                $field_name = 'address';
+                                $field_lable = label_case($field_name);
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        value="{{$detail->address }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
+
+                            </div>
 
                     </div>
 
