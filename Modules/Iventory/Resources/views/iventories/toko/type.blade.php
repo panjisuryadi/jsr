@@ -10,19 +10,69 @@
 </ol>
 @endsection
     @section('content')
-    @push('page_css')
-    <style type="text/css">
+@push('page_css')
 
-    .c-main {
-        flex-basis: auto;
-        flex-shrink: 0;
-        flex-grow: 1;
-        min-width: 0;
-        padding-top: 0.2rem !important;
+
+<style type="text/css">
+.c-main {
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 1;
+    min-width: 0;
+    padding-top: 0.2rem !important;
+}  
+.form-group {
+margin-bottom: 0.5rem !important;
+}
+</style>
+<style type="text/css">
+.dropzone {
+    height: 280px !important;
+    min-height: 190px !important;
+    border: 2px dashed #FF9800 !important;
+    border-radius: 8px;
+    background: #ff98003d !important;
+}
+
+.dropzone i.bi.bi-cloud-arrow-up {
+    font-size: 5rem;
+    color: #bd4019 !important;
+}
+
+.loading {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.loading:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
     }
-    </style>
 
-    @endpush
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+</style>
+
+@endpush
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
@@ -49,16 +99,15 @@
                         </div>
                     </div>
             
-
-
-
-
-      
+  
                         <div class="flex flex-row">
                             <x-library.alert />
                         </div>
                  
-
+       <script src="{{  asset('js/jquery.min.js') }}"></script>
+  
+       <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
+        @csrf
                         {{-- {{$pembelian}} --}}
                       
                         <input type="hidden" name="product_barcode_symbology" value="C128">
@@ -114,7 +163,6 @@
                                         </div>
 
 
-
                                         <div class="flex flex-row grid grid-cols-3 gap-2">
                                             
                                             <div class="form-group">
@@ -132,7 +180,6 @@
                                                     <span class="text-danger error-text cabang_id_err"></span>
                                                 </span>
                                             </div> 
-
 
                                              <div class="form-group">
                                                 <label for="product_note">Model</label>
@@ -194,6 +241,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -202,17 +251,18 @@
 @endsection
 
 <x-library.datatable />
- <x-library.select2 />
- <x-toastr />
- 
+<x-library.select2 />
+<x-toastr />
+  @section('third_party_scripts')
+    <script src="{{ asset('js/dropzone.js') }}"></script>
+    @endsection
  @push('page_scripts')
-   <script src="{{ asset('js/dropzone.js') }}"></script>
 
                 <script type="text/javascript">
                     $('#up1').change(function() {
                         $('#upload2').toggle();
                         $('#upload1').hide();
-                    });
+                       });
                     $('#up2').change(function() {
                         $('#upload1').toggle();
                         $('#upload2').hide();
@@ -254,17 +304,17 @@
                 $('form').find('input[name="document[]"][value="' + name + '"]').remove();
                 },
                 init: function () {
-                @if(isset($product) && $product->getMedia('images'))
-                var files = {!! json_encode($product->getMedia('images')) !!};
-                for (var i in files) {
-                    var file = files[i];
-                    this.options.addedfile.call(this, file);
-                    this.options.thumbnail.call(this, file, file.original_url);
-                    file.previewElement.classList.add('dz-complete');
-                    $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
-                }
-                @endif
-                }
+                    @if(isset($product) && $product->getMedia('images'))
+                        var files = {!! json_encode($product->getMedia('images')) !!};
+                        for (var i in files) {
+                            var file = files[i];
+                            this.options.addedfile.call(this, file);
+                            this.options.thumbnail.call(this, file, file.original_url);
+                            file.previewElement.classList.add('dz-complete');
+                            $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+                        }
+                    @endif
+                   }
                 }
                 </script>
 
@@ -302,11 +352,11 @@
                     });
                 });
            
-           
+         
                 
             $(document).ready(function() {
                 $('#category_id').change(function() {
-                    var option = $(this).find(':selected').attr('data-name')
+                  var option = $(this).find(':selected').attr('data-name')
                 //alert(option);
                 
                 if (option === 'Logam Mulia') {

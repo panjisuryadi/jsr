@@ -177,15 +177,17 @@ public function index_data(Request $request)
 
         $module_action = 'Store';
 
-        $request->validate([
-             'name' => 'required|min:3|max:191',
-             'description' => 'required|min:3|max:191',
-         ]);
-       // $params = $request->all();
-        //dd($params);
-        $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
+        // $request->validate([
+        //      'name' => 'required|min:3|max:191',
+        //      'description' => 'required|min:3|max:191',
+        //  ]);
+        $params = $request->all();
+        dd($params);
+        // $params = $request->except('_token');
+        // $params['name'] = $params['name'];
+        // $params['description'] = $params['description'];
+
+
         //  if ($image = $request->file('image')) {
         //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
         //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
