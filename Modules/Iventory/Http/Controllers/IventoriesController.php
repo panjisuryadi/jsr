@@ -2,6 +2,7 @@
 
 namespace Modules\Iventory\Http\Controllers;
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -379,7 +380,7 @@ public function show($id)
         $mainkategori = KategoriProduk::findOrFail($id_kategori);
         $categories = Category::where('kategori_produk_id',$mainkategori->id)->get();
         $pembelian = GoodsReceipt::where('kategoriproduk_id',$mainkategori->id)->get();
-       
+        $kasir = User::role('Kasir')->orderBy('name')->get();
         $module_action = 'List';
    
          return view(''.$module_name.'::'.$module_path.'.'.$type.'.type',
@@ -388,6 +389,7 @@ public function show($id)
             'module_title',
             'mainkategori',
             'pembelian',
+            'kasir',
             'type',
             'categories',
             'module_icon', 'module_model'));

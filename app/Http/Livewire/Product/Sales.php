@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Product;
 
         use Livewire\Component;
         use App\Http\Livewire\Field;
+        use App\Models\User;
         use Illuminate\Http\Request;
         use Illuminate\Support\Facades\Validator;
         use Modules\GoodsReceipt\Models\GoodsReceipt;
@@ -27,6 +28,7 @@ namespace App\Http\Livewire\Product;
              $jumlah,
              $kadar,
              $no_nota,
+             $kasir,
            
              $karat_id;
  
@@ -35,6 +37,7 @@ namespace App\Http\Livewire\Product;
             public $pilih_po = 300;
             public $pilih_tipe_pembayaran = 'cicil';
             public $inputs = [];
+            public $sales = [];
             public $i = 1;
 
             public function add($i)
@@ -52,8 +55,22 @@ namespace App\Http\Livewire\Product;
             public function render()
             {
                  $this->goodsreceipt = GoodsReceipt::all();
+                 $this->kasir = User::role('Kasir')->orderBy('name')->get();
                 return view('livewire.product.sales');
             }
+
+
+
+            private function resetInput()
+                {
+                    $this->sales['invoice'] = null;
+                    $this->sales['date'] = null;
+                    $this->sales['nama_sales'] = null;
+                    $this->sales['user_id'] = null;
+                  
+                }
+
+
 
             private function resetInputFields(){
                 $this->code = '';
@@ -78,7 +95,10 @@ namespace App\Http\Livewire\Product;
                public function rules()
                 {
                         $rules = [
-                            
+                              'sales.invoice' => 'required|string|max:50',
+                              'sales.date' => 'required',
+                              'sales.nama_sales' => 'required',
+                              'sales.user_id' => 'required',
                               'jumlah.0'     => 'required',
                               'jumlah.*'     => 'required', 
                               'berat_kotor.0'     => 'required',
@@ -93,6 +113,7 @@ namespace App\Http\Livewire\Product;
 
                         foreach($this->inputs as $key => $value)
                         {
+                            
                             $rules['no_nota.0'] = 'required';
                             $rules['no_nota.'.$value] = 'required';
                             $rules['kadar.0'] = 'required';
@@ -111,6 +132,12 @@ namespace App\Http\Livewire\Product;
                    }
 
 
+
+           
+
+
+
+
                 public function messages()
                 {
                     $messages = [];
@@ -118,7 +145,6 @@ namespace App\Http\Livewire\Product;
                       {
                         $messages['qty.0'] = 'required';
                         $messages['qty.'.$value] = 'required';
-                      
                         $messages['karat_id.0'] = 'required';
                         $messages['karat_id.'.$value] = 'required';
                       }

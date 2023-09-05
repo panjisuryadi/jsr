@@ -64,16 +64,6 @@
 
 
 <div class="card-body px-1">
-
-
-
-
-
-
-
-
-
-
 <div class="bg-white w-full rounded-lg border border-1 px-3 py-5 mx-auto">
  
 

@@ -24,15 +24,27 @@
           <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Invoice No.</label>
           <span class="mr-4 inline-block hidden md:block">:</span>
           <div class="flex-1">
-          <input class="form-control" id="inline-full-name" type="text" placeholder="eg. #INV-100001" x-model="invoiceNumber">
+           <input wire:model="sales.invoice" type="text" name="invoice" id="first_name"   placeholder="eg. #INV-100001" class="form-control @error('sales.invoice') is-invalid @enderror">
+                    @error('sales.invoice')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
           </div>
+
         </div>
 
         <div class="mb-2 md:mb-1 md:flex items-center">
           <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide"> Date</label>
           <span class="mr-4 inline-block hidden md:block">:</span>
           <div class="flex-1">
-          <input class="form-control" type="date"  placeholder="eg. 17 Feb, 2020">
+          <input wire:model="sales.date" type="date" name="invoice" id="date"  
+             class="form-control @error('sales.date') is-invalid @enderror">
+                    @error('sales.date')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
           </div>
         </div>
 
@@ -40,7 +52,14 @@
           <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Kepada</label>
           <span class="mr-4 inline-block hidden md:block">:</span>
           <div class="flex-1">
-          <input class="form-control" type="text" placeholder="">
+         <select  class="form-control select2" 
+              name="sales_id" wire:model="sales.sales_id">
+                
+                  @foreach(\Modules\DataSale\Models\DataSale::all() as $row)
+                  <option value="{{$row->id}}" {{ old('sales_id') == $row->id ? 'selected' : '' }}>
+                  {{$row->name}} </option>
+                  @endforeach
+              </select>
           </div>
         </div>
       </div>
@@ -466,18 +485,34 @@
     <div class="flex flex-row gap-2">
        <div class="form-group">
             <label class="mb-0 text-gray-700">PIC</label>
-              <select class="form-control form-control-sm" name="user_id" id="user_id" required>
-            
-                @foreach(\App\Models\User::all() as $jp)
+              <select wire:model="sales.user_id" class="form-control" name="user_id" id="user_id" required>
+           
+                @foreach($kasir as $jp)
                 <option value="{{ $jp->id }}">{{ $jp->name }}</option>
                 @endforeach
               </select>
+                @error('sales.user_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
             </div>
        <div class="mb-2 items-center text-gray-700">
 
             <div class="form-group">
             <label class="mb-0 text-gray-700">Sales</label>
-             <input class="form-control form-control-sm"  type="text" placeholder="Ketik Nama Sales">
+            <input wire:model="sales.nama_sales" type="text" name="Nama_sales" id="nama_sales" placeholder="Ketik Nama Sales" class="form-control @error('sales.nama_sales') is-invalid @enderror">
+                    @error('sales.nama_sales')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+
+
+
+
             </div>
         </div>
      </div>
