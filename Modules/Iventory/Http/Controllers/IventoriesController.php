@@ -277,9 +277,8 @@ public function show($id)
 
 
 
-     public function type($distribusi) {
-
-      
+     public function type(Request $request, $type) {
+        $id_kategori =  $request->kategori;
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -287,14 +286,19 @@ public function show($id)
         $module_model = $this->module_model;
         $module_pembelian = $this->module_pembelian;
         $module_name_singular = Str::singular($module_name);
-        $categories = Category::get();
+        $mainkategori = KategoriProduk::findOrFail($id_kategori);
+        $categories = Category::where('kategori_produk_id',$mainkategori->id)->get();
+        $pembelian = GoodsReceipt::where('kategoriproduk_id',$mainkategori->id)->get();
+       
         $module_action = 'List';
-      
-         return view(''.$module_name.'::'.$module_path.'.'.$distribusi.'.type',
+   
+         return view(''.$module_name.'::'.$module_path.'.'.$type.'.type',
            compact('module_name',
             'module_action',
             'module_title',
-            'distribusi',
+            'mainkategori',
+            'pembelian',
+            'type',
             'categories',
             'module_icon', 'module_model'));
         }
@@ -302,7 +306,7 @@ public function show($id)
 
 
 
-public function kategori($id) {
+public function kategori(Request $request, $id) {
         $id = decode_id($id);
         $module_title = $this->module_title;
         $module_name = $this->module_name;

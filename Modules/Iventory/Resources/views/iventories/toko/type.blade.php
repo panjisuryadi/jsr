@@ -79,23 +79,28 @@ margin-bottom: 0.5rem !important;
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
-                        <div>
+                     <div>
                        <p class="uppercase text-lg text-gray-600 font-semibold">
-                      Distribusi  {{ $distribusi }}</p>
+                      Distribusi  {{ $type }}</p>
                         </div>
                         <div id="buttons">
-                    <div class="dropdown show">
+                            <div class="dropdown show">
                                 <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Pilih Distribusi
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" 
-                                    href="{{route(''.$module_name.'.type','toko')}}">Toko</a>
                                     <a class="dropdown-item"
-                                     href="{{route(''.$module_name.'.type','sales')}}">Sales</a>
+                                        href="{{route('iventory.type',[
+                                        'kategori'=>encode_id($mainkategori->id),
+                                        'type'=>'toko']
+                                    )}}">Toko</a>
+                                    <a class="dropdown-item"
+                                        href="{{route('iventory.type',[
+                                        'kategori'=>encode_id($mainkategori->id),
+                                        'type'=>'sales']
+                                    )}}">Sales</a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
             
@@ -108,7 +113,7 @@ margin-bottom: 0.5rem !important;
   
        <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
         @csrf
-                        {{-- {{$pembelian}} --}}
+                        {{-- {{$mainkategori}} --}}
                       
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
@@ -144,20 +149,34 @@ margin-bottom: 0.5rem !important;
 
                             <div class="col-span-2 bg-transparent">
                         
-                                    <div class="flex flex-row grid grid-cols-2 gap-2">
+                                    <div class="flex flex-row grid grid-cols-3 gap-2">
                                         <livewire:product.pilih-kategori :categories="$categories"/>
                                             <div class="form-group">
                                                 <label for="group_id">@lang('Group')
                                                     <span class="text-danger">*</span>
                                                     <span class="small">Jenis Perhiasan</span>
                                                 </label>
-                                                <select class="form-control select2" name="group_id" id="group_id" required>
+                                                <select class="form-control select2" name="group_id" id="group_id" >
                                                     <option value="" selected disabled>Group</option>
                                                     @foreach(\Modules\Group\Models\Group::all() as $jp)
                                                     <option value="{{ $jp->id }}">{{ $jp->name }}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>
+                                            </div> 
+
+
+                         <div class="form-group">
+                            <label for="group_id">@lang('Nomor PO')
+                                <span class="text-danger">*</span>
+                               
+                            </label>
+                            <select class="form-control select2" name="nomor_po" id="group_id" >
+                                <option value="" selected disabled>Nomor PO</option>
+                                @foreach($pembelian as $jp)
+                                <option value="{{ $jp->id }}">{{ $jp->code }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                                             
                                             
                                         </div>
@@ -167,7 +186,7 @@ margin-bottom: 0.5rem !important;
                                             
                                             <div class="form-group">
                                                 <label for="cabang_id">Cabang</label>
-                                                <select class="form-control select2" name="cabang_id" id="cabang_id" required>
+                                                <select class="form-control select2" name="cabang_id" id="cabang_id" >
                                                     <option value="" selected disabled>Select Cabang</option>
                                                     @foreach(\Modules\Cabang\Models\Cabang::all() as $sup)
                                                     <option value="{{$sup->id}}" {{ old('cabang_id') == $sup->name ? 'selected' : '' }}>
@@ -183,7 +202,7 @@ margin-bottom: 0.5rem !important;
 
                                              <div class="form-group">
                                                 <label for="product_note">Model</label>
-                                                <select class="form-control select2" name="produk_model" id="produk_model" required>
+                                                <select class="form-control select2" name="produk_model" id="produk_model" >
                                                     <option value="" selected disabled>Select Model</option>
                                                     @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
                                                     <option value="{{$sup->id}}" {{ old('produk_model') == $sup->name ? 'selected' : '' }}>
@@ -236,7 +255,7 @@ margin-bottom: 0.5rem !important;
                                             <a class="px-5 btn btn-danger"
                                                 href="{{ route("goodsreceipt.index") }}">
                                             @lang('Cancel')</a>
-                                            <button id="SimpanTambah" type="button" class="px-4 btn btn-primary">@lang('Save')  <i class="bi bi-check"></i></button>
+                                            <button id="SimpanTambah" type="submit" class="px-4 btn btn-primary">@lang('Save')  <i class="bi bi-check"></i></button>
                                         </div>
                                     </div>
                                 </div>

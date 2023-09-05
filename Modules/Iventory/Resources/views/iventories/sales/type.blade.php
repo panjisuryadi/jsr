@@ -33,7 +33,7 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                        <p class="uppercase text-lg text-gray-600 font-semibold">
-                      Distribusi  {{ $distribusi }}</p>
+                      Distribusi  {{ $type }}</p>
                         </div>
                         <div id="buttons">
 
@@ -42,12 +42,20 @@
                 <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Pilih Distribusi
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" 
-                    href="{{route(''.$module_name.'.type','toko')}}">Toko</a>
-                    <a class="dropdown-item"
-                     href="{{route(''.$module_name.'.type','sales')}}">Sales</a>
-                </div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" 
+                        href="{{route('iventory.type',[
+                                 'kategori'=>encode_id($mainkategori->id),
+                                 'type'=>'toko']
+                                 )}}">Toko</a>
+
+
+                        <a class="dropdown-item"
+                         href="{{route('iventory.type',[
+                                 'kategori'=>encode_id($mainkategori->id),
+                                 'type'=>'sales']
+                                 )}}">Sales</a>
+                    </div>
             </div>
 
 

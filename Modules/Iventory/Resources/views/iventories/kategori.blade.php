@@ -54,23 +54,36 @@
 
 
 
+         
+<div class="flex justify-between py-1 border-bottom">
+         <div>
+           <div class="dropdown show">
+                    <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Pilih Distribusi
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" 
+                        href="{{route('iventory.type',[
+                                 'kategori'=>encode_id($kategori->id),
+                                 'type'=>'toko']
+                                 )}}">Toko</a>
 
 
-
-
-                    <div class="flex justify-between py-1 border-bottom">
-                        <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a>
-
-                        </div>
-                        <div id="buttons">
-                        </div>
+                        <a class="dropdown-item"
+                         href="{{route('iventory.type',[
+                                 'kategori'=>encode_id($kategori->id),
+                                 'type'=>'sales']
+                                 )}}">Sales</a>
                     </div>
+                </div>
+            </div>
+            <div class="flex flex-row gap-2" id="buttons">
+           
+
+            </div>
+        </div>
+
+
                     <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>

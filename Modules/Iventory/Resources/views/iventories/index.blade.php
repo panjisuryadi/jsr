@@ -65,7 +65,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-            <div class="dropdown show">
+       {{--      <div class="dropdown show">
                 <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Pilih Distribusi
                 </a>
@@ -75,7 +75,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                     <a class="dropdown-item"
                      href="{{route(''.$module_name.'.type','sales')}}">Sales</a>
                 </div>
-            </div>
+            </div> --}}
         </div>
                         <div id="buttons">
                         </div>
