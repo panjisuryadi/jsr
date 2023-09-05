@@ -129,7 +129,7 @@
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+         step="0.01"
         wire:model="berat_accessories"
         wire:change="recalculateTotal"
         wire:keyup="recalculateTotal"
@@ -137,9 +137,12 @@
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}"
         >
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
+        @if ($errors->has('berat_accessories'))
+        <span class="invalid feedback"role="alert">
+            <small class="text-danger">{{ $errors->first('berat_accessories') }}.</small
+            class="text-danger">
         </span>
+        @endif
     </div>
 
   <div class="form-group">

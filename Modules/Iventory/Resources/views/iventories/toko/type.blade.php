@@ -162,6 +162,15 @@ margin-bottom: 0.5rem !important;
                                                     <option value="{{ $jp->id }}">{{ $jp->name }}</option>
                                                     @endforeach
                                                 </select>
+
+
+                                              @if ($errors->has('group_id'))
+                                                <span class="invalid feedback"role="alert">
+                                                    <small class="text-danger">{{ $errors->first('group_id') }}.</small
+                                                    class="text-danger">
+                                                </span>
+                                                @endif
+
                                             </div> 
 
 
@@ -170,12 +179,19 @@ margin-bottom: 0.5rem !important;
                                 <span class="text-danger">*</span>
                                
                             </label>
-                            <select class="form-control select2" name="nomor_po" id="group_id" >
+                            <select class="form-control select2" name="goodsreceipt_id" id="goodsreceipt_id" >
                                 <option value="" selected disabled>Nomor PO</option>
                                 @foreach($pembelian as $jp)
                                 <option value="{{ $jp->id }}">{{ $jp->code }}</option>
                                 @endforeach
                             </select>
+
+                            @if ($errors->has('goodsreceipt_id'))
+                                <span class="invalid feedback"role="alert">
+                                    <small class="text-danger">{{ $errors->first('goodsreceipt_id') }}.</small
+                                    class="text-danger">
+                                </span>
+                                @endif
                         </div>
                                             
                                             
@@ -195,9 +211,12 @@ margin-bottom: 0.5rem !important;
                                                     @endforeach
                                                 </select>
 
-                                                 <span class="invalid feedback" role="alert">
-                                                    <span class="text-danger error-text cabang_id_err"></span>
-                                                </span>
+                                                @if ($errors->has('cabang_id'))
+                                                    <span class="invalid feedback"role="alert">
+                                                        <small class="text-danger">{{ $errors->first('cabang_id') }}.</small
+                                                        class="text-danger">
+                                                    </span>
+                                                    @endif
                                             </div> 
 
                                              <div class="form-group">
@@ -210,10 +229,12 @@ margin-bottom: 0.5rem !important;
                                                     </option>
                                                     @endforeach
                                                 </select>
-
-                                                 <span class="invalid feedback" role="alert">
-                                                    <span class="text-danger error-text product_code_err"></span>
-                                                </span>
+                                                  @if ($errors->has('produk_model'))
+                                                    <span class="invalid feedback"role="alert">
+                                                        <small class="text-danger">{{ $errors->first('produk_model') }}.</small
+                                                        class="text-danger">
+                                                    </span>
+                                                    @endif
                                             </div>
 
 

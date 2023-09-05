@@ -7,7 +7,12 @@
         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
         @endforeach
     </select>
-
+    @if ($errors->has('category'))
+        <span class="invalid feedback"role="alert">
+            <small class="text-danger">{{ $errors->first('category') }}.</small
+            class="text-danger">
+        </span>
+        @endif
 
 </div>
 

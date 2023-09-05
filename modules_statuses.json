@@ -58,5 +58,6 @@
     "GoodsReceipt": true,
     "KategoriMutiara": true,
     "Exhibition": true,
-    "Iventory": true
+    "Iventory": true,
+    "PenentuanHarga": true
 }

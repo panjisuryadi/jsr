@@ -821,12 +821,13 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'order'         => 3,
                 'activematches' => [
                     'products*',
-                    'timbangans*',
+                    'penentuanhargas*',
                 ],
                 'permission' => ['create_products',
                                       'print_barcodes',
                                       'access_product_transfer',
                                       'access_timbangans',
+                                      'access_penentuanhargas',
                                       'access_products'],
             ]);
             $products->link->attr([
@@ -837,7 +838,8 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
        // Submenu: iventory
             $products->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('List Inventory').'',
+                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
+                '.__('List Inventory').'',
                  [
                 'route' => 'iventory.index',
                 'class' => 'nav-item',
@@ -850,6 +852,24 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
+
+      $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+     '.__('Penentuan Harga'), [
+                'route' => 'penentuanharga.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['penentuanhargas*'],
+                'permission'    => ['access_penentuanhargas'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
 
             // // Submenu: products
             // $products->add('
@@ -867,22 +887,22 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             //     'class' => 'c-sidebar-nav-link py-2',
             // ]);
 
-
+  // PenentuanHargas
 
 
     // Timbangans
-    $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Timbangan'), [
-                'route' => 'timbangan.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['timbangans*'],
-                'permission'    => ['access_timbangans'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+    // $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Timbangan'), [
+    //             'route' => 'timbangan.index',
+    //             'class' => 'nav-item',
+    //         ])
+    //         ->data([
+    //             'order'         => 3,
+    //             'activematches' => ['timbangans*'],
+    //             'permission'    => ['access_timbangans'],
+    //         ])
+    //         ->link->attr([
+    //             'class' => 'c-sidebar-nav-link py-2',
+    //         ]);
 
 
 

@@ -181,13 +181,7 @@ top: 55% !important;
                 <p class="poppins dark:text-gray-300 text-gray-800">
                     {{ @$detail->user->name }}</p>
             </div>
-    <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600"></p>
 
-                <span class="rounded rounded-md px-2 py-1 bg-yellow-300 poppins font-semibold text-xs text-gray-800">
-
-                   {{ $detail->count }} / {{ $detail->qty }}</span>
-            </div>
 
 </div>
 

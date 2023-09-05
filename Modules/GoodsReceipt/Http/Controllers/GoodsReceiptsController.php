@@ -562,8 +562,9 @@ private function _saveTipePembelian($input ,$goodsreceipt)
        foreach ($input['karat_id'] as $key => $value) {
           GoodsReceiptItem::create([
               'goodsreceipt_id' => $goodsreceipt,
+              'kadar' => $input['karat_id'][$key],
               'karat_id' => $input['karat_id'][$key],
-              'kategoriproduk_id' => 4,
+              'kategoriproduk_id' => $input['kategori_id'][$key],
               'qty' =>$input['qty'][$key]
                ]);
 

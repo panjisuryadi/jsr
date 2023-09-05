@@ -18,7 +18,11 @@ use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\Product\Entities\Category;
-
+use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductItem;
+use Modules\Product\Entities\TrackingProduct;
+use Modules\ProdukModel\Models\ProdukModel;
+use Modules\Group\Models\Group;
 
 
 class IventoriesController extends Controller
@@ -33,6 +37,7 @@ class IventoriesController extends Controller
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\Iventory\Models\Iventory";
         $this->module_pembelian = "Modules\GoodsReceipt\Models\GoodsReceipt";
+        $this->module_products = "Modules\Product\Entities\Product";
 
     }
 
@@ -167,45 +172,130 @@ public function index_data(Request $request)
      */
     public function store(Request $request)
     {
-         abort_if(Gate::denies('create_iventory'), 403);
+        abort_if(Gate::denies('create_iventory'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $module_products = $this->module_products;
+        $module_pembelian = $this->module_pembelian;
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'Store';
+        $request->validate([
+             'category' => 'required|min:1|max:3',
+             'group_id' => 'required|min:1|max:3',
+             'goodsreceipt_id' => 'required',
+             'cabang_id' => 'required',
+             'produk_model' => 'required',
+             'berat_accessories' => 'required|numeric',
+          
+         ]);
+        $input = $request->except('_token');
+        $input = $request->all();
+        //dd($input);
+    
+        $model = ProdukModel::where('id', $input['produk_model'])->first();
+        $goodsreceipt = GoodsReceipt::where('id',$input['goodsreceipt_id'])->first();
+        $group = Group::where('id', $input['group_id'])->first();
+        $totalberat = $input['berat_total'] ?? $input['berat_emas'];
+        $berat = number_format((float)($totalberat), 5);
+       
+          $$module_name_singular = $module_products::create([
+            'category_id'                       => $input['category'],
+            'goodsreceipt_id'                   => $input['goodsreceipt_id'],
+            'kode_pembelian'                    => $goodsreceipt->code,
+            'product_stock_alert'               => $input['product_stock_alert'],
+            'product_name'                      => $group->name .' '. $model->name ?? 'unknown',
+            'product_code'                      => $input['product_code'],
+            'product_price'                     => '0',
+            'product_quantity'                  => $input['product_quantity'],
+            'product_barcode_symbology'         => $input['product_barcode_symbology'],
+            'product_unit'                      => $input['product_unit'],
+            'status'                            => 0, //status Purchase 
+            'product_cost'                      => 0
+        ]);
 
-        // $request->validate([
-        //      'name' => 'required|min:3|max:191',
-        //      'description' => 'required|min:3|max:191',
-        //  ]);
-        $params = $request->all();
-        dd($params);
-        // $params = $request->except('_token');
-        // $params['name'] = $params['name'];
-        // $params['description'] = $params['description'];
+         if ($request->filled('image')) {
+                $img = $request->image;
+                $folderPath = "uploads/";
+                $image_parts = explode(";base64,", $img);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName ='webcam_'. uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('local')->put($file,$image_base64);
+                $$module_name_singular->addMedia(Storage::path('uploads/' . $fileName))
+                ->toMediaCollection('images');
+                }
+
+            if ($request->hasFile('document') && $request->file('document')->isValid()) {
+                 $$module_name_singular->addMediaFromRequest('document')
+                 ->toMediaCollection('images');
+            }
+
+            $produk = $$module_name_singular->id;
+            $module_pembelian::countProduk($$module_name_singular->kode_pembelian);
+            $this->_saveProductsItem($input ,$produk);
+
+             activity()->log(' '.auth()->user()->name.' Input data pembelian');
+
+            //$$module_name_singular = $module_model::create($params);
+             toast(''. $module_title.' Created!', 'success');
+             return redirect()->route(''.$module_name.'.index');
 
 
-        //  if ($image = $request->file('image')) {
-        //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
-        //             $constraint->aspectRatio();
-        //             })->encode();
-        //  $normalpath = 'uploads/' . $gambar;
-        //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-        //  Storage::disk($storage)->put($normalpath, (string) $normal);
-        //  $params['image'] = "$gambar";
-        // }else{
-        //    $params['image'] = 'no_foto.png';
-        // }
-
-
-         $$module_name_singular = $module_model::create($params);
-         toast(''. $module_title.' Created!', 'success');
-         return redirect()->route(''.$module_name.'.index');
     }
+
+
+
+
+
+   private function _saveProductsItem($input ,$produk)
+    {
+
+       ProductItem::create([
+                'product_id'                  => $produk,
+                'location_id'                 => $input['location_id'] ?? null,
+                'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
+                'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
+                'customer_id'                 => $input['customer_id'] ?? null,
+                'karat_id'                    => $input['karat_id'] ?? null,
+                'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
+                'certificate_id'              => $input['certificate_id'] ?? null,
+                'shape_id'                    => $input['shape_id'] ?? null,
+                'round_id'                    => $input['round_id'] ?? null,
+                'round_id'                    => $input['round_id'] ?? null,
+                'berat_accessories'           => $input['berat_accessories'] ?? 0,
+                'tag_label'                   => $input['berat_tag'] ?? 0,
+                'berat_total'                 => $input['berat_total'] ?? 0,
+                'product_cost'                => '0',
+                'product_price'               => '0',
+                'product_sale'                => '0',
+                'berat_emas'                  => $input['berat_emas'],
+                'berat_label'                 => '0',
+                'gudang_id'                   => $gudang ?? null,
+                'supplier_id'                 => $input['supplier_id'] ?? null,
+                'etalase_id'                  => $input['etalase_id'] ?? null,
+                'baki_id'                     => $input['baki_id'] ?? null,
+                'produk_model_id'             => $input['produk_model'] ?? null,
+                'berat_total'                 => $input['berat_total']
+            ]);
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
