@@ -15,15 +15,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+
+
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a>
-
+                        <p class="uppercase text-lg text-gray-600 font-semibold">
+                      Penentuan Harga</p>
                         </div>
                         <div id="buttons">
                         </div>

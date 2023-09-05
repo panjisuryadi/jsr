@@ -13,17 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('penentuanhargas', function (Blueprint $table) {
-            $table->id();
-            //$table->unsignedBigInteger('jenis_group_id');
-            $table->string('name');
-            $table->string('code');
-            $table->text('description')->nullable();
-            //$table->string('image')->nullable(true);
-            // $table->foreign('jenis_group_id')->references('id')->on('jenisgroups')->restrictOnDelete();
-            $table->timestamps();
+        // Schema::create('penentuanhargas', function (Blueprint $table) {
+        //     $table->id();
+        //     //$table->unsignedBigInteger('jenis_group_id');
+        //     $table->string('name');
+        //     $table->string('code');
+        //     $table->text('description')->nullable();
+        //     //$table->string('image')->nullable(true);
+        //     // $table->foreign('jenis_group_id')->references('id')->on('jenisgroups')->restrictOnDelete();
+        //     $table->timestamps();
 
-        });
+        // });
     }
 
     /**
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penentuanhargas');
+       // Schema::dropIfExists('penentuanhargas');
     }
 };
