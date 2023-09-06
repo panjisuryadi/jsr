@@ -80,7 +80,7 @@ class Create extends Component
             $this->harga_margin = 0;
         }
 
-        $this->HargaFinal = (int)$this->harga_modal + (int)$this->harga_emas + (int)$this->harga_margin;
+        $this->HargaFinal = (int)$this->harga_modal + (int)$this->harga_margin;
         $this->HargaFinalRp = 'Rp ' . number_format($this->HargaFinal, 0, ',', '.');
     }
 
