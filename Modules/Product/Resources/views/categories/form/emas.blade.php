@@ -19,6 +19,7 @@
     </div>
 </div>
 
+
 {{-- BERAT --}}
 
 <div class="flex relative py-1">
@@ -333,21 +334,13 @@ $("#qty_diterima").on('input', function() {
 });
 
 
-  $('#FormTambah').on('keyup keypress', function(e) {
-                        var keyCode = e.keyCode || e.which;
-                        if (keyCode === 13) {
-                            e.preventDefault();
-                            return false;
-                        }
-                    });
-
-
-
-
-
-
-
-
+$('#FormTambah').on('keyup keypress', function(e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) {
+        e.preventDefault();
+        return false;
+    }
+});
 
 
 })(jQuery);

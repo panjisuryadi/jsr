@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddKategoriIdToGoodsreceiptItemsTable extends Migration
+class AddMigrasiKaratKategoriToGoodsreceiptItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,8 @@ class AddKategoriIdToGoodsreceiptItemsTable extends Migration
     public function up()
     {
         Schema::table('goodsreceipt_items', function (Blueprint $table) {
-          $table->unsignedBigInteger('kategoriproduk_id')
-         ->nullable()->after('kadar');  
-          $table->unsignedBigInteger('karat_id')
-         ->nullable()->after('kategoriproduk_id');   
-          $table->string('qty')->default(0)->nullable()->after('kategoriproduk_id');
+             $table->foreign('kategoriproduk_id')->references('id')->on('kategoriproduks')->nullOnDelete();
+             $table->foreign('karat_id')->references('id')->on('karats')->nullOnDelete();
 
         });
     }

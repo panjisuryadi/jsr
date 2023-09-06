@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
@@ -13,17 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::create('penentuanhargas', function (Blueprint $table) {
-        //     $table->id();
-        //     //$table->unsignedBigInteger('jenis_group_id');
-        //     $table->string('name');
-        //     $table->string('code');
-        //     $table->text('description')->nullable();
-        //     //$table->string('image')->nullable(true);
-        //     // $table->foreign('jenis_group_id')->references('id')->on('jenisgroups')->restrictOnDelete();
-        //     $table->timestamps();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::dropIfExists('penentuanhargas');
+        Schema::create('penentuanhargas', function (Blueprint $table) {
 
-        // });
+            $table->id();
+            $table->unsignedBigInteger('karat_id');   
+            $table->unsignedBigInteger('user_id');   
+            $table->date('tgl_update')->nullable();
+            $table->integer('harga_emas');
+            $table->integer('harga_modal');
+            $table->integer('margin');
+            $table->integer('harga_jual');
+            $table->timestamps();
+            $table->foreign('karat_id')->references('id')->on('karats');
+            $table->foreign('user_id')->references('id')->on('users');
+          });
+          DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -33,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-       // Schema::dropIfExists('penentuanhargas');
+       Schema::dropIfExists('penentuanhargas');
     }
 };
