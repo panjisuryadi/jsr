@@ -3,7 +3,7 @@
         
         <div class="form-group mb-0 w-1/4">
             <label class="mb-0" for="karat_id">@lang('Karat') <span class="text-danger">*</span></label>
-            <select class="form-control select2" 
+            <select class="form-control form-control-sm select2" 
             wire.model="karat_id" 
             wire:change="pilihKarat($event.target.value)" 
             name="karat_id" id="karat_id" required>
@@ -13,8 +13,29 @@
             </select>
         </div>
         
-        <div id="buttons">
-        </div>
+      
+
+<div id="buttons" class="flex flex-row">
+
+<a class="flex" title="Master Data Karat" href="{{ route("karat.index") }}">
+    <div class="flex h-8 w-8 items-center justify-center p-2 mr-1 rounded-full border border-muted bg-muted">
+        <i class="bi bi-card-list text-gray-600"></i>
+    </div>
+ </a>
+
+
+<a class="flex" title="Kembali ke Iventory" href="{{ route("iventory.index") }}">
+    <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
+        <i class="bi bi-house text-gray-600"></i>
+    </div>
+ </a>
+
+
+</div>
+
+
+
+      
     </div>
    
 

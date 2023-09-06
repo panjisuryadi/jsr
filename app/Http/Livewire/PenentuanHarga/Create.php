@@ -82,14 +82,13 @@ class Create extends Component
             $this->harga_emas = 0;
             $this->harga_margin = 0;
         }
-         $this->charga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
-         $this->charga_modal = preg_replace("/[^0-9]/", "", $this->harga_modal);
-         $this->charga_margin = preg_replace("/[^0-9]/", "", $this->harga_margin);
-
-         $this->HargaFinalEmas = (int)$this->charga_emas * (int)$this->kode_karat;
+        $this->charga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
+        $this->charga_modal = preg_replace("/[^0-9]/", "", $this->harga_modal);
+        $this->charga_margin = preg_replace("/[^0-9]/", "", $this->harga_margin);
+        $this->HargaFinalEmas = (int)$this->charga_emas * (int)$this->kode_karat;
 
           $this->HargaFinalEmasRp = 'Rp ' . number_format($this->HargaFinalEmas, 0, ',', '.');
-       //  dd($this->HargaFinalEmas);
+       //dd($this->HargaFinalEmas);
 
         $this->HargaFinal = (int)$this->charga_modal + (int)$this->charga_margin;
 
