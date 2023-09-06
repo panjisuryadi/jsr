@@ -39,7 +39,7 @@
                        wire.model="karat_id" 
                        >
                 <input type="text" class="form-control text-center" 
-                name="karat" value="{{$kode_karat}}" readonly>
+                name="karat" value="{{$kode_karat}}">
             </td>
             <td style="width: 24%;" class="text-left">
                
