@@ -10,15 +10,6 @@ class PenentuanHarga extends Model
 {
     use HasFactory;
     protected $table = 'penentuanhargas';
-    // protected $fillable = [
-    //     'name',
-    //    // 'image',
-    //    // 'code',
-    //     'description',
-    //     'start_date',
-    //     'end_date',
-
-    //  ];
     protected $guarded = [];
 
   // public function products() {

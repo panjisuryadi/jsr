@@ -5,11 +5,11 @@ namespace App\Http\Livewire\PenentuanHarga;
 use Livewire\Component;
 
 use Modules\Karat\Models\Karat;
+use Modules\PenentuanHarga\Models\PenentuanHarga;
 
 
 class Create extends Component
 {
-
 
     public $selected = '';
     public $harga_emas = '';
@@ -30,14 +30,15 @@ class Create extends Component
     public $HargaFinalEmasRp = 0;
     public $HargaFinalEmas = 0;
 
+
+
+
     public function selectOption($value)
     {
         $harga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
         $this->selectedOption = $value;
         $this->emit('optionSelected', $value);
     }
-
-
 
 
     public function pilihKarat($value) {
@@ -55,24 +56,15 @@ class Create extends Component
     }
 
 
-
-
-    // public function convertRupiah()
-    // {
-    //     $this->harga_emas = 'Rp ' . number_format($this->harga_emas, 0, ',', '.');
-    // }
-
-
       public function calculatePriceTotal()
        {
            dd($this->harga_modal);
        }
 
 
-  
 
-    public function recalculateTotal()
-    {
+      public function recalculateTotal()
+       {
         //$this->resetInput();
        
         if ($this->harga_emas == null 
@@ -91,9 +83,6 @@ class Create extends Component
        //dd($this->HargaFinalEmas);
 
         $this->HargaFinal = (int)$this->charga_modal + (int)$this->charga_margin;
-
-
-
         $this->HargaFinalRp = 'Rp ' . number_format($this->HargaFinal, 0, ',', '.');
     }
 
