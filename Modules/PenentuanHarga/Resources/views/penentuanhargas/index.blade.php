@@ -18,14 +18,73 @@
 
 
                     <div class="flex justify-between py-1 border-bottom">
-                        <div>
-                        <p class="uppercase text-lg text-gray-600 font-semibold">
-                      Penentuan Harga</p>
+                    
+                        <div class="form-group mb-0 w-1/4">
+                            <label class="mb-0" for="karat_id">@lang('Karat') <span class="text-danger">*</span></label>
+                            <select class="form-control select2" name="karat_id" id="karat_id" required>
+                                
+                                @foreach(\Modules\Karat\Models\Karat::all() as $jp)
+                                <option value="{{ $jp->id }}">{{ $jp->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
+                      
                         <div id="buttons">
                         </div>
                     </div>
-                    <div class="table-responsive mt-1">
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+         
+            <th style="width: 10%;" class="text-center">Kadar</th>
+            <th class="text-center">Harga Emas</th>
+            <th class="text-center">Harga Modal</th>
+            <th class="text-center">Margin</th>
+            <th class="text-center">Harga Jual</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td style="width: 10%;" class="text-center">
+                <input type="number" class="form-control text-center" name="kadar">
+            </td>
+            <td  style="width: 24%;" class="text-center">
+               <input type="number" class="form-control text-center" name="kadar">
+            </td>
+            <td  style="width: 24%;" class="text-center">
+               <input type="number" class="form-control text-center" name="kadar">
+            </td>
+          <td  style="width: 24%;" class="text-center">
+               <input type="number" class="form-control text-center" name="kadar">
+            </td>
+           <td  style="width: 24%;" class="text-center">
+               <input type="number" class="form-control text-center" name="kadar" readonly>
+            </td>
+       
+        </tr>
+      
+    </tbody>
+</table>
+
+
+<div class="flex justify-between px-3 pb-2 border-bottom">
+    <div>
+    </div>
+    <div class="form-group">
+    
+        <a class="px-5 btn btn-danger"
+            href="{{ route("iventory.index") }}">
+        @lang('Cancel')</a>
+        <button id="SimpanTambah" type="submit" class="px-4 btn btn-primary">
+            @lang('Save')  <i class="bi bi-check"></i></button>
+    </div>
+</div>
+
+                 {{--    <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
@@ -43,6 +102,10 @@
                             </thead>
                         </table>
                     </div>
+ --}}
+
+
+
                 </div>
             </div>
         </div>
