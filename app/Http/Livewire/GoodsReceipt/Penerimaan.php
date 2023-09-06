@@ -138,9 +138,9 @@ namespace App\Http\Livewire\GoodsReceipt;
 
 
              public function convertRupiah()
-            {
-                $this->product_price = 'Rp ' . number_format($this->price, 0, ',', '.');
-            }
+                {
+                    $this->product_price = 'Rp ' . number_format($this->price, 0, ',', '.');
+                }
 
 
 

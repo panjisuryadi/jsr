@@ -27,6 +27,8 @@ class Create extends Component
     public $HargaFinal = 0;
     public $HargaFinalRp = 0;
     public $hargaModal = 0;
+    public $HargaFinalEmasRp = 0;
+    public $HargaFinalEmas = 0;
 
     public function selectOption($value)
     {
@@ -71,6 +73,7 @@ class Create extends Component
 
     public function recalculateTotal()
     {
+        //$this->resetInput();
        
         if ($this->harga_emas == null 
             && $this->harga_modal == null 
@@ -79,8 +82,19 @@ class Create extends Component
             $this->harga_emas = 0;
             $this->harga_margin = 0;
         }
+         $this->charga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
+         $this->charga_modal = preg_replace("/[^0-9]/", "", $this->harga_modal);
+         $this->charga_margin = preg_replace("/[^0-9]/", "", $this->harga_margin);
 
-        $this->HargaFinal = (int)$this->harga_modal + (int)$this->harga_margin;
+         $this->HargaFinalEmas = (int)$this->charga_emas * (int)$this->kode_karat;
+
+          $this->HargaFinalEmasRp = 'Rp ' . number_format($this->HargaFinalEmas, 0, ',', '.');
+       //  dd($this->HargaFinalEmas);
+
+        $this->HargaFinal = (int)$this->charga_modal + (int)$this->charga_margin;
+
+
+
         $this->HargaFinalRp = 'Rp ' . number_format($this->HargaFinal, 0, ',', '.');
     }
 

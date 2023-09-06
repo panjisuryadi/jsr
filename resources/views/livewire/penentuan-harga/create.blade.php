@@ -38,8 +38,9 @@
                        value="{{$karat_id}}" 
                        wire.model="karat_id" 
                        >
-                <input type="text" class="form-control text-center" 
-                name="karat" value="{{$kode_karat}}">
+                <input type="text" 
+                wire.model="karat" class="form-control text-center" 
+                name="karat" value="{{$kode_karat}}" >
             </td>
             <td style="width: 24%;" class="text-left">
                
@@ -52,8 +53,9 @@
         $required = "required";
         ?>
         <input class="form-control"
-        type="number"
+        type="text"
         wire:model="harga_emas"
+        type-currency="IDR"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
@@ -80,7 +82,8 @@
         $required = "required";
         ?>
         <input class="form-control numeric"
-        type="number"
+        type="text"
+        type-currency="IDR"
         name="{{ $field_name }}"
         wire:model="harga_modal"
         wire:change="recalculateTotal"
@@ -107,7 +110,8 @@
         $required = "required";
         ?>
         <input class="form-control numeric"
-        type="number"
+        type="text"
+        type-currency="IDR"
         name="{{ $field_name }}"
         wire:model="harga_margin"
         wire:change="recalculateTotal"
