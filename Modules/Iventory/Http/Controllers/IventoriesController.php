@@ -187,8 +187,7 @@ public function index_data(Request $request)
         $request->validate([
              'category' => 'required|min:1|max:3',
              'group_id' => 'required|min:1|max:3',
-             'goodsreceipt_id' => 'required',
-             'cabang_id' => 'required',
+                 'cabang_id' => 'required',
              'produk_model' => 'required',
              'berat_accessories' => 'required|numeric',
           
@@ -198,15 +197,15 @@ public function index_data(Request $request)
         //dd($input);
     
         $model = ProdukModel::where('id', $input['produk_model'])->first();
-        $goodsreceipt = GoodsReceipt::where('id',$input['goodsreceipt_id'])->first();
+      
         $group = Group::where('id', $input['group_id'])->first();
         $totalberat = $input['berat_total'] ?? $input['berat_emas'];
         $berat = number_format((float)($totalberat), 5);
        
           $$module_name_singular = $module_products::create([
             'category_id'                       => $input['category'],
-            'goodsreceipt_id'                   => $input['goodsreceipt_id'],
-            'kode_pembelian'                    => $goodsreceipt->code,
+            'goodsreceipt_id'                   => null,
+            'kode_pembelian'                    => null,
             'product_stock_alert'               => $input['product_stock_alert'],
             'product_name'                      => $group->name .' '. $model->name ?? 'unknown',
             'product_code'                      => $input['product_code'],
@@ -238,7 +237,7 @@ public function index_data(Request $request)
             }
 
             $produk = $$module_name_singular->id;
-            $module_pembelian::countProduk($$module_name_singular->kode_pembelian);
+            // $module_pembelian::countProduk($$module_name_singular->kode_pembelian);
             $this->_saveProductsItem($input ,$produk);
 
              activity()->log(' '.auth()->user()->name.' Input data pembelian');
@@ -379,7 +378,7 @@ public function show($id)
         $module_name_singular = Str::singular($module_name);
         $mainkategori = KategoriProduk::findOrFail($id_kategori);
         $categories = Category::where('kategori_produk_id',$mainkategori->id)->get();
-        $pembelian = GoodsReceipt::where('kategoriproduk_id',$mainkategori->id)->get();
+        $pembelian = GoodsReceipt::where('kategoriproduk_id',$mainkategori->id)->first();
         $kasir = User::role('Kasir')->orderBy('name')->get();
         $module_action = 'List';
    

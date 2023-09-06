@@ -116,6 +116,9 @@ margin-bottom: 0.5rem !important;
         @csrf
                         {{-- {{$mainkategori}} --}}
                       
+
+{{-- {{$mainkategori}} --}}
+
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">
@@ -150,7 +153,8 @@ margin-bottom: 0.5rem !important;
 
                             <div class="col-span-2 bg-transparent">
                         
-                                    <div class="flex flex-row grid grid-cols-3 gap-2">
+                                    <div class="flex flex-row grid grid-cols-2 gap-2">
+
                                         <livewire:product.pilih-kategori :categories="$categories"/>
                                             <div class="form-group">
                                                 <label for="group_id">@lang('Group')
@@ -175,25 +179,6 @@ margin-bottom: 0.5rem !important;
                                             </div> 
 
 
-                         <div class="form-group">
-                            <label for="group_id">@lang('Nomor PO')
-                                <span class="text-danger">*</span>
-                               
-                            </label>
-                            <select class="form-control select2" name="goodsreceipt_id" id="goodsreceipt_id" >
-                                <option value="" selected disabled>Nomor PO</option>
-                                @foreach($pembelian as $jp)
-                                <option value="{{ $jp->id }}">{{ $jp->code }}</option>
-                                @endforeach
-                            </select>
-
-                            @if ($errors->has('goodsreceipt_id'))
-                                <span class="invalid feedback"role="alert">
-                                    <small class="text-danger">{{ $errors->first('goodsreceipt_id') }}.</small
-                                    class="text-danger">
-                                </span>
-                                @endif
-                        </div>
                                             
                                             
                                         </div>

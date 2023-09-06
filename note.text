@@ -14,7 +14,7 @@
 
 
 
-#php artisan make:livewire GoodsReceipt/goodsreceipt
+#php artisan make:livewire PenentuanHarga/Create
 use Illuminate\Support\Facades\DB;
 public function up()
     {
@@ -42,3 +42,8 @@ public function up()
 
 
 1.setting web cam
+
+
+module stok sales 
+1. sales_id
+2. kadar_id
