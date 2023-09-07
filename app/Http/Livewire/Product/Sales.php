@@ -26,7 +26,6 @@ namespace App\Http\Livewire\Product;
              $berat_kotor,
              $berat_bersih,
              $jumlah,
-             $kadar,
              $no_nota,
              $kasir,
            
@@ -85,7 +84,6 @@ namespace App\Http\Livewire\Product;
                 $this->berat_kotor = '';
                 $this->berat_bersih = '';
                 $this->jumlah = '';
-                $this->kadar = '';
                 $this->no_nota = '';
                 $this->pilih_po = '';
               
@@ -107,8 +105,8 @@ namespace App\Http\Livewire\Product;
                               'berat_bersih.*'     => 'required',
                               'no_nota.0'     => 'required',
                               'no_nota.*'     => 'required',
-                              'kadar.0'     => 'required',
-                              'kadar.*'     => 'required'
+                              'harga.0'     => 'required|numeric|between:0,99.99',
+                              'harga.*'     => 'required|numeric|between:0,99.99'
                         ];
 
                         foreach($this->inputs as $key => $value)
@@ -116,8 +114,8 @@ namespace App\Http\Livewire\Product;
                             
                             $rules['no_nota.0'] = 'required';
                             $rules['no_nota.'.$value] = 'required';
-                            $rules['kadar.0'] = 'required';
-                            $rules['kadar.'.$value] = 'required';
+                            $rules['harga.0'] = 'required|numeric|between:0,99.99';
+                            $rules['harga.'.$value] = 'required|numeric|between:0,99.99';
                             $rules['karat_id.0'] = 'required';
                             $rules['karat_id.'.$value] = 'required'; 
                             $rules['berat_bersih.0'] = 'required';

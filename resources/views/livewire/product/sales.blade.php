@@ -197,8 +197,8 @@
 
  <div class="form-group">
                     <?php
-                    $field_name = 'kadar.0';
-                    $field_lable = label_case('kadar');
+                    $field_name = 'harga.0';
+                    $field_lable = label_case('harga (%)');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = 'wire:model="'.$field_name.'"';
@@ -208,7 +208,7 @@
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","type-currency=PERSEN","step=0.01"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -384,8 +384,8 @@
                 <div class="form-group">
                     <?php
                  
-                    $field_name = 'kadar.'.$value.'';
-                    $field_lable = label_case('kadar');
+                    $field_name = 'harga.'.$value.'';
+                    $field_lable = label_case('harga (%)');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = 'step="0.001" wire:model="'.$field_name.'"';
@@ -564,6 +564,21 @@ document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
         style: 'currency',
         minimumFractionDigits: 0
       });
+      cursorPostion = this.value.length - originalLenght + cursorPostion;
+      this.setSelectionRange(cursorPostion, cursorPostion);
+    }
+  });
+});
+
+document.querySelectorAll('input[type-currency="PERSEN"]').forEach((element) => {
+  element.addEventListener('keyup', function(e) {
+    let cursorPostion = this.selectionStart;
+    let value = parseFloat(this.value.replace(/[^,\d]/g, ''));
+    let originalLenght = this.value.length;
+    if (isNaN(value)) {
+      this.value = "";
+    } else {
+      this.value = (inputValue * 100).toFixed(2);
       cursorPostion = this.value.length - originalLenght + cursorPostion;
       this.setSelectionRange(cursorPostion, cursorPostion);
     }
