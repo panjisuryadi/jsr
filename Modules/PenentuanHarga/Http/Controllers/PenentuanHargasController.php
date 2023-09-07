@@ -19,7 +19,7 @@ class PenentuanHargasController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'PenentuanHarga';
+        $this->module_title = 'Penentuan Harga';
         $this->module_name = 'penentuanharga';
         $this->module_path = 'penentuanhargas';
         $this->module_icon = 'fas fa-sitemap';
@@ -74,10 +74,9 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
+                          ->editColumn('tgl_update', function ($data) {
+                             $tb = '<div class="text-sm font-medium text-gray-800">
+                                     ' .tgl($data->tgl_update) . '
                                     </div>';
                                 return $tb;
                             })
@@ -91,7 +90,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['tgl_update', 'action', 'name'])
                         ->make(true);
                      }
 

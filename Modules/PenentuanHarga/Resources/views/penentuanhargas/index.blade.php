@@ -15,45 +15,40 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="flex justify-between py-1 border-bottom">
+                        <div>
+                           <a href="{{ route(''.$module_name.'.create') }}"
+                                id="333"
+                                data-toggle="tooltip"
+                                 class="btn btn-primary px-3">
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                </a>
 
-  <livewire:penentuan-harga.create/>
-
-
-<div class="flex justify-between px-3 pb-2 border-bottom">
-    <div>
-    </div>
-    <div class="form-group">
-    
-        <a class="px-5 btn btn-danger"
-            href="{{ route("iventory.index") }}">
-        @lang('Cancel')</a>
-        <button id="SimpanTambah" type="submit" class="px-4 btn btn-primary">
-            @lang('Save')  <i class="bi bi-check"></i></button>
-    </div>
-</div>
-
-                 {{--    <div class="table-responsive mt-1">
-                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
-                            <thead>
-                                <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th class="text-lef">{{ __('Name') }}</th>
-
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
-                                    </th>
-                                    <th style="width: 18%!important;" class="text-center">
-                                        {{ __('Action') }}
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
+                        </div>
+                        <div id="buttons">
+                        </div>
                     </div>
- --}}
-
-
-
+                    <div class="table-responsive mt-1">
+<table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+    <thead>
+        <tr>
+            <th style="width: 6%!important;">No</th>
+            <th style="width: 10%!important;" class="text-center">{{ Label_Case('tgl_update') }}</th>
+            <th class="text-left">{{ Label_Case('harga_emas') }}</th>
+            <th style="width: 10%!important;" class="text-center">
+            {{ Label_Case('harga_emas') }}</th>
+            <th style="width: 10%!important;" class="text-center">
+            {{ Label_Case('harga_modal') }}</th>
+            <th style="width: 10%!important;" class="text-center">
+            {{ Label_Case('harga_emas') }}</th>
+            
+            <th style="width: 18%!important;" class="text-center">
+                {{ __('Action') }}
+            </th>
+        </tr>
+    </thead>
+</table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,9 +103,12 @@
                     }
                 },
 
-                {data: 'code', name: 'code'},
-                {data: 'name', name: 'name'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'tgl_update', name: 'tgl_update'},
+                {data: 'harga_emas', name: 'harga_emas'},
+                {data: 'harga_modal', name: 'harga_modal'},
+                {data: 'margin', name: 'margin'},
+                {data: 'harga_jual', name: 'harga_jual'},
+
 
                 {
                     data: 'action',

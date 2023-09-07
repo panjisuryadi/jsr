@@ -1,4 +1,5 @@
 <div>
+     <form wire:submit.prevent="store">
     <div class="flex justify-between py-1 border-bottom">
         
         <div class="form-group mb-0 w-1/4">
@@ -11,12 +12,20 @@
                 <option value="{{ $jp->id }}">{{ $jp->name }} | {{ $jp->kode }}</option>
                 @endforeach
             </select>
+
+
+           @if ($errors->has('karat_id'))
+                <div class="invalid feedback"role="alert">
+                    <small class="text-danger">{{ $errors->first('karat_id') }}.</small
+                        class="text-danger">
+                </div>
+            @endif
+
         </div>
         
       
 
 <div id="buttons" class="flex flex-row">
-
 <a class="flex" title="Master Data Karat" href="{{ route("karat.index") }}">
     <div class="flex h-8 w-8 items-center justify-center p-2 mr-1 rounded-full border border-muted bg-muted">
         <i class="bi bi-card-list text-gray-600"></i>
@@ -82,10 +91,12 @@
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
         
-
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
+           @if($errors->has('harga_emas'))
+                <div class="invalid feedback"role="alert">
+                    <small class="text-danger">{{ $errors->first('harga_emas') }}.</small
+                        class="text-danger">
+                </div>
+            @endif
     </div>
     
 
@@ -140,9 +151,13 @@
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
+     
+           @if($errors->has('harga_margin'))
+                <div class="invalid feedback"role="alert">
+                    <small class="text-danger">{{ $errors->first('harga_margin') }}.</small
+                        class="text-danger">
+                </div>
+            @endif
     </div>
 
 
@@ -179,6 +194,26 @@
 
 
 
+
+
+
+<div class="flex justify-between px-3 pb-2 border-bottom">
+    <div>
+    </div>
+    <div class="form-group">
+        <a class="px-5 btn btn-danger"
+            href="{{ route("iventory.index") }}">
+        @lang('Cancel')</a>
+        <button id="SimpanTambah" type="submit" class="px-4 btn btn-primary">
+        @lang('Save')  <i class="bi bi-check"></i></button>
+    </div>
+</div>
+
+
+
+
+
+</form>
 
 @push('page_scripts')
 <script type="text/javascript">

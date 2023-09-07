@@ -1,84 +1,54 @@
 @extends('layouts.app')
-@section('title', 'Create PenentuanHarga')
+@section('title', $module_title)
+@section('third_party_stylesheets')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+@endsection
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route("penentuanharga.index") }}">PenentuanHarga</a></li>
-    <li class="breadcrumb-item active">Add</li>
+    <li class="breadcrumb-item active">{{$module_title}}</li>
 </ol>
 @endsection
 @section('content')
 <div class="container-fluid">
-    <form action="{{ route('penentuanharga.store') }}" method="POST">
-        @csrf
-        <div class="row">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
 
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
+                    <livewire:penentuan-harga.create/>
 
-                   <div class="form-row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                          <?php
-                            $field_name = 'name';
-                            $field_lable = __($field_name);
-                            $field_placeholder = Label_case($field_lable);
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = '';
-                            ?>
-                         <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-                        <input type="text" name="{{ $field_name }}"
-                        class="form-control {{ $invalid }}"
-                         name="{{ $field_name }}"
-                         value="{{ old($field_name) }}"
-                         placeholder="{{ $field_placeholder }}" {{ $required }}>
-                            @if ($errors->has($field_name))
-                                <span class="invalid feedback"role="alert">
-                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                        class="text-danger">
-                                </span>
-                            @endif
-
-                                </div>
-                            </div>
-                        </div>
-
-                           <div class="form-group">
-                             <?php
-                            $field_name = 'description';
-                            $field_lable = __($field_name);
-                            $field_placeholder = Label_case($field_lable);
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = '';
-                            ?>
-            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <textarea name="{{ $field_name }}"
-             placeholder="{{ $field_placeholder }}"
-             id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}"></textarea>
-
-               @if ($errors->has($field_name))
-                                <span class="invalid feedback"role="alert">
-                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                        class="text-danger">
-                                </span>
-                            @endif
-                            </div>
-
-                        <div class="flex justify-between">
-                            <div></div>
-                            <div class="form-group">
-                             <a class="px-5 btn btn-danger"
-                            href="{{ route("penentuanharga.index") }}">
-                            @lang('Cancel')</a>
-                                <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 @endsection
+
+
+@push('page_scripts')
+
+
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+$(document).on('click', '#Tambah, #Edit', function(e){
+         e.preventDefault();
+        if($(this).attr('id') == 'Tambah')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
+        }
+        if($(this).attr('id') == 'Edit')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
+        }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
+</script>
+@endpush

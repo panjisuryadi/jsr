@@ -50,13 +50,10 @@ class Create extends Component
         //$this->emit('selected', $value);
      }
 
-    public function render()
-    {
-        return view('livewire.penentuan-harga.create');
-    }
 
 
-      public function calculatePriceTotal()
+
+     public function calculatePriceTotal()
        {
            dd($this->harga_modal);
        }
@@ -87,9 +84,56 @@ class Create extends Component
     }
 
 
+<<<<<<< Updated upstream
 
 
 
+=======
+   public function store()
+       {
+            
+                    $validatedDate = $this->validate([
+                        'karat_id'      => 'required',
+                        'harga_emas'    => 'required',
+                        'harga_margin'  => 'required',
+                    ]);
+              
+                // dd($input);
+                 $create = PenentuanHarga::create([
+                'karat_id'                          => $this->karat_id,
+                'user_id'                           =>  auth()->user()->id,
+                'margin'                            => $this->charga_margin,
+                'tgl_update'                        => date('Y-m-d'),
+                'harga_modal'                       => $this->rHarga_emas,
+                'harga_emas'                        => $this->HargaFinalEmas,
+                'harga_jual'                        => $this->HargaFinal,
+                'lock'                              =>  1,
+                      ]);
+        
+             $this->resetInput();
+                    session()->flash('message', 'Created Successfully.');
+                    return redirect(route('penentuanharga.index'));
+       }
+
+
+
+
+
+
+
+
+
+
+
+     public function render()
+        {
+            return view('livewire.penentuan-harga.create');
+        }
+
+ 
+
+
+>>>>>>> Stashed changes
   public function resetInput()
     {
         $this->HargaFinal = '';
