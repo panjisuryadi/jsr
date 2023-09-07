@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RenameKaratColumnInDistSalesItemsTable extends Migration
+class AddHargaColumnToDistSalesItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class RenameKaratColumnInDistSalesItemsTable extends Migration
     public function up()
     {
         Schema::table('dist_sales_items', function (Blueprint $table) {
-            $table->renameColumn('karat', 'harga');
+            $table->decimal('harga',4,2)->nullable()->after('nomor_pembelian');
         });
     }
 
@@ -26,7 +26,7 @@ class RenameKaratColumnInDistSalesItemsTable extends Migration
     public function down()
     {
         Schema::table('dist_sales_items', function (Blueprint $table) {
-            $table->renameColumn('harga', 'karat');
+            $table->dropColumn('harga');
         });
     }
 }
