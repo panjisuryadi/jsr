@@ -1,1 +1,31 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to production
+      uses: appleboy/ssh-action@master
+      with:
+         host: ${{ secrets.SSH_HOST_DEV }}
+         username: ${{ secrets.SSH_USERNAME_DEV }}
+         key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
+         port: ${{ secrets.SSH_PORT_DEV }}
+         script: |
+          cd /home/dev.hokkie.official-jsr.com/public_html
+          git stash
+          git pull
+          composer update
+          php artisan migrate
+          sudo chmod 777 -R storage
+          sudo chmod 777 -R bootstrap/cache
+          sudo composer clear-all
 
