@@ -19,7 +19,7 @@ class PenentuanHargasController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'Penentuan Harga';
+        $this->module_title = 'PenentuanHarga';
         $this->module_name = 'penentuanharga';
         $this->module_path = 'penentuanhargas';
         $this->module_icon = 'fas fa-sitemap';
@@ -51,6 +51,7 @@ class PenentuanHargasController extends Controller
 
 
 
+
 public function index_data(Request $request)
 
     {
@@ -74,12 +75,54 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
+
                           ->editColumn('tgl_update', function ($data) {
-                             $tb = '<div class="text-sm font-medium text-gray-800">
-                                     ' .tgl($data->tgl_update) . '
+                             $tb = '<div class="items-center text-center">
+                                     ' .tanggal2($data->tgl_update) . '
                                     </div>';
                                 return $tb;
                             })
+                           ->editColumn('user', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->user->name . '
+                                    </div>';
+                                return $tb;
+                            })  
+
+                             ->editColumn('harga_emas', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .rupiah($data->harga_emas) . '
+                                    </div>';
+                                return $tb;
+                            })   
+
+                             ->editColumn('harga_modal', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .rupiah($data->harga_modal) . '
+                                    </div>';
+                                return $tb;
+                            })   
+                             ->editColumn('margin', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .rupiah($data->margin) . '
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                             ->editColumn('harga_jual', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .rupiah($data->harga_jual) . '
+                                    </div>';
+                                return $tb;
+                            })
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->karat->kode . '
+                                    </div>';
+                                return $tb;
+                            })
+
+
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -90,7 +133,14 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['tgl_update', 'action', 'name'])
+                        ->rawColumns(['tgl_update',
+                                        'action', 
+                                        'harga_emas',
+                                        'margin',
+                                        'harga_modal',
+                                        'harga_jual',
+                                        'karat', 
+                                        'user'])
                         ->make(true);
                      }
 

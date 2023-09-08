@@ -29,6 +29,8 @@ class Create extends Component
     public $hargaModal = 0;
     public $HargaFinalEmasRp = 0;
     public $HargaFinalEmas = 0;
+    public $HargaEmasRp = 0;
+    public $rHarga_emas = 0;
 
 
 
@@ -50,45 +52,47 @@ class Create extends Component
         //$this->emit('selected', $value);
      }
 
+    public function render()
+    {
+        return view('livewire.penentuan-harga.create');
+    }
 
 
-
-     public function calculatePriceTotal()
+      public function calculatePriceTotal()
        {
            dd($this->harga_modal);
        }
 
-
-
-      public function recalculateTotal()
+      public function bagiHarga()
        {
-        //$this->resetInput();
-       
-        if ($this->harga_emas == null 
-            && $this->harga_modal == null 
-            && $this->harga_margin == null) {
-            $this->berat_modal = 0;
-            $this->harga_emas = 0;
-            $this->harga_margin = 0;
-        }
+            if ($this->harga_emas == null 
+                && $this->harga_modal == null 
+                && $this->harga_margin == null) {
+                $this->berat_modal = 0;
+                $this->harga_emas = 0;
+                $this->harga_margin = 0;
+            }
+          if ($this->kode_karat == null) {
+                //dd('sdsdsdsd');
+
+            // $this->dispatchBrowserEvent('alert',[
+            //     'type'=>'error',
+            //     'message'=>"Harga Karat diisi dulu"
+            // ]);
+
+
+            }
+     
+
         $this->charga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
-        $this->charga_modal = preg_replace("/[^0-9]/", "", $this->harga_modal);
-        $this->charga_margin = preg_replace("/[^0-9]/", "", $this->harga_margin);
-        $this->HargaFinalEmas = (int)$this->charga_emas * (int)$this->kode_karat;
+        $this->rHarga_emas = ((int)$this->kode_karat / 100) * (int)$this->charga_emas;
+        $this->HargaEmasRp = 'Rp ' . number_format($this->rHarga_emas, 0, ',', '.');
 
-          $this->HargaFinalEmasRp = 'Rp ' . number_format($this->HargaFinalEmas, 0, ',', '.');
-       //dd($this->HargaFinalEmas);
-
-        $this->HargaFinal = (int)$this->charga_modal + (int)$this->charga_margin;
-        $this->HargaFinalRp = 'Rp ' . number_format($this->HargaFinal, 0, ',', '.');
-    }
-
-
-<<<<<<< Updated upstream
+       }
 
 
 
-=======
+
    public function store()
        {
             
@@ -117,25 +121,32 @@ class Create extends Component
 
 
 
-
-
-
-
-
-
-
-
-     public function render()
-        {
-            return view('livewire.penentuan-harga.create');
+      public function recalculateTotal()
+       {
+        //$this->resetInput();
+       
+        if ($this->harga_emas == null 
+            && $this->rHarga_emas == null 
+            && $this->harga_margin == null) {
+            $this->berat_modal = 0;
+            $this->harga_emas = 0;
+            $this->harga_margin = 0;
+            $this->rHarga_emas = 0;
         }
 
- 
+        $this->charga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
+        $this->charga_margin = preg_replace("/[^0-9]/", "", $this->harga_margin);
+        $this->HargaFinalEmas = (int)$this->charga_emas * (int)$this->kode_karat;
+        $this->HargaFinalEmasRp = 'Rp ' . number_format($this->HargaFinalEmas, 0, ',', '.');
+        $this->HargaFinal = (int)$this->rHarga_emas + (int)$this->charga_margin;
+        $this->HargaFinalRp = 'Rp ' . number_format($this->HargaFinal, 0, ',', '.');
+    }
 
 
->>>>>>> Stashed changes
+
   public function resetInput()
     {
+        $this->HargaEmasRp = '';
         $this->HargaFinal = '';
         $this->harga_emas = '';
         $this->harga_margin = '';
