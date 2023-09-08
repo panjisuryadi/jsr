@@ -1,149 +1,429 @@
 <?php
 
-namespace App\Http\Livewire\PenentuanHarga;
+namespace Modules\PenentuanHarga\Http\Controllers;
+use Carbon\Carbon;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
+use Lang;
+use Image;
 
-use Livewire\Component;
-
-use Modules\Karat\Models\Karat;
-use Modules\PenentuanHarga\Models\PenentuanHarga;
-
-
-class Create extends Component
+class PenentuanHargasController extends Controller
 {
 
-    public $selected = '';
-    public $harga_emas = '';
-    public $harga_modal;
-    public $harga_margin = '';
-    public $harga_jual = '';
-    public $showCount;
-    public $karat = '';
-    public $karat_id = '';
-    public $kode_karat = '';
-  
-    public $selectedOption = '';
-    public $pilihKarat = '';
-  
-    public $HargaFinal = 0;
-    public $HargaFinalRp = 0;
-    public $hargaModal = 0;
-    public $HargaFinalEmasRp = 0;
-    public $HargaFinalEmas = 0;
-
-
-
-
-    public function selectOption($value)
+  public function __construct()
     {
-        $harga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
-        $this->selectedOption = $value;
-        $this->emit('optionSelected', $value);
+        // Page Title
+        $this->module_title = 'PenentuanHarga';
+        $this->module_name = 'penentuanharga';
+        $this->module_path = 'penentuanhargas';
+        $this->module_icon = 'fas fa-sitemap';
+        $this->module_model = "Modules\PenentuanHarga\Models\PenentuanHarga";
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @return Renderable
+     */
+
+  public function index() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.index',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
     }
 
 
-    public function pilihKarat($value) {
-        $krt = Karat::where('id', $value)->first();
-        $this->karat = $krt->name;
-        $this->karat_id = $krt->id;
-        $this->kode_karat = $krt->kode;
-       // dd($karat->name);
-        //$this->emit('selected', $value);
-     }
+
+
+
+public function index_data(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+                          ->editColumn('tgl_update', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .tanggal2($data->tgl_update) . '
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('user', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->user->name . '
+                                    </div>';
+                                return $tb;
+                            })  
+
+                             ->editColumn('harga_emas', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .rupiah($data->harga_emas) . '
+                                    </div>';
+                                return $tb;
+                            })   
+
+                             ->editColumn('harga_modal', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .rupiah($data->harga_modal) . '
+                                    </div>';
+                                return $tb;
+                            })   
+                             ->editColumn('margin', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .rupiah($data->margin) . '
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                             ->editColumn('harga_jual', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .rupiah($data->harga_jual) . '
+                                    </div>';
+                                return $tb;
+                            })
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->karat->kode . '
+                                    </div>';
+                                return $tb;
+                            })
+
+
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['tgl_update',
+                                        'action', 
+                                        'harga_emas',
+                                        'margin',
+                                        'harga_modal',
+                                        'harga_jual',
+                                        'karat', 
+                                        'user'])
+                        ->make(true);
+                     }
 
 
 
 
-     public function calculatePriceTotal()
-       {
-           dd($this->harga_modal);
-       }
-
-
-
-      public function recalculateTotal()
-       {
-        //$this->resetInput();
-       
-        if ($this->harga_emas == null 
-            && $this->harga_modal == null 
-            && $this->harga_margin == null) {
-            $this->berat_modal = 0;
-            $this->harga_emas = 0;
-            $this->harga_margin = 0;
-        }
-        $this->charga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
-        $this->charga_modal = preg_replace("/[^0-9]/", "", $this->harga_modal);
-        $this->charga_margin = preg_replace("/[^0-9]/", "", $this->harga_margin);
-        $this->HargaFinalEmas = (int)$this->charga_emas * (int)$this->kode_karat;
-
-          $this->HargaFinalEmasRp = 'Rp ' . number_format($this->HargaFinalEmas, 0, ',', '.');
-       //dd($this->HargaFinalEmas);
-
-        $this->HargaFinal = (int)$this->charga_modal + (int)$this->charga_margin;
-        $this->HargaFinalRp = 'Rp ' . number_format($this->HargaFinal, 0, ',', '.');
-    }
-
-
-<<<<<<< Updated upstream
-
-
-
-=======
-   public function store()
-       {
-            
-                    $validatedDate = $this->validate([
-                        'karat_id'      => 'required',
-                        'harga_emas'    => 'required',
-                        'harga_margin'  => 'required',
-                    ]);
-              
-                // dd($input);
-                 $create = PenentuanHarga::create([
-                'karat_id'                          => $this->karat_id,
-                'user_id'                           =>  auth()->user()->id,
-                'margin'                            => $this->charga_margin,
-                'tgl_update'                        => date('Y-m-d'),
-                'harga_modal'                       => $this->rHarga_emas,
-                'harga_emas'                        => $this->HargaFinalEmas,
-                'harga_jual'                        => $this->HargaFinal,
-                'lock'                              =>  1,
-                      ]);
-        
-             $this->resetInput();
-                    session()->flash('message', 'Created Successfully.');
-                    return redirect(route('penentuanharga.index'));
-       }
 
 
 
 
-
-
-
-
-
-
-
-     public function render()
+    /**
+     * Show the form for creating a new resource.
+     * @return Renderable
+     */
+        public function create()
         {
-            return view('livewire.penentuan-harga.create');
+           $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Create';
+            abort_if(Gate::denies('add_'.$module_name.''), 403);
+              return view(''.$module_name.'::'.$module_path.'.create',
+               compact('module_name',
+                'module_action',
+                'module_title',
+                'module_icon', 'module_model'));
         }
 
- 
 
-
->>>>>>> Stashed changes
-  public function resetInput()
+    /**
+     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return Renderable
+     */
+    public function store(Request $request)
     {
-        $this->HargaFinal = '';
-        $this->harga_emas = '';
-        $this->harga_margin = '';
-        $this->harga_jual = '';
-        $this->harga_modal = '';
-  
-      
+         abort_if(Gate::denies('create_penentuanharga'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Store';
+
+        $request->validate([
+             'name' => 'required|min:3|max:191',
+             'description' => 'required|min:3|max:191',
+         ]);
+       // $params = $request->all();
+        //dd($params);
+        $params = $request->except('_token');
+        $params['name'] = $params['name'];
+        $params['description'] = $params['description'];
+        //  if ($image = $request->file('image')) {
+        //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
+        //             $constraint->aspectRatio();
+        //             })->encode();
+        //  $normalpath = 'uploads/' . $gambar;
+        //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+        //  Storage::disk($storage)->put($normalpath, (string) $normal);
+        //  $params['image'] = "$gambar";
+        // }else{
+        //    $params['image'] = 'no_foto.png';
+        // }
+
+
+         $$module_name_singular = $module_model::create($params);
+         toast(''. $module_title.' Created!', 'success');
+         return redirect()->route(''.$module_name.'.index');
     }
 
+
+
+//store ajax version
+
+public function store_ajax(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $validator = \Validator::make($request->all(),[
+             'code' => 'required|max:191|unique:'.$module_model.',code',
+             'name' => 'required|max:191',
+
+        ]);
+        if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+
+        $input = $request->all();
+        $input = $request->except('_token');
+        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+        $input['code'] = $input['code'];
+        $input['name'] = $input['name'];
+        $$module_name_singular = $module_model::create($input);
+
+        return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
+    }
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+public function show($id)
+    {
+
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+        //dd($detail);
+          return view(''.$module_name.'::'.$module_path.'.show',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    public function edit($id)
+    {
+       $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Edit';
+        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.edit',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Renderable
+     */
+    public function update(Request $request, $id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+        $$module_name_singular = $module_model::findOrFail($id);
+        $request->validate([
+            'name' => 'required|min:3|max:191',
+                 ]);
+        $params = $request->except('_token');
+        $params['name'] = $params['name'];
+        $params['description'] = $params['description'];
+
+       // if ($image = $request->file('image')) {
+       //                if ($$module_name_singular->image !== 'no_foto.png') {
+       //                    @unlink(imageUrl() . $$module_name_singular->image);
+       //                  }
+       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
+       //              $constraint->aspectRatio();
+       //              })->encode();
+       //   $normalpath = 'uploads/' . $gambar;
+       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+       //   Storage::disk($storage)->put($normalpath, (string) $normal);
+       //   $params['image'] = "$gambar";
+       //  }else{
+       //      unset($params['image']);
+       //  }
+        $$module_name_singular->update($params);
+         toast(''. $module_title.' Updated!', 'success');
+         return redirect()->route(''.$module_name.'.index');
+    }
+
+
+
+
+//update ajax version
+public function update_ajax(Request $request, $id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+        $$module_name_singular = $module_model::findOrFail($id);
+        $validator = \Validator::make($request->all(),
+            [
+            'code' => [
+                'required',
+                'unique:'.$module_model.',code,'.$id
+            ],
+            'name' => 'required|max:191',
+
+
+        ]);
+
+       if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+
+        $input = $request->all();
+        $params = $request->except('_token');
+        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+        $params['code'] = $params['code'];
+        $params['name'] = $params['name'];
+        $$module_name_singular->update($params);
+        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+ }
+
+
+
+    /**
+     * Remove the specified resource from storage.
+     * @param int $id
+     * @return Renderable
+     */
+    public function destroy($id)
+    {
+
+        try {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Delete';
+
+        $$module_name_singular = $module_model::findOrFail($id);
+
+        $$module_name_singular->delete();
+         toast(''. $module_title.' Deleted!', 'success');
+         return redirect()->route(''.$module_name.'.index');
+
+          } catch (\Exception $e) {
+           // dd($e);
+                toast(''. $module_title.' error!', 'warning');
+                return redirect()->back();
+            }
+
+    }
 
 }
