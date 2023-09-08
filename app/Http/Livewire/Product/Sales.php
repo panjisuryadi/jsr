@@ -26,7 +26,6 @@ namespace App\Http\Livewire\Product;
              $berat_kotor,
              $berat_bersih,
              $jumlah,
-             $no_nota,
              $kasir,
            
              $karat_id;
@@ -84,7 +83,6 @@ namespace App\Http\Livewire\Product;
                 $this->berat_kotor = '';
                 $this->berat_bersih = '';
                 $this->jumlah = '';
-                $this->no_nota = '';
                 $this->pilih_po = '';
               
             }
@@ -103,8 +101,6 @@ namespace App\Http\Livewire\Product;
                               'berat_kotor.*'     => 'required',  
                               'berat_bersih.0'     => 'required',
                               'berat_bersih.*'     => 'required',
-                              'no_nota.0'     => 'required',
-                              'no_nota.*'     => 'required',
                               'harga.0'     => 'required|numeric|between:0,99.99',
                               'harga.*'     => 'required|numeric|between:0,99.99'
                         ];
@@ -112,8 +108,6 @@ namespace App\Http\Livewire\Product;
                         foreach($this->inputs as $key => $value)
                         {
                             
-                            $rules['no_nota.0'] = 'required';
-                            $rules['no_nota.'.$value] = 'required';
                             $rules['harga.0'] = 'required|numeric|between:0,99.99';
                             $rules['harga.'.$value] = 'required|numeric|between:0,99.99';
                             $rules['karat_id.0'] = 'required';
@@ -161,7 +155,6 @@ namespace App\Http\Livewire\Product;
              public function pilihPo($value)
                 {
 
-                    //dd($value);
                     $this->pilih_po = $value;
                 }
 
@@ -188,7 +181,7 @@ namespace App\Http\Livewire\Product;
                 session()->flash('message', 'Created Successfully.');
                 return redirect(route('iventory.index'));
 
-                      }
+            }
 
 
              public function convertRupiah()
