@@ -93,8 +93,8 @@ class Create extends Component
 
 
 
-   public function store()
-       {
+               public function store()
+                 {
             
                     $validatedDate = $this->validate([
                         'karat_id'      => 'required',
@@ -121,6 +121,7 @@ class Create extends Component
 
 
 
+
       public function recalculateTotal()
        {
         //$this->resetInput();
@@ -141,7 +142,6 @@ class Create extends Component
         $this->HargaFinal = (int)$this->rHarga_emas + (int)$this->charga_margin;
         $this->HargaFinalRp = 'Rp ' . number_format($this->HargaFinal, 0, ',', '.');
     }
-
 
 
   public function resetInput()
