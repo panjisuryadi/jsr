@@ -16,7 +16,7 @@ class RemoveNoNotaColumnFromDistSalesItemsTable extends Migration
     {
         Schema::table('dist_sales_items', function (Blueprint $table) {
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            $table->dropColumn('no_nota');
+          //  $table->dropColumn('no_nota');
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         });
     }
