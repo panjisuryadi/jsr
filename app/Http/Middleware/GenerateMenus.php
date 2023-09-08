@@ -425,6 +425,11 @@ class GenerateMenus
 
 
 
+
+
+
+
+
       //============================Access Control Dropdown
 $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Inventory', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -585,25 +590,128 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
-        
-// DataSales
-$menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
-    'route' => 'datasale.index',
-    'class' => 'nav-item',
-])
-->data([
-    'order'         => 3,
-    'activematches' => ['datasales*'],
-    'permission'    => ['access_datasales'],
-])
-->link->attr([
-    'class' => 'c-sidebar-nav-link py-2',
-]);
+
+
+
+         // Access Control Dropdown Stok
+         $stok = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
+                        'class' => 'c-sidebar-nav-dropdown',
+                    ])
+                    ->data([
+                        'order'         => 3,
+                        'activematches' => [
+                                   'stoks*',
+                                  ],
+                          'permission' => ['create_products',
+                                             'access_stoks'],
+                    ]);
+                    $stok->link->attr([
+                        'class' => 'c-sidebar-nav-dropdown-toggle',
+                        'href'  => '#',
+                    ]);
+
+                    // DataStok
+                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Sales'), [
+                        'route' => 'stok.index',
+                        'class' => 'nav-item',
+                    ])
+                    ->data([
+                        'order'         => 3,
+                        'activematches' => ['stoks*'],
+                        'permission'    => ['access_stoks'],
+                    ])
+                    ->link->attr([
+                        'class' => 'c-sidebar-nav-link py-2',
+                    ]);
+
+                  // DataStok
+                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Office'), [
+                        'route' => 'stok.index',
+                        'class' => 'nav-item',
+                    ])
+                    ->data([
+                        'order'         => 3,
+                        'activematches' => ['stoks*'],
+                        'permission'    => ['access_stoks'],
+                    ])
+                    ->link->attr([
+                        'class' => 'c-sidebar-nav-link py-2',
+                    ]);
+
+                  // DataStok
+                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
+                        'route' => 'stok.index',
+                        'class' => 'nav-item',
+                    ])
+                    ->data([
+                        'order'         => 3,
+                        'activematches' => ['stoks*'],
+                        'permission'    => ['access_stoks'],
+                    ])
+                    ->link->attr([
+                        'class' => 'c-sidebar-nav-link py-2',
+                    ]);
+
+
+
+
+                  // DataStok
+                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock DP'), [
+                        'route' => 'stok.index',
+                        'class' => 'nav-item',
+                    ])
+                    ->data([
+                        'order'         => 3,
+                        'activematches' => ['stoks*'],
+                        'permission'    => ['access_stoks'],
+                    ])
+                    ->link->attr([
+                        'class' => 'c-sidebar-nav-link py-2',
+                    ]);
+
+
+
+                  // DataStok
+                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Kroom'), [
+                        'route' => 'stok.index',
+                        'class' => 'nav-item',
+                    ])
+                    ->data([
+                        'order'         => 3,
+                        'activematches' => ['stoks*'],
+                        'permission'    => ['access_stoks'],
+                    ])
+                    ->link->attr([
+                        'class' => 'c-sidebar-nav-link py-2',
+                    ]);
+
+
+
+
+
+
+
+
+
+
+            // DataSales
+            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
+                'route' => 'datasale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['datasales*'],
+                'permission'    => ['access_datasales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
 
       
 
- // customers Access Control Dropdown ==================================
+            // customers Access Control Dropdown ==================================
             $access_expenses = $menu->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
                 '.__('labels.menu.expense').'', [

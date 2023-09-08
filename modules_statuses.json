@@ -59,5 +59,6 @@
     "KategoriMutiara": true,
     "Exhibition": true,
     "Iventory": true,
-    "PenentuanHarga": true
+    "PenentuanHarga": true,
+    "Stok": true
 }
