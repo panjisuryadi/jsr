@@ -17,12 +17,6 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a>
 
                         </div>
                         <div id="buttons">
@@ -38,9 +32,6 @@
                         <th class="text-left">{{ __('Phone') }}</th>
                         <th style="width: 15%!important;" class="text-center">
                              {{ __('Updated') }}
-                        </th>
-                        <th style="width: 18%!important;" class="text-center">
-                            {{ __('Action') }}
                         </th>
                     </tr>
                 </thead>
@@ -100,17 +91,10 @@
                     }
                 },
 
-                {data: 'name', name: 'name'},
+                {data: 'full_name', name: 'full_name'},
                 {data: 'address', name: 'address'},
-                {data: 'phone', name: 'phone'},
+                {data: 'contact_no', name: 'contact_no'},
                 {data: 'updated_at', name: 'updated_at'},
-
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
             ]
         })
         .buttons()

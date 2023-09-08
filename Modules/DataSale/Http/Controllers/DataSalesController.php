@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
@@ -63,43 +64,41 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = [];
+
+
+        $response = Http::withHeaders([
+            'token' => config($module_name . '.sales_api.token')
+        ])->get(config($module_name . '.sales_api.base_url'));
+    
+        if ($response->successful()) {
+            $sales = $response->json();
+            $$module_name = $sales['data'];
+        }
 
         $data = $$module_name;
 
         return Datatables::of($$module_name)
-                        ->addColumn('action', function ($data) {
-                           $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            return view('includes.action',
-                            compact('module_name', 'data', 'module_model'));
-                                })
-                          ->editColumn('name', function ($data) {
+                          ->editColumn('full_name', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
+                                     ' .$data['first_name'] . ' ' . $data['last_name'] . '</h3>
                                     </div>';
                                 return $tb;
                             })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            $diff = Carbon::now()->diffInHours($data['updated_at']);
                             if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                                return \Carbon\Carbon::parse($data['updated_at'])->diffForHumans();
                             } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                                return \Carbon\Carbon::parse($data['updated_at'])->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['updated_at', 'full_name'])
                         ->make(true);
                      }
-
-
-
-
-
-
 
     /**
      * Show the form for creating a new resource.
