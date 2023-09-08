@@ -144,49 +144,6 @@ class GenerateMenus
             ]);
 
 
-  $Categories->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Perak'), [
-                'route' => 'jenisperak.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['jenisperaks*'],
-                'permission'    => ['access_jenisperaks'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-            // JenisMutiaras
-    $Categories->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Mutiara'), [
-                'route' => 'jenismutiara.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['jenismutiaras*'],
-                'permission'    => ['access_jenismutiaras'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-          // KategoriMutiaras
-    $Categories->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Kategori Mutiara'), [
-                'route' => 'kategorimutiara.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['kategorimutiaras*'],
-                'permission'    => ['access_kategorimutiaras'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
 
 
 
@@ -341,62 +298,7 @@ class GenerateMenus
 
         
             // DataEtalases
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Etalase'), [
-                'route' => 'dataetalase.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['dataetalases*'],
-                'permission'    => ['access_dataetalases'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-          // DataRekenings
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Rekening'), [
-                'route' => 'datarekening.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['datarekenings*'],
-                'permission'    => ['access_datarekenings'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-        // MarketPlaces
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Market Place'), [
-                'route' => 'marketplace.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['marketplaces*'],
-                'permission'    => ['access_marketplaces'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-            // KodeTransaksis
-            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Master Kode Transaksi'), [
-                'route' => 'kodetransaksi.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['kodetransaksis*'],
-                'permission'    => ['access_kodetransaksis'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
+        
 
 //================ end menu data master ----------------------
 
@@ -431,119 +333,7 @@ class GenerateMenus
 
 
        // ParamaterPoins
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Paramater Poin'), [
-                'route' => 'paramaterpoin.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['paramaterpoins*'],
-                'permission'    => ['access_paramaterpoins'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-         // GoldParameters
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Gold Parameters'), [
-                'route' => 'goldparameter.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['goldparameters*'],
-                'permission'    => ['access_goldparameters'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-            // CostParameters
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
-             '.__('Cost Parameters'), [
-                'route' => 'costparameter.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['costparameters*'],
-                'permission'    => ['access_costparameters'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-          // ParameterKadars
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Parameter Kadar'), [
-                'route' => 'parameterkadar.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['parameterkadars*'],
-                'permission'    => ['access_parameterkadars'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-              // ParameterBerlians
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Parameter Berlian'), [
-                'route' => 'parameterberlian.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['parameterberlians*'],
-                'permission'    => ['access_parameterberlians'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
-
-
-         // KaratBerlians
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Karat Berlian'), [
-                'route' => 'karatberlian.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['karatberlians*'],
-                'permission'    => ['access_karatberlians'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-
-
-
-
-
-
-      // DataBanks
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Data Bank'), [
-                'route' => 'databank.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['databanks*'],
-                'permission'    => ['access_databanks'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
+            
         // Karats
             $Parameters->add(
                 '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Karat Emas'), [
@@ -564,119 +354,12 @@ class GenerateMenus
 
 
 
-          // Itemclarity
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
-             '.__('Parameter Clarity'), [
-                'route' => 'itemclarity.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => ['itemclarities*'],
-                'permission'    => ['access_itemclarities'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-          $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Rounds'), [
-                'route' => 'itemround.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'itemrounds*',
-                'permission'    => ['access_itemrounds'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-            // ItemShapes
-            $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Shapes'), [
-                'route' => 'itemshape.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['itemshapes*'],
-                'permission'    => ['access_itemshapes'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-             $Parameters->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Colours'), [
-                'route' => 'itemcolour.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['itemcolours*'],
-                'permission'    => ['access_itemcolours'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
-
-
-       
-
-
 
 
 
     //end master parameter
  //==== Access Control Status Iventory
-         $statusIventory = $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> Status Iventory', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => [
-                    'kondisibarangs*',
-                    'kondisipembelians*',
-                ],
-                'permission' => ['access_kondisibarangs','access_kondisipembelians'],
-            ]);
-            $statusIventory->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
-            // KondisiBarangs
-            $statusIventory->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Kondisi Barang'), [
-                'route' => 'kondisibarang.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['kondisibarangs*'],
-                'permission'    => ['access_kondisibarangs'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-       // KondisiPembelians
-            $statusIventory->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Kondisi Pembelian'), [
-                'route' => 'kondisipembelian.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['kondisipembelians*'],
-                'permission'    => ['access_kondisipembelians'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+         
 
 
 
@@ -685,65 +368,7 @@ class GenerateMenus
 
 
  //==== Access Control Dropdown Gudang
-         $menuGudang = $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> Gudang', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => [
-                    'gudangs*',
-                ],
-                'permission' => ['access_gudangs'],
-            ]);
-            $menuGudang->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
-            // menu gudang
-            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Gudang'), [
-                'route' => 'gudang.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['gudangs*'],
-                'permission'    => ['access_gudangs'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link  py-2',
-            ]);
-
-           // Bakis
-            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Baki'), [
-                'route' => 'baki.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['bakis*'],
-                'permission'    => ['access_bakis'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-            // Bandrols
-            $menuGudang->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Bandrol'), [
-                'route' => 'bandrol.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['bandrols*'],
-                'permission'    => ['access_bandrols'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
+         
 
 // end gudang menu =======================
 
@@ -864,19 +489,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-           // DataSales
-            $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
-                'route' => 'datasale.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['datasales*'],
-                'permission'    => ['access_datasales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+           
 
 
 
@@ -953,37 +566,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
           // Submenu: Gudang Utama
-            $products->add(
-                '<i class="c-sidebar-nav-icon bi bi-credit-card-2-back mb-2"></i>'.__('Gudang Utama').'',
-             [
-                'route' => 'products.gudang.utama',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'rfid*',
-                'permission'    => ['access_products'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
-
-            // Submenu: RFID
-            $products->add(
-                '<i class="c-sidebar-nav-icon bi bi-credit-card-2-back mb-2"></i>'.__('RFID').'',
-             [
-                'route' => 'products.rfid',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'rfid*',
-                'permission'    => ['access_products'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
-
 
 
           // Submenu: Reparasi
@@ -1003,26 +585,23 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
-        // Locations
-            $products->add('<i class="c-sidebar-nav-icon  bi bi-geo-alt text-sm"></i> '.__('Locations'), [
-                'route' => 'locations.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['locations*'],
-                'permission'    => ['access_locations'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
+        
+// DataSales
+$menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
+    'route' => 'datasale.index',
+    'class' => 'nav-item',
+])
+->data([
+    'order'         => 3,
+    'activematches' => ['datasales*'],
+    'permission'    => ['access_datasales'],
+])
+->link->attr([
+    'class' => 'c-sidebar-nav-link py-2',
+]);
 
 
       
-
-
-
 
  // customers Access Control Dropdown ==================================
             $access_expenses = $menu->add(
