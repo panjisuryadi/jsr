@@ -32,11 +32,11 @@ namespace App\Http\Livewire\Product;
  
             public $updateMode = false;
             public $total_qty = 0;
-            public $pilih_po = 300;
+            public $pilih_po = [];
             public $pilih_tipe_pembayaran = 'cicil';
             public $inputs = [];
             public $sales = [];
-            public $i = 1;
+            public $i = 0;
 
             public function add($i)
             {
@@ -83,7 +83,7 @@ namespace App\Http\Livewire\Product;
                 $this->berat_kotor = '';
                 $this->berat_bersih = '';
                 $this->jumlah = '';
-                $this->pilih_po = '';
+                $this->pilih_po = [];
               
             }
 
@@ -152,10 +152,9 @@ namespace App\Http\Livewire\Product;
                     $this->pilih_tipe_pembayaran = $value;
                 }
 
-             public function pilihPo($value)
+             public function pilihPo($key,$value)
                 {
-
-                    $this->pilih_po = $value;
+                    $this->pilih_po[$key] = $value;
                 }
 
             public function updated($propertyName)

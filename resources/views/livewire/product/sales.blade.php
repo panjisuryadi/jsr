@@ -86,9 +86,9 @@
        <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                       {{ $field_lable }}<span class="text-danger">*</span></label>
     <select  class="form-control form-control-sm" 
-    name="{{ $field_name }}" wire:model="karat_id.0"
-    wire:click="pilihPo($event.target.value)">
-      
+    name="{{ $field_name }}"
+    wire:change="pilihPo(0,$event.target.value)">
+        <option value="" selected disabled>Select Karat</option>
         @foreach(\Modules\Karat\Models\Karat::all() as $row)
         <option value="{{$row->kode}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
         {{$row->name}} | {{$row->kode}} </option>
@@ -115,9 +115,9 @@
                      <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                       {{ $field_lable }}<span class="text-danger">*</span></label>
 
-           {{-- <span class="text-blue-400 text-4xl">{{$pilih_po}}</span> --}}
-                    {{ html()->text($field_name)->value($pilih_po)
-                    ->class('form-control form-control-sm '.$invalid.'') }}
+           {{-- <span class="text-blue-400 text-4xl">{{$pilih_po[0] ?? null}}</span> --}}
+                    {{ html()->text($field_name)->value($pilih_po[0] ?? null)
+                    ->class('form-control form-control-sm '.$invalid.'')->placeholder($field_lable) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -256,9 +256,8 @@
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
             $required = 'wire:model="'.$field_name.'"';
             ?>
-          
               <select class="form-control form-control-sm" 
-                 wire:click="pilihPo($event.target.value)">
+                 wire:change="pilihPo('{{ $value }}',$event.target.value)">
                  name="{{ $field_name }}">
                 <option value="" selected disabled>Select Karat</option>
                 @foreach(\Modules\Karat\Models\Karat::all() as $row)
@@ -285,8 +284,8 @@
                     $required = 'wire:model="'.$field_name.'"';
                     ?>
                    
-               {{ html()->text($field_name)->value($pilih_po)
-                    ->class('form-control form-control-sm '.$invalid.'') }}
+               {{ html()->text($field_name)->value($pilih_po[$value] ?? null)
+                    ->class('form-control form-control-sm '.$invalid.'')->placeholder($field_lable) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -297,24 +296,7 @@
 
 
 
-                     <div class="form-group">
-                    <?php
-                   
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'wire:model="'.$field_name.'"';
-                    ?>
-                 
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
-                    @if ($errors->has($field_name))
-                    <span class="invalid feedback"role="alert">
-                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                        class="text-danger">
-                    </span>
-                    @endif
-                </div>  
+                     
 
                 <div class="form-group">
                     <?php
