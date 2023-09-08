@@ -101,15 +101,15 @@ namespace App\Http\Livewire\Product;
                               'berat_kotor.*'     => 'required',  
                               'berat_bersih.0'     => 'required',
                               'berat_bersih.*'     => 'required',
-                              'harga.0'     => 'required|numeric|between:0,99.99',
-                              'harga.*'     => 'required|numeric|between:0,99.99'
+                              'harga.0'     => 'numeric|between:0,99.99',
+                              'harga.*'     => 'numeric|between:0,99.99'
                         ];
 
                         foreach($this->inputs as $key => $value)
                         {
                             
-                            $rules['harga.0'] = 'required|numeric|between:0,99.99';
-                            $rules['harga.'.$value] = 'required|numeric|between:0,99.99';
+                            $rules['harga.0'] = 'numeric|between:0,99.99';
+                            $rules['harga.'.$value] = 'numeric|between:0,99.99';
                             $rules['karat_id.0'] = 'required';
                             $rules['karat_id.'.$value] = 'required'; 
                             $rules['berat_bersih.0'] = 'required';
