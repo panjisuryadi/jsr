@@ -21,6 +21,7 @@ class CreateUsersLocationsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_location')->references('id')->on('locations');
             $table->foreign('sub_location')->references('id')->on('locations');
+            $table->timestamps();
         });
     }
 
