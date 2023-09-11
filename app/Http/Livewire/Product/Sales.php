@@ -38,6 +38,8 @@ namespace App\Http\Livewire\Product;
             public $sales = [];
             public $i = 0;
 
+            public $total_jumlah = 0;
+
             public function add($i)
             {
                 $i = $i + 1;

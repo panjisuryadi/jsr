@@ -117,7 +117,7 @@
 
            {{-- <span class="text-blue-400 text-4xl">{{$pilih_po[0] ?? null}}</span> --}}
                     {{ html()->text($field_name)->value($pilih_po[0] ?? null)
-                    ->class('form-control form-control-sm '.$invalid.'')->placeholder($field_lable) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->placeholder($field_lable)->attributes(['readonly']) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -143,7 +143,7 @@
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -166,7 +166,7 @@
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -188,7 +188,7 @@
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["step=0.01", "onkeyup" => "shouldBeNumeric(this)"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["max=100","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -212,7 +212,7 @@
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -285,7 +285,7 @@
                     ?>
                    
                {{ html()->text($field_name)->value($pilih_po[$value] ?? null)
-                    ->class('form-control form-control-sm '.$invalid.'')->placeholder($field_lable) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->placeholder($field_lable)->attributes(['readonly']) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -310,7 +310,7 @@
                  
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -332,7 +332,7 @@
                   
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -353,7 +353,7 @@
                    
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["step=0.01", "onkeyup" => "shouldBeNumeric(this)"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["max=100","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -374,7 +374,7 @@
                    
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -410,7 +410,7 @@
           <label class="w-16 text-gray-700 block text-sm tracking-wide">Jumlah.</label>
           <span class="mr-4 inline-block hidden md:block">:</span>
           <div class="flex-1">
-          <input class="form-control form-control-sm"  type="text" placeholder="0">
+          <input class="form-control form-control-sm"  type="text" placeholder="0" readonly>
           </div>
         </div>
    <div class="mb-2 md:mb-1 md:flex items-center">
@@ -529,29 +529,6 @@ document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
     }
   });
 });
-
-document.querySelectorAll('input[type-currency="PERSEN"]').forEach((element) => {
-  element.addEventListener('keyup', function(e) {
-    let cursorPostion = this.selectionStart;
-    let value = parseFloat(this.value.replace(/[^,\d]/g, ''));
-    let originalLenght = this.value.length;
-    if (isNaN(value)) {
-      this.value = "";
-    } else {
-      this.value = (inputValue * 100).toFixed(2);
-      cursorPostion = this.value.length - originalLenght + cursorPostion;
-      this.setSelectionRange(cursorPostion, cursorPostion);
-    }
-  });
-});
-
-
-function shouldBeNumeric(e){
-  if(isNaN(e.valueAsNumber)){
-    e.value = ""
-  }
-}
-
 </script>
 
 
