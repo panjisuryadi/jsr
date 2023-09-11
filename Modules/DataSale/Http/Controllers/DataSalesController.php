@@ -64,25 +64,17 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = [];
+        $this->fetch();
 
-
-        $response = Http::withHeaders([
-            'token' => config($module_name . '.sales_api.token')
-        ])->get(config($module_name . '.sales_api.base_url'));
-    
-        if ($response->successful()) {
-            $sales = $response->json();
-            $$module_name = $sales['data'];
-        }
+        $$module_name = $module_model::get();
 
         $data = $$module_name;
 
         return Datatables::of($$module_name)
-                          ->editColumn('full_name', function ($data) {
+                          ->editColumn('name', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data['first_name'] . ' ' . $data['last_name'] . '</h3>
+                                     ' .$data['name'] . '</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -96,9 +88,22 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data['updated_at'])->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'full_name'])
+                        ->rawColumns(['name','updated_at'])
                         ->make(true);
                      }
+
+protected function fetch(){
+    $response = Http::withHeaders([
+        'token' => config($this->module_name . '.sales_api.token')
+    ])->get(config($this->module_name . '.sales_api.base_url'));
+    $sales_list = $response->json();
+    foreach($sales_list['data'] as $sales){
+        $this->module_model::updateOrCreate(
+            ['id' => $sales['id']], 
+            ['name' => $sales['first_name'] . ' ' . $sales['last_name'], 'address' => $sales['address'], 'phone' => $sales['contact_no'], 'created_at' => $sales['created_at'], 'updated_at' => $sales['updated_at']]
+        );
+    }
+}
 
     /**
      * Show the form for creating a new resource.

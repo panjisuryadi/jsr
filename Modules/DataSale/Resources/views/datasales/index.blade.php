@@ -91,9 +91,9 @@
                     }
                 },
 
-                {data: 'full_name', name: 'full_name'},
+                {data: 'name', name: 'name'},
                 {data: 'address', name: 'address'},
-                {data: 'contact_no', name: 'contact_no'},
+                {data: 'phone', name: 'phone'},
                 {data: 'updated_at', name: 'updated_at'},
             ]
         })
