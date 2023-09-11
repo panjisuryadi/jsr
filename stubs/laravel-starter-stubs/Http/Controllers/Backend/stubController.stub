@@ -115,7 +115,7 @@ public function index_data(Request $request)
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.create',
+              return view(''.$module_name.'::'.$module_path.'.modal.create',
                compact('module_name',
                 'module_action',
                 'module_title',
@@ -128,7 +128,7 @@ public function index_data(Request $request)
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store_default(Request $request)
     {
          abort_if(Gate::denies('create_{{moduleNameLower}}'), 403);
         $module_title = $this->module_title;
@@ -172,7 +172,7 @@ public function index_data(Request $request)
 
 //store ajax version
 
-public function store_ajax(Request $request)
+public function store(Request $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -252,7 +252,7 @@ public function show($id)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.edit',
+          return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
             'detail',
@@ -266,7 +266,7 @@ public function show($id)
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update_default(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -307,7 +307,7 @@ public function show($id)
 
 
 //update ajax version
-public function update_ajax(Request $request, $id)
+public function update(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

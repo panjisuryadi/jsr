@@ -60,5 +60,6 @@
     "Exhibition": true,
     "Iventory": true,
     "PenentuanHarga": true,
-    "Stok": true
+    "Stok": true,
+    "DistribusiSale": true
 }

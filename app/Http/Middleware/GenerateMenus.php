@@ -687,15 +687,42 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
+         // customers Access Control Dropdown ==================================
+            $distribusisales = $menu->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
+                '.__('Distribusi Sales').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => [
+                    'datasales*',
+                    'distribusisales*',
 
+                ],
+                'permission'    => ['access_expenses','access_expense_categories'],
+            ]);
+            $distribusisales->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
 
-
-
-
-
+       // DistribusiSales
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Sales'), [
+                'route' => 'distribusisale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['distribusisales*'],
+                'permission'    => ['access_distribusisales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
             // DataSales
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
                 'route' => 'datasale.index',
                 'class' => 'nav-item',
             ])

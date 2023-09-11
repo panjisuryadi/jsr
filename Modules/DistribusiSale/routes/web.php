@@ -12,14 +12,9 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    $module_name = 'stok';
-    $controller_name = 'StoksController';
-
+    $module_name = 'distribusisale';
+    $controller_name = 'DistribusiSalesController';
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
-
-   Route::get("$module_name/nolate", ['as' => "$module_name.nolate", 'uses' => "$controller_name@nolate"]);
-
-
     Route::resource("$module_name", "$controller_name");
 
 });
