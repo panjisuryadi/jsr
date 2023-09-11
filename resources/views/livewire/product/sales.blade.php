@@ -70,8 +70,8 @@
 
 
 
-        <div class="flex justify-between">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-7 gap-2">
+        <div class="flex justify-between mb-3">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
 
 
 <div class="form-group">
@@ -243,8 +243,8 @@
 
 
         @foreach($inputs as $key => $value)
-        <div class="flex justify-between">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-7 gap-2">
+        <div class="flex justify-between mb-3">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
 
 
           <div class="form-group">
