@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\GoodsReceipt;
 
-
         use Livewire\Component;
         use App\Http\Livewire\Field;
         use Illuminate\Http\Request;
         use Illuminate\Support\Facades\Validator;
         use Modules\GoodsReceipt\Models\GoodsReceipt;
+        use App\Models\User;
         use Livewire\WithFileUploads;
         class Penerimaan extends Component
         {
@@ -17,7 +17,8 @@ namespace App\Http\Livewire\GoodsReceipt;
              $code,
              $no_invoice,
              $harga,
-             $qty,
+             $berat_kotor,
+             $berat_timbangan,
              $qty_diterima,
              $pengirim,
              $berat_real,
@@ -43,7 +44,9 @@ namespace App\Http\Livewire\GoodsReceipt;
             }
 
             public function render()
+
             {
+                 $this->kasir = User::role('Kasir')->orderBy('name')->get();
                  $this->goodsreceipt = GoodsReceipt::all();
                 return view('livewire.goods-receipt.penerimaan');
             }
@@ -52,7 +55,7 @@ namespace App\Http\Livewire\GoodsReceipt;
                 $this->karat_id = '';
                 $this->kategori = '';
                 $this->no_invoice = '';
-                $this->qty = '';
+                $this->berat_kotor = '';
                 $this->berat_barang = '';
                 $this->berat_real = '';
                 $this->harga = '';
@@ -65,18 +68,29 @@ namespace App\Http\Livewire\GoodsReceipt;
                         $rules = [
                               'karat_id.0'     => 'required',
                               'karat_id.*'     => 'required',
+
                               'kategori.0'     => 'required',
                               'kategori.*'     => 'required',
-                              'qty.0'     => 'required',
-                              'qty.*'     => 'required'
+
+                              'berat_real.0'     => 'required',
+                              'berat_real.*'     => 'required',
+
+                              'berat_kotor.0'     => 'required',
+                              'berat_kotor.*'     => 'required'
                         ];
 
                         foreach($this->inputs as $key => $value)
                         {
                             $rules['kategori.0'] = 'required';
                             $rules['kategori.'.$value] = 'required';
-                            $rules['qty.0'] = 'required';
-                            $rules['qty.'.$value] = 'required';
+
+                            $rules['berat_real.0'] = 'required';
+                            $rules['berat_real.'.$value] = 'required';
+
+                            $rules['berat_kotor.0'] = 'required';
+                            $rules['berat_kotor.'.$value] = 'required';
+
+
                             $rules['karat_id.0'] = 'required';
                             $rules['karat_id.'.$value] = 'required';
 
