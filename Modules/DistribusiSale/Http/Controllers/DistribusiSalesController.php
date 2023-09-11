@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Stok\Http\Controllers;
+namespace Modules\DistribusiSale\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -12,20 +12,18 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
-use Illuminate\Support\Facades\Http;
-use GuzzleHttp\Client;
 
-class StoksController extends Controller
+class DistribusiSalesController extends Controller
 {
 
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'Stok';
-        $this->module_name = 'stok';
-        $this->module_path = 'stoks';
+        $this->module_title = 'DistribusiSale';
+        $this->module_name = 'distribusisale';
+        $this->module_path = 'distribusisales';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "Modules\Stok\Models\StockSales";
+        $this->module_model = "Modules\DistribusiSale\Models\DistribusiSale";
 
     }
 
@@ -52,49 +50,6 @@ class StoksController extends Controller
 
 
 
- public function nolateww() {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'List';
-
-         $api_url = env('API_URL');
-         //$response = Http::get($api_url.'/api/='.$id);
-         $response = Http::get('https://nolate.official-jsr.com/api/sales');
-         $resultapi = json_decode($response, true);
-
-         return $resultapi;
-
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
-         return view(''.$module_name.'::'.$module_path.'.index',
-           compact('module_name',
-            'module_action',
-            'module_title',
-            'module_icon', 'module_model'));
-    }
-
-
-        public function nolate()
-        {
-            try{
-                $token = "SlNSIERJQU9NSU5EIE9GRklDSUFMIA==";
-                $response = Http::withToken(
-                    $token
-                )->get('https://nolate.official-jsr.com/api/sales');
-
-                return response()->json(
-                    json_decode($response->body(), true)
-                );
-            }
-            catch (Exception $e){
-                return $e;
-            }
-        }
-
-
 
 public function index_data(Request $request)
 
@@ -119,10 +74,10 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('weight', function ($data) {
+                          ->editColumn('name', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->weight . '</h3>
+                                     ' .$data->name . '</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -136,7 +91,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'weight'])
+                        ->rawColumns(['updated_at', 'action', 'name'])
                         ->make(true);
                      }
 
@@ -160,7 +115,7 @@ public function index_data(Request $request)
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.create',
+              return view(''.$module_name.'::'.$module_path.'.modal.create',
                compact('module_name',
                 'module_action',
                 'module_title',
@@ -168,18 +123,14 @@ public function index_data(Request $request)
         }
 
 
-
-
-
-
     /**
      * Store a newly created resource in storage.
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store_default(Request $request)
     {
-         abort_if(Gate::denies('create_stok'), 403);
+         abort_if(Gate::denies('create_distribusisale'), 403);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -221,7 +172,7 @@ public function index_data(Request $request)
 
 //store ajax version
 
-public function store_ajax(Request $request)
+public function store(Request $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -301,7 +252,7 @@ public function show($id)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.edit',
+          return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
             'detail',
@@ -315,7 +266,7 @@ public function show($id)
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update_default(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -356,7 +307,7 @@ public function show($id)
 
 
 //update ajax version
-public function update_ajax(Request $request, $id)
+public function update(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
