@@ -23,6 +23,7 @@ use Modules\Karat\Models\Karat;
 use Modules\GoodsReceipt\Models\TipePembelian;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Modules\Stok\Models\StockOffice;
 
 
 class GoodsReceiptsController extends Controller
@@ -478,15 +479,11 @@ public function store(Request $request)
              'supplier_id' => 'required',
              'tanggal' => 'required',
              'total_emas' => 'required',
+             'user_id' => 'required',
              'karat_id.0' => 'required',
              'karat_id.*' => 'required',
-             'user_id' => 'required',
-             
-         ]);
+            ]);
          $input = $request->except('_token','document');
-
-
-
         $$module_name_singular = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
@@ -497,8 +494,8 @@ public function store(Request $request)
             'tipe_pembayaran'            => $input['tipe_pembayaran'],
             'supplier_id'                => $input['supplier_id'],
             'user_id'                    => $input['user_id'],
-            'berat_kotor'                => $input['berat_kotor'],
-            'berat_real'                 => $input['berat_real'],
+            'total_berat_kotor'          => $input['total_berat_kotor'],
+            'berat_timbangan'            => $input['berat_timbangan'],
             'selisih'                    => $input['selisih'] ?? null,
             'total_emas'                 => $input['total_emas'],
             'note'                       => $input['note'],
@@ -509,13 +506,14 @@ public function store(Request $request)
             $goodsreceipt = $$module_name_singular->id;
             $this->_saveTipePembelian($input ,$goodsreceipt);
             $this->_saveGoodsReceiptItem($input ,$goodsreceipt);
+            $this->_saveStockOffice($input);
 
 
-         if ($request->has('document')) {
-            foreach ($request->input('document', []) as $file) {
-                $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('pembelian');
+             if ($request->has('document')) {
+                foreach ($request->input('document', []) as $file) {
+                    $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('pembelian');
+                }
             }
-        }
 
 
             if ($request->filled('image')) {
@@ -565,11 +563,26 @@ private function _saveTipePembelian($input ,$goodsreceipt)
               'kadar' => $input['karat_id'][$key],
               'karat_id' => $input['karat_id'][$key],
               'kategoriproduk_id' => $input['kategori_id'][$key],
-              'qty' =>$input['qty'][$key]
+              'berat_real' =>$input['berat_timbangan'][$key]
                ]);
 
          }
     }
+
+
+private function _saveStockOffice($input)
+     {
+       foreach ($input['karat_id'] as $key => $value) {
+          StockOffice::create([
+              'karat_id' => $input['karat_id'][$key],
+              'berat_real' =>$input['berat_real'],
+              'berat_kotor' =>$input['berat_kotor']
+               ]);
+
+         }
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
