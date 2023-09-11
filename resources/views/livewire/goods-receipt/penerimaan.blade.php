@@ -195,7 +195,7 @@
 
       <div class="form-group">
                 <?php
-                $field_name = 'inputs['.$value.']berat_kotor';
+                //$field_name = 'inputs['.$value.']berat_kotor';
                 $field_name = 'berat_kotor.'.$value.'';
                 $field_lable = label_case('berat_kotor');
                 $field_placeholder = $field_lable;
@@ -321,7 +321,7 @@
     
  <div class="form-group">
         <?php
-        $field_name = 'berat_kotor';
+        $field_name = 'total_berat_kotor';
         $field_lable = label_case('total_berat_kotor');
         $field_placeholder = 0;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';

@@ -45,6 +45,7 @@ return new class extends Migration
 
             $table->foreign('supplier_id')->references('id')
             ->on('suppliers')->nullOnDelete();
+            
              DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         });

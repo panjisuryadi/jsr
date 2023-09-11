@@ -27,6 +27,7 @@ namespace App\Http\Livewire\GoodsReceipt;
 
             public $updateMode = false;
             public $total_qty = 0;
+            public $total_berat = 0;
             public $pilih_tipe_pembayaran = 'cicil';
             public $inputs = [];
             public $i = 1;
@@ -126,13 +127,17 @@ namespace App\Http\Livewire\GoodsReceipt;
 
 
             public function updated($propertyName)
-                {
-                    $this->total_qty = 0;
+                { 
+
+                   
+                    
                     if ($this->inputs) {
                         $this->validateOnly($propertyName);
                     }
                 }
 
+
+          
             public function store()
             {
 
