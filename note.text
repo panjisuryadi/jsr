@@ -1,9 +1,13 @@
 # php artisan module:make-model ProductItem Product --migration
 # php artisan module:build Model --force
-# php artisan module:build Exhibition --force
+# php artisan module:build ReturSales --force
 # php artisan module:make-migration change_kadar_type_to_jenisperhiasans_table JenisPerhiasan
 # php artisan module:make-migration add_new_kolom_to_product_items_table Product
+
+
+
 # php artisan module:make-migration add_toko_to_product_items_table Product
+
 # php artisan module:make-migration add_karat_id_to_goodsreceipts_table GoodsReceipt
 
 # php artisan module:make-migration add_migrasi_karat_kategori_to_goodsreceipt_items_table GoodsReceipt
@@ -12,9 +16,8 @@
 # php artisan module:make-migration add_kode_to_karats_table Karat
 # php artisan module:make-model BuysBackDetails BuysBack --migration
 
-
-
 #php artisan make:livewire PenentuanHarga/Create
+
 use Illuminate\Support\Facades\DB;
 public function up()
     {
