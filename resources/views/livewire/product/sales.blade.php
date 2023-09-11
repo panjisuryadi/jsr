@@ -188,7 +188,7 @@
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["type-currency=PERSEN","step=0.01"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["step=0.01", "onkeyup" => "shouldBeNumeric(this)"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -353,7 +353,7 @@
                    
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["type-currency=PERSEN","step=0.01"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["step=0.01", "onkeyup" => "shouldBeNumeric(this)"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -544,6 +544,13 @@ document.querySelectorAll('input[type-currency="PERSEN"]').forEach((element) => 
     }
   });
 });
+
+
+function shouldBeNumeric(e){
+  if(isNaN(e.valueAsNumber)){
+    e.value = ""
+  }
+}
 
 </script>
 
