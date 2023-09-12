@@ -67,12 +67,12 @@
                     $required = 'wire:model="'.$field_name.'"';
                     ?>
                  <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-               <input class="form-control"
+               <input class="form-control berat_real"
                type="number"
                 name="berat_real[]"
                 id="{{ $field_name }}"
                 min="0" step="0.001"
-                placeholder="{{$field_lable}}">
+                placeholder="{{$field_lable}}" onchange="calculateTotalBeratReal()">
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -91,12 +91,12 @@
                     $required = 'wire:model="'.$field_name.'"';
                     ?>
                  <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-               <input class="form-control"
+               <input class="form-control berat_kotor"
                 type="number"
                 name="berat_kotor[]"
                 id="{{ $field_name }}"
                 min="0" step="0.001"
-                placeholder="{{$field_lable}}">
+                placeholder="{{$field_lable}}" onchange="calculateTotalBeratKotor()">
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -178,12 +178,12 @@
                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                 $required = '';
                 ?>
-               <input class="form-control" type="number"
+               <input class="form-control berat_real" type="number"
                 name="berat_real[]"
                 id="{{ $field_name }}"
                 min="0" step="0.001"
                 wire:model={{ $field_name }}
-                placeholder="{{$field_lable}}">
+                placeholder="{{$field_lable}}" onchange="calculateTotalBeratReal()">
                  @if ($errors->has($field_name))
                 <span class="invalid feedback"role="alert">
                     <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -202,12 +202,14 @@
                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                 $required = '';
                 ?>
-               <input class="form-control" type="number"
+               <input class="form-control berat_kotor" type="number"
                 name="berat_kotor[]"
                 id="{{ $field_name }}"
                 min="0" step="0.001"
-                wire:model={{ $field_name }}
+                onchange="calculateTotalBeratKotor()"
+                wire:model="{{ $field_name }}"
                 placeholder="{{$field_lable}}">
+
                  @if ($errors->has($field_name))
                 <span class="invalid feedback"role="alert">
                     <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -258,7 +260,7 @@
        
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
+        placeholder="{{ $field_placeholder }}" disabled>
            @if ($errors->has($field_name))
             <span class="invalid feedback"role="alert">
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -334,7 +336,7 @@
         min="0" step="0.001"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
+        placeholder="{{ $field_placeholder }}" disabled>
         <span class="invalid feedback" role="alert">
             <span class="text-danger error-text {{ $field_name }}_err"></span>
         </span>
@@ -391,6 +393,27 @@
 
 </div>
 @push('page_scripts')
+<script>
+            let total_emas = document.getElementById("total_emas");
+               let total_kotor = document.getElementById("total_berat_kotor");
+               function calculateTotalBeratReal() {
+                let total_berat_real = 0;
+                   document.querySelectorAll('.berat_real').forEach((element) => {
+                       let beratReal = parseFloat(element.value); 
+                        total_berat_real += beratReal
+                        total_emas.value = (Math.round(total_berat_real * 1000) / 1000).toFixed(3);;
+                   });
+               }
 
+               function calculateTotalBeratKotor() {
+                let total_berat_kotor = 0;
+                   document.querySelectorAll('.berat_kotor').forEach((element) => {
+                       let beratKotor = parseFloat(element.value); 
+                        total_berat_kotor += beratKotor
+                        total_kotor.value = (Math.round(total_berat_kotor * 1000) / 1000).toFixed(3);;
+                   });
+               }
+
+</script>
 
 @endpush
