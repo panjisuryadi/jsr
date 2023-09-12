@@ -687,7 +687,48 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-         // customers Access Control Dropdown ==================================
+
+
+
+
+   // distribusitokos Access Control Dropdown ==================================
+            $distribusiToko = $menu->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
+                '.__('Distribusi Toko').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => [
+                    'datasales*',
+                    'distribusitokos*',
+
+                ],
+                'permission'    => ['access_distribusitoko'],
+            ]);
+            $distribusiToko->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // DistribusiTokos
+            $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
+                'route' => 'distribusitoko.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['distribusitokos*'],
+                'permission'    => ['access_distribusitoko'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+
+         // distribusitokos Access Control Dropdown ==================================
             $distribusisales = $menu->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
                 '.__('Distribusi Sales').'', [
@@ -697,15 +738,18 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'order'         => 3,
                 'activematches' => [
                     'datasales*',
-                    'distribusisales*',
+                    'distribusitokos*',
 
                 ],
-                'permission'    => ['access_expenses','access_expense_categories'],
+                'permission'    => ['access_expenses','access_distribusisales'],
             ]);
             $distribusisales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
+
+
+
 
        // DistribusiSales
             $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Sales'), [

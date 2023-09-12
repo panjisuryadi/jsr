@@ -260,7 +260,7 @@
        
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}" disabled>
+        placeholder="{{ $field_placeholder }}" readonly>
            @if ($errors->has($field_name))
             <span class="invalid feedback"role="alert">
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -336,7 +336,7 @@
         min="0" step="0.001"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}" disabled>
+        placeholder="{{ $field_placeholder }}" readonly>
         <span class="invalid feedback" role="alert">
             <span class="text-danger error-text {{ $field_name }}_err"></span>
         </span>

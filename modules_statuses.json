@@ -62,5 +62,6 @@
     "PenentuanHarga": true,
     "Stok": true,
     "DistribusiSale": true,
-    "ReturSale": true
+    "ReturSale": true,
+    "DistribusiToko": true
 }

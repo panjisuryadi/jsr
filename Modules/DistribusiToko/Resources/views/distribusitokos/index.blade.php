@@ -2,17 +2,7 @@
 @section('title', $module_title)
 @section('third_party_stylesheets')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-
 @endsection
-@push('page_css')
-<style type="text/css">
-    
-table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTable>thead .sorting_desc, table.dataTable>thead .sorting_asc_disabled, table.dataTable>thead .sorting_desc_disabled {
-    text-align: left !important;
-
-}
-</style>
-@endpush
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -28,11 +18,10 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                            <a href="{{ route(''.$module_name.'.create') }}"
-                                id=""
+                                id="Tambah"
                                 data-toggle="tooltip"
-                                 class="btn btn-primary px-3 py-1">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;
-                                 {{ __($module_title) }}
+                                 class="btn btn-primary px-3">
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
                                 </a>
 
                         </div>
@@ -40,20 +29,19 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
-                        <table id="datatable" style="width: 100%" class="table table-striped table-hover table-responsive-sm">
+                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                    <th class="w-5 text-center">{{ __('Image') }}</th>
-                                    <th style="width: 22%!important;"  class="text-left">{{ __('Date') }}</th>
-                                 
-                                    <th style="width: 18%!important;"  class="text-left">{{ __('Berat') }}</th>
-                                    <th style="width: 19%!important;" class="text-left">{{ __('Supplier') }}</th>
-                                    <th style="width: 8%!important;" class="text-center">{{ __('Pembayaran') }}
-                                    </th>
-                                    <th style="width: 22%!important;" class="text-center">{{ __('Action') }}
-                                    </th> 
+                                   <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
+                                    <th class="text-lef">{{ __('Karat') }}</th>
 
+                                    <th style="width: 15%!important;" class="text-center">
+                                         {{ __('Updated') }}
+                                    </th>
+                                    <th style="width: 18%!important;" class="text-center">
+                                        {{ __('Action') }}
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
@@ -63,25 +51,6 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
         </div>
     </div>
 </div>
-
-
-<div id="ModalGroupKategori" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-             <div class="modal-header">
-                <h5 class="modal-title" id="ModalHeaderGroupkategori"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="ModalContentGroupKategori"> </div>
-         <div class="modal-footer" id="ModalFooterGroupKategori"></div>
-
-        </div>
-    </div>
-</div>
-
-
 @endsection
 
 <x-library.datatable />
@@ -131,12 +100,9 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                     }
                 },
 
-                {data: 'image', name: 'image'},
-                {data: 'date', name: 'date'},
-                {data: 'berat', name: 'berat'},
-                {data: 'supplier', name: 'supplier'},
-                {data: 'pembayaran', name: 'pembayaran'},
-
+                {data: 'cabang', name: 'cabang'},
+                {data: 'karat', name: 'karat'},
+                {data: 'updated_at', name: 'updated_at'},
 
                 {
                     data: 'action',
@@ -157,33 +123,23 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-//group modal kategori
-
-  $(document).on('click', '#GroupKategori', function(e){
+$(document).on('click', '#Tambah, #Edit', function(e){
          e.preventDefault();
-          $('#ModalBacktoKategori').modal('hide');
-          $("#ModalBacktoKategori").trigger("reset");
-               $('#ModalKategori').modal('hide');
-          $('#ModalKategori').modal('hide');
-          $("#ModalKategori").trigger("reset");
-         if($(this).attr('id') == 'GroupKategori')
-         {
-
-            $('.modal-dialog').removeClass('modal-lg');
+        if($(this).attr('id') == 'Tambah')
+        {
+            $('.modal-dialog').addClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').addClass('modal-xl');
-            $('#ModalHeaderGroupkategori').html('<i class="bi bi-grid-fill"></i> &nbspGroup {{ Label_case(' Kategori') }}');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
         }
-        $('#ModalContentGroupKategori').load($(this).attr('href'));
-        $('#ModalGroupKategori').modal('show');
-        $('#ModalGroupKategori').modal({
-                        backdrop: 'static',
-                        keyboard: true,
-                        show: true
-                });
+        if($(this).attr('id') == 'Edit')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
+        }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
     });
-
-
 })(jQuery);
 </script>
 @endpush

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Modules\GoodsReceipt\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
@@ -245,10 +244,10 @@ public function index_data(Request $request)
 
                            ->editColumn('berat', function ($data) {
                               $tb = '<div class="text-xs">
-                                     Berat Kotor :' .$data->berat_kotor . '
+                                     Berat Kotor :' .$data->total_berat_kotor . '
                                     </div>';
                                   $tb .= '<div class="text-xs text-left">
-                                    Berat Real :' .$data->berat_real . '
+                                    Total Emas :' .$data->total_emas . '
                                     </div>';   
                                 return $tb;
                             }) 
@@ -264,8 +263,8 @@ public function index_data(Request $request)
                                 return $tb;
                             }) 
 
-        ->editColumn('pembayaran', function ($data) {
-               if ($data->pembelian[0]->tipe_pembayaran == 'jatuh_tempo') 
+                ->editColumn('pembayaran', function ($data) {
+                   if ($data->pembelian[0]->tipe_pembayaran == 'jatuh_tempo') 
                      {
                          $info =  'Jatuh Tempo';
                          $pembayaran =  tgljam(@$data->pembelian[0]->jatuh_tempo);
@@ -275,21 +274,19 @@ public function index_data(Request $request)
                          $pembayaran =  @$data->pembelian[0]->cicil .' kali';
                      }
                      else{
-                         
                          $info =  '';
                          $pembayaran =  'Lunas';
                      }
-          $tb = '<div class="items-left text-left">
-                   <div class="small text-gray-800">'.$info.'</div>
-                   <div class="text-gray-800">' .$pembayaran. '</div>
-                   </div>';
-                     return $tb;
-                     })  
+                        $tb ='<div class="items-left text-left">
+                              <div class="small text-gray-800">'.$info.'</div>
+                              <div class="text-gray-800">' .$pembayaran. '</div>
+                              </div>';
+                             return $tb;
+                             })  
 
-                           ->editColumn('qty', function ($data) {
+                           ->editColumn('supplier', function ($data) {
                              $tb = '<div class="items-left text-left">
-                                    <div>Diterima : '.$data->qty_diterima . '</div>
-                                    <div>Nota :' .$data->qty . '</div>
+                                    <div>'.$data->supplier->supplier_name . '</div>
                                     </div>';
                                 return $tb;
                             })
@@ -312,7 +309,7 @@ public function index_data(Request $request)
                          'harga',
                          'image', 
                          'pembayaran', 
-                         'qty', 
+                         'supplier', 
                          'detail', 
                          'name'])
                         ->make(true);
@@ -484,6 +481,7 @@ public function store(Request $request)
              'karat_id.*' => 'required',
             ]);
          $input = $request->except('_token','document');
+         //dd($input);
         $$module_name_singular = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
@@ -525,7 +523,7 @@ public function store(Request $request)
             $image_base64 = base64_decode($image_parts[1]);
             $fileName ='webcam_'. uniqid() . '.jpg';
             $file = $folderPath . $fileName;
-             // $$module_name_singular->addMedia($image_base64)->toMediaCollection('pembelian');
+             //$$module_name_singular->addMedia($image_base64)->toMediaCollection('pembelian');
             Storage::disk('public')->put($file,$image_base64);
             $input['images'] =  "$fileName";
             }
@@ -542,7 +540,7 @@ public function store(Request $request)
 
 
 
-private function _saveTipePembelian($input ,$goodsreceipt)
+    private function _saveTipePembelian($input ,$goodsreceipt)
         {
         TipePembelian::create([
         'goodsreceipt_id'             => $goodsreceipt,
@@ -555,7 +553,7 @@ private function _saveTipePembelian($input ,$goodsreceipt)
       }
 
 
- private function _saveGoodsReceiptItem($input ,$goodsreceipt)
+   private function _saveGoodsReceiptItem($input ,$goodsreceipt)
      {
        foreach ($input['karat_id'] as $key => $value) {
           GoodsReceiptItem::create([
@@ -568,6 +566,7 @@ private function _saveTipePembelian($input ,$goodsreceipt)
 
          }
     }
+
 
 
 private function _saveStockOffice($input)
