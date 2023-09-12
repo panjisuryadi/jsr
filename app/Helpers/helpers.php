@@ -310,6 +310,11 @@ if (!function_exists('format_currency')) {
     }
 }
 
+
+
+
+
+
 if (!function_exists('make_reference_id')) {
     function make_reference_id($prefix, $number) {
         $padded_text = $prefix . '-' . str_pad($number, 5, 0, STR_PAD_LEFT);
@@ -607,6 +612,37 @@ function tanggal($tgl, $tampil_hari=true){
 }
 
 }
+
+
+
+
+if(! function_exists('rupiah')) {
+
+    function rupiah($number,$dec=0,$trim=false){
+      if($trim){
+        $parts = explode(".",(round($number,$dec) * 1));
+        $dec = isset($parts[1]) ? strlen($parts[1]) : 0;
+      }
+      $formatted = number_format($number,$dec);
+      return $formatted;
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
