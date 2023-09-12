@@ -81,8 +81,8 @@
     
 </div>
 
-               {{-- @include('product::categories.form.lm') --}}
-            @else
+  {{-- @include('product::categories.form.lm') --}}
+ @else
 <div class="grid grid-cols-2 gap-2">
     <div class="form-group">
         <label for="product_note">Kategori Emas</label>
@@ -92,6 +92,13 @@
             {{$sup->name}}</option>
             @endforeach
         </select>
+   @if($errors->has('gold_kategori_id'))
+    <span class="invalid feedback"role="alert">
+        <small class="text-danger">{{ $errors->first('gold_kategori_id') }}.</small
+        class="text-danger">
+    </span>
+    @endif
+
     </div>
     <div class="form-group">
         <label for="karat_id">@lang('Karat') <span class="text-danger">*</span></label>
@@ -129,7 +136,7 @@
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
-         step="0.01"
+         step="0.001"
         wire:model="berat_accessories"
         wire:change="recalculateTotal"
         wire:keyup="recalculateTotal"
@@ -160,7 +167,7 @@
         wire:model="berat_tag"
         wire:change="recalculateTotal"
         wire:keyup="recalculateTotal"
-        min="0" step="0.01"
+        min="0" step="0.001"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
@@ -181,7 +188,7 @@
         <input class="form-control numeric"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+        min="0" step="0.001"
         id="{{ $field_name }}"
         wire:model="berat_emas"
         wire:change="recalculateTotal"

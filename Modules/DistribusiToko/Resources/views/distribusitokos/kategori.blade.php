@@ -229,9 +229,12 @@ margin-bottom: 0.5rem !important;
                                                         <button class="btn btn-info relative rounded-l-none" id="generate-code">Chek</button>
                                                     </span>
                                                 </div>
-                                                <span class="invalid feedback" role="alert">
-                                                    <span class="text-danger error-text product_code_err"></span>
-                                                </span>
+                                                 @if ($errors->has('product_code'))
+                                                    <span class="invalid feedback"role="alert">
+                                                        <small class="text-danger">{{ $errors->first('product_code') }}.</small
+                                                        class="text-danger">
+                                                    </span>
+                                                    @endif
                                             </div>
                                             
                                         </div>
@@ -255,7 +258,7 @@ margin-bottom: 0.5rem !important;
                                         <div>
                                         </div>
                                         <div class="form-group">
-                                            
+                                        
                                             <a class="px-5 btn btn-danger"
                                                 href="{{ route("goodsreceipt.index") }}">
                                             @lang('Cancel')</a>

@@ -1062,22 +1062,6 @@ public function view_main_kategori_modal(Request $request ,$id) {
     }
 
 
-    public function store_old(StoreProductRequest $request) {
-         $params = $request->all();
-        $params = $request->except('_token');
-         dd($params);
-        $product = Product::create($request->except('document'));
-
-        if ($request->has('document')) {
-            foreach ($request->input('document', []) as $file) {
-                $product->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
-            }
-        }
-
-        toast('Product Created!', 'success');
-
-        return redirect()->route('products.index');
-    }
 
 
 
@@ -1214,10 +1198,7 @@ public function saveAjax(Request $request)
                   'berat_kotor' =>$stock->berat_kotor - $input['berat_total'] - $input['berat_emas']
                     ]
                );
-                 
-
-              // dd($input);
-              }
+            }
 
 
 
@@ -1301,6 +1282,15 @@ public function saveAjax(Request $request)
         $module_item = $this->module_item;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Store';
+
+       $request->validate([
+         'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
+         'category' => 'required',
+         'produk_model' => 'required',
+         'group_id' => 'required',
+         'cabang_id' => 'required',
+         'berat_accessories' => 'required',
+          ]);
         $input = $request->all();
         $input = $request->except(['document']);
        // dd($input);
