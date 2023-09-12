@@ -108,13 +108,14 @@ margin-bottom: 0.5rem !important;
                  
        <script src="{{ asset('js/jquery.min.js') }}"></script>
   
-       <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
+       <form id="FormTambah" 
+        action="{{ route("products.store") }}"
+        method="POST" 
+        enctype="multipart/form-data">
+
         @csrf
       {{-- {{$mainkategori}} --}}
                       
-
-       {{-- {{$mainkategori}} --}}
-
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">
