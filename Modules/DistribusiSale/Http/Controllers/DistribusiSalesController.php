@@ -74,13 +74,6 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
-                                    </div>';
-                                return $tb;
-                            })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -91,7 +84,25 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->editColumn('date', function ($data) {
+                            $module_name = $this->module_name;
+                            return \Carbon\Carbon::parse($data->updated_at)->format('j F Y');
+                        })
+                        ->editColumn('sales', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                   <h3 class="text-sm font-medium text-gray-800">
+                                    ' .$data->sales->name . '</h3>
+                                   </div>';
+                               return $tb;
+                           })
+                        ->editColumn('jumlah_emas', function ($data) {
+                        $tb = '<div class="items-center text-center">
+                                <h3 class="text-sm font-medium text-gray-800">
+                                ' .$data->detail->sum('jumlah') . '</h3>
+                                </div>';
+                            return $tb;
+                        })
+                        ->rawColumns(['updated_at', 'action','date','sales','jumlah_emas'])
                         ->make(true);
                      }
 

@@ -5,6 +5,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\DataSale\Models\DataSale;
 use Modules\DistribusiSale\Models\DistribusiSaleDetail;
 class DistribusiSale extends Model
 {
@@ -14,11 +15,15 @@ class DistribusiSale extends Model
     protected $guarded = [];
 
     public function detail() {
-        return $this->hasMany(DistribusiSaleDetail::class, 'karat_id', 'id');
+        return $this->hasMany(DistribusiSaleDetail::class, 'distribusi_sales_id', 'id');
     }
     protected static function newFactory()
     {
         return \Modules\DistribusiSale\database\factories\DistribusiSaleFactory::new();
+    }
+
+    public function sales(){
+        return $this->belongsTo(DataSale::class);
     }
 
 
