@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use Modules\KategoriProduk\Models\KategoriProduk;
 
 class DistribusiTokosController extends Controller
 {
@@ -24,6 +25,7 @@ class DistribusiTokosController extends Controller
         $this->module_path = 'distribusitokos';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\DistribusiToko\Models\DistribusiToko";
+        $this->module_kategori = "Modules\KategoriProduk\Models\KategoriProduk";
 
     }
 
@@ -237,6 +239,36 @@ public function show($id)
             'module_icon', 'module_model'));
 
     }
+
+
+public function kategori($slug)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_kategori = $this->module_kategori;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+       
+        $kategori = $module_kategori::where('slug',$slug)->first();
+        $categories = \Modules\Product\Entities\Category::where('kategori_produk_id',$kategori->id)->get();
+        //dd($detail);
+          return view(''.$module_name.'::'.$module_path.'.kategori',
+           compact('module_name',
+            'module_action',
+            'kategori',
+            'module_title',
+            'categories',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -17,12 +17,18 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                     
+                              <div class="dropdown show">
+                                <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Pilih Kategori
                                 </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $category)
+               <a href="{{ route(''.$module_name.'.kategori',$category->slug) }}"
+                      class="dropdown-item" >{{ $category->name }}</a>
+                @endforeach
+              </div>
+                            </div>
 
                         </div>
                         <div id="buttons">

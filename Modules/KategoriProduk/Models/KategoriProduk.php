@@ -14,6 +14,7 @@ class KategoriProduk extends Model
     protected $fillable = [
         'name',
         'image',
+        'slug',
         'description',
         'start_date',
         'end_date',

@@ -155,6 +155,7 @@ public function create()
         //dd($params);
         $params = $request->except('_token');
         $params['name'] = $params['name'];
+        $params['slug']  = Str::slug($params['name']);
         $params['description'] = $params['description'];
         //  if ($image = $request->file('image')) {
         //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
@@ -248,6 +249,7 @@ public function show($id)
                  ]);
         $params = $request->except('_token');
         $params['name'] = $params['name'];
+        $params['slug']  = Str::slug($params['name']);
         $params['description'] = $params['description'];
 
 
