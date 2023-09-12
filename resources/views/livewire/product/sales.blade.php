@@ -54,12 +54,17 @@
           <div class="flex-1">
          <select  class="form-control select2" 
               name="sales_id" wire:model="sales.sales_id">
-                
-                  @foreach(\Modules\DataSale\Models\DataSale::all() as $row)
-                  <option value="{{$row->id}}" {{ old('sales_id') == $row->id ? 'selected' : '' }}>
-                  {{$row->name}} </option>
+                <option value="" selected disabled>Pilih Sales</option>
+                  @foreach($dataSales as $sales)
+                  <option value="{{$sales->id}}" {{ old('sales_id') == $sales->id ? 'selected' : '' }}>
+                  {{$sales->name}} </option>
                   @endforeach
               </select>
+              @error('sales.sales_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
           </div>
         </div>
       </div>
@@ -87,10 +92,10 @@
                       {{ $field_lable }}<span class="text-danger">*</span></label>
     <select  class="form-control form-control-sm" 
     name="{{ $field_name }}"
-    wire:change="pilihPo(0,$event.target.value)">
+    wire:change="pilihPo(0,$event.target.value)" wire:model="karat_id.0">
         <option value="" selected disabled>Select Karat</option>
         @foreach(\Modules\Karat\Models\Karat::all() as $row)
-        <option value="{{$row->kode}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+        <option value="{{$row->id}}">
         {{$row->name}} | {{$row->kode}} </option>
         @endforeach
     </select>
@@ -188,7 +193,7 @@
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["max=100","min=0","step=0.001"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","max=100","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -205,14 +210,14 @@
                     $field_lable = label_case('jumlah');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'wire:model="'.$field_name.'"';
+                    $required = 'wire:change=calculateTotalJumlah() wire:model="'.$field_name.'"';
                     ?>
                      <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                       {{ $field_lable }}<span class="text-danger">*</span></label>
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
+                    ->class('form-control form-control-sm jumlah-emas '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -257,11 +262,10 @@
             $required = 'wire:model="'.$field_name.'"';
             ?>
               <select class="form-control form-control-sm" 
-                 wire:change="pilihPo('{{ $value }}',$event.target.value)">
-                 name="{{ $field_name }}">
+                 wire:change="pilihPo('{{ $value }}',$event.target.value)" wire:model="karat_id.{{$value}}" name="{{ $field_name }}">
                 <option value="" selected disabled>Select Karat</option>
                 @foreach(\Modules\Karat\Models\Karat::all() as $row)
-                <option value="{{$row->kode}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+                <option value="{{$row->id}}">
                 {{$row->name}} | {{$row->kode}} </option>
                 @endforeach
               </select>
@@ -353,7 +357,7 @@
                    
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["max=100","min=0","step=0.001"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","max=100","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -369,12 +373,12 @@
                     $field_lable = label_case('jumlah');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'step="0.001" wire:model="'.$field_name.'"';
+                    $required = 'wire:change=calculateTotalJumlah() step="0.001" wire:model="'.$field_name.'"';
                     ?>
                    
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
+                    ->class('form-control form-control-sm jumlah-emas '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -387,7 +391,7 @@
 
             </div>
             <div class="px-1 pt-1">
-                <button class="btn text-white text-xl btn-danger btn-sm" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
+                <button class="btn text-white text-xl btn-danger btn-sm removebutton" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
                 <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
                 <span wire:loading wire:target="remove({{$key}})" class="text-center">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -410,21 +414,14 @@
           <label class="w-16 text-gray-700 block text-sm tracking-wide">Jumlah.</label>
           <span class="mr-4 inline-block hidden md:block">:</span>
           <div class="flex-1">
-          <input class="form-control form-control-sm"  type="text" placeholder="0" readonly>
-          </div>
-        </div>
-   <div class="mb-2 md:mb-1 md:flex items-center">
-          <label class="w-16 text-gray-700 block text-sm tracking-wide">Diskon.</label>
-          <span class="mr-4 inline-block hidden md:block">:</span>
-          <div class="flex-1">
-          <input class="form-control form-control-sm"  type="text" placeholder="0">
+          <input class="form-control form-control-sm" wire:model="sales.total_jumlah"  type="text" placeholder="0" readonly>
           </div>
         </div>
    <div class="mb-2 md:mb-1 md:flex items-center">
           <label class="w-16 text-gray-700 block text-sm tracking-wide">Total.</label>
           <span class="mr-4 inline-block hidden md:block">:</span>
           <div class="flex-1">
-          <input class="form-control form-control-sm"  type="text" placeholder="0">
+          <input class="form-control form-control-sm" wire:model="sales.total"  type="text" placeholder="0">
           </div>
         </div>
 
@@ -436,48 +433,7 @@
 
 
 
-<div class="flex items-center justify-between mb-8">
-        <div class="flex items-center">
 
-        </div>
-  <div class="w-2/6">
-
-    <div class="flex flex-row gap-2">
-       <div class="form-group">
-            <label class="mb-0 text-gray-700">PIC</label>
-              <select wire:model="sales.user_id" class="form-control" name="user_id" id="user_id" required>
-           
-                @foreach($kasir as $jp)
-                <option value="{{ $jp->id }}">{{ $jp->name }}</option>
-                @endforeach
-              </select>
-                @error('sales.user_id')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-            </div>
-       <div class="mb-2 items-center text-gray-700">
-
-            <div class="form-group">
-            <label class="mb-0 text-gray-700">Sales</label>
-            <input wire:model="sales.nama_sales" type="text" name="Nama_sales" id="nama_sales" placeholder="Ketik Nama Sales" class="form-control @error('sales.nama_sales') is-invalid @enderror">
-                    @error('sales.nama_sales')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-
-
-
-
-
-            </div>
-        </div>
-     </div>
-
-      </div>
 
     </div>
 
