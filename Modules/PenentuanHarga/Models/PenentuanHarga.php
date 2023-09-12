@@ -5,7 +5,9 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Modules\JenisGroup\Models\JenisGroup;
+use App\Models\User;
+use Modules\Karat\Models\Karat;
+
 class PenentuanHarga extends Model
 {
     use HasFactory;
@@ -16,9 +18,12 @@ class PenentuanHarga extends Model
   //       return $this->hasMany(Product::class, 'category_id', 'id');
   //   }
 
-  //   public function kategoriProduk() {
-  //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
-  //   }
+    public function karat() {
+        return $this->belongsTo(Karat::class, 'karat_id', 'id');
+    } 
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
     protected static function newFactory()
     {

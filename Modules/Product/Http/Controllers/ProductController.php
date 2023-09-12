@@ -19,10 +19,11 @@ use Modules\Product\Entities\TrackingProduct;
 use Modules\Purchase\Entities\Purchase;
 use Modules\Locations\Entities\Locations;
 use Modules\ProdukModel\Models\ProdukModel;
-use Modules\Gudang\Models\Gudang;
+use Modules\Stok\Models\StockOffice;
 use Modules\Group\Models\Group;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
+use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\Upload\Entities\Upload;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -1061,22 +1062,6 @@ public function view_main_kategori_modal(Request $request ,$id) {
     }
 
 
-    public function store(StoreProductRequest $request) {
-         $params = $request->all();
-        $params = $request->except('_token');
-         dd($params);
-        $product = Product::create($request->except('document'));
-
-        if ($request->has('document')) {
-            foreach ($request->input('document', []) as $file) {
-                $product->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
-            }
-        }
-
-        toast('Product Created!', 'success');
-
-        return redirect()->route('products.index');
-    }
 
 
 
@@ -1117,6 +1102,7 @@ public function saveAjax(Request $request)
            $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
           $$module_name_singular = $module_model::create([
             'category_id'                       => $input['category'],
+            'cabang_id'                         => $input['cabang_id'],
             'goodsreceipt_id'                   => $input['goodsreceipt_id'],
             'kode_pembelian'                    => $input['kode_pembelian'],
             'product_stock_alert'               => $input['product_stock_alert'],
@@ -1165,13 +1151,28 @@ public function saveAjax(Request $request)
 
 
 
-
-       private function _saveProductsItem($input ,$produk)
+    private function _saveHistoryDistribusiToko($input)
     {
+        
+           DistribusiToko::create([
+                'cabang_id'                   => $input['cabang_id'] ?? null,
+                'karat_id'                    => $input['karat_id'] ?? null,
+                'date'                        => date('Y-m-d'),
+                'weight'                      => $input['berat_emas'],
+                'created_by'                  => auth()->user()->name
+            ]);
+             
 
-          $product_price = preg_replace("/[^0-9]/", "", $input['product_price']);
-          $product_cost = preg_replace("/[^0-9]/", "", $input['product_cost']);
-          $gudang = Gudang::latest()->limit(1)->first()->id;
+              // dd($input);
+              }
+
+
+
+
+
+    private function _saveProductsItem($input ,$produk)
+    {
+        
            ProductItem::create([
                 'product_id'                  => $produk,
                 'location_id'                 => $input['location_id'] ?? null,
@@ -1181,27 +1182,25 @@ public function saveAjax(Request $request)
                 'karat_id'                    => $input['karat_id'] ?? null,
                 'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
                 'certificate_id'              => $input['certificate_id'] ?? null,
-                'shape_id'                    => $input['shape_id'] ?? null,
-                'round_id'                    => $input['round_id'] ?? null,
                 'round_id'                    => $input['round_id'] ?? null,
                 'tag_label'                   => $input['berat_tag'] ?? null,
-                'product_cost'                => $product_cost,
-                'product_price'               => $product_price,
-                'product_sale'                => null,
                 'berat_emas'                  => $input['berat_emas'],
-                'berat_label'                 => '0',
-                'gudang_id'                   => $gudang ?? null,
+                'berat_label'                 => $input['berat_label'] ?? 0,
                 'supplier_id'                 => $input['supplier_id'] ?? null,
-                'etalase_id'                  => $input['etalase_id'] ?? null,
-                'baki_id'                     => $input['baki_id'] ?? null,
                 'produk_model_id'             => $input['produk_model'] ?? null,
                 'berat_total'                 => $input['berat_total']
             ]);
 
-                 
+         $stock = StockOffice::where('karat_id', $input['karat_id'])->first();
+         $stock::where('karat_id', $input['karat_id'])
+             ->update([
+                  'berat_real' =>$stock->berat_real - $input['berat_emas'],
+                  'berat_kotor' =>$stock->berat_kotor - $input['berat_total'] - $input['berat_emas']
+                    ]
+               );
+            }
 
-              // dd($input);
-              }
+
 
 
 
@@ -1264,6 +1263,84 @@ public function saveAjax(Request $request)
 
              return redirect()->route('products.index');
     }
+
+
+
+
+
+
+
+ public function store(Request $request)
+    {
+
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_item = $this->module_item;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Store';
+
+       $request->validate([
+         'product_code' => 'required|max:255|unique:'.$module_model.',product_code',
+         'category' => 'required',
+         'produk_model' => 'required',
+         'group_id' => 'required',
+         'cabang_id' => 'required',
+         'berat_accessories' => 'required',
+          ]);
+        $input = $request->all();
+        $input = $request->except(['document']);
+       // dd($input);
+       
+        $model = ProdukModel::where('id', $input['produk_model'])->first();
+        $group = Group::where('id', $input['group_id'])->first();
+
+          $$module_name_singular = $module_model::create([
+            'category_id'                       => $input['category'],
+            'cabang_id'                         => $input['cabang_id'],
+            'product_stock_alert'               => $input['product_stock_alert'],
+            'product_name'                      => $group->name .' '. $model->name ?? 'unknown',
+            'product_code'                      => $input['product_code'],
+            'product_price'                     => 0,
+            'product_quantity'                  => $input['product_quantity'],
+            'product_barcode_symbology'         => $input['product_barcode_symbology'],
+            'product_unit'                      => $input['product_unit'],
+            'product_cost'                      => 0
+              ]);
+
+            if ($request->filled('image')) {
+                $img = $request->image;
+                $folderPath = "uploads/";
+                $image_parts = explode(";base64,", $img);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName ='webcam_'. uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('local')->put($file,$image_base64);
+                $$module_name_singular->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('images');
+                    //$params['image'] = "$newFilename";
+                }
+
+
+              if ($request->has('document')) {
+                    foreach ($request->input('document', []) as $file) {
+                        $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
+                    }
+                }
+
+                 $produk = $$module_name_singular->id;
+                 $this->_saveProductsItem($input ,$produk);
+                 $this->_saveHistoryDistribusiToko($input);
+                 toast('Product Created!', 'success');
+
+             return redirect()->route('distribusitoko.index');
+    }
+
+
 
 
 

@@ -33,14 +33,15 @@
     <thead>
         <tr>
             <th style="width: 6%!important;">No</th>
-            <th style="width: 10%!important;" class="text-center">{{ Label_Case('tgl_update') }}</th>
-            <th class="text-left">{{ Label_Case('harga_emas') }}</th>
-            <th style="width: 10%!important;" class="text-center">
-            {{ Label_Case('harga_emas') }}</th>
-            <th style="width: 10%!important;" class="text-center">
+            <th style="width: 12%!important;" class="text-left">{{ Label_Case('tgl_update') }}</th>
+ <th style="width: 14%!important;" class="text-left">{{ Label_Case('karat') }}</th>
+ <th style="width: 14%!important;" class="text-left">{{ Label_Case('harga_emas') }}</th>
+            <th style="width: 14%!important;" class="text-center">
             {{ Label_Case('harga_modal') }}</th>
+            <th style="width: 12%!important;" class="text-center">
+            {{ Label_Case('margin') }}</th>
             <th style="width: 10%!important;" class="text-center">
-            {{ Label_Case('harga_emas') }}</th>
+            {{ Label_Case('harga_jual') }}</th>
             
             <th style="width: 18%!important;" class="text-center">
                 {{ __('Action') }}
@@ -104,6 +105,7 @@
                 },
 
                 {data: 'tgl_update', name: 'tgl_update'},
+                {data: 'karat', name: 'karat'},
                 {data: 'harga_emas', name: 'harga_emas'},
                 {data: 'harga_modal', name: 'harga_modal'},
                 {data: 'margin', name: 'margin'},

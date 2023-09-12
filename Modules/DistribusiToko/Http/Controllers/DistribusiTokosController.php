@@ -79,10 +79,26 @@ public function index_data(Request $request)
                           ->editColumn('cabang', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->cabang . '</h3>
+                                     ' .$data->cabang->name . '</h3>
                                     </div>';
                                 return $tb;
                             })
+                           ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->karat->name . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+
+                           ->editColumn('weight', function ($data) {
+                               $tb = '<div class="items-center text-center">
+                                     '.$data->weight .'
+                                    </div>';
+                                return $tb;
+                            })
+
+
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -94,7 +110,7 @@ public function index_data(Request $request)
                             }
                         })
                         ->rawColumns(['updated_at', 
-                                    'action',  'cabang',
+                                    'action',  'cabang', 'karat','weight',
                                       'name'])
                         ->make(true);
                      }

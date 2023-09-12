@@ -87,6 +87,13 @@ public function index_data(Request $request)
                                      ' .$data->user->name . '
                                     </div>';
                                 return $tb;
+                            }) 
+
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->karat->name . '
+                                    </div>';
+                                return $tb;
                             })  
 
                              ->editColumn('harga_emas', function ($data) {
@@ -138,6 +145,7 @@ public function index_data(Request $request)
                                         'harga_emas',
                                         'margin',
                                         'harga_modal',
+                                        'karat',
                                         'harga_jual',
                                         'karat', 
                                         'user'])

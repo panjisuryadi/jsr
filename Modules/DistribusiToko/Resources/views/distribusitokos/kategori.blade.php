@@ -108,13 +108,14 @@ margin-bottom: 0.5rem !important;
                  
        <script src="{{ asset('js/jquery.min.js') }}"></script>
   
-       <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
+       <form id="FormTambah" 
+        action="{{ route("products.store") }}"
+        method="POST" 
+        enctype="multipart/form-data">
+
         @csrf
       {{-- {{$mainkategori}} --}}
                       
-
-       {{-- {{$mainkategori}} --}}
-
                         <input type="hidden" name="product_barcode_symbology" value="C128">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">
@@ -228,9 +229,12 @@ margin-bottom: 0.5rem !important;
                                                         <button class="btn btn-info relative rounded-l-none" id="generate-code">Chek</button>
                                                     </span>
                                                 </div>
-                                                <span class="invalid feedback" role="alert">
-                                                    <span class="text-danger error-text product_code_err"></span>
-                                                </span>
+                                                 @if ($errors->has('product_code'))
+                                                    <span class="invalid feedback"role="alert">
+                                                        <small class="text-danger">{{ $errors->first('product_code') }}.</small
+                                                        class="text-danger">
+                                                    </span>
+                                                    @endif
                                             </div>
                                             
                                         </div>
@@ -254,7 +258,7 @@ margin-bottom: 0.5rem !important;
                                         <div>
                                         </div>
                                         <div class="form-group">
-                                            
+                                        
                                             <a class="px-5 btn btn-danger"
                                                 href="{{ route("goodsreceipt.index") }}">
                                             @lang('Cancel')</a>

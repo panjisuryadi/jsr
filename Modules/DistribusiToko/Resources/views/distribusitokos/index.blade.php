@@ -40,7 +40,8 @@
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
-                                    <th class="text-lef">{{ __('Karat') }}</th>
+                                    <th class="text-left">{{ __('Karat') }}</th>
+                                    <th class="text-left">{{ __('Weight') }}</th>
 
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
@@ -108,6 +109,7 @@
 
                 {data: 'cabang', name: 'cabang'},
                 {data: 'karat', name: 'karat'},
+                {data: 'weight', name: 'weight'},
                 {data: 'updated_at', name: 'updated_at'},
 
                 {
