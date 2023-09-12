@@ -739,9 +739,11 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'activematches' => [
                     'datasales*',
                     'distribusitokos*',
+                    'penjualansales*',
 
                 ],
-                'permission'    => ['access_expenses','access_distribusisales'],
+                'permission'    => ['access_penjualansales',
+                'access_distribusisales','access_datasales'],
             ]);
             $distribusisales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -780,8 +782,25 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ]);
 
 
+
+     // PenjualanSales
+     $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penjualan Sales'), [
+                'route' => 'penjualansale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['penjualansales*'],
+                'permission'    => ['access_penjualansales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+      
+
+
           // ReturSales
-            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Return Sales'), [
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Retur Sales'), [
                 'route' => 'retursale.index',
                 'class' => 'nav-item',
             ])
