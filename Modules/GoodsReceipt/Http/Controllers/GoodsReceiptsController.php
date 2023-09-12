@@ -476,6 +476,7 @@ public function store(Request $request)
              'supplier_id' => 'required',
              'tanggal' => 'required',
              'total_emas' => 'required',
+             'berat_timbangan' => 'required',
              'user_id' => 'required',
              'karat_id.0' => 'required',
              'karat_id.*' => 'required',
@@ -556,7 +557,7 @@ public function store(Request $request)
    private function _saveGoodsReceiptItem($input ,$goodsreceipt)
      {
        foreach ($input['karat_id'] as $key => $value) {
-          GoodsReceiptItem::create([
+          GoodsReceiptItem::updateOrCreate([
               'goodsreceipt_id' => $goodsreceipt,
               'karat_id' => $input['karat_id'][$key],
               'kategoriproduk_id' => $input['kategori_id'][$key],
@@ -571,14 +572,28 @@ public function store(Request $request)
 
 private function _saveStockOffice($input)
      {
-       foreach ($input['karat_id'] as $key => $value) {
-          StockOffice::create([
-              'karat_id' => $input['karat_id'][$key],
-              'berat_real' =>$input['berat_real'][$key],
-              'berat_kotor' =>$input['berat_kotor'][$key]
-               ]);
 
-         }
+     $karat = StockOffice::where('karat_id',$input['karat_id'])->first();
+     if($karat!==null){
+         foreach ($input['karat_id'] as $key => $value) {
+           StockOffice::where('karat_id',$input['karat_id'][$key])
+                     ->update([
+                          'berat_real' =>$karat->berat_real + $input['berat_real'][$key],
+                          'berat_kotor' =>$karat->berat_kotor + $input['berat_kotor'][$key]
+                            ]
+                       );
+                 }
+     
+           }else{
+              foreach ($input['karat_id'] as $key => $value) {
+                  StockOffice::create([
+                      'karat_id' => $input['karat_id'][$key],
+                      'berat_real' =>$input['berat_real'][$key],
+                      'berat_kotor' =>$input['berat_kotor'][$key]
+                       ]);
+                 }
+           }
+     
     }
 
 
