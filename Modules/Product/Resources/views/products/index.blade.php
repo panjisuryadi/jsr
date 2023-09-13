@@ -70,12 +70,8 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
-                        <div>
-                           {{--  <a href="{{ route('products.create') }}" class="btn btn-primary">
-                                Add Product <i class="bi bi-plus"></i>
-                            </a> --}}
-
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Iventory </span>
+                        <div> 
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk </span>
                         </div>
                         <div id="buttons"></div>
                     </div>
@@ -86,8 +82,8 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                                     <th style="width: 5%!important;">NO</th>
                                     <th style="width: 9%!important;">{{ Label_case('image') }}</th>
                                     <th>{{ Label_case('product_name') }}</th>
-                                    <th>{{ Label_case('price') }}</th>
-                                    <th style="width: 12%!important;" class="text-center">{{ Label_case('Status') }}</th>
+                                    <th class="text-center">{{ Label_case('Cabang') }}</th>
+                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Karat') }}</th>
 
 
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
@@ -137,6 +133,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                 "sNext": "{{ __("labels.table.next") }}"
             }
         },
+
         "aaSorting": [[ 0, "desc" ]],
         "columnDefs": [
         {
@@ -167,14 +164,14 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
             name: 'product_name'
         },
         {
-            data: 'product_price',
-            name: 'product_price'
+            data: 'cabang',
+            name: 'cabang'
         }, {
-            data: 'status',
-            name: 'status'
+            data: 'karat',
+            name: 'karat'
         }, {
-            data: 'updated_at',
-            name: 'updated_at'
+            data: 'created_at',
+            name: 'created_at'
         },{
             data: 'tracking',
             name: 'tracking'

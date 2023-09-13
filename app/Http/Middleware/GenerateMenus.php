@@ -691,7 +691,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-   // distribusitokos Access Control Dropdown ==================================
+   // distribusi toko Access Control Dropdown ==================================
             $distribusiToko = $menu->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
                 '.__('Distribusi Toko').'', [
@@ -711,7 +711,22 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'href'  => '#',
             ]);
 
-            // DistribusiTokos
+            // Produk
+            $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Produk'), [
+                'route' => 'products.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['products*'],
+                'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+   // DistribusiTokos
             $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
                 'route' => 'distribusitoko.index',
                 'class' => 'nav-item',
@@ -724,6 +739,10 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
+
 
 
 

@@ -124,8 +124,6 @@
         .container()
         .appendTo("#buttons");
 
-
-
     </script>
 
 <script type="text/javascript">

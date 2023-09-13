@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Modules\Product\Entities\ProductLocation;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
+use Modules\Cabang\Models\Cabang;
 class Product extends Model implements HasMedia
 {
 
@@ -30,9 +31,6 @@ class Product extends Model implements HasMedia
     }
 
 
-   public function product_location() {
-        return $this->hasMany(ProductLocation::class, 'product_id', 'id');
-    }
 
 
     public function category() {
@@ -40,6 +38,10 @@ class Product extends Model implements HasMedia
     }
     public function pembelian() {
         return $this->belongsTo(GoodsReceipt::class, 'goodsreceipt_id', 'id');
+    } 
+
+    public function cabang() {
+        return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
     }
 
     public function registerMediaCollections(): void {

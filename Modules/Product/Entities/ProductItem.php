@@ -4,6 +4,7 @@ namespace Modules\Product\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Karat\Models\Karat;
 
 class ProductItem extends Model
 {
@@ -20,20 +21,15 @@ class ProductItem extends Model
      public function products() {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
-    public function gudangs() {
-        return $this->belongsTo(Gudang::class, 'gudang_id', 'id');
-    }
+
    public function supplier() {
         return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
     }
 
-   public function baki() {
-        return $this->belongsTo(Baki::class, 'baki_id', 'id');
+   public function karat() {
+        return $this->belongsTo(Karat::class, 'karat_id', 'id');
     }
 
-   public function etalase() {
-        return $this->belongsTo(DataEtalase::class, 'etalase_id', 'id');
-    }
 
    public function model() {
         return $this->belongsTo(DataEtalase::class, 'model_id', 'id');

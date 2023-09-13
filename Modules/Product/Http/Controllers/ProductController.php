@@ -299,7 +299,7 @@ public function index_data(Request $request)
         $module_action = 'List';
 
 
-        $$module_name = $module_model::active()->with('category','product_item')
+        $$module_name = $module_model::with('category','product_item')
         ->latest()->get();
         $data = $$module_name;
 
@@ -316,9 +316,7 @@ public function index_data(Request $request)
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                             ' . $data->category->category_name . '</div>
                             <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                             <div style="font-size:0.6rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
-                            ' . $data->product_code . '</div>
-
+                           
 
                         </div>
                     </div>';
@@ -328,33 +326,23 @@ public function index_data(Request $request)
             $url = $data->getFirstMediaUrl('images', 'thumb');
             return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
         })
+      
+         ->editColumn('cabang', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                    <h3 class="text-sm text-center text-gray-800">
+                     ' . $data->cabang->code . ' |  ' . $data->cabang->name . '</h3>
+                        </div>';
+                return $tb;
+            })
+           ->editColumn('karat', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                    <h3 class="text-sm font-semibold text-center text-gray-800">
+                     ' . $data->product_item[0]->karat->kode . ' |  ' . $data->product_item[0]->karat->name . ' </h3>
+                        </div>';
+                return $tb;
+            })
 
-           ->addColumn('product_price', function ($data) {
-              return format_currency($data->product_price);
-          })
-           ->addColumn('product_quantity', function ($data) {
-            return $data->product_quantity . ' ' . $data->product_unit;
-        })
-
-           ->editColumn('product_quantity', function ($data) {
-            $tb = '<div class="items-center small text-center">
-            <span class="bg-green-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
-            ' . $data->product_quantity . ' ' . $data->product_unit . '</span></div>';
-            return $tb;
-        })
-           ->editColumn('weight', function ($data) {
-              $berat = @$data->product_item[0]->berat_emas;
-            if ($berat) {
-                 $weight = @$data->product_item[0]->berat_emas;
-            } else {
-                $weight = '0';
-            }
-
-            $tb = '<div class="items-center small text-center">
-            <span class="bg-yellow-200 px-3 text-dark py-1 rounded reounded-xl text-center font-semibold">
-            ' .  $weight . '</span></div>';
-            return $tb;
-        })
+      
           ->addColumn('tracking', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
@@ -366,18 +354,12 @@ public function index_data(Request $request)
                return $status;
               })
 
-               ->editColumn('updated_at', function ($data) {
+               ->editColumn('created_at', function ($data) {
                     $module_name = $this->module_name;
-
-                    $diff = Carbon::now()->diffInHours($data->updated_at);
-                    if ($diff < 25) {
-                        return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                    } else {
-                        return tgljam($data->created_at);
-                    }
-                })
-           ->rawColumns(['updated_at','product_image','weight','status','tracking',
-            'product_name','product_quantity','product_price', 'action'])
+                      return tgljam($data->created_at);
+                    })
+           ->rawColumns(['created_at','product_image','weight','status','tracking',
+            'product_name','karat','cabang', 'action'])
            ->make(true);
     }
 
