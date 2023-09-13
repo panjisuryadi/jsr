@@ -981,6 +981,49 @@ public function create2()
          }
 
 
+
+
+
+   //view main kategori modal
+
+public function view_by_kategori(Request $request ,$slug) {
+        abort_if(Gate::denies('access_products'), 403);
+        $type = $request->type;
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $mainkategori = KategoriProduk::where('slug', $slug)->first();
+        $module_action = 'List';
+        return view(''.$module_path.'::'.$module_name.'.page.by_kategori',
+           compact('module_name',
+                    'module_title',
+                    'type',
+                    'mainkategori',
+                    'module_icon', 'module_model'));
+                 }
+
+
+//=============================end tambah produk tanpa modal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    //view main kategori modal
 
 public function view_group_kategori_pages(Request $request ,$id) {

@@ -71,7 +71,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div> 
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk </span>
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> Produk Kategori <span class="text-yellow-400">{{$mainkategori->name}}</span>
                         </div>
                         <div id="buttons"></div>
                     </div>
