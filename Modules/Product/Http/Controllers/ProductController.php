@@ -389,10 +389,10 @@ public function index_data_by_kategori(Request $request ,$id)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('product::products.partials.actions',
+                            return view('product::products.partials.aksi_kategori',
                             compact('module_name', 'data', 'module_model'));
                                 })
-           ->editColumn('product_name', function ($data) {
+                ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
@@ -428,7 +428,7 @@ public function index_data_by_kategori(Request $request ,$id)
           ->addColumn('tracking', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('product::products.transfer.tracking_button',
+                            return view('product::products.partials.qrcode_button',
                             compact('module_name', 'data', 'module_model'));
                       })
           ->editColumn('status', function ($data) {

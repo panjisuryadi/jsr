@@ -14,10 +14,10 @@ class AddDropKolomToProductItemsTable extends Migration
     public function up()
     {
         Schema::table('product_items', function (Blueprint $table) {
-               $table->dropColumn('round_id');
-               $table->dropColumn('location_id');
-               $table->dropColumn('color_id');
-               $table->dropColumn('clarity_id');
+               // $table->dropColumn('round_id');
+               // $table->dropColumn('location_id');
+               // $table->dropColumn('color_id');
+               // $table->dropColumn('clarity_id');
 
                $table->foreign('cabang_id')->references('id')->on('cabangs');
       

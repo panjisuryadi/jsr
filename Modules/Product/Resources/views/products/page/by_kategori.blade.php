@@ -145,8 +145,6 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
         ],
         "sPaginationType": "simple_numbers",
 
-
-
      ajax: '{{ route("$module_name.index_data_by_kategori",$mainkategori->id) }}',
         dom: 'Blfrtip',
         buttons: [
