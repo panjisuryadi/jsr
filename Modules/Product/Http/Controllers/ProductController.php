@@ -971,8 +971,11 @@ public function getPdf($id) {
             'product' => $product,
             'name' => $product->product_name,
         ]);
+       $pdf->setPaper('A4', 'landscape');
         return $pdf->stream('barcodes-'. $product->product_code .'.pdf');
     }
+
+
 
 
 
