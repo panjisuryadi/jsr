@@ -56,7 +56,7 @@
               name="sales_id" wire:model="sales.sales_id">
                 <option value="" selected disabled>Pilih Sales</option>
                   @foreach($dataSales as $sales)
-                  <option value="{{$sales->id}}" {{ old('sales_id') == $sales->id ? 'selected' : '' }}>
+                  <option value="{{$sales->id}}">
                   {{$sales->name}} </option>
                   @endforeach
               </select>

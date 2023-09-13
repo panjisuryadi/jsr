@@ -11,6 +11,7 @@ namespace App\Http\Livewire\Product;
         use Modules\GoodsReceipt\Models\GoodsReceipt;
         use Livewire\WithFileUploads;
 use Modules\DataSale\Models\DataSale;
+use Modules\DistribusiSale\Events\DistribusiSaleDetailCreated;
 use Modules\DistribusiSale\Models\DistribusiSale;
 use Modules\Iventory\Models\DistSales;
 use Modules\Karat\Models\Karat;
@@ -167,7 +168,7 @@ use Modules\Karat\Models\Karat;
                     'created_by' => auth()->user()->name
                 ]);
 
-                $dist_sale->detail()->create([
+                $dist_sale_detail = $dist_sale->detail()->create([
                     'karat_id' => $this->karat_id[0],
                     'berat_kotor' => $this->berat_kotor[0],
                     'berat_bersih' => $this->berat_bersih[0],
@@ -175,16 +176,19 @@ use Modules\Karat\Models\Karat;
                     'harga' => $this->harga[0]
                 ]);
 
+                event(new DistribusiSaleDetailCreated($dist_sale,$dist_sale_detail));
+
                 // if input more than 1
                 if(count($this->inputs) > 0){
                     foreach($this->inputs as $key => $value){
-                        $dist_sale->detail()->create([
+                        $dist_sale_detail = $dist_sale->detail()->create([
                             'karat_id' => $this->karat_id[$value],
                             'berat_kotor' => $this->berat_kotor[$value],
                             'berat_bersih' => $this->berat_bersih[$value],
                             'jumlah' => $this->jumlah[$value],
                             'harga' => $this->harga[$value]
                         ]);
+                        event(new DistribusiSaleDetailCreated($dist_sale,$dist_sale_detail));
                     }
                 }
 
