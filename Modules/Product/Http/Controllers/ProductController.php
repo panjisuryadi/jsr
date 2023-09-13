@@ -31,6 +31,8 @@ use Lang;
 use Yajra\DataTables\DataTables;
 use Image;
 use App\Models\ActivityLog;
+use Milon\Barcode\Facades\DNS1DFacade;
+use PDF;
 class ProductController extends Controller
 {
 
@@ -930,6 +932,50 @@ public function index_data_reparasi(Request $request)
             'module_title',
             'module_icon', 'module_model'));
            }
+
+
+
+
+public function view_qrcode($id) {
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_pembelian = $this->module_pembelian;
+        $module_action = 'Qrcode';
+        $category = Category::get();
+        $detail = $module_model::where('id', $id)->first();
+        //dd($pembelian->code);
+       return view('product::products.modal.qrcode',
+           compact('module_name',
+            'module_action',
+            'category',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+           }
+
+
+
+
+public function getPdf($id) {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $product = $module_model::where('id', $id)->first();
+        $pdf = PDF::loadView('product::barcode.cetak', [
+            'product' => $product,
+            'name' => $product->product_name,
+        ]);
+        return $pdf->stream('barcodes-'. $product->product_code .'.pdf');
+    }
+
+
+
 
 
 public function create2()

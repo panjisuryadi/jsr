@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Image;
+
 
 
 
@@ -77,7 +79,22 @@ if (!function_exists('decode_id')) {
 }
 
 
+if (!function_exists('qrCode')) {
 
+     function qrCode($content)
+    {
+       
+    }
+}
+
+
+function generateQRCode($content)
+{
+    /**
+     * result in data uri
+     */
+ 
+}
 
 
 

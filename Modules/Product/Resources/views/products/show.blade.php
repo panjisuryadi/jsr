@@ -90,7 +90,12 @@
 
                     <div class="card-body text-center">
                         <div class="py-2 d-flex flex-wrap align-items-center justify-content-center">
+
+                            
                      {!! \Milon\Barcode\Facades\DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology, 2, 110) !!}
+
+
+
                     </div>
                         @forelse($product->getMedia('images') as $media)
                             <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-fluid img-thumbnail mb-2">

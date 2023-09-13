@@ -116,7 +116,7 @@ margin-bottom: 0.5rem !important;
         @csrf
       {{-- {{$mainkategori}} --}}
                       
-                        <input type="hidden" name="product_barcode_symbology" value="C128">
+                        <input type="hidden" name="product_barcode_symbology" value="QRCODE">
                         <input type="hidden" name="product_stock_alert" value="5">
                         <input type="hidden" name="product_quantity" value="1">
                         <input type="hidden" name="product_unit" value="Gram">
