@@ -71,7 +71,7 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            return view('includes.hapus',
                             compact('module_name', 'data', 'module_model'));
                                 })
                            ->editColumn('updated_at', function ($data) {
