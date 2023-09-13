@@ -31,6 +31,9 @@ use Lang;
 use Yajra\DataTables\DataTables;
 use Image;
 use App\Models\ActivityLog;
+use Milon\Barcode\Facades\DNS1DFacade;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use PDF;
 class ProductController extends Controller
 {
 
@@ -330,7 +333,7 @@ public function index_data(Request $request)
          ->editColumn('cabang', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                     <h3 class="text-sm text-center text-gray-800">
-                     ' . $data->cabang->code . ' |  ' . $data->cabang->name . '</h3>
+                     ' . @$data->cabang->code . ' |  ' . @$data->cabang->name . '</h3>
                         </div>';
                 return $tb;
             })
@@ -343,10 +346,10 @@ public function index_data(Request $request)
             })
 
       
-          ->addColumn('tracking', function ($data) {
+         ->addColumn('tracking', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('product::products.transfer.tracking_button',
+                            return view('product::products.partials.qrcode_button',
                             compact('module_name', 'data', 'module_model'));
                       })
           ->editColumn('status', function ($data) {
@@ -389,10 +392,10 @@ public function index_data_by_kategori(Request $request ,$id)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('product::products.partials.actions',
+                            return view('product::products.partials.aksi_kategori',
                             compact('module_name', 'data', 'module_model'));
                                 })
-           ->editColumn('product_name', function ($data) {
+                ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
@@ -428,7 +431,7 @@ public function index_data_by_kategori(Request $request ,$id)
           ->addColumn('tracking', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('product::products.transfer.tracking_button',
+                            return view('product::products.partials.qrcode_button',
                             compact('module_name', 'data', 'module_model'));
                       })
           ->editColumn('status', function ($data) {
@@ -930,6 +933,54 @@ public function index_data_reparasi(Request $request)
             'module_title',
             'module_icon', 'module_model'));
            }
+
+
+
+
+public function view_qrcode($id) {
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_pembelian = $this->module_pembelian;
+        $module_action = 'Qrcode';
+        $category = Category::get();
+        $detail = $module_model::where('id', $id)->first();
+        //dd($pembelian->code);
+       return view('product::products.modal.qrcode',
+           compact('module_name',
+            'module_action',
+            'category',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+           }
+
+
+
+
+public function getPdf($id) {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $product = $module_model::where('id', $id)->first();
+       // $customPaper = 'A4';
+        $customPaper = array(0,0,720,720);
+        $barcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate('string'));
+          $pdf = PDF::loadView('product::barcode.cetak', compact('product','barcode'))
+          ->setPaper($customPaper, 'landscape');
+           return $pdf->stream('barcodes-'. $product->product_code .'.pdf');
+
+    }
+
+
+
+
+
 
 
 public function create2()

@@ -88,7 +88,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
 
-                      <th style="width: 10%!important;" class="text-center">{{ Label_case('Tracking') }}</th>
+                      <th style="width: 10%!important;" class="text-center">{{ Label_case('Qr Code') }}</th>
 
 
 
@@ -193,7 +193,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah,#QrCode, #Edit', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -209,6 +209,15 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-lg');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }
+
+         if($(this).attr('id') == 'QrCode')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Cetak QR Code');
+        }
+        
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });

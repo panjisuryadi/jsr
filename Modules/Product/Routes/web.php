@@ -40,7 +40,12 @@ Route::group(['middleware' => 'auth'], function () {
 
    Route::patch("products/sortir_update/{id}", ['as' => "products.sortir_update", 'uses' => "ProductController@sortirUpdate"]);
 
-  Route::get("products/kategori/{slug}", ['as' => "products.view_by_kategori", 'uses' => "ProductController@view_by_kategori"]);
+   Route::get("products/kategori/{slug}", ['as' => "products.view_by_kategori", 'uses' => "ProductController@view_by_kategori"]);
+
+
+   Route::get("products/qrcode/{id}", ['as' => "products.view_qrcode", 'uses' => "ProductController@view_qrcode"]);
+
+   Route::get("products/print-qrcode/{id}", ['as' => "products.getPdf", 'uses' => "ProductController@getPdf"]);
 
 
   Route::get("products/tabel-kategori/{id}", ['as' => "products.index_data_by_kategori", 'uses' => "ProductController@index_data_by_kategori"]);
