@@ -17,9 +17,10 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
+                           <a href="{{ route('iventory.type',[
+                                 'kategori'=>encode_id(1),
+                                 'type'=>'sales']
+                                 ) }}"
                                  class="btn btn-primary px-3">
                                  <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
                                 </a>
