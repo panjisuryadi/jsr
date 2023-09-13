@@ -20,10 +20,7 @@ use Modules\Karat\Models\Karat;
         {
             use WithFileUploads;
             public 
-             $harga,
-             $berat_kotor,
              $berat_bersih,
-             $jumlah,
              $kasir,
              $dataSales = [],
              $karat_id = [''];
@@ -36,10 +33,10 @@ use Modules\Karat\Models\Karat;
             public $i = 0;
 
             public function calculateTotalJumlah(){
-                $this->sales['total_jumlah'] = $this->jumlah[0]??0;
+                $this->sales['total_jumlah'] = $this->berat_bersih[0]??0;
                 if(count($this->inputs)>0){
                     foreach($this->inputs as $key => $value){
-                        $this->sales['total_jumlah'] += $this->jumlah[$value]??0;
+                        $this->sales['total_jumlah'] += $this->berat_bersih[$value]??0;
                         $this->sales['total_jumlah'] = number_format(round($this->sales['total_jumlah'], 3), 3, '.', '');
                     }
                 }
@@ -79,10 +76,7 @@ use Modules\Karat\Models\Karat;
 
             private function resetInputFields(){
                 $this->karat_id = '';
-                $this->harga = '';
-                $this->berat_kotor = '';
                 $this->berat_bersih = '';
-                $this->jumlah = '';
                 $this->pilih_po = [];
               
             }
@@ -92,14 +86,8 @@ use Modules\Karat\Models\Karat;
                 {
                         $rules = [
                               'sales.invoice' => 'required|string|max:50',
-                              'jumlah.0'     => 'required', 
-                              'jumlah.*'     => 'required',
-                              'berat_kotor.0'     => 'required',  
-                              'berat_kotor.*'     => 'required',
                               'berat_bersih.0'     => 'required',  
                               'berat_bersih.*'     => 'required',
-                              'harga.0'     => 'numeric|between:0,99.99',
-                              'harga.*'     => 'numeric|between:0,99.99',
                               'karat_id.0' => 'required',
                               'karat_id.*' => 'required',
                               'sales.sales_id' => 'required',
@@ -110,16 +98,10 @@ use Modules\Karat\Models\Karat;
                         foreach($this->inputs as $key => $value)
                         {
                             
-                            $rules['harga.0'] = 'numeric|between:0,99.99';
-                            $rules['harga.'.$value] = 'numeric|between:0,99.99';
                             $rules['karat_id.0'] = 'required';
                             $rules['karat_id.'.$value] = 'required'; 
                             $rules['berat_bersih.0'] = 'required';
                             $rules['berat_bersih.'.$value] = 'required';
-                            $rules['berat_kotor.0'] = 'required';
-                            $rules['berat_kotor.'.$value] = 'required';   
-                            $rules['jumlah.0'] = 'required';
-                            $rules['jumlah.'.$value] = 'required';
                         }
                         return $rules;
                    }
@@ -170,10 +152,7 @@ use Modules\Karat\Models\Karat;
 
                 $dist_sale_detail = $dist_sale->detail()->create([
                     'karat_id' => $this->karat_id[0],
-                    'berat_kotor' => $this->berat_kotor[0],
                     'berat_bersih' => $this->berat_bersih[0],
-                    'jumlah' => $this->jumlah[0],
-                    'harga' => $this->harga[0]
                 ]);
 
                 event(new DistribusiSaleDetailCreated($dist_sale,$dist_sale_detail));
@@ -183,21 +162,11 @@ use Modules\Karat\Models\Karat;
                     foreach($this->inputs as $key => $value){
                         $dist_sale_detail = $dist_sale->detail()->create([
                             'karat_id' => $this->karat_id[$value],
-                            'berat_kotor' => $this->berat_kotor[$value],
                             'berat_bersih' => $this->berat_bersih[$value],
-                            'jumlah' => $this->jumlah[$value],
-                            'harga' => $this->harga[$value]
                         ]);
                         event(new DistribusiSaleDetailCreated($dist_sale,$dist_sale_detail));
                     }
                 }
-
-                // dd($rawData);
-                //  foreach ($this->no_invoice as $key => $value) {
-                //     $harga = preg_replace("/[^0-9]/", "", $this->harga[$key]);
-                //    // dd($harga);
-                //     //GoodsReceipt::create(['code' => $this->code[$key], 'no_invoice' => $this->no_invoice[$key]]);
-                // }
                 
                 $this->inputs = [];
                 $this->resetInputFields();

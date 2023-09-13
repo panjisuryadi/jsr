@@ -76,7 +76,7 @@
 
 
         <div class="flex justify-between mb-3">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3  gap-2">
 
 
 <div class="form-group">
@@ -135,79 +135,13 @@
                 
 
 
-           <div class="form-group">
-                    <?php
-                    $field_name = 'berat_kotor.0';
-                    $field_lable = label_case('berat_kotor');
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'wire:model="'.$field_name.'"';
-                    ?>
-                     <label class="text-gray-700 mb-0" for="{{ $field_name }}">
-                      {{ $field_lable }}<span class="text-danger">*</span></label>
-
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
-                    @if ($errors->has($field_name))
-                    <span class="invalid feedback"role="alert">
-                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                        class="text-danger">
-                    </span>
-                    @endif
-                </div>
+        
 
 
              <div class="form-group">
                     <?php
                     $field_name = 'berat_bersih.0';
                     $field_lable = label_case('berat_bersih');
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'wire:model="'.$field_name.'"';
-                    ?>
-                     <label class="text-gray-700 mb-0" for="{{ $field_name }}">
-                      {{ $field_lable }}<span class="text-danger">*</span></label>
-
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
-                    @if ($errors->has($field_name))
-                    <span class="invalid feedback"role="alert">
-                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                        class="text-danger">
-                    </span>
-                    @endif
-                </div>
-
- <div class="form-group">
-                    <?php
-                    $field_name = 'harga.0';
-                    $field_lable = label_case('harga (%)');
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'wire:model="'.$field_name.'"';
-                    ?>
-                     <label class="text-gray-700 mb-0" for="{{ $field_name }}">
-                      {{ $field_lable }}</label>
-
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","max=100","min=0","step=0.001"]) }}
-                    @if ($errors->has($field_name))
-                    <span class="invalid feedback"role="alert">
-                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                        class="text-danger">
-                    </span>
-                    @endif
-                </div>
-
-
-
- <div class="form-group">
-                    <?php
-                    $field_name = 'jumlah.0';
-                    $field_lable = label_case('jumlah');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = 'wire:change=calculateTotalJumlah() wire:model="'.$field_name.'"';
@@ -217,7 +151,7 @@
 
                     {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm jumlah-emas '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -225,6 +159,12 @@
                     </span>
                     @endif
                 </div>
+
+ 
+
+
+
+ 
 
 
            
@@ -249,7 +189,7 @@
 
         @foreach($inputs as $key => $value)
         <div class="flex justify-between mb-3">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
 
 
           <div class="form-group">
@@ -302,26 +242,7 @@
 
                      
 
-                <div class="form-group">
-                    <?php
                  
-                    $field_name = 'berat_kotor.'.$value.'';
-                    $field_lable = label_case('berat_kotor');
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'step="0.001" wire:model="'.$field_name.'"';
-                    ?>
-                 
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
-                    @if ($errors->has($field_name))
-                    <span class="invalid feedback"role="alert">
-                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                        class="text-danger">
-                    </span>
-                    @endif
-                </div>  
 
 
                 <div class="form-group">
@@ -331,7 +252,7 @@
                     $field_lable = label_case('berat_bersih');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'step="0.001" wire:model="'.$field_name.'"';
+                    $required = 'wire:change=calculateTotalJumlah() step="0.001" wire:model="'.$field_name.'"';
                     ?>
                   
                     {{ html()->number($field_name)->placeholder($field_placeholder)
@@ -345,47 +266,7 @@
                     @endif
                 </div>  
 
-                <div class="form-group">
-                    <?php
                  
-                    $field_name = 'harga.'.$value.'';
-                    $field_lable = label_case('harga (%)');
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'wire:model="'.$field_name.'"';
-                    ?>
-                   
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","max=100","min=0","step=0.001"]) }}
-                    @if ($errors->has($field_name))
-                    <span class="invalid feedback"role="alert">
-                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                        class="text-danger">
-                    </span>
-                    @endif
-                </div>  
-
-                <div class="form-group">
-                    <?php
-                 
-                    $field_name = 'jumlah.'.$value.'';
-                    $field_lable = label_case('jumlah');
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = 'wire:change=calculateTotalJumlah() step="0.001" wire:model="'.$field_name.'"';
-                    ?>
-                   
-                    {{ html()->number($field_name)->placeholder($field_placeholder)
-                        ->value(old($field_name))
-                    ->class('form-control form-control-sm jumlah-emas '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
-                    @if ($errors->has($field_name))
-                    <span class="invalid feedback"role="alert">
-                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                        class="text-danger">
-                    </span>
-                    @endif
-                </div>  
 
 
 
@@ -409,21 +290,15 @@
         <div class="flex items-center">
 
         </div>
-  <div class="w-2/7">
-        <div class="mb-2 md:mb-1 md:flex items-center">
-          <label class="w-16 text-gray-700 block text-sm tracking-wide">Jumlah.</label>
-          <span class="mr-4 inline-block hidden md:block">:</span>
-          <div class="flex-1">
-          <input class="form-control form-control-sm" wire:model="sales.total_jumlah"  type="text" placeholder="0" readonly>
-          </div>
+        <div class="w-2/7">
+            <div class="mb-2 md:mb-1 flex items-center">
+                <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat Bersih</label>
+                <span class="mr-4 inline-block hidden md:block">:</span>
+                <div class="flex-1">
+                <input class="form-control form-control-sm" wire:model="sales.total_jumlah"  type="text" placeholder="0" readonly>
+            </div>
         </div>
-   <div class="mb-2 md:mb-1 md:flex items-center">
-          <label class="w-16 text-gray-700 block text-sm tracking-wide">Total.</label>
-          <span class="mr-4 inline-block hidden md:block">:</span>
-          <div class="flex-1">
-          <input class="form-control form-control-sm" wire:model="sales.total"  type="text" placeholder="0">
-          </div>
-        </div>
+   
 
 
       </div>
