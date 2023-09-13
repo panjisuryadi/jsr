@@ -193,7 +193,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah,#QrCode, #Edit', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
