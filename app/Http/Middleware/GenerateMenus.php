@@ -534,60 +534,60 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-       // Submenu: products
-            $products->add(
-                '<i class="c-sidebar-nav-icon bi bi-upc-scan mb-2"></i>'.__('Print Barcode').'',
-             [
-                'route' => 'barcode.print',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'barcode*',
-                'permission'    => ['print_barcodes'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
+       // // Submenu: products
+       //      $products->add(
+       //          '<i class="c-sidebar-nav-icon bi bi-upc-scan mb-2"></i>'.__('Print Barcode').'',
+       //       [
+       //          'route' => 'barcode.print',
+       //          'class' => 'nav-item',
+       //      ])
+       //      ->data([
+       //          'order'         => 3,
+       //          'activematches' => 'barcode*',
+       //          'permission'    => ['print_barcodes'],
+       //      ])
+       //      ->link->attr([
+       //          'class' => 'c-sidebar-nav-link py-2 pb-2',
+       //      ]);
 
 
 
-          // Submenu: SORTIR
-            $products->add(
-                '<i class="c-sidebar-nav-icon bi bi-credit-card-2-back mb-2"></i>'.__('Sortir').'',
-             [
-                'route' => 'products.sortir',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'sortir*',
-                'permission'    => ['access_products'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
+          // // Submenu: SORTIR
+          //   $products->add(
+          //       '<i class="c-sidebar-nav-icon bi bi-credit-card-2-back mb-2"></i>'.__('Sortir').'',
+          //    [
+          //       'route' => 'products.sortir',
+          //       'class' => 'nav-item',
+          //   ])
+          //   ->data([
+          //       'order'         => 3,
+          //       'activematches' => 'sortir*',
+          //       'permission'    => ['access_products'],
+          //   ])
+          //   ->link->attr([
+          //       'class' => 'c-sidebar-nav-link py-2 pb-2',
+          //   ]);
 
 
 
           // Submenu: Gudang Utama
 
 
-          // Submenu: Reparasi
-            $products->add(
-                '<i class="c-sidebar-nav-icon bi bi-tools mb-2"></i>'.__('Reparasi').'',
-             [
-                'route' => 'products.reparasi',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'reparasi*',
-                'permission'    => ['access_products'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
+          // // Submenu: Reparasi
+          //   $products->add(
+          //       '<i class="c-sidebar-nav-icon bi bi-tools mb-2"></i>'.__('Reparasi').'',
+          //    [
+          //       'route' => 'products.reparasi',
+          //       'class' => 'nav-item',
+          //   ])
+          //   ->data([
+          //       'order'         => 3,
+          //       'activematches' => 'reparasi*',
+          //       'permission'    => ['access_products'],
+          //   ])
+          //   ->link->attr([
+          //       'class' => 'c-sidebar-nav-link py-2 pb-2',
+          //   ]);
 
 
 
@@ -1061,11 +1061,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link py-2 pb-2',
             ]);
 
-
-
-
-
-          
 
 
 
