@@ -1,0 +1,274 @@
+<div>
+    <div>
+        @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+        @endif
+        <form wire:submit.prevent="store">
+            @csrf
+
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center">
+
+                </div>
+                
+
+
+                <div class="w-2/4">
+                    <!-- No Invoice -->
+                    <div class="mb-2 md:mb-1 md:flex items-center">
+                        <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Invoice No.</label>
+                        <span class="mr-4 inline-block hidden md:block">:</span>
+                        <div class="flex-1">
+                            <input wire:model="penjualan_sales.invoice_no" type="text" name="invoice" id="first_name" placeholder="eg. #INV-100001" class="form-control @error('penjualan_sales.invoice_no') is-invalid @enderror">
+                            @error('penjualan_sales.invoice_no')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                    </div>
+
+
+                    <!-- Date -->
+                    <div class="mb-2 md:mb-1 md:flex items-center">
+                        <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide"> Date</label>
+                        <span class="mr-4 inline-block hidden md:block">:</span>
+                        <div class="flex-1">
+                            <input wire:model="penjualan_sales.date" type="date" name="invoice" id="date" class="form-control @error('penjualan_sales.date') is-invalid @enderror">
+                            @error('penjualan_sales.date')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Sales -->
+                    <div class="mb-2 md:mb-1 md:flex items-center">
+                        <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Kepada</label>
+                        <span class="mr-4 inline-block hidden md:block">:</span>
+                        <div class="flex-1">
+                            <select class="form-control select2" name="sales_id" wire:model="penjualan_sales.sales_id">
+                                <option value="" selected disabled>Pilih Sales</option>
+                                @foreach($dataSales as $sales)
+                                <option value="{{$sales->id}}">
+                                    {{$sales->name}}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('penjualan_sales.sales_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Store Name -->
+                    <div class="mb-2 md:mb-1 md:flex items-center">
+                        <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Nama Store</label>
+                        <span class="mr-4 inline-block hidden md:block">:</span>
+                        <div class="flex-1">
+                            <input wire:model="penjualan_sales.store_name" type="text" name="store_name" id="store_name" placeholder="" class="form-control @error('penjualan_sales.store_name') is-invalid @enderror">
+                            @error('penjualan_sales.store_name')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            @foreach($penjualan_sales_details as $key => $value)
+            <div class="flex justify-between mb-3">
+                <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
+
+
+                    <div class="form-group">
+                        <?php
+
+                        $field_name = 'penjualan_sales_details.' . $key . '.karat_id';
+                        $field_lable = __('Parameter Karat');
+                        $field_placeholder = Label_case($field_lable);
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = 'wire:model="' . $field_name . '"';
+                        ?>
+                        @if ($key == 0)
+                        <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                      {{ $field_lable }}<span class="text-danger">*</span></label>
+                        @endif
+                        <select class="form-control form-control-sm" wire:model="penjualan_sales_details.{{$key}}.karat_id" name="{{ $field_name }}">
+                            <option value="" selected disabled>Select Karat</option>
+                            @foreach($dataKarat as $karat)
+                            <option value="{{$karat->id}}">
+                                {{$karat->name}} | {{$karat->kode}}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has($field_name))
+                        <span class="invalid feedback" role="alert">
+                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                        </span>
+                        @endif
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <?php
+
+                        $field_name = 'penjualan_sales_details.' . $key . '.weight';
+                        $field_lable = label_case('weight');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = 'wire:change=calculateTotalBerat() wire:model="' . $field_name . '"';
+                        ?>
+                        @if ($key == 0)
+                        <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                      {{ $field_lable }}<span class="text-danger">*</span></label>
+                        @endif
+                        {{ html()->number($field_name)->placeholder($field_placeholder)
+                        ->value(old($field_name))
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
+                        @if ($errors->has($field_name))
+                        <span class="invalid feedback" role="alert">
+                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                        </span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <?php
+
+                        $field_name = 'penjualan_sales_details.' . $key . '.nominal';
+                        $field_lable = label_case('nominal');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = 'wire:change=calculateTotalNominal() wire:model="' . $field_name . '"';
+                        ?>
+                        @if ($key == 0)
+                        <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                      {{ $field_lable }}<span class="text-danger">*</span></label>
+                        @endif
+                        {{ html()->number($field_name)->placeholder($field_placeholder)
+                        ->value(old($field_name))
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0"]) }}
+                        @if ($errors->has($field_name))
+                        <span class="invalid feedback" role="alert">
+                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                        </span>
+                        @endif
+                    </div>
+
+
+
+
+
+                </div>
+                @if ($key == 0)
+                <div class="px-1 pt-4">
+                    <button class="btn text-white text-xl btn-info btn-sm" wire:click.prevent="add" wire:loading.attr="disabled">
+                    <span wire:loading.remove wire:target="add"><i class="bi bi-plus"></i></span>
+                    <span wire:loading wire:target="add" class="text-center">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </span>
+                    </button>
+                </div>
+                @else
+                <div class="px-1 pt-1">
+                    <button class="btn text-white text-xl btn-danger btn-sm" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
+                        <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
+                        <span wire:loading wire:target="remove({{$key}})" class="text-center">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </span>
+                    </button>
+                </div>
+                @endif
+            </div>
+            @endforeach
+
+
+
+
+
+            <div class="flex flex-col items-end mb-8">
+                    <div class="mb-2 md:mb-1 flex items-center">
+                        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat</label>
+                        <span class="mr-4 md:block">:</span>
+                        <div class="flex-1">
+                            <input class="form-control form-control-sm" wire:model="penjualan_sales.total_weight" type="text" placeholder="0" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-2 md:mb-1 flex items-center">
+                        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Nominal</label>
+                        <span class="mr-4 md:block">:</span>
+                        <div class="flex-1">
+                            <input class="form-control form-control-sm" type-currency="IDR" wire:model="penjualan_sales.total_nominal" type="text" placeholder="0" readonly>
+                        </div>
+                    </div>
+
+            </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+    <div class="pt-2 border-t flex justify-between">
+        <div></div>
+        <div class="form-group">
+            <a class="px-5 btn btn-outline-danger" href="{{ route("goodsreceipt.index") }}">
+                @lang('Cancel')</a>
+            <button class="px-5 btn  btn-submit btn-outline-success" wire:click.prevent="store" wire:target="store" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="store">
+                    >@lang('Save')
+                </span>
+                <span wire:loading wire:target="store" class="text-center">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </span>
+            </button>
+        </div>
+    </div>
+
+
+
+    </form>
+</div>
+@push('page_scripts')
+<script type="text/javascript">
+
+document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+  element.addEventListener('keyup', function(e) {
+    let cursorPostion = this.selectionStart;
+    let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+    let originalLenght = this.value.length;
+    if (isNaN(value)) {
+      this.value = "";
+    } else {
+      this.value = value.toLocaleString('id-ID', {
+        currency: 'IDR',
+        style: 'currency',
+        minimumFractionDigits: 0
+      });
+      cursorPostion = this.value.length - originalLenght + cursorPostion;
+      this.setSelectionRange(cursorPostion, cursorPostion);
+    }
+  });
+});
+</script>
+
+
+
+@endpush

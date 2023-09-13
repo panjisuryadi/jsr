@@ -1,84 +1,69 @@
 @extends('layouts.app')
-@section('title', 'Create PenjualanSale')
+@section('title', $module_title)
+@section('third_party_stylesheets')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+@endsection
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route("penjualansale.index") }}">PenjualanSale</a></li>
-    <li class="breadcrumb-item active">Add</li>
+    <li class="breadcrumb-item"><a href="{{ url()->previous() }}">Iventory</a></li>
 </ol>
 @endsection
 @section('content')
+@push('page_css')
+<style type="text/css">
+    
+.c-main {
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 1;
+    min-width: 0;
+    padding-top: 0.2rem !important;
+}
+</style>
+
+@endpush
 <div class="container-fluid">
-    <form action="{{ route('penjualansale.store') }}" method="POST">
-        @csrf
-        <div class="row">
 
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
 
-                   <div class="form-row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                          <?php
-                            $field_name = 'name';
-                            $field_lable = __($field_name);
-                            $field_placeholder = Label_case($field_lable);
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = '';
-                            ?>
-                         <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-                        <input type="text" name="{{ $field_name }}"
-                        class="form-control {{ $invalid }}"
-                         name="{{ $field_name }}"
-                         value="{{ old($field_name) }}"
-                         placeholder="{{ $field_placeholder }}" {{ $required }}>
-                            @if ($errors->has($field_name))
-                                <span class="invalid feedback"role="alert">
-                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                        class="text-danger">
-                                </span>
-                            @endif
-
-                                </div>
-                            </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="flex justify-between py-1 border-bottom">
+                        <div>
+                       <p class="uppercase text-lg text-gray-600 font-semibold">
+                      Penjualan Sales</p>
                         </div>
+                        <div id="buttons">
 
-                           <div class="form-group">
-                             <?php
-                            $field_name = 'description';
-                            $field_lable = __($field_name);
-                            $field_placeholder = Label_case($field_lable);
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = '';
-                            ?>
-            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <textarea name="{{ $field_name }}"
-             placeholder="{{ $field_placeholder }}"
-             id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}"></textarea>
 
-               @if ($errors->has($field_name))
-                                <span class="invalid feedback"role="alert">
-                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                        class="text-danger">
-                                </span>
-                            @endif
-                            </div>
+    
 
-                        <div class="flex justify-between">
-                            <div></div>
-                            <div class="form-group">
-                             <a class="px-5 btn btn-danger"
-                            href="{{ route("penjualansale.index") }}">
-                            @lang('Cancel')</a>
-                                <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
-                            </div>
+
                         </div>
-
                     </div>
+
+
+<div class="card-body px-1">
+<div class="bg-white w-full rounded-lg border border-1 px-3 py-5 mx-auto">
+ 
+
+
+<livewire:penjualan-sale.create/>
+
+</div>
+
+
+
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 @endsection
+
+<x-library.datatable />
+@push('page_scripts')
+  
+@endpush
