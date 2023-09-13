@@ -366,6 +366,85 @@ public function index_data(Request $request)
 
 
 
+public function index_data_by_kategori(Request $request ,$id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        
+      
+        $$module_name = $module_model::with('category','product_item')
+            ->whereHas('category', function($q) use ($id){
+                $q->where('kategori_produk_id',$id);
+            })->get();
+          $data = $$module_name;
+      //dd($data);
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.partials.actions',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+           ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                           <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+                            ' . $data->category->category_name . '</div>
+                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                           
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
+           ->addColumn('product_image', function ($data) {
+            $url = $data->getFirstMediaUrl('images', 'thumb');
+            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+        })
+      
+         ->editColumn('cabang', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                    <h3 class="text-sm text-center text-gray-800">
+                     ' . $data->cabang->code . ' |  ' . $data->cabang->name . '</h3>
+                        </div>';
+                return $tb;
+            })
+           ->editColumn('karat', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                    <h3 class="text-sm font-semibold text-center text-gray-800">
+                     ' . $data->product_item[0]->karat->kode . ' |  ' . $data->product_item[0]->karat->name . ' </h3>
+                        </div>';
+                return $tb;
+            })
+
+      
+          ->addColumn('tracking', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.transfer.tracking_button',
+                            compact('module_name', 'data', 'module_model'));
+                      })
+          ->editColumn('status', function ($data) {
+             $status = statusProduk($data->status);
+               return $status;
+              })
+
+               ->editColumn('created_at', function ($data) {
+                    $module_name = $this->module_name;
+                      return tgljam($data->created_at);
+                    })
+           ->rawColumns(['created_at','product_image','weight','status','tracking',
+            'product_name','karat','cabang', 'action'])
+           ->make(true);
+    }
+
 
 
 
@@ -1007,18 +1086,6 @@ public function view_by_kategori(Request $request ,$slug) {
 
 
 //=============================end tambah produk tanpa modal
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
