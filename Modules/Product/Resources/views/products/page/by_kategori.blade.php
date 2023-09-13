@@ -44,10 +44,12 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                 <img id="default_1" src="{{ $image }}" alt="images"
                 class="h-16 w-16 object-contain mx-auto"/>
             </div>
+
             <div
             class="font-semibold text-gray-600 no-underline hover:text-red-600 leading-tight">
             {{ $category->name }}
             </div>
+
         </div>
         </a>
     </div>
@@ -71,7 +73,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div> 
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk </span>
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> Produk Kategori <span class="text-yellow-400">{{$mainkategori->name}}</span>
                         </div>
                         <div id="buttons"></div>
                     </div>
@@ -142,7 +144,10 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
         }
         ],
         "sPaginationType": "simple_numbers",
-        ajax: '{{ route("$module_name.index_data") }}',
+
+
+
+     ajax: '{{ route("$module_name.index_data_by_kategori",$mainkategori->id) }}',
         dom: 'Blfrtip',
         buttons: [
         'excel',
