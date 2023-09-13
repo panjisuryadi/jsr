@@ -7,7 +7,6 @@
     "require": {
         "php": "^7.3|^8.0",
         "barryvdh/laravel-dompdf": "^2.0",
-        "barryvdh/laravel-snappy": "^0.4.8",
         "brian2694/laravel-toastr": "^5.54",
         "bumbummen99/shoppingcart": "^4.0",
         "doctrine/dbal": "^3.6",

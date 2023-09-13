@@ -32,6 +32,7 @@ use Yajra\DataTables\DataTables;
 use Image;
 use App\Models\ActivityLog;
 use Milon\Barcode\Facades\DNS1DFacade;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
 class ProductController extends Controller
 {
@@ -967,12 +968,13 @@ public function getPdf($id) {
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $product = $module_model::where('id', $id)->first();
-        $pdf = PDF::loadView('product::barcode.cetak', [
-            'product' => $product,
-            'name' => $product->product_name,
-        ]);
-       $pdf->setPaper('A4', 'landscape');
-        return $pdf->stream('barcodes-'. $product->product_code .'.pdf');
+       // $customPaper = 'A4';
+        $customPaper = array(0,0,720,720);
+        $barcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate('string'));
+          $pdf = PDF::loadView('product::barcode.cetak', compact('product','barcode'))
+          ->setPaper($customPaper, 'landscape');
+           return $pdf->stream('barcodes-'. $product->product_code .'.pdf');
+
     }
 
 
