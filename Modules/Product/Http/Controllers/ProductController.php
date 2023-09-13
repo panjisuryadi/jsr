@@ -332,7 +332,7 @@ public function index_data(Request $request)
          ->editColumn('cabang', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                     <h3 class="text-sm text-center text-gray-800">
-                     ' . $data->cabang->code . ' |  ' . $data->cabang->name . '</h3>
+                     ' . @$data->cabang->code . ' |  ' . @$data->cabang->name . '</h3>
                         </div>';
                 return $tb;
             })
@@ -345,10 +345,10 @@ public function index_data(Request $request)
             })
 
       
-          ->addColumn('tracking', function ($data) {
+         ->addColumn('tracking', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('product::products.transfer.tracking_button',
+                            return view('product::products.partials.qrcode_button',
                             compact('module_name', 'data', 'module_model'));
                       })
           ->editColumn('status', function ($data) {
