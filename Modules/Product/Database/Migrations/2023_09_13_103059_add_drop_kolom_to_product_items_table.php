@@ -19,9 +19,9 @@ class AddDropKolomToProductItemsTable extends Migration
                // $table->dropColumn('color_id');
                // $table->dropColumn('clarity_id');
 
-               $table->foreign('cabang_id')->references('id')->on('cabangs');
+               // $table->foreign('cabang_id')->references('id')->on('cabangs');
       
-               $table->foreign('karat_id')->references('id')->on('karats');
+               // $table->foreign('karat_id')->references('id')->on('karats');
 
              });
     }
