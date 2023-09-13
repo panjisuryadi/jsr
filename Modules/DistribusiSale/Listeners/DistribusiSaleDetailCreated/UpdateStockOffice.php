@@ -5,10 +5,9 @@ namespace Modules\DistribusiSale\Listeners\DistribusiSaleDetailCreated;
 use Modules\DistribusiSale\Events\DistribusiSaleDetailCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Log;
-use Modules\Stok\Models\StockSales;
+use Modules\Stok\Models\StockOffice;
 
-class UpdateOrCreateStockSales implements ShouldQueue
+class UpdateStockOffice implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -28,14 +27,12 @@ class UpdateOrCreateStockSales implements ShouldQueue
      */
     public function handle(DistribusiSaleDetailCreated $event)
     {
-        $dist_sale = $event->dist_sale;
         $dist_sale_detail = $event->dist_sale_detail;
 
-        $existingWeight = StockSales::where(['sales_id' => $dist_sale->sales_id, 'karat_id' => $dist_sale_detail->karat_id])->value('weight');
+        $stock_office = StockOffice::where(['karat_id' => $dist_sale_detail->karat_id])->first();
+        $berat_real = $stock_office->berat_real;
 
-        StockSales::updateOrCreate(
-            ['sales_id'=>$dist_sale->sales_id,'karat_id'=>$dist_sale_detail->karat_id],
-            ['weight'=>$dist_sale_detail->berat_bersih + $existingWeight]
-        );
+        $stock_office->berat_real = $berat_real - $dist_sale_detail->berat_bersih;
+        $stock_office->save();
     }
 }
