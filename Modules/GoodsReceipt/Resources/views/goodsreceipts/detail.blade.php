@@ -208,6 +208,8 @@ top: 55% !important;
 
 
 
+
+
   <div class="text-gray-600 col-span-2 px-2 py-2 border-l">
 
 
