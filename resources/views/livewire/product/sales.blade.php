@@ -94,9 +94,9 @@
     name="{{ $field_name }}"
     wire:change="pilihPo(0,$event.target.value)" wire:model="karat_id.0">
         <option value="" selected disabled>Select Karat</option>
-        @foreach(\Modules\Karat\Models\Karat::all() as $row)
-        <option value="{{$row->id}}">
-        {{$row->name}} | {{$row->kode}} </option>
+        @foreach($dataKarat as $karat)
+        <option value="{{$karat->id}}">
+        {{$karat->name}} | {{$karat->kode}} </option>
         @endforeach
     </select>
       @if ($errors->has($field_name))
@@ -204,9 +204,9 @@
               <select class="form-control form-control-sm" 
                  wire:change="pilihPo('{{ $value }}',$event.target.value)" wire:model="karat_id.{{$value}}" name="{{ $field_name }}">
                 <option value="" selected disabled>Select Karat</option>
-                @foreach(\Modules\Karat\Models\Karat::all() as $row)
-                <option value="{{$row->id}}">
-                {{$row->name}} | {{$row->kode}} </option>
+                @foreach($dataKarat as $karat)
+                <option value="{{$karat->id}}">
+                {{$karat->name}} | {{$karat->kode}} </option>
                 @endforeach
               </select>
               @if ($errors->has($field_name))

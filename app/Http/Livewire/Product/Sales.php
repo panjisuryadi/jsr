@@ -23,6 +23,7 @@ use Modules\Karat\Models\Karat;
              $berat_bersih,
              $kasir,
              $dataSales = [],
+             $dataKarat = [],
              $karat_id = [''];
  
             public $pilih_po = [];
@@ -137,6 +138,9 @@ use Modules\Karat\Models\Karat;
 
             public function mount(){
                 $this->dataSales = DataSale::all();
+                $this->dataKarat = Karat::whereHas('stockOffice', function ($query) {
+                    $query->where('berat_real', '>', 0);
+                })->get();
             }
 
             public function store()
