@@ -3,11 +3,10 @@
     <head>
         <meta charset="utf-8" />
         <title>{{$title}}</title>
-  
-          <link rel="stylesheet" href="{{ public_path('b3/bootstrap.min.css') }}">
-         <style>
+        
+        <style>
         @page {
-          size: 21.0cm 14.7cm;
+          size: 21.0cm 12.7cm;
           margin: 0;
         }
             .invoice-box {
@@ -18,7 +17,6 @@
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
                 font-size: 16px;
                 line-height: 24px;
-                background-color:#FFFFFF;
                 font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
                 color: #555;
             }
@@ -60,10 +58,6 @@
 
             .invoice-box table tr.details td {
                 padding-bottom: 20px;
-            } 
-
-             .invoice-box table tr.dd td {
-                padding-bottom: 2px;
             }
 
             .invoice-box table tr.item td {
@@ -107,11 +101,7 @@
                 text-align: left;
             }
               .small {
-               font-size: 13px !important;
-            } 
-
-              .text-blue-600 {
-               color: #0f0f0f !important;
+               font-size: 11px !important;
             }  
               .medium {
                font-size: 14px !important;
@@ -139,101 +129,26 @@
                                 <td>
                                     <span class="medium">Tanggal:  {{ tanggal($detail->date)}} </span><br />
                                     No Penerimaan Barang:  {{ $detail->code}}<br />
-                                
+                                    Dibuat Oleh : sdsds<br />
+                                  
                                 </td>
                             </tr>
-
-
-                       <tr class="information">
-                            <td colspan="2">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            {{ $detail->supplier->supplier_name }}.<br />
-                                            {{ $detail->supplier->address }}<br />
-                                            {{ $detail->supplier->city }}
-                                        </td>
-
-                                        <td>
-                                             {{ $detail->supplier->supplier_phone }}<br />
-                                             {{ $detail->supplier->supplier_email }}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-
-
-
-
-
-
                         </table>
                     </td>
                 </tr>
 
               
 
-        <tr class="information">
-                    <td><p class="poppins text-gray-600">{{ Label_case('Tipe Pembayaran') }}</p></td>
+                <tr class="heading">
+                    <td>Detail</td>
 
-                    <td> 
-         @if($detail->pembelian[0]->tipe_pembayaran =='cicil')
-        Cicilan : {{ $detail->pembelian[0]->cicil }} Kali
-        @elseif($detail->pembelian[0]->tipe_pembayaran =='jatuh_tempo')
-    
-        <div> Jatuh Tempo : </div>
-        <div>{{ tgl($detail->pembelian[0]->jatuh_tempo) }}</div>   
-         @endif
-       </td>
+                    <td></td>
                 </tr>
+              <tr class="details">
+                    <td>Cabang</td>
 
-<tr class="dd">
-    <td>
-        <div class="poppins text-gray-600">{{ Label_case('Total_berat_kotor') }}</div>
-    </td>
-    <td>
-   <div class="poppins font-semibold text-blue-800">{{ $detail->total_berat_kotor }}
-                   <small class="text-gray-700">Gram</small></div>
-</td>
-</tr>
-<tr class="dd">
-    <td>
-        <div class="poppins text-gray-600">{{ Label_case('berat_timbangan') }}</div>
-    </td>
-    <td>
-   <div class="poppins font-semibold text-blue-800">{{ $detail->berat_timbangan }}
-                  </div>
-</td>
-</tr>
-
-
-
-<tr class="dd">
-    <td>
-      <div> {{ Label_case('Total_Emas') }} <span style="font-size:0.9rem !important;" class="mt-0 small text-blue-600">Total Emas yg harus di bayar
-                   </span></div>
-                   
-    </td>
-    <td>
-   <div class="poppins font-semibold text-blue-800">{{ $detail->total_emas }}
-                 </div>
-</td>
-</tr>
-
-
-
-
-
-      @if($detail->selisih)
-                  <tr class="details">
-                        <td>{{ Label_case('selisih') }}</td>
-                        <td>Gram : {{ $detail->selisih }}</td>
-                    </tr> 
-
-      @endif
-
+                    <td>sasas</td>
+                </tr> 
 
 
 

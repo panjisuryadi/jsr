@@ -183,7 +183,7 @@ top: 55% !important;
       
    </div>
     </div>
-                 @endif
+    @endif
          <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('pengirim') }}</p>
                 <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->pengirim }}</p>

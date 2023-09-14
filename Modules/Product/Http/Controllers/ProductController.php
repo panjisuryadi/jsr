@@ -1318,14 +1318,13 @@ public function saveAjax(Request $request)
         
            ProductItem::create([
                 'product_id'                  => $produk,
-                'location_id'                 => $input['location_id'] ?? null,
+              
                 'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
                 'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
                 'customer_id'                 => $input['customer_id'] ?? null,
                 'karat_id'                    => $input['karat_id'] ?? null,
                 'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
                 'certificate_id'              => $input['certificate_id'] ?? null,
-                'round_id'                    => $input['round_id'] ?? null,
                 'tag_label'                   => $input['berat_tag'] ?? null,
                 'berat_emas'                  => $input['berat_emas'],
                 'berat_label'                 => $input['berat_label'] ?? 0,
