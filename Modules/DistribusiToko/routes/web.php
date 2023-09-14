@@ -19,6 +19,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/kategori/{slug}", ['as' => "$module_name.kategori", 'uses' => "$controller_name@kategori"]);
 
+  Route::get("$module_name/cetak/{id}", ['as' => "$module_name.cetak", 'uses' => "$controller_name@cetak"]);
+
 
 
     Route::resource("$module_name", "$controller_name");

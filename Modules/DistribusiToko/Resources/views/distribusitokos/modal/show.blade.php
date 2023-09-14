@@ -65,11 +65,18 @@ $(document).ready(function(){
     $('#ModalFooter').html(Tombol);
 
     $('#Cetak').click(function(e){
-        e.preventDefault();
-        Update();
+           CetakStruk();
+           // setTimeout(function(){ 
+           //   location.reload();               
+           //   }, 3000);
     });
 
 
+function CetakStruk()
+{
+    window.open("{{ route(''.$module_name.'.cetak', encode_id($detail->id)) }}");
+    
+}
   
 
 });
