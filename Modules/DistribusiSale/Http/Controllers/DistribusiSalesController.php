@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use PDF;
 
 class DistribusiSalesController extends Controller
 {
@@ -71,9 +72,11 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.hapus',
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.
+                            '.includes.action',
                             compact('module_name', 'data', 'module_model'));
-                                })
+                            })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -384,6 +387,30 @@ public function update(Request $request, $id)
                 toast(''. $module_title.' error!', 'warning');
                 return redirect()->back();
             }
+
+    }
+
+    public function cetak($id) {
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $detail = $module_model::findOrFail($id);
+        $title = 'Print Distribusi Sales';
+        $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.print', compact('detail','title'))
+          ->setPaper('A4', 'portrait');
+          //return $pdf->stream('penerimaan-'. $detail->id .'.pdf');
+         return view(''.$module_name.'::'.$module_path.'.includes.print',
+           compact('module_name',
+            'detail',
+            'module_title',
+            'title',
+            'module_icon', 'module_model'));
+
+
+
 
     }
 

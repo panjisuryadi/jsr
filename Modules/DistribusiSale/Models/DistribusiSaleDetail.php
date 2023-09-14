@@ -5,7 +5,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Karat\Model\Karat;
+use Modules\Karat\Models\Karat;
 use Modules\DistribusiSale\Models\DistribusiSale;
 class DistribusiSaleDetail extends Model
 {
