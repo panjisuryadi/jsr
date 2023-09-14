@@ -98,7 +98,7 @@ public function index_data(Request $request)
                         ->editColumn('jumlah_emas', function ($data) {
                         $tb = '<div class="items-center text-center">
                                 <h3 class="text-sm font-medium text-gray-800">
-                                ' .$data->detail->sum('jumlah') . '</h3>
+                                ' .$data->detail->sum('berat_bersih') . '</h3>
                                 </div>';
                             return $tb;
                         })

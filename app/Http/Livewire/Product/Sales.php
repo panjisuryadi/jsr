@@ -175,7 +175,7 @@ use Modules\Karat\Models\Karat;
                 $this->inputs = [];
                 $this->resetInputFields();
                 session()->flash('message', 'Created Successfully.');
-                return redirect(route('iventory.index'));
+                return redirect(route('distribusisale.index'));
 
             }
 
