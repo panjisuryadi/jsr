@@ -3,13 +3,11 @@
     <head>
         <meta charset="utf-8" />
         <title>{{$title}}</title>
-         <link rel="stylesheet" href="{{ asset('css/backend.css') }}">
-         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-         <link rel="stylesheet" href="{{ public_path('css/backend.css') }}">
+  
           <link rel="stylesheet" href="{{ public_path('b3/bootstrap.min.css') }}">
-        <style>
+         <style>
         @page {
-          size: 21.0cm 12.7cm;
+          size: 21.0cm 29.7cm;
           margin: 0;
         }
             .invoice-box {
@@ -62,6 +60,10 @@
 
             .invoice-box table tr.details td {
                 padding-bottom: 20px;
+            } 
+
+             .invoice-box table tr.dd td {
+                padding-bottom: 2px;
             }
 
             .invoice-box table tr.item td {
@@ -105,7 +107,11 @@
                 text-align: left;
             }
               .small {
-               font-size: 11px !important;
+               font-size: 13px !important;
+            } 
+
+              .text-blue-600 {
+               color: #0f0f0f !important;
             }  
               .medium {
                font-size: 14px !important;
@@ -122,9 +128,6 @@
                 <tr class="top">
                     <td colspan="2">
                         <table>
-
-
-
                             <tr>
                                 <td class="title">
                                     <img
@@ -134,35 +137,34 @@
                                 </td>
 
                                 <td>
-                                    <span class="text-xs text-gray-500">Tanggal:  {{ tanggal($detail->date)}} </span><br />
-
-                                    No Penerimaan Barang:  <strong>{{ $detail->code}}</strong><br />
-
-
+                                    <span class="medium">Tanggal:  {{ tanggal($detail->date)}} </span><br />
+                                    No Penerimaan Barang:  {{ $detail->code}}<br />
                                 
-                                  
                                 </td>
                             </tr>
 
-        <tr class="information">
-                    <td colspan="2">
-                        <table>
-                            <tr>
-                                <td>
-                                    Sparksuite, Inc.<br />
-                                    12345 Sunny Road<br />
-                                    Sunnyville, CA 12345
-                                </td>
 
-                                <td>
-                                    Acme Corp.<br />
-                                    John Doe<br />
-                                    john@example.com
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
+                       <tr class="information">
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            {{ $detail->supplier->supplier_name }}.<br />
+                                            {{ $detail->supplier->address }}<br />
+                                            {{ $detail->supplier->city }}
+                                        </td>
+
+                                        <td>
+                                             {{ $detail->supplier->supplier_phone }}<br />
+                                             {{ $detail->supplier->supplier_email }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+
+
 
 
 
@@ -173,16 +175,65 @@
 
               
 
-                <tr class="heading">
-                    <td>Detail</td>
+        <tr class="information">
+                    <td><p class="poppins text-gray-600">{{ Label_case('Tipe Pembayaran') }}</p></td>
 
-                    <td></td>
+                    <td> 
+         @if($detail->pembelian[0]->tipe_pembayaran =='cicil')
+        Cicilan : {{ $detail->pembelian[0]->cicil }} Kali
+        @elseif($detail->pembelian[0]->tipe_pembayaran =='jatuh_tempo')
+    
+        <div> Jatuh Tempo : </div>
+        <div>{{ tgl($detail->pembelian[0]->jatuh_tempo) }}</div>   
+         @endif
+       </td>
                 </tr>
-              <tr class="details">
-                    <td>Cabang</td>
 
-                    <td>sasas</td>
-                </tr> 
+<tr class="dd">
+    <td>
+        <div class="poppins text-gray-600">{{ Label_case('Total_berat_kotor') }}</div>
+    </td>
+    <td>
+   <div class="poppins font-semibold text-blue-800">{{ $detail->total_berat_kotor }}
+                   <small class="text-gray-700">Gram</small></div>
+</td>
+</tr>
+<tr class="dd">
+    <td>
+        <div class="poppins text-gray-600">{{ Label_case('berat_timbangan') }}</div>
+    </td>
+    <td>
+   <div class="poppins font-semibold text-blue-800">{{ $detail->berat_timbangan }}
+                  </div>
+</td>
+</tr>
+
+
+
+<tr class="dd">
+    <td>
+      <div> {{ Label_case('Total_Emas') }} <span style="font-size:0.9rem !important;" class="mt-0 small text-blue-600">Total Emas yg harus di bayar
+                   </span></div>
+                   
+    </td>
+    <td>
+   <div class="poppins font-semibold text-blue-800">{{ $detail->total_emas }}
+                 </div>
+</td>
+</tr>
+
+
+
+
+
+      @if($detail->selisih)
+                  <tr class="details">
+                        <td>{{ Label_case('selisih') }}</td>
+                        <td>Gram : {{ $detail->selisih }}</td>
+                    </tr> 
+
+      @endif
+
 
 
 
@@ -192,6 +243,34 @@
                     <td>Total: $385.00</td>
                 </tr> --}}
             </table>
+
+<hr>
+<p>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center">No</th>
+      <th class="text-center">Kategori</th>
+      <th class="text-center">Karat</th>
+      <th class="text-center">Berat Real</th>
+      <th class="text-center">Berat Kotor</th>
+    </tr>
+  </thead>
+  <tbody>
+
+ @foreach($detail->goodsreceiptitem as $row)
+   <tr>
+      <th class="text-center">{{$loop->iteration}}</th>
+      <td style="text-align:center;" class="text-center">{{$row->mainkategori->name}}</td>
+     <td class="text-center">{{$row->karat->kode}} | {{$row->karat->name}}</td>
+      <td class="text-center"> {{$row->berat_real}}</td>
+      <td class="text-center"> {{$row->berat_kotor}}</td>
+    
+    </tr>
+@endforeach
+
+
+
         </div>
     </body>
 </html>

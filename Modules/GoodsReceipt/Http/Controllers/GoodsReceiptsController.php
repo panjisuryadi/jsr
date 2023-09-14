@@ -992,13 +992,13 @@ public function cetak($id) {
         $title = 'Print Penerimaan Barang';
         $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.print', compact('detail','title'))
           ->setPaper('A4', 'portrait');
-          //return $pdf->stream('penerimaan-'. $detail->id .'.pdf');
-         return view(''.$module_name.'::'.$module_path.'.includes.print',
-           compact('module_name',
-            'detail',
-            'module_title',
-            'title',
-            'module_icon', 'module_model'));
+          return $pdf->stream('penerimaan-'. $detail->id .'.pdf');
+         // return view(''.$module_name.'::'.$module_path.'.includes.print',
+         //   compact('module_name',
+         //    'detail',
+         //    'module_title',
+         //    'title',
+         //    'module_icon', 'module_model'));
 
 
 

@@ -1,21 +1,27 @@
 <div class="text-center">
 
-  <a href="{{ route("$module_name.show",encode_id($data->id)) }}"
+  <a href="{{ route("$module_name.cetak",encode_id($data->id)) }}"
+    data-toggle="tooltip"
+    target="_blank" 
+     class="btn btn-outline-success btn-sm py-1">
+        @lang('Cetak')
+    </a> 
+<a href="{{ route("$module_name.show",encode_id($data->id)) }}"
 
     data-toggle="tooltip"
-     class="btn btn-info btn-sm py-1">
+     class="btn btn-outline-info btn-sm py-1">
         @lang('Detail')
     </a> 
 
     <a href="{{ route("$module_name.edit",encode_id($data->id)) }}"
 
     data-toggle="tooltip"
-     class="btn btn-warning btn-sm py-1">
+     class="btn btn-outline-warning btn-sm py-1">
         @lang('Edit')
     </a>
 
     @can('delete_'.$module_name.'')
-    <button id="delete" class="btn btn-danger btn-sm" onclick="
+    <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
         if (confirm('Are you sure? It will delete the data permanently!')) {
         document.getElementById('destroy{{ $data->id }}').submit()

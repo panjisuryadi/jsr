@@ -191,23 +191,24 @@
 
 
 
-
-
-
-
-
-
 <div class="flex justify-between px-3 pb-2 border-bottom">
     <div>
     </div>
     <div class="form-group">
-        <a class="px-5 btn btn-danger"
+        <a class="px-5 btn btn-outline-danger"
             href="{{ route("iventory.index") }}">
         @lang('Cancel')</a>
-        <button id="SimpanTambah" type="submit" class="px-4 btn btn-primary">
+        <button id="SimpanTambah" type="submit" class="px-4 btn btn-outline-success">
         @lang('Save')  <i class="bi bi-check"></i></button>
     </div>
 </div>
+
+
+
+
+
+</form>
+
 
 
 

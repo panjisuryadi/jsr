@@ -193,7 +193,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah,#QrCode, #Edit', function(e){
+$(document).on('click', '#Tambah,#QrCode,#Show, #Edit', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -216,6 +216,14 @@ $(document).on('click', '#Tambah,#QrCode, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-xl');
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Cetak QR Code');
+        } 
+
+         if($(this).attr('id') == 'Show')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Detail');
         }
         
         $('#ModalContent').load($(this).attr('href'));
