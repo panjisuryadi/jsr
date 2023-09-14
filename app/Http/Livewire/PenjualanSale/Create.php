@@ -5,6 +5,7 @@ namespace App\Http\Livewire\PenjualanSale;
 use Livewire\Component;
 use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
+use Modules\PenjualanSale\Events\PenjualanSaleDetailCreated;
 use Modules\PenjualanSale\Models\PenjualanSale;
 
 class Create extends Component
@@ -153,12 +154,13 @@ class Create extends Component
         ]);
 
         foreach($this->penjualan_sales_details as $key => $value) {
-            $penjualan_sale->detail()->create([
+            $penjualan_sale_detail = $penjualan_sale->detail()->create([
                 'karat_id' => $this->penjualan_sales_details[$key]['karat_id'],
                 'weight' => $this->penjualan_sales_details[$key]['weight'],
                 'nominal' => $this->penjualan_sales_details[$key]['nominal'],
                 'created_by' => auth()->user()->name
             ]);
+            event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail));
         }
 
         $this->resetInputFields();
