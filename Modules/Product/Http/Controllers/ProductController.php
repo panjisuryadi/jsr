@@ -300,8 +300,6 @@ public function index_data(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-
-
         $$module_name = $module_model::with('category','product_item')
         ->latest()->get();
         $data = $$module_name;
@@ -340,7 +338,7 @@ public function index_data(Request $request)
            ->editColumn('karat', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                     <h3 class="text-sm font-semibold text-center text-gray-800">
-                     ' . $data->product_item[0]->karat->kode . ' |  ' . $data->product_item[0]->karat->name . ' </h3>
+                     ' . @$data->product_item[0]->karat->kode . ' |  ' . @$data->product_item[0]->karat->name . ' </h3>
                         </div>';
                 return $tb;
             })

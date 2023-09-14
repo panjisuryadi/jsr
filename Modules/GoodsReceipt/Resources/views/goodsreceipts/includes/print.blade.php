@@ -7,7 +7,7 @@
           <link rel="stylesheet" href="{{ public_path('b3/bootstrap.min.css') }}">
          <style>
         @page {
-          size: 21.0cm 14.7cm;
+          size: 21.0cm 29.7cm;
           margin: 0;
         }
             .invoice-box {
@@ -243,6 +243,34 @@
                     <td>Total: $385.00</td>
                 </tr> --}}
             </table>
+
+<hr>
+<p>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center">No</th>
+      <th class="text-center">Kategori</th>
+      <th class="text-center">Karat</th>
+      <th class="text-center">Berat Real</th>
+      <th class="text-center">Berat Kotor</th>
+    </tr>
+  </thead>
+  <tbody>
+
+ @foreach($detail->goodsreceiptitem as $row)
+   <tr>
+      <th class="text-center">{{$loop->iteration}}</th>
+      <td style="text-align:center;" class="text-center">{{$row->mainkategori->name}}</td>
+     <td class="text-center">{{$row->karat->kode}} | {{$row->karat->name}}</td>
+      <td class="text-center"> {{$row->berat_real}}</td>
+      <td class="text-center"> {{$row->berat_kotor}}</td>
+    
+    </tr>
+@endforeach
+
+
+
         </div>
     </body>
 </html>
