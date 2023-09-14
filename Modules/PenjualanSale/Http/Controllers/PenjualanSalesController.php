@@ -77,7 +77,7 @@ public function index_data(Request $request)
                           ->editColumn('sales', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->sales . '</h3>
+                                     ' .$data->sales->name . '</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -91,6 +91,16 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
+                        ->editColumn('date', function ($data) {
+                            $module_name = $this->module_name;
+                            return \Carbon\Carbon::parse($data->updated_at)->format('j F Y');
+                        })
+                        ->editColumn('total_weight', function ($data) {
+                            return $data->detail->sum('weight') . " gram";
+                            })
+                        ->editColumn('total_nominal', function ($data) {
+                            return "Rp.".$data->detail->sum('nominal');
+                            })
                         ->rawColumns(['updated_at', 
                              'sales', 
                              'action', 
