@@ -66,9 +66,9 @@ $(document).ready(function(){
 
     $('#Cetak').click(function(e){
            CetakStruk();
-           setTimeout(function(){ 
-             location.reload();               
-             }, 3000);
+           // setTimeout(function(){ 
+           //   location.reload();               
+           //   }, 3000);
     });
 
 
