@@ -1488,7 +1488,7 @@ public function saveAjax(Request $request)
 
     public function show(Product $product) {
         abort_if(Gate::denies('show_products'), 403);
-        return view('product::products.show', compact('product'));
+        return view('product::products.modal.show', compact('product'));
     }
 
    public function show_sortir(Product $product) {
