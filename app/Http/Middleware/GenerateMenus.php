@@ -375,8 +375,6 @@ class GenerateMenus
 
 
 
-
-
 // pembelian
             $Purchases = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
                 'class' => 'c-sidebar-nav-dropdown',

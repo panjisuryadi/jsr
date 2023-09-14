@@ -73,7 +73,9 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            $module_path = $this->module_path;
+                        return view(''.$module_name.'::'.$module_path.
+                            '.includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
                           ->editColumn('cabang', function ($data) {
@@ -247,7 +249,7 @@ public function show($id)
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
         //dd($detail);
-          return view(''.$module_name.'::'.$module_path.'.show',
+          return view(''.$module_name.'::'.$module_path.'.modal.show',
            compact('module_name',
             'module_action',
             'detail',
