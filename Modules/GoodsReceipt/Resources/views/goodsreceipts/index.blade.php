@@ -43,15 +43,15 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                         <table id="datatable" style="width: 100%" class="table table-striped table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
+                                    <th style="width: 3%!important;">No</th>
                                     <th class="w-5 text-center">{{ __('Image') }}</th>
                                     <th style="width: 22%!important;"  class="text-left">{{ __('Date') }}</th>
                                  
                                     <th style="width: 18%!important;"  class="text-left">{{ __('Berat') }}</th>
                                     <th style="width: 19%!important;" class="text-left">{{ __('Supplier') }}</th>
-                                    <th style="width: 8%!important;" class="text-center">{{ __('Pembayaran') }}
+                                    <th class="text-center">{{ __('Pembayaran') }}
                                     </th>
-                                    <th style="width: 22%!important;" class="text-center">{{ __('Action') }}
+                                    <th style="width: 35%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
 
                                 </tr>
