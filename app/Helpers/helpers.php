@@ -683,3 +683,12 @@ if (!function_exists('array_merge_numeric_values')) {
         return $merged;
     }
 }
+
+if (!function_exists('formatWeight')) {
+    function formatWeight($weight) {
+        if (substr($weight, -1) === '.') {
+            $weight = substr($weight, 0, -1);
+        }
+        return $weight;
+    }
+}
