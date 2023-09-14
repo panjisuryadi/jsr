@@ -12,6 +12,8 @@ class PenjualanSaleDetail extends Model
    
     protected $guarded = [];
 
+    protected $table = 'penjualan_sales_detail';
+
     public function penjualanSale() {
         return $this->belongsTo(PenjualanSale::class, 'penjualan_sales_id', 'id');
     }
