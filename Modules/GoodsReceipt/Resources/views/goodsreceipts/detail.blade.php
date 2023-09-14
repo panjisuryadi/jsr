@@ -16,74 +16,7 @@
 .c-main {
     padding-top: 0.5rem!important;
 }
-.table th, .table td {
-    padding: 0.5rem !important;
-    vertical-align: top;
-    border-top: 1px solid;
-    border-top-color: #d8dbe0;
-}
 
-
-.checkbox {
-  position: relative;
-}
-
-.checkbox [type="checkbox"] {
-  position: absolute;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.checkbox [type="checkbox"] + label {
-  position: relative;
-  display: block;
-  width: 15px;
-  height: 15px;
-  border: 2px solid;
-  cursor: pointer;
-  border-radius: 2px;
-  will-change: color;
-  transition: .2s color ease-in-out;
-}
-
-table thead .checkbox [type="checkbox"] + label:hover,
-table thead .checkbox [type="checkbox"] + label:hover:after {
-  color: #e73e9d;
-}
-
-table tbody .checkbox [type="checkbox"] + label:hover,
-table tbody .checkbox [type="checkbox"] + label:hover:after {
-  color: #701347;
-}
-
-.checkbox [type="checkbox"] + label:after {
-  content: '';
-  position: absolute;
-  width: 5px;
-  height: 12px;
-  top: 60%;
-  left: 50%;
-  border-bottom: 2px solid;
-  border-right: 2px solid;
-  margin-top: -2px;
-  opacity: 0;
-  transform: translate(-50%, 0%) rotate(45deg) scale(.75);
-  will-change: opacity, transform, color;
-  transition: .17s opacity ease-in-out, .2s transform ease-in-out, .2s color ease-in-out;
-}
-
-.checkbox [type="checkbox"]:checked + label:after {
-  opacity: 1;
-  transform: translate(-50%, -50%) rotate(45deg) scale(1);
-}
-
-.dataTables_wrapper .dataTables_processing {
-position: absolute;
-top: 55% !important;
-  background: transparent !important;
-  border: none;
-  font-weight: bold;
-}
 
 </style>
 @endpush
@@ -251,7 +184,7 @@ top: 55% !important;
    <tr>
       <th class="text-center">{{$loop->iteration}}</th>
       <td class="text-center"> {{@$row->mainkategori->name}}</td>
-      <td class="text-center"> {{@$row->karat->kode}} | {{$row->karat->name}}</td>
+      <td class="text-center"> {{@$row->karat->kode}} | {{@$row->karat->name}}</td>
       <td class="text-center"> {{@$row->berat_real}}</td>
       <td class="text-center"> {{@$row->berat_kotor}}</td>
     
