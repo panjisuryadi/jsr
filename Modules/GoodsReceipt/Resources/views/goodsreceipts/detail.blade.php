@@ -89,22 +89,42 @@ top: 55% !important;
 @endpush
 <div class="container-fluid">
 
+
+   <div class="text-lg bg-white flex justify-between w-full px-2 py-3">
+        <div class="px-3 py-2">
+   
+            <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
+            <h3 class="font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
+        </div>
+          <div class="px-6 py-2">
+
+   <div class="flex flex-row justify-end">
+        <a class="flex" href="{{ route('goodsreceipt.index') }}">
+            <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
+                <i class="bi bi-house text-gray-600"></i>
+            </div>
+        </a>
+        <a class="flex" target="_blank"
+            id="Save"
+            href="{{ route(''.$module_name.'.cetak',encode_id($detail->id)) }}">
+            <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
+                <i class="bi bi-printer text-gray-600"></i>
+            </div>
+        </a>
+    </div>
+
+      <div class="mt-0 text-gray-600">Supplier</div>
+         <div class="leading-5 mt-0 font-semibold text-gray-500">{{ $detail->supplier->supplier_name }}</div>
+         <div class="leading-5 text-gray-500">{{ $detail->supplier->address }}</div>
+
+        </div>
+    </div>
+
+
 <div class="bg-white grid grid-cols-3 gap-4">
 
   <div class="text-gray-600 px-2 py-2">
-             <div class="flex justify-between w-full py-1">
-                <div class="px-3 py-2">
-                    <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
-                    <h3 class="text-md font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
-                </div>
-                  <div class="px-6 py-2">
-              <div class="mt-3 text-gray-600">Supplier</div>
-                 <div class="leading-5 mt-0 font-semibold text-gray-500">{{ $detail->supplier->supplier_name }}</div>
-                 <div class="leading-5 text-gray-500">{{ $detail->supplier->address }}</div>
-
-                </div>
-            </div>
-
+  
 
 <div class="text-sm px-3 py-2 poppins">
  <div class="flex justify-between w-full py-1">
@@ -116,19 +136,17 @@ top: 55% !important;
                 <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->no_invoice }}</p>
             </div>
   <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('berat kotor') }}</p>
-                <p class="poppins font-semibold text-blue-800">{{ $detail->berat_kotor }}
+                <p class="poppins text-gray-600">{{ Label_case('total_berat_kotor') }}</p>
+                <p class="poppins font-semibold text-blue-800">{{ $detail->total_berat_kotor }}
                    <small class="text-gray-700">Gram</small></p>
             </div>
   <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('berat_real') }}</p>
-                <p class="poppins font-semibold text-green-800">{{ $detail->berat_real }}
+                <p class="poppins text-gray-600">{{ Label_case('berat_timbangan') }}</p>
+                <p class="poppins font-semibold text-green-800">{{ $detail->berat_timbangan }}
                     <small class="text-gray-700">Gram</small></p>
             </div>
-           <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('qty') }}</p>
-                <p class="poppins font-semibold text-gray-800">{{ $detail->qty }}</p>
-            </div>
+
+
     <div class="flex justify-between w-full py-1">
                 <div class="poppins text-gray-600">
                     <div> {{ Label_case('Total_Emas') }}</div>
@@ -139,23 +157,18 @@ top: 55% !important;
                 <div class="mt-2 poppins font-semibold text-gray-800">{{ $detail->total_emas }}</div>
             </div>
 
-
-
+  @if($detail->selisih)
 <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('selisih') }}</p>
-                <div style="font-size: 0.7rem !important;" class="poppins text-gray-800">
-                  <div> Gram : {{ $detail->selisih }}</div>
-                 
-                </div>
-            </div>
-
-<div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('Karat') }}</p>
-
-     <p class="poppins font-semibold text-gray-800">{{ @$detail->goodsreceiptitem[0]->kadar }}</p>
+    <p class="poppins text-gray-600">{{ Label_case('selisih') }}</p>
+    <div style="font-size: 0.7rem !important;" class="poppins text-gray-800">
+        <div> Gram : {{ $detail->selisih }}</div>
+        
+    </div>
+</div>
+  @endif
 
 
-            </div>
+
 
     <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('Tipe Pembayaran') }}</p>
@@ -199,87 +212,52 @@ top: 55% !important;
 
 
        <div class="card-body">
-                    <div class="flex justify-between py-1 border-bottom mb-2">
-
-  <div class="flex flex-row">
-
-<a class="flex" href="{{ route('goodsreceipt.index') }}">
-    <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
-        <i class="bi bi-house text-gray-600"></i>
-    </div>
- </a>
 
 
-<a class="flex" target="_blank" 
-   id="Save"
-href="{{ route(''.$module_name.'.print_produk',$detail->code) }}">
-    <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
-        <i class="bi bi-printer text-gray-600"></i>
-    </div>
- </a>
-
-
-                        </div>
-                 <div id="buttons" class="mb-2 flex flex-row ">
-                       @if($detail->count == $detail->qty_diterima )
-                         <form id="product-form" action="{{ route(''.$module_name.'.update_status',encode_id($detail->id)) }}" method="POST">
-                                @csrf
-                                @method('patch')
-                                <button
-                                id="Save"
-                                onclick="return confirm('yakin akan di simpan?')"
-                                class="bg-green-600 py-1 px-2 mr-1 rounded-lg hover:no-underline hover:text-gray-300">
-                                <i class="bi bi-plus"></i>@lang('Simpan')
-                                </button>
-                            </form>
-                   @endif
-
-      
-                        <a 
-                        class="flex" 
-                        id="GroupKategori"
-                        href="{{ route(''.$module_name.'.add_produk_modal',encode_id($detail->id)) }}">
-                            <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
-                                <i class="bi bi-plus text-gray-600"></i>
-                            </div>
-                        </a>
-
-
-                        </div>
-                    </div>
-                    <div class="table-responsive mt-1">
-
-
- <table id="datatable" style="width: 100%" class="table table-striped table-hover table-responsive-sm">
-                            <thead>
-                                <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                    <th style="width: 6%!important;">
-                                     <div class="checkbox">
-                                          <input type="checkbox" id="selectAll">
-                                          <label for="selectAll"></label>
-                                        </div>
-                                    </th>
-                                    <th  style="width:8%!important;"  class="w-5 text-center">{{ __('Image') }}</th>
-
-                                    <th style="width: 30%!important;text-align: left;"  class="text-left">{{ __('Product') }}</th>
-                              
-                                    <th  style="width: 20%!important;" class="text-left">{{ __('Harga') }}</th>
-                                
-                                    <th style="width: 18%!important;" class="text-center">{{ __('Action') }}
-                                    </th> 
-
-                                </tr>
-                            </thead>
-                        </table>
+                <div class="flex items-center">
+                    <h4
+                    class="flex-shrink-0 pr-4 bg-white text-sm leading-5 tracking-wider font-semibold uppercase text-teal-600">
+                   Item
+                    </h4>
+                    <div class="flex-1 border-t-2 border-gray-200">
                     </div>
                 </div>
-{{-- 
-@foreach($list as $row)
- {{$row->product_code}}<br>
+
+                    <div class="text-gray-600 table-responsive mt-1">
+
+                  
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center">No</th>
+      <th class="text-center">Kategori</th>
+      <th class="text-center">Karat</th>
+      <th class="text-center">Berat Real</th>
+      <th class="text-center">Berat Kotor</th>
+    </tr>
+  </thead>
+  <tbody>
+
+ @foreach($detail->goodsreceiptitem as $row)
+   <tr>
+      <th class="text-center">{{$loop->iteration}}</th>
+      <td class="text-center"> {{$row->mainkategori->name}}</td>
+      <td class="text-center"> {{$row->karat->kode}} | {{$row->karat->name}}</td>
+      <td class="text-center"> {{$row->berat_real}}</td>
+      <td class="text-center"> {{$row->berat_kotor}}</td>
+    
+    </tr>
 @endforeach
 
- --}}
+  
+
+  </tbody>
+</table>
+
+
+                    </div>
+                </div>
 
 
 
