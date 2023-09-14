@@ -80,6 +80,7 @@ class Create extends Component
         $this->resetErrorBag();
         unset($this->penjualan_sales_details[$key]);
         $this->penjualan_sales_details = array_values($this->penjualan_sales_details);
+        $this->calculateTotalBerat();
     }
 
 
@@ -120,9 +121,7 @@ class Create extends Component
             $this->penjualan_sales['total_weight'] += floatval($this->penjualan_sales_details[$key]['weight']);
             $this->penjualan_sales['total_weight'] = number_format(round($this->penjualan_sales['total_weight'], 3), 3, '.', '');
             $this->penjualan_sales['total_weight'] = rtrim($this->penjualan_sales['total_weight'], '0');
-            if (substr($this->penjualan_sales['total_weight'], -1) === '.') {
-                $this->penjualan_sales['total_weight'] = substr($this->penjualan_sales['total_weight'], 0, -1);
-            }
+            $this->penjualan_sales['total_weight'] = formatWeight($this->penjualan_sales['total_weight']);
         }
     }
 
