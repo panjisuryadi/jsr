@@ -121,7 +121,7 @@ top: 55% !important;
     </div>
 
 
-<div class="bg-white grid grid-cols-3 gap-4">
+<div class="bg-white grid grid-cols-3 gap-4 pb-5">
 
   <div class="text-gray-600 px-2 py-2">
   
