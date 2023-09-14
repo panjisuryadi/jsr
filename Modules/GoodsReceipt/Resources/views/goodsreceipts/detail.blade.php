@@ -244,10 +244,10 @@ top: 55% !important;
  @foreach($detail->goodsreceiptitem as $row)
    <tr>
       <th class="text-center">{{$loop->iteration}}</th>
-      <td class="text-center"> {{$row->mainkategori->name}}</td>
-      <td class="text-center"> {{$row->karat->kode}} | {{$row->karat->name}}</td>
-      <td class="text-center"> {{$row->berat_real}}</td>
-      <td class="text-center"> {{$row->berat_kotor}}</td>
+      <td class="text-center"> {{@$row->mainkategori->name}}</td>
+      <td class="text-center"> {{@$row->karat->kode}} | {{$row->karat->name}}</td>
+      <td class="text-center"> {{@$row->berat_real}}</td>
+      <td class="text-center"> {{@$row->berat_kotor}}</td>
     
     </tr>
 @endforeach
