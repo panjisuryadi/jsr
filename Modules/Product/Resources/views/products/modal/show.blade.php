@@ -3,6 +3,10 @@
     <div class="px-2">
         
         <table class="table table-striped mb-0">
+             <tr>
+                <th>Cabang</th>
+                <td>{{ $product->cabang->code }} | {{ $product->cabang->name }}</td>
+            </tr>
             <tr>
                 <th>Product Code</th>
                 <td>{{ $product->product_code }}</td>
@@ -10,7 +14,9 @@
             <tr>
                 <th>Barcode Symbology</th>
                 <td>{{ $product->product_barcode_symbology }}</td>
-            </tr>
+            </tr> 
+
+            
             <tr>
                 <th>Name</th>
                 <td>{{ $product->product_name }}</td>
@@ -20,7 +26,7 @@
                 <td>{{ $product->category->category_name }}</td>
             </tr>
             
-            
+      
             
             
             <tr>
@@ -30,7 +36,7 @@
         </table>
 
     </div>
-    <div class="px-2 w-1/2">
+    <div class="px-2">
         
         <div class="justify-center text-center items-center">
             {!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG($product->product_code,'QRCODE', 12, 12) !!}
