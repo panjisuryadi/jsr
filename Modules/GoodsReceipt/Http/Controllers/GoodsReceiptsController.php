@@ -586,7 +586,7 @@ private function _saveStockOffice($input)
          }
 
      else {
-         StockOffice::updateOrCreate([
+         StockOffice::create([
               'karat_id' =>$input['karat_id'][$key],
               'berat_real' =>$input['berat_real'][$key],
               'berat_kotor' =>$input['berat_kotor'][$key]
