@@ -14,6 +14,8 @@ use Lang;
 use Image;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
+use Modules\Stok\Models\StockOffice;
+
 
 class StoksController extends Controller
 {
@@ -26,6 +28,7 @@ class StoksController extends Controller
         $this->module_path = 'stoks';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\Stok\Models\StockSales";
+        $this->module_office = "Modules\Stok\Models\StockOffice";
 
     }
 
@@ -57,7 +60,7 @@ class StoksController extends Controller
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        $module_action = 'List';
+        $module_action = 'Office';
         abort_if(Gate::denies('access_'.$module_name.''), 403);
          return view(''.$module_name.'::'.$module_path.'.index_office',
            compact('module_name',
@@ -65,6 +68,83 @@ class StoksController extends Controller
             'module_title',
             'module_icon', 'module_model'));
     }
+
+
+public function index_data_office(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_office = $this->module_office;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_office::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->karat->kode  . '   | ' .$data->karat->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                               ->editColumn('berat_real', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->berat_real . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+                              ->editColumn('berat_kotor', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->berat_kotor . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at', 'karat','berat_real', 'berat_kotor', 'action', 'weight'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

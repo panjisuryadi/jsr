@@ -29,11 +29,11 @@
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
                                  
-                                    <th class="text-lef">{{ __('Weight') }}</th>
+                                    <th class="text-left">{{ __('Karat') }}</th>
+                                    <th class="text-left">{{ __('Berat Real') }}</th>
+                                    <th class="text-left">{{ __('Berat Kotor') }}</th>
 
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
-                                    </th>
+                                    
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
@@ -79,7 +79,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("$module_name.index_data_office") }}',
             dom: 'Blfrtip',
             buttons: [
 
@@ -95,8 +95,10 @@
                     }
                 },
 
-                {data: 'weight', name: 'weight'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'karat', name: 'karat'},
+                {data: 'berat_real', name: 'berat_real'},
+                {data: 'berat_kotor', name: 'berat_kotor'},
+              
 
                 {
                     data: 'action',

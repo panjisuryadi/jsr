@@ -22,6 +22,8 @@ Route::group(['middleware' => 'auth'], function () {
 
  Route::get("$module_name/office", ['as' => "$module_name.office", 'uses' => "$controller_name@office"]);
 
+ Route::get("$module_name/index_data_office", ['as' => "$module_name.index_data_office", 'uses' => "$controller_name@index_data_office"]);
+
 
     Route::resource("$module_name", "$controller_name");
 
