@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
+use Modules\ReturSale\Events\ReturSaleDetailCreated;
 use Modules\ReturSale\Models\ReturSale;
 use Modules\ReturSale\Models\ReturSaleDetail;
 
@@ -157,7 +158,7 @@ class Create extends Component
                     'weight' => $this->retur_sales_detail[$key]['weight'],
                     'nominal' => $this->retur_sales_detail[$key]['nominal'],
                 ]);
-                // event(new ReturSaleDetail($retur_sale,$retur_sale_detail));
+                event(new ReturSaleDetailCreated($retur_sale,$retur_sale_detail));
             }
 
             DB::commit();
