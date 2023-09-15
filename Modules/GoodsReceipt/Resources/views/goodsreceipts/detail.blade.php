@@ -22,16 +22,18 @@
 @endpush
 <div class="container-fluid">
 
+<div class="card px-3 pb-4">
 
 
- <div style="font-size:1.1rem;" class="text-md px-3 py-2 bg-white flex justify-between">
+ <div style="font-size:1.1rem;" class="text-md px-3 py-4 flex justify-between">
         <div class="w-full">
             <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
             <h3 class="font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
         </div>
-        <div class="w-50 leading-none text-right">
 
 
+        
+<div class="w-50 leading-none text-right">
   <div class="flex flex-row justify-end py-2 mt-2">
     <a class="flex" href="{{ route('goodsreceipt.index') }}">
         <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
@@ -59,16 +61,16 @@
 
 
 
-<div class="text-md bg-white grid grid-cols-3 gap-4 pb-5">
+<div class="px-0 py-1 grid grid-cols-2 gap-4 m-2 mt-0 text-center no-underline">
+    
+<div class="px-2">
 
-  <div class="text-gray-600 px-2 py-2">
-  
-
-<div class="text-sm px-3 py-2 poppins">
  <div class="flex justify-between py-1">
                 <p class="text-gray-600">{{ Label_case('tanggal') }}</p>
                 <p class="text-gray-900">{{ tanggal($detail->date) }}</p>
             </div>
+
+
            <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('no_invoice') }}</p>
                 <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->no_invoice }}</p>
@@ -86,14 +88,12 @@
 
 
     <div class="flex justify-between w-full py-1">
-                <div class="poppins text-gray-600">
-                    <div> {{ Label_case('Total_Emas') }}</div>
-                   <div style="font-size:0.7rem !important;" class="mt-0 small text-blue-600">Total Emas yg harus di bayar
-                   </div>
-
-                </div>
-                <div class="mt-2 poppins font-semibold text-gray-800">{{ $detail->total_emas }}</div>
+          <p class="poppins text-gray-600">{{ Label_case('Total_Emas') }}</p>
+      
+                <p class="mt-2 poppins font-semibold text-gray-800">{{ $detail->total_emas }}</p>
             </div>
+
+
 
               @if($detail->selisih)
             <div class="flex justify-between w-full py-1">
@@ -106,66 +106,26 @@
               @endif
 
 
-
-
-    <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('Tipe Pembayaran') }}</p>
-      @if($detail->pembelian[0]->tipe_pembayaran =='cicil')
-     <p class="poppins text-gray-800">
-       Cicilan : {{ $detail->pembelian[0]->cicil }} Kali</p>
-    </div>
-      @elseif($detail->pembelian[0]->tipe_pembayaran =='jatuh_tempo')
- <div style="font-size:0.7rem !important;" class="poppins text-gray-800">
-    <div> Jatuh Tempo : </div>
-    <div>{{ tgl($detail->pembelian[0]->jatuh_tempo) }}</div>
-      
-   </div>
-    </div>
-    @endif
-         <div class="flex justify-between w-full py-1">
+   <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('pengirim') }}</p>
                 <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->pengirim }}</p>
             </div>
+
+
+
 
              <div class="flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('penerima') }}</p>
                 <p class="poppins dark:text-gray-300 text-gray-800">
                     {{ @$detail->user->name }}</p>
-            </div>
+            </div>   
+
+
+   
 
 
 </div>
-
-
-
-
-  </div>
-
-
-
-
-
-
-
-
-  <div class="text-gray-600 col-span-2 px-2 py-2 border-l">
-
-
-       <div class="card-body">
-
-
-                <div class="flex items-center">
-                    <h4
-                    class="flex-shrink-0 pr-4 bg-white text-sm leading-5 tracking-wider font-semibold uppercase text-teal-600">
-                   Item
-                    </h4>
-                    <div class="flex-1 border-t-2 border-gray-200">
-                    </div>
-                </div>
-
-                    <div class="text-gray-600 table-responsive mt-1">
-
-                  
+<div>
 
 <table class="table table-striped table-bordered">
   <thead>
@@ -196,24 +156,26 @@
     </tr>
 @endforelse
 
-  
 
   </tbody>
 </table>
 
 
-                    </div>
-                </div>
+
+</div>
 
 
 
-  </div>
 </div>
 
 
 
 
-  {{--   {{ $detail }} --}}
+
+
+</div>
+
+{{--   {{ $detail }} --}}
 
 
 
