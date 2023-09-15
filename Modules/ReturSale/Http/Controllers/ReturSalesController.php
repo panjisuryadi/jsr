@@ -115,7 +115,7 @@ public function index_data(Request $request)
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.modal.create',
+              return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
                 'module_title',
