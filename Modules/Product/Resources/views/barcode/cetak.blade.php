@@ -35,22 +35,22 @@ div#kanan {
 
         <td style="width:40%;border:none !important;text-align: left;">
 <div style="relative">
-<div style="position:absolute; top:3rem;font-size: 0.9rem;left:4rem;">
- <img width="45" src="data:image/png;base64, {!! $barcode !!}">   
+<div style="position:absolute; top:4rem;font-size: 0.9rem;left:5rem;">
+ <img width="50" src="data:image/png;base64, {!! $barcode !!}">   
 </div>
-<div style="font-size: 0.9rem;position:absolute; bottom:2rem;left:2rem;">
+<div style="font-size: 0.9rem;position:absolute; bottom:2rem;left:3rem;">
  {{$product->product_code}}
 </div>
   </div>
         </td>
 <td style="border:none !important;">
  <div style="relative">
-<div class="tf" style="position:absolute; top:2rem;font-size: 0.9rem;right:2rem;">
+<div class="tf" style="position:absolute; top:2rem;font-size: 0.9rem;right:3rem;">
     {{$product->product_code}}
 </div>
 
-<div style="position:absolute; bottom:2rem;right:5rem;">
-  <img class="tf" width="45" src="data:image/png;base64, {!! $barcode !!}">   
+<div style="position:absolute; bottom:4rem;right:6rem;">
+  <img class="tf" width="50" src="data:image/png;base64, {!! $barcode !!}">   
 </div>
 
 </div>   
