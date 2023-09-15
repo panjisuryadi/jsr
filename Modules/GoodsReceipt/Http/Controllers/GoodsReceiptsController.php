@@ -575,9 +575,9 @@ private function _saveStockOffice($input)
      {
 
     foreach ($input['karat_id'] as $key => $value) {
-        $stockOffice = StockOffice::where('karat_id', $value);
-      $existingBeratBersih = $stockOffice->value('berat_real');
-      $existingBeratKotor = $stockOffice->value('berat_kotor');
+    $stockOffice = StockOffice::where('karat_id', $value);
+    $existingBeratBersih = $stockOffice->value('berat_real');
+    $existingBeratKotor = $stockOffice->value('berat_kotor');
     StockOffice::updateOrCreate(
         ['karat_id'=>$value],
         [

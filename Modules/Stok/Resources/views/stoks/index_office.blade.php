@@ -34,9 +34,7 @@
                                     <th class="text-left">{{ __('Berat Kotor') }}</th>
 
                                     
-                                    <th style="width: 18%!important;" class="text-center">
-                                        {{ __('Action') }}
-                                    </th>
+                               
                                 </tr>
                             </thead>
                         </table>
@@ -97,12 +95,10 @@
 
                 {data: 'karat', name: 'karat'},
                 {data: 'berat_real', name: 'berat_real'},
-                {data: 'berat_kotor', name: 'berat_kotor'},
               
-
                 {
-                    data: 'action',
-                    name: 'action',
+                    data: 'berat_kotor',
+                    name: 'berat_kotor',
                     orderable: false,
                     searchable: false
                 }
