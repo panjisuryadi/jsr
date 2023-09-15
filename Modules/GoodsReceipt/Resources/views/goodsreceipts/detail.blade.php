@@ -113,7 +113,11 @@
         <label class="small text-blue-500">Jatuh Tempo</label>
     {!! tanggal2(@$data->pembelian[0]->jatuh_tempo)!!}
      </div>
-          @endif
+      @elseif($detail->pembelian[0]->tipe_pembayaran == 'jatuh_tempo')
+     <p class="text-gray-600">Cicilan : {{ $detail->pembelian[0]->cicil }} Kali</p>
+      @else
+     <p class="text-gray-600">LUNAS</p>
+      @endif
 
 
 

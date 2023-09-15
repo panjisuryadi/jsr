@@ -6,10 +6,10 @@
   
           <link rel="stylesheet" href="{{ public_path('b3/bootstrap.min.css') }}">
          <style>
-        @page {
-          size: 21.0cm 29.7cm;
-          margin: 0;
-        }
+            @page {
+              size: 21.0cm 29.7cm;
+              margin: 0;
+            }
             .invoice-box {
                 max-width: 800px;
                 margin: auto;
