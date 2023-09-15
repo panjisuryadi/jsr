@@ -574,26 +574,26 @@ public function store(Request $request)
 private function _saveStockOffice($input)
      {
 
-     $karat = StockOffice::where('karat_id',$input['karat_id'])->first();
-     if($karat!==null){
-         foreach ($input['karat_id'] as $key => $value) {
-           StockOffice::where('karat_id',$input['karat_id'][$key])
-                     ->update([
-                          'berat_real' =>$karat->berat_real + $input['berat_real'][$key],
-                          'berat_kotor' =>$karat->berat_kotor + $input['berat_kotor'][$key]
-                            ]
-                       );
-                 }
-     
-           }else{
-              foreach ($input['karat_id'] as $key => $value) {
-                  StockOffice::create([
-                      'karat_id' => $input['karat_id'][$key],
-                      'berat_real' =>$input['berat_real'][$key],
-                      'berat_kotor' =>$input['berat_kotor'][$key]
-                       ]);
-                 }
-           }
+  foreach ($input['karat_id'] as $key => $value) {
+    $karat = StockOffice::where('karat_id',$input['karat_id'])->first();
+     if ($karat) {
+         StockOffice::where('karat_id',$input['karat_id'][$key])
+             ->update([
+            'berat_real' =>$karat->berat_real + $input['berat_real'][$key],
+            'berat_kotor' =>$karat->berat_kotor + $input['berat_kotor'][$key]
+                    ]
+               );
+         }
+
+     } else {
+         StockOffice::updateOrCreate([
+              'karat_id' =>$input['karat_id'][$key],
+              'berat_real' =>$input['berat_real'][$key],
+              'berat_kotor' =>$input['berat_kotor'][$key]
+               ]);
+         
+     }
+   
      
     }
 
