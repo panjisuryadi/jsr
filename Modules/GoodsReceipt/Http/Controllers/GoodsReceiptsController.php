@@ -1033,7 +1033,7 @@ public function cetak($id) {
 
         $$module_name_singular->delete();
          toast(''. $module_title.' Deleted!', 'success');
-         return redirect()->route(''.$module_name.'.index');
+         return redirect()->route(''.$module_name.'.riwayat-penerimaan');
 
           } catch (\Exception $e) {
            // dd($e);
