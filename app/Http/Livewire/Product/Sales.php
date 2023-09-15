@@ -39,6 +39,8 @@ use Modules\Karat\Models\Karat;
                     foreach($this->inputs as $key => $value){
                         $this->sales['total_jumlah'] += $this->berat_bersih[$value]??0;
                         $this->sales['total_jumlah'] = number_format(round($this->sales['total_jumlah'], 3), 3, '.', '');
+                        $this->sales['total_jumlah'] = rtrim($this->sales['total_jumlah'], '0');
+                        $this->sales['total_jumlah'] = formatWeight($this->sales['total_jumlah']);
                     }
                 }
             }
