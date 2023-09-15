@@ -25,6 +25,31 @@ Route::group(['middleware' => 'auth'], function () {
  Route::get("$module_name/index_data_office", ['as' => "$module_name.index_data_office", 'uses' => "$controller_name@index_data_office"]);
 
 
+ Route::get("$module_name/pending", ['as' => "$module_name.pending", 'uses' => "$controller_name@pending"]);
+
+ Route::get("$module_name/index_data_pending", ['as' => "$module_name.index_data_pending", 'uses' => "$controller_name@index_data_pending"]);
+
+ Route::get("$module_name/sales", ['as' => "$module_name.sales", 'uses' => "$controller_name@sales"]);
+
+ Route::get("$module_name/index_data_sales", ['as' => "$module_name.index_data_sales", 'uses' => "$controller_name@index_data_sales"]);
+
+
+
+ Route::get("$module_name/dp", ['as' => "$module_name.dp", 'uses' => "$controller_name@dp"]);
+
+ Route::get("$module_name/index_data_dp", ['as' => "$module_name.index_data_dp", 'uses' => "$controller_name@index_data_dp"]);
+
+
+
+ Route::get("$module_name/kroom", ['as' => "$module_name.kroom", 'uses' => "$controller_name@kroom"]);
+
+ Route::get("$module_name/index_data_kroom", ['as' => "$module_name.index_data_kroom", 'uses' => "$controller_name@index_data_kroom"]);
+
+
+
+
+
+
     Route::resource("$module_name", "$controller_name");
 
 });
