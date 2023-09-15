@@ -173,7 +173,7 @@
             $required = '';
             ?>
             <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <input type="date" name="{{ $field_name }}"
+            <input id="{{ $field_name }}" type="date" name="{{ $field_name }}"
             class="form-control {{ $invalid }}"
             name="{{ $field_name }}"
             value="{{ old($field_name) }}"
@@ -411,6 +411,14 @@ $(document).ready(function(){
     }
    
     });
+
+    let hariIni = new Date();
+
+    // Mengubah tanggal ke format "YYYY-MM-DD"
+    let hariIniFormatted = hariIni.toISOString().split('T')[0];
+
+    // Set atribut "min" pada elemen input
+    $("#tanggal").attr("max", hariIniFormatted);
 });
 
 
