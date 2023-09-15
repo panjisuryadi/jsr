@@ -419,6 +419,7 @@ $(document).ready(function(){
 
     // Set atribut "min" pada elemen input
     $("#tanggal").attr("max", hariIniFormatted);
+    $("#tgl_jatuh_tempo_input").attr("min", hariIniFormatted);
 });
 
 

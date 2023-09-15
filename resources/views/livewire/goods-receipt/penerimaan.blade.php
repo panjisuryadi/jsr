@@ -304,6 +304,7 @@
             <input type="date" name="{{ $field_name }}"
             class="form-control {{ $invalid }}"
             name="{{ $field_name }}"
+            id="{{$field_name}}_input"
             value="{{ old($field_name) }}"
             placeholder="{{ $field_placeholder }}" {{ $required }}>
             @if ($errors->has($field_name))
@@ -413,6 +414,8 @@
                         total_kotor.value = (Math.round(total_berat_kotor * 1000) / 1000).toFixed(3);;
                    });
                }
+
+
 
 </script>
 
