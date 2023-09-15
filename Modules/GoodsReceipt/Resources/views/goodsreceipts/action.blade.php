@@ -13,13 +13,13 @@
         @lang('Detail')
     </a> 
 
-    <a href="{{ route("$module_name.edit",encode_id($data->id)) }}"
+{{--     <a href="{{ route("$module_name.edit",encode_id($data->id)) }}"
 
     data-toggle="tooltip"
      class="btn btn-outline-warning btn-sm py-1">
         @lang('Edit')
     </a>
-
+ --}}
     @can('delete_'.$module_name.'')
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();

@@ -8,11 +8,10 @@
 
     </a> 
 
-<a href="{{ route("products.edit",$data->id_produk) }}"
-    data-toggle="tooltip"
-     class="btn btn-warning btn-sm py-1">
+    <a href="{{ route("products.edit",$data->id_produk) }}"
+       data-toggle="tooltip"
+       class="btn btn-warning btn-sm py-1">
        <i class="bi bi-pencil"></i>
-
     </a>
 
 
