@@ -574,25 +574,18 @@ public function store(Request $request)
 private function _saveStockOffice($input)
      {
 
-  foreach ($input['karat_id'] as $key => $value) {
-    $karat = StockOffice::where('karat_id',$input['karat_id'])->first();
-     if ($karat) {
-         StockOffice::where('karat_id',$input['karat_id'][$key])
-             ->update([
-            'berat_real' =>$karat->berat_real + $input['berat_real'][$key],
-            'berat_kotor' =>$karat->berat_kotor + $input['berat_kotor'][$key]
-                    ]
-               );
-         }
-
-     else {
-         StockOffice::create([
-              'karat_id' =>$input['karat_id'][$key],
-              'berat_real' =>$input['berat_real'][$key],
-              'berat_kotor' =>$input['berat_kotor'][$key]
-               ]);
-         
-     }
+    foreach ($input['karat_id'] as $key => $value) {
+        $stockOffice = StockOffice::where('karat_id', $value);
+      $existingBeratBersih = $stockOffice->value('berat_real');
+      $existingBeratKotor = $stockOffice->value('berat_kotor');
+    StockOffice::updateOrCreate(
+        ['karat_id'=>$value],
+        [
+            'berat_real' =>$input['berat_real'][$key] + $existingBeratBersih,
+            'berat_kotor' =>$input['berat_kotor'][$key] + $existingBeratKotor
+        ]
+    );
+    
    
    }
      
