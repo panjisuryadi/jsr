@@ -103,6 +103,23 @@
             </div>
               @endif
 
+                
+     <div class="text-base flex justify-between w-full py-1">
+     <p class="poppins text-gray-600">{{ Label_case('tipe_pembayaran') }}</p>
+
+
+        @if($detail->pembelian[0]->tipe_pembayaran == 'jatuh_tempo')
+     <div class="text-gray-800 text-sm">
+        <label class="small text-blue-500">Jatuh Tempo</label>
+    {!! tanggal2(@$data->pembelian[0]->jatuh_tempo)!!}
+     </div>
+          @endif
+
+
+
+     </div>
+
+
 
    <div class="text-base flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('pengirim') }}</p>
