@@ -29,6 +29,10 @@ class StoksController extends Controller
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\Stok\Models\StockSales";
         $this->module_office = "Modules\Stok\Models\StockOffice";
+        $this->module_pending = "Modules\Stok\Models\StockPending";
+        $this->module_sales = "Modules\Stok\Models\StockSales";
+        $this->module_kroom = "Modules\Stok\Models\StockKroom";
+        $this->module_dp = "Modules\Stok\Models\StokDp";
 
     }
 
@@ -68,6 +72,345 @@ class StoksController extends Controller
             'module_title',
             'module_icon', 'module_model'));
     }
+
+
+ public function pending() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Pending';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.page.index_pending',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+ public function sales() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Sales';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.page.index_sales',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+ public function dp() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'DP';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.page.index_dp',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+ public function kroom() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Kroom';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.page.index_kroom',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+public function index_data_kroom(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_kroom = $this->module_kroom;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_kroom::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+ 
+
+                           
+                              ->editColumn('weight', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->weight . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                 
+                        ->rawColumns(['updated_at', 'karat','customer', 'cabang', 'action', 'weight'])
+                        ->make(true);
+                     }
+
+
+
+
+
+public function index_data_dp(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_dp = $this->module_dp;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_dp::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+
+                          ->editColumn('cabang', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->cabang->code  . ' | ' .$data->cabang->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+
+                             ->editColumn('customer', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->customer->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                           
+                              ->editColumn('weight', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->weight . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                 
+                        ->rawColumns(['updated_at', 'karat','customer', 'cabang', 'action', 'weight'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
+
+public function index_data_sales(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_sales = $this->module_sales;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_sales::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+
+                          ->editColumn('sales', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->sales->name. '</h3>
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                           
+                              ->editColumn('weight', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->weight . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at', 'karat','berat_real', 'berat_kotor', 'action', 'weight'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public function index_data_pending(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_pending = $this->module_pending;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_pending::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+
+                          ->editColumn('cabang', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                   ' .$data->cabang->code  . ' | ' .$data->cabang->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                           
+                              ->editColumn('weight', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                     ' .$data->weight . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at', 'karat','berat_real', 'berat_kotor', 'action', 'weight'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 public function index_data_office(Request $request)
@@ -132,63 +475,6 @@ public function index_data_office(Request $request)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- public function nolateww() {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'List';
-
-         $api_url = env('API_URL');
-         //$response = Http::get($api_url.'/api/='.$id);
-         $response = Http::get('https://nolate.official-jsr.com/api/sales');
-         $resultapi = json_decode($response, true);
-
-         return $resultapi;
-
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
-         return view(''.$module_name.'::'.$module_path.'.index',
-           compact('module_name',
-            'module_action',
-            'module_title',
-            'module_icon', 'module_model'));
-    }
-
-
-        public function nolate()
-        {
-            try{
-                $token = "SlNSIERJQU9NSU5EIE9GRklDSUFMIA==";
-                $response = Http::withToken(
-                    $token
-                )->get('https://nolate.official-jsr.com/api/sales');
-
-                return response()->json(
-                    json_decode($response->body(), true)
-                );
-            }
-            catch (Exception $e){
-                return $e;
-            }
-        }
 
 
 

@@ -4,24 +4,21 @@ namespace Modules\Stok\Models;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
-
-//use Modules\JenisGroup\Models\JenisGroup;
+use Modules\Karat\Models\Karat;
+use Modules\DataSale\Models\DataSale;
 class StockSales extends Model
 {
 
     protected $table = 'stock_sales';
-   
     protected $guarded = [];
 
-  // public function products() {
-  //       return $this->hasMany(Product::class, 'category_id', 'id');
-  //   }
+    public function karat() {
+        return $this->belongsTo(Karat::class, 'karat_id', 'id');
+    } 
 
-  //   public function kategoriProduk() {
-  //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
-  //   }
-
-
+     public function sales() {
+        return $this->belongsTo(DataSale::class, 'sales_id', 'id');
+    }
 
 
 }

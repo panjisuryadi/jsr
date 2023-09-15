@@ -4,8 +4,9 @@ namespace Modules\Stok\Models;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Karat\Models\Karat;
+use Modules\Cabang\Models\Cabang;
 
-//use Modules\JenisGroup\Models\JenisGroup;
 class StockPending extends Model
 {
 
@@ -17,9 +18,13 @@ class StockPending extends Model
   //       return $this->hasMany(Product::class, 'category_id', 'id');
   //   }
 
-  //   public function kategoriProduk() {
-  //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
-  //   }
+    public function karat() {
+        return $this->belongsTo(Karat::class, 'karat_id', 'id');
+    } 
+
+     public function cabang() {
+        return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
+    }
 
 
 

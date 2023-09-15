@@ -610,7 +610,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
                     // DataStok
                     $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Sales'), [
-                        'route' => 'stok.index',
+                        'route' => 'stok.sales',
                         'class' => 'nav-item',
                     ])
                     ->data([
@@ -638,7 +638,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
                   // DataStok
                     $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
-                        'route' => 'stok.index',
+                        'route' => 'stok.pending',
                         'class' => 'nav-item',
                     ])
                     ->data([
@@ -655,7 +655,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
                   // DataStok
                     $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock DP'), [
-                        'route' => 'stok.index',
+                        'route' => 'stok.dp',
                         'class' => 'nav-item',
                     ])
                     ->data([
@@ -671,7 +671,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
                   // DataStok
                     $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Kroom'), [
-                        'route' => 'stok.index',
+                        'route' => 'stok.kroom',
                         'class' => 'nav-item',
                     ])
                     ->data([
