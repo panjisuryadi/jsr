@@ -35,7 +35,7 @@ div#kanan {
 
         <td style="width:40%;border:none !important;text-align: left;">
 <div style="relative">
-<div style="position:absolute; top:4rem;font-size: 0.9rem;left:5rem;">
+<div style="position:absolute; top:1.8rem;font-size: 0.9rem;left:5.3rem;">
  <img width="57" src="data:image/png;base64, {!! $barcode !!}">   
 </div>
 <div style="font-size: 0.9rem;position:absolute; bottom:2rem;left:3.6rem;">
@@ -49,7 +49,7 @@ div#kanan {
     {{$product->product_code}}
 </div>
 
-<div style="position:absolute; bottom:4rem;right:7.1rem;">
+<div style="position:absolute; bottom:1.6rem;right:6.3rem;">
   <img class="tf" width="57" src="data:image/png;base64, {!! $barcode !!}">   
 </div>
 
