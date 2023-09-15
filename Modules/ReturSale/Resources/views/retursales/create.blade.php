@@ -51,7 +51,7 @@
  
 
 
-<livewire:penjualan-sale.create/>
+<livewire:retur-sale.create/>
 
 </div>
 
