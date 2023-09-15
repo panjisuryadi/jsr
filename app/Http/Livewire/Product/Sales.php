@@ -89,8 +89,8 @@ use Modules\Karat\Models\Karat;
                 {
                         $rules = [
                               'sales.invoice' => 'required|string|max:50',
-                              'berat_bersih.0'     => 'required',  
-                              'berat_bersih.*'     => 'required',
+                              'berat_bersih.0'     => 'required|numeric|gt:0',  
+                              'berat_bersih.*'     => 'required|numeric|gt:0',
                               'karat_id.0' => 'required',
                               'karat_id.*' => 'required',
                               'sales.sales_id' => 'required',
@@ -103,8 +103,8 @@ use Modules\Karat\Models\Karat;
                             
                             $rules['karat_id.0'] = 'required';
                             $rules['karat_id.'.$value] = 'required'; 
-                            $rules['berat_bersih.0'] = 'required';
-                            $rules['berat_bersih.'.$value] = 'required';
+                            $rules['berat_bersih.0'] = 'required|numeric|gt:0';
+                            $rules['berat_bersih.'.$value] = 'required|numeric|gt:0';
                         }
                         return $rules;
                    }
@@ -133,9 +133,7 @@ use Modules\Karat\Models\Karat;
 
             public function updated($propertyName)
                 {
-                    if ($this->inputs) {
-                        $this->validateOnly($propertyName);
-                    }
+                    $this->validateOnly($propertyName);
                 }
 
             public function mount(){
