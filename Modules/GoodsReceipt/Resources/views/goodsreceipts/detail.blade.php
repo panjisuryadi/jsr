@@ -22,19 +22,20 @@
 @endpush
 <div class="container-fluid">
 
-<div class="card px-3 pb-4">
+<div class="card px-3 pb-4 rounded rounded-lg shadow">
 
 
- <div style="font-size:1.1rem;" class="text-md px-3 py-4 flex justify-between">
+ <div style="font-size:1.1rem;" class="border-bottom text-md px-3 py-4 flex justify-between">
         <div class="w-full">
-            <div class="mt-3 text-gray-600">No Penerimaan Barang</div>
+            <div class="mt-3 text-sm text-gray-500">{{ tanggal($detail->date) }}</div>
+            <div class="text-gray-600">No Penerimaan Barang</div>
             <h3 class="font-medium text-gray-900 uppercase font-medium font-semibold">{{ $detail->code }}</h3>
         </div>
 
 
         
 <div class="w-50 leading-none text-right">
-  <div class="flex flex-row justify-end py-2 mt-2">
+  <div class="flex flex-row justify-end py-2">
     <a class="flex" href="{{ route('goodsreceipt.index') }}">
         <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
             <i class="bi bi-house text-gray-600"></i>
@@ -50,7 +51,7 @@
 </div>
         
 <div class="text-right">
-   <div class="mt-0 text-gray-600">Supplier</div>
+   <div class="mt-0 text-sm text-gray-600">Supplier</div>
     <div class="leading-5 mt-0 font-semibold text-gray-500">{{ $detail->supplier->supplier_name }}</div>
     <div class="leading-5 text-gray-500">{{ $detail->supplier->address }}</div>
 </div>
@@ -65,29 +66,26 @@
     
 <div class="px-2">
 
- <div class="flex justify-between py-1">
-                <p class="text-gray-600">{{ Label_case('tanggal') }}</p>
-                <p class="text-gray-900">{{ tanggal($detail->date) }}</p>
+
+           <div class="text-base flex justify-between w-full py-1">
+                <p class=" text-gray-600">{{ Label_case('no_invoice') }}</p>
+                <p class=" dark:text-gray-300 text-gray-800">{{ $detail->no_invoice }}</p>
             </div>
 
 
-           <div class="flex justify-between w-full py-1">
-                <p class="poppins text-gray-600">{{ Label_case('no_invoice') }}</p>
-                <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->no_invoice }}</p>
-            </div>
-  <div class="flex justify-between w-full py-1">
+  <div class="text-base flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('total_berat_kotor') }}</p>
                 <p class="poppins font-semibold text-blue-800">{{ $detail->total_berat_kotor }}
                    <small class="text-gray-700">Gram</small></p>
             </div>
-  <div class="flex justify-between w-full py-1">
+  <div class="text-base flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('berat_timbangan') }}</p>
                 <p class="poppins font-semibold text-green-800">{{ $detail->berat_timbangan }}
                     <small class="text-gray-700">Gram</small></p>
             </div>
 
 
-    <div class="flex justify-between w-full py-1">
+    <div class="text-base flex justify-between w-full py-1">
           <p class="poppins text-gray-600">{{ Label_case('Total_Emas') }}</p>
       
                 <p class="mt-2 poppins font-semibold text-gray-800">{{ $detail->total_emas }}</p>
@@ -96,7 +94,7 @@
 
 
               @if($detail->selisih)
-            <div class="flex justify-between w-full py-1">
+            <div class="text-base flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('selisih') }}</p>
                 <div style="font-size: 0.7rem !important;" class="poppins text-gray-800">
                     <div> Gram : {{ $detail->selisih }}</div>
@@ -106,15 +104,13 @@
               @endif
 
 
-   <div class="flex justify-between w-full py-1">
+   <div class="text-base flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('pengirim') }}</p>
                 <p class="poppins dark:text-gray-300 text-gray-800">{{ $detail->pengirim }}</p>
             </div>
 
 
-
-
-             <div class="flex justify-between w-full py-1">
+             <div class="text-base flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('penerima') }}</p>
                 <p class="poppins dark:text-gray-300 text-gray-800">
                     {{ @$detail->user->name }}</p>
