@@ -20,7 +20,7 @@ class DistribusiSalesController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'DistribusiSale';
+        $this->module_title = 'Distribusi Sale';
         $this->module_name = 'distribusisale';
         $this->module_path = 'distribusisales';
         $this->module_icon = 'fas fa-sitemap';
@@ -401,13 +401,13 @@ public function update(Request $request, $id)
         $title = 'Print Distribusi Sales';
         $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.print', compact('detail','title'))
           ->setPaper('A4', 'portrait');
-          //return $pdf->stream('penerimaan-'. $detail->id .'.pdf');
-         return view(''.$module_name.'::'.$module_path.'.includes.print',
-           compact('module_name',
-            'detail',
-            'module_title',
-            'title',
-            'module_icon', 'module_model'));
+          return $pdf->stream('distribusi_sales-'. $detail->id .'.pdf');
+         // return view(''.$module_name.'::'.$module_path.'.includes.print',
+         //   compact('module_name',
+         //    'detail',
+         //    'module_title',
+         //    'title',
+         //    'module_icon', 'module_model'));
 
 
 

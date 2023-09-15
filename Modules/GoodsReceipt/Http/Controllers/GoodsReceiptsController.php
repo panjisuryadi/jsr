@@ -576,6 +576,8 @@ private function _saveStockOffice($input)
 
   foreach ($input['karat_id'] as $key => $value) {
     $karat = StockOffice::where('karat_id',$input['karat_id'])->first();
+
+    dd($karat);
      if ($karat) {
          StockOffice::where('karat_id',$input['karat_id'][$key])
              ->update([
