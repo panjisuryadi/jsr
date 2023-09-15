@@ -967,7 +967,7 @@ public function getPdf($id) {
         $module_model = $this->module_model;
         $product = $module_model::where('id', $id)->first();
        // $customPaper = 'A4';
-        $customPaper = array(0,0,720,720);
+        $customPaper = array(0,0,120,420);
         $barcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate('string'));
           $pdf = PDF::loadView('product::barcode.cetak', compact('product','barcode'))
           ->setPaper($customPaper, 'landscape');
