@@ -624,7 +624,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
                   // DataStok
                     $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Office'), [
-                        'route' => 'stok.index',
+                        'route' => 'stok.office',
                         'class' => 'nav-item',
                     ])
                     ->data([

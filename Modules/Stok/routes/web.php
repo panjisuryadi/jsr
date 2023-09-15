@@ -20,6 +20,9 @@ Route::group(['middleware' => 'auth'], function () {
    Route::get("$module_name/nolate", ['as' => "$module_name.nolate", 'uses' => "$controller_name@nolate"]);
 
 
+ Route::get("$module_name/office", ['as' => "$module_name.office", 'uses' => "$controller_name@office"]);
+
+
     Route::resource("$module_name", "$controller_name");
 
 });
