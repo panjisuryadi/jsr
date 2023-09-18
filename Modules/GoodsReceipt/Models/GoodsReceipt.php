@@ -30,7 +30,7 @@ class GoodsReceipt extends Model implements HasMedia
     }
 
     public function pembelian() {
-        return $this->hasMany(TipePembelian::class, 'goodsreceipt_id', 'id');
+        return $this->hasOne(TipePembelian::class, 'goodsreceipt_id', 'id');
     }
 
     public function user() {

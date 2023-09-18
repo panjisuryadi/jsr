@@ -14,8 +14,8 @@ class TipePembelian extends Model
     protected $guarded = [];
 
 
-    public function pembelian() {
-        return $this->belongsTo(GoodsReceipt::class, 'goodsreceipt_id', 'id');
+    public function goodreceipt() {
+        return $this->belongsTo(GoodsReceipt::class);
     }
 
 }

@@ -259,20 +259,20 @@ public function index_data(Request $request)
                                     Gram : <span class="font-semibold">' .$data->selisih . '</span>
                                     </div>';
                                     $tb .= '<div class="text-xs text-left">
-                                      Nominal :<span class="font-semibold">' .number_format($data->selisih_rupiah) . '</span>
+                                      Nominal :<span class="font-semibold">' .number_format($data->selisih) . '</span>
                                     </div>';   
                                 return $tb;
                             }) 
 
                 ->editColumn('pembayaran', function ($data) {
-                   if ($data->pembelian[0]->tipe_pembayaran == 'jatuh_tempo') 
+                   if ($data->pembelian->tipe_pembayaran == 'jatuh_tempo') 
                      {
                          $info =  'Jatuh Tempo';
-                         $pembayaran =  tgljam(@$data->pembelian[0]->jatuh_tempo);
-                     }else if ($data->pembelian[0]->tipe_pembayaran == 'cicil') 
+                         $pembayaran =  tgljam(@$data->pembelian->jatuh_tempo);
+                     }else if ($data->pembelian->tipe_pembayaran == 'cicil') 
                      {
                          $info =  'Cicilan';
-                         $pembayaran =  @$data->pembelian[0]->cicil .' kali';
+                         $pembayaran =  @$data->pembelian->cicil .' kali';
                      }
                      else{
                          $info =  '';
