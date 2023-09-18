@@ -31,14 +31,14 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
+                                    <th style="width: 3%!important;">No</th>
 
   <th style="width: 15%!important;" class="text-center">{{ Label_Case('date') }}</th>
   <th style="width: 15%!important;" class="text-center">{{ Label_Case('sales') }}</th>
   <th style="width: 15%!important;" class="text-center">{{ Label_Case('store_name') }}</th>
- <th style="width: 15%!important;" class="text-center">{{ Label_Case('total_weight') }}</th>
- <th style="width: 15%!important;" class="text-center">{{ Label_Case('total_nominal') }}</th>
- <th style="width: 15%!important;" class="text-center">{{ Label_Case('created_by') }}</th>
+ <th style="width: 10%!important;" class="text-center">{{ Label_Case('total_weight') }}</th>
+ <th style="width: 10%!important;" class="text-center">{{ Label_Case('total_nominal') }}</th>
+ <th style="width: 10%!important;" class="text-center">{{ Label_Case('created_by') }}</th>
                      
  <th style="width: 18%!important;" class="text-center"> {{ __('Action') }} </th>
                                 </tr>
