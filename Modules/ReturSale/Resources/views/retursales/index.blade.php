@@ -30,7 +30,7 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
+                                    <th style="width: 3%!important;">No</th>
                                    <th style="width: 15%!important;" class="text-center">
                                    {{ __('Date') }}</th>
 
@@ -39,16 +39,16 @@
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('No Return') }}
                                     </th> 
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 12%!important;" class="text-center">
                                          {{ __('Weight') }}
                                     </th>
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 12%!important;" class="text-center">
                                          {{ __('Nominal') }}
                                     </th>  
-                                     <th style="width: 15%!important;" class="text-center">
+                                     <th style="width: 13%!important;" class="text-center">
                                          {{ __('Created') }}
                                     </th>
-                                    <th style="width: 18%!important;" class="text-center">
+                                    <th style="width: 15%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -109,11 +109,11 @@
                     }
                 },
                 {data: 'date', name: 'date'},
+                {data: 'sales_name', name: 'sales_name'},
                 {data: 'retur_no', name: 'retur_no'},
-                {data: 'updated_at', name: 'updated_at'},
-                {data: 'updated_at', name: 'updated_at'},
-                {data: 'updated_at', name: 'updated_at'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'weight', name: 'weight'},
+                {data: 'nominal', name: 'nominal'},
+                {data: 'created', name: 'created'},
 
                 {
                     data: 'action',

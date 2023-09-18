@@ -74,14 +74,32 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('name', function ($data) {
+                          ->editColumn('sales_name', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
+                                     ' .$data->sales->name . '</h3>
                                     </div>';
                                 return $tb;
                             })
-                           ->editColumn('updated_at', function ($data) {
+                            ->editColumn('weight', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                       <h3 class="text-sm font-medium text-gray-800">
+                                        ' .$data->detail->sum('weight') . ' gram </h3>
+                                       </div>';
+                                   return $tb;
+                               })
+                            ->editColumn('nominal', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                    Rp. ' .rupiah($data->detail->sum('nominal')) . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                            ->editColumn('date', function ($data) {
+                                $module_name = $this->module_name;
+                                return \Carbon\Carbon::parse($data->updated_at)->format('j F Y');
+                            })
+                           ->editColumn('created', function ($data) {
                             $module_name = $this->module_name;
 
                             $diff = Carbon::now()->diffInHours($data->updated_at);
@@ -91,7 +109,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['created', 'action', 'sales_name','weight','nominal'])
                         ->make(true);
                      }
 
