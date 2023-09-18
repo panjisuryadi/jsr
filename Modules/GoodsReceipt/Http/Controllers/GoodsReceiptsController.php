@@ -772,13 +772,13 @@ public function show($id)
         $module_action = 'Show';
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-        $list = $module_products::where('kode_pembelian',$detail->code)->get();
+        // $list = $module_products::where('kode_pembelian',$detail->code)->get();
       //  dd($detail->code);
           return view(''.$module_name.'::'.$module_path.'.detail',
            compact('module_name',
             'module_action',
             'detail',
-            'list',
+           
             'module_title',
             'module_icon', 'module_model'));
 
