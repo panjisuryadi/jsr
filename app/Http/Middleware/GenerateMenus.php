@@ -380,7 +380,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
-                'order'         => 2,
+                'order'         => 3,
                 'activematches' => [
                     'purchase-payments*',
 
@@ -476,13 +476,13 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-      $products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+    $penentuan_harga = $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
      '.__('Penentuan Harga'), [
                 'route' => 'penentuanharga.index',
                 'class' => 'nav-item',
             ])
             ->data([
-                'order'         => 3,
+                'order'         => 2,
                 'activematches' => ['penentuanhargas*'],
                 'permission'    => ['access_penentuanhargas'],
             ])
