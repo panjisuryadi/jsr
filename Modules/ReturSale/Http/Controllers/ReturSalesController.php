@@ -71,7 +71,9 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.
+                            '.includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
                           ->editColumn('sales_name', function ($data) {
