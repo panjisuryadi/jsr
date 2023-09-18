@@ -15,9 +15,9 @@ Route::group(['middleware' => 'auth'], function () {
     $module_name = 'distribusisale';
     $controller_name = 'DistribusiSalesController';
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
+    Route::get("$module_name/cetak/{id}", ['as' => "$module_name.cetak", 'uses' => "$controller_name@cetak"]);
     Route::resource("$module_name", "$controller_name");
 
-    Route::get("$module_name/cetak/{id}", ['as' => "$module_name.cetak", 'uses' => "$controller_name@cetak"]);
 
 });
 
