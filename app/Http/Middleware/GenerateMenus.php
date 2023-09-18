@@ -407,19 +407,19 @@ class GenerateMenus
             ]);
 
        // Riwayat Penerimaan
-     $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Riwayat Penerimaan'), [
-                'route' => 'goodsreceipt.riwayat_penerimaan',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => ['goodsreceipts*'],
-                'permission'    => ['access_goodsreceipts'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+    //  $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+    //             '.__('Riwayat Penerimaan'), [
+    //             'route' => 'goodsreceipt.riwayat_penerimaan',
+    //             'class' => 'nav-item',
+    //         ])
+    //         ->data([
+    //             'order'         => 2,
+    //             'activematches' => ['goodsreceipts*'],
+    //             'permission'    => ['access_goodsreceipts'],
+    //         ])
+    //         ->link->attr([
+    //             'class' => 'c-sidebar-nav-link py-2',
+    //         ]);
 
 
 
