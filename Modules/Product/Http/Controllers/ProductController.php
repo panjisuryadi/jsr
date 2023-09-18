@@ -1448,11 +1448,10 @@ public function saveAjax(Request $request)
             'product_stock_alert'               => $input['product_stock_alert'],
             'product_name'                      => $group->name .' '. $model->name ?? 'unknown',
             'product_code'                      => $input['product_code'],
-            'product_price'                     => 0,
-            'product_quantity'                  => $input['product_quantity'],
+        
+         
             'product_barcode_symbology'         => $input['product_barcode_symbology'],
-            'product_unit'                      => $input['product_unit'],
-            'product_cost'                      => 0
+            'product_unit'                      => $input['product_unit']
               ]);
 
             if ($request->filled('image')) {
