@@ -140,7 +140,7 @@
                         ?>
                         @if ($key == 0)
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
-                      {{ $field_lable }}<span class="text-danger">*</span></label>
+                      {{ $field_lable }}</label>
                         @endif
                         {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))

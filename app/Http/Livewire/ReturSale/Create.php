@@ -92,8 +92,6 @@ class Create extends Component
             'retur_sales.total_nominal' => 'required',
             'retur_sales_detail.0.weight'     => 'required',
             'retur_sales_detail.*.weight'     => 'required',
-            'retur_sales_detail.0.nominal'     => 'required',
-            'retur_sales_detail.*.nominal'     => 'required',
             'retur_sales_detail.0.karat_id' => 'required',
             'retur_sales_detail.*.karat_id' => 'required',
             'retur_sales.sales_id' => 'required',
@@ -107,8 +105,6 @@ class Create extends Component
             $rules['retur_sales_detail.'.$key.'.karat_id'] = 'required';
             $rules['retur_sales_detail.0.weight'] = 'required';
             $rules['retur_sales_detail.'.$key.'.weight'] = 'required';
-            $rules['retur_sales_detail.0.nominal'] = 'required';
-            $rules['retur_sales_detail.'.$key.'.nominal'] = 'required';
         }
         return $rules;
     }
@@ -156,7 +152,7 @@ class Create extends Component
                 $retur_sale_detail = $retur_sale->detail()->create([
                     'karat_id' => $this->retur_sales_detail[$key]['karat_id'],
                     'weight' => $this->retur_sales_detail[$key]['weight'],
-                    'nominal' => $this->retur_sales_detail[$key]['nominal'],
+                    'nominal' => $this->retur_sales_detail[$key]['nominal']?$this->retur_sales_detail[$key]['nominal']:null,
                 ]);
                 event(new ReturSaleDetailCreated($retur_sale,$retur_sale_detail));
             }
