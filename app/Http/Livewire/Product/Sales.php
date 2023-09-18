@@ -24,7 +24,8 @@ use Modules\Karat\Models\Karat;
              $kasir,
              $dataSales = [],
              $dataKarat = [],
-             $karat_id = [''];
+             $karat_id = [''],
+             $harga = [];
  
             public $pilih_po = [];
             public $inputs = [];
@@ -105,6 +106,8 @@ use Modules\Karat\Models\Karat;
                             $rules['karat_id.'.$value] = 'required'; 
                             $rules['berat_bersih.0'] = 'required|numeric|gt:0';
                             $rules['berat_bersih.'.$value] = 'required|numeric|gt:0';
+                            $rules['harga.0'] = 'numeric';
+                            $rules['harga.'.$value] = 'numeric';
                         }
                         return $rules;
                    }
@@ -157,6 +160,7 @@ use Modules\Karat\Models\Karat;
                 $dist_sale_detail = $dist_sale->detail()->create([
                     'karat_id' => $this->karat_id[0],
                     'berat_bersih' => $this->berat_bersih[0],
+                    'harga' => $this->harga[0]??null,
                 ]);
 
                 event(new DistribusiSaleDetailCreated($dist_sale,$dist_sale_detail));
@@ -167,6 +171,7 @@ use Modules\Karat\Models\Karat;
                         $dist_sale_detail = $dist_sale->detail()->create([
                             'karat_id' => $this->karat_id[$value],
                             'berat_bersih' => $this->berat_bersih[$value],
+                            'harga' => $this->harga[$value]??null,
                         ]);
                         event(new DistribusiSaleDetailCreated($dist_sale,$dist_sale_detail));
                     }

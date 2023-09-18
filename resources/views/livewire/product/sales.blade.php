@@ -76,7 +76,7 @@
 
 
         <div class="flex justify-between mb-3">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3  gap-2">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 md:grid-cols-4  gap-2">
 
 
 <div class="form-group">
@@ -129,13 +129,31 @@
                         class="text-danger">
                     </span>
                     @endif
+                </div>
+                
+                
+                <div class="form-group">
+                    <?php
+                    $field_name = 'harga.0';
+                    $field_lable = label_case('harga');
+                    $field_placeholder = $field_lable;
+                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                    $required = 'wire:model="'.$field_name.'"';
+                    ?>
+                     <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                      {{ $field_lable }}</label>
+
+                    {{ html()->number($field_name)->placeholder($field_placeholder)
+                        ->value(old($field_name))
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
+                    @if ($errors->has($field_name))
+                    <span class="invalid feedback"role="alert">
+                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                        class="text-danger">
+                    </span>
+                    @endif
                 </div>  
 
-
-                
-
-
-        
 
 
              <div class="form-group">
@@ -160,14 +178,7 @@
                     @endif
                 </div>
 
- 
 
-
-
- 
-
-
-           
 
 
             </div>
@@ -189,7 +200,7 @@
 
         @foreach($inputs as $key => $value)
         <div class="flex justify-between mb-3">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 md:grid-cols-4 gap-2">
 
 
           <div class="form-group">
@@ -230,6 +241,28 @@
                    
                {{ html()->text($field_name)->value($pilih_po[$value] ?? null)
                     ->class('form-control form-control-sm '.$invalid.'')->placeholder($field_lable)->attributes(['readonly']) }}
+                    @if ($errors->has($field_name))
+                    <span class="invalid feedback"role="alert">
+                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                        class="text-danger">
+                    </span>
+                    @endif
+                </div>  
+
+
+
+                <div class="form-group">
+                    <?php
+                    $field_name = 'harga.'.$value;
+                    $field_lable = label_case('harga');
+                    $field_placeholder = $field_lable;
+                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                    $required = 'wire:model="'.$field_name.'"';
+                    ?>
+
+                    {{ html()->number($field_name)->placeholder($field_placeholder)
+                        ->value(old($field_name))
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001"]) }}
                     @if ($errors->has($field_name))
                     <span class="invalid feedback"role="alert">
                         <small class="text-danger">{{ $errors->first($field_name) }}.</small

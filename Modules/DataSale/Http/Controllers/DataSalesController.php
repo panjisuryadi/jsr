@@ -94,7 +94,6 @@ public function index_data(Request $request)
                      }
 
 protected function fetch(){
-    try {
         $token = config($this->module_name . '.sales_api.token');
         $baseUrl = config($this->module_name . '.sales_api.base_url');
     
@@ -118,9 +117,7 @@ protected function fetch(){
                 }
             } 
         } 
-    } catch (Exception $e) {
-       
-    }
+    
 }
 
     /**
