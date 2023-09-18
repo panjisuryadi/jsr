@@ -472,19 +472,18 @@ public function store(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        $request->validate([
-             'no_invoice' => 'required|min:3|max:191',
-             'supplier_id' => 'required',
-             'tanggal' => 'required',
-             'total_emas' => 'required',
-             'berat_timbangan' => 'required',
-             'user_id' => 'required',
-             'karat_id.0' => 'required',
-             'karat_id.*' => 'required',
-            ]);
+        // $request->validate([
+        //      'no_invoice' => 'required|min:3|max:191',
+        //      'supplier_id' => 'required',
+        //      'tanggal' => 'required',
+        //      'total_emas' => 'required',
+        //      'berat_timbangan' => 'required',
+        //      'user_id' => 'required',
+        //      'karat_id.0' => 'required',
+        //      'karat_id.*' => 'required',
+        //     ]);
          $input = $request->except('_token','document');
-         //dd($input);
-        $$module_name_singular = $module_model::create([
+         $goodsreceipt = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
             'date'                       => $input['tanggal'],
@@ -493,25 +492,25 @@ public function store(Request $request)
             'kategoriproduk_id'          => null,
             'tipe_pembayaran'            => $input['tipe_pembayaran'],
             'supplier_id'                => $input['supplier_id'],
-            'user_id'                    => $input['user_id'],
+            'user_id'                    => $input['pic_id'],
             'total_berat_kotor'          => $input['total_berat_kotor'],
             'berat_timbangan'            => $input['berat_timbangan'],
             'selisih'                    => $input['selisih'] ?? null,
-            'total_emas'                 => $input['total_emas'],
-            'note'                       => $input['note'],
+            'total_emas'                 => $input['total_berat_real'],
+            'note'                       => $input['catatan'],
             'count'                      => 0,
             'qty'                        => '8',
             'pengirim'                   => $input['pengirim']
         ]);
-            $goodsreceipt = $$module_name_singular->id;
-            $this->_saveTipePembelian($input ,$goodsreceipt);
-            $this->_saveGoodsReceiptItem($input ,$goodsreceipt);
-            $this->_saveStockOffice($input);
+            $goodsreceipt_id = $goodsreceipt->id;
+            $this->_saveTipePembelian($input ,$goodsreceipt_id);
+            $this->_saveGoodsReceiptItem($input['items'] ,$goodsreceipt_id);
+            $this->_saveStockOffice($input['items']);
 
 
              if ($request->has('document')) {
                 foreach ($request->input('document', []) as $file) {
-                    $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('pembelian');
+                    $goodsreceipt->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('pembelian');
                 }
             }
 
@@ -548,22 +547,22 @@ public function store(Request $request)
         'goodsreceipt_id'             => $goodsreceipt,
         'tipe_pembayaran'             => $input['tipe_pembayaran'] ?? null,
         'jatuh_tempo'                 => $input['tgl_jatuh_tempo'] ?? null,
-        'cicil'                       => $input['cicilan'] ?? 0,
+        'cicil'                       => $input['cicil'] ?? 0,
         'lunas'                       => $input['lunas'] ?? null,
         ]);
     
       }
 
 
-   private function _saveGoodsReceiptItem($input ,$goodsreceipt)
+   private function _saveGoodsReceiptItem($items ,$goodsreceipt)
      {
-       foreach ($input['karat_id'] as $key => $value) {
+       foreach ($items as $key => $value) {
           GoodsReceiptItem::updateOrCreate([
               'goodsreceipt_id' => $goodsreceipt,
-              'karat_id' => $input['karat_id'][$key],
-              'kategoriproduk_id' => $input['kategori_id'][$key],
-              'berat_real' =>$input['berat_real'][$key],
-              'berat_kotor' =>$input['berat_kotor'][$key]
+              'karat_id' => $items[$key]['karat_id'],
+              'kategoriproduk_id' => $items[$key]['kategori_id'],
+              'berat_real' =>$items[$key]['berat_real'],
+              'berat_kotor' =>$items[$key]['berat_kotor']
                ]);
 
          }
@@ -571,18 +570,18 @@ public function store(Request $request)
 
 
 
-private function _saveStockOffice($input)
+private function _saveStockOffice($items)
      {
 
-    foreach ($input['karat_id'] as $key => $value) {
-    $stockOffice = StockOffice::where('karat_id', $value);
+    foreach ($items as $key => $value) {
+    $stockOffice = StockOffice::where('karat_id', $items[$key]['karat_id']);
     $existingBeratBersih = $stockOffice->value('berat_real');
     $existingBeratKotor = $stockOffice->value('berat_kotor');
     StockOffice::updateOrCreate(
-        ['karat_id'=>$value],
+        ['karat_id'=>$items[$key]['karat_id']],
         [
-            'berat_real' =>$input['berat_real'][$key] + $existingBeratBersih,
-            'berat_kotor' =>$input['berat_kotor'][$key] + $existingBeratKotor
+            'berat_real' =>$items[$key]['berat_real'] + $existingBeratBersih,
+            'berat_kotor' =>$items[$key]['berat_kotor'] + $existingBeratKotor
         ]
     );
     
