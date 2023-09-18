@@ -48,7 +48,7 @@
 
                     <!-- Sales -->
                     <div class="mb-2 md:mb-1 md:flex items-center">
-                        <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Kepada</label>
+                        <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Dari</label>
                         <span class="mr-4 inline-block hidden md:block">:</span>
                         <div class="flex-1">
                             <select class="form-control select2" name="sales_id" wire:model="retur_sales.sales_id">
