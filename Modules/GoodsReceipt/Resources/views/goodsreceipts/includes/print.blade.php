@@ -179,12 +179,12 @@
                     <td><p class="poppins text-gray-600">{{ Label_case('Tipe Pembayaran') }}</p></td>
 
                     <td> 
-         @if($detail->pembelian[0]->tipe_pembayaran =='cicil')
-        Cicilan : {{ $detail->pembelian[0]->cicil }} Kali
-        @elseif($detail->pembelian[0]->tipe_pembayaran =='jatuh_tempo')
+         @if($detail->pembelian->tipe_pembayaran =='cicil')
+        Cicilan : {{ $detail->pembelian->cicil }} Kali
+        @elseif($detail->pembelian->tipe_pembayaran =='jatuh_tempo')
     
         <div> Jatuh Tempo : </div>
-        <div>{{ tgl($detail->pembelian[0]->jatuh_tempo) }}</div>   
+        <div>{{ tgl($detail->pembelian->jatuh_tempo) }}</div>   
          @endif
        </td>
                 </tr>

@@ -108,13 +108,13 @@
      <p class="poppins text-gray-600">{{ Label_case('tipe_pembayaran') }}</p>
 
 
-        @if($detail->pembelian[0]->tipe_pembayaran == 'jatuh_tempo')
+        @if($detail->pembelian->tipe_pembayaran == 'jatuh_tempo')
      <div class="text-gray-800 text-sm">
         <label class="small text-blue-500">Jatuh Tempo</label>
-       {!! tanggal2(@$data->pembelian[0]->jatuh_tempo)!!}
+       {!! tanggal2(@$data->pembelian->jatuh_tempo)!!}
       </div>
-      @elseif($detail->pembelian[0]->tipe_pembayaran == 'jatuh_tempo')
-     <p class="text-gray-600">Cicilan : {{ $detail->pembelian[0]->cicil }} Kali</p>
+      @elseif($detail->pembelian->tipe_pembayaran == 'jatuh_tempo')
+     <p class="text-gray-600">Cicilan : {{ $detail->pembelian->cicil }} Kali</p>
       @else
      <p class="text-gray-600">LUNAS</p>
       @endif
