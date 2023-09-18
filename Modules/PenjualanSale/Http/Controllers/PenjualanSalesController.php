@@ -63,7 +63,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::orderBy('updated_at', 'desc')->get();
 
         $data = $$module_name;
 
@@ -71,7 +71,9 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.
+                            '.includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
                           ->editColumn('sales', function ($data) {
