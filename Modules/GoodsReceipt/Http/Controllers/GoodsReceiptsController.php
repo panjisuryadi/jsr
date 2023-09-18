@@ -1028,9 +1028,10 @@ public function cetak($id) {
         $module_action = 'Delete';
 
         $$module_name_singular = $module_model::findOrFail($id);
-
-
+     
         $$module_name_singular->delete();
+
+
          toast(''. $module_title.' Deleted!', 'success');
          return redirect()->route(''.$module_name.'.riwayat-penerimaan');
 

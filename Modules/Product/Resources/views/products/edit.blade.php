@@ -40,14 +40,55 @@
 <div class="grid grid-cols-3 gap-3">
 {{-- kolom 1 --}}
 <div class="py-1">
-    <div class="form-group">
-        <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
-        <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
-            <div class="dz-message" data-dz-message>
-                <i class="bi bi-cloud-arrow-up"></i>
-            </div>
+
+<div x-data="{photoName: null, photoPreview: null}" class="form-group">
+      <?php
+                $field_name = 'images';
+                $field_lable = __($field_name);
+                $label = Label_Case($field_lable);
+                $field_placeholder = $label;
+                $required = '';
+                ?>
+ <input type="file" name="{{ $field_name }}" accept="image/*" class="hidden" x-ref="photo" x-on:change="
+                        photoName = $refs.photo.files[0].name;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            photoPreview = e.target.result;
+                        };
+                        reader.readAsDataURL($refs.photo.files[0]);
+    ">
+
+     <label for="Image" class="block text-gray-700 text-sm font-bold mb-2 text-center">Image</label>
+
+    <div class="text-center">
+            <div class="mt-2" x-show="! photoPreview">
+            <img src="{{asset("images/fallback_product_image.png")}}" class="w-80 h-80 rounded-xl m-auto border-dashed border-2 border-gray-600">
         </div>
+        <div class="mt-2" x-show="photoPreview" style="display: none;">
+            <span class="block w-80 h-80 rounded-xl m-auto border-dashed border-2 border-gray-600" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+            </span>
+        </div>
+        <button type="button" class="mt-2 btn btn-outline-success" x-on:click.prevent="$refs.photo.click()">
+          @lang('Select Image')
+        </button>
     </div>
+
+@if ($errors->has($field_name))
+    <span class="invalid feedback"role="alert">
+        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+        class="text-danger">
+    </span>
+    @endif
+</div>
+
+
+
+
+
+
+
+
+
 
 </div>
 
@@ -61,12 +102,9 @@
 </div>
 <div class="form-group">
     <label class="mb-1" for="product_code">Code <span class="text-danger">*</span></label>
-    <input type="text" class="form-control" name="product_code" required value="{{ $product->product_code }}">
+    <input type="text" class="form-control" name="product_code" required value="{{ $product->product_code }}" readonly>
 </div>
-<div class="form-group">
-    <label for="product_quantity">Quantity <span class="text-danger">*</span></label>
-    <input type="number" class="form-control" name="product_quantity" required value="{{ $product->product_quantity }}" min="1">
-</div>
+
 </div>
 
 {{-- kolom3 --}}
@@ -81,14 +119,6 @@
     </select>
 </div>
 
-<div class="form-group">
-    <label for="product_cost">Cost <span class="text-danger">*</span></label>
-    <input id="product_cost" type="text" class="form-control" min="0" name="product_cost" required value="{{ $product->product_cost }}">
-</div>
-<div class="form-group">
-    <label for="product_price">Price <span class="text-danger">*</span></label>
-    <input id="product_price" type="text" class="form-control" min="0" name="product_price" required value="{{ $product->product_price }}">
-</div>
 
 <div class="form-group">
     <label for="product_note">Note</label>
@@ -117,76 +147,7 @@
     </div>
 @endsection
 
-@section('third_party_scripts')
-    <script src="{{ asset('js/dropzone.js') }}"></script>
-@endsection
-
 @push('page_scripts')
-    <script>
-        var uploadedDocumentMap = {}
-        Dropzone.options.documentDropzone = {
-            url: '{{ route('dropzone.upload') }}',
-            maxFilesize: 1,
-            acceptedFiles: '.jpg, .jpeg, .png',
-            maxFiles: 3,
-            addRemoveLinks: true,
-            dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            success: function (file, response) {
-                $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
-                uploadedDocumentMap[file.name] = response.name;
-            },
-            removedfile: function (file) {
-                file.previewElement.remove();
-                var name = '';
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name;
-                } else {
-                    name = uploadedDocumentMap[file.name];
-                }
-                $('form').find('input[name="document[]"][value="' + name + '"]').remove();
-            },
-            init: function () {
-                @if(isset($product) && $product->getMedia('images'))
-                var files = {!! json_encode($product->getMedia('images')) !!};
-                for (var i in files) {
-                    var file = files[i];
-                    this.options.addedfile.call(this, file);
-                    this.options.thumbnail.call(this, file, file.original_url);
-                    file.previewElement.classList.add('dz-complete');
-                    $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
-                }
-                @endif
-            }
-        }
-    </script>
-
-    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#product_cost').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-            });
-            $('#product_price').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-            });
-
-            $('#product_cost').maskMoney('mask');
-            $('#product_price').maskMoney('mask');
-
-            $('#product-form').submit(function () {
-                var product_cost = $('#product_cost').maskMoney('unmasked')[0];
-                var product_price = $('#product_price').maskMoney('unmasked')[0];
-                $('#product_cost').val(product_cost);
-                $('#product_price').val(product_price);
-            });
-        });
-    </script>
+   
 @endpush
 

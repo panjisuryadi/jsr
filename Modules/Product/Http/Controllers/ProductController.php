@@ -323,11 +323,15 @@ public function index_data(Request $request)
                     </div>';
                 return $tb;
             })
-           ->addColumn('product_image', function ($data) {
-            $url = $data->getFirstMediaUrl('images', 'thumb');
-            return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
-        })
-      
+        //    ->addColumn('product_image', function ($data) {
+        //     $url = $data->getFirstMediaUrl('images', 'thumb');
+        //     return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+        // })
+
+    ->addColumn('product_image', function ($data) {
+                       return view('product::products.partials.image', compact('data'));
+                    })
+
          ->editColumn('cabang', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                     <h3 class="text-sm text-center text-gray-800">
@@ -1638,11 +1642,13 @@ public function saveAjax(Request $request)
     }
 
 
-    public function update(UpdateProductRequest $request, Product $product) {
+    public function update_oso(UpdateProductRequest $request, Product $product) {
         //dd($product);
         $product->update($request->except('document'));
 
-        if ($request->has('document')) {
+
+          //dd($request);
+            if ($request->has('document')) {
             if (count($product->getMedia('images')) > 0) {
                 foreach ($product->getMedia('images') as $media) {
                     if (!in_array($media->file_name, $request->input('document', []))) {
@@ -1652,7 +1658,6 @@ public function saveAjax(Request $request)
             }
 
             $media = $product->getMedia('images')->pluck('file_name')->toArray();
-
             foreach ($request->input('document', []) as $file) {
                 if (count($media) === 0 || !in_array($file, $media)) {
                     $product->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
@@ -1664,6 +1669,75 @@ public function saveAjax(Request $request)
 
         return redirect()->route('products.index');
     }
+
+
+ public function update(Request $request, $id) {
+        abort_if(Gate::denies('access_product_categories'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+
+        $$module_name_singular = $module_model::findOrFail($id);
+        $request->validate([
+            'product_code' => 'required|unique:products,product_code,' . $id,
+            'product_name' => 'required'
+        ]);
+        $params = $request->except('_token');
+        $params['product_code'] = $params['product_code'];
+    
+        
+       if ($image = $request->file('images')) {
+                      if ($$module_name_singular->image !== 'no_foto.png') {
+                          @unlink(imageUrl() . $$module_name_singular->image);
+                        }
+         $gambar = 'produks_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+         $normal = Image::make($image)->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    })->encode();
+
+
+         $normalpath = 'uploads/' . $gambar;
+        if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+         Storage::disk($storage)->put($normalpath, (string) $normal);
+         $params['images'] = "$gambar";
+        }else{
+            unset($params['images']);
+        }
+        // dd($params);
+        $$module_name_singular->update($params);
+          toast(''. $module_title.' Updated!', 'success');
+
+        return redirect()->route('products.index');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  public function getone($id){

@@ -145,7 +145,7 @@ public function index_data()
         $params['slug']          = Str::slug($params['category_name']);
         $params['kategori_produk_id'] = $params['kategori_produk_id'];
 
-     if ($image = $request->file('image')) {
+          if ($image = $request->file('image')) {
          $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
          $normal = Image::make($image)->resize(600, null, function ($constraint) {
                     $constraint->aspectRatio();
