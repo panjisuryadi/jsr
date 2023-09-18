@@ -2,6 +2,7 @@
 
 namespace Modules\DataSale\Http\Controllers;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -93,15 +94,32 @@ public function index_data(Request $request)
                      }
 
 protected function fetch(){
-    $response = Http::withHeaders([
-        'token' => config($this->module_name . '.sales_api.token')
-    ])->get(config($this->module_name . '.sales_api.base_url'));
-    $sales_list = $response->json();
-    foreach($sales_list['data'] as $sales){
-        $this->module_model::updateOrCreate(
-            ['id' => $sales['id']], 
-            ['name' => $sales['first_name'] . ' ' . $sales['last_name'], 'address' => $sales['address'], 'phone' => $sales['contact_no'], 'created_at' => $sales['created_at'], 'updated_at' => $sales['updated_at']]
-        );
+    try {
+        $token = config($this->module_name . '.sales_api.token');
+        $baseUrl = config($this->module_name . '.sales_api.base_url');
+    
+        $response = Http::withHeaders(['token' => $token])->get($baseUrl);
+    
+        if($response->successful()) {
+            $sales_list = $response->json();
+    
+            if(isset($sales_list['data']) && is_array($sales_list['data'])) {
+                foreach($sales_list['data'] as $sales){
+                    $this->module_model::updateOrCreate(
+                        ['id' => $sales['id']], 
+                        [
+                            'name' => $sales['first_name'] . ' ' . $sales['last_name'], 
+                            'address' => $sales['address'], 
+                            'phone' => $sales['contact_no'], 
+                            'created_at' => $sales['created_at'], 
+                            'updated_at' => $sales['updated_at']
+                        ]
+                    );
+                }
+            } 
+        } 
+    } catch (Exception $e) {
+       
     }
 }
 
