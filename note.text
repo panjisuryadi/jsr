@@ -4,7 +4,7 @@
 # php artisan module:make-migration change_kadar_type_to_jenisperhiasans_table JenisPerhiasan
 # php artisan module:make-migration add_new_kolom_to_product_items_table Product
 
-
+php artisan make:model SocialMedia --migration
 
 # php artisan module:make-migration add_toko_to_product_items_table Product
 
