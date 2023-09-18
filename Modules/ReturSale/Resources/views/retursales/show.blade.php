@@ -100,7 +100,7 @@ top: 55% !important;
           <div class="px-6 py-2">
 
    <div class="flex flex-row justify-end">
-        <a class="flex" href="{{ route('goodsreceipt.index') }}">
+        <a class="flex" href="{{ route('retursale.index') }}">
             <div class="flex h-8 w-8 items-center justify-center p-2 rounded-full border border-muted bg-muted">
                 <i class="bi bi-house text-gray-600"></i>
             </div>
