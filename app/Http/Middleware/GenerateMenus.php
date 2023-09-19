@@ -830,6 +830,22 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+            // Submenu: customers
+            $distribusisales->add(
+                '<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> 
+                 '.__('Customer Sales').'', [
+                'route' => 'customersales.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => 'customersales*',
+                'permission'    => ['access_customersales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-3',
+            ]);
+
 
       
 

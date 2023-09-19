@@ -64,5 +64,6 @@
     "DistribusiSale": true,
     "ReturSale": true,
     "DistribusiToko": true,
-    "PenjualanSale": true
+    "PenjualanSale": true,
+    "CustomerSales": true
 }
