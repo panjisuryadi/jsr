@@ -76,7 +76,7 @@
 
 
         <div class="flex justify-between mb-3">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 md:grid-cols-4  gap-2">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-5  gap-2">
 
 
 <div class="form-group">
@@ -92,7 +92,7 @@
                       {{ $field_lable }}<span class="text-danger">*</span></label>
     <select  class="form-control form-control-sm" 
     name="{{ $field_name }}"
-    wire:change="pilihPo(0,$event.target.value)" wire:model="karat_id.0">
+    wire:change="changeParentKarat(0,$event.target.value)" wire:model="karat_id.0">
         <option value="" selected disabled>Select Karat</option>
         @foreach($dataKarat as $karat)
         <option value="{{$karat->id}}">
@@ -105,6 +105,33 @@
                 class="text-danger">
             </span>
             @endif
+</div>
+
+<div class="form-group">
+    <?php
+         
+            $field_name = 'karat_id_w_kategori.0';
+            $field_lable = __('Kategori Karat');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = 'wire:model="'.$field_name.'"';
+            ?>
+       <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                      {{ $field_lable }}<span class="text-danger">*</span></label>
+    <select  class="form-control form-control-sm" 
+    name="{{ $field_name }}" wire:change="pilihPo(0,$event.target.value)" wire:model="{{ $field_name }}">
+        <option value="" selected disabled>Select Kategori</option>
+        @foreach($dataKaratWKategori[0] as $karat)
+        <option value="{{$karat['id']}}">
+        {{$karat['name']}} | {{$karat['kode']}} </option>
+        @endforeach
+    </select>
+      @if ($errors->has($field_name))
+            <span class="invalid feedback"role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+        @endif
 </div>
 
 
@@ -200,7 +227,7 @@
 
         @foreach($inputs as $key => $value)
         <div class="flex justify-between mb-3">
-            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="add-input w-full mx-auto flex flex-row grid grid-cols-5 gap-2">
 
 
           <div class="form-group">
@@ -213,7 +240,7 @@
             $required = 'wire:model="'.$field_name.'"';
             ?>
               <select class="form-control form-control-sm" 
-                 wire:change="pilihPo('{{ $value }}',$event.target.value)" wire:model="karat_id.{{$value}}" name="{{ $field_name }}">
+                 wire:change="changeParentKarat('{{ $value }}',$event.target.value)" wire:model="karat_id.{{$value}}" name="{{ $field_name }}">
                 <option value="" selected disabled>Select Karat</option>
                 @foreach($dataKarat as $karat)
                 <option value="{{$karat->id}}">
@@ -226,6 +253,31 @@
                 class="text-danger">
               </span>
               @endif
+            </div>
+
+            <div class="form-group">
+                <?php
+                    
+                        $field_name = 'karat_id_w_kategori.'.$value;
+                        $field_lable = __('Kategori Karat');
+                        $field_placeholder = Label_case($field_lable);
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = 'wire:model="'.$field_name.'"';
+                        ?>
+                <select  class="form-control form-control-sm" 
+                name="{{ $field_name }}" wire:change="pilihPo('{{ $value }}',$event.target.value)" wire:model="{{$field_name}}">
+                    <option value="" selected disabled>Select Kategori</option>
+                    @foreach($dataKaratWKategori[$value] as $karat)
+                    <option value="{{$karat['id']}}">
+                    {{$karat['name']}} | {{$karat['kode']}} </option>
+                    @endforeach
+                </select>
+                @if ($errors->has($field_name))
+                        <span class="invalid feedback"role="alert">
+                            <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                            class="text-danger">
+                        </span>
+                @endif
             </div>
 
 

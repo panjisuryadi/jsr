@@ -24,7 +24,11 @@ use Modules\Karat\Models\Karat;
              $kasir,
              $dataSales = [],
              $dataKarat = [],
+             $dataKaratWKategori = [
+                []
+             ],
              $karat_id = [''],
+             $karat_id_w_kategori = [''],
              $harga = [];
  
             public $pilih_po = [];
@@ -52,6 +56,8 @@ use Modules\Karat\Models\Karat;
                 $this->i = $i;
                 array_push($this->inputs ,$i);
                 $this->karat_id[] = '';
+                $this->karat_id_w_kategori[] = '';
+                $this->dataKaratWKategori[] = [];
             }
 
             public function remove($i)
@@ -94,6 +100,8 @@ use Modules\Karat\Models\Karat;
                               'berat_bersih.*'     => 'required|numeric|gt:0',
                               'karat_id.0' => 'required',
                               'karat_id.*' => 'required',
+                              'karat_id_w_kategori.0' => 'required',
+                              'karat_id_w_kategori.*' => 'required',
                               'sales.sales_id' => 'required',
                               'sales.date' => 'required',
 
@@ -104,6 +112,8 @@ use Modules\Karat\Models\Karat;
                             
                             $rules['karat_id.0'] = 'required';
                             $rules['karat_id.'.$value] = 'required'; 
+                            $rules['karat_id_w_kategori.0'] = 'required';
+                            $rules['karat_id_w_kategori.'.$value] = 'required'; 
                             $rules['berat_bersih.0'] = 'required|numeric|gt:0';
                             $rules['berat_bersih.'.$value] = 'required|numeric|gt:0';
                             $rules['harga.0'] = 'numeric';
@@ -127,6 +137,11 @@ use Modules\Karat\Models\Karat;
 
                 }
 
+            public function changeParentKarat($key, $value){
+                $this->pilihPo($key, $value);
+                $karat = Karat::find($this->karat_id[$key]);
+                $this->dataKaratWKategori[$key] = is_null($karat)?[]:$karat->children;
+            }
 
              public function pilihPo($key,$value)
                 {
@@ -141,8 +156,12 @@ use Modules\Karat\Models\Karat;
 
             public function mount(){
                 $this->dataSales = DataSale::all();
-                $this->dataKarat = Karat::whereHas('stockOffice', function ($query) {
-                    $query->where('berat_real', '>', 0);
+                $this->dataKarat = Karat::where(function($query){
+                    $query
+                    ->where('parent_id',null)
+                    ->whereHas('stockOffice', function ($query) {
+                        $query->where('berat_real', '>', 0);
+                    });
                 })->get();
             }
 
@@ -158,7 +177,7 @@ use Modules\Karat\Models\Karat;
                 ]);
 
                 $dist_sale_detail = $dist_sale->detail()->create([
-                    'karat_id' => $this->karat_id[0],
+                    'karat_id' => $this->karat_id_w_kategori[0]?$this->karat_id_w_kategori[0]:$this->karat_id[0],
                     'berat_bersih' => $this->berat_bersih[0],
                     'harga' => $this->harga[0]??null,
                 ]);
@@ -169,7 +188,7 @@ use Modules\Karat\Models\Karat;
                 if(count($this->inputs) > 0){
                     foreach($this->inputs as $key => $value){
                         $dist_sale_detail = $dist_sale->detail()->create([
-                            'karat_id' => $this->karat_id[$value],
+                            'karat_id' => $this->karat_id_w_kategori[$value]?$this->karat_id_w_kategori[$value]:$this->karat_id[$value],
                             'berat_bersih' => $this->berat_bersih[$value],
                             'harga' => $this->harga[$value]??null,
                         ]);

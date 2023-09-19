@@ -30,5 +30,12 @@ class Karat extends Model
         return $this->hasOne(StockOffice::class,'karat_id','id');
     }
 
+    public function parent(){
+        return $this->belongsTo(Karat::class,'parent_id','id');
+    }
+
+    public function children(){
+        return $this->hasMany(Karat::class, 'parent_id');
+    }
 
 }

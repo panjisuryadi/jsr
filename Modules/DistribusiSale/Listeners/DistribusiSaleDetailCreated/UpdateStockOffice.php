@@ -29,7 +29,7 @@ class UpdateStockOffice implements ShouldQueue
     {
         $dist_sale_detail = $event->dist_sale_detail;
 
-        $stock_office = StockOffice::where(['karat_id' => $dist_sale_detail->karat_id])->first();
+        $stock_office = StockOffice::where(['karat_id' => $dist_sale_detail->karat->parent->id])->first();
         $berat_real = $stock_office->berat_real;
 
         $stock_office->berat_real = $berat_real - $dist_sale_detail->berat_bersih;
