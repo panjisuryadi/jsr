@@ -13,6 +13,7 @@ class Karat extends Model
     use HasFactory;
     protected $table = 'karats';
     protected $fillable = [
+        'parent_id',
         'name',
         'kode',
         'description',

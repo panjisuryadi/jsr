@@ -162,7 +162,7 @@
                 <div class="form-group">
                     <?php
                     $field_name = 'harga.0';
-                    $field_lable = label_case('harga');
+                    $field_lable = label_case('harga (%)');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = 'wire:model="'.$field_name.'"';
@@ -306,7 +306,7 @@
                 <div class="form-group">
                     <?php
                     $field_name = 'harga.'.$value;
-                    $field_lable = label_case('harga');
+                    $field_lable = label_case('harga (%)');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = 'wire:model="'.$field_name.'"';

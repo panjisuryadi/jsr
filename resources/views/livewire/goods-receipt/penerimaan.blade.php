@@ -41,7 +41,7 @@
                                         <label class="form-check-label" for="up1">Webcam</label>
                                     </div>
                                 </div>
-                                <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center">
+                                <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
                                     <x-library.webcam />
                                 </div>
                                 <div id="upload1">

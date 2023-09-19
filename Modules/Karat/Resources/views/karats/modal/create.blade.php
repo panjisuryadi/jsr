@@ -1,56 +1,7 @@
   <div class="px-3">
   <x-library.alert />
-  <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-  <div class="flex flex-row grid grid-cols-2 mb-0 gap-4">
-
-<div class="form-group">
-                <?php
-                $field_name = 'kode';
-                $field_lable = label_case($field_name);
-                $field_placeholder = $field_lable;
-                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                $required = "required";
-                ?>
-                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                <input class="form-control"
-                type="text"
-                name="{{ $field_name }}"
-                id="{{ $field_name }}"
-                placeholder="{{ $field_placeholder }}">
-                <span class="invalid feedback" role="alert">
-                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                </span>
-            </div>
-
-
-<div class="form-group">
-                <?php
-                $field_name = 'name';
-                $field_lable = label_case('Kadar');
-                $field_placeholder = $field_lable;
-                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                $required = "required";
-                ?>
-                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                <input class="form-control"
-                type="text"
-                name="{{ $field_name }}"
-                id="{{ $field_name }}"
-                placeholder="{{ $field_placeholder }}">
-                <span class="invalid feedback" role="alert">
-                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                </span>
-            </div>
-
-
- 
-
-   </div>
-
-
-            </form>
+  
+  <livewire:karat.create />
 
 
 </div>

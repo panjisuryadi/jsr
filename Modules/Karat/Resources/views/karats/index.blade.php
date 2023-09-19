@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                            <a id="Tambah" href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
+                            <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
                                 Add {{$module_title}}<i class="bi bi-plus"></i>
                             </a>
                         </div>
@@ -31,6 +31,10 @@
                                         NO
                                     </th>
                                      <th style="width:11%;">
+                                        Kode Induk
+                                    </th> 
+
+                                    <th style="width:11%;">
                                         Kode
                                     </th> 
 
@@ -99,6 +103,10 @@
                     }
                 },
 
+                {
+                    data: 'kode_induk',
+                    name: 'kode_induk'
+                },
                 {
                     data: 'kode',
                     name: 'kode'

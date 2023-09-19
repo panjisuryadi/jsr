@@ -86,7 +86,16 @@ public function index_data()
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action'])
+                        ->editColumn('kode_induk', function($data){
+                            return $data->parent->kode??'';
+                        })
+                        ->editColumn('kode', function($data){
+                            if(isset($data->parent->kode)){
+                                return "{$data->parent->kode} | {$data->kode}";
+                            }
+                            return $data->kode??'';
+                        })
+                        ->rawColumns(['updated_at', 'action','kode_induk','kode'])
                         ->make(true);
     }
 
@@ -111,7 +120,7 @@ public function index_data()
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.modal.create',
+              return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
                 'module_title',
@@ -135,19 +144,23 @@ public function store(Request $request)
         $validator = \Validator::make($request->all(),[
             
              'name' => 'required|max:191',
+             'kode' => 'required',
+             'kadar' => 'required'
 
         ]);
-        if (!$validator->passes()) {
-          return response()->json(['error'=>$validator->errors()]);
-        }
+        // if (!$validator->passes()) {
+        //   return response()->json(['error'=>$validator->errors()]);
+        // }
 
         $input = $request->all();
         $input = $request->except('_token');
-        $input['kode'] = $input['kode'];
-        $input['name'] = $input['name'];
         $$module_name_singular = $module_model::create($input);
 
-        return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
+        // return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
+        activity()->log(' '.auth()->user()->name.' input data pembelian');
+         
+        toast(''. $module_title.' Created!', 'success');
+        return redirect()->route(''.$module_name.'.index');
     }
 
 
