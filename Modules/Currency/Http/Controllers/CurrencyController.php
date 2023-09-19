@@ -55,7 +55,6 @@ class CurrencyController extends Controller
 
     public function edit(Currency $currency) {
         abort_if(Gate::denies('edit_currencies'), 403);
-
         return view('currency::edit', compact('currency'));
     }
 
@@ -89,11 +88,8 @@ class CurrencyController extends Controller
 
     public function destroy(Currency $currency) {
         abort_if(Gate::denies('delete_currencies'), 403);
-
         $currency->delete();
-
         toast('Currency Deleted!', 'warning');
-
         return redirect()->route('currencies.index');
     }
 }

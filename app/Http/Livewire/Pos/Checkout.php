@@ -82,21 +82,21 @@ class Checkout extends Component
             'id'      => $product['id'],
             'name'    => $product['product_name'],
             'qty'     => 1,
-            'price'   => $this->calculate($product)['price'],
+            'price'   => 10000,
             'weight'  => 1,
             'options' => [
                 'product_discount'      => 0.00,
                 'product_discount_type' => 'fixed',
-                'sub_total'             => $this->calculate($product)['sub_total'],
+                'sub_total'             => 1,
                 'code'                  => $product['product_code'],
-                'stock'                 => $product['product_quantity'],
+                'stock'                 => 1,
                 'unit'                  => $product['product_unit'],
-                'product_tax'           => $this->calculate($product)['product_tax'],
-                'unit_price'            => $this->calculate($product)['unit_price']
+                'product_tax'           => 1,
+                'unit_price'            =>1
             ]
         ]);
 
-        $this->check_quantity[$product['id']] = $product['product_quantity'];
+        $this->check_quantity[$product['id']] = 1;
         $this->quantity[$product['id']] = 1;
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;
@@ -180,22 +180,24 @@ class Checkout extends Component
         $product_tax = 0;
         $sub_total = 0;
 
-        if ($product['product_tax_type'] == 1) {
-            $price = $product['product_price'] + ($product['product_price'] * ($product['product_order_tax'] / 100));
-            $unit_price = $product['product_price'];
-            $product_tax = $product['product_price'] * ($product['product_order_tax'] / 100);
-            $sub_total = $product['product_price'] + ($product['product_price'] * ($product['product_order_tax'] / 100));
-        } elseif ($product['product_tax_type'] == 2) {
-            $price = $product['product_price'];
-            $unit_price = $product['product_price'] - ($product['product_price'] * ($product['product_order_tax'] / 100));
-            $product_tax = $product['product_price'] * ($product['product_order_tax'] / 100);
-            $sub_total = $product['product_price'];
-        } else {
-            $price = $product['product_price'];
-            $unit_price = $product['product_price'];
-            $product_tax = 0.00;
-            $sub_total = $product['product_price'];
-        }
+        // if ($product['product_tax_type'] == 1) {
+        //     $price = 1000;
+        //     $unit_price = 1000;
+        //     $product_tax = 100;
+        //     $sub_total = 1000;
+        // } 
+
+        // elseif ($product['product_tax_type'] == 2) {
+        //     $price = $product['product_price'];
+        //     $unit_price = $product['product_price'] - ($product['product_price'] * ($product['product_order_tax'] / 100));
+        //     $product_tax = $product['product_price'] * ($product['product_order_tax'] / 100);
+        //     $sub_total = $product['product_price'];
+        // } else {
+        //     $price = $product['product_price'];
+        //     $unit_price = $product['product_price'];
+        //     $product_tax = 0.00;
+        //     $sub_total = $product['product_price'];
+        // }
 
         return ['price' => $price, 'unit_price' => $unit_price, 'product_tax' => $product_tax, 'sub_total' => $sub_total];
     }

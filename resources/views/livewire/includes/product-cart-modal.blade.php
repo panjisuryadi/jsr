@@ -7,13 +7,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="discountModalLabel">
-                    {{ $cart_item->name }}
+                <h2 class="modal-title" id="discountModalLabel">
+                    <strong>{{ $cart_item->name }}</strong>
                     <br>
-                    <span class="badge badge-success">
+                    <span class="text-blue-400 font-semibold">
                         {{ $cart_item->options->code }}
                     </span>
-                </h5>
+                </h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn text-white bg-red-400">Save changes</button>
                 </div>
             </form>
         </div>
