@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 @forelse($products as $product)
-<div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-3 col-md-6" style="cursor: pointer;">
+<div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-3 col-md-6 mb-1" style="cursor: pointer;">
 <div
   class="h-60 relative overflow-hidden rounded-lg shadow transition hover:shadow-lg"
 >
@@ -41,7 +41,7 @@
 </div>
 </div>
 
-                    </div>
+</div>
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning mb-0">
