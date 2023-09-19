@@ -85,6 +85,12 @@
                 </div>
             </div>
 
+
+
+
+
+
+
       {{--       <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
@@ -104,6 +110,53 @@
                 </div>
             </div>
  --}}
+
+
+
+<div
+    class="relative bg-white p-6 shadow-xl mx-auto w-full max-w-2xl">
+    <div class="mx-auto flex w-full max-w-md flex-row justify-center">
+
+        <a class="hover:no-underline hover:text-red-400 text-gray-500 text-center px-2 items-center" href="#">
+         <i class="bi bi-person-plus text-4xl text-gray-500"></i>
+         <div class="py-0 font-semibold">Customer</div>
+        </a>
+
+          <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
+       <i class="text-4xl text-gray-500 bi bi-journals"></i>
+         <div class="py-0 font-semibold">Jenis</div>
+        
+        </a>  
+          <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
+       
+         <i class="bi bi-card-list text-4xl text-gray-500"></i>
+         <div class="py-0 font-semibold">Daftar</div>
+        
+        </a>
+
+     <a class="hover:no-underline hover:text-red-400 text-gray-500 px-2 text-center items-center" href="#">
+       <i class="text-4xl text-gray-500 bi bi-box-arrow-down"></i>
+         <div class="py-0 font-semibold">Simpan</div>
+        
+        </a>
+                
+     <a class="hover:no-underline hover:text-red-400 text-gray-500 px-2 text-center items-center" href="#">
+        <i class="text-4xl text-gray-500 bi bi-pencil-square"></i>
+         <div class="py-0 font-semibold">Manual</div>
+        
+        </a>
+            <a class="hover:no-underline hover:text-red-400 text-gray-500 px-2 text-center items-center" href="#">
+        <i class="text-4xl text-gray-500 bi bi-trash"></i>
+         <div class="py-0 font-semibold">Hapus</div>
+        
+        </a>
+        
+        
+    
+    </div>
+</div>
+
+ 
   @php
     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
   @endphp
