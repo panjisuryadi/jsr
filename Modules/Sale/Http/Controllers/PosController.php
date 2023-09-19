@@ -15,8 +15,6 @@ use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
 use Modules\Sale\Http\Requests\StorePosSaleRequest;
 
-
-
 class PosController extends Controller
 {
 
@@ -30,35 +28,11 @@ class PosController extends Controller
     }
 
 
+
+
     public function store(StorePosSaleRequest $request) {
         DB::transaction(function () use ($request) {
-
-           // dd($request);
-
-            $due_amount    = $request->total_amount - $request->paid_amount;
-            $member        = $request->member;
-            if ($member == 'member') {
-               $customers     = $request->customer_id;
-               $customers_name =  Customer::findOrFail($request->customer_id)->customer_name;
-                //dd($customers_name);
-            } else {
-                $non_member = Customer::where('customer_email', 'non_member@hokkie.com')->first();
-                if ($non_member !== null) {
-                    $non_member->update(['customer_name' => 'Non Member']);
-                } else {
-                    $non_member = Customer::create([
-                            'customer_name'  => 'Non Member',
-                            'customer_phone' => '09393444',
-                            'customer_email' => 'non_member@hokkie.com',
-                            'city'           => 'bandung',
-                            'country'        => 'id',
-                            'address'        => 'dummy address'
-                    ]);
-                }
-               $customers = $non_member->id;
-               $customers_name = $non_member->customer_name;
-            }
-
+            $due_amount = $request->total_amount - $request->paid_amount;
 
             if ($due_amount == $request->total_amount) {
                 $payment_status = 'Unpaid';
@@ -68,14 +42,13 @@ class PosController extends Controller
                 $payment_status = 'Paid';
             }
 
-            //dd($customers_name);
             $sale = Sale::create([
                 'date' => now()->format('Y-m-d'),
                 'reference' => 'PSL',
-                'customer_id' => $customers,
-                'customer_name' => $customers_name,
-                'tax_percentage' => $request->tax_percentage ?? 0,
-                'discount_percentage' => $request->discount_percentage ?? 0,
+                'customer_id' => $request->customer_id,
+                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
+                'tax_percentage' => $request->tax_percentage,
+                'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
                 'paid_amount' => $request->paid_amount * 100,
                 'total_amount' => $request->total_amount * 100,
@@ -87,9 +60,6 @@ class PosController extends Controller
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' => Cart::instance('sale')->discount() * 100,
             ]);
-
-
-           // dd($sale);
 
             foreach (Cart::instance('sale')->content() as $cart_item) {
                 SaleDetails::create([
@@ -129,49 +99,4 @@ class PosController extends Controller
 
         return redirect()->route('sales.index');
     }
-
-
-
-
-   public function salesummary(Request $request){
-        $grand_total = 0;
-        if(isset($request->quantity)){
-            foreach ($request->product_id as $key => $value) {
-                $grand_total = $grand_total + ($request->quantity[$key] * $request->price[$key]);
-            }
-        }
-
-        if(isset($request->discount_amount)){
-            $discount = $grand_total*($request->discount_amount/100);
-            $grand_total = $grand_total-$discount;
-        }
-
-        if(isset($request->order_tax)){
-            $tax = $grand_total*($request->order_tax/100);
-            $grand_total = $grand_total-$tax;
-        }
-
-        if(isset($request->shipping_amount)){
-            $grand_total = $grand_total+$request->shipping_amount;
-        }
-
-        return response()->json([
-            'discount' => number_format($discount),
-            'tax' => number_format($tax),
-            'shipping' => number_format($request->shipping_amount),
-            'grand_total' => number_format($grand_total),
-            'total_amount' => $grand_total
-        ]);
-    }
-
-
-
-
-
-
-
-
-
-
-
 }

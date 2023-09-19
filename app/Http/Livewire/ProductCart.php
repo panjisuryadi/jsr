@@ -121,7 +121,7 @@ class ProductCart extends Component
     }
 
 
-public function addProduk($value)
+    public function addProduk($value)
     {
        $this->add_produk = $value;
        $product = Product::findOrFail($value);
@@ -177,9 +177,6 @@ public function addProduk($value)
      public function updatedDiscountType($value, $name) {
         $this->item_discount[$name] = 0;
     }
-
-
-
 
 
     public function discountModalRefresh($product_id, $row_id) {
