@@ -44,8 +44,18 @@
                                 <tr>
                                     <td class="align-left">
                                       
-    <div class="text-sm text-gray-600 mt-1">{{ $cart_item->name }}
-  @include('livewire.includes.product-cart-modal')
+    <div class="relative text-sm text-gray-600 mt-1">
+        <div style="font-size:0.7rem;" class="py-0 text-blue-500">{{ $cart_item->options->code }} 
+           
+
+        </div>
+        <div class="text-md text-gray-700 ">
+            {{ $cart_item->name }}
+           @include('livewire.includes.product-cart-modal') 
+
+        </div>
+        
+         
      </div>
 
              {{--       <span class="badge badge-success">
@@ -109,20 +119,23 @@
   </div>
 
   <div class="w-1/2 text-center justify-center items-center">
-    <button class="text-white py-4 px-1 rounded inline-flex items-center">
+    <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="text-white py-4 px-1 rounded inline-flex items-center" {{  $total_amount == 0 ? 'disabled' : '' }}>
     <span class="text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
     <i class="text-4xl bi bi-chevron-right"></i>
 </button>
 
+
+
+
 </div>
 </div>
 
 
 
 
-{{-- 
+
            
-            <div class="form-group d-flex justify-content-center flex-wrap mb-0">
+       {{--      <div class="form-group d-flex justify-content-center flex-wrap mb-0">
                 <button wire:click="resetCart" type="button" class="btn btn-pill btn-danger mr-3"><i class="bi bi-x"></i> Reset</button>
                 <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="btn btn-pill btn-primary" {{  $total_amount == 0 ? 'disabled' : '' }}><i class="bi bi-check"></i> Proceed</button>
             </div> --}}
