@@ -5,7 +5,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Piutang Report</li>
+        <li class="breadcrumb-item active">Hutang Report</li>
     </ol>
 @endsection
 
@@ -77,7 +77,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <div class="alert alert-warning mb-0">
-                          ini Hutang
+                            ini laporan piutang nembak ke acuan
                         </div>
                     </div>
                 </div>
