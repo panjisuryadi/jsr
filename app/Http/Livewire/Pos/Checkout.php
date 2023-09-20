@@ -207,7 +207,7 @@ class Checkout extends Component
             'sub_total'             => $cart_item->price * $cart_item->qty,
             'code'                  => $cart_item->options->code,
             'stock'                 => $cart_item->options->stock,
-            'unit'                 => $cart_item->options->unit,
+            'unit'                  => $cart_item->options->unit,
             'product_tax'           => $cart_item->options->product_tax,
             'unit_price'            => $cart_item->options->unit_price,
             'product_discount'      => $discount_amount,

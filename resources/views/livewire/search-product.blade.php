@@ -1,11 +1,8 @@
 <div class="position-relative">
 
-<div class="flex py-2 mt-3 border-bottom">
-  <div class="mt-1 w-1/4">
-<div class="grid justify-items-center">
-    <i class="text-lg bi bi-eye-fill"></i>
-</div>
-
+<div class="flex py-2 mt-3 mb-2">
+  <div class="mt-1 w-1/7">
+     <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#"><i class="hover:text-red-400 text-xl bi bi-eye-fill"></i></a>
   </div>
   <div class="w-5/6">
 <div class="flex items-center justify-center">
@@ -23,10 +20,11 @@
 </div>
 
   </div>
-  <div class="w-1/4">
-  <div class="mt-1 grid justify-items-center">
- <i class="text-lg bi bi-upc-scan"></i>
-</div>
+  <div class="w-1/6 flex px-3 justify-items-center">
+
+  <a class="mt-1 hover:no-underline hover:text-red-400 text-gray-500 px-2 text-center items-center" href="#"><i class="hover:text-red-400 text-xl bi bi-upc-scan"></i></a>
+
+    <a class="hover:no-underline hover:text-red-400 text-gray-500 px-2 text-center items-center" href="{{route('home')}}"><i class="hover:text-red-400 text-2xl bi bi-house"></i></a>
 
 </div>
 </div>
