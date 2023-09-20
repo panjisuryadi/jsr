@@ -24,7 +24,9 @@
 
   <a class="mt-1 hover:no-underline hover:text-red-400 text-gray-500 px-2 text-center items-center" href="#"><i class="hover:text-red-400 text-xl bi bi-upc-scan"></i></a>
 
-    <a class="hover:no-underline hover:text-red-400 text-gray-500 px-2 text-center items-center" href="{{route('home')}}"><i class="hover:text-red-400 text-2xl bi bi-house"></i></a>
+    <a class="mt-1 hover:no-underline hover:text-red-400 text-gray-500 px-2 text-center items-center" href="{{route('home')}}">
+        <i class="hover:text-red-400 text-xl bi bi-house"></i>
+    </a>
 
 </div>
 </div>
