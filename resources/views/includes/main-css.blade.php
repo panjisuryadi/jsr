@@ -28,7 +28,11 @@ body {
     color: #3c4b64;
     background-color: #ebedef;
 }
-
+button:focus {
+    outline: 1px dotted;
+    opacity:50%;
+    /* outline: 5px auto -webkit-focus-ring-color; */
+}
 
 .poppins {
     font-family: 'Poppins', sans-serif !important;

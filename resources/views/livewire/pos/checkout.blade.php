@@ -34,7 +34,12 @@
                 <div class="overflow-y-auto h-64 max-h-full md:max-h-screen">
               
                         @if($cart_items->isNotEmpty())
+                        @php 
+                          $jumlah = 0; 
+                        @endphp
                             @foreach($cart_items as $cart_item)
+
+                            {{-- {{dd($cart_item)}} --}}
                    <!-- component -->
 
                       <div class="bg-white text-white w-full max-w-md flex flex-col border-b rounded-md p-1">
@@ -60,6 +65,10 @@
                         
                       </div>
  
+                          @php
+                             $jumlah = $jumlah +  $cart_item->qty
+                          @endphp
+
                             @endforeach
                         @else
                           
@@ -130,7 +139,7 @@
 <div class="px-3 py-3 bg-red-400 text-white flex justify-between">
     <div class="w-1/4 justify-center items-center border-r">
         <div class="items-center justify-center text-center text-white text-3xl font-semibold">
-            <p>0</p>
+            <p>{{$jumlah ?? '0'}}</p>
         </div>
     </div>
     <div>
