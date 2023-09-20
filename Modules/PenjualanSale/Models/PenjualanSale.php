@@ -21,6 +21,10 @@ class PenjualanSale extends Model
         return $this->belongsTo(DataSale::class, 'sales_id', 'id');
     }
 
+    public function payment(){
+        return $this->hasOne(PenjualanSalesPayment::class,'penjualan_sales_id','id');
+    }
+
 
     protected static function newFactory()
     {

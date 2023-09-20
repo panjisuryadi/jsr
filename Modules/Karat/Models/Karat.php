@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Stok\Models\StockOffice;
+use Modules\Stok\Models\StockSales;
 
 class Karat extends Model
 {
@@ -37,6 +38,10 @@ class Karat extends Model
 
     public function children(){
         return $this->hasMany(Karat::class, 'parent_id');
+    }
+
+    public function stockSales(){
+        return $this->hasOne(StockSales::class, 'karat_id','id');
     }
 
 }

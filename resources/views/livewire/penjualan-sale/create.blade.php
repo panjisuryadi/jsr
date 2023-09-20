@@ -37,7 +37,7 @@
                         <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide"> Date</label>
                         <span class="mr-4 inline-block hidden md:block">:</span>
                         <div class="flex-1">
-                            <input wire:model="penjualan_sales.date" type="date" name="invoice" id="date" class="form-control @error('penjualan_sales.date') is-invalid @enderror">
+                            <input wire:model="penjualan_sales.date" max="{{ $hari_ini }}" type="date" name="invoice" id="date" class="form-control @error('penjualan_sales.date') is-invalid @enderror">
                             @error('penjualan_sales.date')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -51,7 +51,7 @@
                         <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Dari</label>
                         <span class="mr-4 inline-block hidden md:block">:</span>
                         <div class="flex-1">
-                            <select class="form-control select2" name="sales_id" wire:model="penjualan_sales.sales_id">
+                            <select class="form-control select2" name="sales_id" wire:model="penjualan_sales.sales_id" wire:change="updateKaratList">
                                 <option value="" selected disabled>Pilih Sales</option>
                                 @foreach($dataSales as $sales)
                                 <option value="{{$sales->id}}">
@@ -103,7 +103,7 @@
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                             {{ $field_lable }}<span class="text-danger">*</span></label>
                         @endif
-                        <select class="form-control form-control-sm" wire:model="penjualan_sales_details.{{$key}}.karat_id" name="{{ $field_name }}">
+                        <select class="form-control form-control-sm" wire:model="penjualan_sales_details.{{$key}}.karat_id" name="{{ $field_name }}" wire:change="clearWeight({{$key}})">
                             <option value="" selected disabled>Select Karat</option>
                             @foreach($dataKarat as $karat)
                             <option value="{{$karat->id}}">

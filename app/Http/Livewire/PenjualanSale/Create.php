@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\PenjualanSale;
 
+use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
@@ -78,7 +80,12 @@ class Create extends Component
     public function mount()
     {
         $this->dataSales = DataSale::all();
-        $this->dataKarat = Karat::all();
+        $this->dataKarat = Karat::where(function($query){
+            $query
+            ->whereHas('stockSales', function ($query) {
+                $query->where('weight', '>',0);
+            });
+        })->get();
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
     }
@@ -99,14 +106,25 @@ class Create extends Component
             'penjualan_sales.store_name' => 'string',
             'penjualan_sales.total_weight' => 'required',
             'penjualan_sales.total_nominal' => 'required',
-            'penjualan_sales_details.0.weight'     => 'required',
-            'penjualan_sales_details.*.weight'     => 'required',
             'penjualan_sales_details.0.nominal'     => 'required',
             'penjualan_sales_details.*.nominal'     => 'required',
             'penjualan_sales_details.0.karat_id' => 'required',
             'penjualan_sales_details.*.karat_id' => 'required',
             'penjualan_sales.sales_id' => 'required',
             'penjualan_sales.date' => 'required',
+            'penjualan_sales.tipe_pembayaran' => 'required',
+            'penjualan_sales.cicil' => 'required_if:penjualan_sales.tipe_pembayaran,cicil',
+            'penjualan_sales.tgl_jatuh_tempo' => [
+                'required_if:penjualan_sales.tipe_pembayaran,jatuh_tempo',
+                function ($attribute, $value, $fail) {
+                    $today = Carbon::today();
+                    $inputDate = Carbon::parse($value);
+
+                    if ($inputDate < $today) {
+                        $fail($attribute . ' harus tanggal hari ini atau setelahnya.');
+                    }
+                }
+            ],
 
         ];
 
@@ -114,10 +132,28 @@ class Create extends Component
 
             $rules['penjualan_sales_details.0.karat_id'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.karat_id'] = 'required';
-            $rules['penjualan_sales_details.0.weight'] = 'required';
-            $rules['penjualan_sales_details.'.$key.'.weight'] = 'required';
+            $rules['penjualan_sales_details.'.$key.'.weight'] = [
+                'required',
+                function ($attribute, $value, $fail) use ($key) {
+                    // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
+                    // dengan karat_id 1 dan sales_id 48
+                    $isKaratFilled = $this->penjualan_sales_details[$key]['karat_id'] != '';
+                    $isSalesFilled = $this->penjualan_sales['sales_id'] != '';
+                    if($isKaratFilled && $isSalesFilled){
+                        $maxWeight = DB::table('stock_sales')
+                            ->where('karat_id', $this->penjualan_sales_details[$key]['karat_id'])
+                            ->where('sales_id', $this->penjualan_sales['sales_id'])
+                            ->max('weight');
+                        if ($value > $maxWeight) {
+                            $fail("Berat melebihi stok yang tersedia. Jumlah Stok ($maxWeight).");
+                        }
+                    }
+    
+                },
+            ];
             $rules['penjualan_sales_details.0.nominal'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.nominal'] = 'required';
+
         }
         return $rules;
     }
@@ -160,6 +196,13 @@ class Create extends Component
             'created_by' => auth()->user()->name
         ]);
 
+        $penjualan_sale->payment()->create([
+            'tipe_pembayaran' => $this->penjualan_sales['tipe_pembayaran'],
+            'jatuh_tempo'     => $this->penjualan_sales['tgl_jatuh_tempo'] ? $this->penjualan_sales['tgl_jatuh_tempo'] : null,
+            'cicil'           => $this->penjualan_sales['cicil'] ? $this->penjualan_sales['cicil']:  0,
+            'lunas'           => $this->penjualan_sales['tipe_pembayaran'] == 'lunas' ? 'lunas': null,
+        ]);
+
         foreach($this->penjualan_sales_details as $key => $value) {
             $penjualan_sale_detail = $penjualan_sale->detail()->create([
                 'karat_id' => $this->penjualan_sales_details[$key]['karat_id'],
@@ -173,5 +216,21 @@ class Create extends Component
         $this->resetInputFields();
         // session()->flash('message', 'Created Successfully.');
         return redirect(route('penjualansale.index'));
+    }
+
+    public function updateKaratList(){
+        $this->dataKarat = Karat::where(function($query){
+            $query
+            ->whereHas('stockSales', function ($query) {
+                $query->where('weight', '>',0);
+                $query->where('sales_id', $this->penjualan_sales['sales_id']);
+            });
+        })->get();
+        
+        $this->resetPenjualanSalesDetails();
+    }
+
+    public function clearWeight($key){
+        $this->penjualan_sales_details[$key]['weight'] = '';
     }
 }

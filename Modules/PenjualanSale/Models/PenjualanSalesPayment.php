@@ -1,0 +1,29 @@
+<?php
+
+namespace Modules\PenjualanSale\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class PenjualanSalesPayment extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'tipe_pembayaran',
+        'lunas',
+        'cicil',
+        'jatuh_tempo'
+    ];
+
+    protected $table = 'penjualan_sales_payment';
+    
+    protected static function newFactory()
+    {
+        return \Modules\PenjualanSale\Database\factories\PenjualanSalesPaymentFactory::new();
+    }
+
+    public function penjualanSales(){
+        return $this->belongsTo(PenjualanSale::class);
+    }
+}
