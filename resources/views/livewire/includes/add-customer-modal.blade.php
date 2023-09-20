@@ -3,7 +3,7 @@
     role="button" 
     data-toggle="modal" 
     data-target="#customerModal">
-        <i class="bi bi-person-plus text-4xl text-gray-500"></i>
+        <i class="bi bi-person-plus text-4xl text-gray-500 hover:text-red-400"></i>
          <div class="py-0 font-semibold">Customer</div>
         
         </a>

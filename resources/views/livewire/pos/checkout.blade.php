@@ -35,60 +35,31 @@
               
                         @if($cart_items->isNotEmpty())
                             @foreach($cart_items as $cart_item)
+                   <!-- component -->
 
-<!-- component -->
-
-  <div class="bg-white text-white w-full max-w-md flex flex-col border-b rounded-md p-1">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center space-x-4">
-        <div class="rounded-full w-4 h-4 border border-blue-500"></div>
-        <div class="text-md text-dark font-bold">
-           <div class="text-lg relative">{{ $cart_item->name }}
-            @include('livewire.includes.product-cart-modal') 
-           </div>
-       
-           <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} </div>
-         </div>
-      </div>
-      <div class="flex items-center space-x-4">
-        <div class="text-gray-500 hover:text-gray-300 cursor-pointer">
-         <a href="#" wire:loading.class="opacity-50" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
-         <i class="bi bi-x-circle font-xl text-danger"></i>
-            </a>
-        </div>
-      </div>
-    </div>
-    
-  </div>
+                      <div class="bg-white text-white w-full max-w-md flex flex-col border-b rounded-md p-1">
+                        <div class="flex items-center justify-between">
+                          <div class="flex items-center space-x-4">
+                            <div class="rounded-full w-4 h-4 border border-blue-500"></div>
+                            <div class="text-md text-dark font-bold">
+                               <div class="text-lg relative">{{ $cart_item->name }}
+                                @include('livewire.includes.product-cart-modal') 
+                               </div>
+                           
+                               <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} </div>
+                             </div>
+                          </div>
+                          <div class="flex items-center space-x-4">
+                            <div class="text-gray-500 hover:text-gray-300 cursor-pointer">
+                             <a href="#" wire:loading.class="opacity-50" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
+                             <i class="bi bi-x-circle font-xl text-danger"></i>
+                                </a>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
  
-
-
-                              {{--   <tr>
-                                    <td class="align-left">
-                                      
-    <div class="relative text-sm text-gray-600 mt-1">
-        <div style="font-size:0.7rem;" class="py-0 text-blue-500">{{ $cart_item->options->code }} 
-           
-
-        </div>
-        <div class="text-md text-gray-700 ">
-            {{ $cart_item->name }}
-           @include('livewire.includes.product-cart-modal') 
-
-        </div>
-        
-         
-     </div>
-
-                  
-                                    </td>
-
-                                    <td class="align-middle text-center">
-                                        <a href="#" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
-                                            <i class="bi bi-x-circle font-2xl text-danger"></i>
-                                        </a>
-                                    </td>
-                                </tr> --}}
                             @endforeach
                         @else
                           
@@ -125,7 +96,7 @@
          @include('livewire.includes.add-customer-modal') 
           <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
        
-         <i class="bi bi-card-list text-4xl text-gray-500"></i>
+         <i class="hover:text-red-400 bi bi-card-list text-4xl text-gray-500"></i>
          <div class="py-0 font-semibold">Daftar</div>
         
         </a>
@@ -139,7 +110,7 @@
     
         {{-- show modal manual --}}
          @include('livewire.includes.manual-modal') 
-            <button wire:loading.class="opacity-50" wire:click="resetCart" type="button" class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
+            <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
         <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-trash"></i>
          <div class="py-0 font-semibold">Hapus</div>
         

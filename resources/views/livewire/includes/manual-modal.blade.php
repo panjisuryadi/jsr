@@ -3,7 +3,7 @@
     role="button" 
     data-toggle="modal" 
     data-target="#manualModal">
-        <i class="text-4xl text-gray-500 bi bi-pencil-square"></i>
+        <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-pencil-square"></i>
          <div class="py-0 font-semibold">Manual</div>
         
         </a>
