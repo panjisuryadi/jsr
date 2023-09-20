@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\PenjualanSale;
 
+use DateTime;
 use Livewire\Component;
 use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
@@ -16,7 +17,10 @@ class Create extends Component
         'invoice_no' => '',
         'store_name' => '',
         'total_weight' => 0,
-        'total_nominal' => 0
+        'total_nominal' => 0,
+        'tipe_pembayaran' => '',
+        'cicil' => '',
+        'tgl_jatuh_tempo' => '',
     ];
 
     public $penjualan_sales_details = [
@@ -29,6 +33,8 @@ class Create extends Component
 
     public $dataSales = [];
     public $dataKarat = [];
+
+    public $hari_ini;
 
     public function add()
     {
@@ -73,6 +79,8 @@ class Create extends Component
     {
         $this->dataSales = DataSale::all();
         $this->dataKarat = Karat::all();
+        $this->hari_ini = new DateTime();
+        $this->hari_ini = $this->hari_ini->format('Y-m-d');
     }
 
     public function remove($key)
