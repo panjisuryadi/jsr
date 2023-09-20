@@ -1,4 +1,4 @@
-<!-- Button trigger Discount Modal -->
+{{-- <!-- Button trigger Discount Modal -->
 <span wire:click="$emitSelf('discountModalRefresh', '{{ $cart_item->id }}', '{{ $cart_item->rowId }}')" role="button" class="badge badge-warning pointer-event" data-toggle="modal" data-target="#discountModal{{ $cart_item->id }}">
     <i class="bi bi-pencil-square text-white"></i>
 </span>
@@ -55,3 +55,4 @@
         </div>
     </div>
 </div>
+ --}}

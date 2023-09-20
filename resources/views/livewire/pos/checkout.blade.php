@@ -1,4 +1,5 @@
 <div>
+
     <div class="card border-0 shadow-sm">
         <div class="card-body">
             <div>
@@ -73,7 +74,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="8" class="text-center">
+                        <td colspan="8" class="text-center">
                         <span class="text-danger">
                             Please search & select products!
                         </span>
@@ -112,18 +113,13 @@
  --}}
 
 
-
+ @include('livewire.includes.product-cart-modal') 
 <div
     class="relative bg-white p-6 shadow-xl mx-auto w-full max-w-2xl">
     <div class="mx-auto flex w-full max-w-md flex-row justify-center">
 
-        <a class="hover:no-underline hover:text-red-400 text-gray-500 text-center px-3 items-center" href="#">
-         <i class="bi bi-person-plus text-4xl text-gray-500"></i>
-         <div class="py-0 font-semibold">Customer</div>
-        </a>
-
-      
-        </a>  
+       {{-- show modal kostumer --}}
+         @include('livewire.includes.add-customer-modal') 
           <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
        
          <i class="bi bi-card-list text-4xl text-gray-500"></i>
@@ -137,16 +133,16 @@
         
         </a>
                 
-     <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
-        <i class="text-4xl text-gray-500 bi bi-pencil-square"></i>
-         <div class="py-0 font-semibold">Manual</div>
-        
-        </a>
-            <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
+    
+        {{-- show modal manual --}}
+         @include('livewire.includes.manual-modal') 
+            <button wire:click="resetCart" type="button" class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
         <i class="text-4xl text-gray-500 bi bi-trash"></i>
          <div class="py-0 font-semibold">Hapus</div>
         
-        </a>
+        </button>
+
+        
         
         
     
@@ -155,11 +151,16 @@
 
 
   @php
-    $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
+    $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
+    $qty = Cart::instance($cart_instance);
   @endphp
+
 <div class="flex bg-red-400 py-3 px-2">
   <div class="w-1/5 border-r mt-1 text-center justify-center items-center">
-     <p class="text-white px-2 py-4 text-3xl font-semibold">1</p>
+     <p class="text-white px-2 py-4 text-3xl font-semibold">
+      0
+
+     </p>
 
   </div>
   <div class="w-1/4">
