@@ -99,7 +99,8 @@ class Product extends Model implements HasMedia
    public function scopeApprove($query)
     {
         $query->where('status', 3);
-    }
+    }  
+
 
 
     public static function generateCode()
@@ -122,7 +123,7 @@ class Product extends Model implements HasMedia
 
      public function productlocation() {
         return $this->hasMany(ProductLocation::class, 'product_id');
-    }
+       }
 
 
 

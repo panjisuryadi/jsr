@@ -9,6 +9,9 @@
                         </div>
                     </div>
                     @forelse($products as $product)
+
+                    {{-- {{$product->product_item[0]->karat->penentuanHarga->harga_emas}} --}}
+
                     <div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-3 col-md-6 mb-2" style="cursor: pointer;">
                         <div
                             class="h-40 relative overflow-hidden rounded-lg shadow transition hover:shadow-lg"
@@ -26,13 +29,15 @@
                                 class="absolute bottom-3 leading-5 left-2 bg-gradient-to-t from-gray-900/50 to-gray-900/25"
                                 >
                                 <div class="px-1 p-2 sm:p-4">
-                                    <span style="font-size:0.7rem;" class="block text-gray-600">
-                                        {{ @$product->category->category_name }}
+                                    <span style="font-size:0.7rem;" class="block text-gray-600"> {{ @$product->category->category_name }} 
                                     </span>
                                     
                                     <h3 class="leading-5 font-semibold hover:text-red-400 mt-0.5 text-lg text-gray-800">
                                     {{ $product->product_name }}
                                     </h3>
+                                <div class="text-red-400">
+                              {{@format_currency($product->product_item[0]->karat->penentuanHarga->harga_emas)}}
+                                 </div>
                                     
                                 </div>
                             </div>
