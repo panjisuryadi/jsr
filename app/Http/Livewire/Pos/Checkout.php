@@ -66,24 +66,24 @@ class Checkout extends Component
     }
 
     public function productSelected($product) {
-        $cart = Cart::instance($this->cart_instance);
 
+        //dd($product['product_item'][0]['karat']['penentuan_harga']['harga_emas']);
+        $cart = Cart::instance($this->cart_instance);
         $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
             return $cartItem->id == $product['id'];
         });
 
         if ($exists->isNotEmpty()) {
             session()->flash('message', 'Product exists in the cart!');
-
             return;
         }
 
         $cart->add([
-            'id'      => $product['id'],
-            'name'    => $product['product_name'],
-            'qty'     => 1,
-            'price'   => 10000,
-            'weight'  => 1,
+        'id'      => $product['id'],
+        'name'    => $product['product_name'],
+        'qty'     => 1,
+        'price'   => $product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
+        'weight'  => 1,
             'options' => [
                 'product_discount'      => 0.00,
                 'product_discount_type' => 'fixed',

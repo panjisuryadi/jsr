@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Stok\Models\StockOffice;
-use Modules\Stok\Models\StockSales;
+use Modules\PenentuanHarga\Models\PenentuanHarga;
 
 class Karat extends Model
 {
@@ -36,12 +36,18 @@ class Karat extends Model
         return $this->belongsTo(Karat::class,'parent_id','id');
     }
 
+
+     public function harga(){
+        return $this->hasOne(PenentuanHarga::class);
+    }
+
     public function children(){
         return $this->hasMany(Karat::class, 'parent_id');
     }
 
-    public function stockSales(){
-        return $this->hasOne(StockSales::class, 'karat_id','id');
+    public function penentuanHarga(){
+        return $this->hasOne(PenentuanHarga::class,'karat_id','id');
+
     }
 
 }

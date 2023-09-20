@@ -22,7 +22,7 @@
                                 <i class="text-white bi bi-person-plus"></i>
                             </a>
                         </div>
-                        <select wire:model="customer_id" id="customer_id" class="form-control">
+                        <select wire:model="customer_id" id="customer_id" class="select2 form-control">
                             <option value="" selected>Select Customer</option>
                             @foreach($customers as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
@@ -80,13 +80,6 @@
                     
                 </div>
             </div>
-
-
-
-
- 
-
-
 
   @php
     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
