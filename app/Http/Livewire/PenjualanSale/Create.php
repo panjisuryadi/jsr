@@ -186,31 +186,38 @@ class Create extends Component
     {
         $this->validate();
         // create penjualan sales
-        $penjualan_sale = PenjualanSale::create([
-            'sales_id' => $this->penjualan_sales['sales_id'],
-            'date' => $this->penjualan_sales['date'],
-            'store_name' => $this->penjualan_sales['store_name'],
-            'invoice_no' => $this->penjualan_sales['invoice_no'],
-            'total_weight' => $this->penjualan_sales['total_weight'],
-            'total_nominal' => $this->penjualan_sales['total_nominal'],
-            'created_by' => auth()->user()->name
-        ]);
-
-        $penjualan_sale->payment()->create([
-            'tipe_pembayaran' => $this->penjualan_sales['tipe_pembayaran'],
-            'jatuh_tempo'     => $this->penjualan_sales['tgl_jatuh_tempo'] ? $this->penjualan_sales['tgl_jatuh_tempo'] : null,
-            'cicil'           => $this->penjualan_sales['cicil'] ? $this->penjualan_sales['cicil']:  0,
-            'lunas'           => $this->penjualan_sales['tipe_pembayaran'] == 'lunas' ? 'lunas': null,
-        ]);
-
-        foreach($this->penjualan_sales_details as $key => $value) {
-            $penjualan_sale_detail = $penjualan_sale->detail()->create([
-                'karat_id' => $this->penjualan_sales_details[$key]['karat_id'],
-                'weight' => $this->penjualan_sales_details[$key]['weight'],
-                'nominal' => $this->penjualan_sales_details[$key]['nominal'],
+        DB::beginTransaction();
+        try{
+            $penjualan_sale = PenjualanSale::create([
+                'sales_id' => $this->penjualan_sales['sales_id'],
+                'date' => $this->penjualan_sales['date'],
+                'store_name' => $this->penjualan_sales['store_name'],
+                'invoice_no' => $this->penjualan_sales['invoice_no'],
+                'total_weight' => $this->penjualan_sales['total_weight'],
+                'total_nominal' => $this->penjualan_sales['total_nominal'],
                 'created_by' => auth()->user()->name
             ]);
-            event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail));
+    
+            $penjualan_sale->payment()->create([
+                'tipe_pembayaran' => $this->penjualan_sales['tipe_pembayaran'],
+                'jatuh_tempo'     => $this->penjualan_sales['tgl_jatuh_tempo'] ? $this->penjualan_sales['tgl_jatuh_tempo'] : null,
+                'cicil'           => $this->penjualan_sales['cicil'] ? $this->penjualan_sales['cicil']:  0,
+                'lunas'           => $this->penjualan_sales['tipe_pembayaran'] == 'lunas' ? 'lunas': null,
+            ]);
+    
+            foreach($this->penjualan_sales_details as $key => $value) {
+                $penjualan_sale_detail = $penjualan_sale->detail()->create([
+                    'karat_id' => $this->penjualan_sales_details[$key]['karat_id'],
+                    'weight' => $this->penjualan_sales_details[$key]['weight'],
+                    'nominal' => $this->penjualan_sales_details[$key]['nominal'],
+                    'created_by' => auth()->user()->name
+                ]);
+                event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail));
+            }
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
         }
 
         $this->resetInputFields();
