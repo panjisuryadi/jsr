@@ -31,18 +31,39 @@
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr class="text-center">
-                            <th class="text-left">Produk</th>
-                            <th class="w-20 text-left">Aksi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                <div class="overflow-y-auto h-64 max-h-full md:max-h-screen">
+              
                         @if($cart_items->isNotEmpty())
                             @foreach($cart_items as $cart_item)
-                                <tr>
+
+<!-- component -->
+
+  <div class="bg-white text-white w-full max-w-md flex flex-col border-b rounded-md p-1">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <div class="rounded-full w-4 h-4 border border-blue-500"></div>
+        <div class="text-md text-dark font-bold">
+           <div class="text-lg relative">{{ $cart_item->name }}
+            @include('livewire.includes.product-cart-modal') 
+           </div>
+       
+           <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} </div>
+         </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <div class="text-gray-500 hover:text-gray-300 cursor-pointer">
+         <a href="#" wire:loading.class="opacity-50" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
+         <i class="bi bi-x-circle font-xl text-danger"></i>
+            </a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+ 
+
+
+                              {{--   <tr>
                                     <td class="align-left">
                                       
     <div class="relative text-sm text-gray-600 mt-1">
@@ -59,10 +80,7 @@
          
      </div>
 
-             {{--       <span class="badge badge-success">
-                                        {{ $cart_item->options->code }}
-                                    </span> --}}
-             
+                  
                                     </td>
 
                                     <td class="align-middle text-center">
@@ -70,52 +88,37 @@
                                             <i class="bi bi-x-circle font-2xl text-danger"></i>
                                         </a>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             @endforeach
                         @else
-                            <tr>
-                        <td colspan="8" class="text-center">
+                          
                         <span class="text-danger">
                             Please search & select products!
                         </span>
-                                </td>
-                            </tr>
+                            
                         @endif
-                        </tbody>
-                    </table>
+                    
                 </div>
             </div>
 
 
 
 
+ 
 
 
 
-      {{--       <div class="row">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                      
-                            <tr class="text-primary">
-                                <th>Grand Total</th>
-                                @php
-                                    $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
-                                @endphp
-                                <th>
-                                    (=) {{ format_currency($total_with_shipping) }}
-                                </th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
- --}}
+  @php
+    $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
+    $qty = Cart::instance($cart_instance);
+  @endphp
 
+        </div>
 
- @include('livewire.includes.product-cart-modal') 
+{{-- batassss --}}
+
 <div
-    class="relative bg-white p-6 shadow-xl mx-auto w-full max-w-2xl">
+    class="relative bg-white p-4 mx-auto w-full max-w-2xl">
     <div class="mx-auto flex w-full max-w-md flex-row justify-center">
 
        {{-- show modal kostumer --}}
@@ -127,8 +130,8 @@
         
         </a>
 
-     <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
-       <i class="text-4xl text-gray-500 bi bi-box-arrow-down"></i>
+        <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
+       <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-box-arrow-down"></i>
          <div class="py-0 font-semibold">Simpan</div>
         
         </a>
@@ -136,8 +139,8 @@
     
         {{-- show modal manual --}}
          @include('livewire.includes.manual-modal') 
-            <button wire:click="resetCart" type="button" class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
-        <i class="text-4xl text-gray-500 bi bi-trash"></i>
+            <button wire:loading.class="opacity-50" wire:click="resetCart" type="button" class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
+        <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-trash"></i>
          <div class="py-0 font-semibold">Hapus</div>
         
         </button>
@@ -150,51 +153,35 @@
 </div>
 
 
-  @php
-    $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
-    $qty = Cart::instance($cart_instance);
-  @endphp
-
-<div class="flex bg-red-400 py-3 px-2">
-  <div class="w-1/5 border-r mt-1 text-center justify-center items-center">
-     <p class="text-white px-2 py-4 text-3xl font-semibold">
-      0
-
-     </p>
-
-  </div>
-  <div class="w-1/4">
-     <div class="text-white uppercase px-2 py-4 mt-2 text-xl font-semibold">
-     total</div>
-
-  </div>
-
-  <div class="w-1/2 text-center justify-center items-center">
-    <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="text-white py-4 px-1 rounded inline-flex items-center" {{  $total_amount == 0 ? 'disabled' : '' }}>
-    <span class="text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
-    <i class="text-4xl bi bi-chevron-right"></i>
-</button>
 
 
-
-
-</div>
-</div>
-
-
-
-
-
-           
-       {{--      <div class="form-group d-flex justify-content-center flex-wrap mb-0">
-                <button wire:click="resetCart" type="button" class="btn btn-pill btn-danger mr-3"><i class="bi bi-x"></i> Reset</button>
-                <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="btn btn-pill btn-primary" {{  $total_amount == 0 ? 'disabled' : '' }}><i class="bi bi-check"></i> Proceed</button>
-            </div> --}}
+{{-- batassss --}}
+<div class="px-3 py-3 bg-red-400 text-white flex justify-between">
+    <div class="w-1/4 justify-center items-center border-r">
+        <div class="items-center justify-center text-center text-white text-3xl font-semibold">
+            <p>0</p>
         </div>
+    </div>
+    <div>
+    <div class="text-white items-left text-left uppercase text-lg font-semibold">
+        total
+    </div>
+    </div>
+    <div>
+        <span class="text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
+    </div>
+    <div class="w-1/6 justify-center text-center items-center">
+        <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="text-white inline-flex items-center" {{  $total_amount == 0 ? 'disabled' : '' }}><i class="text-4xl bi bi-chevron-right"></i></button>
+        
+    </div>
+</div>
+
+
     </div>
 
     {{--Checkout Modal--}}
     @include('livewire.pos.includes.checkout-modal')
+
 
 </div>
 

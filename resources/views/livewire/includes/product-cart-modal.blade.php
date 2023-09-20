@@ -1,19 +1,18 @@
-{{-- <!-- Button trigger Discount Modal -->
+<!-- Button trigger Discount Modal -->
 <span wire:click="$emitSelf('discountModalRefresh', '{{ $cart_item->id }}', '{{ $cart_item->rowId }}')" role="button" class="badge badge-warning pointer-event" data-toggle="modal" data-target="#discountModal{{ $cart_item->id }}">
-    <i class="bi bi-pencil-square text-white"></i>
+    <i class="small bi bi-pencil-square text-white"></i>
 </span>
 <!-- Discount Modal -->
 <div wire:ignore.self class="modal fade" id="discountModal{{ $cart_item->id }}" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="discountModalLabel">
-                    <strong>{{ $cart_item->name }}</strong>
-                    <br>
-                    <span class="text-blue-400 font-semibold">
+                <h5 class="relative modal-title" id="discountModalLabel">
+                    {{ $cart_item->name }}
+                    <span class="small text-green-400">
                         {{ $cart_item->options->code }}
                     </span>
-                </h2>
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -49,10 +48,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn text-white bg-red-400">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
- --}}
