@@ -421,7 +421,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-            // BuysBacks
+            // Penerimaan Barang Luar
             $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
                 '.__('Penerimaan Barang Luar'), [
                 'route' => 'penerimaanbarangluar.index',
@@ -431,6 +431,19 @@ class GenerateMenus
                 'order'         => 3,
                 'activematches' => ['penerimaanbarangluars*'],
                 'permission'    => ['access_penerimaanbarangluars'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penerimaan Barang DP'), [
+                'route' => 'penerimaanbarangdp.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => ['penerimaanbarangdps*'],
+                'permission'    => ['access_penerimaanbarangdps'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',

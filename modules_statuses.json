@@ -66,5 +66,6 @@
     "DistribusiToko": true,
     "PenjualanSale": true,
     "CustomerSales": true,
-    "PenerimaanBarangLuar": true
+    "PenerimaanBarangLuar": true,
+    "PenerimaanBarangDP": true
 }
