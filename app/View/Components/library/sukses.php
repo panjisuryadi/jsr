@@ -4,7 +4,7 @@ namespace App\View\Components\library;
 
 use Illuminate\View\Component;
 
-class sukses extends Component
+class Sukses extends Component
 {
     /**
      * Create a new component instance.

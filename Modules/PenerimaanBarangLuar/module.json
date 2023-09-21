@@ -1,0 +1,13 @@
+{
+    "name": "PenerimaanBarangLuar",
+    "alias": "penerimaanbarangluar",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\PenerimaanBarangLuar\\Providers\\PenerimaanBarangLuarServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

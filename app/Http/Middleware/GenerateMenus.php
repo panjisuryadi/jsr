@@ -398,7 +398,7 @@ class GenerateMenus
                 'class' => 'nav-item',
             ])
             ->data([
-                'order'         => 2,
+                'order'         => 1,
                 'activematches' => ['goodsreceipts*'],
                 'permission'    => ['access_goodsreceipts'],
             ])
@@ -408,14 +408,29 @@ class GenerateMenus
 
             // BuysBacks
             $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Buys Backs'), [
+                '.__('Penerimaan Barang Buys Backs'), [
                 'route' => 'buysback.index',
                 'class' => 'nav-item',
             ])
             ->data([
-                'order'         => 4,
+                'order'         => 2,
                 'activematches' => ['buysbacks*'],
                 'permission'    => ['access_buysbacks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // BuysBacks
+            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+                '.__('Penerimaan Barang Luar'), [
+                'route' => 'penerimaanbarangluar.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['penerimaanbarangluars*'],
+                'permission'    => ['access_penerimaanbarangluars'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
