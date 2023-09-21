@@ -17,28 +17,28 @@ class GenerateMenus
 
     public function handle($request, Closure $next)
     {
-        /*
-         *
-         * Module Menu for Admin Backend
-         *
-         * *********************************************************************
-         */
-        \Menu::make('admin_sidebar', function ($menu) {
+        // /*
+        //  *
+        //  * Module Menu for Admin Backend
+        //  *
+        //  * *********************************************************************
+        //  */
+        // \Menu::make('admin_sidebar', function ($menu) {
 
-            // PenerimaanBarangLuars
-            $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('PenerimaanBarangLuars'), [
-                'route' => 'penerimaanbarangluar.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 77,
-                'activematches' => ['penerimaanbarangluars*'],
-                'permission'    => ['access_penerimaanbarangluars'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-        })->sortBy('order');
+        //     // PenerimaanBarangLuars
+        //     $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('PenerimaanBarangLuars'), [
+        //         'route' => 'penerimaanbarangluar.index',
+        //         'class' => 'nav-item',
+        //     ])
+        //     ->data([
+        //         'order'         => 77,
+        //         'activematches' => ['penerimaanbarangluars*'],
+        //         'permission'    => ['access_penerimaanbarangluars'],
+        //     ])
+        //     ->link->attr([
+        //         'class' => 'c-sidebar-nav-link py-2',
+        //     ]);
+        // })->sortBy('order');
 
         return $next($request);
     }
