@@ -20,10 +20,10 @@
                             src="{{ $product->getFirstMediaUrl('images') }}"
                             class="absolute inset-0 h-full w-full object-cover"
                             />
-                            <span
-                                class="absolute top-2 leading-5 left-1 inline-flex items-center justify-center rounded-full bg-red-400 px-2.5 py-1 text-red-200"
+                            <span style="font-size:0.7rem;" 
+                                class="absolute top-2 leading-5 left-1 inline-flex items-center justify-center rounded-lg bg-red-400 px-1 py-0.2 text-red-200"
                                 >
-                                0
+                                {{ @$product->product_item[0]->karat->name }}
                             </span>
                             <div
                                 class="absolute bottom-3 leading-5 left-2 bg-gradient-to-t from-gray-900/50 to-gray-900/25"

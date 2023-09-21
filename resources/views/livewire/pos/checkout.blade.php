@@ -39,7 +39,7 @@
                         @endphp
                             @foreach($cart_items as $cart_item)
 
-                            {{-- {{dd($cart_item)}} --}}
+                 {{-- {{dd($cart_item)}} --}}
                    <!-- component -->
 
                       <div class="bg-white text-white w-full max-w-md flex flex-col border-b rounded-md p-1">
@@ -73,7 +73,7 @@
                         @else
                           
                         <span class="text-danger">
-                            Please search & select products!
+                           Produk Belum di pilih
                         </span>
                             
                         @endif
@@ -144,7 +144,7 @@
         <span class="text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
     </div>
     <div class="w-1/6 justify-center text-center items-center">
-        <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="text-white inline-flex items-center" {{  $total_amount == 0 ? 'disabled' : '' }}><i class="text-4xl bi bi-chevron-right"></i></button>
+        <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="text-white inline-flex items-center"><i class="text-4xl bi bi-chevron-right"></i></button>
         
     </div>
 </div>

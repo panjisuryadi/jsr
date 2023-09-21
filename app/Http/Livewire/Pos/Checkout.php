@@ -51,6 +51,7 @@ class Checkout extends Component
 
     public function proceed() {
         if ($this->customer_id != null) {
+            //dd('sdsdsdsd');
             $this->dispatchBrowserEvent('showCheckoutModal');
         } else {
             session()->flash('message', 'Please Select Customer!');
@@ -74,7 +75,7 @@ class Checkout extends Component
         });
 
         if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Product exists in the cart!');
+            session()->flash('message', 'Produk sudah ada di cart!');
             return;
         }
 
