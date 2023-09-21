@@ -12,7 +12,7 @@
             </div>
             <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
                 @csrf
-                <div class="modal-body py-0 px-4">
+                <div class="modal-body py-0 px-2">
 
 
  <div class="tab-content" id="myTabContent">
@@ -47,11 +47,58 @@
     </ul>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                xxxxx
+              {{-- batas --}}
+
+    <div class="px-3 py-3 sm:p-6 border border-2 mt-3 mb-3 shadow rounded rounde-xl ">
+        <div class="flex flex-col items-start justify-between mb-6">
+            <span class="text-sm font-medium text-gray-600">Nama</span>
+            <span class="text-lg font-medium text-gray-800">
+                {!! settings()->company_name !!}</span>
+        </div>
+        <div class="flex flex-col items-start justify-between mb-6">
+            <span class="text-sm font-medium text-gray-600">No Rekening</span>
+            <span class="text-lg font-medium text-gray-800">003003999333</span>
+        </div>
+      
+        <div class="flex flex-row items-center justify-between">
+            <div class="flex flex-col items-start">
+                <span class="text-sm font-medium text-gray-600">Qty</span>
+                <span class="text-lg font-medium text-gray-800">{{ Cart::instance($cart_instance)->count() }}</span>
+            </div>
+            <div class="flex flex-col items-start">
+                <span class="text-sm font-medium text-gray-600">Total</span>
+                 @php
+                $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
+                 @endphp
+                <span class="text-lg font-medium text-gray-800">{{ format_currency($total_with_shipping) }}</span>
+            </div>
+        </div>
+    </div>
+
+              {{-- batas --}}
             </div>
 
              <div class="tab-pane fade" id="qr" role="tabpanel" aria-labelledby="qr-tab">
-                Qr code
+                <div class="flex  flex-row justify-center">
+  <div class="justify-center items-center px-2 py-3 rounded-lg">
+            <div class="justify-center text-center items-center">
+ {!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG('tess','QRCODE', 12, 12) !!}
+
+            </div>
+
+            <div class="py-2 justify-center text-center items-center font-semibold uppercase text-gray-600 no-underline text-lg hover:text-red-600 leading-tight">
+           {{ $customer_id }}
+            </div>
+          
+
+            
+
+        </div>
+        </div>
+
+
+
+
             </div>
              <div class="tab-pane fade" id="tunai" role="tabpanel" aria-labelledby="tunai-tab">
                       <input type="hidden" value="{{ $customer_id }}" name="customer_id">
