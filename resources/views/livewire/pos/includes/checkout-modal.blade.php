@@ -2,8 +2,9 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="checkoutModalLabel">
-                    <i class="bi bi-cart-check text-primary"></i> Confirm Sale
+                <h5 class="modal-title font-semibold text-lg" id="checkoutModalLabel">
+                    <i class="bi bi-cart-check text-primary"></i>
+                    Konfirmasi Pembayaran
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -12,32 +13,38 @@
             <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
                 @csrf
                 <div class="modal-body py-0 px-4">
-{{--     
-<table class="table table-striped">
-    <tr>
-        <th>Total Products</th>
-        <td>
-            <span class="badge badge-success">
-                {{ Cart::instance($cart_instance)->count() }}
-            </span>
-        </td>
-    </tr>
-    
-    
-    <tr class="text-primary">
-        <th>Grand Total</th>
-        @php
-        $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
-        @endphp
-        <th>
-            (=) {{ format_currency($total_with_shipping) }}
-        </th>
-    </tr>
-</table> --}}
 
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                aaaaa
+
+ <div class="tab-content" id="myTabContent">
+ <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+ <ul class="flex flex-col bg-white p-1">
+
+
+  @foreach(\Modules\DataBank\Models\DataBank::get() as $row)
+         <li class="border-gray-200 flex flex-row mb-2">
+          <div class="select-none cursor-pointer bg-gray-10 flex flex-1 items-center p-2  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg border-top">
+            <div class="flex flex-col rounded-md w-14 h-14 bg-white justify-center items-center mr-2">
+                @if($row->kode_bank == '002')
+                  <img src="{{asset('images/icon/bri.png')}}">
+                @elseif($row->kode_bank == '003')
+                  <img src="{{asset('images/icon/mandiri.png')}}">
+                @else
+                 <img src="{{asset('images/icon/bri.png')}}">
+                @endif
+                </div>
+            <div class="flex-1 pl-1 mr-16">
+         <div class="text-gray-600 font-medium text-lg font-semibold">
+            {{$row->nama_bank}}</div>
+              <div class="text-gray-400 text-sm">
+                {{$row->kode_bank}}</div>
+            </div>
+            <div class="text-gray-600 text-xs">{{$row->no_akun}}</div>
+          </div>
+        </li>
+       @endforeach
+  
+    </ul>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 xxxxx
