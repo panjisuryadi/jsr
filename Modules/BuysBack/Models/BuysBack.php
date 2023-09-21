@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\JenisBuyBack\Models\JenisBuyBack;
+use Modules\Karat\Models\Karat;
+use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 class BuysBack extends Model
 {
@@ -26,15 +28,10 @@ class BuysBack extends Model
         return $this->belongsTo(JenisBuyBack::class, 'jenis_buyback_id', 'id');
     }
 
-
-
     public static function boot() {
         parent::boot();
 
-        static::creating(function ($model) {
-            $number = BuysBack::max('id') + 1;
-            $model->reference = make_reference_id('PR', $number);
-        });
+        
     }
 
     public function scopeCompleted($query) {
@@ -90,6 +87,14 @@ class BuysBack extends Model
     protected static function newFactory()
     {
         return \Modules\BuysBack\database\factories\BuysBackFactory::new();
+    }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function karat(){
+        return $this->belongsTo(Karat::class);    
     }
 
 

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\BuysBack\Models\BuysBack;
 use Modules\BuysBack\Models\BuysBackDetails;
@@ -17,7 +18,6 @@ use Modules\People\Entities\Supplier;
 use Modules\People\Entities\Customer;
 use Modules\BuysBack\Http\Requests\StoreBuyBackRequest;
 use Lang;
-use DB;
 class BuysBacksController extends Controller
 {
 
@@ -81,37 +81,47 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                          ->editColumn('date', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <span class="text-xs text-gray-800">
-                                     ' .tanggal($data->created_at) . '</span>
-                                    </div>';
-                                return $tb;
-                            })
-
-                          ->editColumn('status_barang', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <label class="bg-red-500 py-1 px-2 rounded reounded-xl text-xs text-white">
-                                     ' .@$data->jenis->name . '</label>
-                                    </div>';
-                                return $tb;
-                            })
-
-
-                           ->editColumn('produk', function ($data) {
+                        ->editColumn('nama_customer', function ($data) {
+                            $is_member = $data->customer_id?true:false;
+                            $tb = '<div class="items-center text-center">
+                                   <h3 class="text-sm font-medium text-gray-800">
+                                    ' . $is_member?$data->customer->customer_name:$data->customer_name . '</h3>
+                                   </div>';
+                               return $tb;
+                           })
+                           ->editColumn('nama_produk', function ($data) {
                              $tb = '<div class="font-semibold items-center text-center">
-                                     ' .@$data->buysbacksDetails[0]->product_name . '
+                                     ' . $data->product_name . '
                                     </div>';
                                 return $tb;
+                            })
+                            ->editColumn('kadar', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->karat->name . '
+                                       </div>';
+                                   return $tb;
+                               })
+                            ->editColumn('berat', function ($data) {
+                            $tb = '<div class="font-semibold items-center text-center">
+                                    ' . $data->weight . '
+                                     gram </div>';
+                                return $tb;
+                            })
+                            ->editColumn('nominal_beli', function ($data) {
+                            $tb = '<div class="font-semibold items-center text-center">
+                                    ' . $data->nominal . '
+                                    </div>';
+                                return $tb;
+                            })
+                            ->editColumn('keterangan', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->note . '
+                                        </div>';
+                                    return $tb;
                             })
 
-                               ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->reference . '</h3>
-                                    </div>';
-                                return $tb;
-                            })
+
+                              
 
 
                            ->editColumn('updated_at', function ($data) {
@@ -124,8 +134,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action',
-                         'status_barang', 'date', 'produk', 'name'])
+                        ->rawColumns(['action','nama_customer','nama_produk','kadar','berat','nominal_beli','updated_at','keterangan'])
                         ->make(true);
                      }
 
@@ -276,91 +285,30 @@ public function index_data(Request $request)
 
 
 
- public function store(StoreBuyBackRequest $request) {
+ public function store(Request $request) {
 
-        $params = $request->all();
-       // dd($params);
-        DB::transaction(function () use ($request) {
-            $due_amount = $request->total_amount - $request->paid_amount;
-            if ($due_amount == $request->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-          if ($request->supplier == 1) {
-              $supplier_name = $request->supplier_id;
-              } else {
-               $none_supplier  = $request->none_supplier;
-               $supplier_email = randomEmail($none_supplier);
-               $phone = $this->randomPhone();
-               $supplier_new =  Supplier::create([
-                            'supplier_name'  => $none_supplier,
-                            'supplier_phone' => $phone,
-                            'supplier_email' => $supplier_email,
-                            'city'           => 'Jakarta',
-                            'country'        => 'Indonesia',
-                            'address'        => 'Jln. Jakarta no 123'
-                        ]);
-                $supplier_name = $supplier_new->id;
-                // dd($supplier_name);
-
-           }
-
-        $purchase = BuysBack::create([
-                'date' => $request->date,
-                'kode_sales' => $request->kode_sales,
-                'supplier_id' => $supplier_name,
-                'supplier_name' => Supplier::findOrFail($supplier_name)->supplier_name,
-                'tax_percentage' => $request->tax_percentage,
-                'jenis_buyback_id' => $request->jenis_buyback_id,
-                'discount_percentage' => $request->discount_percentage,
-                'shipping_amount' => $request->shipping_amount * 100,
-                'paid_amount' => $request->paid_amount * 100,
-                'total_amount' => $request->total_amount * 100,
-                'due_amount' => $due_amount * 100,
-                'status' => 'Completed',
-                'payment_status' => $payment_status,
-                'payment_method' => $request->payment_method,
-                'note' => $request->note,
-                'tax_amount' => Cart::instance('purchase')->tax() * 100,
-                'discount_amount' => Cart::instance('purchase')->discount() * 100,
-                'status' => 'Completed',
-            ]);
-
-            foreach (Cart::instance('purchase')->content() as $cart_item) {
-                 // dd('purchase');
-                BuysBackDetails::create([
-                    'purchase_id' => $purchase->id,
-                    'product_id' => $cart_item->id,
-                    'product_name' => $cart_item->name,
-                    'product_code' => $cart_item->options->code,
-                    'quantity' => $cart_item->qty,
-                    'price' => $cart_item->price * 100,
-                    'unit_price' => $cart_item->options->unit_price * 100,
-                    'sub_total' => $cart_item->options->sub_total * 100,
-                    'product_discount_amount' => $cart_item->options->product_discount * 100,
-                    'product_discount_type' => $cart_item->options->product_discount_type,
-                    'product_tax_amount' => $cart_item->options->product_tax * 100,
-                    'location_id' => $request->location_id,
-
-                ]);
-                  //add history purchases
-                 }
-
-            Cart::instance('purchase')->destroy();
-            // if ($purchase->paid_amount > 0) {
-            //     PurchasePayment::create([
-            //         'date' => $request->date,
-            //         'reference' => 'INV/'.$purchase->reference,
-            //         'amount' => $purchase->paid_amount,
-            //         'purchase_id' => $purchase->id,
-            //         'payment_method' => $request->payment_method
-            //     ]);
-            // }
-        });
+        $validated = $request->validate([
+            'no_buy_back' => 'required',
+            'date' => 'required',
+            'customer_id' => 'required_if:customer,1',
+            'none_customer' => 'required_if:customer,2',
+            'nama_products' => 'required',
+            'kadar' => 'required',
+            'berat' => 'required',
+            'nominal' => 'required',
+        ]);
+        
+        BuysBack::create([
+            'date' => $request->input('date'),
+            'customer_id' => $request->input('customer_id')??null,
+            'customer_name' => $request->input('none_customer')??null,
+            'note' => $request->input('note')??null,
+            'no_buy_back' => $request->input('no_buy_back'),
+            'product_name' => $request->input('nama_products'),
+            'karat_id' => $request->input('kadar'),
+            'weight' => $request->input('berat'),
+            'nominal' => $request->input('nominal')
+        ]);
 
         toast('Buys Back Created!', 'success');
         return redirect()->route('buysback.index');

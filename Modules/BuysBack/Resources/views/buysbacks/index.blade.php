@@ -65,15 +65,15 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                   <th style="width: 17%!important;" class="text-center">{{ __('Date') }}</th>
-                                    <th class="text-lef">{{ __('Produk') }}</th>
-
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Jenis Barang') }}
-                                    </th>
-
-                                    <th style="width: 21%!important;" class="text-center">
+                                    <th style="width: 5%!important;">No</th>
+                                    <th style="width: 9%!important;">No BuyBack</th>
+                                    <th style="width: 10%!important;">Nama Customer</th>
+                                    <th style="width: 10%!important;">Nama Produk</th>
+                                    <th style="width: 7%!important;">Kadar</th>
+                                    <th style="width: 7%!important;">Berat</th>
+                                    <th style="width: 10%!important;">Nominal Beli</th>
+                                    <th style="width: 10%!important;">Keterangan</th>
+                                    <th style="width: 13%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -134,9 +134,13 @@
                     }
                 },
 
-                {data: 'date', name:  'date'},
-                {data: 'produk', name:  'produk'},
-                {data: 'status_barang', name: 'status_barang'},
+                {data: 'no_buy_back', name:  'no_buy_back'},
+                {data: 'nama_customer', name:  'nama_customer'},
+                {data: 'nama_produk', name: 'nama_produk'},
+                {data: 'kadar', name: 'kadar'},
+                {data: 'berat', name: 'berat'},
+                {data: 'nominal_beli', name: 'nominal_beli'},
+                {data: 'keterangan', name: 'keterangan'},
 
 
                 {

@@ -406,6 +406,21 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+            // BuysBacks
+            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+                '.__('Buys Backs'), [
+                'route' => 'buysback.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => ['buysbacks*'],
+                'permission'    => ['access_buysbacks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
        // Riwayat Penerimaan
     //  $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
     //             '.__('Riwayat Penerimaan'), [
@@ -1113,24 +1128,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-
-           // BuysBacks
-            $purchaseReturns->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Buys Backs'), [
-                'route' => 'buysback.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 4,
-                'activematches' => ['buysbacks*'],
-                'permission'    => ['access_buysbacks'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
 
              // Access Control Dropdown
             $report = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Reports').'', [

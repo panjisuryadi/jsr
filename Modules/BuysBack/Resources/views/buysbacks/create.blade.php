@@ -33,7 +33,7 @@
     
      <div class="form-group">
             <?php
-            $field_name = 'code';
+            $field_name = 'no_buy_back';
             $field_lable = __('no_buys_back');
             $field_placeholder = Label_case($field_lable);
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -59,10 +59,10 @@
             $field_lable = __('Tanggal');
             $field_placeholder = Label_case($field_lable);
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-            $required = '';
+            $required = 'required';
             ?>
             <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <input type="text" name="{{ $field_name }}"
+            <input type="date" name="{{ $field_name }}"
             class="form-control {{ $invalid }}"
             name="{{ $field_name }}"
             value="{{ old($field_name) }}"
@@ -104,34 +104,6 @@
     </div>
 </div>
 
-
-
- <div class="form-group">
-        <?php
-        $field_name = 'code_sales';
-        $field_lable = label_case('kode_sales');
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <label class="mb-1 text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
-        type="text"
-        name="{{ $field_name }}"
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
-    </div>
-
-
-
-</div>
-
-
-<div class="px-3 py-1 flex flex-row grid grid-cols-3 gap-2 border border-gray-300 rounded rounded-lg"> 
 </div>
 
 
@@ -158,54 +130,24 @@
     </div>
  <div class="form-group">
         <?php
-        $field_name = 'qty';
-        $field_lable = label_case('qty');
+        $field_name = 'kadar';
+        $field_lable = label_case('kadar');
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
-        type="number"
-        name="{{ $field_name }}"
-        min="0" step="0.01"
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
+        <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" >
+            <option value="" selected disabled>Pilih Karat</option>
+            @foreach(\Modules\Karat\Models\Karat::all() as $karat)
+            <option value="{{ $karat->id }}">{{ $karat->name }}</option>
+            @endforeach
+        </select>
         <span class="invalid feedback" role="alert">
             <span class="text-danger error-text {{ $field_name }}_err"></span>
         </span>
     </div>
-
-
-
-</div>
-
-
-
-<div class="px-3 py-1 flex flex-row grid grid-cols-3 gap-2"> 
-
- <div class="form-group">
-        <?php
-        $field_name = 'qty';
-        $field_lable = label_case('qty');
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
-        type="number"
-        name="{{ $field_name }}"
-        min="0" step="0.01"
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
-    </div>
- <div class="form-group">
+    <div class="form-group">
         <?php
         $field_name = 'berat';
         $field_lable = label_case($field_name);
@@ -217,7 +159,7 @@
         <input class="form-control"
         type="number"
         name="{{ $field_name }}"
-        min="0" step="0.01"
+        min="0" step="0.001"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
@@ -228,25 +170,40 @@
 
 
 
-<div class="form-group">
-    <label for="status">Status <span class="text-danger">*</span></label>
-    <select class="form-control" name="status" id="status" required>
-        <option value="terima">Di Terima</option>
-        <option value="retur">Di Retur</option>
-    </select>
 </div>
 
 
 
-</div>
+ <div class="form-group">
+        <?php
+        $field_name = 'nominal';
+        $field_lable = label_case($field_name);
+        $field_placeholder = $field_lable;
+        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+        $required = "required";
+        ?>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <input class="form-control"
+        type="number"
+        name="{{ $field_name }}"
+        id="{{ $field_name }}"
+        value="{{old($field_name)}}"
+        placeholder="{{ $field_placeholder }}">
+        <span class="invalid feedback" role="alert">
+            <span class="text-danger error-text {{ $field_name }}_err"></span>
+        </span>
+    </div>
 
 
-<div class="flex flex-row grid grid-cols-2 gap-2">
+
+
+
+
     
   <div class="form-group">
     <?php
     $field_name = 'note';
-    $field_lable = __('Catatan');
+    $field_lable = __('Keterangan');
     $field_placeholder = Label_case($field_lable);
     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
     $required = '';
@@ -264,68 +221,7 @@
     @endif
 </div>
 
-<div class="py-1">
 
- <div class="form-group">
-            <?php
-            $field_name = 'pengirim';
-            $field_lable = __('nama_pengirim');
-            $field_placeholder = Label_case($field_lable);
-            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-            $required = '';
-            ?>
-            <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <input type="text" name="{{ $field_name }}"
-            class="form-control {{ $invalid }}"
-            name="{{ $field_name }}"
-            value="{{ old($field_name) }}"
-            placeholder="{{ $field_placeholder }}" {{ $required }}>
-            @if ($errors->has($field_name))
-            <span class="invalid feedback"role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
-            </span>
-            @endif
-        </div>
-
- <div class="form-group">
-            <?php
-            $field_name = 'user_id';
-            $field_lable = __('PIC');
-            $field_placeholder = Label_case($field_lable);
-            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-            $required = '';
-            ?>
-            <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <input type="text" name="{{ $field_name }}"
-            class="form-control {{ $invalid }}"
-            name="{{ $field_name }}"
-            value="{{ old($field_name) }}"
-            placeholder="{{ $field_placeholder }}" {{ $required }}>
-            @if ($errors->has($field_name))
-            <span class="invalid feedback"role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
-            </span>
-            @endif
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-
-
-</div>
 
                         <div class="flex justify-between">
                             <div></div>
