@@ -1,8 +1,8 @@
 <div>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body">
-            <div>
+
+        <div class="mt-2">
+           
                 @if (session()->has('message'))
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <div class="alert-body">
@@ -14,6 +14,7 @@
                     </div>
                 @endif
 
+                <div class="px-3">
                 <div class="form-group">
                     <label for="customer_id">Customer <span class="text-danger">*</span></label>
                     <div class="input-group">
@@ -79,7 +80,7 @@
                         @endif
                     
                 </div>
-            </div>
+          
 
   @php
     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
@@ -90,6 +91,8 @@
 
 {{-- batassss --}}
 
+
+</div>
 <div
     class="relative bg-white p-4 mx-auto w-full max-w-2xl">
     <div class="mx-auto flex w-full max-w-md flex-row justify-center">
@@ -127,7 +130,6 @@
 
 
 
-
 {{-- batassss --}}
 <div class="px-3 py-3 bg-red-400 text-white flex justify-between">
     <div class="w-1/4 justify-center items-center border-r">
@@ -150,7 +152,7 @@
 </div>
 
 
-    </div>
+
 
     {{--Checkout Modal--}}
     @include('livewire.pos.includes.checkout-modal')

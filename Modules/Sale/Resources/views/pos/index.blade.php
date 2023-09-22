@@ -28,19 +28,36 @@
 @endpush
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
+<div class="container-fluid">
+<div class="card max-h-screen">
+<div class="flex flex-row lg:max-h-screen">
+ <div class="w-3/5 px-2">
+ <livewire:search-product/>
+  <livewire:pos.product-list :categories="$product_categories"/>
+
+ </div>
+ <div class="w-2/5 mt-2 border-l">
+    <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
+ </div>
+ 
+</div>
+</div>
+
+
+
+
+
+  {{--       <div class="row">
             <div class="col-12">
                 @include('utils.alerts')
             </div>
             <div class="col-lg-7 bg-white">
-                <livewire:search-product/>
-                <livewire:pos.product-list :categories="$product_categories"/>
+               
             </div>
             <div class="col-lg-5">
-                <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
+              
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 

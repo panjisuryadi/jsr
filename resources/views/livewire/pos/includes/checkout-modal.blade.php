@@ -12,8 +12,8 @@
             </div>
             <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
                 @csrf
-                <div class="modal-body py-0 px-2">
-
+                <div class="modal-body py-0 px-3">
+ <livewire:pos.payment/>
 
  <div class="tab-content" id="myTabContent">
  <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -35,7 +35,7 @@
                 </div>
             <div class="flex-1 pl-1 mr-16">
          <div class="text-gray-600 font-medium text-lg font-semibold">
-            {{$row->nama_bank}}</div>
+               {{$row->nama_bank}}</div>
               <div class="text-gray-400 text-sm">
                 {{$row->kode_bank}}</div>
             </div>
@@ -82,7 +82,7 @@
                 <div class="flex  flex-row justify-center">
   <div class="justify-center items-center px-2 py-3 rounded-lg">
             <div class="justify-center text-center items-center">
- {!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG('tess','QRCODE', 12, 12) !!}
+            {!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG('tess','QRCODE', 12, 12) !!}
 
             </div>
 
@@ -121,7 +121,7 @@
 
                             <div class="form-group">
                                 <label for="note">Catatan (Jika diperlukan)</label>
-                                <textarea name="note" id="note" rows="5" class="form-control"></textarea>
+                                <textarea name="note" id="note" rows="3" class="form-control"></textarea>
                             </div>
 
 
