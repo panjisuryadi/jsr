@@ -1,9 +1,9 @@
 <div>
     <div class="card border-0 py-0">
-        <div class="card-body px-1 py-1">
+        <div class="card-body px-3 py-1">
             <livewire:pos.filter :categories="$categories"/>
-                <div class="row position-relative">
-                    <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
+                <div class="grid grid-cols-4 md:gap-0 lg:gap-1 gap-2 md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 relative">
+                    <div wire:loading.flex class="position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                         <div class="spinner-border text-primary" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -12,9 +12,9 @@
 
                     {{-- {{$product->product_item[0]->karat->penentuanHarga->harga_emas}} --}}
 
-                    <div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-3 col-md-6 mb-2" style="cursor: pointer;">
+                    <div wire:click.prevent="selectProduct({{ $product }})" class="md:px-1 py-1" style="cursor: pointer;">
                         <div
-                            class="h-40 relative overflow-hidden rounded-lg shadow transition hover:shadow-lg"
+                            class="h-40 lg:h-32 md:h-32 relative overflow-hidden rounded-md  hover:shadow-md"
                             >
                             <img
                             src="{{ $product->getFirstMediaUrl('images') }}"
@@ -26,19 +26,19 @@
                                 {{ @$product->product_item[0]->karat->name }}
                             </span>
                             <div
-                                class="absolute bottom-3 leading-5 left-2 bg-gradient-to-t from-gray-900/50 to-gray-900/25"
+                                class="absolute bottom-3 md:leading-4 left-2"
                                 >
-                                <div class="px-1 p-2 sm:p-4">
-                                    <span style="font-size:0.7rem;" class="block text-gray-600"> {{ @$product->category->category_name }} 
+                                <div class="px-1 sm:p-4 lg:p-2">
+                                    <span  class="md:text-xs md:leading-4 block text-gray-600"> {{ @$product->category->category_name }} 
                                     </span>
                                     
-                                    <h3 class="leading-5 font-semibold hover:text-red-400 mt-0.5 text-lg text-gray-800">
+                                    <h3 class="leading-5 font-semibold hover:text-red-400 mt-0.5 lg:text-sm sm:small md:text-sm md:leading-4 text-lg text-gray-800">
                                     {{ $product->product_name }}
                                     </h3>
-                                <div class="text-red-400">
-                              {{@format_currency($product->product_item[0]->karat->penentuanHarga->harga_emas)}}
+                                <div class="lg:text-sm md:small text-red-400">
+                              {{@number_format($product->product_item[0]->karat->penentuanHarga->harga_emas)}}
                                  </div>
-                                    
+                                     
                                 </div>
                             </div>
                         </div>

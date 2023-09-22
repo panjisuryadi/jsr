@@ -8,7 +8,7 @@ use Livewire\Component;
 class Checkout extends Component
 {
 
-    public $listeners = ['productSelected', 'discountModalRefresh'];
+    public $listeners = ['productSelected',  'discountModalRefresh'];
 
     public $cart_instance;
     public $customers;
@@ -34,6 +34,7 @@ class Checkout extends Component
         $this->discount_type = [];
         $this->item_discount = [];
         $this->total_amount = 0;
+        $this->grand_total = 0;
     }
 
     public function hydrate() {
@@ -41,9 +42,12 @@ class Checkout extends Component
         $this->updatedCustomerId();
     }
 
+       public function hitung()
+       {
+           dd('sdsdsds');
+       }
     public function render() {
         $cart_items = Cart::instance($this->cart_instance)->content();
-
         return view('livewire.pos.checkout', [
             'cart_items' => $cart_items
         ]);
@@ -52,11 +56,23 @@ class Checkout extends Component
     public function proceed() {
         if ($this->customer_id != null) {
             //dd('sdsdsdsd');
-            $this->dispatchBrowserEvent('showCheckoutModal');
+     
+            $this->dispatchBrowserEvent('showCheckoutModal', [
+            'customer' => Cart::instance($this->cart_instance)->content()
+            ]);
+            $this->selectcartModal();
+          
         } else {
             session()->flash('message', 'Please Select Customer!');
         }
     }
+
+     public function selectcartModal() {
+         $cart = Cart::instance($this->cart_instance)->content();
+         //$this->emit('cartModal', $cart);
+    }
+
+
 
     public function calculateTotal() {
         return Cart::instance($this->cart_instance)->total() + $this->shipping;
@@ -102,6 +118,7 @@ class Checkout extends Component
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;
         $this->total_amount = $this->calculateTotal();
+        //$this->emit('cartModal', $product);
     }
 
     public function removeItem($row_id) {

@@ -1,8 +1,8 @@
 <div>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body">
-            <div>
+
+        <div class="mt-2">
+           
                 @if (session()->has('message'))
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <div class="alert-body">
@@ -14,6 +14,7 @@
                     </div>
                 @endif
 
+                <div class="px-3">
                 <div class="form-group">
                     <label for="customer_id">Customer <span class="text-danger">*</span></label>
                     <div class="input-group">
@@ -79,11 +80,14 @@
                         @endif
                     
                 </div>
-            </div>
+          
 
   @php
     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
     $qty = Cart::instance($cart_instance);
+
+
+
   @endphp
 
         </div>
@@ -91,32 +95,37 @@
 {{-- batassss --}}
 
 <div
-    class="relative bg-white p-4 mx-auto w-full max-w-2xl">
-    <div class="mx-auto flex w-full max-w-md flex-row justify-center">
+    class="relative bg-white px-2 py-3 mx-auto w-full max-w-2xl">
+     <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-1">
 
        {{-- show modal kostumer --}}
+    <div class="text-center justify-items-center">
          @include('livewire.includes.add-customer-modal') 
-          <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
+    </div>
+<div class="text-center justify-items-center">
+    <button class="ml-2 hover:no-underline hover:text-red-400 text-gray-500  text-center items-center" href="#">
+         <i class="hover:text-red-400 bi bi-card-list md:text-4xl text-4xl text-gray-500"></i>
+         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Daftar</div>
+      
+        </button>   
+</div>
        
-         <i class="hover:text-red-400 bi bi-card-list text-4xl text-gray-500"></i>
-         <div class="py-0 font-semibold">Daftar</div>
-        
-        </a>
+ 
 
-        <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
-       <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-box-arrow-down"></i>
-         <div class="py-0 font-semibold">Simpan</div>
-        
-        </a>
-                
+<div class="px-1 text-center justify-items-center">
+     @include('livewire.pos.simpan-modal')
+</div>
     
         {{-- show modal manual --}}
+<div class="px-1 text-center justify-items-center">
          @include('livewire.includes.manual-modal') 
+</div>
+<div class="px-1 text-center justify-items-center">
             <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
         <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-trash"></i>
-         <div class="py-0 font-semibold">Hapus</div>
-        
+         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Hapus</div>
         </button>
+        </div>
 
         
         
@@ -125,23 +134,20 @@
     </div>
 </div>
 
-
-
-
 {{-- batassss --}}
 <div class="px-3 py-3 bg-red-400 text-white flex justify-between">
     <div class="w-1/4 justify-center items-center border-r">
-        <div class="items-center justify-center text-center text-white text-3xl font-semibold">
+        <div class="items-center justify-center text-center md:text-xl text-white text-3xl font-semibold">
             <p>{{$jumlah ?? '0'}}</p>
         </div>
     </div>
     <div>
-    <div class="text-white items-left text-left uppercase text-lg font-semibold">
+    <div class="text-white items-left text-left uppercase md:text-sm lg:text-lg font-semibold">
         total
     </div>
     </div>
     <div>
-        <span class="text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
+        <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
     </div>
     <div class="w-1/6 justify-center text-center items-center">
         <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="text-white inline-flex items-center"><i class="text-4xl bi bi-chevron-right"></i></button>
@@ -150,7 +156,10 @@
 </div>
 
 
-    </div>
+</div>
+
+
+
 
     {{--Checkout Modal--}}
     @include('livewire.pos.includes.checkout-modal')

@@ -1,6 +1,6 @@
 <div class="position-relative">
 
-<div class="flex py-2 mt-3 mb-2">
+<div class="flex py-2 mt-4 mb-2">
   <div class="mt-1 w-1/7">
      <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#"><i class="hover:text-red-400 text-xl bi bi-eye-fill"></i></a>
   </div>

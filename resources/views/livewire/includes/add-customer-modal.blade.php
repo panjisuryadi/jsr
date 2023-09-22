@@ -1,12 +1,12 @@
 <!-- Button trigger Discount Modal -->
- <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center"   href="#" 
+ <button class="text-center lg:px-2 md:px-0 hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" 
     role="button" 
     data-toggle="modal" 
     data-target="#customerModal">
-        <i class="bi bi-person-plus text-4xl text-gray-500 hover:text-red-400"></i>
-         <div class="py-0 font-semibold">Customer</div>
+        <i class="hover:text-red-400 bi bi-person-plus md:text-4xl text-4xl text-gray-500"></i>
+         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Customer</div>
         
-        </a>
+        </button>
 <!-- customer Modal -->
 <div wire:ignore.self class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="manualModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

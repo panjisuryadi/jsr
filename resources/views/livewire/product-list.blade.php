@@ -1,6 +1,6 @@
 <div>
     <div class="card border-0 shadow-sm mt-3">
-        <div class="card-body">
+        <div class="px-3 card-body">
             <livewire:pos.filter :categories="$categories"/>
             <div class="row position-relative">
                 <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 @forelse($products as $product)
-                    <div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-3 col-md-6" style="cursor: pointer;">
+                    <div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-3 col-md-6 lg:col-lg-2 col-md-6" style="cursor: pointer;">
                         <div class="card border-0 shadow h-100">
                             <div class="position-relative">
                                 <img height="200" src="{{ $product->getFirstMediaUrl('images') }}" class="card-img-top" alt="Product Image">
