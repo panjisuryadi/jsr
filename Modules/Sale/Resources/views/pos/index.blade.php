@@ -30,7 +30,7 @@
 @section('content')
 <div class="container-fluid">
 <div class="card max-h-screen">
-<div class="flex flex-row lg:max-h-screen">
+<div class="flex flex-row lg:max-h-screen bg-white">
  <div class="w-3/5 px-2">
  <livewire:search-product/>
   <livewire:pos.product-list :categories="$product_categories"/>
