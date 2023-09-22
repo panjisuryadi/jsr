@@ -14,7 +14,7 @@
 
                     <div wire:click.prevent="selectProduct({{ $product }})" class="md:px-1 py-1" style="cursor: pointer;">
                         <div
-                            class="h-40 lg:h-40 md:h-32 relative overflow-hidden rounded-md  hover:shadow-md"
+                            class="h-40 lg:h-32 md:h-32 relative overflow-hidden rounded-md  hover:shadow-md"
                             >
                             <img
                             src="{{ $product->getFirstMediaUrl('images') }}"

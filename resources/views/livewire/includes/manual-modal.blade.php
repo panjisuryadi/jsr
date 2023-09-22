@@ -1,12 +1,12 @@
 <!-- Button trigger Discount Modal -->
- <a class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center"   href="#" 
+ <button class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" 
     role="button" 
     data-toggle="modal" 
     data-target="#manualModal">
         <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-pencil-square"></i>
          <div class="py-0 font-semibold">Manual</div>
         
-        </a>
+        </button>
 <!-- manual Modal -->
 <div wire:ignore.self class="modal fade" id="manualModal" tabindex="-1" role="dialog" aria-labelledby="manualModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -22,6 +22,8 @@
             </div>
             <form method="POST">
                 <div class="modal-body">
+
+                    
                ini buat modal manual
                 </div>
                 <div class="modal-footer">

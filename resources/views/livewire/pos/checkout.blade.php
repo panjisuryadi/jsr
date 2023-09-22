@@ -85,6 +85,9 @@
   @php
     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
     $qty = Cart::instance($cart_instance);
+
+
+
   @endphp
 
         </div>
@@ -108,13 +111,11 @@
         </a>   
 </div>
        
+ 
+
 <div class="px-1 text-center justify-items-center">
-        <a class="hover:no-underline hover:text-red-400 text-gray-500 text-center items-center" href="#">
-       <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-box-arrow-down"></i>
-         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Simpan</div>
-        
-        </a>
-      </div>         
+     @include('livewire.pos.simpan-modal')
+</div>
     
         {{-- show modal manual --}}
 <div class="px-1 text-center justify-items-center">
@@ -133,8 +134,6 @@
     
     </div>
 </div>
-
-
 
 {{-- batassss --}}
 <div class="px-3 py-3 bg-red-400 text-white flex justify-between">

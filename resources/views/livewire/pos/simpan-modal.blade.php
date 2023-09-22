@@ -1,12 +1,16 @@
-<div>
  
 <?php
     $result = array (
     'total_with_shipping' => $total_with_shipping,
     'qty' => $jumlah ?? 0,
     'total_amount' => $total_amount ?? 0,
+    'bayar' =>  0,
     );
 ?>
+
+
+
+
 
  <button class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center justify-items-center" 
     role="button" 
@@ -33,23 +37,7 @@
             <form  method="POST">
      <div style="text-align:left !important;" class="modal-body items-baseline">
                    
-            <div class="form-group">
-                <label class="mb-0" style="text-align:left !important;" for="total_amount">Total <span class="text-danger">*</span></label>
-                <input  wire:model="total_amount"  type="number" class="form-control" name="total_amount" value="{{$total_with_shipping}}" required>
-            </div> 
-                  
-               <div class="form-group mt-4">
-                    <label class="mb-0" style="text-align:left !important;"  for="total_amount">Bayar <span class="items-left text-danger">*</span></label>
-                    <input  wire:model="bayar" id="bayar" type="number" class="form-control" name="bayar" value="{{$result['total_amount']}}" required>
-                </div>
-
-
-               <div class="form-group mt-4">
-                    <label class="mb-0" style="text-align:left !important;"  
-                    for="total_amount">Grand Total <span class="items-left text-danger">*</span></label>
-                    <input id="total_amount" type="number" class="form-control" name="total_amount" value="{{$grandtotal ?? 0}}" readonly required>
-                </div>
-
+ 
  
 
     <div class="form-group">
@@ -69,6 +57,4 @@
             </form>
         </div>
     </div>
-</div>
-
 </div>

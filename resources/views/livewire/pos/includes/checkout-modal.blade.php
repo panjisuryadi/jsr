@@ -13,7 +13,6 @@
             <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
                 @csrf
                 <div class="modal-body py-0 px-3">
- <livewire:pos.payment/>
 
  <div class="tab-content" id="myTabContent">
  <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -108,21 +107,27 @@
 
                     <input type="hidden" value="Other" name="payment_method">
 
-                                  <div class="form-group mt-4">
-                                        <label for="total_amount">Total <span class="text-danger">*</span></label>
-                                        <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" readonly required>
-                                    </div>
+              <div class="form-group mt-4">
+                    <label for="total_amount">Total <span class="text-danger">*</span></label>
+                    <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" readonly required>
+                </div>
 
-                                <div class="form-group">
-                                        <label for="paid_amount">Bayar <span class="text-danger">*</span></label>
-                                        <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ $total_amount }}" required>
-                                    </div> 
-                  
+            <div class="form-group">
+                    <label for="paid_amount">Bayar <span class="text-danger">*</span></label>
+                    <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ $total_amount }}" required>
+                </div> 
 
-                            <div class="form-group">
-                                <label for="note">Catatan (Jika diperlukan)</label>
-                                <textarea name="note" id="note" rows="3" class="form-control"></textarea>
-                            </div>
+
+  <div class="form-group">
+                    <label for="grand_total">Grand Total <span class="text-danger">*</span></label>
+                    <input id="grand_total" type="text" class="form-control" name="grand_total" value="{{ $total_amount }}" readonly>
+                </div> 
+
+
+                <div class="form-group">
+                    <label for="note">Catatan (Jika diperlukan)</label>
+                    <textarea name="note" id="note" rows="3" class="form-control"></textarea>
+                </div>
 
 
             </div>

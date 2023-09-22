@@ -77,9 +77,9 @@ class PosController extends Controller
                 ]);
 
                 $product = Product::findOrFail($cart_item->id);
-                $product->update([
-                    'product_quantity' => $product->product_quantity - $cart_item->qty
-                ]);
+                // $product->update([
+                //     'product_quantity' => $product->product_quantity - $cart_item->qty
+                // ]);
             }
 
             Cart::instance('sale')->destroy();

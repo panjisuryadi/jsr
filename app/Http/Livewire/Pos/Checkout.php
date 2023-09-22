@@ -34,6 +34,7 @@ class Checkout extends Component
         $this->discount_type = [];
         $this->item_discount = [];
         $this->total_amount = 0;
+        $this->grand_total = 0;
     }
 
     public function hydrate() {
@@ -41,6 +42,10 @@ class Checkout extends Component
         $this->updatedCustomerId();
     }
 
+       public function hitung()
+       {
+           dd('sdsdsds');
+       }
     public function render() {
         $cart_items = Cart::instance($this->cart_instance)->content();
         return view('livewire.pos.checkout', [
@@ -113,7 +118,7 @@ class Checkout extends Component
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;
         $this->total_amount = $this->calculateTotal();
-        $this->emit('cartModal', $product);
+        //$this->emit('cartModal', $product);
     }
 
     public function removeItem($row_id) {
