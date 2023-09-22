@@ -95,20 +95,19 @@
 {{-- batassss --}}
 
 <div
-    class="relative bg-white p-4 mx-auto w-full max-w-2xl">
+    class="relative bg-white px-2 py-3 mx-auto w-full max-w-2xl">
      <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-1">
 
        {{-- show modal kostumer --}}
-       <div class="px-1 text-center justify-items-center">
+    <div class="text-center justify-items-center">
          @include('livewire.includes.add-customer-modal') 
-</div>
-<div class="px-1 text-center justify-items-center">
-    <a class="hover:no-underline hover:text-red-400 text-gray-500  text-center items-center" href="#">
-       
-         <i class="hover:text-red-400 bi bi-card-list text-4xl text-gray-500"></i>
-         <div class="py-0 font-semibold">Daftar</div>
-        
-        </a>   
+    </div>
+<div class="text-center justify-items-center">
+    <button class="ml-2 hover:no-underline hover:text-red-400 text-gray-500  text-center items-center" href="#">
+         <i class="hover:text-red-400 bi bi-card-list md:text-4xl text-4xl text-gray-500"></i>
+         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Daftar</div>
+      
+        </button>   
 </div>
        
  

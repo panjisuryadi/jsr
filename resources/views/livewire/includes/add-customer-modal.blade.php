@@ -1,10 +1,10 @@
 <!-- Button trigger Discount Modal -->
- <button class="text-center  hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" 
+ <button class="text-center lg:px-2 md:px-0 hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" 
     role="button" 
     data-toggle="modal" 
     data-target="#customerModal">
-        <i class="items-center bi bi-person-plus text-4xl text-gray-500 hover:text-red-400"></i>
-          <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Customer</div>
+        <i class="hover:text-red-400 bi bi-person-plus md:text-4xl text-4xl text-gray-500"></i>
+         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Customer</div>
         
         </button>
 <!-- customer Modal -->

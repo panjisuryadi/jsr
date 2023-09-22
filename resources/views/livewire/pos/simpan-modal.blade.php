@@ -11,14 +11,13 @@
 
 
 
-
- <button class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center justify-items-center" 
+ <button class="text-center  hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" 
     role="button" 
     data-toggle="modal" 
     data-target="#simpanModal{{$result['total_with_shipping']}}">
-        <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-box-arrow-down"></i>
-         <div class="py-0 font-semibold">Simpan</div>
-        
+        <i class="hover:text-red-400 bi bi-box-arrow-down md:text-4xl text-4xl text-gray-500"></i>
+         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Customer</div>
+    
         </button>
 
 <!-- Discount Modal -->
