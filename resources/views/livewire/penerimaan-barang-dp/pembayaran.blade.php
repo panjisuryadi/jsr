@@ -9,9 +9,11 @@
         ?>
         <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
         <input type="number" name="{{$field_name}}" class="form-control" placeholder="{{$field_placeholder}}">
+        @if ($errors->has($field_name))
         <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
+            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
         </span>
+        @endif
     </div>
 
     <div class="form-group">

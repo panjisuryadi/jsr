@@ -14,9 +14,11 @@
             <option value="{{ $karat->id }}">{{ $karat->name }}</option>
             @endforeach
         </select>
+        @if ($errors->has($field_name))
         <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
+            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
         </span>
+        @endif
     </div>
     <div class="form-group">
         <?php
@@ -28,9 +30,6 @@
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
         <input type="text" class="form-control" readonly wire:model="{{ $field_name }}">
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
     </div>
     <div class="form-group">
         <?php
@@ -42,8 +41,10 @@
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
         <input class="form-control" type="number" name="{{ $field_name }}" min="0" step="0.001" id="{{ $field_name }}" value="{{old($field_name)}}" placeholder="{{ $field_placeholder }}">
+        @if ($errors->has($field_name))
         <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
+            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
         </span>
+        @endif
     </div>
 </div>

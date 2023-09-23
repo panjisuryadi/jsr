@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
@@ -180,23 +181,72 @@ public function store(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        $validator = \Validator::make($request->all(),[
-             'code' => 'required|max:191|unique:'.$module_model.',code',
-             'name' => 'required|max:191',
+        $module_action = 'Store';
 
-        ]);
-        if (!$validator->passes()) {
-          return response()->json(['error'=>$validator->errors()]);
-        }
-
+       $request->validate([
+         'no_barang_dp' => 'required|max:255|unique:'.$module_model.',no_barang_dp',
+         'date' => 'required',
+         'nama_pemilik' => 'required',
+         'no_hp' => 'required',
+         'alamat' => 'required',
+         'kadar' => 'required',
+         'berat' => 'required',
+         'nominal_dp' => 'required',
+         'tipe_pembayaran' => 'required',
+         'cicil' => 'required_if:tipe_pembayaran,cicil',
+         'tgl_jatuh_tempo' => 'required_if:tipe_pembayaran,jatuh_tempo'
+          ]);
         $input = $request->all();
-        $input = $request->except('_token');
-        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $input['code'] = $input['code'];
-        $input['name'] = $input['name'];
-        $$module_name_singular = $module_model::create($input);
+        $input = $request->except(['document']);
+       
+        DB::beginTransaction();
+        try{
+            $$module_name_singular = $module_model::create([
+                'no_barang_dp' => $input['no_barang_dp'],
+                'date' => $input['date'],
+                'owner_name'=> $input['nama_pemilik'],
+                'contact_number' => $input['no_hp'],
+                'address' => $input['alamat'],
+                'karat_id' => $input['kadar'],
+                'weight' => $input['berat'],
+                'nominal' => $input['nominal_dp'],
+                'note' => $input['keterangan']??null
+                  ]);
+    
+                if ($request->filled('image')) {
+                    $img = $request->image;
+                    $folderPath = "uploads/";
+                    $image_parts = explode(";base64,", $img);
+                    $image_type_aux = explode("image/", $image_parts[0]);
+                    $image_type = $image_type_aux[1];
+                    $image_base64 = base64_decode($image_parts[1]);
+                    $fileName ='webcam_'. uniqid() . '.jpg';
+                    $file = $folderPath . $fileName;
+                    Storage::disk('local')->put($file,$image_base64);
+                    $$module_name_singular->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('images');
+                        //$params['image'] = "$newFilename";
+                    }
+    
+    
+                  if ($request->has('document')) {
+                        foreach ($request->input('document', []) as $file) {
+                            $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
+                        }
+                    }
+                    $$module_name_singular->payment()->create([
+                        'tipe_pembayaran' => $input['tipe_pembayaran'],
+                        'jatuh_tempo'     => $input['tgl_jatuh_tempo'] ?? null,
+                        'cicil'           => $input['cicil'] ?? 0,
+                        'lunas'           => $input['tipe_pembayaran'] == 'lunas' ? 'lunas': null,
+                    ]);
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
+                 toast('Penerimaan Barang DP Berhasil dibuat!', 'success');
 
-        return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
+             return redirect()->route($this->module_name .'.index');
     }
 
 

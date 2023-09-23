@@ -16,12 +16,16 @@ return new class extends Migration
     {
         Schema::create('penerimaanbarangdps', function (Blueprint $table) {
             $table->id();
-            //$table->unsignedBigInteger('jenis_group_id');
-            $table->string('name');
-            $table->string('code');
-            $table->text('description')->nullable();
-            //$table->string('image')->nullable(true);
-            // $table->foreign('jenis_group_id')->references('id')->on('jenisgroups')->restrictOnDelete();
+            $table->string('no_barang_dp');
+            $table->date('date');
+            $table->string('owner_name');
+            $table->string('contact_number');
+            $table->text('address');
+            $table->unsignedBigInteger('karat_id');
+            $table->decimal('weight', 12, 3, true)->default(0);
+            $table->unsignedBigInteger('nominal');
+            $table->text('note')->nullable();
+            $table->foreign('karat_id')->references('id')->on('karats');
             $table->timestamps();
 
         });
@@ -30,8 +34,6 @@ return new class extends Migration
         Permissions::firstOrCreate(['name' => 'create_penerimaanbarangdps']);
         Permissions::firstOrCreate(['name' => 'edit_penerimaanbarangdps']);
         Permissions::firstOrCreate(['name' => 'delete_penerimaanbarangdps']);
-
-
     }
 
     /**
