@@ -6,7 +6,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">{{$module_title}}</li>
+    <li class="breadcrumb-item active">Penerimaan Barang DP</li>
 </ol>
 @endsection
 @section('content')
@@ -21,7 +21,7 @@
                                 id="Tambah"
                                 data-toggle="tooltip"
                                  class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;Penerimaan Barang DP
                                 </a>
 
                         </div>
@@ -32,11 +32,14 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th class="text-lef">{{ __('Name') }}</th>
-
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 4%!important;">No</th>
+                                   <th style="width: 13%!important;" class="text-center">{{ __('No Barang DP') }}</th>
+                                   <th style="width: 15%!important;" class="text-center">{{ __('Nama Pemilik') }}</th>
+                                   <th style="width: 10%!important;" class="text-center">{{ __('Kadar') }}</th>
+                                   <th style="width: 9%!important;" class="text-center">{{ __('Berat') }}</th>
+                                   <th style="width: 10%!important;" class="text-center">{{ __('Nominal DP') }}</th>
+                                   <th style="width: 12%!important;" class="text-center">{{ __('Keterangan') }}</th>
+                                    <th style="width: 12%!important;" class="text-center">
                                          {{ __('Updated') }}
                                     </th>
                                     <th style="width: 18%!important;" class="text-center">
@@ -100,8 +103,12 @@
                     }
                 },
 
-                {data: 'code', name: 'code'},
-                {data: 'name', name: 'name'},
+                {data: 'no_barang_dp', name: 'no_barang_dp'},
+                {data: 'nama_pemilik', name: 'nama_pemilik'},
+                {data: 'kadar', name: 'kadar'},
+                {data: 'berat', name: 'berat'},
+                {data: 'nominal_dp', name: 'nominal_dp'},
+                {data: 'keterangan', name: 'keterangan'},
                 {data: 'updated_at', name: 'updated_at'},
 
                 {

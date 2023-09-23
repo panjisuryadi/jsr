@@ -5,6 +5,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Karat\Models\Karat;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -39,6 +40,10 @@ class PenerimaanBarangDP extends Model implements HasMedia
 
     public function payment(){
       return $this->hasOne(PenerimaanBarangDPPayment::class,'penerimaan_barang_dp_id','id');
+    }
+
+    public function karat(){
+      return $this->belongsTo(Karat::class);
     }
 
 }

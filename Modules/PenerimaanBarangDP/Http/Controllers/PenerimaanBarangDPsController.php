@@ -75,12 +75,47 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('name', function ($data) {
+                          ->editColumn('no_barang_dp', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
+                                     ' .$data->no_barang_dp . '</h3>
                                     </div>';
                                 return $tb;
+                            })
+                            ->editColumn('nama_pemilik', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                       <h3 class="text-sm font-medium text-gray-800">
+                                        ' .$data->owner_name . '</h3>
+                                       </div>';
+                                   return $tb;
+                               })
+                            ->editColumn('kadar', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                    ' .$data->karat->name . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                            ->editColumn('berat', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                        <h3 class="text-sm font-medium text-gray-800">
+                                        ' .$data->weight . '</h3>
+                                        </div>';
+                                    return $tb;
+                            })
+                            ->editColumn('nominal_dp', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                        <h3 class="text-sm font-medium text-gray-800">
+                                        ' .$data->nominal . '</h3>
+                                        </div>';
+                                    return $tb;
+                            })
+                            ->editColumn('keterangan', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                        <h3 class="text-sm font-medium text-gray-800">
+                                        ' .$data->note . '</h3>
+                                        </div>';
+                                    return $tb;
                             })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
@@ -92,7 +127,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['updated_at', 'action', 'no_barang_dp','nama_pemilik','kadar','berat','nominal_dp','keterangan'])
                         ->make(true);
                      }
 
