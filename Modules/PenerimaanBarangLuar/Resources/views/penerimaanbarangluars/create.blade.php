@@ -82,6 +82,15 @@
 <div class="form-group">
         <input type="text" class="form-control" placeholder="Nama Customer" name="customer_name" required >
 </div>
+<div class="form-group">
+    <div>
+        <select class="form-control select2" name="cabang_id" id="cabang_id" >
+            @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
+            <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
 
 </div>
 

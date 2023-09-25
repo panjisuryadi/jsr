@@ -5,6 +5,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Cabang\Models\Cabang;
 //use Modules\JenisGroup\Models\JenisGroup;
 use Modules\Karat\Models\Karat;
 class PenerimaanBarangLuar extends Model
@@ -36,6 +37,10 @@ class PenerimaanBarangLuar extends Model
     }
     public function karat(){
       return $this->belongsTo(Karat::class);    
+    }
+
+    public function cabang(){
+      return $this->belongsTo(Cabang::class);
     }
 
 

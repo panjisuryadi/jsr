@@ -114,6 +114,12 @@ class PenerimaanBarangLuarsController extends Controller
                                         </div>';
                                     return $tb;
                             })
+                            ->editColumn('cabang', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->cabang->name . '
+                                        </div>';
+                                    return $tb;
+                            })
 
 
                               
@@ -129,7 +135,7 @@ class PenerimaanBarangLuarsController extends Controller
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['action','nama_customer','nama_produk','kadar','berat','nominal_beli','updated_at','keterangan'])
+                        ->rawColumns(['action','nama_customer','nama_produk','kadar','berat','nominal_beli','updated_at','keterangan','cabang'])
                         ->make(true);
                      }
 
@@ -209,6 +215,7 @@ public function store(Request $request)
             'kadar' => 'required',
             'berat' => 'required',
             'nominal' => 'required',
+            'cabang_id' => 'required|exists:cabangs,id'
         ]);
         
         PenerimaanBarangLuar::create([
@@ -219,7 +226,8 @@ public function store(Request $request)
             'product_name' => $request->input('nama_products'),
             'karat_id' => $request->input('kadar'),
             'weight' => $request->input('berat'),
-            'nominal' => $request->input('nominal')
+            'nominal' => $request->input('nominal'),
+            'cabang_id' => $request->input('cabang_id')
         ]);
 
         toast('Penerimaan Barang Luar Created!', 'success');

@@ -34,6 +34,7 @@
                                 <tr>
                                     <th style="width: 5%!important;">No</th>
                                     <th style="width: 9%!important;">No Barang Luar</th>
+                                    <th style="width: 9%!important;">Cabang</th>
                                     <th style="width: 10%!important;">Nama Customer</th>
                                     <th style="width: 10%!important;">Nama Produk</th>
                                     <th style="width: 7%!important;">Kadar</th>
@@ -102,6 +103,7 @@
                 },
 
                 {data: 'no_barang_luar', name:  'no_barang_luar'},
+                {data: 'cabang', name:  'cabang'},
                 {data: 'nama_customer', name:  'nama_customer'},
                 {data: 'nama_produk', name: 'nama_produk'},
                 {data: 'kadar', name: 'kadar'},
