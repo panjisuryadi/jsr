@@ -739,7 +739,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
-                'order'         => 3,
+                'order'         => 2,
                 'activematches' => [
                     'datasales*',
                     'distribusitokos*',
@@ -795,7 +795,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
-                'order'         => 3,
+                'order'         => 2,
                 'activematches' => [
                     'datasales*',
                     'distribusitokos*',
@@ -887,6 +887,20 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-3',
+            ]);
+
+            // BuyBackSales
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Buy Back Sales'), [
+                'route' => 'buybacksale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => ['buybacksales*'],
+                'permission'    => ['access_buybacksales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 
