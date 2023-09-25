@@ -14,10 +14,17 @@ class AddRelasiKaratToProductItemsTable extends Migration
     public function up()
     {
 
+<<<<<<< Updated upstream
         // Schema::table('product_items', function (Blueprint $table) {
         //       DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         //      $table->foreign('karat_id')->references('id')->on('karats');
         //       DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+=======
+        Schema::table('product_items', function (Blueprint $table) {
+              DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+             $table->foreign('karat_id')->references('id')->on('karats');
+              DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+>>>>>>> Stashed changes
 
         // });
     }
