@@ -80,9 +80,16 @@
 
 <div class="flex flex-row grid grid-cols-2 gap-2">
 <div class="form-group">
-        <label for="customer_sales_id" style="margin-bottom: 0.2rem;">Customer Sales <span class="text-danger">*</span></label>
+            <?php
+            $field_name = 'customer_sales_id';
+            $field_lable = __('customer sales');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = '';
+            ?>
+        <label for="{{ $field_name }}" style="margin-bottom: 0.2rem;">Customer Sales <span class="text-danger">*</span></label>
         <div class="input-group">
-            <select class="form-control select2" name="customer_sales_id" id="customer_sales_id" >
+            <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" >
                 <option value="" selected disabled>Pilih Customer Sales</option>
                 @foreach(\Modules\CustomerSales\Entities\CustomerSales::all() as $cust)
                 <option value="{{ $cust->id }}">{{ $cust->customer_name }}</option>
@@ -98,9 +105,16 @@
 </div>
 <div class="form-group">
     <div>
-        <label for="sales_id" style="margin-bottom: 0.2rem;">Sales <span class="text-danger">*</span></label>
+            <?php
+            $field_name = 'sales_id';
+            $field_lable = __('sales');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = '';
+            ?>
+        <label for="{{ $field_name }}" style="margin-bottom: 0.2rem;">Sales <span class="text-danger">*</span></label>
         <div class="input-group">
-            <select class="form-control select2" name="sales_id" id="sales_id" >
+            <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" >
                 <option value="" selected disabled>Pilih Sales</option>
                 @foreach(\Modules\DataSale\Models\DataSale::all() as $sale)
                 <option value="{{ $sale->id }}">{{ $sale->name }}</option>
