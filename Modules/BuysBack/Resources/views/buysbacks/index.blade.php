@@ -65,8 +65,9 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%!important;">No</th>
-                                    <th style="width: 9%!important;">No BuyBack</th>
+                                    <th style="width: 3%!important;">No</th>
+                                    <th style="width: 7%!important;">No BuyBack</th>
+                                    <th style="width: 9%!important;">Cabang</th>
                                     <th style="width: 10%!important;">Nama Customer</th>
                                     <th style="width: 10%!important;">Nama Produk</th>
                                     <th style="width: 7%!important;">Kadar</th>
@@ -135,6 +136,7 @@
                 },
 
                 {data: 'no_buy_back', name:  'no_buy_back'},
+                {data: 'cabang', name:  'cabang'},
                 {data: 'nama_customer', name:  'nama_customer'},
                 {data: 'nama_produk', name: 'nama_produk'},
                 {data: 'kadar', name: 'kadar'},

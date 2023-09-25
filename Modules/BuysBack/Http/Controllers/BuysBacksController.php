@@ -82,10 +82,16 @@ public function index_data(Request $request)
                                 })
 
                         ->editColumn('nama_customer', function ($data) {
-                            $is_member = $data->customer_id?true:false;
+                            $is_non_member = is_null($data->customer_id);
+                            $customer_name = '';
+                            if($is_non_member){
+                                $customer_name = $data->customer_name;
+                            }else{
+                                $customer_name = $data->customer->customer_name;
+                            }
                             $tb = '<div class="items-center text-center">
                                    <h3 class="text-sm font-medium text-gray-800">
-                                    ' . $is_member?$data->customer->customer_name:$data->customer_name . '</h3>
+                                    ' . $customer_name . '</h3>
                                    </div>';
                                return $tb;
                            })
@@ -119,6 +125,12 @@ public function index_data(Request $request)
                                         </div>';
                                     return $tb;
                             })
+                            ->editColumn('cabang', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->cabang->name . '
+                                        </div>';
+                                    return $tb;
+                            })
 
 
                               
@@ -134,7 +146,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['action','nama_customer','nama_produk','kadar','berat','nominal_beli','updated_at','keterangan'])
+                        ->rawColumns(['action','nama_customer','nama_produk','kadar','berat','nominal_beli','updated_at','keterangan','cabang'])
                         ->make(true);
                      }
 
@@ -286,7 +298,6 @@ public function index_data(Request $request)
 
 
  public function store(Request $request) {
-
         $validated = $request->validate([
             'no_buy_back' => 'required',
             'date' => 'required',
@@ -296,18 +307,20 @@ public function index_data(Request $request)
             'kadar' => 'required',
             'berat' => 'required',
             'nominal' => 'required',
+            'cabang_id' => 'required|exists:cabangs,id'
         ]);
         
         BuysBack::create([
             'date' => $request->input('date'),
-            'customer_id' => $request->input('customer_id')??null,
-            'customer_name' => $request->input('none_customer')??null,
+            'customer_id' => $request->input('customer') == 1?$request->input('customer_id'):null,
+            'customer_name' => $request->input('customer') == 2?$request->input('none_customer'):null,
             'note' => $request->input('note')??null,
             'no_buy_back' => $request->input('no_buy_back'),
             'product_name' => $request->input('nama_products'),
             'karat_id' => $request->input('kadar'),
             'weight' => $request->input('berat'),
-            'nominal' => $request->input('nominal')
+            'nominal' => $request->input('nominal'),
+            'cabang_id' => $request->input('cabang_id')
         ]);
 
         toast('Buys Back Created!', 'success');

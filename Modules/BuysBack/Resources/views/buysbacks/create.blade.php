@@ -103,6 +103,15 @@
         </select>
     </div>
 </div>
+<div class="form-group">
+    <div style="padding-top: 1.3rem;">
+        <select class="form-control select2" name="cabang_id" id="cabang_id" >
+            @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
+            <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
 
 </div>
 

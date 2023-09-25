@@ -5,6 +5,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Cabang\Models\Cabang;
 use Modules\JenisBuyBack\Models\JenisBuyBack;
 use Modules\Karat\Models\Karat;
 use Modules\People\Entities\Customer;
@@ -95,6 +96,10 @@ class BuysBack extends Model
 
     public function karat(){
         return $this->belongsTo(Karat::class);    
+    }
+
+    public function cabang(){
+        return $this->belongsTo(Cabang::class);
     }
 
 
