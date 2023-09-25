@@ -67,5 +67,6 @@
     "PenjualanSale": true,
     "CustomerSales": true,
     "PenerimaanBarangLuar": true,
-    "PenerimaanBarangDP": true
+    "PenerimaanBarangDP": true,
+    "BuyBackSale": true
 }
