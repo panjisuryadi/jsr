@@ -92,6 +92,9 @@ class Checkout extends Component
 
         if ($exists->isNotEmpty()) {
             session()->flash('message', 'Produk sudah ada di cart!');
+            $cartid = $exists->first()->rowId;
+            // dd($cartid);
+            // $this->updateQuantity($cartid,$product['id']);
             return;
         }
 
