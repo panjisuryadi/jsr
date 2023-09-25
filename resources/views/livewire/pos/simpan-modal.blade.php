@@ -16,7 +16,7 @@
     data-toggle="modal" 
     data-target="#simpanModal{{$result['total_with_shipping']}}">
         <i class="hover:text-red-400 bi bi-box-arrow-down md:text-4xl text-4xl text-gray-500"></i>
-         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Customer</div>
+         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Simpan</div>
     
         </button>
 
