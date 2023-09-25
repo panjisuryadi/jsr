@@ -80,15 +80,34 @@
 
 <div class="flex flex-row grid grid-cols-2 gap-2">
 <div class="form-group">
-        <input type="text" class="form-control" placeholder="Nama Customer" name="customer_name" required >
+        <label for="customer_name">Nama Customer <span class="text-danger">*</span></label>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Nama Customer" name="customer_name" required >
+            @if ($errors->has('customer_name'))
+            <span class="invalid feedback" role="alert">
+                <small class="text-danger">{{ $errors->first('customer_name') }}.</small
+                class="text-danger">
+            </span>
+            @endif
+        </div>
 </div>
 <div class="form-group">
     <div>
-        <select class="form-control select2" name="cabang_id" id="cabang_id" >
-            @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
-            <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
-            @endforeach
-        </select>
+        <label for="cabang_id">Cabang <span class="text-danger">*</span></label>
+        <div class="input-group">
+            <select class="form-control select2" name="cabang_id" id="cabang_id" >
+                <option value="" selected disabled>Pilih Cabang</option>
+                @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
+                <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
+                @endforeach
+            </select>
+            @if ($errors->has('cabang_id'))
+            <span class="invalid feedback" role="alert">
+                <small class="text-danger">{{ $errors->first('cabang_id') }}.</small
+                class="text-danger">
+            </span>
+            @endif
+        </div>
     </div>
 </div>
 
