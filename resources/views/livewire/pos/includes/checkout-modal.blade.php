@@ -10,7 +10,18 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="px-2" id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
+
+ <?php
+    $result = array (
+    'total_with_shipping' => $total_with_shipping,
+    'qty' => $jumlah ?? 0,
+    'total_amount' => $total_amount ?? 0,
+    );
+   ?>
+{{-- <livewire:pos.payment> --}}
+              
+ <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
+          
                 @csrf
                 <div class="modal-body py-0 px-3 ">
                     <div class="tab-content" id="myTabContent">
@@ -132,7 +143,7 @@
                         
                     </ul>
                 </div>
-                <div class="modal-footer">
+                <div id="ModalFooter" class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="px-5 btn bg-red-400 text-white">Submit</button>
                 </div>

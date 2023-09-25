@@ -1,7 +1,9 @@
 <?php
 
 namespace Modules\Sale\Http\Controllers;
-
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use Modules\Sale\DataTables\SalesDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
@@ -14,15 +16,120 @@ use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
 use Modules\Sale\Http\Requests\StoreSaleRequest;
 use Modules\Sale\Http\Requests\UpdateSaleRequest;
-
+use Yajra\DataTables\DataTables;
+use Carbon\Carbon;
 class SaleController extends Controller
 {
 
-    public function index(SalesDataTable $dataTable) {
-        abort_if(Gate::denies('access_sales'), 403);
+    public function __construct()
+    {
+        // Page Title
+        $this->module_title = 'Sale';
 
+        // module name
+        $this->module_name = 'sales';
+
+        // directory path of the module
+        $this->module_path = 'sale';
+
+        // module icon
+        $this->module_icon = 'fas fa-sitemap';
+
+        // module model name, path
+        $this->module_model = "Modules\Sale\Entities\Sale";
+        $this->module_detail = "Modules\Sale\Entities\SaleDetails";
+        $this->module_payment = "Modules\Sale\Entities\SalePayment";
+        $this->module_product = "Modules\Product\Entities\Product";
+
+
+    }
+
+
+ public function index() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_products'), 403);
+         return view('sale::index',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+    public function index_table(SalesDataTable $dataTable) {
+        abort_if(Gate::denies('access_sales'), 403);
         return $dataTable->render('sale::index');
     }
+
+
+
+
+
+public function index_data(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::orderBy('updated_at', 'desc')->get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_path.'::.partials.actions',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+                            ->editColumn('date', function ($data) {
+                             $tb = '<div class="text-gray-800"> 
+                                     ' .shortdate($data->date) . '</div>';
+                                return $tb;
+                            })   
+
+                            ->editColumn('reference', function ($data) {
+                             $tb = '<div class="text-center text-blue-800"> 
+                                     ' .$data->reference . '</div>';
+                                return $tb;
+                            })
+                          ->editColumn('sales', function ($data) {
+                             $tb = '<div class="px-2">
+                        <div class="small font-medium text-gray-800">Tgl: 
+                                     ' .$data->date . '</div>   
+                        <div class="text-sm font-medium text-gray-800">
+                                     <small>Invoice :</small>' .$data->customer . '</div>
+                                    </div>';
+                                return $tb;
+                            })
+            
+                        ->rawColumns(['customer', 
+                             'reference', 
+                             'date', 
+                             'sales', 
+                             'action', 
+                             'name'])
+                        ->make(true);
+                     }
+
+
+
+
+
+
 
 
     public function create() {
@@ -32,6 +139,8 @@ class SaleController extends Controller
 
         return view('sale::create');
     }
+
+
 
 
     public function store(StoreSaleRequest $request) {
@@ -104,6 +213,102 @@ class SaleController extends Controller
 
         return redirect()->route('sales.index');
     }
+
+
+
+
+public function store_ajax(StoreSaleRequest $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        // $validator = \Validator::make($request->all(),[
+        //      'name' => 'required|max:191|unique:'.$module_model.',name',
+        //      'value' => 'required|max:191',
+
+        // ]);
+        // if (!$validator->passes()) {
+        //   return response()->json(['error'=>$validator->errors()]);
+        // }
+
+           DB::transaction(function () use ($request) {
+            $due_amount = $request->total_amount - $request->paid_amount;
+
+            if ($due_amount == $request->total_amount) {
+                $payment_status = 'Unpaid';
+            } elseif ($due_amount > 0) {
+                $payment_status = 'Partial';
+            } else {
+                $payment_status = 'Paid';
+            }
+
+            $sale = Sale::create([
+                'date' => $request->date,
+                'customer_id' => $request->customer_id,
+                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
+                'tax_percentage' => $request->tax_percentage,
+                'discount_percentage' => $request->discount_percentage,
+                'shipping_amount' => $request->shipping_amount * 100,
+                'paid_amount' => $request->paid_amount * 100,
+                'total_amount' => $request->total_amount * 100,
+                'due_amount' => $due_amount * 100,
+                'status' => $request->status,
+                'payment_status' => $payment_status,
+                'payment_method' => $request->payment_method,
+                'note' => $request->note,
+                'tax_amount' => Cart::instance('sale')->tax() * 100,
+                'discount_amount' => Cart::instance('sale')->discount() * 100,
+            ]);
+
+            foreach (Cart::instance('sale')->content() as $cart_item) {
+                SaleDetails::create([
+                    'sale_id' => $sale->id,
+                    'product_id' => $cart_item->id,
+                    'product_name' => $cart_item->name,
+                    'product_code' => $cart_item->options->code,
+                    'quantity' => $cart_item->qty,
+                    'price' => $cart_item->price * 100,
+                    'unit_price' => $cart_item->options->unit_price * 100,
+                    'sub_total' => $cart_item->options->sub_total * 100,
+                    'product_discount_amount' => $cart_item->options->product_discount * 100,
+                    'product_discount_type' => $cart_item->options->product_discount_type,
+                    'product_tax_amount' => $cart_item->options->product_tax * 100,
+                ]);
+
+                if ($request->status == 'Shipped' || $request->status == 'Completed') {
+                    $product = Product::findOrFail($cart_item->id);
+                    $product->update([
+                        'product_quantity' => $product->product_quantity - $cart_item->qty
+                    ]);
+                }
+            }
+
+            Cart::instance('sale')->destroy();
+
+            if ($sale->paid_amount > 0) {
+                SalePayment::create([
+                    'date' => $request->date,
+                    'reference' => 'INV/'.$sale->reference,
+                    'amount' => $sale->paid_amount,
+                    'sale_id' => $sale->id,
+                    'payment_method' => $request->payment_method
+                ]);
+            }
+        });
+
+        return response()->json(['success'=>'Sales Sukses disimpan.']);
+    }
+
+
+
+
+
+
+
+
 
 
     public function show(Sale $sale) {

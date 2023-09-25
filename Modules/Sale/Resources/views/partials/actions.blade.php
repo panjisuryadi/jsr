@@ -1,3 +1,39 @@
+<div class="text-center">
+ @can('edit_sales')
+    <a target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}"
+     class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-print"></i>&nbsp;@lang('Print')
+    </a>
+@endcan
+
+ @can('show_sales')
+    
+    <a href="{{ route('sales.show', $data->id) }}"
+     class="btn btn-outline-success btn-sm">
+        <i class="bi bi-eye"></i> &nbsp;@lang('View')
+    </a>     
+   @endcan
+
+ @can('delete_sales')
+ <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
+                event.preventDefault();
+                if (confirm('Are you sure? It will delete the data permanently!')) {
+                document.getElementById('destroy{{ $data->id }}').submit()
+                }">
+                <i class="bi bi-eye"></i> &nbsp;@lang('Delete')
+                <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('sales.destroy', $data->id) }}" method="POST">
+                    @csrf
+                    @method('delete')
+                </form>
+            </button>
+        @endcan
+
+</div>
+
+
+{{-- 
+
+
 <div class="btn-group dropleft">
     <button type="button" class="btn btn-ghost-primary dropdown rounded" data-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-three-dots-vertical"></i>
@@ -43,3 +79,4 @@
         @endcan
     </div>
 </div>
+ --}}

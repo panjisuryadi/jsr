@@ -507,6 +507,19 @@ if (!function_exists('pstatus')) {
          }
       }
 
+ if (!function_exists('shortdate')) {
+        function shortdate($value)
+        {
+
+        $date = '';
+        $date = \Carbon\Carbon::parse($value);
+        $tgl = $date->format('d/m/Y');
+    
+         return $date = ''. $tgl.'';
+
+         }
+      }
+
 
       if (!function_exists('tgl')) {
         function tgl($value)

@@ -6,11 +6,12 @@ use Livewire\Component;
 
 class Payment extends Component
 {
-    public $listeners = ['cartModal'];
+    public $listeners = ['cartModal','cartAdded'];
     public $total_with_shipping;
     public $bayar = 0;
     public $total_amount = 0;
     public $grandtotal = 0;
+    public $cart = [];
   
  public function updated()
 {
@@ -18,9 +19,20 @@ class Payment extends Component
 }
 
     public function render() {
-        return view('livewire.pos.payment');
+  
+         $cart =  $this->cart;
+         //dd($cart);
+        return view('livewire.pos.payment', [
+            'cart' => $cart
+        ]);
     }
 
+
+     public function cartAdded($cart)
+    {
+        // dd($this->cart);
+         $this->cart = $cart;
+    }
 
 public function calculate()
        {

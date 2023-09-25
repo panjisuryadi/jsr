@@ -8,9 +8,6 @@
     );
 ?>
 
-
-
-
  <button class="text-center  hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" 
     role="button" 
     data-toggle="modal" 
@@ -35,11 +32,7 @@
             </div>
             <form  method="POST">
      <div style="text-align:left !important;" class="modal-body items-baseline">
-                   
- 
- 
-
-    <div class="form-group">
+         <div class="form-group">
         <label for="note">Catatan (Jika diperlukan)</label>
         <textarea name="note" id="note" rows="3" class="form-control"></textarea>
     </div>

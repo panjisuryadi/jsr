@@ -1689,7 +1689,7 @@ public function saveAjax(Request $request)
         $params['product_code'] = $params['product_code'];
     
         
-       if ($image = $request->file('images')) {
+         if ($image = $request->file('images')) {
                       if ($$module_name_singular->image !== 'no_foto.png') {
                           @unlink(imageUrl() . $$module_name_singular->image);
                         }

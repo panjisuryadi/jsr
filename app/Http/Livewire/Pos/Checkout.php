@@ -22,6 +22,7 @@ class Checkout extends Component
     public $data;
     public $customer_id;
     public $total_amount;
+   
 
     public function mount($cartInstance, $customers) {
         $this->cart_instance = $cartInstance;
@@ -33,6 +34,7 @@ class Checkout extends Component
         $this->quantity = [];
         $this->discount_type = [];
         $this->item_discount = [];
+        $this->cart = [];
         $this->total_amount = 0;
         $this->grand_total = 0;
     }
@@ -55,12 +57,19 @@ class Checkout extends Component
 
     public function proceed() {
         if ($this->customer_id != null) {
-            //dd('sdsdsdsd');
-     
-            $this->dispatchBrowserEvent('showCheckoutModal', [
-            'customer' => Cart::instance($this->cart_instance)->content()
-            ]);
-            $this->selectcartModal();
+           //  $cart = $this->total_amount;
+             $cart = [
+                   "customer_id" => $this->customer_id,
+                   "total_amount" => $this->total_amount,
+                   "paid" => $this->total_amount];
+           // dd($cart);
+             $this->emit('cartAdded', $cart);
+             $this->dispatchBrowserEvent('showCheckoutModal', 
+                [  
+                    'customer_id' => $this->customer_id
+
+                 ]);
+          
           
         } else {
             session()->flash('message', 'Please Select Customer!');
