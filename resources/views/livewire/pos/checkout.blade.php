@@ -158,9 +158,6 @@
 
 </div>
 
-
-
-
     {{--Checkout Modal--}}
     @include('livewire.pos.includes.checkout-modal')
 
