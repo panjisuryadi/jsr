@@ -1,4 +1,4 @@
-<div class="pt-3">
+<div>
     <div class="form-group">
         <?php
         $field_name = 'kadar';

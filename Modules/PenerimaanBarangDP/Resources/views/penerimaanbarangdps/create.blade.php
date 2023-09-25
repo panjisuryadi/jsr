@@ -129,7 +129,28 @@ margin-bottom: 0.5rem !important;
                                             </div>
                                         </div>
                                     </div>
-                                    @livewire('penerimaan-barang-dp.karat')
+                                    <div>
+                                    <div class="form-group mt-5">
+                                        <div>
+                                            <label for="cabang_id">Cabang <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <select class="form-control select2" name="cabang_id" id="cabang_id" >
+                                                    <option value="" selected disabled>Pilih Cabang</option>
+                                                    @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
+                                                    <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('cabang_id'))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first('cabang_id') }}.</small
+                                                    class="text-danger">
+                                                </span>
+                                            @endif
+                                            </div>
+                                        </div>
+                                    </div> 
+                                        @livewire('penerimaan-barang-dp.karat')
+                                    </div>
                                 </div>
                                 <div class="mt-3">
                                     @livewire('penerimaan-barang-dp.pembayaran')

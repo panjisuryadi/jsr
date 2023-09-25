@@ -34,14 +34,13 @@
                                 <tr>
                                     <th style="width: 4%!important;">No</th>
                                    <th style="width: 13%!important;" class="text-center">{{ __('No Barang DP') }}</th>
+                                   <th style="width: 13%!important;" class="text-center">{{ __('Cabang') }}</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('Nama Pemilik') }}</th>
                                    <th style="width: 10%!important;" class="text-center">{{ __('Kadar') }}</th>
                                    <th style="width: 9%!important;" class="text-center">{{ __('Berat') }}</th>
                                    <th style="width: 10%!important;" class="text-center">{{ __('Nominal DP') }}</th>
                                    <th style="width: 12%!important;" class="text-center">{{ __('Keterangan') }}</th>
-                                    <th style="width: 12%!important;" class="text-center">
-                                         {{ __('Updated') }}
-                                    </th>
+                                    
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
@@ -104,12 +103,12 @@
                 },
 
                 {data: 'no_barang_dp', name: 'no_barang_dp'},
+                {data: 'cabang', name: 'cabang'},
                 {data: 'nama_pemilik', name: 'nama_pemilik'},
                 {data: 'kadar', name: 'kadar'},
                 {data: 'berat', name: 'berat'},
                 {data: 'nominal_dp', name: 'nominal_dp'},
                 {data: 'keterangan', name: 'keterangan'},
-                {data: 'updated_at', name: 'updated_at'},
 
                 {
                     data: 'action',

@@ -117,17 +117,15 @@ public function index_data(Request $request)
                                         </div>';
                                     return $tb;
                             })
-                           ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
-
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                            }
-                        })
-                        ->rawColumns(['updated_at', 'action', 'no_barang_dp','nama_pemilik','kadar','berat','nominal_dp','keterangan'])
+                            ->editColumn('cabang', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                        <h3 class="text-sm font-medium text-gray-800">
+                                        ' .$data->cabang->name . '</h3>
+                                        </div>';
+                                    return $tb;
+                            })
+                           
+                        ->rawColumns(['updated_at', 'action', 'no_barang_dp','nama_pemilik','kadar','berat','nominal_dp','keterangan','cabang'])
                         ->make(true);
                      }
 
@@ -220,6 +218,7 @@ public function store(Request $request)
 
        $request->validate([
          'no_barang_dp' => 'required|max:255|unique:'.$module_model.',no_barang_dp',
+         'cabang_id' => 'required|exists:cabangs,id',
          'date' => 'required',
          'nama_pemilik' => 'required',
          'no_hp' => 'required',
@@ -238,6 +237,7 @@ public function store(Request $request)
         try{
             $$module_name_singular = $module_model::create([
                 'no_barang_dp' => $input['no_barang_dp'],
+                'cabang_id' => $input['cabang_id'],
                 'date' => $input['date'],
                 'owner_name'=> $input['nama_pemilik'],
                 'contact_number' => $input['no_hp'],
