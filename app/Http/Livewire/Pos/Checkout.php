@@ -119,9 +119,9 @@ class Checkout extends Component
                 'sub_total'             => 1,
                 'code'                  => $product['product_code'],
                 'stock'                 => 1,
-                'unit'                  => $product['product_unit'],
-                'karat_id'              =>$product['product_item'][0]['karat']['id'],
-                'karat'                 =>$product['product_item'][0]['karat']['name'],
+                'unit'          => $product['product_unit'],
+                'karat_id'      =>$product['product_item'][0]['karat']['id'],
+                'karat'         =>$product['product_item'][0]['karat']['name'],
                 'harga_karat'   =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
 
                 'product_tax'           => 1,

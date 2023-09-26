@@ -86,7 +86,7 @@
                                        
 
                                         <td class="align-middle">
-                             {{ format_currency( @$item->karat->penentuanHarga->harga_emas) }}
+                                       {{ format_currency( @$item->price) }}
                                         </td>
                                     </tr>
                                 @endforeach
