@@ -34,6 +34,7 @@ use App\Models\ActivityLog;
 use Milon\Barcode\Facades\DNS1DFacade;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
+use Auth;
 class ProductController extends Controller
 {
 
@@ -1441,17 +1442,19 @@ public function saveAjax(Request $request)
        
         $model = ProdukModel::where('id', $input['produk_model'])->first();
         $group = Group::where('id', $input['group_id'])->first();
+        $group = Group::where('id', $input['group_id'])->first();
 
           $$module_name_singular = $module_model::create([
-            'category_id'                       => $input['category'],
-            'cabang_id'                         => $input['cabang_id'],
-            'product_stock_alert'               => $input['product_stock_alert'],
-            'product_name'                      => $group->name .' '. $model->name ?? 'unknown',
-            'product_code'                      => $input['product_code'],
+            'category_id'                => $input['category'],
+            'cabang_id'                  => $input['cabang_id'],
+            'product_stock_alert'        => $input['product_stock_alert'],
+             'product_name'              => $group->name .' '. $model->name ?? 'unknown',
+            'product_code'               => $input['product_code'],
+            'user_id'                    => Auth::user()->id,
         
          
-            'product_barcode_symbology'         => $input['product_barcode_symbology'],
-            'product_unit'                      => $input['product_unit']
+            'product_barcode_symbology'  => $input['product_barcode_symbology'],
+            'product_unit'               => $input['product_unit']
               ]);
 
             if ($request->filled('image')) {

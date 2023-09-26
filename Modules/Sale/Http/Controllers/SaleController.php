@@ -53,7 +53,7 @@ class SaleController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_products'), 403);
+        abort_if(Gate::denies('access_sales'), 403);
          return view('sale::index',
            compact('module_name',
             'module_action',
