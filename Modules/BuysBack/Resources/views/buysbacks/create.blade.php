@@ -143,9 +143,12 @@
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
+        @if ($errors->has($field_name))
+            <span class="invalid feedback" role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+        @endif
     </div>
  <div class="form-group">
         <?php
@@ -162,9 +165,12 @@
             <option value="{{ $karat->id }}">{{ $karat->name }}</option>
             @endforeach
         </select>
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
+        @if ($errors->has($field_name))
+            <span class="invalid feedback" role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+        @endif
     </div>
     <div class="form-group">
         <?php
@@ -182,9 +188,12 @@
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
+        @if ($errors->has($field_name))
+            <span class="invalid feedback" role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+        @endif
     </div>
 
 
@@ -208,9 +217,12 @@
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
+        @if ($errors->has($field_name))
+            <span class="invalid feedback" role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+        @endif
     </div>
 
 

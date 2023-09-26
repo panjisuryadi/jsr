@@ -21,7 +21,7 @@ class PenerimaanBarangLuarsController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'PenerimaanBarangLuar';
+        $this->module_title = 'Penerimaan Barang Luar';
         $this->module_name = 'penerimaanbarangluar';
         $this->module_path = 'penerimaanbarangluars';
         $this->module_icon = 'fas fa-sitemap';

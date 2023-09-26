@@ -53,7 +53,7 @@
                         <div>
          <a href="{{ route(''.$module_name.'.create') }}"
                                     data-toggle="tooltip"
-                                 class="btn btn-primary btn-sm px-3">
+                                 class="btn btn-primary btn-md px-3">
                                  <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
                                 </a>
  
