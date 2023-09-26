@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
+use Modules\BuyBackSale\Events\BuyBackSaleCreated;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
@@ -212,7 +213,7 @@ public function store(Request $request)
             'nominal' => 'required',
         ]);
         
-        BuyBackSale::create([
+        $buybackSale = BuyBackSale::create([
             'date' => $request->input('date'),
             'customer_sales_id' => $request->input('customer_sales_id'),
             'sales_id' => $request->input('sales_id'),
@@ -223,6 +224,8 @@ public function store(Request $request)
             'weight' => $request->input('berat'),
             'nominal' => $request->input('nominal'),
         ]);
+
+        event(new BuyBackSaleCreated($buybackSale));
 
         toast('Buy Back Sale Created!', 'success');
         return redirect()->route('buybacksale.index');

@@ -5,7 +5,8 @@
     "keywords": [],
     "priority": 0,
     "providers": [
-        "Modules\\BuyBackSale\\Providers\\BuyBackSaleServiceProvider"
+        "Modules\\BuyBackSale\\Providers\\BuyBackSaleServiceProvider",
+        "Modules\\BuyBackSale\\Providers\\EventServiceProvider"
     ],
     "aliases": {},
     "files": [],
