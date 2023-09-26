@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
-
+use Modules\PenerimaanBarangLuar\Events\PenerimaanBarangLuarCreated;
 use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuar;
 
 class PenerimaanBarangLuarsController extends Controller
@@ -218,7 +218,7 @@ public function store(Request $request)
             'cabang_id' => 'required|exists:cabangs,id'
         ]);
         
-        PenerimaanBarangLuar::create([
+        $penerimaanBarangLuar = PenerimaanBarangLuar::create([
             'date' => $request->input('date'),
             'customer_name' => $request->input('customer_name')??null,
             'note' => $request->input('note')??null,
@@ -229,7 +229,7 @@ public function store(Request $request)
             'nominal' => $request->input('nominal'),
             'cabang_id' => $request->input('cabang_id')
         ]);
-
+        event(new PenerimaanBarangLuarCreated($penerimaanBarangLuar));
         toast('Penerimaan Barang Luar Created!', 'success');
         return redirect()->route('penerimaanbarangluar.index');
     }

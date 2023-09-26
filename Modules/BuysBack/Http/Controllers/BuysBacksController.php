@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
+use Modules\BuysBack\Events\BuysBackCreated;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
@@ -310,7 +311,7 @@ public function index_data(Request $request)
             'cabang_id' => 'required|exists:cabangs,id'
         ]);
         
-        BuysBack::create([
+        $newBuyBack = BuysBack::create([
             'date' => $request->input('date'),
             'customer_id' => $request->input('customer') == 1?$request->input('customer_id'):null,
             'customer_name' => $request->input('customer') == 2?$request->input('none_customer'):null,
@@ -322,6 +323,8 @@ public function index_data(Request $request)
             'nominal' => $request->input('nominal'),
             'cabang_id' => $request->input('cabang_id')
         ]);
+
+        event(new BuysBackCreated($newBuyBack));
 
         toast('Buys Back Created!', 'success');
         return redirect()->route('buysback.index');
