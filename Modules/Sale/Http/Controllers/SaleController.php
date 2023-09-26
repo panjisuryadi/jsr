@@ -82,8 +82,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::orderBy('updated_at', 'desc')->get();
-
+        $$module_name = $module_model::akses()->orderBy('updated_at', 'desc')->get();
         $data = $$module_name;
 
         return Datatables::of($$module_name)
