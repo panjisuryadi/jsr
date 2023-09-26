@@ -5,7 +5,8 @@
     "keywords": [],
     "priority": 0,
     "providers": [
-        "Modules\\PenerimaanBarangLuarSale\\Providers\\PenerimaanBarangLuarSaleServiceProvider"
+        "Modules\\PenerimaanBarangLuarSale\\Providers\\PenerimaanBarangLuarSaleServiceProvider",
+        "Modules\\PenerimaanBarangLuarSale\\Providers\\EventServiceProvider"
     ],
     "aliases": {},
     "files": [],

@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use Modules\PenerimaanBarangLuarSale\Events\PenerimaanBarangLuarSaleCreated;
 use Modules\PenerimaanBarangLuarSale\Models\PenerimaanBarangLuarSale;
 
 class PenerimaanBarangLuarSalesController extends Controller
@@ -224,7 +225,7 @@ public function store(Request $request)
             'nominal' => $request->input('nominal'),
         ]);
 
-        // event(new BuyBackSaleCreated($buybackSale));
+        event(new PenerimaanBarangLuarSaleCreated($penerimaanBarangLuar));
 
         toast($this->module_title, 'success');
         return redirect()->route('penerimaanbarangluarsale.index');
