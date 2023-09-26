@@ -903,6 +903,19 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penerimaan Barang Luar Sales'), [
+                'route' => 'penerimaanbarangluarsale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 5,
+                'activematches' => ['penerimaanbarangluarsales*'],
+                'permission'    => ['access_penerimaanbarangluarsales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
 
       
 

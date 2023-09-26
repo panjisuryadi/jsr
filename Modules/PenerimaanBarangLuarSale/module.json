@@ -1,0 +1,13 @@
+{
+    "name": "PenerimaanBarangLuarSale",
+    "alias": "penerimaanbarangluarsale",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\PenerimaanBarangLuarSale\\Providers\\PenerimaanBarangLuarSaleServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
