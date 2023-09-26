@@ -375,8 +375,8 @@ class GenerateMenus
 
 
 
-// pembelian
-            $Purchases = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
+         // pembelian
+ $Purchases = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -463,6 +463,43 @@ class GenerateMenus
     //         ->link->attr([
     //             'class' => 'c-sidebar-nav-link py-2',
     //         ]);
+
+
+
+
+// Penjualan
+    $Penjualan = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-cart"></i>'.__('Penjualan').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => [
+                    'sales*',
+
+                ],
+                'permission'    => ['access_sales'],
+            ]);
+            $Penjualan->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // 
+            $Penjualan->add('
+                <i class="c-sidebar-nav-icon bi bi-chevron-right mb-2"></i>
+                '.__('List Penjualan').'',
+                 [
+                'route' => 'sales.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'sales*',
+                'permission'    => ['access_sales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
 
 

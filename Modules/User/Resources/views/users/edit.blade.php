@@ -65,7 +65,7 @@
                     <div class="card">
                         <div class="card-body">
 
-<div class="flex flex-row grid grid-cols-3 gap-2">
+<div class="flex flex-row grid grid-cols-2 gap-2">
     <div class="form-group">
         <label for="name">Name <span class="text-danger">*</span></label>
         <input class="form-control" type="text" name="name" required value="{{ $user->name }}">
@@ -74,14 +74,7 @@
         <label for="email">Email <span class="text-danger">*</span></label>
         <input class="form-control" type="email" name="email" required value="{{ $user->email }}">
     </div>
-      <div class="form-group">
-                                <label for="role">Role <span class="text-danger">*</span></label>
-                                <select class="form-control" name="role" id="role" required>
-                                    @foreach(\Spatie\Permission\Models\Role::where('name', '!=', 'Super Admin')->get() as $role)
-                                        <option {{ $user->hasRole($role->name) ? 'selected' : '' }} value="{{ $role->name }}">{{ $role->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+     
 </div>
 <div class="flex flex-row grid grid-cols-2 gap-2">
 
@@ -107,6 +100,46 @@
         </span>
     </div>
 </div>
+
+<div class="flex flex-row grid grid-cols-2 gap-2">
+    <div class="form-group">
+        <label for="is_active">Cabang <span class="text-danger">*</span></label>
+{{-- {{$user->namacabang->user_id}} --}}
+<select class="form-control" name="cabang_id" id="cabang_id" required>
+ <option value="" selected disabled>Select Cabang</option>
+         @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
+            <option value="{{ $cabang->id }}" {{ (old('cabang_id',$user->namacabang->cabang_id) == $cabang->id) ? 'selected' : '' }}>
+               {{ $cabang->code }} | {{ $cabang->name }}
+            </option>
+        @endforeach
+
+        </select>
+
+    </div>
+<div class="form-group">
+<label for="role">Role <span class="text-danger">*</span></label>
+<select class="form-control" name="role" id="role" required>
+    @foreach(\Spatie\Permission\Models\Role::where('name', '!=', 'Super Admin')->get() as $role)
+        <option {{ $user->hasRole($role->name) ? 'selected' : '' }} value="{{ $role->name }}">{{ $role->name }}</option>
+    @endforeach
+</select>
+</div>
+
+
+    
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
