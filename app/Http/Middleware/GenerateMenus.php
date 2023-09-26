@@ -49,16 +49,9 @@ class GenerateMenus
                     'itemshapes*',
 
                 ],
-                'permission' => ['create_products',
-                                      'access_product_categories',
-                                      'access_itemrounds',
-                                      'access_masterdata',
-                                      'access_itemshapes',
-                                      'access_karats',
+                'permission' => ['access_masterdata',
                                       'access_kategoriproduks',
-                                      'access_diamondcertificates',
-                                      'itemclarities',
-                                      'access_products'],
+                                      'access_diamondcertificates'],
             ]);
             $masterData->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -519,13 +512,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                     'penentuanhargas*',
                     'datasales*',
                 ],
-                'permission' => ['create_products',
-                                      'print_barcodes',
-                                      'access_product_transfer',
-                                      'access_timbangans',
-                                      'access_penentuanhargas',
-                                      'access_datasales',
-                                      'access_products'],
+                'permission' => ['access_inventory'],
             ]);
             $products->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -680,8 +667,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                         'activematches' => [
                                    'stoks*',
                                   ],
-                          'permission' => ['create_products',
-                                             'access_stoks'],
+                          'permission' => ['access_stoks'],
                     ]);
                     $stok->link->attr([
                         'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -839,8 +825,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                     'penjualansales*',
 
                 ],
-                'permission'    => ['access_penjualansales',
-                'access_distribusisales','access_datasales'],
+                'permission'    => ['access_distribusisales'],
             ]);
             $distribusisales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
