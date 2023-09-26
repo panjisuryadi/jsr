@@ -18,6 +18,7 @@ use Modules\Sale\Http\Requests\StoreSaleRequest;
 use Modules\Sale\Http\Requests\UpdateSaleRequest;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use Modules\Cabang\Models\Cabang;
 class SaleController extends Controller
 {
 
@@ -53,11 +54,13 @@ class SaleController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
+        $cabangs = Cabang::get();
         abort_if(Gate::denies('access_sales'), 403);
          return view('sale::index',
            compact('module_name',
             'module_action',
             'module_title',
+            'cabangs',
             'module_icon', 'module_model'));
     }
 
@@ -130,18 +133,17 @@ public function index_data(Request $request)
                                      ' .format_currency($data->total_amount) . '</div>';
                                 return $tb;
                             })
-                     
-            
-                        ->rawColumns(['customer', 
-                             'reference', 
-                             'date', 
-                             'sales', 
-                             'cabang', 
-                             'status', 
-                             'total_amount', 
-                             'action', 
-                             'name'])
-                        ->make(true);
+
+                                ->rawColumns(['customer', 
+                                     'reference', 
+                                     'date', 
+                                     'sales', 
+                                     'cabang', 
+                                     'status', 
+                                     'total_amount', 
+                                     'action', 
+                                     'name'])
+                                ->make(true);
                      }
 
 

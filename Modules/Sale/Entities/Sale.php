@@ -28,7 +28,7 @@ class Sale extends Model
         {
 
             $users = Auth::user()->id;
-             if ($users == 7) {
+             if ($users == 1) {
                 return $query;
             }
 
