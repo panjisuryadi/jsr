@@ -353,7 +353,7 @@ public function store_ajax(StoreSaleRequest $request)
         $sale = Sale::findOrFail($id);
         $pdf = PDF::loadView('sale::nota', [
             'sale' => $sale,
-        ])->setPaper('a7')
+        ])->setPaper('a6')
             ->setOption('margin-top', 8)
             ->setOption('margin-bottom', 8)
             ->setOption('margin-left', 2)

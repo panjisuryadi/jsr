@@ -76,9 +76,9 @@
                 <tr>
                     <td colspan="2">
                         {{ $saleDetail->product->product_name }}
-                        ({{ $saleDetail->karat }} x {{ format_currency($saleDetail->price) }})
+                        ({{ $saleDetail->karat->name }} x {{ format_currency($saleDetail->price) }})
                     </td>
-                    <td style="text-align:right;vertical-align:bottom">{{ format_currency($saleDetail->sub_total) }}</td>
+                    <td style="text-align:right;vertical-align:bottom">{{ format_currency($saleDetail->price) }}</td>
                 </tr>
             @endforeach
 
