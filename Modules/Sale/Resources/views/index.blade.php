@@ -50,7 +50,7 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 3%!important;">No</th>
+ <th style="width: 3%!important;">No</th>
 
   <th style="width: 10%!important;" class="text-center">{{ Label_Case('date') }}</th>
   <th style="width: 11%!important;" class="text-center">{{ Label_Case('Cabang') }}</th>
