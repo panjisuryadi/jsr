@@ -1,32 +1,38 @@
-<div class="text-center">
- @can('print_sales')
-    <a target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}"
-     class="btn btn-outline-primary btn-sm">
-        <i class="bi bi-print"></i>&nbsp;@lang('Print')
-    </a>
-@endcan
+<div class="items-center justify-items-center text-center">
 
- @can('show_sales')
-    
-    <a href="{{ route('sales.show', $data->id) }}"
-     class="btn btn-outline-success btn-sm">
-        <i class="bi bi-eye"></i> &nbsp;@lang('View')
-    </a>     
-   @endcan
+<!-- Example single danger button -->
+<div class="w-full btn-group">
+  <button type="button" class="px-5 btn-sm btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Aksi
+  </button>
+  <div class="dropdown-menu">
+     @can('print_sales')
+    <a class="dropdown-item" target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}"> <i class="bi bi-printer"></i>&nbsp;@lang('Print')</a>
+     @endcan
 
- @can('delete_sales')
- <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
+     @can('show_sales')
+    <a class="dropdown-item" href="{{ route('sales.show', $data->id) }}"><i class="bi bi-eye"></i> &nbsp;@lang('View')</a>
+      @endcan
+
+
+         @can('delete_sales')
+    <button id="delete" class="dropdown-item px-2 ml-2 hover:no-underline" onclick="
                 event.preventDefault();
                 if (confirm('Are you sure? It will delete the data permanently!')) {
                 document.getElementById('destroy{{ $data->id }}').submit()
                 }">
-                <i class="bi bi-eye"></i> &nbsp;@lang('Delete')
+                <i class="bi bi-trash"></i> &nbsp;@lang('Delete')
                 <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('sales.destroy', $data->id) }}" method="POST">
                     @csrf
                     @method('delete')
                 </form>
             </button>
-        @endcan
+      @endcan
+    
+
+  </div>
+</div>
+
 
 </div>
 

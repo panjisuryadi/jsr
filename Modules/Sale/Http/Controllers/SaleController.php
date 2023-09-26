@@ -18,6 +18,7 @@ use Modules\Sale\Http\Requests\StoreSaleRequest;
 use Modules\Sale\Http\Requests\UpdateSaleRequest;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use Modules\Cabang\Models\Cabang;
 class SaleController extends Controller
 {
 
@@ -53,11 +54,13 @@ class SaleController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_products'), 403);
+        $cabangs = Cabang::get();
+        abort_if(Gate::denies('access_sales'), 403);
          return view('sale::index',
            compact('module_name',
             'module_action',
             'module_title',
+            'cabangs',
             'module_icon', 'module_model'));
     }
 
@@ -82,8 +85,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::orderBy('updated_at', 'desc')->get();
-
+        $$module_name = $module_model::akses()->orderBy('updated_at', 'desc')->get();
         $data = $$module_name;
 
         return Datatables::of($$module_name)
@@ -95,34 +97,53 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                            ->editColumn('date', function ($data) {
-                             $tb = '<div class="text-gray-800"> 
+                           ->editColumn('date', function ($data) {
+                             $tb = '<div class="text-center text-gray-800"> 
                                      ' .shortdate($data->date) . '</div>';
                                 return $tb;
-                            })   
-
+                            })
                             ->editColumn('reference', function ($data) {
                              $tb = '<div class="text-center text-blue-800"> 
                                      ' .$data->reference . '</div>';
                                 return $tb;
-                            })
-                          ->editColumn('sales', function ($data) {
-                             $tb = '<div class="px-2">
-                        <div class="small font-medium text-gray-800">Tgl: 
-                                     ' .$data->date . '</div>   
-                        <div class="text-sm font-medium text-gray-800">
-                                     <small>Invoice :</small>' .$data->customer . '</div>
-                                    </div>';
+                            })  
+
+                            ->editColumn('cabang', function ($data) {
+                             $tb = '<div class="text-center text-blue-800"> 
+                                     ' .@$data->cabang->name . '</div>';
                                 return $tb;
                             })
-            
-                        ->rawColumns(['customer', 
-                             'reference', 
-                             'date', 
-                             'sales', 
-                             'action', 
-                             'name'])
-                        ->make(true);
+
+                            ->editColumn('customer', function ($data) {
+                             $tb = '<div class="text-center text-green-800"> 
+                                     ' .@$data->customer->customer_name . '</div>';
+                                return $tb;
+                            })
+
+                        ->addColumn('status', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_path.'::.partials.status',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+                         ->editColumn('total_amount', function ($data) {
+                             $tb = '<div class="text-center text-gray-800"> 
+                                     ' .format_currency($data->total_amount) . '</div>';
+                                return $tb;
+                            })
+
+                                ->rawColumns(['customer', 
+                                     'reference', 
+                                     'date', 
+                                     'sales', 
+                                     'cabang', 
+                                     'status', 
+                                     'total_amount', 
+                                     'action', 
+                                     'name'])
+                                ->make(true);
                      }
 
 
@@ -155,6 +176,8 @@ public function index_data(Request $request)
                 $payment_status = 'Paid';
             }
 
+
+            
             $sale = Sale::create([
                 'date' => $request->date,
                 'customer_id' => $request->customer_id,
@@ -171,6 +194,7 @@ public function index_data(Request $request)
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' => Cart::instance('sale')->discount() * 100,
+               
             ]);
 
             foreach (Cart::instance('sale')->content() as $cart_item) {
@@ -245,6 +269,9 @@ public function store_ajax(StoreSaleRequest $request)
                 $payment_status = 'Paid';
             }
 
+            $input = $request->all();
+            $input = $request->except(['document']);
+            dd($input);
             $sale = Sale::create([
                 'date' => $request->date,
                 'customer_id' => $request->customer_id,

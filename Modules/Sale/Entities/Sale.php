@@ -1,9 +1,11 @@
 <?php
 
 namespace Modules\Sale\Entities;
-
+use Modules\Cabang\Models\Cabang;
+use Modules\People\Entities\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Auth;
 
 class Sale extends Model
 {
@@ -14,6 +16,27 @@ class Sale extends Model
     public function saleDetails() {
         return $this->hasMany(SaleDetails::class, 'sale_id', 'id');
     }
+
+    public function cabang() {
+        return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
+    }
+   public function customer() {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+     public function scopeAkses($query)
+        {
+
+            $users = Auth::user()->id;
+             if ($users == 1) {
+                return $query;
+            }
+
+    return $query->where('cabang_id', Auth::user()->namacabang->cabang()->first()->id);
+        }
+
+
+
 
     public function salePayments() {
         return $this->hasMany(SalePayment::class, 'sale_id', 'id');

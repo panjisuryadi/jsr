@@ -17,14 +17,30 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
+                   <div class="flex justify-between">       
                 <p class="uppercase text-lg text-gray-600 font-semibold">
                       Data <span class="text-yellow-500 uppercase">SALES</span>
                   </p>
-                         {{--   <a href="{{ route(''.$module_name.'.create') }}"
-                               
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a> --}}
+                  @php
+                  $users = Auth::user()->id;
+                  @endphp
+
+                  @if($users == 1)
+                  <div class="form-group px-4">
+                    <select class="form-control form-control-sm select2" data-placeholder="Pilih Cabang" tabindex="1" name="cabang_id" id="cabang_id">
+                        <option value="">Pilih Cabang</option>
+                           @foreach($cabangs as $k)
+                            <option value="{{$k->id}}" {{ old("id") == $k ? 'selected' : '' }}>{{$k->name}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                  @else
+                   <p class="uppercase text-lg text-gray-600 font-semibold">
+                     &nbsp;| {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }} 
+                  </p>
+                 
+                  @endif
+                  </div>  
 
                         </div>
                         <div id="buttons">
@@ -36,13 +52,15 @@
                                 <tr>
                                     <th style="width: 3%!important;">No</th>
 
-  <th style="width: 15%!important;" class="text-center">{{ Label_Case('date') }}</th>
-  <th style="width: 15%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
-  <th style="width: 15%!important;" class="text-center">{{ Label_Case('Harga') }}</th>
+  <th style="width: 10%!important;" class="text-center">{{ Label_Case('date') }}</th>
+  <th style="width: 11%!important;" class="text-center">{{ Label_Case('Cabang') }}</th>
+  <th style="width: 11%!important;" class="text-center">{{ Label_Case('Kostumer') }}</th>
+  <th style="width: 9%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
+  <th style="width: 15%!important;" class="text-center">{{ Label_Case('Nominal') }}</th>
  <th style="width: 10%!important;" class="text-center">{{ Label_Case('status') }}</th>
 
                      
- <th style="width: 18%!important;" class="text-center"> {{ __('Action') }} </th>
+ <th style="width: 8%!important;" class="text-center"> {{ __('Action') }} </th>
                                 </tr>
                             </thead>
                         </table>
@@ -57,6 +75,8 @@
 <x-library.datatable />
 @push('page_scripts')
    <script type="text/javascript">
+    jQuery.noConflict();
+      (function( $ ) {
         $('#datatable').DataTable({
            processing: true,
            serverSide: true,
@@ -85,10 +105,15 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+               ajax: {
+                  url: "{{ route("$module_name.index_data") }}",
+                  data: function (d) {
+                        d.cabang_id = $('#cabang_id').val()
+                    }
+                },
+          
             dom: 'Blfrtip',
             buttons: [
-
                 'excel',
                 'pdf',
                 'print'
@@ -102,6 +127,8 @@
                 },
 
                 {data: 'date', name: 'date'},
+                {data: 'cabang', name: 'cabang'},
+                {data: 'customer', name: 'customer'},
                 {data: 'reference', name: 'reference'},
                 {data: 'total_amount', name: 'total_amount'},
                 {data: 'status', name: 'status'},
@@ -119,13 +146,17 @@
         .container()
         .appendTo("#buttons");
 
-
-
+ 
+     })(jQuery);
     </script>
+
+
 
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
+
+   
 $(document).on('click', '#Tambah, #Edit', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
