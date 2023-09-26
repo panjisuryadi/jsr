@@ -34,6 +34,11 @@
                         @endforeach
                     </select>
                   </div>
+                  @else
+                   <p class="uppercase text-lg text-gray-600 font-semibold">
+                     &nbsp;| {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }} 
+                  </p>
+                 
                   @endif
                   </div>  
 
