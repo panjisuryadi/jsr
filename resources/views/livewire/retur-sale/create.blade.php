@@ -51,7 +51,7 @@
                         <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Dari</label>
                         <span class="mr-4 inline-block hidden md:block">:</span>
                         <div class="flex-1">
-                            <select class="form-control select2" name="sales_id" wire:model="retur_sales.sales_id">
+                            <select class="form-control select2" name="sales_id" wire:model="retur_sales.sales_id" wire:change="updateKaratList">
                                 <option value="" selected disabled>Pilih Sales</option>
                                 @foreach($dataSales as $sales)
                                 <option value="{{$sales->id}}">
@@ -73,7 +73,7 @@
 
             @foreach($retur_sales_detail as $key => $value)
             <div class="flex justify-between mb-3">
-                <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
+                <div class="add-input w-full mx-auto flex flex-row grid grid-cols-4 gap-2">
 
 
                     <div class="form-group">
@@ -89,7 +89,7 @@
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                       {{ $field_lable }}<span class="text-danger">*</span></label>
                         @endif
-                        <select class="form-control form-control-sm" wire:model="retur_sales_detail.{{$key}}.karat_id" name="{{ $field_name }}">
+                        <select class="form-control form-control-sm" wire:model="retur_sales_detail.{{$key}}.karat_id" name="{{ $field_name }}" wire:change="changeParentKarat({{$key}})">
                             <option value="" selected disabled>Select Karat</option>
                             @foreach($dataKarat as $karat)
                             <option value="{{$karat->id}}">
@@ -100,6 +100,36 @@
                         @if ($errors->has($field_name))
                         <span class="invalid feedback" role="alert">
                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                        </span>
+                        @endif
+                    </div>
+
+
+                     <!-- Sub Karat -->
+                     <div class="form-group">
+                        <?php
+                        $field_name = 'retur_sales_detail.' . $key . '.sub_karat_id';
+                        $field_lable = __('Kategori Karat');
+                        $field_placeholder = Label_case($field_lable);
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = 'wire:model="'.$field_name.'"';
+                        ?>
+                        @if ($key == 0)
+                        <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                            {{ $field_lable }}<span class="text-danger">*</span></label>
+                        @endif
+                        <select  class="form-control form-control-sm" 
+                        name="{{ $field_name }}" wire:model="{{$field_name}}">
+                            <option value="" selected disabled>Select Kategori</option>
+                            @foreach($retur_sales_detail[$key]['sub_karat_choice'] as $karat)
+                            <option value="{{$karat['id']}}">
+                            {{$karat['name']}} | {{$karat['kode']}} </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has($field_name))
+                        <span class="invalid feedback"role="alert">
+                            <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                            class="text-danger">
                         </span>
                         @endif
                     </div>

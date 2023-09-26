@@ -20,7 +20,7 @@ class ReturSalesController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'ReturSale';
+        $this->module_title = 'Retur Sale';
         $this->module_name = 'retursale';
         $this->module_path = 'retursales';
         $this->module_icon = 'fas fa-sitemap';

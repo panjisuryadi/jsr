@@ -24,7 +24,9 @@ class Create extends Component
         [
             'karat_id' => '',
             'weight' => '',
-            'nominal' => ''
+            'nominal' => '',
+            'sub_karat_id' => '',
+            'sub_karat_choice' => []
         ]
     ];
 
@@ -36,7 +38,9 @@ class Create extends Component
         $this->retur_sales_detail[] = [
             'karat_id' => '',
             'weight' => '',
-            'nominal' => ''
+            'nominal' => '',
+            'sub_karat_id' => '',
+            'sub_karat_choice' => []
         ];
     }
 
@@ -54,7 +58,9 @@ class Create extends Component
             [
                 'karat_id' => '',
                 'weight' => '',
-                'nominal' => ''
+                'nominal' => '',
+                'sub_karat_id' => '',
+                'sub_karat_choice' => []
             ]
         ];
     }
@@ -72,7 +78,15 @@ class Create extends Component
     public function mount()
     {
         $this->dataSales = DataSale::all();
-        $this->dataKarat = Karat::all();
+        $this->dataKarat = Karat::where(function($query){
+            $query
+                ->where('parent_id',null)
+                ->whereHas('children', function($query){
+                    $query->whereHas('stockSales', function ($query) {
+                        $query->where('weight', '>',0);
+                    });
+                });
+        })->get();
     }
 
     public function remove($key)
@@ -90,10 +104,6 @@ class Create extends Component
             'retur_sales.retur_no' => 'required|string|max:50',
             'retur_sales.total_weight' => 'required',
             'retur_sales.total_nominal' => 'required',
-            'retur_sales_detail.0.weight'     => 'required',
-            'retur_sales_detail.*.weight'     => 'required',
-            'retur_sales_detail.0.karat_id' => 'required',
-            'retur_sales_detail.*.karat_id' => 'required',
             'retur_sales.sales_id' => 'required',
             'retur_sales.date' => 'required',
 
@@ -101,10 +111,28 @@ class Create extends Component
 
         foreach ($this->retur_sales_detail as $key => $value) {
 
-            $rules['retur_sales_detail.0.karat_id'] = 'required';
             $rules['retur_sales_detail.'.$key.'.karat_id'] = 'required';
-            $rules['retur_sales_detail.0.weight'] = 'required';
-            $rules['retur_sales_detail.'.$key.'.weight'] = 'required';
+            $rules['retur_sales_detail.'.$key.'.sub_karat_id'] = 'required';
+            $rules['retur_sales_detail.'.$key.'.weight'] = [
+                'required',
+                function ($attribute, $value, $fail) use ($key) {
+                    // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
+                    $isKaratFilled = $this->retur_sales_detail[$key]['sub_karat_id'] != '';
+                    $isSalesFilled = $this->retur_sales['sales_id'] != '';
+                    if($isKaratFilled && $isSalesFilled){
+                        $maxWeight = DB::table('stock_sales')
+                            ->where('karat_id', $this->retur_sales_detail[$key]['sub_karat_id'])
+                            ->where('sales_id', $this->retur_sales['sales_id'])
+                            ->max('weight');
+                        if ($value > $maxWeight) {
+                            $fail("Berat melebihi stok yang tersedia. Jumlah Stok ($maxWeight).");
+                        }
+                    }
+    
+                },
+            
+            ];
+            $rules['retur_sales_detail.'.$key.'.nominal'] = 'required';
         }
         return $rules;
     }
@@ -150,7 +178,7 @@ class Create extends Component
     
             foreach($this->retur_sales_detail as $key => $value) {
                 $retur_sale_detail = $retur_sale->detail()->create([
-                    'karat_id' => $this->retur_sales_detail[$key]['karat_id'],
+                    'karat_id' => $this->retur_sales_detail[$key]['sub_karat_id'],
                     'weight' => $this->retur_sales_detail[$key]['weight'],
                     'nominal' => $this->retur_sales_detail[$key]['nominal']?$this->retur_sales_detail[$key]['nominal']:null,
                 ]);
@@ -167,5 +195,49 @@ class Create extends Component
         $this->resetInputFields();
         // session()->flash('message', 'Created Successfully.');
         return redirect(route('retursale.index'));
+    }
+
+
+
+    public function updateKaratList(){
+        $this->dataKarat = Karat::where(function($query){
+            $query
+                ->where('parent_id',null)
+                ->whereHas('children', function($query){
+                    $query->whereHas('stockSales', function ($query) {
+                        $query->where('weight', '>',0);
+                        $query->where('sales_id', $this->retur_sales['sales_id']);
+                    });
+                });
+        })->get();
+        
+        $this->resetReturSalesDetails();
+        $this->resetDataSubKarat();
+    }
+
+    public function clearWeight($key){
+        $this->retur_sales_detail[$key]['weight'] = '';
+    }
+
+    public function changeParentKarat($key){
+        $this->clearWeight($key);
+        $karat = Karat::find($this->retur_sales_detail[$key]['karat_id']);
+        $this->retur_sales_detail[$key]['sub_karat_choice'] = is_null($karat)?[]:$karat->children->whereNotIn('id', $this->getUsedSubKaratIds());
+    }
+
+    protected function resetDataSubKarat(){
+        foreach ($this->retur_sales_detail as $detail) {
+            $detail['sub_karat_choice'] = [];
+        }
+    }
+
+    protected function getUsedSubKaratIds(){
+        $subKaratIds = [];
+        foreach ($this->retur_sales_detail as $detail) {
+            if (isset($detail['sub_karat_id'])) {
+                $subKaratIds[] = $detail['sub_karat_id'];
+            }
+        }
+        return $subKaratIds;
     }
 }
