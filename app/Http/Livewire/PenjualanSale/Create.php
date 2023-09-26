@@ -28,8 +28,10 @@ class Create extends Component
     public $penjualan_sales_details = [
         [
             'karat_id' => '',
+            'sub_karat_id' => '',
             'weight' => '',
-            'nominal' => ''
+            'nominal' => '',
+            'sub_karat_choice' => []
         ]
     ];
 
@@ -42,8 +44,10 @@ class Create extends Component
     {
         $this->penjualan_sales_details[] = [
             'karat_id' => '',
+            'sub_karat_id' => '',
             'weight' => '',
-            'nominal' => ''
+            'nominal' => '',
+            'sub_karat_choice' => []
         ];
     }
 
@@ -61,8 +65,10 @@ class Create extends Component
         $this->penjualan_sales_details = [
             [
                 'karat_id' => '',
+                'sub_karat_id' => '',
                 'weight' => '',
-                'nominal' => ''
+                'nominal' => '',
+                'sub_karat_choice' => []
             ]
         ];
     }
@@ -82,9 +88,12 @@ class Create extends Component
         $this->dataSales = DataSale::all();
         $this->dataKarat = Karat::where(function($query){
             $query
-            ->whereHas('stockSales', function ($query) {
-                $query->where('weight', '>',0);
-            });
+                ->where('parent_id',null)
+                ->whereHas('children', function($query){
+                    $query->whereHas('stockSales', function ($query) {
+                        $query->where('weight', '>',0);
+                    });
+                });
         })->get();
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
@@ -106,10 +115,6 @@ class Create extends Component
             'penjualan_sales.store_name' => 'string',
             'penjualan_sales.total_weight' => 'required',
             'penjualan_sales.total_nominal' => 'required',
-            'penjualan_sales_details.0.nominal'     => 'required',
-            'penjualan_sales_details.*.nominal'     => 'required',
-            'penjualan_sales_details.0.karat_id' => 'required',
-            'penjualan_sales_details.*.karat_id' => 'required',
             'penjualan_sales.sales_id' => 'required',
             'penjualan_sales.date' => 'required',
             'penjualan_sales.tipe_pembayaran' => 'required',
@@ -130,18 +135,17 @@ class Create extends Component
 
         foreach ($this->penjualan_sales_details as $key => $value) {
 
-            $rules['penjualan_sales_details.0.karat_id'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.karat_id'] = 'required';
+            $rules['penjualan_sales_details.'.$key.'.sub_karat_id'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.weight'] = [
                 'required',
                 function ($attribute, $value, $fail) use ($key) {
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
-                    // dengan karat_id 1 dan sales_id 48
-                    $isKaratFilled = $this->penjualan_sales_details[$key]['karat_id'] != '';
+                    $isKaratFilled = $this->penjualan_sales_details[$key]['sub_karat_id'] != '';
                     $isSalesFilled = $this->penjualan_sales['sales_id'] != '';
                     if($isKaratFilled && $isSalesFilled){
                         $maxWeight = DB::table('stock_sales')
-                            ->where('karat_id', $this->penjualan_sales_details[$key]['karat_id'])
+                            ->where('karat_id', $this->penjualan_sales_details[$key]['sub_karat_id'])
                             ->where('sales_id', $this->penjualan_sales['sales_id'])
                             ->max('weight');
                         if ($value > $maxWeight) {
@@ -151,7 +155,6 @@ class Create extends Component
     
                 },
             ];
-            $rules['penjualan_sales_details.0.nominal'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.nominal'] = 'required';
 
         }
@@ -207,7 +210,7 @@ class Create extends Component
     
             foreach($this->penjualan_sales_details as $key => $value) {
                 $penjualan_sale_detail = $penjualan_sale->detail()->create([
-                    'karat_id' => $this->penjualan_sales_details[$key]['karat_id'],
+                    'karat_id' => $this->penjualan_sales_details[$key]['sub_karat_id'],
                     'weight' => $this->penjualan_sales_details[$key]['weight'],
                     'nominal' => $this->penjualan_sales_details[$key]['nominal'],
                     'created_by' => auth()->user()->name
@@ -228,16 +231,42 @@ class Create extends Component
     public function updateKaratList(){
         $this->dataKarat = Karat::where(function($query){
             $query
-            ->whereHas('stockSales', function ($query) {
-                $query->where('weight', '>',0);
-                $query->where('sales_id', $this->penjualan_sales['sales_id']);
-            });
+                ->where('parent_id',null)
+                ->whereHas('children', function($query){
+                    $query->whereHas('stockSales', function ($query) {
+                        $query->where('weight', '>',0);
+                        $query->where('sales_id', $this->penjualan_sales['sales_id']);
+                    });
+                });
         })->get();
         
         $this->resetPenjualanSalesDetails();
+        $this->resetDataSubKarat();
     }
 
     public function clearWeight($key){
         $this->penjualan_sales_details[$key]['weight'] = '';
+    }
+
+    public function changeParentKarat($key){
+        $this->clearWeight($key);
+        $karat = Karat::find($this->penjualan_sales_details[$key]['karat_id']);
+        $this->penjualan_sales_details[$key]['sub_karat_choice'] = is_null($karat)?[]:$karat->children->whereNotIn('id', $this->getUsedSubKaratIds());
+    }
+
+    protected function resetDataSubKarat(){
+        foreach ($this->penjualan_sales_details as $detail) {
+            $detail['sub_karat_choice'] = [];
+        }
+    }
+
+    protected function getUsedSubKaratIds(){
+        $subKaratIds = [];
+        foreach ($this->penjualan_sales_details as $detail) {
+            if (isset($detail['sub_karat_id'])) {
+                $subKaratIds[] = $detail['sub_karat_id'];
+            }
+        }
+        return $subKaratIds;
     }
 }
