@@ -555,6 +555,16 @@
                                                                value="create_pos_sales" {{ $role->hasPermissionTo('create_pos_sales') ? 'checked' : '' }}>
                                                         <label class="custom-control-label" for="create_pos_sales">POS System</label>
                                                     </div>
+                                                </div>  
+
+
+                                                 <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="print_sales" name="permissions[]"
+                                                               value="print_sales" {{ $role->hasPermissionTo('print_sales') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="print_sales">Print Sales</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">

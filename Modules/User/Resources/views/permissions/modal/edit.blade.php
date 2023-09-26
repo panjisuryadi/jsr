@@ -22,6 +22,7 @@
                 <option value="edit_" >Edit</option>
                 <option value="create_" >Create</option>
                 <option value="delete_" >Delete</option>
+                <option value="print_" >Print</option>
             </select>
 
                <span class="invalid feedback" role="alert">

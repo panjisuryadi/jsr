@@ -1,5 +1,5 @@
 <div class="text-center">
- @can('edit_sales')
+ @can('print_sales')
     <a target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}"
      class="btn btn-outline-primary btn-sm">
         <i class="bi bi-print"></i>&nbsp;@lang('Print')
