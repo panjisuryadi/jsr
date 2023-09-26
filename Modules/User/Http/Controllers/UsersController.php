@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Modules\Upload\Entities\Upload;
+use Modules\UserCabang\Models\UserCabang;
 
 class UsersController extends Controller
 {
@@ -102,6 +103,11 @@ class UsersController extends Controller
                 $tempFile->delete();
             }
         }
+
+        $cabangs = UserCabang::where('user_id',$user->id)->first();
+        $cabangs->update([
+                        'cabang_id' => $request->cabang_id
+                       ]);
 
         toast("User Updated & Assigned '$request->role' Role!", 'info');
 

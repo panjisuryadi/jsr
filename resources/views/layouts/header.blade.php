@@ -9,7 +9,9 @@
         <li class="c-header-nav-item px-3 ">
             <a class="c-header-nav-link" href="#" target="_blank">
                 <i class="c-icon cil-external-link relative"></i>&nbsp;
-             {!! settings()->company_name !!}  |  {{ ucfirst(Auth::user()->roles->first()->name) }}
+             {!! settings()->company_name !!}  |  
+             {{ ucfirst(Auth::user()->roles->first()->name) }} |
+             {{ ucfirst(Auth::user()->namacabang->cabang()->first()->name) }} 
 
             </a>
         </li>
