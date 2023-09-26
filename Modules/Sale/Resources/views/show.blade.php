@@ -19,8 +19,7 @@
                         <div>
                             Invoice: <strong>{{ $sale->reference }}</strong>
                         </div>
-                        <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('sales.pdf', $sale->id) }}">
-                            <i class="bi bi-printer"></i> Print
+                        <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('sales.cetak', $sale->id) }}"><i class="bi bi-printer"></i> Print
                         </a>
                         <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('sales.pdf', $sale->id) }}">
                             <i class="bi bi-save"></i> Save
@@ -61,7 +60,7 @@
                                 <thead>
                                 <tr>
                                     <th class="align-middle">Product</th>
-                                    <th class="align-middle">Price</th>
+                                    <th class="align-middle">Karat / Harga</th>
                                   
                                     <th class="align-middle">Sub Total</th>
                                 </tr>
@@ -79,12 +78,15 @@
                                             </span>
                                         </td>
 
-                                        <td class="align-middle">{{ format_currency($item->unit_price) }}</td>
+                                        <td class="align-middle">
+                                            {{ @$item->karat->name }}
+
+                                        </td>
 
                                        
 
                                         <td class="align-middle">
-                                            {{ format_currency($item->sub_total) }}
+                             {{ format_currency( @$item->karat->penentuanHarga->harga_emas) }}
                                         </td>
                                     </tr>
                                 @endforeach

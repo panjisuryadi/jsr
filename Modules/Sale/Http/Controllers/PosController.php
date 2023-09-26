@@ -31,6 +31,9 @@ class PosController extends Controller
 
 
 
+ 
+
+
 
     public function store(StorePosSaleRequest $request) {
         DB::transaction(function () use ($request) {
@@ -69,6 +72,7 @@ class PosController extends Controller
                 SaleDetails::create([
                     'sale_id' => $sale->id,
                     'product_id' => $cart_item->id,
+                    'karat_id' => $cart_item->options->karat_id,
                     'product_name' => $cart_item->name,
                     'product_code' => $cart_item->options->code,
                     'quantity' => $cart_item->qty,
@@ -103,4 +107,13 @@ class PosController extends Controller
 
         return redirect()->route('sales.index');
     }
+
+
+
+
+
+
+
+
+
 }

@@ -44,10 +44,15 @@ Route::group(['middleware' => 'auth'], function () {
         return $pdf->stream('sale-'. $sale->reference .'.pdf');
     })->name('sales.pos.pdf');
 
+
+
     //Sales
 
     Route::get('sales/index_data', 'SaleController@index_data')
-    ->name('sales.index_data');
+    ->name('sales.index_data'); 
+
+     Route::get('sales/cetak/{id}', 'SaleController@cetak')
+    ->name('sales.cetak');
     
     Route::resource('sales', 'SaleController');
 

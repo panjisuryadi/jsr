@@ -5,6 +5,7 @@ namespace Modules\Sale\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Product\Entities\Product;
+use Modules\Karat\Models\Karat;
 
 class SaleDetails extends Model
 {
@@ -20,6 +21,10 @@ class SaleDetails extends Model
 
     public function sale() {
         return $this->belongsTo(Sale::class, 'sale_id', 'id');
+    }
+
+    public function karat() {
+        return $this->belongsTo(Karat::class, 'karat_id', 'id');
     }
 
     public function getPriceAttribute($value) {

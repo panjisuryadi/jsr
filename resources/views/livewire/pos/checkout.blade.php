@@ -52,7 +52,10 @@
                                 @include('livewire.includes.product-cart-modal') 
                                </div>
                            
-                               <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} </div>
+                     <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} | 
+                        <span class="text-yellow-500">{{ $cart_item->options->karat }}</span>
+                      
+                       </div>
                              </div>
                           </div>
                           <div class="flex items-center space-x-4">

@@ -19,6 +19,7 @@ use Modules\Sale\Http\Requests\UpdateSaleRequest;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Modules\Cabang\Models\Cabang;
+use PDF;
 class SaleController extends Controller
 {
 
@@ -271,7 +272,7 @@ public function store_ajax(StoreSaleRequest $request)
 
             $input = $request->all();
             $input = $request->except(['document']);
-            dd($input);
+            //dd($input);
             $sale = Sale::create([
                 'date' => $request->date,
                 'customer_id' => $request->customer_id,
@@ -345,6 +346,24 @@ public function store_ajax(StoreSaleRequest $request)
 
         return view('sale::show', compact('sale', 'customer'));
     }
+
+
+
+    public function cetak($id) {
+        $sale = Sale::findOrFail($id);
+        $pdf = PDF::loadView('sale::nota', [
+            'sale' => $sale,
+        ])->setPaper('a7')
+            ->setOption('margin-top', 8)
+            ->setOption('margin-bottom', 8)
+            ->setOption('margin-left', 2)
+            ->setOption('margin-right', 2);
+
+        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+    }
+
+
+
 
 
     public function edit(Sale $sale) {

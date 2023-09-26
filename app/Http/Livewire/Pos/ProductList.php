@@ -47,6 +47,7 @@ class ProductList extends Component
     }
 
     public function selectProduct($product) {
+       // dd($product);
         $this->emit('productSelected', $product);
     }
 }
