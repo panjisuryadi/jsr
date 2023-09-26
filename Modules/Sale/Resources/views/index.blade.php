@@ -36,13 +36,15 @@
                                 <tr>
                                     <th style="width: 3%!important;">No</th>
 
-  <th style="width: 15%!important;" class="text-center">{{ Label_Case('date') }}</th>
-  <th style="width: 15%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
-  <th style="width: 15%!important;" class="text-center">{{ Label_Case('Harga') }}</th>
+  <th style="width: 10%!important;" class="text-center">{{ Label_Case('date') }}</th>
+  <th style="width: 11%!important;" class="text-center">{{ Label_Case('Cabang') }}</th>
+  <th style="width: 11%!important;" class="text-center">{{ Label_Case('Kostumer') }}</th>
+  <th style="width: 9%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
+  <th style="width: 15%!important;" class="text-center">{{ Label_Case('Nominal') }}</th>
  <th style="width: 10%!important;" class="text-center">{{ Label_Case('status') }}</th>
 
                      
- <th style="width: 18%!important;" class="text-center"> {{ __('Action') }} </th>
+ <th style="width: 8%!important;" class="text-center"> {{ __('Action') }} </th>
                                 </tr>
                             </thead>
                         </table>
@@ -102,6 +104,8 @@
                 },
 
                 {data: 'date', name: 'date'},
+                {data: 'cabang', name: 'cabang'},
+                {data: 'customer', name: 'customer'},
                 {data: 'reference', name: 'reference'},
                 {data: 'total_amount', name: 'total_amount'},
                 {data: 'status', name: 'status'},

@@ -1,7 +1,8 @@
 <?php
 
 namespace Modules\Sale\Entities;
-
+use Modules\Cabang\Models\Cabang;
+use Modules\People\Entities\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -13,6 +14,13 @@ class Sale extends Model
 
     public function saleDetails() {
         return $this->hasMany(SaleDetails::class, 'sale_id', 'id');
+    }
+
+    public function cabang() {
+        return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
+    }
+   public function customer() {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 
     public function salePayments() {

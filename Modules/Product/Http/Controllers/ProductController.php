@@ -1450,7 +1450,7 @@ public function saveAjax(Request $request)
             'product_stock_alert'        => $input['product_stock_alert'],
              'product_name'              => $group->name .' '. $model->name ?? 'unknown',
             'product_code'               => $input['product_code'],
-            'user_id'                    => Auth::user()->id,
+           
         
          
             'product_barcode_symbology'  => $input['product_barcode_symbology'],
@@ -1690,7 +1690,6 @@ public function saveAjax(Request $request)
         ]);
         $params = $request->except('_token');
         $params['product_code'] = $params['product_code'];
-    
         
          if ($image = $request->file('images')) {
                       if ($$module_name_singular->image !== 'no_foto.png') {

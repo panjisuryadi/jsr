@@ -1,3 +1,4 @@
+<div class="items-center justify-items-center text-center">
 @if ($data->status == 'Pending')
     <span class="badge badge-info">
         {{ $data->status }}
@@ -11,3 +12,4 @@
         {{ $data->status }}
     </span>
 @endif
+</div>

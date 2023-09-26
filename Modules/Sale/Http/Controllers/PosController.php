@@ -14,6 +14,7 @@ use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
 use Modules\Sale\Http\Requests\StorePosSaleRequest;
+use Auth;
 
 class PosController extends Controller
 {
@@ -60,6 +61,8 @@ class PosController extends Controller
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' => Cart::instance('sale')->discount() * 100,
+                'user_id' => Auth::user()->id,
+                'cabang_id' => Auth::user()->namacabang->cabang()->first()->id,
             ]);
 
             foreach (Cart::instance('sale')->content() as $cart_item) {
