@@ -107,27 +107,27 @@ class Checkout extends Component
             return;
         }
 
-$cart->add([
-'id'      => $product['id'],
-'name'    => $product['product_name'],
-'qty'     => 1,
-'price'   => $product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
-'weight'  => 1,
-'options' => [
-    'product_discount'      => 0.00,
-    'product_discount_type' => 'fixed',
-    'sub_total'             => 1,
-    'code'                  => $product['product_code'],
-    'stock'                 => 1,
-    'unit'                  => $product['product_unit'],
-    'karat_id'              =>$product['product_item'][0]['karat']['id'],
-    'karat'                 =>$product['product_item'][0]['karat']['name'],
-    'harga_karat'   =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
+            $cart->add([
+            'id'      => $product['id'],
+            'name'    => $product['product_name'],
+            'qty'     => 1,
+            'price'   => $product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
+            'weight'  => 1,
+            'options' => [
+                'product_discount'      => 0.00,
+                'product_discount_type' => 'fixed',
+                'sub_total'             => 1,
+                'code'                  => $product['product_code'],
+                'stock'                 => 1,
+                'unit'                  => $product['product_unit'],
+                'karat_id'              =>$product['product_item'][0]['karat']['id'],
+                'karat'                 =>$product['product_item'][0]['karat']['name'],
+                'harga_karat'   =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
 
-    'product_tax'           => 1,
-    'unit_price'            =>1
-]
-]);
+                'product_tax'           => 1,
+                'unit_price'            =>1
+            ]
+            ]);
 
         $this->check_quantity[$product['id']] = 1;
         $this->quantity[$product['id']] = 1;
