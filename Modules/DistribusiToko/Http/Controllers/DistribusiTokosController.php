@@ -13,7 +13,12 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\KategoriProduk\Models\KategoriProduk;
+use Modules\Cabang\Models\Cabang;
+use Modules\UserCabang\Models\UserCabang;
 use PDF;
+use Auth;
+
+
 class DistribusiTokosController extends Controller
 {
 
@@ -314,6 +319,7 @@ public function kategori($slug)
        
         $kategori = $module_kategori::where('slug',$slug)->first();
         $categories = \Modules\Product\Entities\Category::where('kategori_produk_id',$kategori->id)->get();
+        $cabang = Cabang::where('id',Auth::user()->namacabang->cabang()->first()->id)->get();
         //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.kategori',
            compact('module_name',
@@ -321,6 +327,7 @@ public function kategori($slug)
             'kategori',
             'module_title',
             'categories',
+            'cabang',
             'module_icon', 'module_model'));
 
     }

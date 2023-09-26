@@ -13,6 +13,7 @@ use Spatie\MediaLibrary\MediaCollections\File;
 use Spatie\Permission\Traits\HasRoles;
 use Modules\UserCabang\Models\UserCabang;
 use Modules\Company\Models\Company;
+use Auth;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -55,7 +56,17 @@ class User extends Authenticatable implements HasMedia
     protected $with = ['media'];
 
 
+    public function scopeAkses($query)
+    {
 
+     $users = Auth::user()->id;
+     if ($users == 1) {
+            return $query;
+        }
+        return $query->whereHas('namacabang', function($query) {
+               $query->where('cabang_id', Auth::user()->namacabang->cabang()->first()->id);
+            });
+    }
 
      public function namacabang()
         {

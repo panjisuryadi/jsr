@@ -53,7 +53,7 @@ class UsersDataTable extends DataTable
     }
 
     public function query(User $model) {
-        return $model->newQuery()
+        return $model->newQuery()->akses()
             ->with(['roles' => function ($query) {
                 $query->select('name')->get();
             }])

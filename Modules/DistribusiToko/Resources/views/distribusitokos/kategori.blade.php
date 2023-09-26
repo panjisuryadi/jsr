@@ -186,8 +186,7 @@ margin-bottom: 0.5rem !important;
                                             <div class="form-group">
                                                 <label for="cabang_id">Cabang</label>
                                                 <select class="form-control select2" name="cabang_id" id="cabang_id" >
-                                                    <option value="" selected disabled>Select Cabang</option>
-                                                    @foreach(\Modules\Cabang\Models\Cabang::all() as $sup)
+                                                    @foreach($cabang as $sup)
                                                     <option value="{{$sup->id}}" {{ old('cabang_id') == $sup->name ? 'selected' : '' }}>
                                                         {{$sup->name}}
                                                     </option>

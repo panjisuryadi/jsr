@@ -18,6 +18,7 @@ use Modules\Sale\Http\Requests\StorePosSaleRequest;
 class PosController extends Controller
 {
 
+
     public function index() {
         Cart::instance('sale')->destroy();
 

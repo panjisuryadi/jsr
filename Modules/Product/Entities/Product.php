@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Modules\Product\Entities\ProductLocation;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Cabang\Models\Cabang;
+use Auth;
 class Product extends Model implements HasMedia
 {
 
@@ -30,7 +31,16 @@ class Product extends Model implements HasMedia
         return $this->hasMany(ProductItem::class, 'product_id', 'id');
     }
 
+    public function scopeAkses($query)
+    {
 
+     $users = Auth::user()->id;
+     if ($users == 1) {
+            return $query;
+
+        }
+      return $query->where('cabang_id', '=', Auth::user()->namacabang->cabang()->first()->id);
+    }
 
 
     public function category() {
