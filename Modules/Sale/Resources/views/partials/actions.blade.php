@@ -15,6 +15,11 @@
       @endcan
 
 
+    <a class="dropdown-item" href="{{ route('sales.show', $data->id) }}">
+       <i class="bi bi-x-square"></i>&nbsp;@lang('Void')</a>
+
+
+
          @can('delete_sales')
     <button id="delete" class="dropdown-item px-2 ml-2 hover:no-underline" onclick="
                 event.preventDefault();

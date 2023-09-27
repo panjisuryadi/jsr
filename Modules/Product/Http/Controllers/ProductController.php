@@ -1343,6 +1343,11 @@ public function saveAjax(Request $request)
                   'berat_kotor' =>$stock->berat_kotor - $input['berat_total'] - $input['berat_emas']
                     ]
                );
+
+        
+
+
+
             }
 
 
