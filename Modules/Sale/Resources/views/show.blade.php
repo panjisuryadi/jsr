@@ -55,8 +55,8 @@
 
                         </div>
 
-                        <div class="table-responsive-sm">
-                            <table class="table table-striped">
+                        <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
+                            <table style="width: 100% !important;" class="table table-sm table-striped">
                                 <thead>
                                 <tr>
                                     <th class="align-middle">Product</th>
@@ -95,9 +95,10 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-sm-5 ml-md-auto">
-                                <table class="table">
+                                <table style="width: 100% !important;" 
+                                class="table md:table-sm lg:table-sm">
                                     <tbody>
-                                   
+                                 
                                     <tr>
                                         <td class="left"><strong>Grand Total</strong></td>
                                         <td class="right"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
@@ -112,4 +113,16 @@
         </div>
     </div>
 @endsection
+
+
+@push('page_css')
+<style type="text/css">
+@media (max-width: 767.98px) { 
+ .table-sm th,
+ .table-sm td {
+     padding: .2em !important;
+  }
+}
+</style>
+@endpush
 

@@ -161,12 +161,6 @@ button:focus {
 }
 
 
-
-
-
-
-
-
 @media (hover: hover), (-ms-high-contrast: none) {
   .c-sidebar .c-sidebar-nav-link:hover, .c-sidebar .c-sidebar-nav-dropdown-toggle:hover {
      color: {{settings()->bg_sidebar_link_hover}} !important;
@@ -225,4 +219,18 @@ button:focus {
     line-height: 1.6 !important;
     border-radius: 0.2rem;
 }
+
+.table-sm td, .table-sm th {
+    padding: 0.3rem !important;
+}
+
+@media (max-width: 767.98px) { 
+ .table-sm th,
+ .table-sm td {
+     padding: 0.3rem !important;
+  }
+}
+
+
+
 </style>

@@ -12,9 +12,16 @@
     <div class="container-fluid">
 
 @php
-use App\Models\User;
-$user = User::findOrFail(Auth::user()->id);
+$user = \App\Models\User::findOrFail(Auth::user()->id);
  @endphp
+
+
+
+
+     @if (Auth::user()->roles->first()->name == 'Kasir')
+        @include('partial.pages.kasir')
+     @endif
+
 
         @can('show_total_stats')
         <div class="row">
@@ -84,6 +91,11 @@ $user = User::findOrFail(Auth::user()->id);
         </div>
         @endcan
 
+
+
+
+
+
         @can('show_weekly_sales_purchases|show_month_overview')
         <div class="row mb-4">
             @can('show_weekly_sales_purchases')
@@ -135,7 +147,10 @@ $user = User::findOrFail(Auth::user()->id);
  @can('access_sortir')
  @include('product::products.sortir_dashboard')
  @endcan
-  @endif
+ @endif
+
+
+
 
 
  @can('show_logs_dashboard')
