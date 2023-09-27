@@ -48,6 +48,7 @@ class Create extends Component
         $rules = [
             'kode' => 'required',
             'kadar' => 'required',
+            'type' => 'required',
             'kategori_karat' => 'requiredIf:isParentSelected,true'
         ];
         return $rules;
@@ -59,6 +60,7 @@ class Create extends Component
         $data = [
             'parent_id' => $this->parent_karat_id?$this->parent_karat_id:null,
             'name' => $this->kadar,
+            'type' => $this->type,
             'kode' => $this->isParentSelected?$this->kategori_karat:$this->kode,
         ];
 

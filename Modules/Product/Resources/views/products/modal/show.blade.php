@@ -25,6 +25,11 @@
                 <th>Category</th>
                 <td>{{ $product->category->category_name }}</td>
             </tr>
+
+              <tr>
+                <th>Karat / Harga (Gram)</th>
+                <td>{{ number_format(@$product->product_item[0]->karat->PenentuanHarga->harga_emas) }}</td>
+            </tr>
             
       
             

@@ -91,9 +91,12 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                       <th style="width: 10%!important;" class="text-center">{{ Label_case('Qr Code') }}</th>
 
 
+                      <th style="width: 8%!important;" class="text-center">{{ Label_case('Status') }}</th>
 
 
-                                    <th style="width: 14%!important;" class="text-center">
+
+
+                                    <th style="width: 11%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -175,6 +178,9 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
         },{
             data: 'tracking',
             name: 'tracking'
+        },{
+            data: 'status',
+            name: 'status'
         },
         {
             data: 'action',

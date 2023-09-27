@@ -1,7 +1,7 @@
 <form wire:submit.prevent="store">
     @csrf
 
-    <div class="flex flex-row grid grid-cols-4 mb-0 gap-4">
+    <div class="flex flex-row grid grid-cols-5 mb-0 gap-4">
 
         <div class="form-group">
             <?php
@@ -81,6 +81,23 @@
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
             </span>
             @endif
+        </div>
+
+
+        <div class="form-group">
+           <?php
+            $field_name = 'type';
+            $field_lable = label_case('Type');
+            $field_placeholder = $field_lable;
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = "required";
+            ?>
+            <label class="text-gray-700 mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+            <select wire:model="{{ $field_name }}" class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" required>
+                <option value="" selected disabled>Select Type</option>
+                <option value="LM">Logam Mulia</option>
+                <option value="GOLD">Emas</option>
+            </select>
         </div>
 
 

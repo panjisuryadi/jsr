@@ -88,6 +88,10 @@ public function index_data()
                         })
                         ->editColumn('kode_induk', function($data){
                             return $data->parent->kode??'';
+                        })  
+
+                          ->editColumn('type', function($data){
+                            return $data->type??'';
                         })
                         ->editColumn('kode', function($data){
                             if(isset($data->parent->kode)){
@@ -145,7 +149,7 @@ public function store(Request $request)
             
              'name' => 'required|max:191',
              'kode' => 'required',
-             'kadar' => 'required'
+             'type' => 'required'
 
         ]);
         // if (!$validator->passes()) {
@@ -247,10 +251,11 @@ public function update(Request $request, $id)
           return response()->json(['error'=>$validator->errors()]);
         }
 
-        $input = $request->all();
+       // $input = $request->all();
         $params = $request->except('_token');
         $params['kode'] = $params['kode'];
         $params['name'] = $params['name'];
+        $params['type'] = $params['type'];
             $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

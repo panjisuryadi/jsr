@@ -41,7 +41,11 @@
                                     <th>
                                         Karat
                                     </th>
-                                    <th style="width:20%;">
+                                    <th class="text-center" style="width:10%;">
+                                        Type
+                                    </th> 
+
+                                     <th style="width:20%;">
                                         Updated
                                     </th>
                                     <th style="width: 19%!important;" class="text-center">
@@ -114,6 +118,9 @@
                 {
                     data: 'name',
                     name: 'name'
+                },{
+                    data: 'type',
+                    name: 'type'
                 },
                 {
                     data: 'updated_at',

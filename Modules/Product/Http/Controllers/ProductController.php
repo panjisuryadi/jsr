@@ -312,7 +312,7 @@ public function index_data(Request $request)
                             return view('product::products.partials.actions',
                             compact('module_name', 'data', 'module_model'));
                                 })
-           ->editColumn('product_name', function ($data) {
+              ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
@@ -329,8 +329,12 @@ public function index_data(Request $request)
         //     return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
         // })
 
-    ->addColumn('product_image', function ($data) {
+              ->addColumn('product_image', function ($data) {
                        return view('product::products.partials.image', compact('data'));
+                    })
+
+              ->addColumn('status', function ($data) {
+                       return view('product::products.partials.status', compact('data'));
                     })
 
          ->editColumn('cabang', function ($data) {
@@ -340,6 +344,7 @@ public function index_data(Request $request)
                         </div>';
                 return $tb;
             })
+
            ->editColumn('karat', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                     <h3 class="text-sm font-semibold text-center text-gray-800">
@@ -355,10 +360,7 @@ public function index_data(Request $request)
                             return view('product::products.partials.qrcode_button',
                             compact('module_name', 'data', 'module_model'));
                       })
-          ->editColumn('status', function ($data) {
-             $status = statusProduk($data->status);
-               return $status;
-              })
+          
 
                ->editColumn('created_at', function ($data) {
                     $module_name = $this->module_name;
@@ -1300,9 +1302,10 @@ public function saveAjax(Request $request)
     private function _saveHistoryDistribusiToko($input)
     {
         
+         $logam_mulia = \Modules\Karat\Models\Karat::where('type', 'LM')->first();
            DistribusiToko::create([
                 'cabang_id'                   => $input['cabang_id'] ?? null,
-                'karat_id'                    => $input['karat_id'] ?? null,
+                'karat_id'                    => $input['karat_id'] ?? $logam_mulia->id,
                 'date'                        => date('Y-m-d'),
                 'weight'                      => $input['berat_emas'],
                 'created_by'                  => auth()->user()->name
@@ -1313,42 +1316,42 @@ public function saveAjax(Request $request)
               }
 
 
-
-
-
     private function _saveProductsItem($input ,$produk)
     {
-        
-           ProductItem::create([
-                'product_id'                  => $produk,
-              
-                'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
-                'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
-                'customer_id'                 => $input['customer_id'] ?? null,
-                'karat_id'                    => $input['karat_id'] ?? null,
-                'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
-                'certificate_id'              => $input['certificate_id'] ?? null,
-                'tag_label'                   => $input['berat_tag'] ?? null,
-                'berat_emas'                  => $input['berat_emas'],
-                'berat_label'                 => $input['berat_label'] ?? 0,
-                'supplier_id'                 => $input['supplier_id'] ?? null,
-                'produk_model_id'             => $input['produk_model'] ?? null,
-                'berat_total'                 => $input['berat_total']
-            ]);
 
-         $stock = StockOffice::where('karat_id', $input['karat_id'])->first();
-         $stock::where('karat_id', $input['karat_id'])
-             ->update([
-                  'berat_real' =>$stock->berat_real - $input['berat_emas'],
-                  'berat_kotor' =>$stock->berat_kotor - $input['berat_total'] - $input['berat_emas']
-                    ]
-               );
+      $logam_mulia = \Modules\Karat\Models\Karat::where('type', 'LM')->first();
+      //dd($logam_mulia->id);
+        ProductItem::create([
+        'product_id'                  => $produk,
+        'parameter_berlian_id'        => $input['parameter_berlian_id'] ?? null,
+        'jenis_perhiasan_id'          => $input['jenis_perhiasan_id'] ?? null,
+        'customer_id'                 => $input['customer_id'] ?? null,
+        'karat_id'                    => $input['karat_id'] ?? $logam_mulia->id,
+        'gold_kategori_id'            => $input['gold_kategori_id'] ?? null,
+        'certificate_id'              => $input['certificate_id'] ?? null,
+        //'tag_label'                   => $input['berat_tag'] ?? null,
+        'berat_emas'                  => $input['berat_emas'],
+        'berat_label'                 => $input['berat_label'] ?? 0,
+        'supplier_id'                 => $input['supplier_id'] ?? null,
+        'produk_model_id'             => $input['produk_model'] ?? null,
+        'berat_total'                 => $input['berat_total']
+        ]);
+     $lm = $input['karat_id'] ?? $logam_mulia->id;
+     $stock = StockOffice::where('karat_id', $lm)->first();
+     if (isset($stock)) {
+          $stock->update([
+              'berat_real' =>$stock->berat_real - $input['berat_emas'],
+              'berat_kotor' =>$stock->berat_kotor - $input['berat_total'] - $input['berat_emas']
+                ]
+           );
+      } else{
+           toast('Gagal Insert Produk!', 'error');
+            return redirect()->back();
 
-        
+      }
+    
 
-
-
-            }
+    }
 
 
 
@@ -1439,7 +1442,7 @@ public function saveAjax(Request $request)
          'produk_model' => 'required',
          'group_id' => 'required',
          'cabang_id' => 'required',
-         'berat_accessories' => 'required',
+         'berat_accessories' => 'required_if:category,!4',
           ]);
         $input = $request->all();
         $input = $request->except(['document']);
@@ -1497,10 +1500,35 @@ public function saveAjax(Request $request)
 
 
 
-    public function show(Product $product) {
-        abort_if(Gate::denies('show_products'), 403);
-        return view('product::products.modal.show', compact('product'));
+
+
+public function show($id)
+    {
+
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $product = $module_model::akses()->with('product_item.karat.penentuanHarga')->where('id',$id)->first();
+  
+        //dd($detail);
+          return view('product::products.modal.show',
+           compact('module_name',
+            'module_action',
+            'product',
+            'module_title',
+            'module_icon', 'module_model'));
+
     }
+
+
+
+
 
    public function show_sortir(Product $product) {
         $module_title = $this->module_title;
