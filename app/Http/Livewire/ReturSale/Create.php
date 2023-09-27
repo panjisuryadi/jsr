@@ -222,7 +222,13 @@ class Create extends Component
     public function changeParentKarat($key){
         $this->clearWeight($key);
         $karat = Karat::find($this->retur_sales_detail[$key]['karat_id']);
-        $this->retur_sales_detail[$key]['sub_karat_choice'] = is_null($karat)?[]:$karat->children->whereNotIn('id', $this->getUsedSubKaratIds());
+
+        if(is_null($karat)){
+            $this->retur_sales_detail[$key]['sub_karat_choice'] = [];
+        }else{
+            $this->retur_sales_detail[$key]['sub_karat_choice'] = 
+            $karat->children()->whereHas('stockSales', fn ($query) => $query->where('weight','>',0)->where('sales_id', $this->retur_sales['sales_id']))->whereNotIn('id',$this->getUsedSubKaratIds())->get();
+        }
     }
 
     protected function resetDataSubKarat(){
