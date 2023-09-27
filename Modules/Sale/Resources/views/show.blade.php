@@ -55,8 +55,8 @@
 
                         </div>
 
-                        <div class="table-responsive-sm">
-                            <table class="table table-striped">
+                        <div class="md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
+                            <table class="table table-sm table-striped">
                                 <thead>
                                 <tr>
                                     <th class="align-middle">Product</th>
@@ -112,4 +112,16 @@
         </div>
     </div>
 @endsection
+
+
+@push('page_css')
+<style type="text/css">
+@media (max-width: 767.98px) { 
+ .table-sm th,
+ .table-sm td {
+     padding: .2em !important;
+  }
+}
+</style>
+@endpush
 
