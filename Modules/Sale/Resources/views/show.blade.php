@@ -55,8 +55,8 @@
 
                         </div>
 
-                        <div class="md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
-                            <table class="table table-sm table-striped">
+                        <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
+                            <table style="width: 100% !important;" class="table table-sm table-striped">
                                 <thead>
                                 <tr>
                                     <th class="align-middle">Product</th>
