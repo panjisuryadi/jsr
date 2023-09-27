@@ -312,7 +312,7 @@ public function index_data(Request $request)
                             return view('product::products.partials.actions',
                             compact('module_name', 'data', 'module_model'));
                                 })
-           ->editColumn('product_name', function ($data) {
+              ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
@@ -329,8 +329,12 @@ public function index_data(Request $request)
         //     return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
         // })
 
-    ->addColumn('product_image', function ($data) {
+              ->addColumn('product_image', function ($data) {
                        return view('product::products.partials.image', compact('data'));
+                    })
+
+              ->addColumn('status', function ($data) {
+                       return view('product::products.partials.status', compact('data'));
                     })
 
          ->editColumn('cabang', function ($data) {
@@ -340,6 +344,7 @@ public function index_data(Request $request)
                         </div>';
                 return $tb;
             })
+
            ->editColumn('karat', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                     <h3 class="text-sm font-semibold text-center text-gray-800">
@@ -355,10 +360,7 @@ public function index_data(Request $request)
                             return view('product::products.partials.qrcode_button',
                             compact('module_name', 'data', 'module_model'));
                       })
-          ->editColumn('status', function ($data) {
-             $status = statusProduk($data->status);
-               return $status;
-              })
+          
 
                ->editColumn('created_at', function ($data) {
                     $module_name = $this->module_name;
