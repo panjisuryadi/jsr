@@ -46,7 +46,7 @@
                         <div id="buttons">
                         </div>
                     </div>
-                    <div class="mt-1">
+                    <div class="md:overflow-x-scroll lg:overflow-x-auto mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
