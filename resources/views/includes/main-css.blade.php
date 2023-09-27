@@ -233,11 +233,11 @@ button:focus {
 
 
 .c-main > .container-fluid, .c-main > .container-sm, .c-main > .container-md, .c-main > .container-lg, .c-main > .container-xl, .c-main > .container-xxl {
-    padding-right: 10px !important;
-    padding-left: 10px !important;
+    padding-right: 13px !important;
+    padding-left: 13px !important;
 }
 .c-main {
-      padding-top: 0.5rem !important;
+      padding-top: 0.9rem !important;
 }
 
 </style>
