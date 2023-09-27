@@ -80,7 +80,7 @@
 
 
 
-           <div class="form-group">
+                           <div class="form-group">
                                 <label for="is_active">Status <span class="text-danger">*</span></label>
                                 <select class="form-control" name="is_active" id="is_active" required>
                                     <option value="1" {{ $user->is_active == 1 ? 'selected' : ''}}>Active</option>
@@ -112,8 +112,7 @@
                {{ $cabang->code }} | {{ $cabang->name }}
             </option>
         @endforeach
-
-        </select>
+    </select>
 
     </div>
 <div class="form-group">

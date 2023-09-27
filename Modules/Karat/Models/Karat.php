@@ -18,6 +18,7 @@ class Karat extends Model
         'parent_id',
         'name',
         'kode',
+        'type',
         'description',
         'start_date',
         'end_date',

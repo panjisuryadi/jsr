@@ -3,7 +3,7 @@
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
-     <div class="flex flex-row grid grid-cols-2 gap-4">
+     <div class="flex flex-row grid grid-cols-3 gap-4">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'kode';
@@ -40,6 +40,30 @@
                                 </span>
 
                             </div>
+
+                      <div class="form-group">
+                                <?php
+                                $field_name = 'type';
+                                $field_lable = label_case('kadar');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                       
+                            <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" required>
+                                    <option value="LM" {{ $detail->kode == 'LM' ? 'selected' : ''}}>Logam Mulia</option>
+                                    <option value="GOLD" {{ $detail->kode == 'GOLD' ? 'selected' : ''}}>Emas</option>
+                                 </select>
+
+
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
+
+                            </div>
+
+
               
 
 
