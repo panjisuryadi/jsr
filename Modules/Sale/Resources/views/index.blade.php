@@ -46,8 +46,8 @@
                         <div id="buttons">
                         </div>
                     </div>
-                    <div class="md:overflow-x-scroll lg:overflow-x-auto mt-1">
-                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+                    <div class="w-full md:overflow-x-scroll lg:overflow-x-auto mt-1">
+                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover md:table-sm lg:table-sm table-responsive-sm">
                             <thead>
                                 <tr>
  <th style="width: 3%!important;">No</th>
