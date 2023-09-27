@@ -18,10 +18,10 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
 
 
 
-{{--      @if (Auth::user()->roles->first()->name == 'Kasir')
+     @if (Auth::user()->roles->first()->name == 'Kasir')
         @include('partial.pages.kasir')
      @endif
- --}}
+
 
         @can('show_total_stats')
         <div class="row">
