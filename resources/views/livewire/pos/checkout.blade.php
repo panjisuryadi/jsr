@@ -4,6 +4,7 @@
         <div class="mt-2">
            
                 @if (session()->has('message'))
+                <div class="px-3">
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <div class="alert-body">
                             <span>{{ session('message') }}</span>
@@ -11,6 +12,7 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
+                    </div>
                     </div>
                 @endif
 

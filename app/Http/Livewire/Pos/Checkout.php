@@ -99,6 +99,12 @@ class Checkout extends Component
             return $cartItem->id == $product['id'];
         });
 
+        // if(isset($product['product_item'][0]['karat']['penentuan_harga']['harga_emas'])) {
+        //     session()->flash('message', 'Harga Produk Masih kosong!');
+          
+        //     return;
+        // } 
+
         if ($exists->isNotEmpty()) {
             session()->flash('message', 'Produk sudah ada di cart!');
             $cartid = $exists->first()->rowId;
