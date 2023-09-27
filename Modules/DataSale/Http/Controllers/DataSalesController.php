@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use Modules\DataSale\Models\DataSale;
 
 class DataSalesController extends Controller
 {
@@ -217,6 +218,92 @@ public function show($id)
             'module_title',
             'module_icon', 'module_model'));
 
+    }
+
+    public function show_data(DataSale $detail){
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+
+        $$module_name = $detail->penjualanSale;
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.
+                            '.includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->editColumn('date', function ($data) {
+                            $module_name = $this->module_name;
+                            return \Carbon\Carbon::parse($data->updated_at)->format('j F Y');
+                        })
+                        ->editColumn('total_weight', function ($data) {
+                            return $data->detail->sum('weight') . " gram";
+                            })
+                        ->editColumn('total_nominal', function ($data) {
+                            return "Rp.".$data->detail->sum('nominal');
+                            })
+                        ->rawColumns(['updated_at', 
+                             'action', 
+                             'name',
+                             'date',
+                             'total_weight',
+                             'total_nominal'
+                        ])
+                        ->make(true);
+    }
+
+
+    public function show_stock(DataSale $detail){
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+
+        $$module_name = $detail->stockSales;
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.
+                            '.includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          
+                        ->editColumn('berat', function ($data) {
+                            return $data->weight . " gram";
+                            })
+                        ->editColumn('karat', function ($data) {
+                            return $data->karat->name. ' | ' . $data->karat->kode;
+                            })
+                        ->rawColumns([ 
+                             'action', 
+                             'karat',
+                             'berat'
+                        ])
+                        ->make(true);
     }
 
     /**

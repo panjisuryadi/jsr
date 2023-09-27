@@ -5,6 +5,9 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\PenjualanSale\Models\PenjualanSale;
+use Modules\Stok\Models\StockSales;
+
 //use Modules\JenisGroup\Models\JenisGroup;
 class DataSale extends Model
 {
@@ -28,6 +31,14 @@ class DataSale extends Model
 
     public function insentif(){
       return $this->hasOne(Insentif::class,'sales_id','id');
+    }
+
+    public function penjualanSale(){
+      return $this->hasMany(PenjualanSale::class,'sales_id','id');
+    }
+
+    public function stockSales(){
+      return $this->hasMany(StockSales::class,'sales_id','id');
     }
 
 
