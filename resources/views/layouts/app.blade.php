@@ -29,8 +29,7 @@
             @if(! request()->routeIs('app.pos.*')
             && ! request()->routeIs('purchase.*')
             && ! request()->routeIs('rfid.*')
-          
-         
+                 
             )
             <header class="c-header c-header-light c-header-fixed">
                 @include('layouts.header')

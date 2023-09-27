@@ -224,5 +224,13 @@ button:focus {
     padding: 0.3rem !important;
 }
 
+@media (max-width: 767.98px) { 
+ .table-sm th,
+ .table-sm td {
+     padding: 0.3rem !important;
+  }
+}
+
+
 
 </style>
