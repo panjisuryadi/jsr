@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
+use Modules\DataSale\Models\Insentif;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
@@ -72,6 +73,14 @@ public function index_data(Request $request)
         $data = $$module_name;
 
         return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.
+                            '.includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                        })
                           ->editColumn('name', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
@@ -226,9 +235,10 @@ public function show($id)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.modal.edit',
+          return view(''.$module_name.'::'.$module_path.'.edit',
            compact('module_name',
             'module_action',
+            'module_path',
             'detail',
             'module_title',
             'module_icon', 'module_model'));
@@ -253,31 +263,28 @@ public function update(Request $request, $id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
-        $validator = \Validator::make($request->all(),
-            [
-
-            'phone' => [
-                'required',
-                'unique:'.$module_model.',phone,'.$id
-            ],
-            'name' => 'required|max:191',
-            'address' => 'required|max:191',
-
-
+        
+        $validated = $request->validate([
+            'target' => 'gt:0',
+            'insentif' => 'gt:0'
         ]);
 
-       if (!$validator->passes()) {
-          return response()->json(['error'=>$validator->errors()]);
+        if(isset($validated['target'])){
+            $$module_name_singular->update([
+                'target' => $validated['target']
+            ]);
         }
 
-        $input = $request->all();
-        $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['address'] = $params['address'];
-        $params['phone'] = $params['phone'];
-        $$module_name_singular->update($params);
-        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
-
+        if(isset($validated['insentif'])){
+            Insentif::updateOrCreate([
+                'sales_id' => $$module_name_singular->id
+            ],[
+                'nominal' => $validated['insentif'],
+                'date' => now()
+            ]);
+        }
+        toast(''. $module_title.' Data Berhasil di update!', 'success');
+         return redirect()->route(''.$module_name.'.index');
  }
 
 

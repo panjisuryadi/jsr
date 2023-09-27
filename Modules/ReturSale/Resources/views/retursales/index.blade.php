@@ -45,7 +45,7 @@
                                     <th style="width: 12%!important;" class="text-center">
                                          {{ __('Nominal') }}
                                     </th>  
-                                     <th style="width: 13%!important;" class="text-center">
+                                     <th style="width: 10%!important;" class="text-center">
                                          {{ __('Created') }}
                                     </th>
                                     <th style="width: 15%!important;" class="text-center">

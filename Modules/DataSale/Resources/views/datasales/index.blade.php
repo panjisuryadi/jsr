@@ -33,6 +33,9 @@
                         <th style="width: 15%!important;" class="text-center">
                              {{ __('Updated') }}
                         </th>
+                        <th style="width: 15%!important;" class="text-center">
+                                        {{ __('Action') }}
+                        </th>
                     </tr>
                 </thead>
                         </table>
@@ -95,6 +98,12 @@
                 {data: 'address', name: 'address'},
                 {data: 'phone', name: 'phone'},
                 {data: 'updated_at', name: 'updated_at'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
             ]
         })
         .buttons()

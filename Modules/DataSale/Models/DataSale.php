@@ -26,5 +26,9 @@ class DataSale extends Model
         return \Modules\DataSale\database\factories\DataSaleFactory::new();
     }
 
+    public function insentif(){
+      return $this->hasOne(Insentif::class,'sales_id','id');
+    }
+
 
 }

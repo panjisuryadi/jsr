@@ -705,3 +705,12 @@ if (!function_exists('formatWeight')) {
         return $weight;
     }
 }
+
+if (!function_exists('formatBerat')) {
+    function formatBerat($weight) {
+        $weight = number_format(round($weight, 3), 3, '.', '');
+        $weight = rtrim($weight, '0');
+        $weight = formatWeight($weight);
+        return $weight;
+    }
+}
