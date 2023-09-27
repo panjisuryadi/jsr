@@ -95,9 +95,10 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-sm-5 ml-md-auto">
-                                <table class="table">
+                                <table style="width: 100% !important;" 
+                                class="table md:table-sm lg:table-sm">
                                     <tbody>
-                                   
+                                 
                                     <tr>
                                         <td class="left"><strong>Grand Total</strong></td>
                                         <td class="right"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
