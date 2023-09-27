@@ -277,7 +277,7 @@ class Tambah extends Component
     
 
 
-       public function updatedBeratTotal() {
+    public function updatedBeratTotal() {
          $this->berat_total +1;
             }
 

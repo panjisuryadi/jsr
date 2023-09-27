@@ -84,10 +84,15 @@ class PosController extends Controller
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                 ]);
 
+
                 $product = Product::findOrFail($cart_item->id);
                 // $product->update([
                 //     'product_quantity' => $product->product_quantity - $cart_item->qty
-                // ]);
+                // ]); 
+
+                $product->update([
+                    'status' => 1 ?? 0
+                ]);
             }
 
             Cart::instance('sale')->destroy();

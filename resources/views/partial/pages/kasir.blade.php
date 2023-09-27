@@ -36,10 +36,7 @@
                         <i class="bi bi-receipt text-2xl"></i>
                     </a>
 
-                   
-
-
-
+                  
 
                   </div>
 
