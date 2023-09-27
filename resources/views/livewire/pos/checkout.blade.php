@@ -89,60 +89,72 @@
     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
     $qty = Cart::instance($cart_instance);
 
-
-
-  @endphp
+   @endphp
 
         </div>
 
 {{-- batassss --}}
 
-<div
-    class="relative bg-white px-2 py-3 mx-auto w-full max-w-2xl">
-     <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-1">
+<div class="px-0 py-2 grid grid-cols-3 gap-4 m-2">
 
-       {{-- show modal kostumer --}}
-    <div class="text-center justify-items-center">
-         @include('livewire.includes.add-customer-modal') 
-    </div>
-<div class="text-center justify-items-center">
-    <button class="ml-2 hover:no-underline hover:text-red-400 text-gray-500  text-center items-center" href="#">
-         <i class="hover:text-red-400 bi bi-card-list md:text-4xl text-4xl text-gray-500"></i>
-         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Daftar</div>
-      
-        </button>   
-</div>
-       
- 
 
 <div class="px-1 text-center justify-items-center">
-     @include('livewire.pos.simpan-modal')
+   <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
+   <i class="hover:text-red-400 text-2xl text-gray-500 bi bi-trash"></i>
+  <div class="mb-1 ml-1 lg:text-sm md:text-sm text-xl py-0 font-semibold">Hapus</div>
+</button>
 </div>
-    
-        {{-- show modal manual --}}
+
+
+
 <div class="px-1 text-center justify-items-center">
          @include('livewire.includes.manual-modal') 
 </div>
-<div class="px-1 text-center justify-items-center">
-            <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center" href="#">
-        <i class="hover:text-red-400 text-4xl text-gray-500 bi bi-trash"></i>
-         <div class="lg:text-sm md:text-sm text-xl py-0 font-semibold">Hapus</div>
-        </button>
-        </div>
 
-        
-        
-        
-    
-    </div>
+<div class="px-1 text-center justify-items-center">
+   <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
+   <i class="hover:text-red-400 text-xl text-gray-500 bi bi-save"></i>
+  <div class="mb-1 ml-1 lg:text-sm md:text-sm text-xl py-0 font-semibold">Simpan</div>
+</button>
 </div>
 
+
+
+
+
+</div>
+
+
 {{-- batassss --}}
-<div class="px-3 py-3 bg-red-400 text-white flex justify-between">
+
+<div class="w-full px-3 py-3 bg-red-400 text-white flex justify-between">
+   <div class="flex flex-row w-40 justify-items-center items-center text-center border-r">
+{{--         <div class="relative items-center justify-center text-center md:text-xl text-white text-3xl font-semibold">
+          {{$jumlah ?? '0'}}
+        </div> --}}
+        <div class="md:text-xl text-white text-2xl font-semibold relative p-3">
+          <i class="bi bi-cart-fill"></i>
+            <span class="absolute top-2 right-1 inline-flex items-center justify-center w-6 h-6 ml-2 text-xs font-semibold text-dark bg-yellow-300 rounded-full">
+                 {{$jumlah ?? '0'}}
+              </span>
+        </div>
+        <div class="relative items-center justify-center text-center md:text-xl text-white text-3xl font-semibold">Bayar</div>
+
+    </div>  
+
+ <div class="w-60 justify-end flex text-center items-center">
+     <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
+       <i class="ml-3 text-2xl bi bi-chevron-right"></i>
+    </div>
+
+</div>
+
+{{-- <div class="px-3 py-3 bg-red-400 text-white flex justify-between">
     <div class="w-1/4 justify-center items-center border-r">
         <div class="items-center justify-center text-center md:text-xl text-white text-3xl font-semibold">
             <p>{{$jumlah ?? '0'}}</p>
         </div>
+
     </div>
     <div>
     <div class="text-white items-left text-left uppercase md:text-sm lg:text-lg font-semibold">
@@ -153,11 +165,10 @@
         <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
     </div>
     <div class="w-1/6 justify-center text-center items-center">
-        <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="text-white inline-flex items-center"><i class="text-4xl bi bi-chevron-right"></i></button>
-        
+       <i class="text-4xl bi bi-chevron-right"></i>
     </div>
 </div>
-
+ --}}
 
 </div>
 
