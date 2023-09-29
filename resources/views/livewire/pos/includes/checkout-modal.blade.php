@@ -11,13 +11,13 @@
                 </button>
             </div>
 
- <?php
-    $result = array (
-    'total_with_shipping' => $total_with_shipping,
-    'qty' => $jumlah ?? 0,
-    'total_amount' => $total_amount ?? 0,
-    );
-   ?>
+             <?php
+                $result = array (
+                'total_with_shipping' => $total_with_shipping,
+                'qty' => $jumlah ?? 0,
+                'total_amount' => $total_amount ?? 0,
+                );
+               ?>
 {{-- <livewire:pos.payment> --}}
               
  <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
