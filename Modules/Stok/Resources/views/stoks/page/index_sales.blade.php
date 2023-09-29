@@ -28,8 +28,8 @@
                             <thead>
                                 <tr>
                                 <th style="width: 6%!important;">No</th>
-                                <th class="text-left">{{ Label_Case('Karat') }}</th>
                                 <th class="text-left">{{ Label_Case('Sales') }}</th>
+                                <th class="text-left">{{ Label_Case('Karat') }}</th>
                                 <th class="text-left">{{ Label_Case('Berat') }}</th>
                               
                                
@@ -90,13 +90,11 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
-
-                {data: 'karat', name: 'karat'},
                 {data: 'sales', name: 'sales'},
-              
+                {data: 'karat', name: 'karat'},
                 {
-                    data: 'berat',
-                    name: 'berat',
+                    data: 'weight',
+                    name: 'weight',
                     orderable: false,
                     searchable: false
                 }
