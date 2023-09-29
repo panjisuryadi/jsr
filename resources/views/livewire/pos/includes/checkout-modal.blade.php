@@ -68,9 +68,17 @@
     <input id="grand_total" type="text" class="form-control" name="grand_total" value="{{ $total_amount }}" readonly>
 </div>
 <div class="form-group">
-    <label for="note">Catatan (Jika diperlukan)</label>
-    <textarea name="note" id="note" rows="4" class="form-control"></textarea>
+    <label for="note">Grand Total</label>
+    {{-- <span id="final" class="text-black text-4xl"></span> --}}
+    <input id="final" type="text" class="form-control text-black text-2xl" name="final" readonly>  
+    <input id="final_unmask" type="hidden" class="form-control" name="final_unmask" readonly>
 </div>
+
+<div class="form-group">
+    <label for="note">Catatan (Jika diperlukan)</label>
+    <textarea name="note" id="note" rows="2" class="form-control"></textarea>
+</div>
+
 
 
 </div>
@@ -205,17 +213,22 @@
 
                 
             });
+
+          $('#discount').keyup(function() {
+                var diskon = $("#discount").maskMoney('unmasked')[0];
+                var grand_total = $("#grand_total").maskMoney('unmasked')[0];
+                console.log(diskon);
+                 // var total = bayar - harga;
+                  var grandTotal = grand_total - diskon;
+                  $("#final_unmask").val(grandTotal.toFixed(2));
+                  $("#final").val(grandTotal).maskMoney('mask');
+                
+             });
+
+
         });
 
-         // $(document).ready(function () {
-         //   $('#diskon').keyup(function() {
-         //        var diskon = $("#diskon").maskMoney('unmasked')[0];
-         //        var total = bayar - harga;
-         //        var grandTotal = total - diskon;
-         //        $("#grand_total").val(grandTotal.toFixed(2));
-                
-         //     });
-         //   });
+        
 
 
     </script>

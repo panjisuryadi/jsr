@@ -82,11 +82,19 @@
                     decimal:'{{ settings()->currency->decimal_separator }}',
                     allowZero: true,
                 });
+                 
+                 $('#final').maskMoney({
+                    prefix:'{{ settings()->currency->symbol }}',
+                    thousands:'{{ settings()->currency->thousand_separator }}',
+                    decimal:'{{ settings()->currency->decimal_separator }}',
+                    allowZero: true,
+                });
 
                 $('#paid_amount').maskMoney('mask');
                 $('#total_amount').maskMoney('mask');
                 $('#grand_total').maskMoney('mask');
                 $('#discount').maskMoney('mask');
+                $('#final').maskMoney('mask');
 
                 $('#checkout-form').submit(function () {
                     var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
