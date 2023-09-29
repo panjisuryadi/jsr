@@ -139,7 +139,7 @@ class Penerimaan extends Component
                 }
             ],
             'berat_timbangan' => 'required|numeric|gt:0',
-            'selisih' => 'required|numeric|gt:0',
+            'selisih' => 'numeric',
             'pengirim' => 'required',
             'pic_id' => 'required'
         ];
