@@ -76,6 +76,7 @@ class Penerimaan extends Component
         ];
     }
 
+
     public function remove($i)
     {
         $this->resetErrorBag();
@@ -132,14 +133,13 @@ class Penerimaan extends Component
                 function ($attribute, $value, $fail) {
                     $today = Carbon::today();
                     $inputDate = Carbon::parse($value);
-
                     if ($inputDate < $today) {
                         $fail($attribute . ' harus tanggal hari ini atau setelahnya.');
                     }
                 }
             ],
             'berat_timbangan' => 'required|numeric|gt:0',
-            'selisih' => 'required|numeric|gt:0',
+            'selisih' => 'numeric',
             'pengirim' => 'required',
             'pic_id' => 'required'
         ];
@@ -185,9 +185,7 @@ class Penerimaan extends Component
         ];
 
         $request = new Request($data);
-
         $controller = new GoodsReceiptsController();
-
         $controller->store($request);
         $this->resetInputFields();
 
