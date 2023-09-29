@@ -41,10 +41,8 @@
                           $jumlah = 0; 
                         @endphp
                             @foreach($cart_items as $cart_item)
-
                  {{-- {{dd($cart_item)}} --}}
                    <!-- component -->
-
                       <div class="bg-white text-white w-full max-w-md flex flex-col border-b rounded-md p-1">
                         <div class="flex items-center justify-between">
                           <div class="flex items-center space-x-4">
@@ -76,7 +74,7 @@
                           @endphp
 
                             @endforeach
-                        @else
+                          @else
                           
                         <span class="text-danger">
                            Produk Belum di pilih
@@ -110,8 +108,7 @@
 
 
 <div class="px-1 text-center justify-items-center">
-
-         @include('livewire.includes.manual-modal') 
+       @include('livewire.includes.manual-modal') 
 </div>
 
 <div class="px-1 text-center justify-items-center">
@@ -120,9 +117,6 @@
   <div class="mb-1 ml-1 lg:text-sm md:text-sm text-xl py-0 font-semibold">Simpan</div>
 </button>
 </div>
-
-
-
 
 
 </div>
