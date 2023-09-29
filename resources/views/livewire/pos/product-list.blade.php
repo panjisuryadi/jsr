@@ -12,7 +12,11 @@
 
                     {{-- {{$product->product_item[0]->karat->penentuanHarga->harga_emas}} --}}
 
+
                     <div wire:click.prevent="selectProduct({{ $product }})" class="md:px-1 py-1" style="cursor: pointer;">
+
+            
+
                         <div
                             class="h-40 lg:h-32 md:h-32 relative overflow-hidden rounded-md  hover:shadow-md"
                             >
@@ -28,17 +32,22 @@
                             <div
                                 class="absolute md:bottom-1 bottom-3 md:leading-4 left-2"
                                 >
+
                                 <div class="px-1 sm:p-4 md:mt-4 lg:p-2">
                                     <span  class="md:text-xs md:leading-4 block text-gray-600"> {{ @$product->category->category_name }} 
+
                                     </span>
                                     
                                     <h3 class="leading-5 font-semibold hover:text-red-400 mt-0.5 lg:text-sm sm:small md:text-sm md:leading-3 md:leading-4 text-lg text-gray-800">
                                     {{ $product->product_name }}
                                     </h3>
+
                                 <div class="lg:text-sm md:small text-red-400">
                               {{@number_format($product->product_item[0]->karat->penentuanHarga->harga_emas)}}
                                  </div>
                                      
+
+    
                                 </div>
                             </div>
                         </div>

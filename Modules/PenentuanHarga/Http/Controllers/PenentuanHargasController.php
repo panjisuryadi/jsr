@@ -19,7 +19,7 @@ class PenentuanHargasController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'PenentuanHarga';
+        $this->module_title = 'Penentuan Harga';
         $this->module_name = 'penentuanharga';
         $this->module_path = 'penentuanhargas';
         $this->module_icon = 'fas fa-sitemap';
@@ -308,8 +308,8 @@ public function show($id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
-        $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.edit',
+        $detail = $module_model::with('karat')->findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
             'detail',

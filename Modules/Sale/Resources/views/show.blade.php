@@ -5,7 +5,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('sales.index') }}">Sales</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('sales.index') }}">Penjualan</a></li>
         <li class="breadcrumb-item active">Details</li>
     </ol>
 @endsection
@@ -29,8 +29,9 @@
                         <div class="row mb-4">
                             <div class="col-sm-4 mb-3 mb-md-0">
                                 <h5 class="mb-2 border-bottom pb-2">Company Info:</h5>
-                                <div><strong>{{ settings()->company_name }}</strong></div>
+                    <div><strong>{{ settings()->company_name }}</strong></div>
                                 <div>{{ settings()->company_address }}</div>
+                       <div>Cabang: <strong>{{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }} </strong></div>
                                 <div>Email: {{ settings()->company_email }}</div>
                                 <div>Phone: {{ settings()->company_phone }}</div>
                             </div>
@@ -80,11 +81,7 @@
 
                                         <td class="align-middle">
                                             {{ @$item->karat->name }}
-
                                         </td>
-
-                                       
-
                                         <td class="align-middle">
                                        {{ format_currency( @$item->price) }}
                                         </td>
@@ -114,15 +111,14 @@
     </div>
 @endsection
 
-
-@push('page_css')
-<style type="text/css">
-@media (max-width: 767.98px) { 
- .table-sm th,
- .table-sm td {
-     padding: .2em !important;
-  }
-}
-</style>
-@endpush
+        @push('page_css')
+        <style type="text/css">
+        @media (max-width: 767.98px) { 
+         .table-sm th,
+         .table-sm td {
+             padding: .2em !important;
+          }
+        }
+        </style>
+        @endpush
 

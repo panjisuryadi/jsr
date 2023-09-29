@@ -302,7 +302,7 @@ public function index_data_sales(Request $request)
                               ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->weight . '</h3>
+                                     ' .$data->weight . ' Gram</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -316,7 +316,7 @@ public function index_data_sales(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'karat','berat_real', 'berat_kotor', 'action', 'weight'])
+                        ->rawColumns(['updated_at', 'sales','karat','berat_real', 'berat_kotor', 'action', 'weight'])
                         ->make(true);
                      }
 

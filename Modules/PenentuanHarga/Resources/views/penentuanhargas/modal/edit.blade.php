@@ -6,8 +6,8 @@
              <div class="flex flex-row grid grid-cols-2 gap-4">
                             <div class="form-group">
                                 <?php
-                                $field_name = 'code';
-                                $field_lable = label_case('Code');
+                                $field_name = 'harga_emas';
+                                $field_lable = label_case('harga_emas');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -16,7 +16,7 @@
                         <input class="form-control" type="text"
                         name="{{ $field_name }}"
                         id="{{ $field_name }}"
-                        value="{{$detail->code }}">
+                        value="{{$detail->harga_emas }}">
                                 <span class="invalid feedback" role="alert">
                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                 </span>
@@ -25,8 +25,8 @@
 
                        <div class="form-group">
                                 <?php
-                                $field_name = 'name';
-                                $field_lable = label_case('Name');
+                                $field_name = 'harga_modal';
+                                $field_lable = label_case('harga_modal');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -35,32 +35,12 @@
                         <input class="form-control" type="text"
                         name="{{ $field_name }}"
                         id="{{ $field_name }}"
-                        value="{{$detail->name }}">
+                        value="{{$detail->harga_modal }}">
                                 <span class="invalid feedback" role="alert">
                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                 </span>
 
                             </div>
-
-
-
-
-    {{--  <div class="form-group">
-                                        <label for="kategori_produk_id">Main Category <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
-                                            @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $main)
-                                                <option {{ $main->id == $category->kategori_produk_id ? 'selected' : '' }} value="{{ $main->id }}">{{ $main->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>--}}
-
-
-
-
-
-
-
-
 
 
                     </div>

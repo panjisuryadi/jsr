@@ -28,7 +28,9 @@ class ProductList extends Component
 
     public function render() {
         return view('livewire.pos.product-list', [
+
             'products' => Product::akses()->with('product_item.karat.penentuanHarga')
+
             ->when($this->category_id, function ($query) {
                 return $query->where('category_id', $this->category_id);
             })->where('status', 0)

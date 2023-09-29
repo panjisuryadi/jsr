@@ -33,6 +33,10 @@ class Create extends Component
     public $rHarga_emas = 0;
 
 
+    public $penentuan_harga;
+    public $pharga = [];
+    public $updateMode = false;
+
 
 
     public function selectOption($value)
@@ -45,18 +49,25 @@ class Create extends Component
 
     public function pilihKarat($value) {
         $krt = Karat::where('id', $value)->first();
+        $ph = PenentuanHarga::where('karat_id', $value)->first();
         $this->karat = $krt->name;
         $this->karat_id = $krt->id;
         $this->kode_karat = $krt->kode;
-       // dd($karat->name);
-        //$this->emit('selected', $value);
+        if ($ph) {
+         $this->updateMode = true;
+         $this->penentuan_harga = PenentuanHarga::with('karat')->where('karat_id', $value)->first();
+            //dd($ph);
+        } else {
+             $this->updateMode = false;
+           // dd('xxx');
+          // code...
+        }
      }
 
-    public function render()
-    {
-        return view('livewire.penentuan-harga.create');
-    }
-
+        public function render()
+        {
+            return view('livewire.penentuan-harga.create');
+        }
 
       public function calculatePriceTotal()
        {
@@ -83,7 +94,6 @@ class Create extends Component
 
             }
      
-
         $this->charga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
         $this->rHarga_emas = ((int)$this->kode_karat / 100) * (int)$this->charga_emas;
         $this->HargaEmasRp = 'Rp ' . number_format($this->rHarga_emas, 0, ',', '.');
@@ -95,7 +105,7 @@ class Create extends Component
 
 
 
-               public function store()
+     public function store()
                  {
             
                     $validatedDate = $this->validate([
@@ -105,7 +115,7 @@ class Create extends Component
                     ]);
               
                 // dd($input);
-                 $create = PenentuanHarga::create([
+            $create = PenentuanHarga::create([
                 'karat_id'                          => $this->karat_id,
                 'user_id'                           =>  auth()->user()->id,
                 'margin'                            => $this->charga_margin,
@@ -116,7 +126,7 @@ class Create extends Component
                 'lock'                              =>  1,
                       ]);
         
-             $this->resetInput();
+                 $this->resetInput();
                     session()->flash('message', 'Created Successfully.');
                     return redirect(route('penentuanharga.index'));
        }
@@ -146,17 +156,17 @@ class Create extends Component
     }
 
 
-  public function resetInput()
-    {
-        $this->HargaEmasRp = '';
-        $this->HargaFinal = '';
-        $this->harga_emas = '';
-        $this->harga_margin = '';
-        $this->harga_jual = '';
-        $this->harga_modal = '';
-  
+      public function resetInput()
+        {
+            $this->HargaEmasRp = '';
+            $this->HargaFinal = '';
+            $this->harga_emas = '';
+            $this->harga_margin = '';
+            $this->harga_jual = '';
+            $this->harga_modal = '';
       
-    }
+          
+        }
 
 
 }

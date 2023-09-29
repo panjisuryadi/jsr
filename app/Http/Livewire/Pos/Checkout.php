@@ -99,26 +99,25 @@ class Checkout extends Component
             return $cartItem->id == $product['id'];
         });
 
+
         // if(isset($product['product_item'][0]['karat']['penentuan_harga']['harga_emas'])) {
         //     session()->flash('message', 'Harga Produk Masih kosong!');
           
         //     return;
         // } 
 
+ 
         if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Produk sudah ada di cart!');
-            $cartid = $exists->first()->rowId;
-            // dd($cartid);
-            // $this->updateQuantity($cartid,$product['id']);
+            session()->flash('message', 'Product exists in the cart!');
             return;
         }
 
-            $cart->add([
-            'id'      => $product['id'],
-            'name'    => $product['product_name'],
-            'qty'     => 1,
-            'price'   => $product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
-            'weight'  => 1,
+        $cart->add([
+        'id'      => $product['id'],
+        'name'    => $product['product_name'],
+        'qty'     => 1,
+        'price'   => $product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
+        'weight'  => 1,
             'options' => [
                 'product_discount'      => 0.00,
                 'product_discount_type' => 'fixed',
@@ -188,6 +187,8 @@ class Checkout extends Component
         $this->updateQuantity($row_id, $product_id);
     }
 
+
+//set utk diskon
     public function setProductDiscount($row_id, $product_id) {
         $cart_item = Cart::instance($this->cart_instance)->get($row_id);
 
@@ -213,6 +214,7 @@ class Checkout extends Component
 
         session()->flash('discount_message' . $product_id, 'Discount added to the product!');
     }
+
 
     public function calculate($product) {
         $price = 0;
