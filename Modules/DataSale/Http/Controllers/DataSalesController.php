@@ -473,4 +473,52 @@ public function update(Request $request, $id)
 
     }
 
+    public function updateincentive(Request $request){
+        $date = Date('Y-m-d',strtotime($request->date.'-01'));
+        $model = Insentif::where('date',$date)->where('sales_id',$request->sale_id)->first();
+        if(empty($model)){
+            $model = new Insentif;
+        }
+        try {
+            $model->sales_id = $request->sale_id;
+            $model->date = $date;
+            $model->nominal = $request->nominal;
+            if($model->save()){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Insentif Berhasil Disimpan'
+                ]);
+            }   
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function updatetarget(Request $request){
+        $model = DataSale::find($request->sale_id);
+        if(empty($model)){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Sales Not Found'
+            ]);
+        }
+        try {
+            $model->target = $request->target;
+            if($model->save()){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Target Berhasil Disimpan'
+                ]);
+            }   
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
 }
