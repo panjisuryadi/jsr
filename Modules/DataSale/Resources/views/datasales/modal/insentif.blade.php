@@ -1,14 +1,16 @@
-  <div class="px-3">
+<div class="px-3">
   <x-library.alert />
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
                 <div class="py-8 px-16">
-                        <label for="target" class="text-sm text-gray-600">Target</label>
-                        <input class="mt-2 border-2 border-gray-200 px-3 py-2 block w-full rounded-lg text-base text-gray-900 focus:outline-none focus:border-indigo-500" type="number" value="{{ formatBerat($detail->target) }}" name="target" step="0.001">
-                        <span class="invalid feedback" role="alert">
-                                <span class="text-danger error-text {{ $field_name }}_err"></span>
+                        <label for="insentif" class="text-sm text-gray-600">Insentif</label>
+                        <input class="mt-2 border-2 border-gray-200 px-3 py-2 block w-full rounded-lg text-base text-gray-900 focus:outline-none focus:border-indigo-500" type="number" value="{{ $detail->insentif->nominal??0 }}" name="insentif">
+                        @error('insentif')
+                        <span class="invalid feedback"role="alert">
+                            <small class="text-danger">{{ $message }}</small>
                         </span>
+                        @enderror
                 </div>
 
             </form>

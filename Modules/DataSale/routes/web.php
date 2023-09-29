@@ -17,6 +17,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
     Route::get("$module_name/show_data/{detail}", ['as' => "$module_name.show_data", 'uses' => "$controller_name@show_data"]);
     Route::get("$module_name/show_stock/{detail}", ['as' => "$module_name.show_stock", 'uses' => "$controller_name@show_stock"]);
+    Route::get("$module_name/edit-insentif", ['as' => "$module_name.edit_insentif", 'uses' => "$controller_name@edit_insentif"]);
+    Route::patch("$module_name/update_json", ['as' => "$module_name.update_json", 'uses' => "$controller_name@update_json"]);
     Route::resource("$module_name", "$controller_name");
 
 });

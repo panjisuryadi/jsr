@@ -331,6 +331,27 @@ public function show($id)
             'module_icon', 'module_model'));
     }
 
+
+    public function edit_insentif($id)
+    {
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Edit Insentif';
+        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+        return view(''.$module_name.'::'.$module_path.'.modal.insentif',
+               compact('module_name',
+                'detail',
+                'module_action',
+                'module_title',
+                'module_icon', 'module_model'));
+    }
+
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -373,6 +394,44 @@ public function update(Request $request, $id)
         toast(''. $module_title.' Data Berhasil di update!', 'success');
          return redirect()->route(''.$module_name.'.index');
  }
+
+
+ public function update_json(Request $request, $id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $$module_name_singular = $module_model::findOrFail($id);
+        $validator = \Validator::make($request->all(),[
+            'target' => 'gt:0',
+            'insentif' => 'gt:0'
+
+        ]);
+        if (!$validator->passes()) {
+            return response()->json(['error'=>$validator->errors()]);
+        }
+
+        if(isset($validator['target'])){
+            $$module_name_singular->update([
+                'target' => $validator['target']
+            ]);
+        }
+
+        if(isset($validator['insentif'])){
+            Insentif::updateOrCreate([
+                'sales_id' => $$module_name_singular->id
+            ],[
+                'nominal' => $validator['insentif'],
+                'date' => now()
+            ]);
+        }
+        
+
+        return response()->json(['success'=>'  '.$module_title.' Sukses diUpdate.']);
+    }
 
 
 

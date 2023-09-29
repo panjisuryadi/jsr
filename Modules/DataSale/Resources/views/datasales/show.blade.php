@@ -54,7 +54,7 @@
                         </div>
                         <div class="w-full px-2 relative">
                             <div class="absolute right-5 top-2 z-20">
-                                <a href="{{ route(''.$module_name.'.edit', $detail->id) }}" class="btn btn-outline-nfo btn-sm">
+                                <a id="modal-insentif" href="{{ route(''.$module_name.'.edit_insentif', ['id' => $detail->id]) }}" class="btn btn-outline-nfo btn-sm">
                                     <i class="bi bi-pencil"></i> &nbsp;@lang('Update')
                                 </a>
                             </div>
@@ -293,7 +293,7 @@
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah, #modal-insentif', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -301,7 +301,7 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
         }
-        if($(this).attr('id') == 'Edit')
+        if($(this).attr('id') == 'modal-insentif')
         {
             $('.modal-dialog').addClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
