@@ -33,6 +33,10 @@ class Create extends Component
     public $rHarga_emas = 0;
 
 
+    public $penentuan_harga;
+    public $pharga = [];
+    public $updateMode = false;
+
 
 
     public function selectOption($value)
@@ -45,11 +49,19 @@ class Create extends Component
 
     public function pilihKarat($value) {
         $krt = Karat::where('id', $value)->first();
+        $ph = PenentuanHarga::where('karat_id', $value)->first();
         $this->karat = $krt->name;
         $this->karat_id = $krt->id;
         $this->kode_karat = $krt->kode;
-       // dd($karat->name);
-        //$this->emit('selected', $value);
+        if ($ph) {
+         $this->updateMode = true;
+         $this->penentuan_harga = PenentuanHarga::with('karat')->where('karat_id', $value)->first();
+            //dd($ph);
+        } else {
+             $this->updateMode = false;
+           // dd('xxx');
+          // code...
+        }
      }
 
     public function render()
@@ -105,7 +117,7 @@ class Create extends Component
                     ]);
               
                 // dd($input);
-                 $create = PenentuanHarga::create([
+            $create = PenentuanHarga::create([
                 'karat_id'                          => $this->karat_id,
                 'user_id'                           =>  auth()->user()->id,
                 'margin'                            => $this->charga_margin,
@@ -116,7 +128,7 @@ class Create extends Component
                 'lock'                              =>  1,
                       ]);
         
-             $this->resetInput();
+                 $this->resetInput();
                     session()->flash('message', 'Created Successfully.');
                     return redirect(route('penentuanharga.index'));
        }

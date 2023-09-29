@@ -12,8 +12,6 @@
                 <option value="{{ $jp->id }}">{{ $jp->name }} | {{ $jp->kode }}</option>
                 @endforeach
             </select>
-
-
            @if ($errors->has('karat_id'))
                 <div class="invalid feedback"role="alert">
                     <small class="text-danger">{{ $errors->first('karat_id') }}.</small
@@ -47,6 +45,21 @@
       
     </div>
    
+
+
+<div class="px-3">
+       @if($updateMode)
+      
+<h1 class="py-3 font-semibold text-blue-600">{{$penentuan_harga->karat->name}}</h1>
+       @else
+        <h1 class="py-3 font-semibold text-gray-400">Data Kosong</h1>
+
+
+       @endif
+
+</div>
+
+
 
 <table class="table table-striped">
     <thead>
