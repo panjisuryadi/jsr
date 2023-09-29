@@ -64,11 +64,10 @@ class Create extends Component
         }
      }
 
-    public function render()
-    {
-        return view('livewire.penentuan-harga.create');
-    }
-
+        public function render()
+        {
+            return view('livewire.penentuan-harga.create');
+        }
 
       public function calculatePriceTotal()
        {
@@ -95,7 +94,6 @@ class Create extends Component
 
             }
      
-
         $this->charga_emas = preg_replace("/[^0-9]/", "", $this->harga_emas);
         $this->rHarga_emas = ((int)$this->kode_karat / 100) * (int)$this->charga_emas;
         $this->HargaEmasRp = 'Rp ' . number_format($this->rHarga_emas, 0, ',', '.');
@@ -107,7 +105,7 @@ class Create extends Component
 
 
 
-               public function store()
+     public function store()
                  {
             
                     $validatedDate = $this->validate([
@@ -158,17 +156,17 @@ class Create extends Component
     }
 
 
-  public function resetInput()
-    {
-        $this->HargaEmasRp = '';
-        $this->HargaFinal = '';
-        $this->harga_emas = '';
-        $this->harga_margin = '';
-        $this->harga_jual = '';
-        $this->harga_modal = '';
-  
+      public function resetInput()
+        {
+            $this->HargaEmasRp = '';
+            $this->HargaFinal = '';
+            $this->harga_emas = '';
+            $this->harga_margin = '';
+            $this->harga_jual = '';
+            $this->harga_modal = '';
       
-    }
+          
+        }
 
 
 }

@@ -142,7 +142,7 @@
     </div>
 
 
-            </td>
+        </td>
 
 
           <td  style="width: 20%;" class="text-left">
@@ -178,7 +178,7 @@
 
 
 
-           <td  style="width: 23%;" class="text-left">
+           <td style="width: 23%;" class="text-left">
                 <input 
                 type="text" 
                 value="{{$HargaFinalRp}}" 
