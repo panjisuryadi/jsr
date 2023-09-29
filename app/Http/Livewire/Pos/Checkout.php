@@ -93,18 +93,18 @@ class Checkout extends Component
 
     public function productSelected($product) {
 
-        //dd($product['product_item'][0]['karat']['penentuan_harga']['harga_emas']);
+      //  dd($product['product_item'][0]['karat']['penentuan_harga']['harga_emas']);
+
         $cart = Cart::instance($this->cart_instance);
         $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
             return $cartItem->id == $product['id'];
         });
 
 
-        // if(isset($product['product_item'][0]['karat']['penentuan_harga']['harga_emas'])) {
-        //     session()->flash('message', 'Harga Produk Masih kosong!');
-          
-        //     return;
-        // } 
+        if (!isset($product['product_item'][0]['karat']['penentuan_harga']['harga_emas'])) {
+            session()->flash('message', 'Penentuan Harga '.$product['product_item'][0]['karat']['name'].' Belum di setting!');
+            return;
+        } 
 
  
         if ($exists->isNotEmpty()) {
