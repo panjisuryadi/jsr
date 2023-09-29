@@ -220,6 +220,22 @@ button:focus {
     border-radius: 0.2rem;
 }
 
+
+
+.btn-xs, .btn-group-xs > .btn {
+    padding: 0.16rem 0.3rem !important;
+    font-size: 0.6rem !important;
+    line-height: 1.5 !important;
+    border-radius: 0.2rem;
+}
+
+
+
+
+
+
+
+
 .table-sm td, .table-sm th {
     padding: 0.3rem !important;
 }

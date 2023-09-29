@@ -51,7 +51,7 @@
                             <div class="rounded-full w-4 h-4 border border-blue-500"></div>
                             <div class="text-md text-dark font-bold">
                                <div class="text-lg relative">{{ $cart_item->name }}
-                                @include('livewire.includes.product-cart-modal') 
+                                @include('livewire.includes.product-detail-modal') 
                                </div>
                            
                      <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} | 
@@ -110,7 +110,9 @@
 
 
 <div class="px-1 text-center justify-items-center">
+       
          @include('livewire.includes.manual-modal') 
+  
 </div>
 
 <div class="px-1 text-center justify-items-center">
@@ -151,26 +153,6 @@
 
 </div>
 
-{{-- <div class="px-3 py-3 bg-red-400 text-white flex justify-between">
-    <div class="w-1/4 justify-center items-center border-r">
-        <div class="items-center justify-center text-center md:text-xl text-white text-3xl font-semibold">
-            <p>{{$jumlah ?? '0'}}</p>
-        </div>
-
-    </div>
-    <div>
-    <div class="text-white items-left text-left uppercase md:text-sm lg:text-lg font-semibold">
-        total
-    </div>
-    </div>
-    <div>
-        <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
-    </div>
-    <div class="w-1/6 justify-center text-center items-center">
-       <i class="text-4xl bi bi-chevron-right"></i>
-    </div>
-</div>
- --}}
 
 </div>
 

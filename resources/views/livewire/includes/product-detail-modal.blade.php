@@ -1,7 +1,7 @@
 <!-- Button trigger Modal -->
-<span role="button" class="badge badge-warning pointer-event" data-toggle="modal" data-target="#detailProduk{{ $cart_item->id }}">
-    <i class="bi bi-search text-white"></i>
-</span>
+<button role="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#detailProduk{{ $cart_item->id }}">
+    <i class="small p-1 bi bi-search text-white"></i>
+</button>
 <!--  Modal -->
 <div wire:ignore.self class="modal fade" id="detailProduk{{ $cart_item->id }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -16,11 +16,38 @@
                 </button>
             </div>
            <div class="modal-body px-3 py-2" id="ModalContentDetail">
-               
-              {{ $cart_item->name }}
-                <span class="badge badge-success">
-                        {{ $cart_item->options->rfid }}
-                    </span>
+     
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">
+                   Product Code
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                   {{ $cart_item->options->code }}
+                </dd>
+            </div> 
+
+            <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">
+                   Karat
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                   {{ $cart_item->options->karat }}
+                </dd>
+            </div>
+
+             <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">
+                   Harga
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                   {{ number_format($cart_item->options->harga_karat) }}
+                </dd>
+            </div>
+
+
+
+
+
 
            </div>
            <div class="modal-footer" id="ModalFooterDetail">
