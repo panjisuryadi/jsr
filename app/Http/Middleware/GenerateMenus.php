@@ -33,8 +33,7 @@ class GenerateMenus
 
 
 
-
-            // Access Control Dropdown
+            // MASTER DATA
             $masterData = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Master Data', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
@@ -57,6 +56,472 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
+
+
+            // Pelanggan And Supplier
+            $customers_suppliers = $masterData->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-people-fill"></i>
+                '.__('labels.menu.people').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => [
+                    'customers*',
+
+                ],
+                'permission'    => ['access_customers','access_suppliers'],
+            ]);
+            $customers_suppliers->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // Submenu: Pelanggan
+            $customers_suppliers->add(
+                '<i class="c-sidebar-nav-icon bi bi-person-square mb-1"></i>
+                 '.__('Customers').'', [
+                'route' => 'customers.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => 'customers*',
+                'permission'    => ['access_customers'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-3',
+            ]);
+        // Submenu: customers
+            $customers_suppliers->add(
+                '<i class="c-sidebar-nav-icon bi bi-person-bounding-box mb-1"></i>
+                 '.__('Suppliers').'', [
+                'route' => 'suppliers.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => 'suppliers*',
+                'permission'    => ['access_suppliers'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-3',
+            ]);
+
+            // Submenu: Customer Sales
+            $customers_suppliers->add(
+                '<i class="c-sidebar-nav-icon  bi bi-person-square"></i> 
+                 '.__('Customer Sales').'', [
+                'route' => 'customersales.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => 'customersales*',
+                'permission'    => ['access_customersales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-3',
+            ]);
+
+
+            // EMAS
+            $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Emas', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => [
+                    'products*',
+                    'kategoriproduk*',
+                    'product-categories*',
+                    'diamondcertificates*',
+                    'itemrounds*',
+                    'itemshapes*',
+
+                ],
+                'permission' => ['access_masterdata',
+                                      'access_kategoriproduks',
+                                      'access_diamondcertificates'],
+            ]);
+            $emas->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - PEMBELIAN
+            $Purchases = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => [
+                    'purchase-payments*',
+
+                ],
+                'permission'    => ['access_purchases'],
+            ]);
+            $Purchases->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+          // EMAS - PEMBELIAN - PENERIMAAN BARANG
+            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Goods Receipts'), [
+                'route' => 'goodsreceipt.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['goodsreceipts*'],
+                'permission'    => ['access_goodsreceipts'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // EMAS - PEMBELIAN - RETUR PEMBELIAN
+            $Purchases->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
+             '.__('Purchase Returns').'', [
+                'route' => 'purchase-returns.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'permission'    => ['create_purchase'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+
+            // EMAS - TOKO
+            $toko = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Toko').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                    'penentuanhargas*',
+
+                ],
+                'permission'    => ['access_penentuanhargas'],
+            ]);
+            $toko->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+            // EMAS - TOKO - PENENTUAN HARGA
+            $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+     '.__('Penentuan Harga'), [
+                'route' => 'penentuanharga.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['penentuanhargas*'],
+                'permission'    => ['access_penentuanhargas'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // EMAS - TOKO - PENERIMAAN
+            $penerimaan = $toko->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Penerimaan').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => [
+                    'penentuanhargas*',
+
+                ],
+                'permission'    => ['access_penentuanhargas'],
+            ]);
+            $penerimaan->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - TOKO - PENERIMAAN - BUYBACK
+            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+                '.__('Penerimaan Barang Buys Backs'), [
+                'route' => 'buysback.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['buysbacks*'],
+                'permission'    => ['access_buysbacks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // EMAS - TOKO - PENERIMAAN - Penerimaan Barang Luar
+            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+                '.__('Penerimaan Barang Luar'), [
+                'route' => 'penerimaanbarangluar.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['penerimaanbarangluars*'],
+                'permission'    => ['access_penerimaanbarangluars'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // EMAS - TOKO - PENERIMAAN - Penerimaan Barang DP
+            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penerimaan Barang DP'), [
+                'route' => 'penerimaanbarangdp.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['penerimaanbarangdps*'],
+                'permission'    => ['access_penerimaanbarangdps'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+            // EMAS - TOKO - Distribusi Toko
+            $distribusiToko = $toko->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
+                '.__('Distribusi Toko').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                    'datasales*',
+                    'distribusitokos*',
+
+                ],
+                'permission'    => ['access_distribusitoko'],
+            ]);
+            $distribusiToko->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - TOKO - Distribusi Toko - PRODUK
+            $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Produk'), [
+                'route' => 'products.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['products*'],
+                'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // EMAS - TOKO - Distribusi Toko - LIST DISTRIBUSI TOKO
+            $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
+                'route' => 'distribusitoko.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['distribusitokos*'],
+                'permission'    => ['access_distribusitoko'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+            // SALES
+            $sales = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Sales', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => [],
+                'permission' => [],
+            ]);
+            $sales->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+            // SALES - DataSales
+            $sales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
+                'route' => 'datasale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['datasales*'],
+                'permission'    => ['access_datasales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+            // SALES - DISTRIBUSI SALES
+            $distribusisales = $sales->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
+                '.__('Distribusi Sales').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                    'datasales*',
+                    'distribusitokos*',
+                    'penjualansales*',
+
+                ],
+                'permission'    => ['access_distribusisales'],
+            ]);
+            $distribusisales->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+
+
+            // SALES - DISTRIBUSI SALES - LIST
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Sales'), [
+                'route' => 'distribusisale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['distribusisales*'],
+                'permission'    => ['access_distribusisales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            
+
+
+
+            // SALES - DISTRIBUSI SALES - PENJUALAN SALES
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penjualan Sales'), [
+                'route' => 'penjualansale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['penjualansales*'],
+                'permission'    => ['access_penjualansales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+      
+
+
+            // SALES - DISTRIBUSI SALES - Retur Sales
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Retur Sales'), [
+                'route' => 'retursale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['retursales*'],
+                'permission'    => ['access_retursales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+            // SALES - DISTRIBUSI SALES - BuyBackSales
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Buy Back'), [
+                'route' => 'buybacksale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => ['buybacksales*'],
+                'permission'    => ['access_buybacksales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // SALES - DISTRIBUSI SALES - Barang Luar
+
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Barang Luar'), [
+                'route' => 'penerimaanbarangluarsale.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 5,
+                'activematches' => ['penerimaanbarangluarsales*'],
+                'permission'    => ['access_penerimaanbarangluarsales'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+            // SALES - LAPORAN SALES
+            $laporansales = $sales->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
+                '.__('Laporan Sales').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => [],
+                'permission'    => [],
+            ]);
+            $laporansales->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+           
+
+          // SALES - LAPORAN SALES - Laporan Hutang
+            $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Hutang').'', [
+                'route' => 'hutang-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+
+             // SALES - LAPORAN SALES - Laporan Piutang
+             $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Piutang').'', [
+                'route' => 'piutang-report.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'permission'    => ['access_reports'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link',
+            ]);
+            
+
+            
+
+            
 
 
  //==== Access Control Dropdown Categories
@@ -996,54 +1461,7 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
             // customers Access Control Dropdown ==================================
-            $customers = $menu->add(
-                '<i class="c-sidebar-nav-icon mb-1 bi bi-people-fill"></i>
-                '.__('labels.menu.people').'', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 78,
-                'activematches' => [
-                    'customers*',
-
-                ],
-                'permission'    => ['access_customers','access_suppliers'],
-            ]);
-            $customers->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-            // Submenu: customers
-            $customers->add(
-                '<i class="c-sidebar-nav-icon bi bi-person-square mb-1"></i>
-                 '.__('customers').'', [
-                'route' => 'customers.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 1,
-                'activematches' => 'customers*',
-                'permission'    => ['access_customers'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-3',
-            ]);
-     // Submenu: customers
-            $customers->add(
-                '<i class="c-sidebar-nav-icon bi bi-person-bounding-box mb-1"></i>
-                 '.__('Suppliers').'', [
-                'route' => 'suppliers.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 1,
-                'activematches' => 'suppliers*',
-                'permission'    => ['access_suppliers'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-3',
-            ]);
+            
 
 
            // Separator: Access Management
