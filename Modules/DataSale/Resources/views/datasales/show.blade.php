@@ -39,7 +39,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full px-2">
+                        <div class="w-full px-2 relative">
+                            <div class="absolute right-5 top-2 z-20">
+                                <a id="modal-target" class="btn btn-outline-nfo btn-sm">
+                                    <i class="bi bi-pencil"></i> &nbsp;@lang('Update')
+                                </a>
+                            </div>
                             <div class="rounded-lg shadow-sm">
                                 <div class="rounded-lg bg-white shadow-lg md:shadow-xl relative overflow-hidden">
                                     <div class="px-3 pt-8 pb-10 text-center relative z-10">
@@ -54,7 +59,7 @@
                         </div>
                         <div class="w-full px-2 relative">
                             <div class="absolute right-5 top-2 z-20">
-                                <a id="modal-insentif" href="{{ route(''.$module_name.'.edit_insentif', ['id' => $detail->id]) }}" class="btn btn-outline-nfo btn-sm">
+                                <a id="modal-incentive" class="btn btn-outline-nfo btn-sm">
                                     <i class="bi bi-pencil"></i> &nbsp;@lang('Update')
                                 </a>
                             </div>
@@ -147,6 +152,8 @@
         </div>
     </div>
 </div>
+@include('datasale::datasales.modal.incentive')
+@include('datasale::datasales.modal.target')
 @endsection
 
 @push('page_css')
@@ -285,31 +292,87 @@
         .buttons()
         .container()
         .appendTo("#buttons");
+</script>
 
+<script>
+    $('#modal-target').click(function(){
+        $('#modaltarget').modal('show')
+    })
+    $('#modal-incentive').click(function(){
+        $('#modalincentive').modal('show')
+    })
 
+    $('#form-incentive').submit(function(){
+        $.ajax({
+            type: "POST",
+            url: '{{route("datasale.updateincentive")}}',
+            data: $('#form-incentive').serialize(),
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept' : 'application/json'
+            },
+            success: function(data){
+                if(data.status == 'success'){
+                    toastr.success(data.message)
+                    setTimeout(function(){ location.reload();}, 1000);
+                }else{
+                    toastr.error(data.message)
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // if error occured
+					data = JSON.parse(jqXHR.responseText);
+					if(data.message == 'The given data was invalid.'){
+						err = data.errors;
+						$.each(err, function(key, val) {
+							$("."+key+"_field .fv-plugins-message-container").text(val);                   
+							$("."+key+"_field .fv-plugins-message-container").show();
+						});
 
-    </script>
+						toastr.error(data.message);
+					}
+					else{
+						toastr.error("Error occured. "+jqXHR.status+" "+ textStatus +" "+" please try again");
+					}
+				}
+        })
+        return false;
+    })
+    $('#form-target').submit(function(){
+        $.ajax({
+            type: "POST",
+            url: '{{route("datasale.updatetarget")}}',
+            data: $('#form-target').serialize(),
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept' : 'application/json'
+            },
+            success: function(data){
+                if(data.status == 'success'){
+                    toastr.success(data.message)
+                    setTimeout(function(){ location.reload();}, 1000);
+                }else{
+                    toastr.error(data.message)
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // if error occured
+					data = JSON.parse(jqXHR.responseText);
+					if(data.message == 'The given data was invalid.'){
+						err = data.errors;
+						$.each(err, function(key, val) {
+							$("."+key+"_field .fv-plugins-message-container").text(val);                   
+							$("."+key+"_field .fv-plugins-message-container").show();
+						});
 
-<script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #modal-insentif', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'modal-insentif')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
+						toastr.error(data.message);
+					}
+					else{
+						toastr.error("Error occured. "+jqXHR.status+" "+ textStatus +" "+" please try again");
+					}
+				}
+        })
+        return false;
+    })
 </script>
 @endpush
