@@ -37,7 +37,7 @@
   <th style="width: 15%!important;" class="text-center">{{ Label_Case('sales') }}</th>
   <th style="width: 15%!important;" class="text-center">{{ Label_Case('store_name') }}</th>
  <th style="width: 10%!important;" class="text-center">{{ Label_Case('total_weight') }}</th>
- <th style="width: 10%!important;" class="text-center">{{ Label_Case('total_nominal') }}</th>
+ <th style="width: 10%!important;" class="text-center">{{ Label_Case('total_harga') }}</th>
  <th style="width: 10%!important;" class="text-center">{{ Label_Case('created_by') }}</th>
                      
  <th style="width: 18%!important;" class="text-center"> {{ __('Action') }} </th>
@@ -103,7 +103,7 @@
                 {data: 'sales', name: 'sales'},
                 {data: 'store_name', name: 'store_name'},
                 {data: 'total_weight', name: 'total_weight'},
-                {data: 'total_nominal', name: 'total_nominal'},
+                {data: 'total_harga', name: 'total_harga'},
                 {data: 'created_by', name: 'created_by'},
 
                 {

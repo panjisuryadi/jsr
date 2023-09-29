@@ -176,14 +176,14 @@
                         <?php
 
                         $field_name = 'penjualan_sales_details.' . $key . '.nominal';
-                        $field_lable = label_case('nominal');
+                        $field_lable = label_case('harga');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         $required = 'wire:change=calculateTotalNominal() wire:model="' . $field_name . '"';
                         ?>
                         @if ($key == 0)
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
-                            {{ $field_lable }}<span class="text-danger">*</span></label>
+                            {{ $field_lable }}</label>
                         @endif
                         {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
@@ -302,7 +302,7 @@
         </div>
     </div>
     <div class="mb-2 md:mb-1 flex items-center">
-        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Nominal</label>
+        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Harga</label>
         <span class="mr-4 md:block">:</span>
         <div class="flex-1">
             <input class="form-control form-control-sm" type-currency="IDR" wire:model="penjualan_sales.total_nominal" type="text" placeholder="0" readonly>

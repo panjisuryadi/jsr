@@ -101,8 +101,8 @@ public function index_data(Request $request)
                         ->editColumn('total_weight', function ($data) {
                             return $data->detail->sum('weight') . " gram";
                             })
-                        ->editColumn('total_nominal', function ($data) {
-                            return "Rp.".$data->detail->sum('nominal');
+                        ->editColumn('total_harga', function ($data) {
+                            return $data->detail->sum('nominal');
                             })
                         ->rawColumns(['updated_at', 
                              'sales', 

@@ -30,7 +30,7 @@ class Create extends Component
             'karat_id' => '',
             'sub_karat_id' => '',
             'weight' => '',
-            'nominal' => '',
+            'nominal' => 0,
             'sub_karat_choice' => []
         ]
     ];
@@ -46,7 +46,7 @@ class Create extends Component
             'karat_id' => '',
             'sub_karat_id' => '',
             'weight' => '',
-            'nominal' => '',
+            'nominal' => 0,
             'sub_karat_choice' => []
         ];
     }
@@ -67,7 +67,7 @@ class Create extends Component
                 'karat_id' => '',
                 'sub_karat_id' => '',
                 'weight' => '',
-                'nominal' => '',
+                'nominal' => 0,
                 'sub_karat_choice' => []
             ]
         ];
@@ -114,7 +114,6 @@ class Create extends Component
             'penjualan_sales.invoice_no' => 'required|string|max:50',
             'penjualan_sales.store_name' => 'string',
             'penjualan_sales.total_weight' => 'required',
-            'penjualan_sales.total_nominal' => 'required',
             'penjualan_sales.sales_id' => 'required',
             'penjualan_sales.date' => 'required',
             'penjualan_sales.tipe_pembayaran' => 'required',
@@ -155,7 +154,6 @@ class Create extends Component
     
                 },
             ];
-            $rules['penjualan_sales_details.'.$key.'.nominal'] = 'required';
 
         }
         return $rules;
@@ -176,7 +174,7 @@ class Create extends Component
     {
         $this->penjualan_sales['total_nominal'] = 0;
         foreach ($this->penjualan_sales_details as $key => $value) {
-            $this->penjualan_sales['total_nominal'] += intval($this->penjualan_sales_details[$key]['nominal']);
+            $this->penjualan_sales['total_nominal'] += intval($this->penjualan_sales_details[$key]['nominal']??0);
         }
     }
 
@@ -197,7 +195,7 @@ class Create extends Component
                 'store_name' => $this->penjualan_sales['store_name'],
                 'invoice_no' => $this->penjualan_sales['invoice_no'],
                 'total_weight' => $this->penjualan_sales['total_weight'],
-                'total_nominal' => $this->penjualan_sales['total_nominal'],
+                'total_nominal' => $this->penjualan_sales['total_nominal']??0,
                 'created_by' => auth()->user()->name
             ]);
     
@@ -212,7 +210,7 @@ class Create extends Component
                 $penjualan_sale_detail = $penjualan_sale->detail()->create([
                     'karat_id' => $this->penjualan_sales_details[$key]['sub_karat_id'],
                     'weight' => $this->penjualan_sales_details[$key]['weight'],
-                    'nominal' => $this->penjualan_sales_details[$key]['nominal'],
+                    'nominal' => $this->penjualan_sales_details[$key]['nominal']??0,
                     'created_by' => auth()->user()->name
                 ]);
                 event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail));
