@@ -110,9 +110,8 @@
 
 
 <div class="px-1 text-center justify-items-center">
-       
+
          @include('livewire.includes.manual-modal') 
-  
 </div>
 
 <div class="px-1 text-center justify-items-center">

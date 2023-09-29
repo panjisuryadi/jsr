@@ -43,21 +43,6 @@
 </div>
 </div>
 
-
-
-
-
-  {{--       <div class="row">
-            <div class="col-12">
-                @include('utils.alerts')
-            </div>
-            <div class="col-lg-7 bg-white">
-               
-            </div>
-            <div class="col-lg-5">
-              
-            </div>
-        </div> --}}
     </div>
 @endsection
 
