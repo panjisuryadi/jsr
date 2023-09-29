@@ -43,7 +43,7 @@
                             @foreach($cart_items as $cart_item)
                  {{-- {{dd($cart_item)}} --}}
                    <!-- component -->
-                      <div class="bg-white text-white w-full max-w-md flex flex-col border-b rounded-md p-1">
+                      <div class="bg-white text-white w-full max-w-lg flex flex-col border-b rounded-md p-1">
                         <div class="flex items-center justify-between">
                           <div class="flex items-center space-x-4">
                             <div class="rounded-full w-4 h-4 border border-blue-500"></div>
@@ -151,7 +151,5 @@
 
     {{--Checkout Modal--}}
     @include('livewire.pos.includes.checkout-modal')
-
-
 </div>
 

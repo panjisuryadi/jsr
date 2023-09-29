@@ -187,6 +187,8 @@ class Checkout extends Component
         $this->updateQuantity($row_id, $product_id);
     }
 
+
+//set utk diskon
     public function setProductDiscount($row_id, $product_id) {
         $cart_item = Cart::instance($this->cart_instance)->get($row_id);
 
@@ -212,6 +214,7 @@ class Checkout extends Component
 
         session()->flash('discount_message' . $product_id, 'Discount added to the product!');
     }
+
 
     public function calculate($product) {
         $price = 0;
