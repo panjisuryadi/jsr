@@ -99,6 +99,7 @@ class Checkout extends Component
             return $cartItem->id == $product['id'];
         });
 
+
         // if(isset($product['product_item'][0]['karat']['penentuan_harga']['harga_emas'])) {
         //     session()->flash('message', 'Harga Produk Masih kosong!');
           
@@ -119,6 +120,19 @@ class Checkout extends Component
             'qty'     => 1,
             'price'   => $product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
             'weight'  => 1,
+
+        if ($exists->isNotEmpty()) {
+            session()->flash('message', 'Product exists in the cart!');
+            return;
+        }
+
+        $cart->add([
+        'id'      => $product['id'],
+        'name'    => $product['product_name'],
+        'qty'     => 1,
+        'price'   => $product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
+        'weight'  => 1,
+>>>>>>> Stashed changes
             'options' => [
                 'product_discount'      => 0.00,
                 'product_discount_type' => 'fixed',
