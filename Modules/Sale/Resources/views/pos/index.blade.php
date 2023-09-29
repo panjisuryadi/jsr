@@ -60,6 +60,13 @@
                     thousands:'{{ settings()->currency->thousand_separator }}',
                     decimal:'{{ settings()->currency->decimal_separator }}',
                     allowZero: false,
+                });  
+
+                $('#discount').maskMoney({
+                    prefix:'{{ settings()->currency->symbol }}',
+                    thousands:'{{ settings()->currency->thousand_separator }}',
+                    decimal:'{{ settings()->currency->decimal_separator }}',
+                    allowZero: false,
                 });
 
                 $('#total_amount').maskMoney({
@@ -79,12 +86,17 @@
                 $('#paid_amount').maskMoney('mask');
                 $('#total_amount').maskMoney('mask');
                 $('#grand_total').maskMoney('mask');
+                $('#discount').maskMoney('mask');
 
                 $('#checkout-form').submit(function () {
                     var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
                     $('#paid_amount').val(paid_amount);
+
                     var total_amount = $('#total_amount').maskMoney('unmasked')[0];
-                    $('#total_amount').val(total_amount);
+                    $('#total_amount').val(total_amount); 
+
+                    var discount = $('#discount').maskMoney('unmasked')[0];
+                    $('#discount').val(discount);
                 });
             });
         });

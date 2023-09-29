@@ -1,5 +1,5 @@
 <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-lg modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-semibold text-lg" id="checkoutModalLabel">
@@ -27,33 +27,60 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                            
-                                <input type="hidden" value="{{ $customer_id }}" name="customer_id">
-                                <input type="hidden" value="{{ $global_tax }}" name="tax_percentage">
-                                <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
-                                <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
-                                <input type="hidden" value="Other" name="payment_method">
-                                <div class="form-group mt-4">
-                                    <label for="total_amount">Total <span class="text-danger">*</span></label>
-                                    <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" readonly required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="paid_amount">Bayar <span class="text-danger">*</span></label>
-                                    <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ $total_amount }}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="grand_total">Kembali <span class="text-danger">*</span></label>
-                                    <span class="text-red-800" id="hasil"></span>
-                                    <input id="grand_total" type="text" class="form-control" name="grand_total" value="{{ $total_amount }}" readonly>
-                                </div>
+<div class="px-0 py-2 grid grid-cols-2 gap-4 m-2">
+ 
+
+<input type="hidden" value="{{ $customer_id }}" name="customer_id">
+    <input type="hidden" value="{{ $global_tax }}" name="tax_percentage">
+    <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
+    <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
+    <input type="hidden" value="Other" name="payment_method"> 
+
+
+<div class="px-1">
+<div class="form-group mt-0">
+    <label for="total_amount">Total <span class="text-danger">*</span></label>
+    <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" readonly required>
+</div>
+
+<div class="form-group">
+    <label for="paid_amount">Bayar <span class="text-danger">*</span></label>
+    <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ $total_amount }}" required>
+</div>
+
+<div class="form-group">
+    <label for="discount">Discount  <span class="small text-danger">(Nominal)</span></label>
+    <input id="discount" type="text" class="form-control" name="discount" required>
+</div>
 
 
 
 
-                                <div class="form-group">
-                                    <label for="note">Catatan (Jika diperlukan)</label>
-                                    <textarea name="note" id="note" rows="3" class="form-control"></textarea>
-                                </div>
-                            </div>
+</div>
+
+
+<div class="px-1">
+
+
+<div class="form-group">
+    <label for="grand_total">Kembali <span class="text-danger">*</span></label>
+    <span class="text-red-800" id="hasil"></span>
+    <input id="grand_total" type="text" class="form-control" name="grand_total" value="{{ $total_amount }}" readonly>
+</div>
+<div class="form-group">
+    <label for="note">Catatan (Jika diperlukan)</label>
+    <textarea name="note" id="note" rows="4" class="form-control"></textarea>
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
      
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             {{-- batas --}}
@@ -156,10 +183,11 @@
 @push('page_scripts')
 
 <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
            $('#paid_amount').keyup(function() {
                var bayar = $('#paid_amount').maskMoney('unmasked')[0];
                var harga = $("#total_amount").maskMoney('unmasked')[0];
+               var diskon = $("#diskon").maskMoney('unmasked')[0];
 
                 if (isNaN(harga) || isNaN(bayar)) {
                     alert("Harga dan Jumlah harus diisi dengan angka.");
@@ -167,19 +195,30 @@
                 }
 
                 var total = bayar - harga;
+                var grandTotal = total - diskon;
                  if(bayar>=harga){
-                      $("#grand_total").val(total.toFixed(2));
+                      $("#grand_total").val(grandTotal.toFixed(2));
                       $("#kembalian").val(kembalian.toFixed(2));
                     }else{
-                        $("#grand_total").val(total.toFixed(2));
-
+                      $("#grand_total").val(grandTotal.toFixed(2));
                     }
 
                 
             });
         });
-    </script>
 
+         // $(document).ready(function () {
+         //   $('#diskon').keyup(function() {
+         //        var diskon = $("#diskon").maskMoney('unmasked')[0];
+         //        var total = bayar - harga;
+         //        var grandTotal = total - diskon;
+         //        $("#grand_total").val(grandTotal.toFixed(2));
+                
+         //     });
+         //   });
+
+
+    </script>
 
 
 @endpush
