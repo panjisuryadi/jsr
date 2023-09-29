@@ -339,8 +339,8 @@ class GenerateMenus
             ]);
 
 
-            // SALES
-            $sales = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Sales', [
+            // EMAS - SALES
+            $sales = $emas->add('<i class="c-sidebar-nav-icon cil-apps"></i> Sales', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -354,7 +354,7 @@ class GenerateMenus
             ]);
 
 
-            // SALES - DataSales
+            // EMAS - SALES - DataSales
             $sales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
                 'route' => 'datasale.index',
                 'class' => 'nav-item',
@@ -369,7 +369,7 @@ class GenerateMenus
             ]);
 
 
-            // SALES - DISTRIBUSI SALES
+            // EMAS - SALES - DISTRIBUSI SALES
             $distribusisales = $sales->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
                 '.__('Distribusi Sales').'', [
@@ -393,7 +393,7 @@ class GenerateMenus
 
 
 
-            // SALES - DISTRIBUSI SALES - LIST
+            // EMAS - SALES - DISTRIBUSI SALES - LIST
             $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Sales'), [
                 'route' => 'distribusisale.index',
                 'class' => 'nav-item',
@@ -411,7 +411,7 @@ class GenerateMenus
 
 
 
-            // SALES - DISTRIBUSI SALES - PENJUALAN SALES
+            // EMAS - SALES - DISTRIBUSI SALES - PENJUALAN SALES
             $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penjualan Sales'), [
                 'route' => 'penjualansale.index',
                 'class' => 'nav-item',
@@ -427,7 +427,7 @@ class GenerateMenus
       
 
 
-            // SALES - DISTRIBUSI SALES - Retur Sales
+            // EMAS - SALES - DISTRIBUSI SALES - Retur Sales
             $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Retur Sales'), [
                 'route' => 'retursale.index',
                 'class' => 'nav-item',
@@ -456,7 +456,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-            // SALES - DISTRIBUSI SALES - Barang Luar
+            // EMAS - SALES - DISTRIBUSI SALES - Barang Luar
 
             $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Barang Luar'), [
                 'route' => 'penerimaanbarangluarsale.index',
@@ -473,7 +473,7 @@ class GenerateMenus
 
 
 
-            // SALES - LAPORAN SALES
+            // EMAS - SALES - LAPORAN SALES
             $laporansales = $sales->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
                 '.__('Laporan Sales').'', [
@@ -492,7 +492,7 @@ class GenerateMenus
 
            
 
-          // SALES - LAPORAN SALES - Laporan Hutang
+          // EMAS - SALES - LAPORAN SALES - Laporan Hutang
             $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Hutang').'', [
                 'route' => 'hutang-report.index',
                 'class' => 'nav-item',
@@ -505,7 +505,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link',
             ]);
 
-             // SALES - LAPORAN SALES - Laporan Piutang
+             // EMAS - SALES - LAPORAN SALES - Laporan Piutang
              $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Piutang').'', [
                 'route' => 'piutang-report.index',
                 'class' => 'nav-item',
@@ -517,6 +517,299 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
+
+
+
+            // EMAS - STOK
+            $stok = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => [
+                           'stoks*',
+                    ],
+                  'permission' => ['access_stoks'],
+            ]);
+            $stok->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - STOK - DAFTAR STOK
+            $daftar_stok = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Daftar Stok', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => [
+                           'stoks*',
+                    ],
+                  'permission' => ['access_stoks'],
+            ]);
+            $daftar_stok->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - STOK - DAFTAR STOK - STOK SALES
+            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Sales'), [
+                'route' => 'stok.sales',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+          // EMAS - STOK - DAFTAR STOK - STOK OFFICE
+            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Office'), [
+                'route' => 'stok.office',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+          // EMAS - STOK - DAFTAR STOK - STOK PENDING
+            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
+                'route' => 'stok.pending',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+
+          // EMAS - STOK - DAFTAR STOK - STOK DP
+            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock DP'), [
+                'route' => 'stok.dp',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+          // EMAS - STOK - DAFTAR STOK - STOK KROOM
+            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Kroom'), [
+                'route' => 'stok.kroom',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 5,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+            // EMAS - STOK - KELOLA STOK
+            $kelola_stok = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Kelola Stok', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                           'stoks*',
+                    ],
+                  'permission' => ['access_stoks'],
+            ]);
+            $kelola_stok->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+            // EMAS - STOK - STOK Opname
+            $adjustments = $kelola_stok->add('
+                <i class="mb-2 c-sidebar-nav-icon bi bi-clipboard-check"></i> '.__('Adjustments').'',
+                 [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => [
+                    'adjustments*',
+
+
+                ],
+                'permission' => ['access_adjustments',
+                                     // 'print_barcodes',
+                                      'create_adjustments'],
+            ]);
+            $adjustments->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+            // EMAS - STOK - STOK OPNAME - List Adjustment
+            // $adjustments->add('
+            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-1"></i>'.__('List Adjustments').'',
+            //      [
+            //     'route' => 'adjustments.index',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 1,
+            //     'activematches' => 'adjustments*',
+            //     'permission'    => ['create_adjustments'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-3',
+            // ]);
+
+            // EMAS - STOK - STOK OPNAME - Create Adjustment
+            // $adjustments->add('
+            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-1"></i>'.__('Create Adjustments').'',
+            //      [
+            //     'route' => 'adjustments.create',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 2,
+            //     'activematches' => 'adjustments*',
+            //     'permission'    => ['create_adjustments'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2 pb-2',
+            // ]);
+
+
+            // EMAS - STOK - STOK OPNAME - Stocks
+            // $adjustments->add('
+            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Stocks').'',
+            //      [
+            //     'route' => 'stocks.index',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 3,
+            //     'activematches' => 'stocks*',
+            //     'permission'    => ['create_adjustments'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2 pb-2',
+            // ]);
+
+            // EMAS - STOK - STOK OPNAME - Stock Transfer
+            // $adjustments->add('
+            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
+            //     '.__('Stock Transfer').'',
+            //      [
+            //     'route' => 'stocktransfer.index',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 4,
+            //     'activematches' => 'stocktransfer*',
+            //     'permission'    => ['create_adjustments'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2 pb-2',
+            // ]);
+
+            // EMAS - STOK - STOK OPNAME - Stok RFID
+            //  $adjustments->add('
+            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
+            //     '.__('Stok RFID').'',
+            //      [
+            //     'route' => 'rfid.index',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 3,
+            //     'activematches' => 'rfid*',
+            //     'permission'    => ['create_adjustments'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2 pb-2',
+            // ]);
+
+            // EMAS - PROSES
+            $proses = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Proses', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 5,
+                'activematches' => [],
+                'permission' => [],
+            ]);
+            $proses->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - PROSES - CUCI
+            $cuci = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Cuci', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => [],
+                'permission' => [],
+            ]);
+            $cuci->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - PROSES - Rongsok
+            $rongsok = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Rongsok', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [],
+                'permission' => [],
+            ]);
+            $rongsok->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - PROSES - Olah Kembali
+            $olah_kembali = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Olah Kembali', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => [],
+                'permission' => [],
+            ]);
+            $olah_kembali->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+            
+            
             
 
             
@@ -833,79 +1126,7 @@ class GenerateMenus
 
 
 
-         // pembelian
- $Purchases = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => [
-                    'purchase-payments*',
-
-                ],
-                'permission'    => ['access_purchases'],
-            ]);
-            $Purchases->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-          // GoodsReceipts
-     $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Goods Receipts'), [
-                'route' => 'goodsreceipt.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 1,
-                'activematches' => ['goodsreceipts*'],
-                'permission'    => ['access_goodsreceipts'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-            // BuysBacks
-            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Penerimaan Barang Buys Backs'), [
-                'route' => 'buysback.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => ['buysbacks*'],
-                'permission'    => ['access_buysbacks'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-            // Penerimaan Barang Luar
-            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Penerimaan Barang Luar'), [
-                'route' => 'penerimaanbarangluar.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['penerimaanbarangluars*'],
-                'permission'    => ['access_penerimaanbarangluars'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penerimaan Barang DP'), [
-                'route' => 'penerimaanbarangdp.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 4,
-                'activematches' => ['penerimaanbarangdps*'],
-                'permission'    => ['access_penerimaanbarangdps'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+         
 
        // Riwayat Penerimaan
     //  $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
@@ -1008,25 +1229,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-    $penentuan_harga = $menu->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-     '.__('Penentuan Harga'), [
-                'route' => 'penentuanharga.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => ['penentuanhargas*'],
-                'permission'    => ['access_penentuanhargas'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-           
-
-
 
             // // Submenu: products
             // $products->add('
@@ -1122,288 +1324,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
 
 
 
-
-         // Access Control Dropdown Stok
-         $stok = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
-                        'class' => 'c-sidebar-nav-dropdown',
-                    ])
-                    ->data([
-                        'order'         => 3,
-                        'activematches' => [
-                                   'stoks*',
-                                  ],
-                          'permission' => ['access_stoks'],
-                    ]);
-                    $stok->link->attr([
-                        'class' => 'c-sidebar-nav-dropdown-toggle',
-                        'href'  => '#',
-                    ]);
-
-                    // DataStok
-                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Sales'), [
-                        'route' => 'stok.sales',
-                        'class' => 'nav-item',
-                    ])
-                    ->data([
-                        'order'         => 3,
-                        'activematches' => ['stoks*'],
-                        'permission'    => ['access_stoks'],
-                    ])
-                    ->link->attr([
-                        'class' => 'c-sidebar-nav-link py-2',
-                    ]);
-
-                  // DataStok
-                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Office'), [
-                        'route' => 'stok.office',
-                        'class' => 'nav-item',
-                    ])
-                    ->data([
-                        'order'         => 3,
-                        'activematches' => ['stoks*'],
-                        'permission'    => ['access_stoks'],
-                    ])
-                    ->link->attr([
-                        'class' => 'c-sidebar-nav-link py-2',
-                    ]);
-
-                  // DataStok
-                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
-                        'route' => 'stok.pending',
-                        'class' => 'nav-item',
-                    ])
-                    ->data([
-                        'order'         => 3,
-                        'activematches' => ['stoks*'],
-                        'permission'    => ['access_stoks'],
-                    ])
-                    ->link->attr([
-                        'class' => 'c-sidebar-nav-link py-2',
-                    ]);
-
-
-
-
-                  // DataStok
-                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock DP'), [
-                        'route' => 'stok.dp',
-                        'class' => 'nav-item',
-                    ])
-                    ->data([
-                        'order'         => 3,
-                        'activematches' => ['stoks*'],
-                        'permission'    => ['access_stoks'],
-                    ])
-                    ->link->attr([
-                        'class' => 'c-sidebar-nav-link py-2',
-                    ]);
-
-
-
-                  // DataStok
-                    $stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Kroom'), [
-                        'route' => 'stok.kroom',
-                        'class' => 'nav-item',
-                    ])
-                    ->data([
-                        'order'         => 3,
-                        'activematches' => ['stoks*'],
-                        'permission'    => ['access_stoks'],
-                    ])
-                    ->link->attr([
-                        'class' => 'c-sidebar-nav-link py-2',
-                    ]);
-
-
-
-
-
-
-
-   // distribusi toko Access Control Dropdown ==================================
-            $distribusiToko = $menu->add(
-                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
-                '.__('Distribusi Toko').'', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => [
-                    'datasales*',
-                    'distribusitokos*',
-
-                ],
-                'permission'    => ['access_distribusitoko'],
-            ]);
-            $distribusiToko->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-            // Produk
-            $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Produk'), [
-                'route' => 'products.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['products*'],
-                'permission'    => ['access_products'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-   // DistribusiTokos
-            $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
-                'route' => 'distribusitoko.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['distribusitokos*'],
-                'permission'    => ['access_distribusitoko'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-
-
-
-
-
-         // distribusitokos Access Control Dropdown ==================================
-            $distribusisales = $menu->add(
-                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
-                '.__('Distribusi Sales').'', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => [
-                    'datasales*',
-                    'distribusitokos*',
-                    'penjualansales*',
-
-                ],
-                'permission'    => ['access_distribusisales'],
-            ]);
-            $distribusisales->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
-
-
-       // DistribusiSales
-            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Sales'), [
-                'route' => 'distribusisale.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['distribusisales*'],
-                'permission'    => ['access_distribusisales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-            // DataSales
-            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
-                'route' => 'datasale.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['datasales*'],
-                'permission'    => ['access_datasales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-     // PenjualanSales
-     $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penjualan Sales'), [
-                'route' => 'penjualansale.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['penjualansales*'],
-                'permission'    => ['access_penjualansales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-      
-
-
-          // ReturSales
-            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Retur Sales'), [
-                'route' => 'retursale.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['retursales*'],
-                'permission'    => ['access_retursales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-            // Submenu: customers
-            $distribusisales->add(
-                '<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> 
-                 '.__('Customer Sales').'', [
-                'route' => 'customersales.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 4,
-                'activematches' => 'customersales*',
-                'permission'    => ['access_customersales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-3',
-            ]);
-
-            // BuyBackSales
-            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Buy Back Sales'), [
-                'route' => 'buybacksale.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 4,
-                'activematches' => ['buybacksales*'],
-                'permission'    => ['access_buybacksales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penerimaan Barang Luar Sales'), [
-                'route' => 'penerimaanbarangluarsale.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 5,
-                'activematches' => ['penerimaanbarangluarsales*'],
-                'permission'    => ['access_penerimaanbarangluarsales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
       
 
             // customers Access Control Dropdown ==================================
@@ -1478,151 +1398,6 @@ $products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist">
                    ],
             ]);
 
-
-      //============================Access Control adjustments
-            $adjustments = $menu->add('
-                <i class="mb-2 c-sidebar-nav-icon bi bi-clipboard-check"></i> '.__('Adjustments').'',
-                 [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => [
-                    'adjustments*',
-
-
-                ],
-                'permission' => ['access_adjustments',
-                                     // 'print_barcodes',
-                                      'create_adjustments'],
-            ]);
-            $adjustments->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
-       // Submenu: adjustments
-            $adjustments->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-1"></i>'.__('List Adjustments').'',
-                 [
-                'route' => 'adjustments.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'adjustments*',
-                'permission'    => ['create_adjustments'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-3',
-            ]);
-
-  // Submenu: adjustments
-            $adjustments->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-1"></i>'.__('Create Adjustments').'',
-                 [
-                'route' => 'adjustments.create',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'adjustments*',
-                'permission'    => ['create_adjustments'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
-
-
-  // Submenu: adjustments
-            $adjustments->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Stocks').'',
-                 [
-                'route' => 'stocks.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'stocks*',
-                'permission'    => ['create_adjustments'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
-
-
-       $adjustments->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
-                '.__('Stock Transfer').'',
-                 [
-                'route' => 'stocktransfer.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'stocktransfer*',
-                'permission'    => ['create_adjustments'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
-
-
-             $adjustments->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
-                '.__('Stok RFID').'',
-                 [
-                'route' => 'rfid.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'rfid*',
-                'permission'    => ['create_adjustments'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2 pb-2',
-            ]);
-
-
-
-
-
-
-
-    // Access Purchases Dropdown
-            $purchaseReturns = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchase Returns').'', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 4,
-                'activematches' => [
-                    'purchase-returns.*',
-                    'purchase-return-payments.*',
-
-                ],
-                'permission'    => ['access_purchase_returns'],
-            ]);
-            $purchaseReturns->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
-            // Submenu: Purchase Return
-            $purchaseReturns->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
-             '.__('Purchase Return').'', [
-                'route' => 'purchase-returns.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 4,
-                'permission'    => ['create_purchase'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link',
-            ]);
 
              // Access Control Dropdown
             $report = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Reports').'', [
