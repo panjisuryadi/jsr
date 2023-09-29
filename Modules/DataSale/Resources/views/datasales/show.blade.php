@@ -22,25 +22,57 @@
         <div class="col-lg-12">
             <!-- component -->
             <div class="px-5 py-5">
-                <div class="w-full max-w-3xl">
-                    <div class="-mx-2 md:flex">
-                        <div class="w-full md:w-1/3 px-2">
-                        <div class="rounded-lg shadow-sm mb-4">
-                            <div class="rounded-lg bg-white shadow-lg md:shadow-xl relative overflow-hidden">
-                                <div class="px-3 pt-8 pb-10 text-center relative z-10">
-                                    <h2 class="font-bold text-3xl text-gray-700 mb-4 tracking-wide"> {{ $detail->name }}</h2>
-                                    @if ($detail->address)
-                                    <p class="text-lg text-gray-500 font-medium"> <i class="cil-location-pin"></i> {{ $detail->address }}</p>
-                                    @endif
-                                    @if ($detail->phone)
-                                    <p class="text-lg text-gray-500 font-medium"> <i class="cil-phone"></i> {{ $detail->phone }}</p>
-                                    @endif
+                <div class="w-full">
+                    <div class="-mx-2 md:grid grid-cols-3 grid-rows-2 mb-4 gap-y-4">
+                        <div class="w-full h-full px-2 row-span-2">
+                            <div class="h-full rounded-lg shadow-sm">
+                                <div class="h-full rounded-lg bg-white shadow-lg md:shadow-xl relative overflow-hidden">
+                                    <div class="px-5 pt-8 pb-10 relative z-10">
+                                        <h2 class="font-bold text-3xl text-gray-700 mb-4 tracking-wide"> {{ $detail->name }}</h2>
+                                        @if ($detail->address)
+                                        <p class="text-lg text-gray-500 font-medium"> <i class="cil-location-pin"></i> {{ $detail->address }}</p>
+                                        @endif
+                                        @if ($detail->phone)
+                                        <p class="text-lg text-gray-500 font-medium"> <i class="cil-phone"></i> {{ $detail->phone }}</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="w-full px-2">
+                            <div class="rounded-lg shadow-sm">
+                                <div class="rounded-lg bg-white shadow-lg md:shadow-xl relative overflow-hidden">
+                                    <div class="px-3 pt-8 pb-10 text-center relative z-10">
+                                        <h4 class="text-sm uppercase text-gray-500 leading-tight">Target Penjualan</h4>
+                                        <h3 class="text-3xl text-gray-700 font-semibold leading-tight my-3">{{ formatBerat($detail->target) }} gram</h3>
+                                    </div>
+                                    <div class="absolute bottom-0 inset-x-0">
+                                        <canvas id="chart1" height="70"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="w-full md:w-1/3 px-2">
-                            <div class="rounded-lg shadow-sm mb-4">
+                        <div class="w-full px-2 relative">
+                            <div class="absolute right-5 top-2 z-20">
+                                <a href="{{ route(''.$module_name.'.edit', $detail->id) }}" class="btn btn-outline-nfo btn-sm">
+                                    <i class="bi bi-pencil"></i> &nbsp;@lang('Update')
+                                </a>
+                            </div>
+                            <div class="rounded-lg shadow-sm">
+                                <div class="rounded-lg bg-white shadow-lg md:shadow-xl relative overflow-hidden">
+                                    <div class="px-3 pt-8 pb-10 text-center relative z-10">
+                                        <h4 class="text-sm uppercase text-gray-500 leading-tight">Insentif</h4>
+                                        <h3 class="text-3xl text-gray-700 font-semibold leading-tight my-3">Rp. {{ rupiah($detail->insentif->nominal??0) }}</h3>
+                                    </div>
+                                    <div class="absolute bottom-0 inset-x-0">
+                                        <canvas id="chart1" height="70"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full px-2">
+                            <div class="rounded-lg shadow-sm">
                                 <div class="rounded-lg bg-white shadow-lg md:shadow-xl relative overflow-hidden">
                                     <div class="px-3 pt-8 pb-10 text-center relative z-10">
                                         <h4 class="text-sm uppercase text-gray-500 leading-tight">Jumlah Penjualan</h4>
@@ -52,8 +84,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full md:w-1/3 px-2">
-                            <div class="rounded-lg shadow-sm mb-4">
+                        <div class="w-full px-2">
+                            <div class="rounded-lg shadow-sm">
                                 <div class="rounded-lg bg-white shadow-lg md:shadow-xl relative overflow-hidden">
                                     <div class="px-3 pt-8 pb-10 text-center relative z-10">
                                         <h4 class="text-sm uppercase text-gray-500 leading-tight">Total Stock</h4>
@@ -65,6 +97,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                    
                 </div>
