@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Modules\DataSale\Http\Controllers\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('static.api.token')->get('/datasales', function (Request $request) {
-    return 'hello world';
+Route::middleware(['static.api.token'])->group(function () {
+    Route::get('/datasales', [Api\DataSalesController::class, 'index']);
 });

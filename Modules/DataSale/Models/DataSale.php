@@ -30,7 +30,7 @@ class DataSale extends Model
     }
 
     public function insentif(){
-      return $this->hasOne(Insentif::class,'sales_id','id');
+      return $this->hasMany(Insentif::class,'sales_id','id');
     }
 
     public function penjualanSale(){
