@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\ReturSale;
 
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Modules\DataSale\Models\DataSale;
@@ -24,7 +26,7 @@ class Create extends Component
         [
             'karat_id' => '',
             'weight' => '',
-            'nominal' => '',
+            'nominal' => 0,
             'sub_karat_id' => '',
             'sub_karat_choice' => []
         ]
@@ -33,12 +35,16 @@ class Create extends Component
     public $dataSales = [];
     public $dataKarat = [];
 
+    public $hari_ini;
+
+
+
     public function add()
     {
         $this->retur_sales_detail[] = [
             'karat_id' => '',
             'weight' => '',
-            'nominal' => '',
+            'nominal' => 0,
             'sub_karat_id' => '',
             'sub_karat_choice' => []
         ];
@@ -58,11 +64,16 @@ class Create extends Component
             [
                 'karat_id' => '',
                 'weight' => '',
-                'nominal' => '',
+                'nominal' => 0,
                 'sub_karat_id' => '',
                 'sub_karat_choice' => []
             ]
         ];
+    }
+
+    private function resetTotal(){
+        $this->retur_sales['total_weight'] = 0;
+        $this->retur_sales['total_nominal'] = 0;
     }
 
     private function resetInputFields(){
@@ -87,6 +98,9 @@ class Create extends Component
                     });
                 });
         })->get();
+
+        $this->hari_ini = new DateTime();
+        $this->hari_ini = $this->hari_ini->format('Y-m-d');
     }
 
     public function remove($key)
@@ -103,9 +117,18 @@ class Create extends Component
         $rules = [
             'retur_sales.retur_no' => 'required|string|max:50',
             'retur_sales.total_weight' => 'required',
-            'retur_sales.total_nominal' => 'required',
             'retur_sales.sales_id' => 'required',
-            'retur_sales.date' => 'required',
+            'retur_sales.date' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $today = Carbon::today();
+                    $inputDate = Carbon::parse($value);
+
+                    if ($inputDate < $today) {
+                        $fail($attribute . ' harus tanggal hari ini atau setelahnya.');
+                    }
+                }
+            ],
 
         ];
 
@@ -115,6 +138,7 @@ class Create extends Component
             $rules['retur_sales_detail.'.$key.'.sub_karat_id'] = 'required';
             $rules['retur_sales_detail.'.$key.'.weight'] = [
                 'required',
+                'gt:0',
                 function ($attribute, $value, $fail) use ($key) {
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
                     $isKaratFilled = $this->retur_sales_detail[$key]['sub_karat_id'] != '';
@@ -132,7 +156,7 @@ class Create extends Component
                 },
             
             ];
-            $rules['retur_sales_detail.'.$key.'.nominal'] = 'required';
+            $rules['retur_sales_detail.'.$key.'.nominal'] = 'gt:-1';
         }
         return $rules;
     }
@@ -152,7 +176,10 @@ class Create extends Component
     {
         $this->retur_sales['total_nominal'] = 0;
         foreach ($this->retur_sales_detail as $key => $value) {
-            $this->retur_sales['total_nominal'] += intval($this->retur_sales_detail[$key]['nominal']);
+            $this->retur_sales['total_nominal'] += floatval($this->retur_sales_detail[$key]['nominal']);
+            $this->retur_sales['total_nominal'] = number_format(round($this->retur_sales['total_nominal'], 3), 3, '.', '');
+            $this->retur_sales['total_nominal'] = rtrim($this->retur_sales['total_nominal'], '0');
+            $this->retur_sales['total_nominal'] = formatWeight($this->retur_sales['total_nominal']);
         }
     }
 
@@ -193,7 +220,9 @@ class Create extends Component
         
 
         $this->resetInputFields();
+        $this->resetTotal();
         // session()->flash('message', 'Created Successfully.');
+        toast('Created Successfully','success');
         return redirect(route('retursale.index'));
     }
 
