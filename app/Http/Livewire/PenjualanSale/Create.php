@@ -78,6 +78,11 @@ class Create extends Component
         $this->resetPenjualanSalesDetails();
     }
 
+    private function resetTotal(){
+        $this->penjualan_sales['total_weight'] = 0;
+        $this->penjualan_sales['total_nominal'] = 0;
+    }
+
     public function render()
     {
         return view('livewire.penjualan-sale.create');
@@ -138,6 +143,7 @@ class Create extends Component
             $rules['penjualan_sales_details.'.$key.'.sub_karat_id'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.weight'] = [
                 'required',
+                'gt:0',
                 function ($attribute, $value, $fail) use ($key) {
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
                     $isKaratFilled = $this->penjualan_sales_details[$key]['sub_karat_id'] != '';
@@ -154,6 +160,7 @@ class Create extends Component
     
                 },
             ];
+            $rules['penjualan_sales_details.'.$key.'.nominal'] = 'gt:-1';
 
         }
         return $rules;
@@ -174,7 +181,10 @@ class Create extends Component
     {
         $this->penjualan_sales['total_nominal'] = 0;
         foreach ($this->penjualan_sales_details as $key => $value) {
-            $this->penjualan_sales['total_nominal'] += intval($this->penjualan_sales_details[$key]['nominal']??0);
+            $this->penjualan_sales['total_nominal'] += floatval($this->penjualan_sales_details[$key]['nominal']??0);
+            $this->penjualan_sales['total_nominal'] = number_format(round($this->penjualan_sales['total_nominal'], 3), 3, '.', '');
+            $this->penjualan_sales['total_nominal'] = rtrim($this->penjualan_sales['total_nominal'], '0');
+            $this->penjualan_sales['total_nominal'] = formatWeight($this->penjualan_sales['total_nominal']);
         }
     }
 
@@ -222,7 +232,8 @@ class Create extends Component
         }
 
         $this->resetInputFields();
-        // session()->flash('message', 'Created Successfully.');
+        $this->resetTotal();
+        toast('Created Successfully','success');
         return redirect(route('penjualansale.index'));
     }
 

@@ -156,7 +156,7 @@
                         $field_lable = label_case('weight');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                        $required = 'wire:change=calculateTotalBerat() wire:model="' . $field_name . '"';
+                        $required = 'wire:change=calculateTotalBerat() wire:model.debounce.1s="' . $field_name . '"';
                         ?>
                         @if ($key == 0)
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
@@ -176,10 +176,10 @@
                         <?php
 
                         $field_name = 'penjualan_sales_details.' . $key . '.nominal';
-                        $field_lable = label_case('harga');
+                        $field_lable = label_case('harga (%)');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                        $required = 'wire:change=calculateTotalNominal() wire:model="' . $field_name . '"';
+                        $required = 'wire:change=calculateTotalNominal() wire:model.debounce.1s="' . $field_name . '"';
                         ?>
                         @if ($key == 0)
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
@@ -298,14 +298,14 @@
         <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat</label>
         <span class="mr-4 md:block">:</span>
         <div class="flex-1">
-            <input class="form-control form-control-sm" wire:model="penjualan_sales.total_weight" type="text" placeholder="0" readonly>
+            <input class="form-control form-control-sm" wire:model.debounce.1s="penjualan_sales.total_weight" type="text" placeholder="0" readonly>
         </div>
     </div>
     <div class="mb-2 md:mb-1 flex items-center">
         <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Harga</label>
         <span class="mr-4 md:block">:</span>
         <div class="flex-1">
-            <input class="form-control form-control-sm" type-currency="IDR" wire:model="penjualan_sales.total_nominal" type="text" placeholder="0" readonly>
+            <input class="form-control form-control-sm" type-currency="IDR" wire:model.debounce.1s="penjualan_sales.total_nominal" type="text" placeholder="0" readonly>
         </div>
     </div>
 
