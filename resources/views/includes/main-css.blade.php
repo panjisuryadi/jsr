@@ -257,4 +257,9 @@ button:focus {
       padding-top: 0.9rem !important;
 }
 
+
+.c-sidebar-nav-dropdown .c-sidebar-nav-dropdown-items {
+    padding-left: 0.5rem;
+}
+
 </style>
