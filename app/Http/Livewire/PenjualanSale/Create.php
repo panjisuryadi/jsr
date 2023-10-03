@@ -20,7 +20,7 @@ class Create extends Component
         'store_name' => '',
         'total_weight' => 0,
         'total_nominal' => 0,
-        'tipe_pembayaran' => '',
+        'tipe_pembayaran' => 'lunas',
         'cicil' => '',
         'tgl_jatuh_tempo' => '',
     ];
@@ -209,7 +209,7 @@ class Create extends Component
                 'created_by' => auth()->user()->name
             ]);
     
-            $penjualan_sale->payment()->create([
+            $penjualan_sale_payment = $penjualan_sale->payment()->create([
                 'tipe_pembayaran' => $this->penjualan_sales['tipe_pembayaran'],
                 'jatuh_tempo'     => $this->penjualan_sales['tgl_jatuh_tempo'] ? $this->penjualan_sales['tgl_jatuh_tempo'] : null,
                 'cicil'           => $this->penjualan_sales['cicil'] ? $this->penjualan_sales['cicil']:  0,
@@ -223,7 +223,7 @@ class Create extends Component
                     'nominal' => $this->penjualan_sales_details[$key]['nominal']??0,
                     'created_by' => auth()->user()->name
                 ]);
-                event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail));
+                event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail,$penjualan_sale_payment));
             }
             DB::commit();
         }catch (\Exception $e) {

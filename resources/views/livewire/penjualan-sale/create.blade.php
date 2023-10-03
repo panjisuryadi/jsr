@@ -223,7 +223,7 @@
             @endforeach
 
 
-            <div class="flex grid grid-cols-4 gap-2">
+            <!-- <div class="flex grid grid-cols-4 gap-2">
                 <div class="form-group">
                     <?php
                     $field_name = 'penjualan_sales.tipe_pembayaran';
@@ -283,7 +283,7 @@
                 </div>
                 @endif
 
-            </div>
+            </div> -->
 
 
 
