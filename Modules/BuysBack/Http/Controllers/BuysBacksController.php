@@ -17,8 +17,10 @@ use Modules\BuysBack\Models\BuysBack;
 use Modules\BuysBack\Models\BuysBackDetails;
 use Modules\People\Entities\Supplier;
 use Modules\People\Entities\Customer;
+use Modules\Cabang\Models\Cabang;
 use Modules\BuysBack\Http\Requests\StoreBuyBackRequest;
 use Lang;
+use Auth;
 class BuysBacksController extends Controller
 {
 
@@ -70,9 +72,7 @@ public function index_data(Request $request)
         $module_action = 'List';
 
         $$module_name = $module_model::get();
-
         $data = $$module_name;
-
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
                             $module_name = $this->module_name;
@@ -133,10 +133,6 @@ public function index_data(Request $request)
                                     return $tb;
                             })
 
-
-                              
-
-
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -170,13 +166,15 @@ public function index_data(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
+            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang()->first()->id)->get();
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
                 'module_title',
+                'cabang',
                 'module_icon', 'module_model'));
-        }
+            }
 
 
     /**
@@ -310,8 +308,10 @@ public function index_data(Request $request)
             'nominal' => 'required',
             'cabang_id' => 'required|exists:cabangs,id'
         ]);
-        
-        $newBuyBack = BuysBack::create([
+        // $input = $request->all();
+         $nominal = preg_replace("/[^0-9]/", "",  $request->input('nominal'));
+         //dd($nominal);
+         $newBuyBack = BuysBack::create([
             'date' => $request->input('date'),
             'customer_id' => $request->input('customer') == 1?$request->input('customer_id'):null,
             'customer_name' => $request->input('customer') == 2?$request->input('none_customer'):null,
@@ -320,7 +320,7 @@ public function index_data(Request $request)
             'product_name' => $request->input('nama_products'),
             'karat_id' => $request->input('kadar'),
             'weight' => $request->input('berat'),
-            'nominal' => $request->input('nominal'),
+            'nominal' => $nominal,
             'cabang_id' => $request->input('cabang_id')
         ]);
 
