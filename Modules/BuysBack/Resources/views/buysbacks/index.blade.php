@@ -66,7 +66,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 3%!important;">No</th>
-                                    <th style="width: 17%!important;">No BuyBack</th>
+                                    <th style="width: 22%!important;">No BuyBack</th>
                                    
                                     
                                     <th style="width: 10%!important;">Nama Produk</th>

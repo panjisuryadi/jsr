@@ -93,14 +93,14 @@ public function index_data(Request $request)
                             }
                              $tb = '<div class="justify items-left text-left">'; 
                              $tb .= '<div class="text-blue-400">
-                                     Nomor :' . $data->no_buy_back . '
-                                    </div>';
-                            $tb .= '<div class="text-gray-800">
-                                     Cabang :' . $data->cabang->name . '
-                                    </div>'; 
-                            $tb .= '<div class="text-gray-800">
-                                     Cabang :' . $customer_name . '
-                                    </div>';               
+                                     Nomor :<strong>' . $data->no_buy_back . '
+                                    </strong></div>';
+                             $tb .= '<div class="text-gray-800">
+                                     Cabang :<strong>' . $data->cabang->name . '
+                                    </strong></div>'; 
+                             $tb .= '<div class="text-gray-800">
+                                     Customer :<strong>' . $customer_name . '
+                                    </strong></div>';               
                              $tb .= '</div>'; 
                                 return $tb;
                               })
@@ -404,7 +404,7 @@ public function show($id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
         abort_if(Gate::denies('show_'.$module_name.''), 403);
-        $detail = $module_model::findOrFail($id);
+        $detail = $module_model::with('customer','product','karat')->where('id',$id)->first();
         //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.show',
            compact('module_name',

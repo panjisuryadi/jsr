@@ -17,7 +17,7 @@ class BuysBack extends Model
     protected $guarded = [];
 
 
-  public function buysbacksDetails() {
+  public function detail() {
         return $this->hasMany(BuysBackDetails::class, 'purchase_id', 'id');
     }
 
@@ -28,6 +28,8 @@ class BuysBack extends Model
     public function jenis() {
         return $this->belongsTo(JenisBuyBack::class, 'jenis_buyback_id', 'id');
     }
+
+
 
     public static function boot() {
         parent::boot();
