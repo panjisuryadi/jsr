@@ -81,8 +81,6 @@ class Checkout extends Component
          //$this->emit('cartModal', $cart);
     }
 
-
-
     public function calculateTotal() {
         return Cart::instance($this->cart_instance)->total() + $this->shipping;
     }
@@ -124,7 +122,7 @@ class Checkout extends Component
                 'sub_total'             => 1,
                 'code'                  => $product['product_code'],
                 'stock'                 => 1,
-                'unit'          => $product['product_unit'],
+                'unit'          =>$product['product_unit'],
                 'karat_id'      =>$product['product_item'][0]['karat']['id'],
                 'karat'         =>$product['product_item'][0]['karat']['name'],
                 'harga_karat'   =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],

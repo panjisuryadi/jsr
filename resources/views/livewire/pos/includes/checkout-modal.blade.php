@@ -36,7 +36,6 @@
     <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
     <input type="hidden" value="Other" name="payment_method"> 
 
-
 <div class="px-1">
 <div class="form-group mt-0">
     <label for="total_amount">Total <span class="text-danger">*</span></label>
@@ -64,8 +63,8 @@
 
 <div class="form-group">
     <label for="grand_total">Kembali <span class="text-danger">*</span></label>
-    <span class="text-red-800" id="hasil"></span>
-    <input id="grand_total" type="text" class="form-control" name="grand_total" value="{{ $total_amount }}" readonly>
+    <span class="text-red-800 text-2xl" id="kembalian"></span>
+    <input id="grand_total" type="text" class="form-control" name="grand_total" readonly>
 </div>
 <div class="form-group">
     <label for="note">Grand Total</label>
@@ -193,34 +192,36 @@
 <script>
     $(document).ready(function () {
            $('#paid_amount').keyup(function() {
-               var bayar = $('#paid_amount').maskMoney('unmasked')[0];
-               var harga = $("#total_amount").maskMoney('unmasked')[0];
-               var diskon = $("#diskon").maskMoney('unmasked')[0];
+               var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
+               var total_amount = $("#total_amount").maskMoney('unmasked')[0];
+               var discount = $("#discount").maskMoney('unmasked')[0];
 
-                if (isNaN(harga) || isNaN(bayar)) {
-                    alert("Harga dan Jumlah harus diisi dengan angka.");
-                    return;
-                }
+               console.log(total_amount);
+                // if (isNaN(total_amount) || isNaN(paid_amount) || isNaN(discount)) {
+                //     alert("Harga dan Jumlah harus diisi dengan angka.");
+                //     return;
+                // }
 
-                var total = bayar - harga;
-                var grandTotal = total - diskon;
-                 if(bayar>=harga){
-                      $("#grand_total").val(grandTotal.toFixed(2));
-                      $("#kembalian").val(kembalian.toFixed(2));
+                var total = paid_amount - total_amount;
+            
+                 if(paid_amount>=total_amount){
+                      $("#grand_total").val(total);
+                      $("#kembalian").html(total).maskMoney('mask');
                     }else{
-                      $("#grand_total").val(grandTotal.toFixed(2));
+                      $("#grand_total").val(total);
+                      $("#kembalian").html(total).maskMoney('mask');
                     }
 
                 
             });
 
-          $('#discount').keyup(function() {
+            $('#discount').keyup(function() {
                 var diskon = $("#discount").maskMoney('unmasked')[0];
                 var grand_total = $("#grand_total").maskMoney('unmasked')[0];
                 console.log(diskon);
                  // var total = bayar - harga;
                   var grandTotal = grand_total - diskon;
-                  $("#final_unmask").val(grandTotal.toFixed(2));
+                  $("#final_unmask").val(grandTotal);
                   $("#final").val(grandTotal).maskMoney('mask');
                 
              });

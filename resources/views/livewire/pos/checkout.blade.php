@@ -138,7 +138,7 @@
     </div>  
 
  <div class="w-60 justify-end flex text-center items-center">
-     <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_currency($total_with_shipping) }}</span>
+     <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_uang($total_with_shipping) }}</span>
        <i class="ml-3 text-2xl bi bi-chevron-right"></i>
     </div>
 

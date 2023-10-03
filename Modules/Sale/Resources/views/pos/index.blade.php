@@ -60,6 +60,7 @@
                     thousands:'{{ settings()->currency->thousand_separator }}',
                     decimal:'{{ settings()->currency->decimal_separator }}',
                     allowZero: false,
+                    precision: 0,
                 });  
 
                 $('#discount').maskMoney({
@@ -67,13 +68,16 @@
                     thousands:'{{ settings()->currency->thousand_separator }}',
                     decimal:'{{ settings()->currency->decimal_separator }}',
                     allowZero: false,
+                    precision: 0,
+
                 });
 
                 $('#total_amount').maskMoney({
                     prefix:'{{ settings()->currency->symbol }}',
                     thousands:'{{ settings()->currency->thousand_separator }}',
                     decimal:'{{ settings()->currency->decimal_separator }}',
-                    allowZero: true,
+                    precision: 0,
+                    allowZero: false,
                 });
 
                  $('#grand_total').maskMoney({
@@ -81,6 +85,7 @@
                     thousands:'{{ settings()->currency->thousand_separator }}',
                     decimal:'{{ settings()->currency->decimal_separator }}',
                     allowZero: true,
+                    precision: 0,
                 });
                  
                  $('#final').maskMoney({
@@ -88,6 +93,7 @@
                     thousands:'{{ settings()->currency->thousand_separator }}',
                     decimal:'{{ settings()->currency->decimal_separator }}',
                     allowZero: true,
+                    precision: 0,
                 });
 
                 $('#paid_amount').maskMoney('mask');

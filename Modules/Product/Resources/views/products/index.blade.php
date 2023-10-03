@@ -3,15 +3,15 @@
 @section('third_party_stylesheets')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 <style type="text/css">
-div.dataTables_wrapper div.dataTables_filter input {
-margin-left: 0.5em;
-display: inline-block;
-width: 220px !important;
-}
-div.dataTables_wrapper div.dataTables_length select {
-width: 70px !important;
-display: inline-block;
-}
+    div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: 220px !important;
+    }
+    div.dataTables_wrapper div.dataTables_length select {
+    width: 70px !important;
+    display: inline-block;
+    }
 </style>
 @endsection
 @section('breadcrumb')
@@ -58,13 +58,6 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 
 
 
-
-
-
-
-
-
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -92,9 +85,6 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 
 
                       <th style="width: 8%!important;" class="text-center">{{ Label_case('Status') }}</th>
-
-
-
 
                                     <th style="width: 11%!important;" class="text-center">
                                         Action
