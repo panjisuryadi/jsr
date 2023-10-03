@@ -56,19 +56,6 @@
                                         <option value="">Select Payments</option>
                                         <option value="sales">Sales</option>
                                         <option value="sales_return">Sale Returns</option>
-                                        <option value="purchase">Purchase</option>
-                                        <option value="purchase_return">Purchase Returns</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Payment Status</label>
-                                    <select wire:model.defer="payment_status" class="form-control" name="payment_status">
-                                        <option value="">Select Payment Status</option>
-                                        <option value="Paid">Paid</option>
-                                        <option value="Unpaid">Unpaid</option>
-                                        <option value="Partial">Partial</option>
                                     </select>
                                 </div>
                             </div>
@@ -95,9 +82,9 @@
                         <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-700 md:text-3xl lg:text-4xl dark:text-white text-center" style="text-transform:uppercase;">LAPORAN PIUTANG {{ $payments }}</h1>
                     </div>
     
-                    <p class="text-center mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Periode {{ $this->start_date }} - {{ $this->end_date }}</p>
+                    <p class="text-center mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Periode</p>
                     @livewire('reports.piutang.sales-report')
-                    @else
+                @else
                     
                 </div>
                 @endif
