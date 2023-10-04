@@ -3,27 +3,24 @@
   <form id="FormEdit" action="{{ route(''.$module_name.'.update_status', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
-             <div class="flex flex-row grid grid-cols-1 gap-4">
-            
-             
-        <div class="form-group">
-                    <label for="status">Status <span class="text-danger">*</span></label>
-                    <select class="form-control" name="status" id="status" required>
-    <option 
-    value="PENDING" 
-    {{ $detail->status == 'PENDING' ? 'selected' : ''}}
-    >PENDING
-   </option>
-
-    <option 
-    value="CUCI" 
-    {{ $detail->status == 'CUCI' ? 'selected' : ''}}
-    >CUCI
-   </option>
-
-
-      </select>
-        </div>
+<div class="flex flex-row grid grid-cols-1 gap-4">
+    
+    
+    <div class="form-group">
+        <label for="status">Status <span class="text-danger">*</span></label>
+        <select class="form-control" name="status" id="status" required>
+            <option
+                value="PENDING"
+                {{ $detail->status == 'PENDING' ? 'selected' : ''}}
+                >PENDING
+            </option>
+            <option
+                value="CUCI"
+                {{ $detail->status == 'CUCI' ? 'selected' : ''}}
+                >CUCI
+            </option>
+        </select>
+    </div>
 
 
                     </div>

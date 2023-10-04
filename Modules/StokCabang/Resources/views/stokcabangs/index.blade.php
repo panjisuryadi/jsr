@@ -23,7 +23,7 @@
             <i class="bi bi-badge-8k text-3xl"></i>
         </div>
         <div>
-            <div class="text-value text-lg text-success">122</div>
+            <div class="text-value font-semibold text-lg text-success">122</div>
             <div class="text-gray-800 text-uppercase font-weight-bold text-xl">
                 Karat
             </div>
@@ -31,10 +31,10 @@
     </div>
     <div class="card-body p-0 d-flex align-items-center border shadow">
         <div class="bg-gradient-danger p-4 mfe-3 rounded-left">
-            <i class="bi bi-diagram-2 font-2xl"></i>
+            <i class="bi bi-diagram-2 text-3xl"></i>
         </div>
         <div>
-            <div class="text-value text-success">22</div>
+            <div class="text-xl font-semibold text-value text-success">22</div>
             <div class="text-xl text-gray-800 text-uppercase font-weight-bold">
                 Berat
             </div>
@@ -42,11 +42,11 @@
     </div>
     <div class="card-body p-0 d-flex align-items-center  border shadow">
         <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
-            <i class="bi bi-geo-alt-fill font-2xl"></i>
+            <i class="bi bi-geo-alt-fill text-3xl"></i>
 
         </div>
         <div>
-            <div class="text-value text-success">34</div>
+            <div class="text-xl font-semibold text-value text-success">34</div>
             <div class="text-gray-800 text-uppercase font-weight-bold text-xl">
                 Cabang
             </div>

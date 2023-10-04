@@ -96,9 +96,8 @@
         <label for="cabang_id">Cabang <span class="text-danger">*</span></label>
         <div class="input-group">
             <select class="form-control select2" name="cabang_id" id="cabang_id" >
-                <option value="" selected disabled>Pilih Cabang</option>
-                @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
-                <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
+                @foreach($cabang as $row)
+                <option value="{{ $row->id }}">{{ $row->name }}</option>
                 @endforeach
             </select>
             @if ($errors->has('cabang_id'))
@@ -160,7 +159,15 @@
             </span>
         @endif
     </div>
-    <div class="form-group">
+ 
+
+
+</div>
+
+
+<div class="flex flex-row grid grid-cols-2 gap-2"> 
+
+   <div class="form-group">
         <?php
         $field_name = 'berat';
         $field_lable = label_case($field_name);
@@ -186,9 +193,6 @@
 
 
 
-</div>
-
-
 
  <div class="form-group">
         <?php
@@ -200,9 +204,10 @@
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
         <input class="form-control"
-        type="number"
+        type="text"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
+        type-currency="IDR"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
         @if ($errors->has($field_name))
@@ -216,7 +221,7 @@
 
 
 
-
+</div>
 
     
   <div class="form-group">
@@ -265,6 +270,23 @@
 
 @push('page_scripts')
 <script type="text/javascript">
-  
+    document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+        element.addEventListener('keyup', function(e) {
+            let cursorPostion = this.selectionStart;
+            let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+            let originalLenght = this.value.length;
+            if (isNaN(value)) {
+                this.value = "";
+            } else {
+                this.value = value.toLocaleString('id-ID', {
+                    currency: 'IDR',
+                    style: 'currency',
+                    minimumFractionDigits: 0
+                });
+                cursorPostion = this.value.length - originalLenght + cursorPostion;
+                this.setSelectionRange(cursorPostion, cursorPostion);
+            }
+        });
+    });
 </script>
 @endpush
