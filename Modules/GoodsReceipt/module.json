@@ -5,7 +5,8 @@
     "keywords": [],
     "priority": 0,
     "providers": [
-        "Modules\\GoodsReceipt\\Providers\\GoodsReceiptServiceProvider"
+        "Modules\\GoodsReceipt\\Providers\\GoodsReceiptServiceProvider",
+        "Modules\\GoodsReceipt\\Providers\\EventServiceProvider"
     ],
     "aliases": {},
     "files": [],

@@ -13,6 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use Modules\GoodsReceipt\Events\GoodsReceiptItemCreated;
 use PDF;
 use Modules\Upload\Entities\Upload;
 use Modules\Product\Entities\Category;
@@ -504,8 +505,8 @@ public function store(Request $request)
         ]);
             $goodsreceipt_id = $goodsreceipt->id;
             $this->_saveTipePembelian($input ,$goodsreceipt_id);
-            $this->_saveGoodsReceiptItem($input['items'] ,$goodsreceipt_id);
-            $this->_saveStockOffice($input['items']);
+            $this->_saveGoodsReceiptItem($input['items'] ,$goodsreceipt);
+            // $this->_saveStockOffice($input['items']);
 
 
              if ($request->has('document')) {
@@ -557,14 +558,14 @@ public function store(Request $request)
    private function _saveGoodsReceiptItem($items ,$goodsreceipt)
      {
        foreach ($items as $key => $value) {
-          GoodsReceiptItem::updateOrCreate([
-              'goodsreceipt_id' => $goodsreceipt,
+          $item = GoodsReceiptItem::updateOrCreate([
+              'goodsreceipt_id' => $goodsreceipt->id,
               'karat_id' => $items[$key]['karat_id'],
               'kategoriproduk_id' => $items[$key]['kategori_id'],
               'berat_real' =>$items[$key]['berat_real'],
               'berat_kotor' =>$items[$key]['berat_kotor']
                ]);
-
+        event(new GoodsReceiptItemCreated($goodsreceipt,$item));
          }
     }
 

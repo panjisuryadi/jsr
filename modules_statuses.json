@@ -71,5 +71,6 @@
     "BuyBackSale": true,
     "PenerimaanBarangLuarSale": true,
     "StokCabang": true,
-    "Status": true
+    "Status": true,
+    "KeluarMasuk": true
 }

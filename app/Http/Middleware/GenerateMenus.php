@@ -684,6 +684,21 @@ class GenerateMenus
             ]);
 
 
+            // EMAS - STOK - KELUAR MASUK
+            $stok->add('<i class="c-sidebar-nav-icon  bi bi-card-checklist"></i> '.__('Keluar Masuk'), [
+                'route' => 'keluarmasuk.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['keluarmasuks*'],
+                'permission'    => ['access_keluarmasuks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
             // EMAS - STOK - STOK OPNAME - List Adjustment
             // $adjustments->add('
             //     <i class="c-sidebar-nav-icon bi bi-list-task mb-1"></i>'.__('List Adjustments').'',
