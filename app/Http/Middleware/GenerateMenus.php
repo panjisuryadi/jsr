@@ -247,7 +247,7 @@ class GenerateMenus
 
             // EMAS - TOKO - PENERIMAAN - BUYBACK
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Penerimaan Barang Buys Backs'), [
+                <div class="break">'.__('Penerimaan Barang Buys Backs').'</div>', [
                 'route' => 'buysback.index',
                 'class' => 'nav-item',
             ])
