@@ -73,6 +73,7 @@
                                     <th style="width: 7%!important;">Kadar</th>
                                     <th style="width: 7%!important;">Berat</th>
                                     <th style="width: 10%!important;">Nominal</th>
+                                    <th style="width: 10%!important;">Status</th>
                                   
                                     <th style="width: 13%!important;" class="text-center">
                                         {{ __('Action') }}
@@ -141,6 +142,7 @@
                 {data: 'nama_produk', name: 'nama_produk'},
                 {data: 'kadar', name: 'kadar'},
                 {data: 'berat', name: 'berat'},
+                {data: 'status', name: 'status'},
                 {data: 'nominal_beli', name: 'nominal_beli'},
               
 
