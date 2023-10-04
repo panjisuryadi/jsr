@@ -114,7 +114,7 @@
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah, #Edit, #Status', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -122,9 +122,18 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
         }
+        if($(this).attr('id') == 'Status')
+        {
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status {{ Label_case($module_title) }}');
+        }
+
         if($(this).attr('id') == 'Edit')
         {
-            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }

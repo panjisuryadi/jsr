@@ -27,6 +27,10 @@ Route::group(['middleware' => 'auth'], function () {
 
  Route::get("$module_name/pending", ['as' => "$module_name.pending", 'uses' => "$controller_name@pending"]);
 
+Route::get("$module_name/pending/{id}", ['as' => "$module_name.view_pending", 'uses' => "$controller_name@view_pending"]);
+
+
+
  Route::get("$module_name/index_data_pending", ['as' => "$module_name.index_data_pending", 'uses' => "$controller_name@index_data_pending"]);
 
  Route::get("$module_name/sales", ['as' => "$module_name.sales", 'uses' => "$controller_name@sales"]);

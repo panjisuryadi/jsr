@@ -353,10 +353,11 @@ public function index_data_pending(Request $request)
         $data = $$module_name;
 
         return Datatables::of($$module_name)
-                        ->addColumn('action', function ($data) {
-                           $module_name = $this->module_name;
+                         ->addColumn('action', function ($data) {
+                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.aksi',
                             compact('module_name', 'data', 'module_model'));
                                 })
                               ->editColumn('karat', function ($data) {
@@ -401,19 +402,6 @@ public function index_data_pending(Request $request)
                                    'weight'])
                                ->make(true);
                      }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -671,6 +659,34 @@ public function show($id)
             'module_icon', 'module_model'));
 
     }
+
+
+
+public function view_pending($id)
+    {
+
+         //dd($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_pending = $this->module_pending;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $detail = $module_pending::findOrFail($id);
+        //dd($detail);
+          return view(''.$module_name.'::'.$module_path.'.modal.pending',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
