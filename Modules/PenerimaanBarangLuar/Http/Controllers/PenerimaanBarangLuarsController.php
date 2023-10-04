@@ -164,7 +164,9 @@ public function index_data(Request $request)
                                'berat',
                                'status',
                                'nominal_beli',
-                               'updated_at','keterangan','cabang'])
+                               'updated_at',
+                               'keterangan',
+                               'cabang'])
                         ->make(true);
                      }
 

@@ -25,8 +25,7 @@ jobs:
           git pull
           composer update
           php artisan migrate
-          php artisan module:seed --class=ProsesStatusDatabaseSeeder Status
-          sudo chmod 777 -R storage
+            sudo chmod 777 -R storage
           sudo chmod 777 -R bootstrap/cache
           sudo composer clear-all
 
