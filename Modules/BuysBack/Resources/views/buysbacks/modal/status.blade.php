@@ -7,19 +7,16 @@
             
              
         <div class="form-group">
-                    <label for="status">Status <span class="text-danger">*</span></label>
-                    <select class="form-control" name="status" id="status" required>
-    <option 
-    value="PENDING" 
-    {{ $detail->status == 'PENDING' ? 'selected' : ''}}
-    >PENDING
-   </option>
+                    <label for="status_id">Status <span class="text-danger">*</span></label>
+                    <select class="form-control uppercase" name="status_id" id="status_id" required>
 
-    <option 
-    value="CUCI" 
-    {{ $detail->status == 'CUCI' ? 'selected' : ''}}
-    >CUCI
-   </option>
+   <option value="" {{ is_null($detail->current_status) ? 'selected' : ''}} disabled>PENDING</option>
+
+  @foreach($proses_statuses as $status)
+    <option value="{{$status->id}}" class="uppercase">
+        {{ $status->name }}
+    </option>
+  @endforeach
 
 
       </select>

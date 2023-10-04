@@ -10,12 +10,13 @@ use Modules\JenisBuyBack\Models\JenisBuyBack;
 use Modules\Karat\Models\Karat;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
+use Modules\Status\Models\ProsesStatus;
+
 class BuysBack extends Model
 {
     use HasFactory;
     protected $table = 'buysbacks';
     protected $guarded = [];
-
 
   public function detail() {
         return $this->hasMany(BuysBackDetails::class, 'purchase_id', 'id');
@@ -105,4 +106,11 @@ class BuysBack extends Model
     }
 
 
+    public function statuses(){
+        return $this->belongsToMany(ProsesStatus::class,'buyback_statuses','buyback_id','status_id')->withTimestamps();
+    }
+
+    public function current_status(){
+        return $this->belongsTo(ProsesStatus::class, 'status_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace Modules\Status\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\BuysBack\Models\BuysBack;
 
 class ProsesStatus extends Model
 {
@@ -18,5 +19,9 @@ class ProsesStatus extends Model
     protected static function newFactory()
     {
         return \Modules\Status\Database\factories\ProsesStatusFactory::new();
+    }
+
+    public function buybacks(){
+        return $this->belongsToMany(BuysBack::class, 'buyback_statuses','status_id','buyback_id');
     }
 }

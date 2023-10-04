@@ -21,6 +21,8 @@ use Modules\Cabang\Models\Cabang;
 use Modules\BuysBack\Http\Requests\StoreBuyBackRequest;
 use Lang;
 use Auth;
+use Modules\Status\Models\ProsesStatus;
+
 class BuysBacksController extends Controller
 {
 
@@ -470,10 +472,12 @@ public function show($id)
         $module_action = 'Status';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
+        $proses_statuses = ProsesStatus::all();
           return view(''.$module_name.'::'.$module_path.'.modal.status',
            compact('module_name',
             'module_action',
             'detail',
+            'proses_statuses',
             'module_title',
             'module_icon', 'module_model'));
          }
@@ -536,9 +540,7 @@ public function update_status(Request $request, $id)
         $$module_name_singular = $module_model::findOrFail($id);
         $validator = \Validator::make($request->all(),
             [
-                'status' => 'required|max:191',
-
-
+                'status_id' => 'required|exists:proses_statuses,id',
         ]);
 
        if (!$validator->passes()) {
@@ -547,8 +549,9 @@ public function update_status(Request $request, $id)
 
         $input = $request->all();
         $params = $request->except('_token');
-        $params['status'] = $params['status'];
         $$module_name_singular->update($params);
+        $$module_name_singular->statuses()->attach($params['status_id']);
+        
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }
