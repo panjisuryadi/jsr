@@ -105,12 +105,24 @@ public function index_data(Request $request)
                                 return $tb;
                               })
 
-                           ->editColumn('nama_produk', function ($data) {
-                             $tb = '<div class="font-semibold items-center text-center">
-                                     ' . $data->product_name . '
-                                    </div>';
+                      
+                             ->editColumn('nama_produk', function ($data) {
+                             $tb = '<div class="justify items-left text-left">'; 
+                           
+                             $tb .= '<div class="text-gray-800">
+                                     Prduk :<strong>' . $data->product_name . '
+                                    </strong></div>'; 
+                             $tb .= '<div class="text-gray-800">
+                                     Karat :<strong>' . $data->karat->name . '
+                                    </strong></div>';   
+
+                             $tb .= '<div class="text-gray-800">
+                                     Berat :<strong>' . $data->weight . '
+                                    </strong></div>';               
+                             $tb .= '</div>'; 
                                 return $tb;
-                            })
+                              })
+
 
                           ->editColumn('kadar', function ($data) {
                                 $tb = '<div class="font-semibold items-center text-center">
@@ -130,12 +142,16 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
-                            ->editColumn('status', function ($data) {
-                    $tb = '<div class="text-white font-semibold bg-green-500 items-center text-center">
-                                        ' . $data->status . '
-                                        </div>';
-                                    return $tb;
-                            })
+
+                         ->addColumn('status', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.status',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+
                             ->editColumn('cabang', function ($data) {
                                 $tb = '<div class="font-semibold items-center text-center">
                                         ' . $data->cabang->name . '
@@ -344,6 +360,7 @@ public function index_data(Request $request)
 
         event(new BuysBackCreated($newBuyBack));
 
+
         toast('Buys Back Created!', 'success');
         return redirect()->route('buysback.index');
     }
@@ -440,6 +457,26 @@ public function show($id)
             'module_title',
             'module_icon', 'module_model'));
     }
+
+
+     public function status($id)
+    {
+       $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Status';
+        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.modal.status',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+         }
 
     /**
      * Update the specified resource in storage.

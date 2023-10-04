@@ -69,13 +69,12 @@
                                     <th style="width: 22%!important;">No BuyBack</th>
                                    
                                     
-                                    <th style="width: 10%!important;">Nama Produk</th>
-                                    <th style="width: 7%!important;">Kadar</th>
-                                    <th style="width: 7%!important;">Berat</th>
-                                    <th style="width: 10%!important;">Nominal</th>
-                                    <th style="width: 10%!important;">Status</th>
+                                    <th style="width: 20%!important;">Detail Produk</th>
                                   
-                                    <th style="width: 13%!important;" class="text-center">
+                                    <th style="width: 10%!important;">Status</th>
+                                    <th style="width: 10%!important;">Nominal</th>
+                                  
+                                    <th style="width: 15%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -140,8 +139,6 @@
              
               
                 {data: 'nama_produk', name: 'nama_produk'},
-                {data: 'kadar', name: 'kadar'},
-                {data: 'berat', name: 'berat'},
                 {data: 'status', name: 'status'},
                 {data: 'nominal_beli', name: 'nominal_beli'},
               
@@ -165,7 +162,7 @@
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah, #Edit, #Status', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -178,7 +175,17 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').addClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
+        }  
+
+        if($(this).attr('id') == 'Status')
+        {
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status {{ Label_case($module_title) }}');
         }
+
+
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });
