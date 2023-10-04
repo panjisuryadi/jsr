@@ -18,7 +18,9 @@ Route::group(['middleware' => 'auth'], function () {
     //save type
     Route::post('buys-back/save-customer', 'BuysBacksController@saveTypeCustomer')->name('buysback.save.customer');
     //type
-    Route::get('/buys-back-type/{type}', 'BuysBacksController@type')->name('buys-back.type');
+    Route::get('/buysback-status/{id}', 'BuysBacksController@status')->name('buysback.status');
+
+
     Route::resource("$module_name", "$controller_name");
 
 });
