@@ -359,42 +359,47 @@ public function index_data_pending(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('karat', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                   ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
-                                    </div>';
-                                return $tb;
-                            })  
+                              ->editColumn('karat', function ($data) {
+                                 $tb = '<div class="items-center text-center">
+                                        <h3 class="text-sm font-medium text-gray-800">
+                                       ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                        </div>';
+                                    return $tb;
+                                })  
 
                           ->editColumn('cabang', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                   ' .$data->cabang->code  . ' | ' .$data->cabang->name  . '</h3>
+                                   ' .@$data->cabang->name  . '</h3>
                                     </div>';
                                 return $tb;
                             }) 
-
                            
-                              ->editColumn('weight', function ($data) {
+                            ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
                                      ' .$data->weight . '</h3>
                                     </div>';
                                 return $tb;
-                            })
-                           ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
+                            }) 
 
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                            }
-                        })
-                        ->rawColumns(['updated_at', 'karat','berat_real', 'berat_kotor', 'action', 'weight'])
-                        ->make(true);
+                             ->editColumn('type', function ($data) {
+                              $tb = '<div class="items-center text-center">
+                                    <p class="text-sm font-medium text-gray-800">
+                                     ' .$data->type . '</p>
+                                    </div>';
+                                return $tb;
+                            })
+                        
+                        ->rawColumns([
+                                   'updated_at', 
+                                   'karat',
+                                   'cabang', 
+                                   'status', 
+                                   'action', 
+                                   'type', 
+                                   'weight'])
+                               ->make(true);
                      }
 
 

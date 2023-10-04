@@ -30,8 +30,9 @@
                                 <th style="width: 6%!important;">No</th>
                                 <th class="text-left">{{ Label_Case('Karat') }}</th>
                                 <th class="text-left">{{ Label_Case('Cabang') }}</th>
-                                <th class="text-left">{{ Label_Case('Berat') }}</th>
-                              
+                                <th class="text-left">{{ Label_Case('weight') }}</th>
+                                <th style="width: 16%!important;" class="text-left">{{ Label_Case('Status') }}</th>
+                   
                                
                                 </tr>
                             </thead>
@@ -78,12 +79,11 @@
             ajax: '{{ route("$module_name.index_data_pending") }}',
             dom: 'Blfrtip',
             buttons: [
-
                 'excel',
                 'pdf',
                 'print'
             ],
-            columns: [{
+              columns: [{
                     "data": 'id',
                     "sortable": false,
                     render: function(data, type, row, meta) {
@@ -92,11 +92,12 @@
                 },
 
                 {data: 'karat', name: 'karat'},
-                {data: 'berat_real', name: 'berat_real'},
+                {data: 'cabang', name: 'cabang'},
+                {data: 'weight', name: 'weight'},
               
                 {
-                    data: 'berat_kotor',
-                    name: 'berat_kotor',
+                    data: 'action',
+                    name: 'action',
                     orderable: false,
                     searchable: false
                 }

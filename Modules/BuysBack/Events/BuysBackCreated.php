@@ -4,6 +4,7 @@ namespace Modules\BuysBack\Events;
 
 use Illuminate\Queue\SerializesModels;
 use Modules\BuysBack\Models\BuysBack;
+use Modules\Stok\Models\StockPending;
 
 class BuysBackCreated
 {
