@@ -57,6 +57,8 @@ class StoksController extends Controller
             'module_icon', 'module_model'));
     }
 
+
+
     public function office() {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -72,6 +74,7 @@ class StoksController extends Controller
             'module_title',
             'module_icon', 'module_model'));
     }
+
 
 
  public function pending() {

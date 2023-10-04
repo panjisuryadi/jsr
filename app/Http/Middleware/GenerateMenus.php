@@ -627,6 +627,22 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+        // StokCabangs
+            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Cabang'), [
+                'route' => 'stokcabang.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 5,
+                'activematches' => ['stokcabangs*'],
+                'permission'    => ['access_stokcabangs'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+    
 
             // EMAS - STOK - KELOLA STOK
             $kelola_stok = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Kelola Stok', [
