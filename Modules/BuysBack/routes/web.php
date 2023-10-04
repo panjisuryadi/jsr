@@ -16,7 +16,9 @@ Route::group(['middleware' => 'auth'], function () {
     $controller_name = 'BuysBacksController';
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
     //save type
-    Route::post('buys-back/save-customer', 'BuysBacksController@saveTypeCustomer')->name('buysback.save.customer');
+    Route::post('buys-back/save-customer', 'BuysBacksController@saveTypeCustomer')->name('buysback.save.customer');  
+
+    Route::patch('buys-back/update-status/{id}', 'BuysBacksController@update_status')->name('buysback.update_status');
     //type
     Route::get('/buysback-status/{id}', 'BuysBacksController@status')->name('buysback.status');
 

@@ -523,7 +523,35 @@ public function update(Request $request, $id)
 
  }
 
+//update ajax version
+public function update_status(Request $request, $id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+        $$module_name_singular = $module_model::findOrFail($id);
+        $validator = \Validator::make($request->all(),
+            [
+                'status' => 'required|max:191',
 
+
+        ]);
+
+       if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+
+        $input = $request->all();
+        $params = $request->except('_token');
+        $params['status'] = $params['status'];
+        $$module_name_singular->update($params);
+        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+ }
 
     /**
      * Remove the specified resource from storage.

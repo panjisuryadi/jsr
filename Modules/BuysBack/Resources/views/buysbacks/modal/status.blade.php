@@ -1,48 +1,29 @@
   <div class="px-3">
   <x-library.alert />
-  <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
+  <form id="FormEdit" action="{{ route(''.$module_name.'.update_status', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
              <div class="flex flex-row grid grid-cols-1 gap-4">
-                            <div class="form-group">
-                                <?php
-                                $field_name = 'status';
-                                $field_lable = label_case('Code');
-                                $field_placeholder = $field_lable;
-                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                $required = "required";
-                                ?>
-                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                        name="{{ $field_name }}"
-                        id="{{ $field_name }}"
-                        value="{{$detail->status }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
-
-                            </div>
-
+            
              
+        <div class="form-group">
+                    <label for="status">Status <span class="text-danger">*</span></label>
+                    <select class="form-control" name="status" id="status" required>
+    <option 
+    value="PENDING" 
+    {{ $detail->status == 'PENDING' ? 'selected' : ''}}
+    >PENDING
+   </option>
+
+    <option 
+    value="CUCI" 
+    {{ $detail->status == 'CUCI' ? 'selected' : ''}}
+    >CUCI
+   </option>
 
 
-
-    {{--  <div class="form-group">
-                                        <label for="kategori_produk_id">Main Category <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
-                                            @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $main)
-                                                <option {{ $main->id == $category->kategori_produk_id ? 'selected' : '' }} value="{{ $main->id }}">{{ $main->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>--}}
-
-
-
-
-
-
-
-
+      </select>
+        </div>
 
 
                     </div>
@@ -99,8 +80,8 @@ jQuery.noConflict();
 
 $(document).ready(function(){
 
-    var Tombol = "<button type='button' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
-    Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanUpdate'>{{ __('Update') }}</button>";
+    var Tombol = "<button type='button' class='btn btn-outline-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
+    Tombol += "<button type='button' class='px-5 btn btn-outline-success' id='SimpanUpdate'>{{ __('Update') }}</button>";
     $('#ModalFooter').html(Tombol);
 
     $("#FormEdit").find('input[type=text],textarea,select').filter(':visible:first').focus();
