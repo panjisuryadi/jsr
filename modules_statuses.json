@@ -70,5 +70,6 @@
     "PenerimaanBarangDP": true,
     "BuyBackSale": true,
     "PenerimaanBarangLuarSale": true,
-    "StokCabang": true
+    "StokCabang": true,
+    "Status": true
 }
