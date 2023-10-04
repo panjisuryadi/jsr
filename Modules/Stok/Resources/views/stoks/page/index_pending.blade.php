@@ -30,8 +30,9 @@
                                 <th style="width: 6%!important;">No</th>
                                 <th class="text-left">{{ Label_Case('Karat') }}</th>
                                 <th class="text-left">{{ Label_Case('Cabang') }}</th>
-                                <th class="text-left">{{ Label_Case('Berat') }}</th>
-                              
+                                <th class="text-left">{{ Label_Case('weight') }}</th>
+                                <th style="width: 16%!important;" class="text-left">{{ Label_Case('Status') }}</th>
+                   
                                
                                 </tr>
                             </thead>
@@ -78,12 +79,11 @@
             ajax: '{{ route("$module_name.index_data_pending") }}',
             dom: 'Blfrtip',
             buttons: [
-
                 'excel',
                 'pdf',
                 'print'
             ],
-            columns: [{
+              columns: [{
                     "data": 'id',
                     "sortable": false,
                     render: function(data, type, row, meta) {
@@ -92,11 +92,12 @@
                 },
 
                 {data: 'karat', name: 'karat'},
-                {data: 'berat_real', name: 'berat_real'},
+                {data: 'cabang', name: 'cabang'},
+                {data: 'weight', name: 'weight'},
               
                 {
-                    data: 'berat_kotor',
-                    name: 'berat_kotor',
+                    data: 'action',
+                    name: 'action',
                     orderable: false,
                     searchable: false
                 }
@@ -113,7 +114,7 @@
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
+$(document).on('click', '#Tambah, #Edit, #Status', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
@@ -121,9 +122,18 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
         }
+        if($(this).attr('id') == 'Status')
+        {
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status {{ Label_case($module_title) }}');
+        }
+
         if($(this).attr('id') == 'Edit')
         {
-            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }

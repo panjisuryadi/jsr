@@ -32,7 +32,7 @@ class UpdateStockPending implements ShouldQueue
             [
                 'karat_id' => $newBuyBack->karat_id,
                 'cabang_id' => $newBuyBack->cabang_id,
-                'type' => 'buyback'
+                'type' =>   'buyback'
             ],
         )->value('weight');
 

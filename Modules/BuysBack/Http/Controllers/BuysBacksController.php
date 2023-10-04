@@ -130,9 +130,9 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
-                            ->editColumn('keterangan', function ($data) {
-                                $tb = '<div class="font-semibold items-center text-center">
-                                        ' . $data->note . '
+                            ->editColumn('status', function ($data) {
+                    $tb = '<div class="text-white font-semibold bg-green-500 items-center text-center">
+                                        ' . $data->status . '
                                         </div>';
                                     return $tb;
                             })
@@ -158,6 +158,7 @@ public function index_data(Request $request)
                                'nama_produk',
                                'kadar',
                                'berat',
+                               'status',
                                'nominal_beli',
                                'updated_at','keterangan','cabang'])
                         ->make(true);
@@ -335,6 +336,7 @@ public function index_data(Request $request)
             'no_buy_back' => $request->input('no_buy_back'),
             'product_name' => $request->input('nama_products'),
             'karat_id' => $request->input('kadar'),
+            'status' => 'PENDING',
             'weight' => $request->input('berat'),
             'nominal' => $nominal,
             'cabang_id' => $request->input('cabang_id')

@@ -262,4 +262,18 @@ button:focus {
     padding-left: 0.5rem;
 }
 
+.break{
+    -ms-word-break: break-all !important;
+    word-break: break-all !important;
+
+ /* Non standard for webkit */
+     word-break: break-word !important;
+
+    -webkit-hyphens: auto;
+       -moz-hyphens: auto;
+        -ms-hyphens: auto;
+            hyphens: auto;
+}
+
+
 </style>
