@@ -34,14 +34,11 @@
                                 <tr>
                                     <th style="width: 5%!important;">No</th>
                                     <th style="width: 9%!important;">No Barang Luar</th>
-                                    <th style="width: 9%!important;">Cabang</th>
-                                    <th style="width: 10%!important;">Nama Customer</th>
-                                    <th style="width: 10%!important;">Nama Produk</th>
-                                    <th style="width: 7%!important;">Kadar</th>
-                                    <th style="width: 7%!important;">Berat</th>
+                                    <th style="width: 10%!important;">Detail Produk</th>
+                                   
                                     <th style="width: 10%!important;">Nominal Beli</th>
-                                    <th style="width: 10%!important;">Keterangan</th>
-                                    <th style="width: 13%!important;" class="text-center">
+                                  
+                                    <th style="width: 10%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -103,13 +100,10 @@
                 },
 
                 {data: 'no_barang_luar', name:  'no_barang_luar'},
-                {data: 'cabang', name:  'cabang'},
-                {data: 'nama_customer', name:  'nama_customer'},
                 {data: 'nama_produk', name: 'nama_produk'},
-                {data: 'kadar', name: 'kadar'},
-                {data: 'berat', name: 'berat'},
+            
                 {data: 'nominal_beli', name: 'nominal_beli'},
-                {data: 'keterangan', name: 'keterangan'},
+           
 
                 {
                     data: 'action',
