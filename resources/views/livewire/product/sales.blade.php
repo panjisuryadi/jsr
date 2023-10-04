@@ -114,7 +114,7 @@
                         <label class="text-gray-700" for="{{ $field_name }}">
                             {{ $field_lable }}<span class="text-danger">*</span></label>
                         @endif
-                      <select class="form-control form-control-sm" wire:change="updateCode($event.target.value,'{{ $key }}')" wire:model="{{ $field_name }}">
+                      <select class="form-control form-control-sm" wire:change="updateCodeHarga($event.target.value,'{{ $key }}')" wire:model="{{ $field_name }}">
                           <option value="" selected disabled>Select Kategori</option>
                           @foreach($distribusi_sales_details[$key]['sub_karat_choice'] as $karat)
                           <option value="{{$karat['id']}}">

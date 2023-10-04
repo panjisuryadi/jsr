@@ -119,7 +119,7 @@
                             {{ $field_lable }}<span class="text-danger">*</span></label>
                         @endif
                         <select  class="form-control form-control-sm" 
-                        name="{{ $field_name }}" wire:model="{{$field_name}}">
+                        name="{{ $field_name }}" wire:model="{{$field_name}}" wire:change="updateHarga($event.target.value,'{{ $key }}')">
                             <option value="" selected disabled>Select Kategori</option>
                             @foreach($retur_sales_detail[$key]['sub_karat_choice'] as $karat)
                             <option value="{{$karat['id']}}">
@@ -174,7 +174,7 @@
                         @endif
                         {{ html()->number($field_name)->placeholder($field_placeholder)
                         ->value(old($field_name))
-                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0"]) }}
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0",'readonly']) }}
                         @if ($errors->has($field_name))
                         <span class="invalid feedback" role="alert">
                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -222,7 +222,7 @@
                         </div>
                     </div>
                     <div class="mb-2 md:mb-1 flex items-center">
-                        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Nominal</label>
+                        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Harga</label>
                         <span class="mr-4 md:block">:</span>
                         <div class="flex-1">
                             <input class="form-control form-control-sm" type-currency="IDR" wire:model.debounce.1s="retur_sales.total_nominal" type="text" placeholder="0" readonly>

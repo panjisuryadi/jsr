@@ -190,6 +190,9 @@ class Sales extends Component
                     'berat_bersih' => $this->distribusi_sales_details[$key]['berat_bersih'],
                     'harga' => floatval($this->distribusi_sales_details[$key]['harga'])??0,
                 ]);
+
+                $karat = Karat::findOrFail($this->distribusi_sales_details[$key]['sub_karat_id']);
+                $karat->update(['harga'=>floatval($this->distribusi_sales_details[$key]['harga'])??0]);
                 event(new DistribusiSaleDetailCreated($dist_sale, $dist_sale_detail));
             }
             DB::commit();
@@ -224,6 +227,15 @@ class Sales extends Component
 
     public function updateCode(Karat $karat,$key){
         $this->distribusi_sales_details[$key]['code'] = $karat->kode;
+    }
+
+    public function updateHarga(Karat $karat,$key){
+        $this->distribusi_sales_details[$key]['harga'] = formatBerat($karat->harga);
+    }
+
+    public function updateCodeHarga(Karat $karat, $key){
+        $this->updateCode($karat, $key);
+        $this->updateHarga($karat, $key);
     }
 
     protected function getUsedSubKaratIds(){

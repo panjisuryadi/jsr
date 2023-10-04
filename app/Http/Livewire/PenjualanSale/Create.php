@@ -283,4 +283,9 @@ class Create extends Component
         }
         return $subKaratIds;
     }
+
+    public function updateHarga(Karat $karat,$key){
+        $this->penjualan_sales_details[$key]['nominal'] = formatBerat($karat->harga);
+        $this->calculateTotalNominal();
+    }
 }

@@ -23,7 +23,7 @@ class Karat extends Model
         'description',
         'start_date',
         'end_date',
-
+        'harga'
      ];
 
     protected static function newFactory()
