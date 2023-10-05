@@ -23,8 +23,7 @@
                                  class="btn bg-green-600 uppercase text-white px-3">
                                  <i class="bi bi-plus"></i>
                                  Tambah Insentif
-                                </a>
-
+                            </a>
                         </div>
                         <div id="buttons">
                         </div>

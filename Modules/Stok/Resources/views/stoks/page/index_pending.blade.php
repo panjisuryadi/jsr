@@ -18,12 +18,15 @@
                     <div class="flex justify-between py-1 border-bottom">
                      <div>
                        <p class="uppercase text-lg text-gray-600 font-semibold">
-                      Stok <span class="text-yellow-500 uppercase">{{$module_action}}</span></p>
+                      Stok 
+                      <span class="text-yellow-500 uppercase">{{$module_action}}</span>
+                  </p>
                         </div>
                         <div id="buttons">
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
+
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>

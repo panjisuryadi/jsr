@@ -9,13 +9,8 @@
    @csrf
 
 <div class="px-2 py-2">
-  @livewire('penerimaan.insentif',[
-        'module_name' => $module_name,
-        'module_action' => $module_action,
-        'module_title' => $module_title,
-        'module_icon' => $module_icon,
-        'module_model' => $module_model
-    ])
+
+ <livewire:penerimaan.create>
 
 </div>
 

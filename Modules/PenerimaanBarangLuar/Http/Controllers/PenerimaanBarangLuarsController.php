@@ -440,7 +440,7 @@ public function show($id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
         abort_if(Gate::denies('show_'.$module_name.''), 403);
-        $detail = $module_model::findOrFail($id);
+        $detail = $module_model::with('cabang','karat')->findOrFail($id);
         //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.show',
            compact('module_name',
