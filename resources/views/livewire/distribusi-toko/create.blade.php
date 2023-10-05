@@ -12,25 +12,61 @@
 
                             <div class="col-span-2 bg-transparent">
                         
-                                    <div class="flex flex-col grid grid-cols-2 gap-2">
+                                    <div class="flex flex-col grid grid-cols-3 gap-2">
+
+                                    <!-- NO DISTRIBUSI TOKO -->
+                                    <div class="form-group">
+                                                <?php
+                                                $field_name = 'distribusi_toko.no_distribusi_toko';
+                                                $field_lable = label_case('no surat jalan');
+                                                $field_placeholder = $field_lable;
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = "required";
+                                                ?>
+                                            <label for="{{ $field_name }}"> No Surat Jalan</label>
+                                            <div class="flex-1">
+                                                <input wire:model="{{ $field_name }}" type="text" id="{{ $field_name }}" placeholder="{{ $field_lable }}" class="form-control @error( $field_name) is-invalid @enderror">
+                                                @if ($errors->has($field_name))
+                                                    <span class="invalid feedback"role="alert">
+                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                        class="text-danger">
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
 
                                     <!-- DATE -->
                                         <div class="form-group">
-                                            <label for="distribusi_toko.date"> Date</label>
+                                            <?php
+                                            $field_name = 'distribusi_toko.date';
+                                            $field_lable = label_case('tanggal');
+                                            $field_placeholder = $field_lable;
+                                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                            $required = "required";
+                                            ?>
+                                            <label for="{{ $field_name }}">Date</label>
                                             <div class="flex-1">
-                                                <input wire:model="distribusi_toko.date" type="date" id="distribusi_toko.date" class="form-control @error('distribusi_toko.date') is-invalid @enderror">
-                                                @error('distribusi_toko.date')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
+                                                <input wire:model="{{ $field_name }}" type="date" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror">
+                                                @if ($errors->has($field_name))
+                                                    <span class="invalid feedback"role="alert">
+                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                        class="text-danger">
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
 
                                     <!-- CABANG -->
                                         <div class="form-group">
-                                                <label for="distribusi_toko.cabang_id">Cabang</label>
-                                                <select class="form-control" name="distribusi_toko.cabang_id" id="distribusi_toko.cabang_id" wire:model="distribusi_toko.cabang_id" >
+                                                <?php
+                                                    $field_name = 'distribusi_toko.cabang_id';
+                                                    $field_lable = label_case('cabang');
+                                                    $field_placeholder = $field_lable;
+                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                    $required = "required";
+                                                ?>
+                                                <label for="{{ $field_name }}">Cabang</label>
+                                                <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                                     <option value="" selected>Pilih Cabang</option>
                                                     @foreach($cabang as $sup)
                                                     <option value="{{$sup->id}}">
@@ -39,9 +75,9 @@
                                                     @endforeach
                                                 </select>
 
-                                                @if ($errors->has('distribusi_toko.cabang_id'))
+                                                @if ($errors->has($field_name))
                                                     <span class="invalid feedback"role="alert">
-                                                        <small class="text-danger">{{ $errors->first('distribusi_toko.cabang_id') }}.</small
+                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
                                                         class="text-danger">
                                                     </span>
                                                 @endif
@@ -72,7 +108,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">Product Category</label>
-                                                <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control">
+                                                <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="clearKaratAndTotal({{$key}})">
                                                 <option value="">All Products</option>
                                                     @foreach($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -99,7 +135,7 @@
                                                     <span class="text-danger">*</span>
                                                     <span class="small">Jenis Perhiasan</span>
                                                 </label>
-                                                <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                                <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                     @foreach(\Modules\Group\Models\Group::all() as $jp)
                                                     <option value="{{ $jp->id }}">{{ $jp->name }}</option>
@@ -123,7 +159,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                                <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                                     <option value="" selected disabled>Pilih Model</option>
                                                     @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
                                                     <option value="{{$sup->id}}">
@@ -149,7 +185,7 @@
                                                 ?>
                                                 <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                                 <div class="input-group">
-                                                    <input type="text" id="{{ $field_name }}" class="form-control" wire:model="{{ $field_name }}">
+                                                    <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-info relative rounded-l-none" id="generate-code">Chek</button>
                                                     </span>
@@ -174,7 +210,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">@lang('Certificate') <span class="text-danger">*</span></label>
-                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
+                                                <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih Certificate</option>
                                                     @foreach(\Modules\DiamondCertificate\Models\DiamondCertificate::all() as $certificate)
                                                     <option value="{{ $certificate->id }}">{{ $certificate->name }}</option>
@@ -196,7 +232,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">@lang('No .Certificate') <span class="text-danger">*</span></label>
-                                                <input id="{{ $field_name }}" type="text" class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}">
+                                                <input id="{{ $field_name }}" type="text" class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                 @if ($errors->has($field_name))
                                                 <span class="invalid feedback"role="alert">
                                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -229,7 +265,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                                <input class="form-control"
+                                                <input class="form-control @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 name="{{ $field_name }}"
                                                 min="0" step="0.01"
@@ -275,7 +311,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">Kategori Emas</label>
-                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
+                                                <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                     @foreach(\Modules\GoldCategory\Models\GoldCategory::all() as $sup)
                                                     <option value="{{$sup->id}}">
@@ -299,7 +335,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">@lang('Karat') <span class="text-danger">*</span></label>
-                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
+                                                <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                     @foreach($dataKarat as $jp)
                                                     <option value="{{ $jp->id }}">{{ $jp->name }}</option>
@@ -336,7 +372,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                <input class="form-control numeric"
+                                                <input class="form-control numeric @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 name="{{ $field_name }}"
                                                 step="0.001"
@@ -361,7 +397,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                <input class="form-control numeric"
+                                                <input class="form-control numeric @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 wire:model="{{ $field_name }}"
                                                 min="0" step="0.001"
@@ -384,7 +420,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                                <input class="form-control"
+                                                <input class="form-control @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 name="{{ $field_name }}"
                                                 min="0" step="0.01"

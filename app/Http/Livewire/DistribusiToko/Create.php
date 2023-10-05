@@ -18,6 +18,7 @@ class Create extends Component
     public $kategori;
 
     public $distribusi_toko = [
+        'no_distribusi_toko' =>'',
         'date' => '',
         'cabang_id' => ''
     ];
@@ -113,6 +114,7 @@ class Create extends Component
         $rules = [
             'distribusi_toko.cabang_id' => 'required',
             'distribusi_toko.date' => 'required',
+            'distribusi_toko.no_distribusi_toko' => 'required|string|max:70'
         ];
 
         foreach ($this->distribusi_toko_details as $key => $value) {
@@ -180,5 +182,12 @@ class Create extends Component
             'distribusi_toko_details.*.*.required_if' => 'Wajib di isi',
             'distribusi_toko_details.*.*.required_unless' => 'Wajib di isi',
         ];
+    }
+
+    public function clearKaratAndTotal($key){
+        $this->distribusi_toko_details[$key]['accessoris_weight'] = '';
+        $this->distribusi_toko_details[$key]['label_weight'] = '';
+        $this->distribusi_toko_details[$key]['gold_weight'] = '';
+        $this->distribusi_toko_details[$key]['total_weight'] = '';
     }
 }
