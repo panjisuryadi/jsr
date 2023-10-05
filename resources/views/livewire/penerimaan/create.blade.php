@@ -1,3 +1,6 @@
+
+
+<div>
 <table style="width:100%;" class="table table-borderlees">
     <tbody>
         <tr>
@@ -56,7 +59,7 @@
             </td>
             <td class="w-50">
                 <div class="form-group">
-                   <button wire:click="like">Like Post</button>
+                 <p>idsids</p>
                 </div>
             </td>
         </tr>
@@ -95,3 +98,5 @@
         </tr>
     </tbody>
 </table>
+
+</div>

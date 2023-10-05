@@ -77,6 +77,7 @@
                                 </a>
 
                         </div>
+                        
                         <div id="buttons">
                         </div>
                     </div>

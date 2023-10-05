@@ -28,11 +28,13 @@
                             <thead>
                                 <tr>
                                 <th style="width: 6%!important;">No</th>
-                                <th class="text-left">{{ Label_Case('Karat') }}</th>
+                           <th class="text-left">{{ Label_Case('Tanggal') }}</th>
+                           <th class="text-left">{{ Label_Case('Karat') }}</th>
                                
-                                <th class="text-left">{{ Label_Case('Berat') }}</th>
+                          <th class="text-left">{{ Label_Case('Berat') }}</th>
+                          <th class="text-left">{{ Label_Case('Proses') }}</th>
                               
-                               
+                           
                                 </tr>
                             </thead>
                         </table>
@@ -91,6 +93,8 @@
                     }
                 },
 
+                {data: 'karat', name: 'karat'},
+                {data: 'karat', name: 'karat'},
                 {data: 'karat', name: 'karat'},
              
                 {
