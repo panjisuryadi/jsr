@@ -271,6 +271,7 @@
                                                 min="0" step="0.01"
                                                 id="{{ $field_name }}"
                                                 wire:model="{{ $field_name }}"
+                                                wire:change="calculateTotalWeight({{$key}})"
                                                 placeholder="{{ $field_placeholder }}">
                                                 @if ($errors->has($field_name))
                                                 <span class="invalid feedback"role="alert">
@@ -377,6 +378,7 @@
                                                 name="{{ $field_name }}"
                                                 step="0.001"
                                                 wire:model="{{ $field_name }}"
+                                                wire:change="calculateTotalWeight({{$key}})"
                                                 id="{{ $field_name }}"
                                                 placeholder="{{ $field_placeholder }}"
                                                 >
@@ -400,6 +402,7 @@
                                                 <input class="form-control numeric @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 wire:model="{{ $field_name }}"
+                                                wire:change="calculateTotalWeight({{$key}})"
                                                 min="0" step="0.001"
                                                 id="{{ $field_name }}"
                                                 placeholder="{{ $field_placeholder }}">
@@ -426,6 +429,7 @@
                                                 min="0" step="0.01"
                                                 id="{{ $field_name }}"
                                                 wire:model="{{ $field_name }}"
+                                                wire:change="calculateTotalWeight({{$key}})"
                                                 placeholder="{{ $field_placeholder }}">
                                                 @if ($errors->has($field_name))
                                                 <span class="invalid feedback"role="alert">

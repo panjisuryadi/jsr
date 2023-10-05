@@ -46,6 +46,7 @@ class Create extends Component
 
     public function add()
     {
+        $this->validate();
         $this->distribusi_toko_details[] = [
             'product_category' => '',
             'group' => '',
@@ -92,7 +93,7 @@ class Create extends Component
     }
 
     public function render(){
-        return view('livewire.distribusi-toko.create');
+        return view("livewire.distribusi-toko.create");
     }
 
     public function remove($key)
@@ -189,5 +190,15 @@ class Create extends Component
         $this->distribusi_toko_details[$key]['label_weight'] = '';
         $this->distribusi_toko_details[$key]['gold_weight'] = '';
         $this->distribusi_toko_details[$key]['total_weight'] = '';
+    }
+
+
+    public function calculateTotalWeight($key){
+        $this->distribusi_toko_details[$key]['total_weight'] = 0;
+        $this->distribusi_toko_details[$key]['total_weight'] += floatval($this->distribusi_toko_details[$key]['gold_weight']);
+        if($this->distribusi_toko_details[$key]['product_category'] != '4'){
+            $this->distribusi_toko_details[$key]['total_weight'] += floatval($this->distribusi_toko_details[$key]['accessoris_weight']);
+            $this->distribusi_toko_details[$key]['total_weight'] += floatval($this->distribusi_toko_details[$key]['label_weight']);
+        }
     }
 }
