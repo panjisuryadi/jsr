@@ -11,6 +11,7 @@ class EventServiceProvider extends ServiceProvider
         'Modules\ReturSale\Events\ReturSaleDetailCreated' => [
             'Modules\ReturSale\Listeners\ReturSaleDetailCreated\UpdateStockSales',
             'Modules\ReturSale\Listeners\ReturSaleDetailCreated\UpdateStockOffice',
+            'Modules\ReturSale\Listeners\ReturSaleDetailCreated\RecordReturSale'
         ],
     ];
 }
