@@ -17,6 +17,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);  
 
+
+     Route::get("$module_name/index_insentif", ['as' => "$module_name.index_insentif", 'uses' => "$controller_name@index_insentif"]);  
+
       Route::get("$module_name/tambah_insentif", ['as' => "$module_name.tambah_insentif", 'uses' => "$controller_name@tambah_insentif"]);  
 
     
