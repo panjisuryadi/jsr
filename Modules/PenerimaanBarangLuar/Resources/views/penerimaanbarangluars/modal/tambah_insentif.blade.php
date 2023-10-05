@@ -1,125 +1,26 @@
+  
+
   <div class="px-3">
+
+
+
   <x-library.alert />
   <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
-                @csrf
+   @csrf
 
 <div class="px-2 py-2">
-    
-<table style="width:100%;" class="table table-borderlees">
-  <tbody>
-    <tr>
-     
-      <td class="w-50">
-       <label class="px-1 font-semibold text-lg uppercase text-gray-600">Bulan </label>
-      </td>
-      <td class="w-50">
-            <div class="form-group">
-                                <?php
-                                $field_name = 'code';
-                                $field_lable = label_case('Code');
-                                $field_placeholder = $field_lable;
-                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                $required = "required";
-                                ?>
-                             
-                        <input class="form-control"
-                         type="text"
-                         name="{{ $field_name }}"
-                         id="{{ $field_name }}"
-                         placeholder="{{ $field_placeholder }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
-
-                            </div>
-      </td>
-     
-    </tr>
-
-<tr>
-    <td class="w-50">
-        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-        Angkatan </label>
-    </td>
-    <td class="w-50">
-        <div class="form-group">
-            Angkatan
-        </div>
-    </td>
-</tr>
-
-
-<tr>
-    <td class="w-50">
-        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-        Hitungan Office </label>
-    </td>
-    <td class="w-50">
-        <div class="form-group">
-             Hitungan Office
-        </div>
-    </td>
-</tr>
-
-
-
-<tr>
-    <td class="w-50">
-        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-       Selisih </label>
-    </td>
-    <td class="w-50">
-        <div class="form-group">
-            Selisih
-        </div>
-    </td>
-</tr>
-
-<tr>
-    <td class="w-50">
-        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-       Persentase </label>
-    </td>
-    <td class="w-50">
-        <div class="form-group">
-            Persentase
-        </div>
-    </td>
-</tr>
-
-
-
-<tr>
-    <td class="w-50">
-        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-       Nilai insentif </label>
-    </td>
-    <td class="w-50">
-        <div class="form-group">
-            Nilai insentif
-        </div>
-    </td>
-</tr>
-
-
-
-
-
-
-
-
-
- 
-  </tbody>
-</table>
-
-
-
+  @livewire('penerimaan.insentif',[
+        'module_name' => $module_name,
+        'module_action' => $module_action,
+        'module_title' => $module_title,
+        'module_icon' => $module_icon,
+        'module_model' => $module_model
+    ])
 
 </div>
 
 
-            </form>
+  </form>
 
 
 </div>

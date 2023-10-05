@@ -1,11 +1,10 @@
 <div class="text-center">
 @can('edit_'.$module_name.'')
-    <a id="Status" href="{{ route(''.$module_name.'.view_pending', $data) }}"
+    <a id="Detail" href="{{ route(''.$module_name.'.view_pending', $data) }}"
      class="btn btn-outline-success btn-sm">
-        <i class="bi bi-eye"></i> &nbsp;@lang('Status')
+        <i class="bi bi-eye"></i> &nbsp;@lang('Detail')
     </a>
-
-@endcan
+ @endcan
 
 {{-- @can('delete_'.$module_name.'')
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="

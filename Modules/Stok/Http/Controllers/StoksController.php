@@ -17,6 +17,8 @@ use GuzzleHttp\Client;
 use Modules\Stok\Models\StockOffice;
 
 
+
+
 class StoksController extends Controller
 {
 
@@ -678,9 +680,9 @@ public function view_pending($id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
         abort_if(Gate::denies('show_'.$module_name.''), 403);
-        $detail = $module_pending::findOrFail($id);
+        $detail = $module_pending::with('karat','cabang')->findOrFail($id);
         //dd($detail);
-          return view(''.$module_name.'::'.$module_path.'.modal.pending',
+          return view(''.$module_name.'::'.$module_path.'.modal.view_pending',
            compact('module_name',
             'module_action',
             'detail',
