@@ -1,7 +1,4 @@
-<form id="FormTambah" 
-        action="{{ route("products.store") }}"
-        method="POST" 
-        enctype="multipart/form-data">
+<form wire:submit.prevent="store" enctype="multipart/form-data">
 
         @csrf
       {{-- {{$mainkategori}} --}}
@@ -108,8 +105,6 @@
                                                     <option value="{{ $jp->id }}">{{ $jp->name }}</option>
                                                     @endforeach
                                                 </select>
-
-
                                                 @if ($errors->has($field_name))
                                                 <span class="invalid feedback"role="alert">
                                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -179,7 +174,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">@lang('Certificate') <span class="text-danger">*</span></label>
-                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" required wire:model="{{ $field_name }}">
+                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih Certificate</option>
                                                     @foreach(\Modules\DiamondCertificate\Models\DiamondCertificate::all() as $certificate)
                                                     <option value="{{ $certificate->id }}">{{ $certificate->name }}</option>
@@ -201,7 +196,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">@lang('No .Certificate') <span class="text-danger">*</span></label>
-                                                <input id="{{ $field_name }}" type="text" class="form-control" name="{{ $field_name }}" required wire:model="{{ $field_name }}">
+                                                <input id="{{ $field_name }}" type="text" class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                 @if ($errors->has($field_name))
                                                 <span class="invalid feedback"role="alert">
                                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -280,7 +275,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">Kategori Emas</label>
-                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" required wire:model="{{ $field_name }}">
+                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                     @foreach(\Modules\GoldCategory\Models\GoldCategory::all() as $sup)
                                                     <option value="{{$sup->id}}">
@@ -304,12 +299,18 @@
                                                 $required = "required";
                                                 ?>
                                                 <label for="{{ $field_name }}">@lang('Karat') <span class="text-danger">*</span></label>
-                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" required wire:model="{{ $field_name }}">
+                                                <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
-                                                    @foreach(\Modules\Karat\Models\Karat::all() as $jp)
+                                                    @foreach($dataKarat as $jp)
                                                     <option value="{{ $jp->id }}">{{ $jp->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                @if($errors->has($field_name))
+                                                <span class="invalid feedback"role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                    class="text-danger">
+                                                </span>
+                                                @endif
                                             </div>
                                         </div>
 
