@@ -32,13 +32,13 @@
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Keterangan') }}
                                     </th>
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 10%!important;" class="text-center">
                                          {{ __('Berat Masuk') }} (gram)
                                     </th>
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 10%!important;" class="text-center">
                                          {{ __('Berat Keluar') }} (gram)
                                     </th>
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 10%!important;" class="text-center">
                                          {{ __('Sisa Stok Office') }} (gram)
                                     </th>
                                     <th style="width: 18%!important;" class="text-center">
