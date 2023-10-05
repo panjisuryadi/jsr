@@ -5,7 +5,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('buysback.index') }}">Buys Back</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('penerimaanbarangluar.index') }}">Penerimaan Barang Luar</a></li>
         <li class="breadcrumb-item active">Details</li>
     </ol>
 @endsection
@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-header d-flex flex-wrap align-items-center">
                         <div>
-                            Invoice: <strong>{{@$detail->no_buy_back}}</strong>
+                            Invoice: <strong>{{@$detail->no_barang_luar}}</strong>
                         </div>
                         <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="#"><i class="bi bi-printer"></i> Print
                         </a>
@@ -41,9 +41,9 @@
     <div class="w-50 mb-3 mb-md-0 justify-end">
         
         <h5 class="mb-2 border-bottom pb-2">Invoice Info:</h5>
+ <div>Date: {{ \Carbon\Carbon::parse($detail->date)->format('d M, Y') }}</div>
         <div class="text-lg">Customer: <strong>{{@$detail->customer_name}}</strong></div>
         <div>Invoice: <strong>{{@$detail->no_barang_luar}}</strong></div>
-        <div>Date: {{ \Carbon\Carbon::parse($detail->date)->format('d M, Y') }}</div>
       
     </div>
     
