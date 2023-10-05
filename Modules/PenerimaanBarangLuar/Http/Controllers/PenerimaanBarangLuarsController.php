@@ -58,7 +58,9 @@ class PenerimaanBarangLuarsController extends Controller
 
 
 
-public function index_data(Request $request)
+
+
+public function index_data_insentif(Request $request)
 
     {
         $module_title = $this->module_title;
@@ -80,41 +82,11 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                           ->editColumn('no_barang_luar', function ($data) {
-                             $tb = '<div class="justify items-left text-left">'; 
-                             $tb .= '<div class="text-blue-400">
-                                     Nomor :<strong>' . $data->no_barang_luar . '
-                                    </strong></div>';
-                             $tb .= '<div class="text-gray-800">
-                                     Cabang :<strong>' . $data->cabang->name . '
-                                    </strong></div>'; 
-                             $tb .= '<div class="text-gray-800">
-                                     Customer :<strong>' . $data->customer_name . '
-                                    </strong></div>';               
-                             $tb .= '</div>'; 
-                                return $tb;
+                           ->editColumn('bulan', function ($data) {
+                                return \Carbon\Carbon::parse($data->created_at)->format('F');
                               })
 
-                      
-                             ->editColumn('nama_produk', function ($data) {
-                             $tb = '<div class="justify items-left text-left">'; 
-                           
-                             $tb .= '<div class="text-gray-800">
-                                     Prduk :<strong>' . $data->product_name . '
-                                    </strong></div>'; 
-                             $tb .= '<div class="text-gray-800">
-                                     Karat :<strong>' . $data->karat->name . '
-                                    </strong></div>';   
-
-                             $tb .= '<div class="text-gray-800">
-                                     Berat :<strong>' . $data->weight . '
-                                    </strong></div>';               
-                             $tb .= '</div>'; 
-                                return $tb;
-                              })
-
-
-                          ->editColumn('kadar', function ($data) {
+                            ->editColumn('kadar', function ($data) {
                                 $tb = '<div class="font-semibold items-center text-center">
                                         ' . $data->karat->name . '
                                        </div>';
@@ -160,8 +132,8 @@ public function index_data(Request $request)
                             }
                         })
                         ->rawColumns(['action','nama_customer',
-                               'no_barang_luar',
-                               'nama_produk',
+                               'bulan',
+                               'cabang',
                                'kadar',
                                'berat',
                                'status',
@@ -171,6 +143,32 @@ public function index_data(Request $request)
                                'cabang'])
                         ->make(true);
                      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -232,7 +230,7 @@ public function index_data(Request $request)
             $module_action = 'Create';
             $cabang = Cabang::where('id',Auth::user()->namacabang->cabang()->first()->id)->get();
             abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.insentif',
+              return view(''.$module_name.'::'.$module_path.'.modal.tambah_insentif',
                compact('module_name',
                 'module_action',
                 'module_title',

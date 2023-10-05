@@ -290,6 +290,21 @@ class GenerateMenus
             ]);
 
 
+
+            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Insentif'), [
+                'route' => 'penerimaanbarangluar.index_insentif',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['penerimaanbarangluar*'],
+                'permission'    => ['access_penerimaanbarangluars'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
             // EMAS - TOKO - Distribusi Toko
             $distribusiToko = $toko->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
