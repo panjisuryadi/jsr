@@ -63,7 +63,7 @@
                            <a href="{{ route(''.$module_name.'.create') }}"
                                 id="Add"
                                 data-toggle="tooltip"
-                                 class="btn bg-green-600 uppercase  text-white px-3">
+                                 class="btn btn-outline-secondary uppercase">
                                  <i class="bi bi-plus"></i>
                                  @lang('Tambah Penerimaan Barang Luar')
                                 </a>
@@ -71,7 +71,7 @@
                              <a href="{{ route(''.$module_name.'.index_insentif') }}"
                                 id="Add"
                                 data-toggle="tooltip"
-                                 class="btn bg-green-600 uppercase text-white px-3">
+                                 class="btn btn-outline-secondary uppercase">
                                  <i class="bi bi-plus"></i>
                                  Insentif
                                 </a>
