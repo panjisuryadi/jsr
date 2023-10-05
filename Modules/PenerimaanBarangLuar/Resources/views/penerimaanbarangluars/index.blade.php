@@ -68,7 +68,7 @@
                                  @lang('Tambah Penerimaan Barang Luar')
                                 </a>
 
-                             <a href="{{ route(''.$module_name.'.tambah_insentif') }}"
+                             <a href="{{ route(''.$module_name.'.index_insentif') }}"
                                 id="Add"
                                 data-toggle="tooltip"
                                  class="btn bg-green-600 uppercase text-white px-3">
