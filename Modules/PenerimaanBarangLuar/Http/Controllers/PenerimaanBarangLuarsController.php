@@ -55,6 +55,121 @@ class PenerimaanBarangLuarsController extends Controller
 
 
 
+public function index_data(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = $module_model::get();
+        $data = $$module_name;
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.aksi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+                           ->editColumn('no_barang_luar', function ($data) {
+                             $tb = '<div class="justify items-left text-left">'; 
+                             $tb .= '<div class="text-blue-400">
+                                     Nomor :<strong>' . $data->no_barang_luar . '
+                                    </strong></div>';
+                             $tb .= '<div class="text-gray-800">
+                                     Cabang :<strong>' . $data->cabang->name . '
+                                    </strong></div>'; 
+                             $tb .= '<div class="text-gray-800">
+                                     Customer :<strong>' . $data->customer_name . '
+                                    </strong></div>';               
+                             $tb .= '</div>'; 
+                                return $tb;
+                              })
+
+                      
+                             ->editColumn('nama_produk', function ($data) {
+                             $tb = '<div class="justify items-left text-left">'; 
+                           
+                             $tb .= '<div class="text-gray-800">
+                                     Prduk :<strong>' . $data->product_name . '
+                                    </strong></div>'; 
+                             $tb .= '<div class="text-gray-800">
+                                     Karat :<strong>' . $data->karat->name . '
+                                    </strong></div>';   
+
+                             $tb .= '<div class="text-gray-800">
+                                     Berat :<strong>' . $data->weight . '
+                                    </strong></div>';               
+                             $tb .= '</div>'; 
+                                return $tb;
+                              })
+
+
+                          ->editColumn('kadar', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->karat->name . '
+                                       </div>';
+                                   return $tb;
+                               })
+                            ->editColumn('berat', function ($data) {
+                            $tb = '<div class="font-semibold items-center text-center">
+                                    ' . $data->weight . '
+                                     gram </div>';
+                                return $tb;
+                            })
+                            ->editColumn('nominal_beli', function ($data) {
+                            $tb = '<div class="font-semibold items-center text-center">
+                                    ' . format_uang($data->nominal) . '
+                                    </div>';
+                                return $tb;
+                            })
+
+                         ->addColumn('status', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.status',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+
+                            ->editColumn('cabang', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->cabang->name . '
+                                        </div>';
+                                    return $tb;
+                            })
+
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['action','nama_customer',
+                               'no_barang_luar',
+                               'nama_produk',
+                               'kadar',
+                               'berat',
+                               'status',
+                               'nominal_beli',
+                               'updated_at',
+                               'keterangan',
+                               'cabang'])
+                        ->make(true);
+                     }
+
+
 
 
 
