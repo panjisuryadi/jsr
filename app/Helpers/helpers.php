@@ -493,6 +493,41 @@ if (!function_exists('pstatus')) {
 
 
 
+if (!function_exists('bpstts')) {
+    /**
+     * Prepare the Column Name for Lables.
+     */
+    function bpstts($required)
+    {
+        $return_text = 'btn-outline-success';
+        if ($required == 'pending') {
+             $return_text = 'btn-outline-success';
+         }
+
+        elseif ($required == 'cuci'){
+             $return_text = 'btn-outline-info';
+        }
+
+        elseif ($required == 'masak'){
+             $return_text = 'btn-outline-warning';
+        }
+
+        elseif ($required == 'rongsok'){
+             $return_text = 'btn-outline-primary';
+        }
+
+        elseif ($required == 'second'){
+             $return_text = 'btn-outline-danger';
+        }
+        return $return_text;
+    }
+}
+
+
+
+
+
+
  if (!function_exists('tgljam')) {
         function tgljam($value)
         {

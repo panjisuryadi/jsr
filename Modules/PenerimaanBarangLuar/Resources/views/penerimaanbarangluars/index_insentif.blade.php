@@ -13,67 +13,16 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-
-<div class="px-0 py-1 grid grid-cols-3 gap-4 m-2 mt-0 mb-2 text-center no-underline">
-    
-    <div class="bg-white card-body p-0 d-flex align-items-center border shadow">
-        <div class="bg-gradient-success p-4 mfe-3 rounded-left">
-            <i class="bi bi-currency-dollar text-3xl"></i>
-        </div>
-        <div>
-            <div class="text-value font-semibold text-lg text-success">122</div>
-            <div class="text-gray-600 text-uppercase font-weight-bold text-md">
-                TOTAL NOMINAL
-            </div>
-        </div>
-    </div>
-    <div class="bg-white card-body p-0 d-flex align-items-center border shadow">
-        <div class="bg-gradient-danger p-4 mfe-3 rounded-left">
-            <i class="bi bi-wallet-fill text-3xl"></i>
-           
-        </div>
-        <div>
-            <div class="text-xl font-semibold text-value text-success">22</div>
-            <div class="text-md text-gray-600 text-uppercase font-weight-bold">
-               TOTAL BERAT
-            </div>
-            <i class="bi bi-suitcase-lg"></i>
-        </div>
-    </div>
-    <div class="bg-white card-body p-0 d-flex align-items-center  border shadow">
-        <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
-            <i class="bi bi-map-fill text-3xl"></i>
-
-        </div>
-        <div>
-            <div class="text-md font-semibold text-value text-success">Filter /Cabang</div>
-            <div class="text-gray-600 text-uppercase font-weight-bold text-lg">
-        
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Add"
-                                data-toggle="tooltip"
-                                 class="btn bg-green-600 uppercase  text-white px-3">
-                                 <i class="bi bi-plus"></i>
-                                 @lang('Tambah Penerimaan Barang Luar')
-                                </a>
-
-                             <a href="{{ route(''.$module_name.'.index_insentif') }}"
-                                id="Add"
+                             <a href="{{ route(''.$module_name.'.tambah_insentif') }}"
+                                id="Tambah"
                                 data-toggle="tooltip"
                                  class="btn bg-green-600 uppercase text-white px-3">
                                  <i class="bi bi-plus"></i>
-                                 Insentif
+                                 Tambah Insentif
                                 </a>
 
                         </div>
@@ -84,14 +33,11 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%!important;">No</th>
-                                    <th style="width: 9%!important;">No Barang Luar</th>
-                                    <th style="width: 10%!important;">Detail Produk</th>
-                                   
-                             <th style="width: 10%!important;">Status</th>
-                             <th style="width: 10%!important;">Nominal Beli</th>
-                                  
-                                    <th style="width: 10%!important;" class="text-center">
+              <th style="width: 5%!important;">No</th>
+              <th style="width: 9%!important;">Bulan</th>
+              <th style="width: 10%!important;">Cabang</th>
+              <th style="width: 10%!important;">Insentif</th>
+              <th style="width: 10%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -136,7 +82,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("$module_name.index_data_insentif") }}',
             dom: 'Blfrtip',
             buttons: [
 
@@ -152,10 +98,9 @@
                     }
                 },
 
-                {data: 'no_barang_luar', name:  'no_barang_luar'},
-                {data: 'nama_produk', name: 'nama_produk'},
-                {data: 'status', name: 'status'},
-            
+                {data: 'bulan', name:  'bulan'},
+                {data: 'cabang', name: 'cabang'},
+                      
                 {data: 'nominal_beli', name: 'nominal_beli'},
            
 
@@ -183,7 +128,7 @@ $(document).on('click', '#Tambah, #Edit, #Status', function(e){
         {
             $('.modal-dialog').addClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah Insentif');
         }
         if($(this).attr('id') == 'Edit')
         {
