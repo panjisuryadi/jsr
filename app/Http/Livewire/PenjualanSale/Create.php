@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Modules\CustomerSales\Entities\CustomerSales;
 use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
 use Modules\PenjualanSale\Events\PenjualanSaleDetailCreated;
@@ -20,9 +21,10 @@ class Create extends Component
         'store_name' => '',
         'total_weight' => 0,
         'total_nominal' => 0,
-        'tipe_pembayaran' => 'lunas',
+        'tipe_pembayaran' => '',
         'cicil' => '',
         'tgl_jatuh_tempo' => '',
+        'konsumen_sales_id' => ''
     ];
 
     public $penjualan_sales_details = [
@@ -31,12 +33,21 @@ class Create extends Component
             'sub_karat_id' => '',
             'weight' => '',
             'nominal' => 0,
-            'sub_karat_choice' => []
+            'sub_karat_choice' => [],
+            'harga_type' => '1',
+            'konversi_harga' => '',
+            'total_harga' => ''
         ]
     ];
 
     public $dataSales = [];
     public $dataKarat = [];
+    public $konsumenSales = [];
+
+    protected $listeners = [
+        'beratChanged' => 'calculateTotalBerat',
+        'hargaTypeChanged' => 'calculateTotalNominal'
+    ];
 
     public $hari_ini;
 
@@ -47,7 +58,10 @@ class Create extends Component
             'sub_karat_id' => '',
             'weight' => '',
             'nominal' => 0,
-            'sub_karat_choice' => []
+            'sub_karat_choice' => [],
+            'harga_type' => '1',
+            'konversi_harga' => '',
+            'total_harga' => ''
         ];
     }
 
@@ -68,7 +82,10 @@ class Create extends Component
                 'sub_karat_id' => '',
                 'weight' => '',
                 'nominal' => 0,
-                'sub_karat_choice' => []
+                'sub_karat_choice' => [],
+                'harga_type' => '1',
+                'konversi_harga' => '',
+                'total_harga' => ''
             ]
         ];
     }
@@ -91,6 +108,7 @@ class Create extends Component
     public function mount()
     {
         $this->dataSales = DataSale::all();
+        $this->konsumenSales = CustomerSales::all();
         $this->dataKarat = Karat::where(function($query){
             $query
                 ->where('parent_id',null)
@@ -117,6 +135,7 @@ class Create extends Component
     {
         $rules = [
             'penjualan_sales.invoice_no' => 'required|string|max:50',
+            'penjualan_sales.konsumen_sales_id' => 'required',
             'penjualan_sales.store_name' => 'string',
             'penjualan_sales.total_weight' => 'required',
             'penjualan_sales.sales_id' => 'required',
@@ -166,26 +185,38 @@ class Create extends Component
         return $rules;
     }
 
-    public function calculateTotalBerat()
+    public function calculateTotalBerat($key)
     {
         $this->penjualan_sales['total_weight'] = 0;
-        foreach ($this->penjualan_sales_details as $key => $value) {
-            $this->penjualan_sales['total_weight'] += floatval($this->penjualan_sales_details[$key]['weight']);
+        foreach ($this->penjualan_sales_details as $index => $value) {
+            $this->penjualan_sales['total_weight'] += floatval($this->penjualan_sales_details[$index]['weight']);
             $this->penjualan_sales['total_weight'] = number_format(round($this->penjualan_sales['total_weight'], 3), 3, '.', '');
             $this->penjualan_sales['total_weight'] = rtrim($this->penjualan_sales['total_weight'], '0');
             $this->penjualan_sales['total_weight'] = formatWeight($this->penjualan_sales['total_weight']);
         }
+        $this->calculateHarga($key);
     }
 
-    public function calculateTotalNominal()
+    public function calculateTotalNominal($key)
     {
         $this->penjualan_sales['total_nominal'] = 0;
-        foreach ($this->penjualan_sales_details as $key => $value) {
-            $this->penjualan_sales['total_nominal'] += floatval($this->penjualan_sales_details[$key]['nominal']??0);
-            $this->penjualan_sales['total_nominal'] = number_format(round($this->penjualan_sales['total_nominal'], 3), 3, '.', '');
-            $this->penjualan_sales['total_nominal'] = rtrim($this->penjualan_sales['total_nominal'], '0');
-            $this->penjualan_sales['total_nominal'] = formatWeight($this->penjualan_sales['total_nominal']);
+        if($this->hasSameHargaType()){
+            foreach ($this->penjualan_sales_details as $index => $value) {
+                $this->penjualan_sales['total_nominal'] += floatval($this->penjualan_sales_details[$index]['nominal']??0);
+                $this->penjualan_sales['total_nominal'] = number_format(round($this->penjualan_sales['total_nominal'], 3), 3, '.', '');
+                $this->penjualan_sales['total_nominal'] = rtrim($this->penjualan_sales['total_nominal'], '0');
+                $this->penjualan_sales['total_nominal'] = formatWeight($this->penjualan_sales['total_nominal']);
+            }
         }
+        $this->calculateHarga($key);
+    }
+
+    private function hasSameHargaType(){
+        $harga_type_values = array_map(function($item) {
+            return $item['harga_type'];
+        }, $this->penjualan_sales_details);
+
+        return !(in_array('1', $harga_type_values) && in_array('2', $harga_type_values));
     }
 
     public function updated($propertyName)
@@ -284,8 +315,20 @@ class Create extends Component
         return $subKaratIds;
     }
 
-    public function updateHarga(Karat $karat,$key){
-        $this->penjualan_sales_details[$key]['nominal'] = formatBerat($karat->harga);
-        $this->calculateTotalNominal();
+    public function updateMarketName(){
+        $this->penjualan_sales['store_name'] = CustomerSales::find($this->penjualan_sales['konsumen_sales_id'])?->market;
+    }
+
+    public function clearHarga($key){
+        $this->penjualan_sales_details[$key]['nominal'] = 0;
+        $this->calculateTotalNominal($key);
+    }
+
+    public function calculateHarga($key){
+        if($this->penjualan_sales_details[$key]['harga_type'] == '1'){
+            $this->penjualan_sales_details[$key]['konversi_harga'] = floatval($this->penjualan_sales_details[$key]['weight']) * $this->penjualan_sales_details[$key]['nominal'];
+        }else{
+            $this->penjualan_sales_details[$key]['total_harga'] = floatval($this->penjualan_sales_details[$key]['weight']) * $this->penjualan_sales_details[$key]['nominal'];
+        }
     }
 }
