@@ -79,7 +79,7 @@
                            <a href="{{ route(''.$module_name.'.create') }}"
                                 id="Tambah"
                                 data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
+                                 class="btn btn-outline-secondary px-3">
                                  <i class="bi bi-plus"></i>@lang('Add')&nbsp;Penerimaan Barang DP
                                 </a>
 

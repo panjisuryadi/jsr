@@ -23,7 +23,14 @@ class StokCabangsController extends Controller
         $this->module_name = 'stokcabang';
         $this->module_path = 'stokcabangs';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "Modules\StokCabang\Models\StokCabang";
+       // $this->module_model = "Modules\StokCabang\Models\StokCabang";
+        $this->module_model = "Modules\Stok\Models\StockSales";
+        $this->module_office = "Modules\Stok\Models\StockOffice";
+        $this->module_pending = "Modules\Stok\Models\StockPending";
+        $this->module_sales = "Modules\Stok\Models\StockSales";
+        $this->module_kroom = "Modules\Stok\Models\StockKroom";
+        $this->module_dp = "Modules\Stok\Models\StokDp";
+
 
     }
 
@@ -59,6 +66,7 @@ public function index_data(Request $request)
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $module_model = $this->module_office;
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
@@ -74,23 +82,8 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
-                                    </div>';
-                                return $tb;
-                            })
-                           ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
-
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                            }
-                        })
+                         
+             
                         ->rawColumns(['updated_at', 'action', 'name'])
                         ->make(true);
                      }
