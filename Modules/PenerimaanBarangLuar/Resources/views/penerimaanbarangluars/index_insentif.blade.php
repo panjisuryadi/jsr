@@ -18,14 +18,14 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                              <a href="{{ route(''.$module_name.'.tambah_insentif') }}"
-                                id="Tambah"
+                                id="zxzx"
                                 data-toggle="tooltip"
                                  class="btn bg-green-600 uppercase text-white px-3">
                                  <i class="bi bi-plus"></i>
                                  Tambah Insentif
                             </a>
 
-<button onclick="Livewire.emit('openModal', 'penerimaan.create')">Open</button>
+
 
                         </div>
                         <div id="buttons">

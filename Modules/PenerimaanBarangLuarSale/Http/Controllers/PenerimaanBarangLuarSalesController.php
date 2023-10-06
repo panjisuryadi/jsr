@@ -52,6 +52,42 @@ class PenerimaanBarangLuarSalesController extends Controller
 
 
 
+  public function insentif() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.index_insentif',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+  public function tambah_insentif() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.tambah_insentif',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+
+
 
 public function index_data(Request $request)
 
@@ -120,6 +156,92 @@ public function index_data(Request $request)
                                         return $tb;
                                 })
                         ->rawColumns(['action','nama_customer','nama_produk','kadar','berat','nominal_beli','keterangan','sales'])
+                        ->make(true);
+                     }
+
+
+
+public function index_data_insentif(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = $module_model::get();
+        $data = $$module_name;
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.aksi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+                           ->editColumn('bulan', function ($data) {
+                                return \Carbon\Carbon::parse($data->created_at)->format('F');
+                              })
+
+                            ->editColumn('kadar', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->karat->name . '
+                                       </div>';
+                                   return $tb;
+                               })
+                            ->editColumn('berat', function ($data) {
+                            $tb = '<div class="font-semibold items-center text-center">
+                                    ' . $data->weight . '
+                                     gram </div>';
+                                return $tb;
+                            })
+                            ->editColumn('nominal_beli', function ($data) {
+                            $tb = '<div class="font-semibold items-center text-center">
+                                    ' . format_uang($data->nominal) . '
+                                    </div>';
+                                return $tb;
+                            })
+
+                         ->addColumn('status', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.status',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+
+                            ->editColumn('cabang', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->cabang->name . '
+                                        </div>';
+                                    return $tb;
+                            })
+
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['action','nama_customer',
+                               'bulan',
+                               'cabang',
+                               'kadar',
+                               'berat',
+                               'status',
+                               'nominal_beli',
+                               'updated_at',
+                               'keterangan',
+                               'cabang'])
                         ->make(true);
                      }
 
