@@ -88,21 +88,37 @@
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
+
+{{-- 
+1.no barang
+2.tanggal 
+3.nama konsumen
+4.cabang
+5.nama produk
+6.kadar
+7.berat
+8.nominal dp
+9.pengambilan jatuh tempo
+10.status
+11.aksi 
+--}}
+
+
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 4%!important;">No</th>
-                                   <th style="width: 13%!important;" class="text-center">{{ __('No Barang DP') }}</th>
-                                   <th style="width: 13%!important;" class="text-center">{{ __('Cabang') }}</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Nama Pemilik') }}</th>
-                                   <th style="width: 10%!important;" class="text-center">{{ __('Kadar') }}</th>
-                                   <th style="width: 9%!important;" class="text-center">{{ __('Berat') }}</th>
-                                   <th style="width: 10%!important;" class="text-center">{{ __('Nominal DP') }}</th>
-                                   <th style="width: 12%!important;" class="text-center">{{ __('Keterangan') }}</th>
-                                    
-                                    <th style="width: 18%!important;" class="text-center">
-                                        {{ __('Action') }}
-                                    </th>
+                                  <th style="width: 4%!important;">No</th>
+<th class="text-center">{{ Label_Case('No Barang') }}</th>
+<th class="text-center">{{ Label_Case('Tanggal') }}</th>
+<th class="text-center">{{ Label_Case('Nama Konsumen') }}</th>
+<th class="text-center">{{ Label_Case('cabang') }}</th>
+<th class="text-center">{{ Label_Case('nama produk') }}</th>
+<th class="text-center">{{ Label_Case('kadar') }}</th>
+<th class="text-center">{{ Label_Case('berat') }}</th>
+<th class="text-center">{{ Label_Case('nominal') }}</th>
+<th class="text-center">{{ Label_Case('pengambilan jatuh tempo') }}</th>
+<th class="text-center">{{ Label_Case('status') }}</th>
+<th style="width: 10%!important;" class="text-center">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -113,6 +129,8 @@
     </div>
 </div>
 @endsection
+
+
 
 <x-library.datatable />
 @push('page_scripts')
@@ -166,8 +184,12 @@
                 {data: 'nama_pemilik', name: 'nama_pemilik'},
                 {data: 'kadar', name: 'kadar'},
                 {data: 'berat', name: 'berat'},
+                {data: 'berat', name: 'berat'},
+                {data: 'berat', name: 'berat'},
+                {data: 'berat', name: 'berat'},
+                {data: 'berat', name: 'berat'},
                 {data: 'nominal_dp', name: 'nominal_dp'},
-                {data: 'keterangan', name: 'keterangan'},
+           
 
                 {
                     data: 'action',
