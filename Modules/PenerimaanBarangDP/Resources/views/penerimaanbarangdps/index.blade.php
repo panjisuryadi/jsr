@@ -13,6 +13,65 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
+
+<div class="px-0 py-1 grid grid-cols-3 gap-4 m-2 mt-0 mb-2 text-center no-underline">
+    
+
+
+
+    <div class="bg-white card-body p-0 d-flex align-items-center border shadow cursor-pointer hover:zoom-1">
+        <div class="bg-gradient-success p-4 mfe-3 rounded-left">
+            <i class="bi bi-badge-8k text-3xl"></i>
+        </div>
+        <div>
+            <div class="text-value font-semibold text-lg text-gray-600">
+              122
+            </div>
+            <div class="text-gray-400 font-weight-bold text-md">
+               Total Karat
+            </div>
+        </div>
+    </div>   
+
+     <div class="bg-white card-body p-0 d-flex align-items-center border shadow cursor-pointer hover:zoom-1">
+        <div class="bg-gradient-info p-4 mfe-3 rounded-left">
+            <i class="bi bi-badge-8k text-3xl"></i>
+        </div>
+        <div>
+            <div class="text-value font-semibold text-lg text-gray-600">
+              122 <small class="text-muted">GRAM</small>
+            </div>
+            <div class="text-gray-400 font-weight-bold text-md">
+               Total Berat
+            </div>
+        </div>
+    </div>
+
+
+     <div class="bg-white card-body p-0 d-flex align-items-center border shadow cursor-pointer hover:zoom-1">
+        <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
+            <i class="bi bi-badge-8k text-3xl"></i>
+        </div>
+        <div>
+            <div class="text-value font-semibold text-lg text-gray-600">
+              <small class="text-muted">Rp</small> 120.000.000
+            </div>
+            <div class="text-gray-400 font-weight-bold text-md">
+               Total Nominal DP
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
