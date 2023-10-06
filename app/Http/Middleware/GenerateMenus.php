@@ -111,7 +111,7 @@ class GenerateMenus
             // Submenu: Customer Sales
             $customers_suppliers->add(
                 '<i class="c-sidebar-nav-icon  bi bi-person-square"></i> 
-                 '.__('Customer Sales').'', [
+                 '.__('Konsumen Sales').'', [
                 'route' => 'customersales.index',
                 'class' => 'nav-item',
             ])

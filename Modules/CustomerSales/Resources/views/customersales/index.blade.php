@@ -9,7 +9,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Customer Sales</li>
+        <li class="breadcrumb-item active">Konsumen Sales</li>
     </ol>
 @endsection
 
@@ -20,12 +20,11 @@
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route('customersales.create') }}" class="btn btn-primary">
-                            Add Customer <i class="bi bi-plus"></i>
+                            {{__('Add')}} Konsumen <i class="bi bi-plus"></i>
                         </a>
 
-                        <hr>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive mt-3">
                             {!! $dataTable->table() !!}
                         </div>
                     </div>

@@ -3,8 +3,8 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('customersales.index') }}">Customers</a></li>
-    <li class="breadcrumb-item active">Add</li>
+    <li class="breadcrumb-item"><a href="{{ route('customersales.index') }}">Konsumen Sales</a></li>
+    <li class="breadcrumb-item active">{{__("Add")}}</li>
 </ol>
 @endsection
 @section('content')
@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 @include('utils.alerts')
                 <div class="form-group">
-                    <button class="btn btn-primary">Create Customer <i class="bi bi-check"></i></button>
+                    <button class="btn btn-primary">{{__('Create')}} Konsumen <i class="bi bi-check"></i></button>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -25,7 +25,7 @@
                             
                             <div class="border-right px-2">
                                 <div class="form-group">
-                                    <label for="customer_name">Customer Name <span class="text-danger">*</span></label>
+                                    <label for="customer_name">{{ __('Konsumen Sales') }} <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="customer_name" required>
                                 </div>
                                 <div class="form-group">
@@ -36,19 +36,19 @@
                             
                             <div class="px-2">
                                 <div class="form-group">
-                                    <label for="customer_phone">Phone</label>
+                                    <label for="customer_phone">Telepon</label>
                                     <input type="text" class="form-control" name="customer_phone" >
                                 </div>
                                 <div class="form-group">
-                                    <label for="city">@lang('city') <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="city" required>
+                                    <label for="market">{{ __('Nama Pasar') }} <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="market" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="country">@lang('country')</label>
+                                    <label for="country">{{ __('Negara') }}</label>
                                     <input type="text" class="form-control" name="country" >
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Address</label>
+                                    <label for="address">{{ __('Alamat') }}</label>
                                     <input type="text" class="form-control" name="address" >
                                 </div>
                             </div>
