@@ -18,12 +18,15 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                              <a href="{{ route(''.$module_name.'.tambah_insentif') }}"
-                                id="Tambah"
+                                id="zxzx"
                                 data-toggle="tooltip"
                                  class="btn bg-green-600 uppercase text-white px-3">
                                  <i class="bi bi-plus"></i>
                                  Tambah Insentif
                             </a>
+
+
+
                         </div>
                         <div id="buttons">
                         </div>
@@ -36,8 +39,7 @@
               <th style="width: 9%!important;">Bulan</th>
               <th style="width: 10%!important;">Cabang</th>
               <th style="width: 10%!important;">Insentif</th>
-              <th style="width: 10%!important;" class="text-center">
-                                        {{ __('Action') }}
+              <th style="width: 10%!important;" class="text-center">{{ __('Action') }}
                                     </th>
                                 </tr>
                             </thead>

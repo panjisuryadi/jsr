@@ -17,17 +17,15 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
+                             <a href="{{ route(''.$module_name.'.tambah_insentif') }}"
+                                
                                 data-toggle="tooltip"
-                                 class="btn btn-outline-secondary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a>
-                          <a href="{{ route(''.$module_name.'.insentif') }}"
-                                data-toggle="tooltip"
-                                 class="btn btn-outline-secondary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Insentif')
-                                </a>
+                                 class="btn bg-green-600 uppercase text-white px-3">
+                                 <i class="bi bi-plus"></i>
+                                 Tambah Insentif
+                            </a>
+
+
 
                         </div>
                         <div id="buttons">
@@ -37,17 +35,11 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 3%!important;">No</th>
-                                    <th style="width: 7%!important;">No Barang Luar</th>
-                                    <th style="width: 10%!important;">Nama Customer</th>
-                                    <th style="width: 9%!important;">Nama Sales</th>
-                                    <th style="width: 10%!important;">Nama Produk</th>
-                                    <th style="width: 7%!important;">Kadar</th>
-                                    <th style="width: 7%!important;">Berat</th>
-                                    <th style="width: 10%!important;">Nominal Beli</th>
-                                    <th style="width: 10%!important;">Keterangan</th>
-                                    <th style="width: 13%!important;" class="text-center">
-                                        {{ __('Action') }}
+              <th style="width: 5%!important;">No</th>
+              <th style="width: 9%!important;">Bulan</th>
+              <th style="width: 10%!important;">Cabang</th>
+              <th style="width: 10%!important;">Insentif</th>
+              <th style="width: 10%!important;" class="text-center">{{ __('Action') }}
                                     </th>
                                 </tr>
                             </thead>
@@ -91,7 +83,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("$module_name.index_data_insentif") }}',
             dom: 'Blfrtip',
             buttons: [
 
@@ -107,14 +99,11 @@
                     }
                 },
 
-                {data: 'no_barang_luar', name:  'no_barang_luar'},
-                {data: 'nama_customer', name:  'nama_customer'},
-                {data: 'sales', name:  'sales'},
-                {data: 'nama_produk', name: 'nama_produk'},
-                {data: 'kadar', name: 'kadar'},
-                {data: 'berat', name: 'berat'},
+                {data: 'bulan', name:  'bulan'},
+                {data: 'cabang', name: 'cabang'},
+                      
                 {data: 'nominal_beli', name: 'nominal_beli'},
-                {data: 'keterangan', name: 'keterangan'},
+           
 
                 {
                     data: 'action',
@@ -131,8 +120,36 @@
 
 
     </script>
-
 <script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+$(document).on('click', '#Tambah, #Edit, #Status', function(e){
+         e.preventDefault();
+        if($(this).attr('id') == 'Tambah')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah Insentif');
+        }
+        if($(this).attr('id') == 'Edit')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
+        }  
 
+        if($(this).attr('id') == 'Status')
+        {
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status {{ Label_case($module_title) }}');
+        }
+
+
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
 </script>
 @endpush

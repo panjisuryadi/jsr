@@ -129,7 +129,7 @@
 </div>
 
 
-<div class="flex flex-row grid grid-cols-2 gap-2"> 
+<div class="flex flex-row grid grid-cols-3 gap-2"> 
 
  <div class="form-group">
         <?php
@@ -175,7 +175,9 @@
         </span>
         @endif
     </div>
-    <div class="form-group">
+    
+
+<div class="form-group">
         <?php
         $field_name = 'berat';
         $field_lable = label_case($field_name);
@@ -200,14 +202,18 @@
     </div>
 
 
-
 </div>
 
 
 
+
+
+<div class="flex flex-row grid grid-cols-3 gap-2"> 
+
+
  <div class="form-group">
         <?php
-        $field_name = 'nominal';
+        $field_name = 'nilai_angkat';
         $field_lable = label_case($field_name);
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -228,7 +234,53 @@
         @endif
     </div>
 
+     <div class="form-group">
+        <?php
+        $field_name = 'nilai_tafsir';
+        $field_lable = label_case($field_name);
+        $field_placeholder = $field_lable;
+        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+        $required = "required";
+        ?>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <input class="form-control"
+        type="number"
+        name="{{ $field_name }}"
+        id="{{ $field_name }}"
+        value="{{old($field_name)}}"
+        placeholder="{{ $field_placeholder }}">
+        @if ($errors->has($field_name))
+        <span class="invalid feedback"role="alert">
+            <small class="text-danger">{{ $errors->first($field_name) }}.</small
+            class="text-danger">
+        </span>
+        @endif
+    </div>
+ <div class="form-group">
+        <?php
+        $field_name = 'selisih';
+        $field_lable = label_case($field_name);
+        $field_placeholder = $field_lable;
+        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+        $required = "required";
+        ?>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger small">&nbsp; Nilai Angkat - Nilai Tafsir</span></label>
+        <input class="form-control"
+        type="number"
+        name="{{ $field_name }}"
+        id="{{ $field_name }}"
+        value="{{old($field_name)}}"
+        placeholder="{{ $field_placeholder }}" readonly>
+        @if ($errors->has($field_name))
+        <span class="invalid feedback"role="alert">
+            <small class="text-danger">{{ $errors->first($field_name) }}.</small
+            class="text-danger">
+        </span>
+        @endif
+    </div>
 
+
+ </div>
 
 
 
