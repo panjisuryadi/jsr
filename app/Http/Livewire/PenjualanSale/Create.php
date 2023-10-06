@@ -124,9 +124,10 @@ class Create extends Component
     public function remove($key)
     {
         $this->resetErrorBag();
+        $this->penjualan_sales['total_jumlah'] -= $this->penjualan_sales_details[$key]['jumlah'];
+        $this->penjualan_sales['total_weight'] -= $this->penjualan_sales_details[$key]['weight'];
         unset($this->penjualan_sales_details[$key]);
         $this->penjualan_sales_details = array_values($this->penjualan_sales_details);
-        $this->calculateTotalBerat();
     }
 
 
@@ -335,12 +336,13 @@ class Create extends Component
     }
 
     public function calculateHarga($key){
-        $this->penjualan_sales_details[$key]['jumlah'] = floatval($this->penjualan_sales_details[$key]['weight']) * $this->penjualan_sales_details[$key]['nominal'];
+        $this->penjualan_sales_details[$key]['jumlah'] = floatval($this->penjualan_sales_details[$key]['weight']) * floatval($this->penjualan_sales_details[$key]['nominal']);
     }
 
     public function handleBeratChanged($key){
         $this->calculateHarga($key);
         $this->calculateTotalBerat();
+        $this->calculateTotalJumlah();
     }
 
     public function handleHargaChanged($key){
