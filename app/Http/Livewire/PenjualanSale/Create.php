@@ -124,10 +124,10 @@ class Create extends Component
     public function remove($key)
     {
         $this->resetErrorBag();
-        $this->penjualan_sales['total_jumlah'] -= floatval($this->penjualan_sales_details[$key]['jumlah']);
-        $this->penjualan_sales['total_weight'] -= floatval($this->penjualan_sales_details[$key]['weight']);
         unset($this->penjualan_sales_details[$key]);
         $this->penjualan_sales_details = array_values($this->penjualan_sales_details);
+        $this->calculateTotalBerat();
+        $this->calculateTotalJumlah();
     }
 
 
@@ -213,11 +213,16 @@ class Create extends Component
         if($this->hasSameHargaType()){
             foreach ($this->penjualan_sales_details as $index => $value) {
                 $this->penjualan_sales['total_jumlah'] += floatval($this->penjualan_sales_details[$index]['jumlah']??0);
-                $this->penjualan_sales['total_jumlah'] = number_format(round($this->penjualan_sales['total_jumlah'], 3), 3, '.', '');
-                $this->penjualan_sales['total_jumlah'] = rtrim($this->penjualan_sales['total_jumlah'], '0');
-                $this->penjualan_sales['total_jumlah'] = formatWeight($this->penjualan_sales['total_jumlah']);
+                $this->penjualan_sales['total_jumlah'] = $this->formatJumlah($this->penjualan_sales['total_jumlah']);
             }
         }
+    }
+
+    public function formatJumlah($item){
+       $item = number_format(round($item, 3), 3, '.', '');
+       $item = rtrim($item, '0');
+       $item = formatWeight($item);
+       return $item;
     }
 
     private function hasSameHargaType(){
@@ -242,10 +247,11 @@ class Create extends Component
             $penjualan_sale = PenjualanSale::create([
                 'sales_id' => $this->penjualan_sales['sales_id'],
                 'date' => $this->penjualan_sales['date'],
-                'store_name' => $this->penjualan_sales['store_name'],
                 'invoice_no' => $this->penjualan_sales['invoice_no'],
                 'total_weight' => $this->penjualan_sales['total_weight'],
                 'total_nominal' => $this->penjualan_sales['total_nominal']??0,
+                'konsumen_sales_id' => $this->penjualan_sales['konsumen_sales_id'],
+                'total_jumlah' => $this->penjualan_sales['total_jumlah'],
                 'created_by' => auth()->user()->name
             ]);
     
@@ -336,7 +342,7 @@ class Create extends Component
     }
 
     public function calculateHarga($key){
-        $this->penjualan_sales_details[$key]['jumlah'] = floatval($this->penjualan_sales_details[$key]['weight']) * floatval($this->penjualan_sales_details[$key]['nominal']);
+        $this->penjualan_sales_details[$key]['jumlah'] = $this->formatJumlah(floatval($this->penjualan_sales_details[$key]['weight']) * floatval($this->penjualan_sales_details[$key]['nominal']));
     }
 
     public function handleBeratChanged($key){
