@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
-                            <table style="width: 100% !important;" class="table table-sm table-striped">
+                            <table style="width: 100% !important;" class="px-3 table table-sm table-striped">
                                 <thead>
                                 <tr>
                                     <th class="align-middle">Product</th>

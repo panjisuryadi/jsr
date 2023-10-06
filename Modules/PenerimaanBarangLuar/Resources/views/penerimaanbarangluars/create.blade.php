@@ -80,9 +80,9 @@
 
 <div class="flex flex-row grid grid-cols-2 gap-2">
 <div class="form-group">
-        <label for="customer_name">Nama Customer <span class="text-danger">*</span></label>
+        <label for="customer_name">Nama Pegawai <span class="text-danger">*</span></label>
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Nama Customer" name="customer_name" required >
+            <input type="text" class="form-control" placeholder="Nama Pegawai" name="customer_name" required >
             @if ($errors->has('customer_name'))
             <span class="invalid feedback" role="alert">
                 <small class="text-danger">{{ $errors->first('customer_name') }}.</small
@@ -113,7 +113,7 @@
 </div>
 
 
-<div class="flex flex-row grid grid-cols-2 gap-2"> 
+<div class="flex flex-row grid grid-cols-3 gap-2"> 
 
  <div class="form-group">
         <?php
@@ -162,10 +162,6 @@
  
 
 
-</div>
-
-
-<div class="flex flex-row grid grid-cols-2 gap-2"> 
 
    <div class="form-group">
         <?php
@@ -192,11 +188,18 @@
     </div>
 
 
+</div>
+
+
+<div class="flex flex-row grid grid-cols-3 gap-2"> 
+
+
+
 
 
  <div class="form-group">
         <?php
-        $field_name = 'nominal';
+        $field_name = 'nilai_angkat';
         $field_lable = label_case($field_name);
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -220,10 +223,65 @@
 
 
 
+ <div class="form-group">
+        <?php
+        $field_name = 'nilai_tafsir';
+        $field_lable = label_case($field_name);
+        $field_placeholder = $field_lable;
+        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+        $required = "required";
+        ?>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <input class="form-control"
+        type="text"
+        name="{{ $field_name }}"
+        id="{{ $field_name }}"
+        type-currency="IDR"
+        value="{{old($field_name)}}"
+        placeholder="{{ $field_placeholder }}">
+        @if ($errors->has($field_name))
+            <span class="invalid feedback"role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+        @endif
+    </div>
+
+
+ <div class="form-group">
+        <?php
+        $field_name = 'selisih';
+        $field_lable = label_case($field_name);
+        $field_placeholder = $field_lable;
+        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+        $required = "required";
+        ?>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <input class="form-control"
+        type="text"
+        name="{{ $field_name }}"
+        id="{{ $field_name }}"
+        type-currency="IDR"
+        value="{{old($field_name)}}"
+        placeholder="{{ $field_placeholder }}">
+        @if ($errors->has($field_name))
+            <span class="invalid feedback"role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                class="text-danger">
+            </span>
+        @endif
+    </div>
 
 </div>
 
     
+
+
+
+
+
+
+
   <div class="form-group">
     <?php
     $field_name = 'note';

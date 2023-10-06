@@ -44,22 +44,42 @@
         <tr>
             <td class="w-50">
                 <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-                Angkatan </label>
+                Nama Pegawai</label>
             </td>
             <td class="w-50">
                 <div class="form-group">
-                  00
+                <select
+                        name="nama_pegawai"
+                   
+                      
+                        class="form-control">
+                        <option value="01">Asep</option>
+                        <option value="02">Wawan</option>
+                
+                    </select>
                 </div>
             </td>
         </tr>
         <tr>
             <td class="w-50">
                 <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-                Hitungan Office </label>
+              Nilai Angkat </label>
             </td>
             <td class="w-50">
                 <div class="form-group">
-                 <p>idsids</p>
+                <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
+                </div>
+            </td>
+        </tr> 
+
+        <tr>
+            <td class="w-50">
+                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+              Nilai Tafsir </label>
+            </td>
+            <td class="w-50">
+                <div class="form-group">
+                  <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
                 </div>
             </td>
         </tr>
@@ -70,7 +90,7 @@
             </td>
             <td class="w-50">
                 <div class="form-group">
-                    Selisih
+                   <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
                 </div>
             </td>
         </tr>
@@ -81,7 +101,7 @@
             </td>
             <td class="w-50">
                 <div class="form-group">
-                    Persentase
+                       <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat">
                 </div>
             </td>
         </tr>
@@ -92,7 +112,7 @@
             </td>
             <td class="w-50">
                 <div class="form-group">
-                    Nilai insentif
+                     <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
                 </div>
             </td>
         </tr>
