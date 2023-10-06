@@ -124,8 +124,8 @@ class Create extends Component
     public function remove($key)
     {
         $this->resetErrorBag();
-        $this->penjualan_sales['total_jumlah'] -= $this->penjualan_sales_details[$key]['jumlah'];
-        $this->penjualan_sales['total_weight'] -= $this->penjualan_sales_details[$key]['weight'];
+        $this->penjualan_sales['total_jumlah'] -= floatval($this->penjualan_sales_details[$key]['jumlah']);
+        $this->penjualan_sales['total_weight'] -= floatval($this->penjualan_sales_details[$key]['weight']);
         unset($this->penjualan_sales_details[$key]);
         $this->penjualan_sales_details = array_values($this->penjualan_sales_details);
     }
