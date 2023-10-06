@@ -13,6 +13,65 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
+
+<div class="px-0 py-1 grid grid-cols-3 gap-4 m-2 mt-0 mb-2 text-center no-underline">
+    
+
+
+
+    <div class="bg-white card-body p-0 d-flex align-items-center border shadow cursor-pointer hover:zoom-1">
+        <div class="bg-gradient-success p-4 mfe-3 rounded-left">
+            <i class="bi bi-badge-8k text-3xl"></i>
+        </div>
+        <div>
+            <div class="text-value font-semibold text-lg text-gray-600">
+              122
+            </div>
+            <div class="text-gray-400 font-weight-bold text-md">
+               Total Karat
+            </div>
+        </div>
+    </div>   
+
+     <div class="bg-white card-body p-0 d-flex align-items-center border shadow cursor-pointer hover:zoom-1">
+        <div class="bg-gradient-info p-4 mfe-3 rounded-left">
+            <i class="bi bi-badge-8k text-3xl"></i>
+        </div>
+        <div>
+            <div class="text-value font-semibold text-lg text-gray-600">
+              122 <small class="text-muted">GRAM</small>
+            </div>
+            <div class="text-gray-400 font-weight-bold text-md">
+               Total Berat
+            </div>
+        </div>
+    </div>
+
+
+     <div class="bg-white card-body p-0 d-flex align-items-center border shadow cursor-pointer hover:zoom-1">
+        <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
+            <i class="bi bi-badge-8k text-3xl"></i>
+        </div>
+        <div>
+            <div class="text-value font-semibold text-lg text-gray-600">
+              <small class="text-muted">Rp</small> 120.000.000
+            </div>
+            <div class="text-gray-400 font-weight-bold text-md">
+               Total Nominal DP
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
@@ -20,7 +79,7 @@
                            <a href="{{ route(''.$module_name.'.create') }}"
                                 id="Tambah"
                                 data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
+                                 class="btn btn-outline-secondary px-3">
                                  <i class="bi bi-plus"></i>@lang('Add')&nbsp;Penerimaan Barang DP
                                 </a>
 
@@ -29,21 +88,37 @@
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
+
+{{-- 
+1.no barang
+2.tanggal 
+3.nama konsumen
+4.cabang
+5.nama produk
+6.kadar
+7.berat
+8.nominal dp
+9.pengambilan jatuh tempo
+10.status
+11.aksi 
+--}}
+
+
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 4%!important;">No</th>
-                                   <th style="width: 13%!important;" class="text-center">{{ __('No Barang DP') }}</th>
-                                   <th style="width: 13%!important;" class="text-center">{{ __('Cabang') }}</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Nama Pemilik') }}</th>
-                                   <th style="width: 10%!important;" class="text-center">{{ __('Kadar') }}</th>
-                                   <th style="width: 9%!important;" class="text-center">{{ __('Berat') }}</th>
-                                   <th style="width: 10%!important;" class="text-center">{{ __('Nominal DP') }}</th>
-                                   <th style="width: 12%!important;" class="text-center">{{ __('Keterangan') }}</th>
-                                    
-                                    <th style="width: 18%!important;" class="text-center">
-                                        {{ __('Action') }}
-                                    </th>
+                                  <th style="width: 4%!important;">No</th>
+<th class="text-center">{{ Label_Case('No Barang') }}</th>
+<th class="text-center">{{ Label_Case('Tanggal') }}</th>
+<th class="text-center">{{ Label_Case('Nama Konsumen') }}</th>
+<th class="text-center">{{ Label_Case('cabang') }}</th>
+<th class="text-center">{{ Label_Case('nama produk') }}</th>
+<th class="text-center">{{ Label_Case('kadar') }}</th>
+<th class="text-center">{{ Label_Case('berat') }}</th>
+<th class="text-center">{{ Label_Case('nominal') }}</th>
+<th class="text-center">{{ Label_Case('pengambilan jatuh tempo') }}</th>
+<th class="text-center">{{ Label_Case('status') }}</th>
+<th style="width: 10%!important;" class="text-center">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -54,6 +129,8 @@
     </div>
 </div>
 @endsection
+
+
 
 <x-library.datatable />
 @push('page_scripts')
@@ -107,8 +184,12 @@
                 {data: 'nama_pemilik', name: 'nama_pemilik'},
                 {data: 'kadar', name: 'kadar'},
                 {data: 'berat', name: 'berat'},
+                {data: 'berat', name: 'berat'},
+                {data: 'berat', name: 'berat'},
+                {data: 'berat', name: 'berat'},
+                {data: 'berat', name: 'berat'},
                 {data: 'nominal_dp', name: 'nominal_dp'},
-                {data: 'keterangan', name: 'keterangan'},
+           
 
                 {
                     data: 'action',

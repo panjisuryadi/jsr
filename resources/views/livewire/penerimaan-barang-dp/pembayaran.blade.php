@@ -1,4 +1,4 @@
-<div class="grid grid-cols-3 gap-3">
+<div class="grid grid-cols-1 gap-3 items-start">
     <div class="form-group">
         <?php
         $field_name = 'nominal_dp';
@@ -7,7 +7,7 @@
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
-        <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <label class="text-left mb-0" for="{{ $field_name }}">{{ $field_lable }}<small class="text-danger">*</small></label>
         <input type="number" name="{{$field_name}}" class="form-control" placeholder="{{$field_placeholder}}">
         @if ($errors->has($field_name))
         <span class="invalid feedback" role="alert">
@@ -23,7 +23,7 @@
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
-        <label for="{{ $field_name }}">Tipe Pembayaran <span class="text-danger">*</span></label>
+        <label class="mb-0" for="{{ $field_name }}">Tipe Pembayaran <span class="text-danger">*</span></label>
         <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
             <option value="" selected disabled>Pilih {{ $field_lable }}</option>
             <option value="cicil">Cicil</option>
@@ -66,7 +66,7 @@
         $field_placeholder = Label_case($field_lable);
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         ?>
-        <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
+        <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
         <input type="date" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" id="{{$field_name}}_input" wire:model="{{ $field_name }}"  placeholder="{{ $field_placeholder }}">
         @if ($errors->has($field_name))
         <span class="invalid feedback" role="alert">

@@ -12,10 +12,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-
+<div class="col-12">
 <div class="px-0 py-1 grid grid-cols-3 gap-4 m-2 mt-0 mb-2 text-center no-underline">
     
     <div class="card-body p-0 d-flex align-items-center border shadow">
@@ -60,24 +57,32 @@
 
 
 
-        
+
+
+
+            <div class="card">
+                <div class="card-body">
+    <div class="flex justify-between py-1 border-bottom">
+          <div>
+                       <p class="uppercase text-lg text-gray-600 font-semibold">
+                      Stok <span class="text-yellow-500 uppercase">OFFICE</span></p>
+                        </div>
+                        <div id="buttons">
+                        </div>
+                    </div>
+    
                     <div class="table-responsive mt-1">
-               {{--          <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+            <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th class="text-lef">{{ __('Name') }}</th>
-
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
-                                    </th>
-                                    <th style="width: 18%!important;" class="text-center">
+                                <th style="width: 6%!important;">No</th>
+                      <th class="text-left">{{ label_case('berat_real') }}</th>
+                      <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
                             </thead>
-                        </table> --}}
+                        </table> 
                     </div>
                 </div>
             </div>
@@ -133,9 +138,9 @@
                     }
                 },
 
-                {data: 'code', name: 'code'},
-                {data: 'name', name: 'name'},
-                {data: 'updated_at', name: 'updated_at'},
+              
+                {data: 'berat_real', name: 'berat_real'},
+             
 
                 {
                     data: 'action',
