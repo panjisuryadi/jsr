@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pos;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
+use LivewireUI\Modal\ModalComponent;
 use Livewire\Component;
 
 class Checkout extends Component
