@@ -23,7 +23,46 @@ class Checkout extends Component
     public $data;
     public $customer_id;
     public $total_amount;
-   
+    public $show = false;
+    public $showPanel = false;
+    public $showTransfer = false;
+    public $showEdc = false;
+    public $loading = false;
+
+    public function togglePanel()
+    {
+        $this->showEdc = false;
+        $this->showTransfer = false;
+        $this->loading = true;
+        sleep(1);
+       
+        $this->showPanel = !$this->showPanel;
+        $this->loading = false;
+    }
+
+  public function btnTransfer()
+    {
+
+        $this->showEdc = false;
+        $this->showPanel = false;
+        $this->loading = true;
+        sleep(1);
+      
+        $this->showTransfer = !$this->showTransfer;
+        $this->loading = false;
+    }  
+
+    public function btnEdc()
+    {
+        $this->showTransfer = false;
+        $this->showPanel = false;
+        $this->loading = true;
+        sleep(1);
+        $this->showEdc = !$this->showEdc;
+        $this->loading = false;
+    }
+
+
 
     public function mount($cartInstance, $customers) {
         $this->cart_instance = $cartInstance;

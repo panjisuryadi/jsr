@@ -146,8 +146,10 @@
 
 
 </div>
+    @include('livewire.pos.includes.payment-modal')
 
     {{--Checkout Modal--}}
-    @include('livewire.pos.includes.checkout-modal')
+
+    {{-- @include('livewire.pos.includes.checkout-modal') --}}
 </div>
 
