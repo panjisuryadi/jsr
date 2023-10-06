@@ -552,7 +552,7 @@ class GenerateMenus
             ]);
 
             // EMAS - STOK - DAFTAR STOK
-            $daftar_stok = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Daftar Stok', [
+            $stock_office = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok Office', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -562,13 +562,13 @@ class GenerateMenus
                     ],
                   'permission' => ['access_stoks'],
             ]);
-            $daftar_stok->link->attr([
+            $stock_office->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
 
             // EMAS - STOK - DAFTAR STOK - STOK SALES
-            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Sales'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Sales'), [
                 'route' => 'stok.sales',
                 'class' => 'nav-item',
             ])
@@ -582,7 +582,7 @@ class GenerateMenus
             ]);
 
           // EMAS - STOK - DAFTAR STOK - STOK OFFICE
-            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Office'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Gudang'), [
                 'route' => 'stok.office',
                 'class' => 'nav-item',
             ])
@@ -596,7 +596,7 @@ class GenerateMenus
             ]);
 
           // EMAS - STOK - DAFTAR STOK - STOK PENDING
-            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
                 'route' => 'stok.pending',
                 'class' => 'nav-item',
             ])
@@ -613,7 +613,7 @@ class GenerateMenus
 
 
           // EMAS - STOK - DAFTAR STOK - STOK DP
-            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock DP'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock DP'), [
                 'route' => 'stok.dp',
                 'class' => 'nav-item',
             ])
@@ -629,7 +629,7 @@ class GenerateMenus
 
 
           // EMAS - STOK - DAFTAR STOK - STOK KROOM
-            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Kroom'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Kroom'), [
                 'route' => 'stok.kroom',
                 'class' => 'nav-item',
             ])
@@ -643,12 +643,12 @@ class GenerateMenus
             ]);
 
         // StokCabangs
-            $daftar_stok->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Cabang'), [
+            $stok->add('<i class="c-sidebar-nav-icon  bi-card-checklist"></i> '.__('Stok Cabang'), [
                 'route' => 'stokcabang.index',
                 'class' => 'nav-item',
             ])
             ->data([
-                'order'         => 5,
+                'order'         => 2,
                 'activematches' => ['stokcabangs*'],
                 'permission'    => ['access_stokcabangs'],
             ])
