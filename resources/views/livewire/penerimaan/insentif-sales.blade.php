@@ -17,17 +17,12 @@
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = "required";
                     ?>
-                    
-                    <select
-                        name="{{ $field_name }}"
-                        id="{{ $field_name }}"
-                        wire:change="pilihBulan($event.target.value)"
-                        class="form-control">
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
+                   <select wire:model="id_sales" wire:change="getDataSales" name="id_sales" class="form-control">
+                        <option value="140">January</option>
+                        <option value="142">February</option>
+                        <option value="143">March</option>
+                        <option value="144">April</option>
+                        <option value="145">May</option>
                         <option value="06">June</option>
                         <option value="07">July</option>
                         <option value="08">August</option>
@@ -44,20 +39,21 @@
         <tr>
             <td class="w-50">
                 <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-                Nama Pegawai</label>
+                Nama Sales</label>
             </td>
             <td class="w-50">
-                <div class="form-group">
-                <select
-                        name="nama_pegawai"
-                   
-                      
-                        class="form-control">
-                        <option value="01">Asep</option>
-                        <option value="02">Wawan</option>
-                
+
+           {{$listsales}}
+
+              <select wire:model="sales_id" name="sales_id" class="form-control">
+                    <option value="" selected>Pilih Sales</option>
+                        @if(!empty($listsales))
+                        @foreach($listsales as $loc)
+                        <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                        @endforeach
+                        @endif
                     </select>
-                </div>
+        
             </td>
         </tr>
         <tr>

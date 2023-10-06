@@ -201,9 +201,9 @@ margin-bottom: 0.5rem !important;
                                     </div>
                                         
                                     <div class="form-group">
-                                        <label for="nama_pemilik">Nama Pemilik <span class="text-danger">*</span></label>
+                                        <label for="nama_pemilik">Nama Konsumen <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <input type="text" id="nama_pemilik" class="form-control" name="nama_pemilik" placeholder="Nama Pemilik">
+                                            <input type="text" id="nama_pemilik" class="form-control" name="nama_pemilik" placeholder="Nama Konsumen">
                                         </div>
                                         @if ($errors->has('nama_pemilik'))
                                             <span class="invalid feedback" role="alert">
