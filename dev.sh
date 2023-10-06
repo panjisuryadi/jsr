@@ -3,6 +3,7 @@ git config --global user.name "n0izestr3am"
 #
 git stash
 git pull origin dev
+sudo chwon ipunk:ipunk -R /cd/var/www/html/hokkie_jsr
 git stash pop
 
 git add .

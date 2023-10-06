@@ -45,7 +45,7 @@
 
            {{$listsales}}
 
-              <select wire:model="sales_id" name="sales_id" class="form-control">
+                  <select wire:model="id_sales" name="id_sales" class="form-control">
                     <option value="" selected>Pilih Sales</option>
                         @if(!empty($listsales))
                         @foreach($listsales as $loc)
