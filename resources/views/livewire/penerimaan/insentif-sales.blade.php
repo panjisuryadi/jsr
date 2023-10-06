@@ -44,12 +44,12 @@
             <td class="w-60">
 
            {{-- {{$listsales}} --}}
-          
 
            <select wire:model="id_sales" name="id_sales" wire:change="getIdSales" class="form-control">
             <div wire:loading wire:target="id_sales">
                     Processing ...
                 </div>
+
                     <option value="" selected>Pilih Sales</option>
                         @if(!empty($listsales))
                         @foreach($listsales as $loc)

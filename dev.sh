@@ -3,9 +3,9 @@ git config --global user.name "n0izestr3am"
 #
 git stash
 git pull origin dev
-sudo chown ipunk:ipunk -R /var/www/html/hokkie_jsr
 
 git stash pop
+sudo chown ipunk:ipunk -R /var/www/html/hokkie_jsr
 
 git add .
 
