@@ -5,10 +5,10 @@
     <tbody>
         <tr>
             
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">Bulan </label>
+            <td class="w-40">
+                <label class="px-1 font-semibold text-md mt-1 uppercase text-gray-500">Bulan </label>
             </td>
-            <td class="w-50">
+            <td class="w-60">
                 <div class="form-group">
                     <?php
                     $field_name = 'bulan';
@@ -37,15 +37,16 @@
             
         </tr>
         <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+            <td class="w-40">
+                <label class="px-1 font-semibold text-md mt-1 uppercase text-gray-500">
                 Nama Sales</label>
             </td>
-            <td class="w-50">
+            <td class="w-60">
 
-           {{$listsales}}
+           {{-- {{$listsales}} --}}
+          
 
-                  <select wire:model="id_sales" name="id_sales" class="form-control">
+           <select wire:model="id_sales" name="id_sales" wire:change="getIdSales" class="form-control">
                     <option value="" selected>Pilih Sales</option>
                         @if(!empty($listsales))
                         @foreach($listsales as $loc)
@@ -53,60 +54,61 @@
                         @endforeach
                         @endif
                     </select>
+
         
             </td>
         </tr>
         <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+            <td class="w-40">
+                <label class="px-1 font-semibold text-md mt-1 uppercase text-gray-500">
               Nilai Angkat </label>
             </td>
-            <td class="w-50">
+            <td class="w-60">
                 <div class="form-group">
-                <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
+                <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" value="{{@$detailsales->target}}" readonly>
                 </div>
             </td>
         </tr> 
 
         <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+            <td class="w-40">
+                <label class="px-1 font-semibold text-md mt-1 uppercase text-gray-500">
               Nilai Tafsir </label>
             </td>
-            <td class="w-50">
+            <td class="w-60">
                 <div class="form-group">
                   <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
                 </div>
             </td>
         </tr>
         <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+            <td class="w-40">
+                <label class="px-1 font-semibold text-md mt-1 uppercase text-gray-500">
                 Selisih </label>
             </td>
-            <td class="w-50">
+            <td class="w-60">
                 <div class="form-group">
                    <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
                 </div>
             </td>
         </tr>
         <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+            <td class="w-40">
+                <label class="px-1 font-semibold text-md mt-1 uppercase text-gray-500">
                 Persentase </label>
             </td>
-            <td class="w-50">
+            <td class="w-60">
                 <div class="form-group">
                        <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat">
                 </div>
             </td>
         </tr>
         <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+            <td class="w-40">
+                <label class="px-1 font-semibold text-md mt-1 uppercase text-gray-500">
                 Nilai insentif </label>
             </td>
-            <td class="w-50">
+            <td class="w-60">
                 <div class="form-group">
                      <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
                 </div>

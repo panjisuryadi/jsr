@@ -20,6 +20,7 @@ class InsentifSales extends Component
 
    public $datasales;
    public $listsales;
+   public $detailsales;
    public $id_sales = 0;
    public $data_sales = 0;
    public $selectedBulan = NULL;
@@ -36,22 +37,19 @@ class InsentifSales extends Component
     }
 
 
-    public function newSelectedBulan($bulan)
+    public function getIdSales()
     {
 
-        if (!is_null($bulan)) {
-             //dd($bulan);
-            $this->datasales = DataSale::where('id', $bulan)->get();
+        if (!is_null($this->id_sales)) {
+            $this->detailsales = DataSale::where('id', $this->id_sales)->first();
         }
     } 
 
- public function getDataSales(){
+     public function getDataSales(){
           $this->listsales = DataSale::orderby('name','asc')
                           ->select('*')
                           ->where('id',$this->id_sales)
                           ->get();
-
-          // Reset value
           $this->data_sales = 0;
      }
 
