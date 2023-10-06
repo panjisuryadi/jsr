@@ -24,7 +24,8 @@ class Create extends Component
         'tipe_pembayaran' => '',
         'cicil' => '',
         'tgl_jatuh_tempo' => '',
-        'konsumen_sales_id' => ''
+        'konsumen_sales_id' => '',
+        'total_jumlah' => 0
     ];
 
     public $penjualan_sales_details = [
@@ -35,8 +36,7 @@ class Create extends Component
             'nominal' => 0,
             'sub_karat_choice' => [],
             'harga_type' => '1',
-            'konversi_harga' => '',
-            'total_harga' => ''
+            'jumlah' => 0
         ]
     ];
 
@@ -46,7 +46,7 @@ class Create extends Component
 
     protected $listeners = [
         'beratChanged' => 'handleBeratChanged',
-        'hargaTypeChanged' => 'handleHargaTypeChanged'
+        'hargaChanged' => 'handleHargaChanged'
     ];
 
     public $hari_ini;
@@ -60,8 +60,7 @@ class Create extends Component
             'nominal' => 0,
             'sub_karat_choice' => [],
             'harga_type' => '1',
-            'konversi_harga' => '',
-            'total_harga' => ''
+            'jumlah' => 0,
         ];
     }
 
@@ -72,7 +71,8 @@ class Create extends Component
             'invoice_no' => '',
             'store_name' => '',
             'total_weight' => 0,
-            'total_nominal' => 0
+            'total_nominal' => 0,
+            'total_jumlah' => 0
         ];
     }
     private function resetPenjualanSalesDetails(){
@@ -84,8 +84,7 @@ class Create extends Component
                 'nominal' => 0,
                 'sub_karat_choice' => [],
                 'harga_type' => '1',
-                'konversi_harga' => '',
-                'total_harga' => ''
+                'jumlah' => 0
             ]
         ];
     }
@@ -97,7 +96,7 @@ class Create extends Component
 
     private function resetTotal(){
         $this->penjualan_sales['total_weight'] = 0;
-        $this->penjualan_sales['total_nominal'] = 0;
+        $this->penjualan_sales['total_jumlah'] = 0;
     }
 
     public function render()
@@ -199,12 +198,23 @@ class Create extends Component
     public function calculateTotalNominal()
     {
         $this->penjualan_sales['total_nominal'] = 0;
+        foreach ($this->penjualan_sales_details as $index => $value) {
+            $this->penjualan_sales['total_nominal'] += floatval($this->penjualan_sales_details[$index]['nominal']??0);
+            $this->penjualan_sales['total_nominal'] = number_format(round($this->penjualan_sales['total_nominal'], 3), 3, '.', '');
+            $this->penjualan_sales['total_nominal'] = rtrim($this->penjualan_sales['total_nominal'], '0');
+            $this->penjualan_sales['total_nominal'] = formatWeight($this->penjualan_sales['total_nominal']);
+        }
+    }
+
+    public function calculateTotalJumlah()
+    {
+        $this->penjualan_sales['total_jumlah'] = 0;
         if($this->hasSameHargaType()){
             foreach ($this->penjualan_sales_details as $index => $value) {
-                $this->penjualan_sales['total_nominal'] += floatval($this->penjualan_sales_details[$index]['nominal']??0);
-                $this->penjualan_sales['total_nominal'] = number_format(round($this->penjualan_sales['total_nominal'], 3), 3, '.', '');
-                $this->penjualan_sales['total_nominal'] = rtrim($this->penjualan_sales['total_nominal'], '0');
-                $this->penjualan_sales['total_nominal'] = formatWeight($this->penjualan_sales['total_nominal']);
+                $this->penjualan_sales['total_jumlah'] += floatval($this->penjualan_sales_details[$index]['jumlah']??0);
+                $this->penjualan_sales['total_jumlah'] = number_format(round($this->penjualan_sales['total_jumlah'], 3), 3, '.', '');
+                $this->penjualan_sales['total_jumlah'] = rtrim($this->penjualan_sales['total_jumlah'], '0');
+                $this->penjualan_sales['total_jumlah'] = formatWeight($this->penjualan_sales['total_jumlah']);
             }
         }
     }
@@ -320,24 +330,21 @@ class Create extends Component
 
     public function clearHarga($key){
         $this->penjualan_sales_details[$key]['nominal'] = 0;
-        $this->calculateTotalNominal($key);
+        $this->calculateHarga($key);
+        $this->calculateTotalJumlah();
     }
 
     public function calculateHarga($key){
-        if($this->penjualan_sales_details[$key]['harga_type'] == '1'){
-            $this->penjualan_sales_details[$key]['konversi_harga'] = floatval($this->penjualan_sales_details[$key]['weight']) * $this->penjualan_sales_details[$key]['nominal'];
-        }else{
-            $this->penjualan_sales_details[$key]['total_harga'] = floatval($this->penjualan_sales_details[$key]['weight']) * $this->penjualan_sales_details[$key]['nominal'];
-        }
+        $this->penjualan_sales_details[$key]['jumlah'] = floatval($this->penjualan_sales_details[$key]['weight']) * $this->penjualan_sales_details[$key]['nominal'];
     }
 
     public function handleBeratChanged($key){
-        $this->calculateTotalBerat();
         $this->calculateHarga($key);
+        $this->calculateTotalBerat();
     }
 
-    public function handleHargaTypeChanged($key){
-        $this->calculateTotalNominal();
+    public function handleHargaChanged($key){
         $this->calculateHarga($key);
+        $this->calculateTotalJumlah();
     }
 }
