@@ -45,8 +45,8 @@ class Create extends Component
     public $konsumenSales = [];
 
     protected $listeners = [
-        'beratChanged' => 'calculateTotalBerat',
-        'hargaTypeChanged' => 'calculateTotalNominal'
+        'beratChanged' => 'handleBeratChanged',
+        'hargaTypeChanged' => 'handleHargaTypeChanged'
     ];
 
     public $hari_ini;
@@ -185,7 +185,7 @@ class Create extends Component
         return $rules;
     }
 
-    public function calculateTotalBerat($key)
+    public function calculateTotalBerat()
     {
         $this->penjualan_sales['total_weight'] = 0;
         foreach ($this->penjualan_sales_details as $index => $value) {
@@ -194,10 +194,9 @@ class Create extends Component
             $this->penjualan_sales['total_weight'] = rtrim($this->penjualan_sales['total_weight'], '0');
             $this->penjualan_sales['total_weight'] = formatWeight($this->penjualan_sales['total_weight']);
         }
-        $this->calculateHarga($key);
     }
 
-    public function calculateTotalNominal($key)
+    public function calculateTotalNominal()
     {
         $this->penjualan_sales['total_nominal'] = 0;
         if($this->hasSameHargaType()){
@@ -208,7 +207,6 @@ class Create extends Component
                 $this->penjualan_sales['total_nominal'] = formatWeight($this->penjualan_sales['total_nominal']);
             }
         }
-        $this->calculateHarga($key);
     }
 
     private function hasSameHargaType(){
@@ -281,6 +279,7 @@ class Create extends Component
         })->get();
         
         $this->resetPenjualanSalesDetails();
+        $this->resetTotal();
         $this->resetDataSubKarat();
     }
 
@@ -330,5 +329,15 @@ class Create extends Component
         }else{
             $this->penjualan_sales_details[$key]['total_harga'] = floatval($this->penjualan_sales_details[$key]['weight']) * $this->penjualan_sales_details[$key]['nominal'];
         }
+    }
+
+    public function handleBeratChanged($key){
+        $this->calculateTotalBerat();
+        $this->calculateHarga($key);
+    }
+
+    public function handleHargaTypeChanged($key){
+        $this->calculateTotalNominal();
+        $this->calculateHarga($key);
     }
 }
