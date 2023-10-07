@@ -568,7 +568,7 @@ class GenerateMenus
             ]);
 
             // EMAS - STOK - DAFTAR STOK - STOK SALES
-            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Sales'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Sales'), [
                 'route' => 'stok.sales',
                 'class' => 'nav-item',
             ])
@@ -582,7 +582,7 @@ class GenerateMenus
             ]);
 
             // EMAS - STOK CABANG - STOK PENDING
-            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Pending'), [
                 'route' => 'stok.pending_office',
                 'class' => 'nav-item',
             ])
@@ -596,7 +596,7 @@ class GenerateMenus
             ]);
 
           // EMAS - STOK - DAFTAR STOK - STOK OFFICE
-            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Gudang'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Gudang'), [
                 'route' => 'stok.office',
                 'class' => 'nav-item',
             ])
@@ -615,7 +615,7 @@ class GenerateMenus
 
 
           // EMAS - STOK - DAFTAR STOK - STOK DP
-            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock DP'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok DP'), [
                 'route' => 'stok.dp',
                 'class' => 'nav-item',
             ])
@@ -631,7 +631,7 @@ class GenerateMenus
 
 
           // EMAS - STOK - DAFTAR STOK - STOK KROOM
-            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Kroom'), [
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Kroom'), [
                 'route' => 'stok.kroom',
                 'class' => 'nav-item',
             ])
@@ -660,7 +660,7 @@ class GenerateMenus
             
 
             // EMAS - STOK CABANG - STOK PENDING
-            $stock_cabang->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
+            $stock_cabang->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Pending'), [
                 'route' => 'stok.pending',
                 'class' => 'nav-item',
             ])
@@ -763,9 +763,9 @@ class GenerateMenus
             // ]);
 
 
-            // EMAS - STOK - STOK OPNAME - Stocks
+            // EMAS - STOK - STOK OPNAME - Stoks
             // $adjustments->add('
-            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Stocks').'',
+            //     <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>'.__('Stoks').'',
             //      [
             //     'route' => 'stocks.index',
             //     'class' => 'nav-item',
@@ -779,10 +779,10 @@ class GenerateMenus
             //     'class' => 'c-sidebar-nav-link py-2 pb-2',
             // ]);
 
-            // EMAS - STOK - STOK OPNAME - Stock Transfer
+            // EMAS - STOK - STOK OPNAME - Stok Transfer
             // $adjustments->add('
             //     <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
-            //     '.__('Stock Transfer').'',
+            //     '.__('Stok Transfer').'',
             //      [
             //     'route' => 'stocktransfer.index',
             //     'class' => 'nav-item',

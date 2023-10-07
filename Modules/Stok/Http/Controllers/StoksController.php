@@ -69,7 +69,7 @@ class StoksController extends Controller
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        $module_action = 'Office';
+        $module_action = 'Gudang';
         abort_if(Gate::denies('access_'.$module_name.''), 403);
          return view(''.$module_name.'::'.$module_path.'.index_office',
            compact('module_name',

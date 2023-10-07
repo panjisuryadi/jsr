@@ -6,7 +6,8 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">{{$module_title}}</li>
+    <li class="breadcrumb-item">Stok Office</li>
+    <li class="breadcrumb-item active">{{$module_title}} {{ $module_action }}</li>
 </ol>
 @endsection
 @section('content')
@@ -18,7 +19,7 @@
                     <div class="flex justify-between py-1 border-bottom">
                      <div>
                        <p class="uppercase text-lg text-gray-600 font-semibold">
-                      Stok <span class="text-yellow-500 uppercase">OFFICE</span></p>
+                      Stok <span class="text-yellow-500 uppercase">{{ $module_action }}</span></p>
                         </div>
                         <div id="buttons">
                         </div>
