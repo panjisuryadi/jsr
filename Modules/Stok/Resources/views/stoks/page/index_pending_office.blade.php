@@ -6,7 +6,6 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item">Stok Cabang</li>
     <li class="breadcrumb-item active">{{$module_title}} {{ $module_action }}</li>
 </ol>
 @endsection
@@ -33,7 +32,6 @@
                                 <tr>
                                 <th style="width: 6%!important;">No</th>
                                 <th class="text-left">{{ Label_Case('Karat') }}</th>
-                                <th class="text-left">{{ Label_Case('Cabang') }}</th>
                                 <th class="text-left">{{ Label_Case('weight') }}</th>
                                 <th style="width: 16%!important;" class="text-left">{{ Label_Case('Status') }}</th>
                    
@@ -80,7 +78,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data_pending") }}',
+            ajax: '{{ route("$module_name.index_data_pending_office") }}',
             dom: 'Blfrtip',
             buttons: [
                 'excel',
@@ -96,7 +94,6 @@
                 },
 
                 {data: 'karat', name: 'karat'},
-                {data: 'cabang', name: 'cabang'},
                 {data: 'weight', name: 'weight'},
               
                 {

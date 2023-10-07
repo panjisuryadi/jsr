@@ -581,6 +581,20 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+            // EMAS - STOK CABANG - STOK PENDING
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
+                'route' => 'stok.pending_office',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
           // EMAS - STOK - DAFTAR STOK - STOK OFFICE
             $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Gudang'), [
                 'route' => 'stok.office',
@@ -595,19 +609,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-          // EMAS - STOK - DAFTAR STOK - STOK PENDING
-            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
-                'route' => 'stok.pending',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 4,
-                'activematches' => ['stoks*'],
-                'permission'    => ['access_stoks'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+          
 
 
 
@@ -642,20 +644,34 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-        // StokCabangs
-            $stok->add('<i class="c-sidebar-nav-icon  bi-card-checklist"></i> '.__('Stok Cabang'), [
-                'route' => 'stokcabang.index',
-                'class' => 'nav-item',
+            // EMAS - Stok Cabang
+            $stock_cabang = $stok->add('<i class="c-sidebar-nav-icon  bi-card-checklist"></i> '.__('Stok Cabang'), [
+                'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
                 'order'         => 2,
                 'activematches' => ['stokcabangs*'],
                 'permission'    => ['access_stokcabangs'],
+            ]);
+            $stock_cabang->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+            
+
+            // EMAS - STOK CABANG - STOK PENDING
+            $stock_cabang->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stock Pending'), [
+                'route' => 'stok.pending',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
-
 
     
 

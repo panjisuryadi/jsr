@@ -32,6 +32,7 @@ class StoksController extends Controller
         $this->module_model = "Modules\Stok\Models\StockSales";
         $this->module_office = "Modules\Stok\Models\StockOffice";
         $this->module_pending = "Modules\Stok\Models\StockPending";
+        $this->module_pending_office = "Modules\Stok\Models\StockPendingOffice";
         $this->module_sales = "Modules\Stok\Models\StockSales";
         $this->module_kroom = "Modules\Stok\Models\StockKroom";
         $this->module_dp = "Modules\Stok\Models\StokDp";
@@ -94,6 +95,22 @@ class StoksController extends Controller
             'module_title',
             'module_icon', 'module_model'));
     }
+
+public function pending_office() {
+    $module_title = $this->module_title;
+    $module_name = $this->module_name;
+    $module_path = $this->module_path;
+    $module_icon = $this->module_icon;
+    $module_model = $this->module_model;
+    $module_name_singular = Str::singular($module_name);
+    $module_action = 'Pending Gudang';
+    abort_if(Gate::denies('access_'.$module_name.''), 403);
+        return view(''.$module_name.'::'.$module_path.'.page.index_pending_office',
+        compact('module_name',
+        'module_action',
+        'module_title',
+        'module_icon', 'module_model'));
+}
 
 
  public function sales() {
@@ -340,7 +357,7 @@ public function index_data_sales(Request $request)
 
 
 
-public function index_data_pending(Request $request)
+public function index_data_pending_office(Request $request)
 
     {
         $module_title = $this->module_title;
@@ -349,11 +366,12 @@ public function index_data_pending(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_pending = $this->module_pending;
+        $module_pending_office = $this->module_pending_office;
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
 
-        $$module_name = $module_pending::get();
+        $$module_name = $module_pending_office::get();
 
         $data = $$module_name;
 
@@ -373,14 +391,6 @@ public function index_data_pending(Request $request)
                                     return $tb;
                                 })  
 
-                          ->editColumn('cabang', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                   ' .@$data->cabang->name  . '</h3>
-                                    </div>';
-                                return $tb;
-                            }) 
-                           
                             ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
@@ -389,24 +399,82 @@ public function index_data_pending(Request $request)
                                 return $tb;
                             }) 
 
-                             ->editColumn('type', function ($data) {
-                              $tb = '<div class="items-center text-center">
-                                    <p class="text-sm font-medium text-gray-800">
-                                     ' .$data->type . '</p>
-                                    </div>';
-                                return $tb;
-                            })
-                        
                         ->rawColumns([
                                    'updated_at', 
                                    'karat',
-                                   'cabang', 
-                                   'status', 
                                    'action', 
-                                   'type', 
-                                   'weight'])
-                               ->make(true);
+                                   'weight'
+                        ])
+                        ->make(true);
                      }
+
+public function index_data_pending(Request $request)
+
+{
+    $module_title = $this->module_title;
+    $module_name = $this->module_name;
+    $module_path = $this->module_path;
+    $module_icon = $this->module_icon;
+    $module_model = $this->module_model;
+    $module_pending = $this->module_pending;
+    $module_name_singular = Str::singular($module_name);
+
+    $module_action = 'List';
+
+    $$module_name = $module_pending::get();
+
+    $data = $$module_name;
+
+    return Datatables::of($$module_name)
+                    ->addColumn('action', function ($data) {
+                        $module_name = $this->module_name;
+                        $module_model = $this->module_model;
+                        $module_path = $this->module_path;
+                        return view(''.$module_name.'::'.$module_path.'.aksi',
+                        compact('module_name', 'data', 'module_model'));
+                            })
+                        ->editColumn('karat', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+
+                    ->editColumn('cabang', function ($data) {
+                        $tb = '<div class="items-center text-center">
+                                <h3 class="text-sm font-medium text-gray-800">
+                            ' .@$data->cabang->name  . '</h3>
+                                </div>';
+                            return $tb;
+                        }) 
+                    
+                        ->editColumn('weight', function ($data) {
+                        $tb = '<div class="items-center text-center">
+                                <h3 class="text-sm font-medium text-gray-800">
+                                ' .$data->weight . '</h3>
+                                </div>';
+                            return $tb;
+                        }) 
+
+                        ->editColumn('type', function ($data) {
+                        $tb = '<div class="items-center text-center">
+                                <p class="text-sm font-medium text-gray-800">
+                                ' .$data->type . '</p>
+                                </div>';
+                            return $tb;
+                        })
+                    
+                    ->rawColumns([
+                            'updated_at', 
+                            'karat',
+                            'cabang', 
+                            'status', 
+                            'action', 
+                            'type', 
+                            'weight'])
+                        ->make(true);
+                }
 
 
 
