@@ -35,7 +35,7 @@ class Create extends Component
             'weight' => '',
             'nominal' => 0,
             'sub_karat_choice' => [],
-            'harga_type' => '1',
+            'harga_type' => 'persen',
             'jumlah' => 0
         ]
     ];
@@ -59,7 +59,7 @@ class Create extends Component
             'weight' => '',
             'nominal' => 0,
             'sub_karat_choice' => [],
-            'harga_type' => '1',
+            'harga_type' => 'persen',
             'jumlah' => 0,
         ];
     }
@@ -83,7 +83,7 @@ class Create extends Component
                 'weight' => '',
                 'nominal' => 0,
                 'sub_karat_choice' => [],
-                'harga_type' => '1',
+                'harga_type' => 'persen',
                 'jumlah' => 0
             ]
         ];
@@ -230,7 +230,7 @@ class Create extends Component
             return $item['harga_type'];
         }, $this->penjualan_sales_details);
 
-        return !(in_array('1', $harga_type_values) && in_array('2', $harga_type_values));
+        return !(in_array('persen', $harga_type_values) && in_array('nominal', $harga_type_values));
     }
 
     public function updated($propertyName)
@@ -249,7 +249,6 @@ class Create extends Component
                 'date' => $this->penjualan_sales['date'],
                 'invoice_no' => $this->penjualan_sales['invoice_no'],
                 'total_weight' => $this->penjualan_sales['total_weight'],
-                'total_nominal' => $this->penjualan_sales['total_nominal']??0,
                 'konsumen_sales_id' => $this->penjualan_sales['konsumen_sales_id'],
                 'total_jumlah' => $this->penjualan_sales['total_jumlah'],
                 'created_by' => auth()->user()->name
@@ -267,7 +266,9 @@ class Create extends Component
                     'karat_id' => $this->penjualan_sales_details[$key]['sub_karat_id'],
                     'weight' => $this->penjualan_sales_details[$key]['weight'],
                     'nominal' => $this->penjualan_sales_details[$key]['nominal']??0,
-                    'created_by' => auth()->user()->name
+                    'created_by' => auth()->user()->name,
+                    'harga_type' => $this->penjualan_sales_details[$key]['harga_type'],
+                    'jumlah' => $this->penjualan_sales_details[$key]['jumlah']
                 ]);
                 event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail,$penjualan_sale_payment));
             }

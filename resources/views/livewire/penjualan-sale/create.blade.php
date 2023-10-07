@@ -210,10 +210,10 @@
                             {{ $field_lable }}</label>
 
                         <span class="ml-2">
-                            <input type="radio" wire:model="penjualan_sales_details.{{$key}}.harga_type" value="1" wire:change="clearHarga({{$key}})">
+                            <input type="radio" wire:model="penjualan_sales_details.{{$key}}.harga_type" value="persen" wire:change="clearHarga({{$key}})">
                             <label class="text-black mb-0">%</label>
     
-                            <input type="radio" wire:model="penjualan_sales_details.{{$key}}.harga_type" value="2" wire:change="clearHarga({{$key}})">
+                            <input type="radio" wire:model="penjualan_sales_details.{{$key}}.harga_type" value="nominal" wire:change="clearHarga({{$key}})">
                             <label class="text-black mb-0">Rp.</label>
                         </span>
                         <input wire:change="$emit('hargaChanged', {{ $key }})" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model.debounce.1s="{{ $field_name }}">
@@ -228,7 +228,7 @@
                     <div class="form-group">
                         <?php
                         $field_name = 'penjualan_sales_details.' . $key . '.jumlah';
-                        if ($penjualan_sales_details[$key]['harga_type'] == '1'){
+                        if ($penjualan_sales_details[$key]['harga_type'] == 'persen'){
                             $field_lable = __('Konversi 24K');
                         }else{
                             $field_lable = __('Total Harga');
