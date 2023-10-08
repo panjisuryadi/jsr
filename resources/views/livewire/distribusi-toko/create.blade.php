@@ -187,9 +187,9 @@
                                                         ?>
                                                         <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                                         <div class="input-group">
-                                                            <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}">
+                                                            <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}" readonly>
                                                             <span class="input-group-btn">
-                                                                <button class="btn btn-info relative rounded-l-none" id="generate-code">Chek</button>
+                                                                <button class="btn btn-info relative rounded-l-none" wire:click.prevent="generateCode({{$key}})">Chek</button>
                                                             </span>
                                                         </div>
                                                         @if ($errors->has($field_name))

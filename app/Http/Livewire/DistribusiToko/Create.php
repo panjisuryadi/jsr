@@ -4,8 +4,10 @@ namespace App\Http\Livewire\DistribusiToko;
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Entities\Category;
+use Modules\Product\Entities\Product;
 
 class Create extends Component
 {
@@ -217,5 +219,24 @@ class Create extends Component
             $this->distribusi_toko_details[$key]['total_weight'] += floatval($this->distribusi_toko_details[$key]['accessoris_weight']);
             $this->distribusi_toko_details[$key]['total_weight'] += floatval($this->distribusi_toko_details[$key]['label_weight']);
         }
+    }
+
+    public function generateCode($key){
+        $this->checkGroup($key);
+        $namagroup = Group::where('id', $this->distribusi_toko_details[$key]['group'])->first()->code;
+        $existingCode = true;
+        $codeNumber = '';
+        $cabang = 'CBR';
+        while ($existingCode) {
+               $date = now()->format('dmY');
+               $randomNumber = mt_rand(100, 999);
+               $codeNumber = $cabang .'-'. $namagroup .'-'. $randomNumber .'-'. $date;
+               $existingCode = Product::where('product_code', $codeNumber)->exists();
+        }
+        $this->distribusi_toko_details[$key]['code'] = $codeNumber;
+    }
+
+    private function checkGroup($key){
+        $this->validateOnly('distribusi_toko_details.'.$key.'.group');
     }
 }
