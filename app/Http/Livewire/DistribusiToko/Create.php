@@ -39,9 +39,23 @@ class Create extends Component
             'code' => '',
             'file' => '',
             'certificate_id' => '',
-            'no_certificate' => ''
+            'no_certificate' => '',
+            'webcam_image' => ''
         ]
     ];
+
+    protected $listeners = [
+        'webcamCaptured' => 'handleWebcamCaptured',
+        'webcamReset' => 'handleWebcamReset'
+    ];
+
+    public function handleWebcamCaptured($key,$data_uri){
+        $this->distribusi_toko_details[$key]['webcam_image'] = $data_uri;
+    }
+
+    public function handleWebcamReset($key){
+        $this->distribusi_toko_details[$key]['webcam_image'] = '';
+    }
 
 
     public function add()
@@ -60,7 +74,8 @@ class Create extends Component
             'code' => '',
             'file' => '',
             'certificate_id' => '',
-            'no_certificate' => ''
+            'no_certificate' => '',
+            'webcam_image' => ''
         ];
     }
 
@@ -87,7 +102,8 @@ class Create extends Component
                 'code' => '',
                 'file' => '',
                 'certificate_id' => '',
-                'no_certificate' => ''
+                'no_certificate' => '',
+                'webcam_image' => ''
             ]
         ];
     }
@@ -135,6 +151,7 @@ class Create extends Component
                 'required',
                 'gt:0',
             ];
+            $rules['distribusi_toko_details.'.$key.'.webcam_image'] = 'required';
 
         }
         return $rules;

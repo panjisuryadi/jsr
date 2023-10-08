@@ -97,109 +97,111 @@
                                             </button>
                                         </div>
                                         @endif
-                                        <div class="grid grid-cols-5 gap-2">
+                                        <div class="grid grid-cols-3 gap-5">
+                                            <div class="col-span-2">
 
-                                            <div class="form-group">
-                                                <?php
-                                                $field_name = 'distribusi_toko_details.' . $key . '.product_category';
-                                                $field_lable = label_case('kategori produk');
-                                                $field_placeholder = $field_lable;
-                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                $required = "required";
-                                                ?>
-                                                <label for="{{ $field_name }}">Product Category</label>
-                                                <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="clearKaratAndTotal({{$key}})">
-                                                <option value="">All Products</option>
-                                                    @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has($field_name))
-                                                    <span class="invalid feedback"role="alert">
-                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                                        class="text-danger">
-                                                    </span>
-                                                @endif
-    
-                                            </div>
-    
-                                            <div class="form-group">
-                                                <?php
-                                                $field_name = 'distribusi_toko_details.' . $key . '.group';
-                                                $field_lable = label_case('group');
-                                                $field_placeholder = $field_lable;
-                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                $required = "required";
-                                                ?>
-                                                <label for="{{ $field_name }}">@lang($field_lable)
-                                                    <span class="text-danger">*</span>
-                                                    <span class="small">Jenis Perhiasan</span>
-                                                </label>
-                                                <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
-                                                    <option value="" selected disabled>Pilih {{ $field_lable }}</option>
-                                                    @foreach(\Modules\Group\Models\Group::all() as $jp)
-                                                    <option value="{{ $jp->id }}">{{ $jp->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has($field_name))
-                                                <span class="invalid feedback"role="alert">
-                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                                    class="text-danger">
-                                                </span>
-                                                @endif
-
-                                            </div> 
-    
-                                            <div class="form-group">
-                                                <?php
-                                                $field_name = 'distribusi_toko_details.' . $key . '.model';
-                                                $field_lable = label_case('model');
-                                                $field_placeholder = $field_lable;
-                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                $required = "required";
-                                                ?>
-                                                <label for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
-                                                    <option value="" selected disabled>Pilih Model</option>
-                                                    @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
-                                                    <option value="{{$sup->id}}">
-                                                        {{$sup->name}}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
-                                                    @if ($errors->has($field_name))
-                                                    <span class="invalid feedback"role="alert">
-                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                                        class="text-danger">
-                                                    </span>
-                                                    @endif
-                                            </div>
-    
-                                            <div class="form-group">
-                                                <?php
-                                                $field_name = 'distribusi_toko_details.' . $key . '.code';
-                                                $field_lable = label_case('code');
-                                                $field_placeholder = $field_lable;
-                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                $required = "required";
-                                                ?>
-                                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                                <div class="input-group">
-                                                    <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-info relative rounded-l-none" id="generate-code">Chek</button>
-                                                    </span>
+                                                <div class="grid grid-cols-3 gap-2">
+                                                    <div class="form-group">
+                                                        <?php
+                                                        $field_name = 'distribusi_toko_details.' . $key . '.product_category';
+                                                        $field_lable = label_case('kategori produk');
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = "required";
+                                                        ?>
+                                                        <label for="{{ $field_name }}">Product Category</label>
+                                                        <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="clearKaratAndTotal({{$key}})">
+                                                        <option value="">All Products</option>
+                                                            @foreach($categories as $category)
+                                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has($field_name))
+                                                            <span class="invalid feedback"role="alert">
+                                                                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                                class="text-danger">
+                                                            </span>
+                                                        @endif
+            
+                                                    </div>
+            
+                                                    <div class="form-group">
+                                                        <?php
+                                                        $field_name = 'distribusi_toko_details.' . $key . '.group';
+                                                        $field_lable = label_case('group');
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = "required";
+                                                        ?>
+                                                        <label for="{{ $field_name }}">@lang($field_lable)
+                                                            <span class="text-danger">*</span>
+                                                            <span class="small">Jenis Perhiasan</span>
+                                                        </label>
+                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                                            <option value="" selected disabled>Pilih {{ $field_lable }}</option>
+                                                            @foreach(\Modules\Group\Models\Group::all() as $jp)
+                                                            <option value="{{ $jp->id }}">{{ $jp->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has($field_name))
+                                                        <span class="invalid feedback"role="alert">
+                                                            <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                            class="text-danger">
+                                                        </span>
+                                                        @endif
+        
+                                                    </div> 
+            
+                                                    <div class="form-group">
+                                                        <?php
+                                                        $field_name = 'distribusi_toko_details.' . $key . '.model';
+                                                        $field_lable = label_case('model');
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = "required";
+                                                        ?>
+                                                        <label for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                                            <option value="" selected disabled>Pilih Model</option>
+                                                            @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
+                                                            <option value="{{$sup->id}}">
+                                                                {{$sup->name}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                            @if ($errors->has($field_name))
+                                                            <span class="invalid feedback"role="alert">
+                                                                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                                class="text-danger">
+                                                            </span>
+                                                            @endif
+                                                    </div>
+            
+                                                    <div class="form-group">
+                                                        <?php
+                                                        $field_name = 'distribusi_toko_details.' . $key . '.code';
+                                                        $field_lable = label_case('code');
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = "required";
+                                                        ?>
+                                                        <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                                        <div class="input-group">
+                                                            <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-info relative rounded-l-none" id="generate-code">Chek</button>
+                                                            </span>
+                                                        </div>
+                                                        @if ($errors->has($field_name))
+                                                        <span class="invalid feedback"role="alert">
+                                                            <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                            class="text-danger">
+                                                        </span>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                                @if ($errors->has($field_name))
-                                                <span class="invalid feedback"role="alert">
-                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                                    class="text-danger">
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
 
-                                        @if($distribusi_toko_details[$key]['product_category'] == '4')
+                                                @if($distribusi_toko_details[$key]['product_category'] == '4')
                                         <div class="grid grid-cols-2 gap-2">
                                             <div class="form-group">
                                                 <?php
@@ -460,6 +462,34 @@
                                         </div>
                                         {{-- END BERAT --}}
                                         @endif
+
+                                            </div>
+
+
+
+                                            <div class="form-group">
+                                                <?php
+                                                $field_name = 'distribusi_toko_details.' . $key . '.webcam_image';
+                                                $field_lable = label_case('webcam upload');
+                                                $field_placeholder = $field_lable;
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = "required";
+                                                ?>
+                                                
+
+                                                @livewire('webcam', ['key' => $key], key('cam-'.$key))
+                                                @if ($errors->has($field_name))
+                                                <span class="invalid feedback"role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                    class="text-danger">
+                                                </span>
+                                                @endif
+                                                
+                                            </div>
+
+                                        </div>
+
+                                        
                                         
                                         
                                         
@@ -509,3 +539,23 @@
                             </div>
 
                     </form>
+
+@push('page_scripts')
+
+<script type="text/javascript">
+    jQuery.noConflict();
+    (function($) {
+        $(document).ready(function() {
+            $('.numeric').keypress(function(e) {
+                var verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
+                if (verified) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+    })(jQuery);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+
+@endpush
