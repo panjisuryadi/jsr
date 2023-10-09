@@ -2,6 +2,7 @@
 
 namespace Modules\DataSale\Providers;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Finder\Finder;
@@ -36,6 +37,11 @@ class DataSaleServiceProvider extends ServiceProvider
 
         // register commands
         $this->registerCommands('\Modules\DataSale\Console\Commands');
+
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('nolate:datasales')->everyFiveMinutes();
+        });
     }
 
     /**

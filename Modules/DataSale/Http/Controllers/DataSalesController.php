@@ -67,8 +67,6 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $this->fetch();
-
         $$module_name = $module_model::get();
 
         $data = $$module_name;
