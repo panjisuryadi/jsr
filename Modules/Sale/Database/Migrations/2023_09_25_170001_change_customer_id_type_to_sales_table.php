@@ -13,12 +13,14 @@ class ChangeCustomerIdTypeToSalesTable extends Migration
      */
     public function up()
     {
+        if (app()->environment() !== 'testing') {
         Schema::table('sales', function (Blueprint $table) {
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');          
             $table->foreign('customer_id')->references('id')->on('customers');
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');   
             
              });
+        }
     }
 
     /**

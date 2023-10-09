@@ -26,10 +26,10 @@ class DatabaseSeeder extends Seeder
         app()['cache']->forget('spatie.permission.cache');
         $this->call(KategoriProdukDatabaseSeeder::class);
         $this->call(CategoriesDatabaseSeeder::class);
-        $this->call(ProductDatabaseSeeder::class);
+        // $this->call(ProductDatabaseSeeder::class);
         $this->call(PermissionsTableSeeder::class);
         $this->call(SuperUserSeeder::class);
-        $this->call(CurrencyDatabaseSeeder::class);
+        // $this->call(CurrencyDatabaseSeeder::class);
         $this->call(SettingDatabaseSeeder::class);
         $this->call(PeopleDatabaseSeeder::class);
         $this->call(LocationsDatabaseSeeder::class);

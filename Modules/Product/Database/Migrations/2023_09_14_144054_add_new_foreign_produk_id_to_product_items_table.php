@@ -13,17 +13,19 @@ class AddNewForeignProdukIdToProductItemsTable extends Migration
      */
     public function up()
     {
-        Schema::table('product_items', function (Blueprint $table) {
-          DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-          
-         $table->foreign('product_id')->references('id')
-                  ->on('products')->onDelete('cascade');
-
-
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');   
-
-        });
+        if (app()->environment() !== 'testing') {
+            Schema::table('product_items', function (Blueprint $table) {
+              DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    
+              
+             $table->foreign('product_id')->references('id')
+                      ->on('products')->onDelete('cascade');
+    
+    
+                DB::statement('SET FOREIGN_KEY_CHECKS=0;');   
+    
+            });
+        }
     }
 
     /**
