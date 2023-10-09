@@ -25,7 +25,8 @@ jobs:
           git pull
           composer update
           php artisan migrate
-            sudo chmod 777 -R storage
+          php artisan schedule:run >> /dev/null 2>&1
+          sudo chmod 777 -R storage
           sudo chmod 777 -R bootstrap/cache
           sudo composer clear-all
 
