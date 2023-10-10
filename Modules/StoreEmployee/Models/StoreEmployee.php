@@ -5,6 +5,8 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Cabang\Models\Cabang;
+
 //use Modules\JenisGroup\Models\JenisGroup;
 class StoreEmployee extends Model
 {
@@ -32,6 +34,10 @@ class StoreEmployee extends Model
     protected static function newFactory()
     {
         return \Modules\StoreEmployee\database\factories\StoreEmployeeFactory::new();
+    }
+
+    public function cabang(){
+        return $this->belongsTo(Cabang::class);
     }
 
 

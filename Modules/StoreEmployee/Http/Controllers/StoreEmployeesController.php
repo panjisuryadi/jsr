@@ -81,10 +81,10 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
-                            ->editColumn('name', function ($data) {
+                            ->editColumn('cabang', function ($data) {
                                 $tb = '<div class="items-center text-center">
                                        <h3 class="text-sm font-medium text-gray-800">
-                                        ' .$data->cabang . '</h3>
+                                        ' .$data->cabang->name . '</h3>
                                        </div>';
                                    return $tb;
                                })
@@ -98,7 +98,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['updated_at', 'action', 'name','cabang'])
                         ->make(true);
                      }
 
