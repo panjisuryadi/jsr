@@ -205,48 +205,35 @@
             
                  if(paid_amount>=total_amount){
                       $("#grand_total").val(total);
-                      $("#kembalian").val(total).maskMoney({
-                        prefix:'{{ settings()->currency->symbol }}',
-                        thousands:'{{ settings()->currency->thousand_separator }}',
-                        decimal:'{{ settings()->currency->decimal_separator }}',
-                        allowZero: true,
-                        precision: 0,
-                        });
+                     
                     }else{
                       $("#grand_total").val(total);
-                      $("#kembalian").val(total).maskMoney({
+                     
+                    }
+
+                
+            });
+
+        });
+
+
+
+
+   $(document).ready(function() {
+    $("#discount").on('keyup', function() {
+        let inputValue = $(this).val();
+        let harga = $("#total_amount").val();
+        var diskon = inputValue.replace(/[^\d]/g, '');
+        var harga2 = harga.replace(/[^\d]/g, '');
+        var hasil_diskon = harga2 - diskon;
+        var kembalian =  $("#kembalian").val(hasil_diskon).maskMoney({
                         prefix:'{{ settings()->currency->symbol }}',
                         thousands:'{{ settings()->currency->thousand_separator }}',
                         decimal:'{{ settings()->currency->decimal_separator }}',
                         allowZero: true,
                         precision: 0,
                           });
-                    }
-
-                
-            });
-
-            $('#discount').keyup(function() {
-                var diskon = $("#discount").maskMoney('unmasked')[0];
-               // var diskon = $('#discount').unmask().val();
-              
-                  console.log(diskon);
-                
-             });
-
-
-        });
-
-
-function unformatRupiah(formattedValue) {
-            return formattedValue.replace(/[^\d]/g, '');
-        }
-
-   $(document).ready(function() {
-    $("#discount").on('keyup', function() {
-        let inputValue = $(this).val();
-        var unformattedValue = inputValue.replace(/[^\d]/g, '');
-        console.log(unformattedValue);
+        console.log(hasil_diskon);
       });
      });     
 
