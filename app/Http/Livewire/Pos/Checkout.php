@@ -9,6 +9,7 @@ use Livewire\Component;
 class Checkout extends Component
 {
 
+
     public $listeners = ['productSelected',  'discountModalRefresh'];
 
     public $cart_instance;
@@ -23,8 +24,9 @@ class Checkout extends Component
     public $data;
     public $customer_id;
     public $total_amount;
+    public $paid_amount;
     public $show = false;
-    public $showPanel = false;
+    public $showPanel = true;
     public $showTransfer = false;
     public $showEdc = false;
     public $loading = false;
@@ -35,7 +37,6 @@ class Checkout extends Component
         $this->showTransfer = false;
         $this->loading = true;
         sleep(1);
-       
         $this->showPanel = !$this->showPanel;
         $this->loading = false;
     }
@@ -75,7 +76,8 @@ class Checkout extends Component
         $this->discount_type = [];
         $this->item_discount = [];
         $this->cart = [];
-        $this->total_amount = 0;
+        $this->total_amount;
+        $this->paid_amount;
         $this->grand_total = 0;
     }
 
