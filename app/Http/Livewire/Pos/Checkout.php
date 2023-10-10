@@ -4,10 +4,14 @@ namespace App\Http\Livewire\Pos;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use LivewireUI\Modal\ModalComponent;
+use Modules\Sale\Entities\Sale;
+use Modules\Sale\Entities\SaleDetails;
+use Modules\Sale\Entities\SalePayment;
 use Livewire\Component;
 
 class Checkout extends Component
 {
+
 
     public $listeners = ['productSelected',  'discountModalRefresh'];
 
@@ -23,11 +27,93 @@ class Checkout extends Component
     public $data;
     public $customer_id;
     public $total_amount;
+
+    public $discount;
+    public $paid_amount = 0;
+    public $diskon = 0;
+    public $bayar = 0;
+    public $kembali = 0;
+    public $total = 0;
+    public $keterangan = 0;
+
+
+
+    public $sub_total = 0;
+    public $sub_total_hidden = 0;
+    public $discountAmount = 0;
+    public $grand_total;
     public $show = false;
-    public $showPanel = false;
+    public $showTunai = true;
     public $showTransfer = false;
     public $showEdc = false;
     public $loading = false;
+
+
+ protected function rules()
+            {
+               return [
+                     'total_amount' => 'required|max:191',
+                     'keterangan' => 'required|max:191',
+                     'grand_total' => 'required|max:191',
+                 
+
+                ];
+             }
+
+
+ public function totalbayar()
+       {
+        //$this->resetInput();
+        if ($this->paid_amount == 0  && $this->sub_total == 0) {
+                $this->sub_total = $this->total_amount;
+        }
+       $subtotal = preg_replace("/[^0-9]/", "", $this->total_amount);
+       $hitung_bayar = preg_replace("/[^0-9]/", "", $this->paid_amount);
+       $kembalian = (int)$hitung_bayar - (int)$subtotal;
+       $this->kembali = 'Rp ' . number_format($kembalian, 0, ',', '.');
+
+       $this->grand_total = 'Rp ' . number_format($this->total_amount, 0, ',', '.');
+
+        
+
+    }
+
+
+   
+
+ public function recalculateTotal()
+       {
+        if ($this->total_amount == 0 
+            && $this->diskon == 0) {
+            $this->total = 0;
+        }
+
+       $hitung_bayar = preg_replace("/[^0-9]/", "", $this->total_amount);
+       $hitung_diskon =preg_replace("/[^0-9]/", "", $this->diskon);
+       $total = (int)$hitung_bayar - (int)$hitung_diskon;
+      
+     
+      if ($hitung_diskon > $hitung_bayar) {
+          session()->flash('pesan', 'Diskon melebihi jumlah yang dibayar.');
+          $this->diskon = 0;
+          $this->sub_total = $this->total_amount;
+          $this->sub_total_hidden = $hitung_bayar;
+
+        } else{
+      
+         $this->sub_total = 'Rp ' . number_format($total, 0, ',', '.');
+         $this->grand_total = 'Rp ' . number_format($total, 0, ',', '.');
+         $this->total =$total;
+         $this->sub_total_hidden = $total;
+        
+
+        }
+       // dd($hitung_bayar);
+        
+
+    }
+
+
 
     public function togglePanel()
     {
@@ -35,8 +121,7 @@ class Checkout extends Component
         $this->showTransfer = false;
         $this->loading = true;
         sleep(1);
-       
-        $this->showPanel = !$this->showPanel;
+        $this->showTunai = !$this->showTunai;
         $this->loading = false;
     }
 
@@ -44,7 +129,7 @@ class Checkout extends Component
     {
 
         $this->showEdc = false;
-        $this->showPanel = false;
+        $this->showTunai = false;
         $this->loading = true;
         sleep(1);
       
@@ -55,7 +140,7 @@ class Checkout extends Component
     public function btnEdc()
     {
         $this->showTransfer = false;
-        $this->showPanel = false;
+        $this->showTunai = false;
         $this->loading = true;
         sleep(1);
         $this->showEdc = !$this->showEdc;
@@ -75,25 +160,32 @@ class Checkout extends Component
         $this->discount_type = [];
         $this->item_discount = [];
         $this->cart = [];
-        $this->total_amount = 0;
-        $this->grand_total = 0;
+        $this->total_amount;
+       
+        
     }
 
     public function hydrate() {
-        $this->total_amount = $this->calculateTotal();
-        $this->updatedCustomerId();
+        //$this->total_amount = $this->calculateTotal();
+        //$this->updatedCustomerId();
     }
 
-       public function hitung()
-       {
-          //dd('sdsdsds');
-       }
-    public function render() {
-        $cart_items = Cart::instance($this->cart_instance)->content();
-        return view('livewire.pos.checkout', [
-            'cart_items' => $cart_items
-        ]);
-    }
+
+        public function convertRupiah()
+            {
+            $this->paid_amount = 'Rp ' . number_format($this->paid_amount, 0, ',', '.');
+            }
+
+
+
+        public function render() {
+            $cart_items = Cart::instance($this->cart_instance)->content();
+            return view('livewire.pos.checkout', [
+                'cart_items' => $cart_items
+            ]);
+        }
+
+
 
     public function proceed() {
         if ($this->customer_id != null) {
@@ -143,7 +235,6 @@ class Checkout extends Component
             session()->flash('message', 'Penentuan Harga '.$product['product_item'][0]['karat']['name'].' Belum di setting!');
             return;
         } 
-
  
         if ($exists->isNotEmpty()) {
             session()->flash('message', 'Product exists in the cart!');
@@ -179,6 +270,8 @@ class Checkout extends Component
         $this->total_amount = $this->calculateTotal();
         //$this->emit('cartModal', $product);
     }
+
+
 
     public function removeItem($row_id) {
         Cart::instance($this->cart_instance)->remove($row_id);
@@ -294,4 +387,31 @@ class Checkout extends Component
             'product_discount_type' => $this->discount_type[$product_id],
         ]]);
     }
+
+  
+
+
+
+ public function store()
+       {
+
+        $input= $this->validate();
+        $input['grand_total'] = preg_replace("/[^0-9]/", "", $this->grand_total);
+        $input['diskon'] = preg_replace("/[^0-9]/", "", $this->diskon);
+        $input['paid_amount'] = preg_replace("/[^0-9]/", "", $this->paid_amount);
+        $input['kembali'] = preg_replace("/[^0-9]/", "", $this->kembali);
+           dd($input);
+
+
+
+      
+       }
+
+
+
+
+
+
+
+
 }
