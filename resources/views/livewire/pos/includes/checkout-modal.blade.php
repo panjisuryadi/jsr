@@ -69,7 +69,9 @@
 <div class="form-group">
     <label for="note">Grand Total</label>
     {{-- <span id="final" class="text-black text-4xl"></span> --}}
-    <input id="final" type="text" class="form-control text-black text-2xl" name="final" readonly>  
+    <input id="finalTotal" type="text" class="form-control text-black text-2xl" name="final" readonly>  
+
+
     <input id="final_unmask" type="hidden" class="form-control" name="final_unmask" readonly>
 </div>
 
@@ -193,15 +195,12 @@
     $(document).ready(function () {
            $('#paid_amount').keyup(function() {
                var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
+               var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
                var total_amount = $("#total_amount").maskMoney('unmasked')[0];
                var discount = $("#discount").maskMoney('unmasked')[0];
-
-               console.log(total_amount);
-                // if (isNaN(total_amount) || isNaN(paid_amount) || isNaN(discount)) {
-                //     alert("Harga dan Jumlah harus diisi dengan angka.");
-                //     return;
-                // }
-
+               // console.log(paid_amount);
+                var bayar =  $("#bayar").text(paid_amount);
+                console.log(bayar);
                 var total = paid_amount - total_amount;
             
                  if(paid_amount>=total_amount){
@@ -221,7 +220,7 @@
                         decimal:'{{ settings()->currency->decimal_separator }}',
                         allowZero: true,
                         precision: 0,
-                });
+                          });
                     }
 
                 
@@ -229,19 +228,27 @@
 
             $('#discount').keyup(function() {
                 var diskon = $("#discount").maskMoney('unmasked')[0];
-                var grand_total = $("#grand_total").maskMoney('unmasked')[0];
-                console.log(diskon);
-                 // var total = bayar - harga;
-                  var grandTotal = grand_total - diskon;
-                  $("#final_unmask").val(grandTotal);
-                  $("#final").val(grandTotal).maskMoney('mask');
+               // var diskon = $('#discount').unmask().val();
+              
+                  console.log(diskon);
                 
              });
 
 
         });
 
-        
+
+function unformatRupiah(formattedValue) {
+            return formattedValue.replace(/[^\d]/g, '');
+        }
+
+   $(document).ready(function() {
+    $("#discount").on('keyup', function() {
+        let inputValue = $(this).val();
+        var unformattedValue = inputValue.replace(/[^\d]/g, '');
+        console.log(unformattedValue);
+      });
+     });     
 
 
     </script>
