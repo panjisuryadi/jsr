@@ -63,8 +63,8 @@
 
 <div class="form-group">
     <label for="grand_total">Kembali <span class="text-danger">*</span></label>
-    <span class="text-red-800 text-2xl" id="kembalian"></span>
-    <input id="grand_total" type="text" class="form-control" name="grand_total" readonly>
+   
+    <input id="kembalian" type="text" class="form-control" name="kembalian" disabled>
 </div>
 <div class="form-group">
     <label for="note">Grand Total</label>
@@ -206,10 +206,22 @@
             
                  if(paid_amount>=total_amount){
                       $("#grand_total").val(total);
-                      $("#kembalian").html(total).maskMoney('mask');
+                      $("#kembalian").val(total).maskMoney({
+                        prefix:'{{ settings()->currency->symbol }}',
+                        thousands:'{{ settings()->currency->thousand_separator }}',
+                        decimal:'{{ settings()->currency->decimal_separator }}',
+                        allowZero: true,
+                        precision: 0,
+                        });
                     }else{
                       $("#grand_total").val(total);
-                      $("#kembalian").html(total).maskMoney('mask');
+                      $("#kembalian").val(total).maskMoney({
+                        prefix:'{{ settings()->currency->symbol }}',
+                        thousands:'{{ settings()->currency->thousand_separator }}',
+                        decimal:'{{ settings()->currency->decimal_separator }}',
+                        allowZero: true,
+                        precision: 0,
+                });
                     }
 
                 

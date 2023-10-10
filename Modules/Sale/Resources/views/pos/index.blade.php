@@ -96,10 +96,10 @@
                     precision: 0,
                 });
 
-                $('#paid_amount').maskMoney('mask');
+               // $('#paid_amount').maskMoney('mask');
                 $('#total_amount').maskMoney('mask');
                 $('#grand_total').maskMoney('mask');
-                $('#discount').maskMoney('mask');
+                //$('#discount').maskMoney('mask');
                 $('#final').maskMoney('mask');
 
                 $('#checkout-form').submit(function () {
