@@ -72,5 +72,6 @@
     "PenerimaanBarangLuarSale": true,
     "StokCabang": true,
     "Status": true,
-    "KeluarMasuk": true
+    "KeluarMasuk": true,
+    "StoreEmployee": true
 }

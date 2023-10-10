@@ -1,23 +1,23 @@
 <?php
 
-namespace Modules\DataSale\Providers;
+namespace Modules\StoreEmployee\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Finder\Finder;
 
-class DataSaleServiceProvider extends ServiceProvider
+class StoreEmployeeServiceProvider extends ServiceProvider
 {
     /**
      * @var string
      */
-    protected $moduleName = 'DataSale';
+    protected $moduleName = 'StoreEmployee';
 
     /**
      * @var string
      */
-    protected $moduleNameLower = 'datasale';
+    protected $moduleNameLower = 'storeemployee';
 
     /**
      * Boot the application events.
@@ -29,18 +29,18 @@ class DataSaleServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->loadMigrationsFrom(base_path('Modules/DataSale/database/migrations'));
+        $this->loadMigrationsFrom(base_path('Modules/StoreEmployee/database/migrations'));
 
         // adding global middleware
         $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
-        $kernel->pushMiddleware('Modules\DataSale\Http\Middleware\GenerateMenus');
+        $kernel->pushMiddleware('Modules\StoreEmployee\Http\Middleware\GenerateMenus');
 
         // register commands
-        $this->registerCommands('\Modules\DataSale\Console\Commands');
+        $this->registerCommands('\Modules\StoreEmployee\Console\Commands');
 
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
-            $schedule->command('nolate:datasales')->everyMinute();
+            $schedule->command('nolate:employee')->everyMinute();
         });
     }
 
@@ -62,10 +62,10 @@ class DataSaleServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            base_path('Modules/DataSale/Config/config.php') => config_path($this->moduleNameLower.'.php'),
+            base_path('Modules/StoreEmployee/Config/config.php') => config_path($this->moduleNameLower.'.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            base_path('Modules/DataSale/Config/config.php'), $this->moduleNameLower
+            base_path('Modules/StoreEmployee/Config/config.php'), $this->moduleNameLower
         );
     }
 
@@ -78,7 +78,7 @@ class DataSaleServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
 
-        $sourcePath = base_path('Modules/DataSale/Resources/views');
+        $sourcePath = base_path('Modules/StoreEmployee/Resources/views');
 
         $this->publishes([
             $sourcePath => $viewPath,
@@ -94,7 +94,7 @@ class DataSaleServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'datasale');
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'storeemployee');
     }
 
     /**

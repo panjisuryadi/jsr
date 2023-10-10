@@ -2,6 +2,7 @@
 
 namespace Modules\Cabang\Providers;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Finder\Finder;
@@ -36,6 +37,10 @@ class CabangServiceProvider extends ServiceProvider
 
         // register commands
         $this->registerCommands('\Modules\Cabang\Console\Commands');
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('nolate:cabang')->everyMinute();
+        });
     }
 
     /**

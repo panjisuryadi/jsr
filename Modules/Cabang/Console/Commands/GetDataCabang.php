@@ -1,28 +1,28 @@
 <?php
 
-namespace Modules\DataSale\Console\Commands;
+namespace Modules\Cabang\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
-use Modules\DataSale\Models\DataSale;
+use Modules\Cabang\Models\Cabang;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class GetDataSales extends Command
+class GetDataCabang extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'nolate:datasales';
+    protected $signature = 'nolate:cabang';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Get Data Sales from Nolate API';
+    protected $description = 'Get Data Cabang from Nolate API';
 
     /**
      * Create a new command instance.
@@ -41,29 +41,27 @@ class GetDataSales extends Command
      */
     public function handle()
     {
-        $token = config('datasale.sales_api.token');
-        $baseUrl = config('datasale.sales_api.base_url');
+        $token = config('cabang.cabang_api.token');
+        $baseUrl = config('cabang.cabang_api.base_url');
     
-        $response = Http::withHeaders(['token' => $token])->get($baseUrl.'/api/sales');
+        $response = Http::withHeaders(['token' => $token])->get($baseUrl.'/api/departments',['ids'=>[2,3]]);
     
         if($response->successful()) {
-            $sales_list = $response->json();
+            $cabang_list = $response->json();
     
-            if(isset($sales_list['data']) && is_array($sales_list['data'])) {
-                foreach($sales_list['data'] as $sales){
-                    DataSale::updateOrCreate(
-                        ['id' => $sales['id']], 
+            if(isset($cabang_list['data']) && is_array($cabang_list['data'])) {
+                foreach($cabang_list['data'] as $cabang){
+                    Cabang::updateOrCreate(
+                        ['id' => $cabang['id']], 
                         [
-                            'name' => $sales['first_name'] . ' ' . $sales['last_name'], 
-                            'address' => $sales['address'], 
-                            'phone' => $sales['contact_no'], 
-                            'created_at' => $sales['created_at'], 
-                            'updated_at' => $sales['updated_at']
+                            'name' => $cabang['department_name'], 
+                            'created_at' => $cabang['created_at'], 
+                            'updated_at' => $cabang['updated_at']
                         ]
                     );
                 }
             }
-        } 
+        }
     }
 
     /**

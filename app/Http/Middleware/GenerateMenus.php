@@ -213,6 +213,19 @@ class GenerateMenus
             ]);
 
 
+            $pegawai_toko = $toko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Pegawai Toko'), [
+                'route' => 'storeemployee.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['storeemployees*'],
+                'permission'    => ['access_storeemployees'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
             // EMAS - TOKO - PENENTUAN HARGA
             $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
      '.__('Penentuan Harga'), [
@@ -220,7 +233,7 @@ class GenerateMenus
                 'class' => 'nav-item',
             ])
             ->data([
-                'order'         => 1,
+                'order'         => 2,
                 'activematches' => ['penentuanhargas*'],
                 'permission'    => ['access_penentuanhargas'],
             ])
@@ -233,7 +246,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
-                'order'         => 1,
+                'order'         => 3,
                 'activematches' => [
                     'penentuanhargas*',
 
@@ -312,7 +325,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
-                'order'         => 2,
+                'order'         => 4,
                 'activematches' => [
                     'datasales*',
                     'distribusitokos*',
