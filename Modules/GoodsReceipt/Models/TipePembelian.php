@@ -18,4 +18,8 @@ class TipePembelian extends Model
         return $this->belongsTo(GoodsReceipt::class);
     }
 
+    public function isCicil(){
+        return $this->tipe_pembayaran == 'cicil';
+    }
+
 }

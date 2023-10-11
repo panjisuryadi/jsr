@@ -16,6 +16,9 @@ use Modules\GoodsReceipt\Http\Controllers\GoodsReceiptsController;
 use Modules\Karat\Models\Karat;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\People\Entities\Supplier;
+use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
+
+use function PHPUnit\Framework\isEmpty;
 
 class Penerimaan extends Component
 {
@@ -27,6 +30,7 @@ class Penerimaan extends Component
         $tipe_pembayaran = '',
         $tanggal,
         $cicil = '',
+        $detail_cicilan = [],
         $tgl_jatuh_tempo,
         $berat_timbangan,
         $selisih,
@@ -141,7 +145,7 @@ class Penerimaan extends Component
             'berat_timbangan' => 'required|numeric|gt:0',
             'selisih' => 'numeric',
             'pengirim' => 'required',
-            'pic_id' => 'required'
+            'pic_id' => 'required',
         ];
 
         foreach ($this->inputs as $key => $value) {
@@ -149,6 +153,12 @@ class Penerimaan extends Component
             $rules['inputs.' . $key . '.kategori_id'] = 'required';
             $rules['inputs.' . $key . '.berat_real'] = 'required|gt:0';
             $rules['inputs.' . $key . '.berat_kotor'] = 'required|gt:0';
+        }
+
+        if($this->cicil != ''){
+            for($i=1;$i<=$this->cicil;$i++){
+                $rules['detail_cicilan.' . $i] = 'required_if:tipe_pembayaran,cicil';
+            }
         }
         return $rules;
     }
@@ -182,6 +192,7 @@ class Penerimaan extends Component
             'total_berat_real' => $this->total_berat_real,
             'total_berat_kotor' => $this->total_berat_kotor,
             'items' => $this->inputs,
+            'detail_cicilan' => $this->detail_cicilan
         ];
 
         $request = new Request($data);
@@ -223,5 +234,20 @@ class Penerimaan extends Component
         $this->document = array_filter($this->document, function($file) use ($fileName){
             return $file != $fileName;
         });
+    }
+
+    public function getMinCicilDate($key){
+        if(in_array($key-1,array_keys($this->detail_cicilan))){
+            $minCicilDate = new DateTime($this->detail_cicilan[$key-1]);
+            return $minCicilDate->modify("+1 day")->format("Y-m-d");
+        }else{
+            return $this->hari_ini;
+        }
+    }
+
+    public function resetDetailCicilanAfterwards($key){
+        for ($i=$key+1; $i <= count($this->detail_cicilan) ; $i++) { 
+            $this->detail_cicilan[$i] = "";
+        }
     }
 }

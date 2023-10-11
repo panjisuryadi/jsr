@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\GoodsReceipt\Events\GoodsReceiptItemCreated;
+use Modules\GoodsReceipt\Models\GoodsReceiptInstallment;
 use PDF;
 use Modules\Upload\Entities\Upload;
 use Modules\Product\Entities\Category;
@@ -544,13 +545,23 @@ public function store(Request $request)
 
     private function _saveTipePembelian($input ,$goodsreceipt)
         {
-        TipePembelian::create([
+        $tipe_pembayaran = TipePembelian::create([
         'goodsreceipt_id'             => $goodsreceipt,
         'tipe_pembayaran'             => $input['tipe_pembayaran'] ?? null,
         'jatuh_tempo'                 => $input['tgl_jatuh_tempo'] ?? null,
         'cicil'                       => $input['cicil'] ?? 0,
         'lunas'                       => $input['lunas'] ?? null,
         ]);
+
+        if($tipe_pembayaran->isCicil()){
+            foreach($input['detail_cicilan'] as $key => $value){
+                GoodsReceiptInstallment::create([
+                    'payment_id' => $tipe_pembayaran->id,
+                    'nomor_cicilan' => $key,
+                    'tanggal_cicilan' => $input['detail_cicilan'][$key]
+                ]);
+            }
+        }
     
       }
 
