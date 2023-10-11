@@ -39,7 +39,10 @@
 <div class="px-1">
 <div class="form-group mt-0">
     <label for="total_amount">Total <span class="text-danger">*</span></label>
-    <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" readonly required>
+    <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" disabled required>
+    <input type="hidden" id="harga" value="{{ $total_amount }}">
+
+
 </div>
 
 <div class="form-group">
@@ -49,7 +52,8 @@
 
 <div class="form-group">
     <label for="discount">Discount  <span class="small text-danger">(Nominal)</span></label>
-    <input id="discount" type="text" class="form-control" name="discount" required>
+    <input  id="discount" type="text" class="form-control" name="discount" required>
+    <input type="hidden" id="diskon2">
 </div>
 
 
@@ -67,9 +71,9 @@
     <input id="kembalian" type="text" class="form-control" name="kembalian" disabled>
 </div>
 <div class="form-group">
-    <label for="note">Grand Total</label>
+    <label for="note">Grand Total</label> <span class="text-danger small" id="message"></span>
     {{-- <span id="final" class="text-black text-4xl"></span> --}}
-    <input id="finalTotal" type="text" class="form-control text-black text-2xl" name="final" readonly>  
+    <input id="final" type="text" class="form-control text-black text-2xl" name="final" value="{{ $total_amount }}" disabled>  
 
 
     <input id="final_unmask" type="hidden" class="form-control" name="final_unmask" readonly>
@@ -192,50 +196,70 @@
 @push('page_scripts')
 
 <script>
-    $(document).ready(function () {
-           $('#paid_amount').keyup(function() {
-               var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
-               var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
-               var total_amount = $("#total_amount").maskMoney('unmasked')[0];
-               var discount = $("#discount").maskMoney('unmasked')[0];
-               // console.log(paid_amount);
-                var bayar =  $("#bayar").text(paid_amount);
-                console.log(bayar);
-                var total = paid_amount - total_amount;
-            
-                 if(paid_amount>=total_amount){
-                      $("#grand_total").val(total);
-                     
-                    }else{
-                      $("#grand_total").val(total);
-                     
-                    }
 
-                
-            });
 
-        });
+
+$(document).ready(function() {
+
+
+$("#paid_amount").on('keyup', function() {
+        let paid_amount = $(this).val();
+        let harga = $("#harga").val();
+        var bayar = paid_amount.replace(/[^\d]/g, '');
+        var kembalian = bayar - harga;
+        var kembaliRp = formatRupiah(kembalian);
+
+
+         // if(price>=total_amount){
+         //              $("#grand_total").val(total);
+                     
+         //            }else{
+         //              $("#grand_total").val(total);
+                     
+         //            }
+       $("#kembalian").val(kembaliRp);
+            console.log(kembaliRp);
+         });
+      });     
 
 
 
 
    $(document).ready(function() {
+
     $("#discount").on('keyup', function() {
         let inputValue = $(this).val();
-        let harga = $("#total_amount").val();
+        let harga = $("#harga").val();
         var diskon = inputValue.replace(/[^\d]/g, '');
+        $("#diskon2").empty().append().val(diskon);
+        var diskon_value = $("#diskon2").val();
         var harga2 = harga.replace(/[^\d]/g, '');
         var hasil_diskon = harga2 - diskon;
-        var kembalian =  $("#kembalian").val(hasil_diskon).maskMoney({
-                        prefix:'{{ settings()->currency->symbol }}',
-                        thousands:'{{ settings()->currency->thousand_separator }}',
-                        decimal:'{{ settings()->currency->decimal_separator }}',
-                        allowZero: true,
-                        precision: 0,
-                          });
-        console.log(hasil_diskon);
-      });
-     });     
+        var gt = formatRupiah(hasil_diskon);
+        if (diskon_value > harga) {
+            $("#message").text("Diskon tidak boleh melebihi Harga");
+            $("#discount").empty().append().val('0');
+        } else {
+            $("#message").text("");
+            $("#final").empty().append().val(gt);
+            console.log(gt);
+        }
+        
+         
+         });
+
+      });     
+
+
+      function formatRupiah(number) {
+        var rupiah = Number(number).toString();
+        var parts = rupiah.split(".");
+        var integerPart = parts[0];
+        var decimalPart = parts.length > 1 ? parts[1] : "";
+        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        rupiah = "Rp " + integerPart + "." + decimalPart;
+        return rupiah;
+      }
 
 
     </script>
