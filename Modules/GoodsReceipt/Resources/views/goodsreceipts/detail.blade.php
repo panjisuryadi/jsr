@@ -123,6 +123,48 @@
 
      </div>
 
+     @if ($detail->pembelian->isCicil())
+         
+     <div class="card">
+        <div class="card-header">
+            Rincian Cicilan
+        </div>
+        <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                    <th class="text-center">Nomor Cicilan</th>
+                    <th class="text-center">Tanggal Cicilan</th>
+                    <th class="text-center">Jumlah Cicilan</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Sisa Cicilan</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                @forelse($detail->pembelian->detailCicilan as $row)
+                <tr>
+                    <th class="text-center">{{$row->nomor_cicilan}}</th>
+                    <td class="text-center"> {{@$row->tanggal_cicilan}}</td>
+                    <td class="text-center"> {{@$row->jumlah_cicilan??'-'}}</td>
+                    <td class="text-center"> - </td>
+                    <td class="text-center"> - </td>
+                    
+                    </tr>
+                @empty
+                    <tr>
+                    <th colspan="5" class="text-center">Tidak ada data</th>
+                    
+                    </tr>
+                @endforelse
+
+
+                </tbody>
+        </table>
+
+     </div>
+     @endif
+
 
 
    <div class="text-base flex justify-between w-full py-1">

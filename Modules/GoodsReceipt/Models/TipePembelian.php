@@ -22,4 +22,8 @@ class TipePembelian extends Model
         return $this->tipe_pembayaran == 'cicil';
     }
 
+    public function detailCicilan(){
+        return $this->hasMany(GoodsReceiptInstallment::class,'payment_id','id');
+    }
+
 }
