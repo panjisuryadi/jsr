@@ -86,7 +86,7 @@
 
 
     <div class="text-base flex justify-between w-full py-1">
-          <p class="poppins text-gray-600">{{ Label_case('Total_Emas') }}</p>
+          <p class="poppins text-gray-600">{{ Label_case('total emas yang harus di bayar') }}</p>
       
                 <p class="mt-2 poppins font-semibold text-gray-800">{{ $detail->total_emas }}</p>
             </div>
