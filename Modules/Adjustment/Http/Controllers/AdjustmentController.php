@@ -36,22 +36,21 @@ class AdjustmentController extends Controller
         if($status == 1){
             $id = json_decode($setting->location);
             $stat = AdjustmentSetting::first()->status == 1 ? 'Running' : 'Not Running';
-            $total = ProductLocation::count();
-            $success = ProductLocation::where('last_opname','>',$setting->period)->count();
-            $pending = ProductLocation::where('last_opname','<',$setting->period)->whereIn('location_id',$id)->count();
-            $location = ProductLocation::select('location_id', DB::raw('count(*) as count'))
-            ->groupBy('location_id')
-            ->get();;
+            // $total = ProductLocation::count();
+            // $success = ProductLocation::where('last_opname','>',$setting->period)->count();
+            // $pending = ProductLocation::where('last_opname','<',$setting->period)->whereIn('location_id',$id)->count();
+            // $location = ProductLocation::select('location_id', DB::raw('count(*) as count'))
+            // ->groupBy('location_id')
+            // ->get();;
+            $location = AdjustmentSetting::LOCATION[$id[0]];
         }else{
             $stat = 'Not Running';
             $total = 0;
             $success = 0;
             $pending = 0;
-            $location = ProductLocation::select('location_id', DB::raw('count(*) as count'))
-            ->groupBy('location_id')
-            ->get();;
+            $location = "Lokasi Belum di pilih";
         }
-        return view('adjustment::index',compact('stat','total','success','pending','status','location'));
+        return view('adjustment::index',compact('stat','status','location'));
     }
 
 
@@ -61,6 +60,10 @@ class AdjustmentController extends Controller
         $reference = make_reference_id('ADJ', $number);
         $status = 0;
         $setting = AdjustmentSetting::first();
+        $active_location = [
+            'id' => json_decode($setting->location),
+            'label' => AdjustmentSetting::LOCATION[json_decode($setting->location)[0]],
+        ];
         if(isset($setting)){
             $status = $setting->status;
         }
@@ -75,7 +78,7 @@ class AdjustmentController extends Controller
             ->groupBy('location_id')
             ->get();;
         }
-        return view('adjustment::create',compact('reference','product'));
+        return view('adjustment::create',compact('reference','product','active_location'));
     }
 
     public function create2() {
@@ -320,13 +323,14 @@ class AdjustmentController extends Controller
     }
     
     public function setsetting(Request $request){
-        $id = explode(',',$request->value);
+        // $id = explode(',',$request->value);
+        $active_adjustment = $request->value;
         // return response()->json($id);
         $status = AdjustmentSetting::first();
         if(empty($status)){
             $status = new AdjustmentSetting;
         }
-        $status->location = json_encode($id);
+        $status->location = json_encode([$active_adjustment]);
         $status->status = 1;
         $status->period = Carbon::now();
         $status->save();

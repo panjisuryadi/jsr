@@ -40,7 +40,7 @@ function showTime(){
 @stack('page_scripts')
 
 
-{{-- <script src="{{  asset('js/jquery.min.js') }}"></script> --}}
+<script src="{{  asset('js/jquery.min.js') }}"></script>
 <!-- batass================================Create Modal============================= -->
 <div class="modal fade" id="ModalGue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -57,7 +57,6 @@ function showTime(){
     </div>
 </div>
 {{-- end modal ======================================================================--}}
-{{--
 <script type='text/javascript'>
     var jq = $.noConflict();
     (function($){
@@ -71,8 +70,27 @@ function showTime(){
        jq('#ModalGue').on('click', '.modal .close', function () {
         jq(this).closest('.modal').modal('hide');
     })
+    $.ajax({
+            type: "get",
+            url: "{{ route('adjustment.getsetting2') }}",
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept' : 'application/json'
+            },
+            success:function(data){	
+                if(data == 1){
+                    $('#runningopname').show()
+                    setInterval(function() {
+                        $('#runningopname').toggle();
+                    }, 500);
+                }else{
+                    $('#runningopname').hide()
+                }
+            },
+        })
 
    })
   })(jq);
 
-</script> --}}
+</script>

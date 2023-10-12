@@ -709,7 +709,8 @@ class GenerateMenus
             $adjustments = $kelola_stok->add('
                 <i class="mb-2 c-sidebar-nav-icon bi bi-clipboard-check"></i> '.__('Adjustments').'',
                  [
-                'class' => 'c-sidebar-nav-dropdown',
+                'class' => 'nav-item',
+                'route' => 'adjustments.index'
             ])
             ->data([
                 'order'         => 1,
@@ -723,8 +724,7 @@ class GenerateMenus
                                       'create_adjustments'],
             ]);
             $adjustments->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
 

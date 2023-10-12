@@ -67,15 +67,12 @@
                 <div class="row pt-2">
                     <div class="col-12 form-group">
                             <label for="">Pilih Lokasi Stock Opname</label> <br>
-                        <button class="btn btn-success btn-sm" type="button" id="checkAllBtn">Semua Lokasi</button>
-                        @foreach ($location as $location)
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="{{$location->location_id}}" id="">
-                            <label class="form-check-label">
-                                {{$location->location->name}} ({{$location->count}} Produk)
-                            </label>
-                        </div>
+                        <select id="adjustment-location" class="form-control">
+                            <option value="">Pilih Lokasi</option>
+                        @foreach (\Modules\Adjustment\Entities\AdjustmentSetting::LOCATION as $key => $value)
+                            <option value="{{ $key }}">{{ $value }}</option>
                         @endforeach
+                        </select>
                     </div>
                 </div>
             </form>

@@ -17,10 +17,13 @@
         </li>
         <li><x-library.widget /></li>
     </ul>
-<ul class="c-header-nav ml-auto">
-
-
-
+<ul class="c-header-nav">
+    <li class="c-header-nav-item px-3">
+            <a class="c-header-nav-link text-success" href="{{route('adjustments.index')}}" id="runningopname" style="display:none;">
+                <i class="c-icon cil-external-link "></i>&nbsp;
+                <span class="">Stock Opname Berjalan</span>
+            </a>
+        </li>
 </ul>
 
 <ul class="c-header-nav ml-auto mr-4">

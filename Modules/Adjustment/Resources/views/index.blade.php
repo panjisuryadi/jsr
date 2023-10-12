@@ -16,7 +16,7 @@
 @section('content')
     <div class="container-fluid">
     <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="text-value-lg" id="status">{{$stat}}</div>
@@ -30,7 +30,7 @@
             <!-- <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <div class="text-value-lg" id="totalcategory">{{$total}}</div>
+                        <div class="text-value-lg" id="totalcategory"></div>
                         <div>Total Stok Opname</div>
                         <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -38,28 +38,30 @@
                     </div>
                 </div>
             </div> -->
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <a class="card" href="javascript:;" id="successadjustment">
                     <div class="card-body text-dark">
-                        <div class="text-value-lg" id="totalaset">{{$success}}</div>
+                        <div class="text-value-lg" id="totalaset"></div>
                         <div>Stok Opname Selesai</div>
                         <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </a>
-            </div>
-            <div class="col-md-4">
+            </div> -->
+            @if ($status == '1')
+            <div class="col-md-6">
                 <a class="card" href="javascript:;" id="pendingadjustment">
                     <div class="card-body">
-                        <div class="text-value-lg" id="totalproduct">{{$pending}}</div>
-                        <div>Stok Opname Belum Selesai</div>
+                        <div class="text-value-lg" id="totalproduct">{{$location}}</div>
+                        <div>Lokasi Stok Opname</div>
                         <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </a>
             </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-12">
@@ -236,16 +238,39 @@
     })
 
     function runningadjustment(){
-        const values = [];
-        $('input[type=checkbox]:checked').each(function() {
-            values.push($(this).val());
-        });
-        if (values.length === 0) {
+        // const values = [];
+        // $('input[type=checkbox]:checked').each(function() {
+        //     values.push($(this).val());
+        // });
+        // if (values.length === 0) {
+        //     toastr.error('Lokasi Belum Dipilih')
+        // }else{
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "{{route('adjustment.setadjustment')}}?value="+values,
+        //         dataType:'json',
+        //         contentType: false,
+        //         processData: false,
+        //         dataType: 'json',
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         success: function(data){
+        //             // console.log(data)
+        //             toastr.success('Stock Opname Berjalan')
+        //             location.reload();
+        //         }
+        //     })
+        // }
+
+        let selected = '';
+        selected = $('#adjustment-location').val();
+        if(selected == ''){
             toastr.error('Lokasi Belum Dipilih')
         }else{
             $.ajax({
                 type: "GET",
-                url: "{{route('adjustment.setadjustment')}}?value="+values,
+                url: "{{route('adjustment.setadjustment')}}?value="+selected,
                 dataType:'json',
                 contentType: false,
                 processData: false,
@@ -260,7 +285,6 @@
                 }
             })
         }
-        // console.log(values)
     }
 
     $('#checkAllBtn').click(function() {
