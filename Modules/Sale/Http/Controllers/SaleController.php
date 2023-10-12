@@ -128,12 +128,15 @@ public function index_data(Request $request)
                             return view(''.$module_path.'::.partials.status',
                             compact('module_name', 'data', 'module_model'));
                                 })
+                           ->addColumn('total_amount', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_path.'::.partials.nominal',
+                            compact('module_name', 'data', 'module_model'));
+                                })
 
-                         ->editColumn('total_amount', function ($data) {
-                             $tb = '<div class="text-center text-gray-800"> 
-                                     ' .format_currency($data->total_amount) . '</div>';
-                                return $tb;
-                            })
+
 
                                 ->rawColumns(['customer', 
                                      'reference', 

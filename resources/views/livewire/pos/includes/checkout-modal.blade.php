@@ -11,6 +11,7 @@
                 </button>
             </div>
 
+
              <?php
                 $result = array (
                 'total_with_shipping' => $total_with_shipping,
@@ -45,14 +46,32 @@
 
 </div>
 
-<div class="form-group">
-    <label for="paid_amount">Bayar <span class="text-danger">*</span></label>
-    <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ $total_amount }}" required>
+<label for="tunaiRadio">Tunai</label>
+<input type="radio" name="tipebayar" id="tunaiRadio" value="tunai" checked required>
+
+<label for="cicilRadio">Cicilan</label>
+<input type="radio" name="tipebayar" id="cicilRadio" value="cicil">
+
+<div id="Tunai" class="px-0">
+   <div class="form-group">
+    <label for="tunai">Bayar Tunai<span class="text-danger">*</span></label>
+    <input id="tunai" type="text" class="form-control" name="tunai">
 </div>
+</div>
+
+<div id="cicilan" style="display: none;">
+   <div class="form-group">
+    <label for="ciclan">Bayar Cicilan<span class="text-danger">*</span></label>
+    <input id="ciclan" type="text" class="form-control" name="cicilan">
+</div>
+</div>
+
+
+
 
 <div class="form-group">
     <label for="discount">Discount  <span class="small text-danger">(Nominal)</span></label>
-    <input  id="discount" type="text" class="form-control" name="discount" required>
+    <input  id="discount" type="text" class="form-control" name="discount">
     <input type="hidden" id="diskon2">
 </div>
 
@@ -76,7 +95,7 @@
     <input id="final" type="text" class="form-control text-black text-2xl" name="final" value="{{ $total_amount }}" disabled>  
 
 
-    <input id="final_unmask" type="hidden" class="form-control" name="final_unmask" readonly>
+    <input id="final_unmask" type="hidden" class="form-control" name="final_unmask">
 </div>
 
 <div class="form-group">
@@ -197,8 +216,20 @@
 
 <script>
 
+$(document).ready(function() {
+      $("input[type='radio'][name='tipebayar']").change(function () {
+        if ($("input[name='tipebayar']:checked").val() === "cicil") {
+            //alert('cicilan');
+           $("#Tunai").hide();
+            $("#cicilan").show();
+        } else {
+            //alert('tunai');
+             $("#cicilan").hide();
+             $("#Tunai").show();
 
-
+        }
+    });
+ });
 $(document).ready(function() {
 
 
@@ -212,15 +243,18 @@ $("#paid_amount").on('keyup', function() {
 
          // if(price>=total_amount){
          //              $("#grand_total").val(total);
-                     
+
          //            }else{
          //              $("#grand_total").val(total);
-                     
+
          //            }
        $("#kembalian").val(kembaliRp);
             console.log(kembaliRp);
          });
-      });     
+
+
+
+      });
 
 
 
@@ -229,26 +263,28 @@ $("#paid_amount").on('keyup', function() {
 
     $("#discount").on('keyup', function() {
         let inputValue = $(this).val();
-        let harga = $("#harga").val();
-        var diskon = inputValue.replace(/[^\d]/g, '');
-        $("#diskon2").empty().append().val(diskon);
-        var diskon_value = $("#diskon2").val();
-        var harga2 = harga.replace(/[^\d]/g, '');
-        var hasil_diskon = harga2 - diskon;
-        var gt = formatRupiah(hasil_diskon);
-        if (diskon_value > harga) {
-            $("#message").text("Diskon tidak boleh melebihi Harga");
-            $("#discount").empty().append().val('0');
-        } else {
-            $("#message").text("");
-            $("#final").empty().append().val(gt);
-            console.log(gt);
-        }
-        
-         
+         var harga_awal = parseFloat($('#harga').val());
+         var diskon_value = inputValue.replace(/[^\d]/g, '');
+         var result = harga_awal - diskon_value;
+        // console.log(harga_awal);
+
+         if (diskon_value > harga_awal) {
+                   $("#message").text("Diskon tidak boleh melebihi Harga");
+                    $("#discount").val("0");
+                   // alert('Pembayaran tidak mencukupi.');
+                } else {
+                   $("#message").text("");
+                    $("#final").empty().append().val(inputValue);
+                    $("#final_unmask").append().val(result);
+                    console.log(diskon_value);
+                }
+
+
          });
 
-      });     
+      });
+
+
 
 
       function formatRupiah(number) {

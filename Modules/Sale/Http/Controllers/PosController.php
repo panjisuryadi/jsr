@@ -33,9 +33,56 @@ class PosController extends Controller
 
  
 
+ public function store(Request $request) {
+
+     $input = $request->all();
+      $input = $request->except('_token');
+      // dd($input);
+        if ($input['tipebayar'] == 'cicil') {
+            $tipebayar = 'cicilan';
+            $payment_status = 'partial';
+            $bayar = preg_replace("/[^0-9]/", "", $input['cicilan']);
+
+        } else {
+            $tipebayar = 'tunai';
+            $bayar = preg_replace("/[^0-9]/", "", $input['tunai']);
+            $payment_status = 'Paid';
+        }
+
+     // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+   $sale = Sale::create([
+                'date' => now()->format('Y-m-d'),
+                'reference' => 'jsr',
+                'customer_id' =>$input['customer_id'],
+                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
+                'tax_percentage' => $request->tax_percentage,
+                'discount_percentage' => $request->discount_percentage,
+                'shipping_amount' => $request->shipping_amount * 100,
+                'paid_amount' => $bayar ?? '0',
+                'total_amount' =>  $input['final_unmask'] ?? $bayar,
+                'due_amount' => '0',
+                'status' => 'Completed',
+                'payment_status' => $payment_status,
+                'payment_method' =>$tipebayar ?? null,
+                'tipe_bayar' =>$tipebayar ?? null,
+                'cicilan' =>$cicilan ?? null,
+                'note' => $request->note,
+                'tax_amount' => Cart::instance('sale')->tax() * 100,
+                'discount_amount' =>  $input['diskon2'] ?? '0',
+                'user_id' => Auth::user()->id,
+                'cabang_id' => Auth::user()->namacabang->cabang()->first()->id,
+            ]);
 
 
-    public function store(StorePosSaleRequest $request) {
+    //return response()->json(['success'=>'Sales Sukses disimpan.']);
+     toast('POS Sale Created!', 'success');
+
+        return redirect()->route('sales.index');
+
+
+
+}
+    public function store_old(StorePosSaleRequest $request) {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
