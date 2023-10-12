@@ -35,22 +35,24 @@ class PosController extends Controller
 
  public function store(Request $request) {
 
-     $input = $request->all();
+      $input = $request->all();
       $input = $request->except('_token');
       // dd($input);
         if ($input['tipebayar'] == 'cicil') {
             $tipebayar = 'cicilan';
             $payment_status = 'partial';
             $bayar = preg_replace("/[^0-9]/", "", $input['cicilan']);
+            $jatuh_tempo = $input['tgl_jatuh_tempo'];
 
         } else {
             $tipebayar = 'tunai';
             $bayar = preg_replace("/[^0-9]/", "", $input['tunai']);
             $payment_status = 'Paid';
+            $jatuh_tempo = null;
         }
 
      // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-   $sale = Sale::create([
+        $sale = Sale::create([
                 'date' => now()->format('Y-m-d'),
                 'reference' => 'jsr',
                 'customer_id' =>$input['customer_id'],
@@ -59,13 +61,14 @@ class PosController extends Controller
                 'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
                 'paid_amount' => $bayar ?? '0',
-                'total_amount' =>  $input['final_unmask'] ?? $bayar,
+                'total_amount' =>  $input['final_unmask'],
                 'due_amount' => '0',
                 'status' => 'Completed',
                 'payment_status' => $payment_status,
                 'payment_method' =>$tipebayar ?? null,
                 'tipe_bayar' =>$tipebayar ?? null,
                 'cicilan' =>$cicilan ?? null,
+                'tgl_jatuh_tempo' =>$jatuh_tempo,
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' =>  $input['diskon2'] ?? '0',

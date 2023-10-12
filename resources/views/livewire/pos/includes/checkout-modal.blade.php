@@ -88,6 +88,13 @@
     <input id="input_cicilan" type="text" class="form-control" name="cicilan">
      <div style="display: none;" id="kembalian-cicil">Kembali: <span class="text-green-500 text-xl" id="kembalian2">0</span></div>
 </div>
+
+ <div class="form-group">
+    <label for="ciclan">Jatuh Tempo<span class="text-danger">*</span></label>
+    <input id="tgl_jatuh_tempo" type="date" class="form-control" name="tgl_jatuh_tempo">
+
+</div>
+
 </div>
 
 <div class="form-group">
@@ -256,8 +263,9 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("#input_cicilan").on('keyup', function() {
         let input_tunai = $(this).val();
-        let harga = $("#final_unmask").val();
+        let harga = $("#harga").val();
         var bayar = input_tunai.replace(/[^\d]/g, '');
+        $("#final_unmask").append().val(bayar);
         if (bayar > harga) {
           var kembalian = bayar - harga;
           var kembaliRp = formatRupiah(kembalian);

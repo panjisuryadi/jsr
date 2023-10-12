@@ -64,7 +64,8 @@ class Sale extends Model
     }
 
     public function getTotalAmountAttribute($value) {
-        return $value / 100;
+        return $value;
+        //return $value / 100;
     }
 
     public function getDueAmountAttribute($value) {
