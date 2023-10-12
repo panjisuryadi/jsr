@@ -46,26 +46,11 @@
 
 </div>
 
-<label for="tunaiRadio">Tunai</label>
-<input type="radio" name="tipebayar" id="tunaiRadio" value="tunai" checked required>
 
-<label for="cicilRadio">Cicilan</label>
-<input type="radio" name="tipebayar" id="cicilRadio" value="cicil">
-
-<div id="Tunai" class="px-0">
-   <div class="form-group">
-    <label for="tunai">Bayar Tunai<span class="text-danger">*</span></label>
-    <input id="tunai" type="text" class="form-control" name="tunai">
+<div class="form-group">
+    <label for="note">Catatan (Jika diperlukan)</label>
+    <textarea name="note" id="note" rows="2" class="form-control"></textarea>
 </div>
-</div>
-
-<div id="cicilan" style="display: none;">
-   <div class="form-group">
-    <label for="ciclan">Bayar Cicilan<span class="text-danger">*</span></label>
-    <input id="ciclan" type="text" class="form-control" name="cicilan">
-</div>
-</div>
-
 
 
 
@@ -83,25 +68,37 @@
 
 <div class="px-1">
 
+<label for="tunaiRadio">Tunai</label>
+<input type="radio" name="tipebayar" id="tunaiRadio" value="tunai" checked required>
 
-<div class="form-group">
-    <label for="grand_total">Kembali <span class="text-danger">*</span></label>
-   
-    <input id="kembalian" type="text" class="form-control" name="kembalian" disabled>
+<label for="cicilRadio">Cicilan</label>
+<input type="radio" name="tipebayar" id="cicilRadio" value="cicil">
+
+<div id="Tunai" class="px-0">
+   <div class="form-group">
+    <label for="tunai">Bayar Tunai<span class="text-danger">*</span></label>
+    <input id="input_tunai" type="text" class="form-control" name="tunai">
+    <div style="display: none;" id="kembalian-info">Kembali: <span class="text-blue-500 text-xl" id="kembalian">0</span></div>
 </div>
+</div>
+
+<div id="cicilan" style="display: none;">
+   <div class="form-group">
+    <label for="ciclan">Bayar Cicilan<span class="text-danger">*</span></label>
+    <input id="input_cicilan" type="text" class="form-control" name="cicilan">
+     <div style="display: none;" id="kembalian-cicil">Kembali: <span class="text-green-500 text-xl" id="kembalian2">0</span></div>
+</div>
+</div>
+
 <div class="form-group">
     <label for="note">Grand Total</label> <span class="text-danger small" id="message"></span>
     {{-- <span id="final" class="text-black text-4xl"></span> --}}
     <input id="final" type="text" class="form-control text-black text-2xl" name="final" value="{{ $total_amount }}" disabled>  
 
 
-    <input id="final_unmask" type="hidden" class="form-control" name="final_unmask">
+    <input value="{{ $total_amount }}" id="final_unmask" type="hidden" class="form-control" name="final_unmask">
 </div>
 
-<div class="form-group">
-    <label for="note">Catatan (Jika diperlukan)</label>
-    <textarea name="note" id="note" rows="2" class="form-control"></textarea>
-</div>
 
 
 
@@ -212,6 +209,14 @@
 </div>
 
 
+@push('page_css')
+<style type="text/css">
+    label {
+    display: inline-block;
+    margin-bottom: 0.2rem;
+}
+</style>
+@endpush
 @push('page_scripts')
 
 <script>
@@ -231,53 +236,61 @@ $(document).ready(function() {
     });
  });
 $(document).ready(function() {
+    $("#input_tunai").on('keyup', function() {
+        let input_tunai = $(this).val();
+        let harga = $("#final_unmask").val();
+        var bayar = input_tunai.replace(/[^\d]/g, '');
+        if (bayar > harga) {
+          var kembalian = bayar - harga;
+          var kembaliRp = formatRupiah(kembalian);
+          $('#kembalian').text(kembaliRp);
+          $('#kembalian-info').show();
+        }
 
-
-$("#paid_amount").on('keyup', function() {
-        let paid_amount = $(this).val();
-        let harga = $("#harga").val();
-        var bayar = paid_amount.replace(/[^\d]/g, '');
-        var kembalian = bayar - harga;
-        var kembaliRp = formatRupiah(kembalian);
-
-
-         // if(price>=total_amount){
-         //              $("#grand_total").val(total);
-
-         //            }else{
-         //              $("#grand_total").val(total);
-
-         //            }
-       $("#kembalian").val(kembaliRp);
             console.log(kembaliRp);
          });
-
-
 
       });
 
 
+$(document).ready(function() {
+    $("#input_cicilan").on('keyup', function() {
+        let input_tunai = $(this).val();
+        let harga = $("#final_unmask").val();
+        var bayar = input_tunai.replace(/[^\d]/g, '');
+        if (bayar > harga) {
+          var kembalian = bayar - harga;
+          var kembaliRp = formatRupiah(kembalian);
+          $('#kembalian2').text(kembaliRp);
+          $('#kembalian-cicil').show();
+        }
+
+            console.log(kembaliRp);
+         });
+
+      });
 
 
    $(document).ready(function() {
 
     $("#discount").on('keyup', function() {
-        let inputValue = $(this).val();
-         var harga_awal = parseFloat($('#harga').val());
-         var diskon_value = inputValue.replace(/[^\d]/g, '');
+        var discount = $(this).val();
+        var harga_awal = $("#harga").val();
+         var diskon_value = discount.replace(/[^\d]/g, '');
          var result = harga_awal - diskon_value;
-        // console.log(harga_awal);
-
-         if (diskon_value > harga_awal) {
-                   $("#message").text("Diskon tidak boleh melebihi Harga");
-                    $("#discount").val("0");
-                   // alert('Pembayaran tidak mencukupi.');
-                } else {
-                   $("#message").text("");
-                    $("#final").empty().append().val(inputValue);
-                    $("#final_unmask").append().val(result);
-                    console.log(diskon_value);
-                }
+         var final = formatRupiah(result);
+        $("#final").append().val(final);
+         $("#final_unmask").append().val(result);
+        console.log(diskon_value);
+         // if (diskon_value >= harga_awal) {
+         //           $("#message").text("Diskon tidak boleh melebihi Harga");
+         //            $("#discount").val("0");
+         //              } else {
+         //           $("#message").text("");
+         //            $("#final").append().val(result);
+         //            $("#final_unmask").append().val(result);
+         //            console.log(diskon_value);
+         //        }
 
 
          });

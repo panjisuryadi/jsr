@@ -48,6 +48,8 @@
 
 
 
+
+
 @push('page_scripts')
 <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
@@ -96,10 +98,26 @@
                     precision: 0,
                 });
 
-               // $('#paid_amount').maskMoney('mask');
+                 $('#input_tunai').maskMoney({
+                    prefix:'{{ settings()->currency->symbol }}',
+                    thousands:'{{ settings()->currency->thousand_separator }}',
+                    decimal:'{{ settings()->currency->decimal_separator }}',
+                    allowZero: true,
+                    precision: 0,
+                });
+
+                 $('#input_cicilan').maskMoney({
+                    prefix:'{{ settings()->currency->symbol }}',
+                    thousands:'{{ settings()->currency->thousand_separator }}',
+                    decimal:'{{ settings()->currency->decimal_separator }}',
+                    allowZero: true,
+                    precision: 0,
+                });
+
+                $('#paid_amount').maskMoney('mask');
                 $('#total_amount').maskMoney('mask');
                 $('#grand_total').maskMoney('mask');
-                //$('#discount').maskMoney('mask');
+                $('#discount').maskMoney('mask');
                 $('#final').maskMoney('mask');
 
                 $('#checkout-form').submit(function () {
