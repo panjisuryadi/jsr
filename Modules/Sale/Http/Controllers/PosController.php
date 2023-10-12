@@ -37,6 +37,7 @@ class PosController extends Controller
 
      $input = $request->all();
       $input = $request->except('_token');
+      // dd($input);
         if ($input['tipebayar'] == 'cicil') {
             $tipebayar = 'cicilan';
             $payment_status = 'partial';
@@ -58,7 +59,7 @@ class PosController extends Controller
                 'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
                 'paid_amount' => $bayar ?? '0',
-                'total_amount' =>  $input['final_unmask'] ?? '0',
+                'total_amount' =>  $input['final_unmask'] ?? $bayar,
                 'due_amount' => '0',
                 'status' => 'Completed',
                 'payment_status' => $payment_status,
@@ -71,7 +72,7 @@ class PosController extends Controller
                 'user_id' => Auth::user()->id,
                 'cabang_id' => Auth::user()->namacabang->cabang()->first()->id,
             ]);
-      //dd($input);
+
 
     //return response()->json(['success'=>'Sales Sukses disimpan.']);
      toast('POS Sale Created!', 'success');

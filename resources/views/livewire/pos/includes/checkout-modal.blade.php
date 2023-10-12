@@ -62,7 +62,7 @@
 <div id="cicilan" style="display: none;">
    <div class="form-group">
     <label for="ciclan">Bayar Cicilan<span class="text-danger">*</span></label>
-    <input id="ciclan" type="text" class="form-control" name="ciclan">
+    <input id="ciclan" type="text" class="form-control" name="cicilan">
 </div>
 </div>
 
