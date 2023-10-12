@@ -47,6 +47,15 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($adjustment_items as $item )
+                                <tr>
+                                    <td>{{ $item['karat']['name'] }} {{ $item['karat']['kode'] }}</td>
+                                    <td>{{ $active_location['label'] }}</td>
+                                    <td>{{ $item['stock_data'] }}</td>
+                                    <td>{{ $item['stock_rill'] }}</td>
+                                    <td>Aksi</td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

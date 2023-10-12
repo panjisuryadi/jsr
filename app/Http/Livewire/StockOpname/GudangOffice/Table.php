@@ -27,15 +27,6 @@ class Table extends Component
 
      public $active_location;
 
-     protected $listeners = [
-        'save'
-     ];
-
-     public function save($data){
-        
-     }
-
-
 
      public function updated(){
           $this->resetPage();
@@ -64,6 +55,7 @@ class Table extends Component
         }
 
         public function selectProduct($key) {
+           
         }
 
          public function getDestination($value) {
