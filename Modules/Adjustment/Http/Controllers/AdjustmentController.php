@@ -61,7 +61,7 @@ class AdjustmentController extends Controller
         $status = 0;
         $setting = AdjustmentSetting::first();
         $active_location = [
-            'id' => json_decode($setting->location),
+            'id' => json_decode($setting->location)[0],
             'label' => AdjustmentSetting::LOCATION[json_decode($setting->location)[0]],
         ];
         if(isset($setting)){
