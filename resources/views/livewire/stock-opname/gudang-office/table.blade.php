@@ -65,7 +65,9 @@
     document.addEventListener('livewire:load', function () {
         Livewire.on('closeModal', function (data) {
             $("#addModal"+data.modalId).modal('hide');
-            $(".modal-backdrop").remove();
+            $(".modal-backdrop").each(function(index, element) {
+                $(element).remove();
+            });
         });
     });
 </script>
