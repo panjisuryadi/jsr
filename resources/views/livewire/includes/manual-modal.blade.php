@@ -38,25 +38,24 @@
                 @endif
 
 
-@php
-   $list = Cart::instance($this->cart_instance)->content();
-@endphp
- @foreach($list as $cart_item)
- {{-- {{ $cart_item->name }}     --}}
-          <form wire:submit.prevent="setManualtype('{{ $cart_item->rowId }}')" method="POST">
+
+
+          <form wire:submit.prevent="setManualtype()" method="POST">
             <div class="modal-body justify-start">
                       
            <div class="form-group text-left">
             <label class="text-left" for="nominal">Nominal <span class="text-danger">*</span>
             </label>
-       <input id="nominal" type="text" class="form-control" name="nominal" value=" {{ $cart_item->options->nominal_manual }}" required>
+
+        <input type="hidden" wire:model="manual" value="1">
+         <input id="nominal_manual" wire:model="nominal_manual" type="text" class="form-control" value="{{ $nominal_manual }}" name="nominal_manual">
             </div>
 
          <div class="form-group text-left">
             <label class="text-left" for="keterangan">keterangan <span class="text-danger">*</span>
             </label>
                <input wire:model="keterangan_manual" id="keterangan_manual" type="text" class="form-control" 
-               name="keterangan_manual" value="{{ $cart_item->options->keterangan_manual }}">
+               name="keterangan_manual" value="{{ $keterangan_manual }}">
         
             </div>
              </div>
@@ -65,7 +64,7 @@
                     <button type="submit" class="btn text-white bg-red-400">Save changes</button>
                 </div>
             </form>
-            @endforeach
+      
         </div>
     </div>
 </div>
