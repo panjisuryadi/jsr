@@ -41,14 +41,18 @@ class PosController extends Controller
         if ($input['tipebayar'] == 'cicil') {
             $tipebayar = 'cicilan';
             $payment_status = 'partial';
-            $bayar = preg_replace("/[^0-9]/", "", $input['cicilan']);
-            $jatuh_tempo = $input['tgl_jatuh_tempo'];
+            //$bayar = preg_replace("/[^0-9]/", "", $input['cicilan']);
+            $bayar = $input['harga_awal'];
+            $jatuh_tempo =  $input['tgl_jatuh_tempo'];
+            $total_amount = $input['harga_awal'];
+          
 
         } else {
             $tipebayar = 'tunai';
             $bayar = preg_replace("/[^0-9]/", "", $input['tunai']);
             $payment_status = 'Paid';
             $jatuh_tempo = null;
+            $total_amount = $input['final_unmask'];
         }
 
      // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
@@ -61,7 +65,7 @@ class PosController extends Controller
                 'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
                 'paid_amount' => $bayar ?? '0',
-                'total_amount' =>  $input['final_unmask'],
+                'total_amount' =>  $total_amount,
                 'due_amount' => '0',
                 'status' => 'Completed',
                 'payment_status' => $payment_status,

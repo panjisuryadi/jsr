@@ -1,8 +1,11 @@
 <div class="items-center justify-items-center text-center">
 @if ($data->tipe_bayar == 'cicilan')
-    <span class="badge badge-info">
-        Cicilan
-    </span>
+<a 
+class="btn btn-sm btn-info" 
+id="Show" 
+href="{{ route('sales.show_cicilan', $data->id) }}">
+&nbsp;@lang('Cicilan')
+</a>
 @elseif ($data->status == 'total')
     <span class="badge badge-primary">
         {{ $data->status }}

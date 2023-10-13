@@ -25,9 +25,9 @@ class FixTabelProductsItemsTable extends Migration
                  //$table->dropColumn('clarity_id');
                  //$table->dropForeign('product_items_clarity_id_foreign');
                  //$table->dropForeign('product_items_color_id_foreign');
-                 $table->dropColumn('color_id');
+                // $table->dropColumn('color_id');
                  //$table->dropForeign('product_items_gudang_id_foreign');
-                 $table->dropColumn('gudang_id');
+                // $table->dropColumn('gudang_id');
                  DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
 
