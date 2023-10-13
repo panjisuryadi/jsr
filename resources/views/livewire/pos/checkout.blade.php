@@ -72,6 +72,7 @@
  
                           @php
                              $jumlah = $jumlah +  $cart_item->qty
+                           
                           @endphp
 
                             @endforeach
@@ -88,7 +89,6 @@
 
   @php
     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
-    $qty = Cart::instance($cart_instance);
 
    @endphp
 
@@ -125,7 +125,7 @@
 
 <div class="w-full px-3 py-3 bg-red-400 text-white flex justify-between">
    <div class="flex flex-row w-40 justify-items-center items-center text-center border-r">
-{{--         <div class="relative items-center justify-center text-center md:text-xl text-white text-3xl font-semibold">
+{{--  <div class="relative items-center justify-center text-center md:text-xl text-white text-3xl font-semibold">
           {{$jumlah ?? '0'}}
         </div> --}}
         <div class="md:text-xl text-white text-2xl font-semibold relative p-3">

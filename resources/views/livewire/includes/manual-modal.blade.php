@@ -22,45 +22,50 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST">
+
+
+                @if (session()->has('manual'))
+                <div class="px-3">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <div class="alert-body">
+                            <span>{{ session('manual') }}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                @endif
+
+
+@php
+   $list = Cart::instance($this->cart_instance)->content();
+@endphp
+ @foreach($list as $cart_item)
+ {{-- {{ $cart_item->name }}     --}}
+          <form wire:submit.prevent="setManualtype('{{ $cart_item->rowId }}')" method="POST">
             <div class="modal-body justify-start">
                       
-        <div class="form-group text-left">
+           <div class="form-group text-left">
             <label class="text-left" for="nominal">Nominal <span class="text-danger">*</span>
             </label>
-            <input id="nominal" type="text" class="form-control" name="nominal" value="{{ $total_amount }}" required>
-        </div>
+       <input id="nominal" type="text" class="form-control" name="nominal" value=" {{ $cart_item->options->nominal_manual }}" required>
+            </div>
 
-
-
-
-
-                 <table class="table table-striped table-sm">
-                                    <tr>
-                                        <th>Total Products</th>
-                                        <td>
-                                                <span class="inline-flex items-center justify-center w-6 h-6 ml-2 text-xs font-semibold text-white bg-green-500 rounded-full">
-                                                    {{ Cart::instance($cart_instance)->count() }}
-                                                </span>
-                                        </td>
-                                    </tr>
-                          
-                                    <tr class="text-blue-700">
-                                        <th>Grand Total</th>
-                                        @php
-                                            $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
-                                        @endphp
-                                        <th>
-                                            (=) {{ format_currency($total_with_shipping) }}
-                                        </th>
-                                    </tr>
-                                </table>
+         <div class="form-group text-left">
+            <label class="text-left" for="keterangan">keterangan <span class="text-danger">*</span>
+            </label>
+               <input wire:model="keterangan_manual" id="keterangan_manual" type="text" class="form-control" 
+               name="keterangan_manual" value="{{ $cart_item->options->keterangan_manual }}">
+        
+            </div>
              </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn text-white bg-red-400">Save changes</button>
                 </div>
             </form>
+            @endforeach
         </div>
     </div>
 </div>
