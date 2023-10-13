@@ -114,6 +114,7 @@
                     precision: 0,
                 });
 
+
                 $('#paid_amount').maskMoney('mask');
                 $('#total_amount').maskMoney('mask');
                 $('#grand_total').maskMoney('mask');

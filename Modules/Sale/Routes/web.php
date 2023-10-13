@@ -51,8 +51,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sales/index_data', 'SaleController@index_data')
     ->name('sales.index_data'); 
 
-     Route::get('sales/cetak/{id}', 'SaleController@cetak')
+    Route::get('sales/cetak/{id}', 'SaleController@cetak')
     ->name('sales.cetak');
+
+    Route::get('sales/show-cicilan/{id}', 'SaleController@show_cicilan')
+    ->name('sales.show_cicilan');
+
+
+
     
     Route::resource('sales', 'SaleController');
 

@@ -41,7 +41,7 @@
 <div class="form-group mt-0">
     <label for="total_amount">Total <span class="text-danger">*</span></label>
     <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" disabled required>
-    <input type="hidden" id="harga" value="{{ $total_amount }}">
+    <input type="hidden" id="harga" name="harga_awal" value="{{ $total_amount }}">
 
 
 </div>
@@ -83,12 +83,6 @@
 </div>
 
 <div id="cicilan" style="display: none;">
-   <div class="form-group">
-    <label for="ciclan">Bayar Cicilan<span class="text-danger">*</span></label>
-    <input id="input_cicilan" type="text" class="form-control" name="cicilan">
-     <div style="display: none;" id="kembalian-cicil">Kembali: <span class="text-green-500 text-xl" id="kembalian2">0</span></div>
-</div>
-
  <div class="form-group">
     <label for="ciclan">Jatuh Tempo<span class="text-danger">*</span></label>
     <input id="tgl_jatuh_tempo" type="date" class="form-control" name="tgl_jatuh_tempo">
@@ -222,6 +216,9 @@
     display: inline-block;
     margin-bottom: 0.2rem;
 }
+.form-group {
+    margin-bottom: 0.3rem;
+}
 </style>
 @endpush
 @push('page_scripts')
@@ -232,12 +229,14 @@ $(document).ready(function() {
       $("input[type='radio'][name='tipebayar']").change(function () {
         if ($("input[name='tipebayar']:checked").val() === "cicil") {
             //alert('cicilan');
-           $("#Tunai").hide();
+            $("#Tunai").hide();
             $("#cicilan").show();
+            $('#discount').prop('readonly', true);
         } else {
             //alert('tunai');
              $("#cicilan").hide();
              $("#Tunai").show();
+             $('#discount').prop('readonly', false);
 
         }
     });
@@ -287,7 +286,7 @@ $(document).ready(function() {
          var diskon_value = discount.replace(/[^\d]/g, '');
          var result = harga_awal - diskon_value;
          var final = formatRupiah(result);
-        $("#final").append().val(final);
+         $("#final").append().val(final);
          $("#final_unmask").append().val(result);
         console.log(diskon_value);
          // if (diskon_value >= harga_awal) {
