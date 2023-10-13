@@ -35,7 +35,6 @@ class AdjustmentController extends Controller
         
         if($status == 1){
             $id = json_decode($setting->location);
-            $stat = AdjustmentSetting::first()->status == 1 ? 'Running' : 'Not Running';
             // $total = ProductLocation::count();
             // $success = ProductLocation::where('last_opname','>',$setting->period)->count();
             // $pending = ProductLocation::where('last_opname','<',$setting->period)->whereIn('location_id',$id)->count();
@@ -44,13 +43,12 @@ class AdjustmentController extends Controller
             // ->get();;
             $location = AdjustmentSetting::LOCATION[$id[0]];
         }else{
-            $stat = 'Not Running';
             $total = 0;
             $success = 0;
             $pending = 0;
             $location = "Lokasi Belum di pilih";
         }
-        return view('adjustment::index',compact('stat','status','location'));
+        return view('adjustment::index',compact('status','location'));
     }
 
 
@@ -337,10 +335,15 @@ class AdjustmentController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Adjustment Dijalankan'
+            'message' => 'Adjustment Dijalankan',
+            'redirectRoute' => route($this->getAppropriateRoute($active_adjustment))
         ]);
-        // toast('Adjustment Dijalankan, feature Pembelian, POS dan Penjualan dikunci sampai Adjustment selesai','warning');
-        // return redirect()->back();
+    }
+
+    private function getAppropriateRoute($active_adjustment) : string {
+        return match($active_adjustment){
+            '1' => 'adjustment.gudang.office.index',
+        };
     }
 
     public function getdata(Request $request){

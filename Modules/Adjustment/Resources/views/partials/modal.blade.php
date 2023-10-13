@@ -1,55 +1,3 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">Detail Stock</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <table class="table">
-                <tr>
-                    <th>
-                        Nama Product
-                    </th>
-                    <td>
-                        <span id="product_name"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Jenis
-                    </th>
-                    <td>
-                        <span id="type_name"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Stock
-                    </th>
-                    <td>
-                        <span id="stock_name"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Location
-                    </th>
-                    <td>
-                        <span id="location_name"></span>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="confirmmodal" tabindex="-1" role="dialog" aria-labelledby="confirmmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -103,6 +51,26 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="stopAdjustmentModal" tabindex="-1" role="dialog" aria-labelledby="stopAdjustmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title text-value-md">Stop Adjustment</h1>
+        </div>
+        <div class="modal-body">
+            <h3 class="">Apakah anda yakin ingin menghentikan proses Stok Opname ?</h3>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="button" class="btn btn-primary" onclick="stopAdjustment()">
+                @lang('Stop Adjustment') 
+            </button>
         </div>
         </div>
     </div>

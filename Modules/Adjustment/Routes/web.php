@@ -11,12 +11,16 @@
 |
 */
 
+use Modules\Adjustment\Http\Controllers\GudangOffice;
+
+
 Route::group(['middleware' => 'auth'], function () {
     //Product Adjustment
-    Route::resource('adjustments', 'AdjustmentController');
     Route::get('adjustment/getdatatable', 'AdjustmentController@getdata')->name('adjustment.datatable');
     Route::post('adjustment/getbyqr', 'AdjustmentController@getbyqr')->name('adjustment.getbyqr');
     Route::get('adjustment/print/{id}', 'AdjustmentController@print')->name('adjustment.print');
+    Route::get('adjustments/gudang-office', [GudangOffice\AdjustmentController::class,'index'])->name('adjustment.gudang.office.index');
+    Route::resource('adjustments', 'AdjustmentController');
     
     //Stock Transfer
     Route::get('stocktransfer', 'StockTransferController@index')->name('stocktransfer.index');
@@ -46,4 +50,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('adjustments-setting2', 'AdjustmentController@getsetting2')->name('adjustment.getsetting2');
     Route::get('adjustments-setsetting', 'AdjustmentController@setsetting')->name('adjustment.setadjustment');
 
+    Route::get('adjustments/settings/stop','AdjustmentSettingController@destroy')->name('adjustment.stop');
 });

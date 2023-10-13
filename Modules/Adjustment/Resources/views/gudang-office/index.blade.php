@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Adjustments')
+@section('title', 'Adjustments Gudang Office')
 
 @section('third_party_stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
@@ -9,47 +9,58 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active"> @lang('Stock Opname')</li>
+        <li class="breadcrumb-item"> @lang('Stock Opname')</li>
+        <li class="breadcrumb-item"> @lang('Gudang Office')</li>
     </ol>
 @endsection
 
 @section('content')
     <div class="container-fluid">
     <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <div class="text-value-md">Status Stok Opname</div>
-                        <div class="text-value-lg my-2" id="status">{{$status?'Running':'Not Running'}}</div>
-                        <div class="progress progress-xs my-3">
+                        <div class="text-value-lg" id="status">Sedang Berjalan</div>
+                        <div>Status Stok Opname</div>
+                        <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <div class="text-value-md">Lokasi Stok Opname Saat Ini</div>
-                        <div class="text-value-lg my-2" id="totalcategory">-</div>
-                        <div class="progress progress-xs my-3">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="text-value-lg" id="totalcategory"></div>
+                        <div>Total Stok Opname</div>
+                        <div class="progress progress-xs my-2">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
+            </div> -->
+            <!-- <div class="col-md-4">
                 <a class="card" href="javascript:;" id="successadjustment">
                     <div class="card-body text-dark">
-                        <div class="text-value-md">Lokasi Stok Opname Terakhir kali</div>
-                        <div class="text-value-lg my-2" id="totalaset">Stock Gudang (Office)</div>
-                        <div class="progress progress-xs my-3">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="text-value-lg" id="totalaset"></div>
+                        <div>Stok Opname Selesai</div>
+                        <div class="progress progress-xs my-2">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </a>
+            </div> -->
+            <div class="col-md-6">
+                <a class="card" href="javascript:;" id="pendingadjustment">
+                    <div class="card-body">
+                        <div class="text-value-lg" id="totalproduct">{{$location}}</div>
+                        <div>Lokasi Stok Opname</div>
+                        <div class="progress progress-xs my-2">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </a>
             </div>
-            
         </div>
         <div class="row">
             <div class="col-12">
@@ -57,18 +68,17 @@
                     <div class="card-body">
                         <div style="justify-content: space-between;display:flex;">
                         <div>
-
+                            <a href="{{ route('adjustments.create') }}" class="btn btn-primary mr-2">
+                              @lang('Stock Opname Manual')  <i class="bi bi-plus"></i>
+                            </a>
+                            <a href="{{ route('adjustments.create.qrcode') }}" class="btn btn-primary">
+                              @lang('Stock Opname Scan')  <i class="bi bi-plus"></i>
+                            </a>
                         </div>
                         <div>
-                            @if($status == 0)
-                            <a href="javascript:;" class="btn btn-primary" id="confirmadjustment">
-                              @lang('Run Adjustment') 
-                            </a>
-                            @else
                             <a href="javascript:;" class="btn btn-primary" id="stopAdjustment">
                               @lang('Stop Adjustment') 
                             </a>
-                            @endif
                         </div>
                         </div>
 
@@ -195,7 +205,6 @@
         $('#stopAdjustmentModal').modal('show')
     })
 
-
     $('#successadjustment').click(function(){
         $.ajax({
             url: 'adjustments-setting',
@@ -228,6 +237,31 @@
     })
 
     function runningadjustment(){
+        // const values = [];
+        // $('input[type=checkbox]:checked').each(function() {
+        //     values.push($(this).val());
+        // });
+        // if (values.length === 0) {
+        //     toastr.error('Lokasi Belum Dipilih')
+        // }else{
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "{{route('adjustment.setadjustment')}}?value="+values,
+        //         dataType:'json',
+        //         contentType: false,
+        //         processData: false,
+        //         dataType: 'json',
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         success: function(data){
+        //             // console.log(data)
+        //             toastr.success('Stock Opname Berjalan')
+        //             location.reload();
+        //         }
+        //     })
+        // }
+
         let selected = '';
         selected = $('#adjustment-location').val();
         if(selected == ''){
@@ -244,8 +278,8 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data){
-                    window.location.href = data.redirectRoute;
-                    toastr.success('Stock Opname Berjalan')
+                    window.location.href = data.redirectRoute; // Ganti 'route' dengan nama route dasar Anda
+                    toastr.success('Stock Opname Berjalan');
                 }
             })
         }
