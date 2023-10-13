@@ -9,7 +9,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"> @lang('Stock Opname')</li>
+        <li class="breadcrumb-item"><a href="{{ route('adjustments.index') }}">@lang('Stock Opname')</a></li>
         <li class="breadcrumb-item"> @lang('Gudang Office')</li>
     </ol>
 @endsection
@@ -20,9 +20,9 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <div class="text-value-lg" id="status">Sedang Berjalan</div>
-                        <div>Status Stok Opname</div>
-                        <div class="progress progress-xs my-2">
+                        <div class="text-value-md">Status Stok Opname</div>
+                        <div class="text-value-lg my-2" id="status">Sedang Berjalan</div>
+                        <div class="progress progress-xs my-3">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
@@ -51,15 +51,15 @@
                 </a>
             </div> -->
             <div class="col-md-6">
-                <a class="card" href="javascript:;" id="pendingadjustment">
+                <div class="card">
                     <div class="card-body">
-                        <div class="text-value-lg" id="totalproduct">{{$location}}</div>
-                        <div>Lokasi Stok Opname</div>
-                        <div class="progress progress-xs my-2">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="text-value-md">Lokasi Stok Opname</div>
+                        <div class="text-value-lg my-2">{{$location}}</div>
+                        <div class="progress progress-xs my-3">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -68,11 +68,8 @@
                     <div class="card-body">
                         <div style="justify-content: space-between;display:flex;">
                         <div>
-                            <a href="{{ route('adjustments.create') }}" class="btn btn-primary mr-2">
+                            <a href="{{ route('adjustment.gudang.office.create') }}" class="btn btn-primary mr-2">
                               @lang('Stock Opname Manual')  <i class="bi bi-plus"></i>
-                            </a>
-                            <a href="{{ route('adjustments.create.qrcode') }}" class="btn btn-primary">
-                              @lang('Stock Opname Scan')  <i class="bi bi-plus"></i>
                             </a>
                         </div>
                         <div>

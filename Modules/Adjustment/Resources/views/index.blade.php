@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <a class="card" href="javascript:;" id="successadjustment">
+                <div class="card">
                     <div class="card-body text-dark">
                         <div class="text-value-md">Lokasi Stok Opname Terakhir kali</div>
                         <div class="text-value-lg my-2" id="totalaset">Stock Gudang (Office)</div>
@@ -47,7 +47,7 @@
                             <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             
         </div>

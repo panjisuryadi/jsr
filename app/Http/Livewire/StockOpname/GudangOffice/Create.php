@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\StockOpname;
+namespace App\Http\Livewire\StockOpname\GudangOffice;
 
 use Livewire\Component;
 use Modules\Karat\Models\Karat;
@@ -32,7 +32,7 @@ class Create extends Component
         }
      }
     public function render(){
-        return view('livewire.stock-opname.create');
+        return view('livewire.stock-opname.gudang-office.create');
     }
 
     public function remove($index){

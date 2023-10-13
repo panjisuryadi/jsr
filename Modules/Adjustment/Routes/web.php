@@ -19,7 +19,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('adjustment/getdatatable', 'AdjustmentController@getdata')->name('adjustment.datatable');
     Route::post('adjustment/getbyqr', 'AdjustmentController@getbyqr')->name('adjustment.getbyqr');
     Route::get('adjustment/print/{id}', 'AdjustmentController@print')->name('adjustment.print');
+
+    // Gudang Office
     Route::get('adjustments/gudang-office', [GudangOffice\AdjustmentController::class,'index'])->name('adjustment.gudang.office.index');
+    Route::get('adjustments/gudang-office/create', [GudangOffice\AdjustmentController::class,'create'])->name('adjustment.gudang.office.create');
+
+
     Route::resource('adjustments', 'AdjustmentController');
     
     //Stock Transfer
