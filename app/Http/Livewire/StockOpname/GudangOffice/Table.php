@@ -55,7 +55,7 @@ class Table extends Component
         }
 
         public function selectProduct($key) {
-           
+            $this->emit('showModal', ['modalId' => $key]);
         }
 
          public function getDestination($value) {

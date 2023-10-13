@@ -47,13 +47,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($adjustment_items as $item )
+                                @foreach ($adjustment_items as $index => $item )
                                 <tr>
-                                    <td>{{ $item['karat']['name'] }} {{ $item['karat']['kode'] }}</td>
+                                    <td>{{ $item['product_name'] }}</td>
                                     <td>{{ $active_location['label'] }}</td>
-                                    <td>{{ $item['stock_data'] }}</td>
-                                    <td>{{ $item['stock_rill'] }}</td>
-                                    <td>Aksi</td>
+                                    <td>{{ $item['current_stock'] }}</td>
+                                    <td>{{ $item['new_stock'] }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $index }})">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

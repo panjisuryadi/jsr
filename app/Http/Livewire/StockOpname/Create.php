@@ -20,18 +20,25 @@ class Create extends Component
      public $selected_items = [];
 
      public function save($data){
-        if(in_array($data['key'],$this->selected_items)){
+        if(in_array($data['id'],$this->selected_items)){
             $this->emit('alreadySelected');
         }else{
-            $this->selected_items[] = $data['key'];
+            $this->selected_items[] = $data['id'];
             $this->adjustment_items[] = [
-                "karat" => Karat::find($data['product']['karat_id']),
-                "stock_data" => $data['product']['berat_real'],
-                "stock_rill" => $data['stock_rill']
+                "product_name" => $data['product_name'],
+                "current_stock" => $data['current_stock'],
+                "new_stock" => $data['new_stock']
             ];
         }
      }
     public function render(){
         return view('livewire.stock-opname.create');
     }
+
+    public function remove($index){
+        unset($this->selected_items[$index]);
+        unset($this->adjustment_items[$index]);
+    }
+
+    
 }

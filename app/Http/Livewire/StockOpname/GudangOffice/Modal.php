@@ -25,9 +25,10 @@ class Modal extends Component
     public function add(){
         $this->validate();
         $data = [
-            'key' => $this->key,
-            'product'=>$this->data,
-            'stock_rill'=>$this->stock_rill
+            'id' => $this->data->id,
+            'product_name'=>$this->data->karat->name . ' | ' . $this->data->karat->kode,
+            'current_stock' => $this->data->berat_real,
+            'new_stock'=>$this->stock_rill
         ];
         $this->emit('save', $data);
         $this->emit('closeModal', ['modalId' => $this->key]);

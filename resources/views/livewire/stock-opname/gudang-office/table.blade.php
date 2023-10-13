@@ -37,9 +37,9 @@
                     <td>{{ $value->karat->name }} - {{$value->karat->kode}}</td>
                     <td>{{ $value->berat_real }}</td>
                     <td>
-            <button wire:click="selectProduct('{{ $value->id }}')"
+            <button wire:click="selectProduct('{{ $key }}')"
             class="w-100 btn btn-sm btn-outline-success "
-            style="cursor: pointer;" data-toggle="modal" data-target="#addModal{{$key}}"> Tambah
+            style="cursor: pointer;"> Tambah
                         </button>
              </td>
                 </tr>
@@ -63,11 +63,11 @@
 @push('page_scripts')
 <script>
     document.addEventListener('livewire:load', function () {
+        Livewire.on('showModal', function(data){
+            $("#addModal"+data.modalId).modal('show');
+        });
         Livewire.on('closeModal', function (data) {
             $("#addModal"+data.modalId).modal('hide');
-            $(".modal-backdrop").each(function(index, element) {
-                $(element).remove();
-            });
         });
     });
 </script>
