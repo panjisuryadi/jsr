@@ -249,7 +249,7 @@ $(document).ready(function() {
         if (bayar > harga) {
           var kembalian = bayar - harga;
           var kembaliRp = formatRupiah(kembalian);
-          $('#kembalian').text(kembaliRp);
+          $("#kembalian").append().text(kembaliRp);
           $('#kembalian-info').show();
         }
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 
+
 class GoldParametersController extends Controller
 {
 
