@@ -25,6 +25,7 @@ class Modal extends Component
     public function add(){
         $this->validate();
         $data = [
+            'key' => $this->key,
             'product'=>$this->data,
             'stock_rill'=>$this->stock_rill
         ];

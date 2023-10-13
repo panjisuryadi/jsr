@@ -80,3 +80,14 @@
         </div>
     </div>
 </div>
+
+@push('page_scripts')
+<script>
+    document.addEventListener('livewire:load', function () {
+        Livewire.on('alreadySelected', function () {
+            toastr.error('Item sudah dipilih!');
+        });
+    });
+</script>
+
+@endpush
