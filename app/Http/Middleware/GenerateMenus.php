@@ -622,24 +622,6 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-          
-
-
-
-
-          // EMAS - STOK - DAFTAR STOK - STOK DP
-            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok DP'), [
-                'route' => 'stok.dp',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['stoks*'],
-                'permission'    => ['access_stoks'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
 
 
 
@@ -679,6 +661,20 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 1,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // EMAS - STOK - DAFTAR STOK - STOK DP
+            $stock_cabang->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok DP'), [
+                'route' => 'stok.dp',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
                 'activematches' => ['stoks*'],
                 'permission'    => ['access_stoks'],
             ])
