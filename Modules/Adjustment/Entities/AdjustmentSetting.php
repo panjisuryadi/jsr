@@ -15,8 +15,8 @@ class AdjustmentSetting extends Model
         "1" => "Stok Gudang (Office)",
         "2" => "Stok Sales (Office)",
         "3" => "Stok Pending (Office)",
-        "4" => "Stok DP (Office)",
-        "5" => "Stok Kroom (Office)",
+        "4" => "Stok Kroom (Office)",
+        "5" => "Stok DP (Cabang)",
         "6" => "Stok Pending (Cabang)"
     ];
     
