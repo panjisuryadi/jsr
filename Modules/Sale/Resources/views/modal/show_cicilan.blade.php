@@ -4,7 +4,7 @@
 
 
 
-<div class="py-2 px-2">
+<div class="py-2 px-4">
     
 <div class="flex justify-between mt-3 mb-6">
         <h1 class="text-lg font-bold">Invoice</h1>

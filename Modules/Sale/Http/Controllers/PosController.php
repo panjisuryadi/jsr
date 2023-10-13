@@ -37,7 +37,7 @@ class PosController extends Controller
 
       $input = $request->all();
       $input = $request->except('_token');
-      // dd($input);
+     // dd($input);
         if ($input['tipebayar'] == 'cicil') {
             $tipebayar = 'cicilan';
             $payment_status = 'partial';
@@ -45,7 +45,6 @@ class PosController extends Controller
             $bayar = $input['harga_awal'];
             $jatuh_tempo =  $input['tgl_jatuh_tempo'];
             $total_amount = $input['harga_awal'];
-          
 
         } else {
             $tipebayar = 'tunai';
@@ -56,8 +55,8 @@ class PosController extends Controller
         }
 
      // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $sale = Sale::create([
-                'date' => now()->format('Y-m-d'),
+         $sale = Sale::create([
+                'date' => date('Y-m-d'),
                 'reference' => 'jsr',
                 'customer_id' =>$input['customer_id'],
                 'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
@@ -65,7 +64,7 @@ class PosController extends Controller
                 'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
                 'paid_amount' => $bayar ?? '0',
-                'total_amount' =>  $total_amount,
+                'total_amount' => $total_amount,
                 'due_amount' => '0',
                 'status' => 'Completed',
                 'payment_status' => $payment_status,
@@ -80,11 +79,9 @@ class PosController extends Controller
                 'cabang_id' => Auth::user()->namacabang->cabang()->first()->id,
             ]);
 
-
-    //return response()->json(['success'=>'Sales Sukses disimpan.']);
-     toast('POS Sale Created!', 'success');
-
-        return redirect()->route('sales.index');
+             //return response()->json(['success'=>'Sales Sukses disimpan.']);
+             toast('POS Sale Created!', 'success');
+              return redirect()->route('sales.index');
 
 
 
@@ -92,7 +89,6 @@ class PosController extends Controller
     public function store_old(StorePosSaleRequest $request) {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
-
             if ($due_amount == $request->total_amount) {
                 $payment_status = 'Unpaid';
             } elseif ($due_amount > 0) {
@@ -137,8 +133,6 @@ class PosController extends Controller
                     'product_discount_type' => $cart_item->options->product_discount_type,
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                 ]);
-
-
                 $product = Product::findOrFail($cart_item->id);
                 // $product->update([
                 //     'product_quantity' => $product->product_quantity - $cart_item->qty

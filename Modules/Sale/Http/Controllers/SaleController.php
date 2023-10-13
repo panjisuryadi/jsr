@@ -179,12 +179,7 @@ public function index_data(Request $request)
                                      'action', 
                                      'name'])
                                 ->make(true);
-                     }
-
-
-
-
-
+                               }
 
 
 
@@ -363,12 +358,6 @@ public function store_ajax(StoreSaleRequest $request)
 
         return response()->json(['success'=>'Sales Sukses disimpan.']);
     }
-
-
-
-
-
-
 
 
 
