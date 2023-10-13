@@ -19,7 +19,8 @@
                         <div>
                    <div class="flex justify-between">       
                 <p class="uppercase text-lg text-gray-600 font-semibold">
-                      Data <span class="text-yellow-500 uppercase">SALES</span>
+                      Data <span class="text-yellow-500 uppercase">SALES |</span>
+                           <span class="text-gray-400 uppercase">{{ $type }}</span>
                   </p>
                   @php
                   $users = Auth::user()->id;
@@ -43,7 +44,23 @@
                   </div>  
 
                         </div>
-                        <div id="buttons">
+                        <div class="flex flex-row" id="buttons">
+
+                          <div class="dropdown mr-1">
+                                <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Pilih Type
+                                </a>
+                           <div 
+                          class="dropdown-menu" 
+                          aria-labelledby="dropdownMenuLink" 
+                          style="margin: 0px;">
+ <a href="{{ route("$module_name.index", ['type'=>'tunai']) }}" class="dropdown-item">Tunai</a>
+ <a href="{{ route("$module_name.index", ['type'=>'cicilan']) }}" class="dropdown-item">Cicilan</a>
+                              </div>
+                         </div>
+
+
+
                         </div>
                     </div>
                     <div class="w-full md:overflow-x-scroll lg:overflow-x-auto mt-1">
@@ -51,15 +68,12 @@
                             <thead>
                                 <tr>
  <th style="width: 3%!important;">No</th>
-
   <th style="width: 10%!important;" class="text-center">{{ Label_Case('date') }}</th>
   <th style="width: 11%!important;" class="text-center">{{ Label_Case('Cabang') }}</th>
   <th style="width: 11%!important;" class="text-center">{{ Label_Case('Kostumer') }}</th>
   <th style="width: 9%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
   <th style="width: 8%!important;" class="text-center">{{ Label_Case('Nominal') }}</th>
  <th style="width: 6%!important;" class="text-center">{{ Label_Case('status') }}</th>
-
-                     
  <th style="width: 8%!important;" class="text-center"> {{ __('Action') }} </th>
                                 </tr>
                             </thead>
@@ -106,7 +120,7 @@
             ],
             "sPaginationType": "simple_numbers",
                ajax: {
-                  url: "{{ route("$module_name.index_data") }}",
+                  url: "{{ route("$module_name.index_data", ['type'=>$type]) }}",
                   data: function (d) {
                         d.cabang_id = $('#cabang_id').val()
                     }

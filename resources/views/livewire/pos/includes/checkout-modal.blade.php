@@ -36,14 +36,15 @@
     <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
     <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
     <input type="hidden" value="Other" name="payment_method"> 
+    <input type="hidden" value="Other" name="payment_method"> 
+
+
 
 <div class="px-1">
 <div class="form-group mt-0">
     <label for="total_amount">Total <span class="text-danger">*</span></label>
     <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" disabled required>
     <input type="hidden" id="harga" name="harga_awal" value="{{ $total_amount }}">
-
-
 </div>
 
 
@@ -99,6 +100,20 @@
 
     <input value="{{ $total_amount }}" id="final_unmask" type="hidden" class="form-control" name="final_unmask">
 </div>
+
+
+@php
+   $manual = Cart::instance($this->cart_instance)->content();
+@endphp
+ @foreach($manual as $items)
+              
+           <div class="form-group text-left">
+            <label class="text-left" for="nominal">Nominal <span class="text-danger">*</span>
+            </label>
+       <input id="keterangan_manual" type="text" class="form-control"
+        name="keterangan_manual" value=" {{ $items->options->keterangan_manual }}" required>
+            </div>
+  @endforeach
 
 
 
@@ -249,7 +264,7 @@ $(document).ready(function() {
         if (bayar > harga) {
           var kembalian = bayar - harga;
           var kembaliRp = formatRupiah(kembalian);
-          $('#kembalian').text(kembaliRp);
+          $("#kembalian").append().text(kembaliRp);
           $('#kembalian-info').show();
         }
 

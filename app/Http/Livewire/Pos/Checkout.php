@@ -37,6 +37,9 @@ class Checkout extends Component
     public $keterangan = 0;
 
 
+    public $keterangan_manual = '';
+
+
 
     public $sub_total = 0;
     public $sub_total_hidden = 0;
@@ -259,6 +262,9 @@ class Checkout extends Component
                 'harga_karat'   =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
 
                 'product_tax'           => 1,
+                'manual'                => 0,
+                'nominal_manual'        => 0,
+                'keterangan_manual'     => 'kosong',
                 'unit_price'            =>1
             ]
             ]);
@@ -270,6 +276,19 @@ class Checkout extends Component
         $this->total_amount = $this->calculateTotal();
         //$this->emit('cartModal', $product);
     }
+
+public function setManualtype($rowId) {
+        Cart::instance($this->cart_instance)->update($rowId, ['options' => [
+            'keterangan_manual' => $this->keterangan_manual,
+        ]]);
+    }
+
+
+
+
+
+
+
 
 
 
@@ -347,6 +366,12 @@ class Checkout extends Component
     }
 
 
+
+
+
+
+
+
     public function calculate($product) {
         $price = 0;
         $unit_price = 0;
@@ -374,6 +399,8 @@ class Checkout extends Component
 
         return ['price' => $price, 'unit_price' => $unit_price, 'product_tax' => $product_tax, 'sub_total' => $sub_total];
     }
+
+
 
     public function updateCartOptions($row_id, $product_id, $cart_item, $discount_amount) {
         Cart::instance($this->cart_instance)->update($row_id, ['options' => [

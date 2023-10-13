@@ -2,7 +2,9 @@
 
 {{-- {"id":44,"date":"2023-10-13","reference":"SL-00001","customer_id":2,"cabang_id":1,"user_id":1,"customer_name":"Amalia Sakura Usamah","tax_percentage":0,"tax_amount":0,"discount_percentage":0,"discount_amount":0,"shipping_amount":0,"total_amount":2000000,"paid_amount":20000,"due_amount":0,"status":"Completed","payment_status":"partial","payment_method":"cicilan","note":null,"cicilan":null,"tipe_bayar":"cicilan","tgl_jatuh_tempo":"2024-06-15","created_at":"2023-10-13T02:14:44.000000Z","updated_at":"2023-10-13T02:14:44.000000Z" --}}
 
-<div class="py-2 px-2">
+
+
+<div class="py-2 px-4">
     
 <div class="flex justify-between mt-3 mb-6">
         <h1 class="text-lg font-bold">Invoice</h1>

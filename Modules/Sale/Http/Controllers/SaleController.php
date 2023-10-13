@@ -47,12 +47,13 @@ class SaleController extends Controller
     }
 
 
- public function index() {
+ public function index(Request $request) {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $type = $request->type ?? '';
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
         $cabangs = Cabang::get();
@@ -61,6 +62,7 @@ class SaleController extends Controller
            compact('module_name',
             'module_action',
             'module_title',
+            'type',
             'cabangs',
             'module_icon', 'module_model'));
     }
@@ -100,6 +102,7 @@ class SaleController extends Controller
 public function index_data(Request $request)
 
     {
+        $type = $request->type;
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -108,9 +111,17 @@ public function index_data(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
+ 
+       $$module_name = $module_model::akses();
+        if($type) {
+           $$module_name->where('payment_method',$type);
+           $$module_name->orderBy('created_at', 'desc');
+         }else{
+             $$module_name->orderBy('created_at', 'desc');
+         }
+         $$module_name->get();
 
-        $$module_name = $module_model::akses()->orderBy('updated_at', 'desc')->get();
-        $data = $$module_name;
+         $data = $$module_name;
 
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
@@ -158,9 +169,6 @@ public function index_data(Request $request)
                             return view(''.$module_path.'::.partials.nominal',
                             compact('module_name', 'data', 'module_model'));
                                 })
-
-
-
                                 ->rawColumns(['customer', 
                                      'reference', 
                                      'date', 
@@ -171,12 +179,7 @@ public function index_data(Request $request)
                                      'action', 
                                      'name'])
                                 ->make(true);
-                     }
-
-
-
-
-
+                               }
 
 
 
@@ -355,12 +358,6 @@ public function store_ajax(StoreSaleRequest $request)
 
         return response()->json(['success'=>'Sales Sukses disimpan.']);
     }
-
-
-
-
-
-
 
 
 
