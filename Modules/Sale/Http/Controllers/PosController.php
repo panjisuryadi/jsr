@@ -13,6 +13,7 @@ use Modules\Product\Entities\Product;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
+use Modules\Sale\Entities\SaleManual;
 use Modules\Sale\Http\Requests\StorePosSaleRequest;
 use Auth;
 
@@ -80,13 +81,7 @@ class PosController extends Controller
                 'cabang_id' => Auth::user()->namacabang->cabang()->first()->id,
             ]);
 
-             if ($input['nominal_manual'] > 0) {
-                    // dd($input['nominal_manual']);
-                     $nominal_manual =  $input['nominal_manual'];
-                     $keterangan_manual =  $input['keterangan_manual'] ?? '';
-                     $manual =  1;
-                     
-                }
+  
        foreach (Cart::instance('sale')->content() as $cart_item) {
                 SaleDetails::create([
                     'sale_id' => $sale->id,
@@ -98,21 +93,26 @@ class PosController extends Controller
                     'unit_price' => 1,
                     'product_discount_amount' => 0,
                     'product_tax_amount' => 0,
-                    'manual' => $manual ?? null,
-                    'nominal_manual' => $nominal_manual ?? null,
-                    'keterangan_manual' => $keterangan_manual ?? null,
+                   
                 
                 ]);
 
             }
 
+          Cart::instance('sale')->destroy();
+             //return response()->json(['success'=>'Sales Sukses disimpan.']);
+           if ($request->nominal_manual > 0) {
+                SaleManual::create([
+                    'date' => now()->format('Y-m-d'),
+                    'reference' => 'INV/'.$sale->reference,
+                    'nominal' => $request->nominal_manual,
+                    'sale_id' => $sale->id,
+                    'note' => $request->keterangan_manual
+                ]);
+            }
              session()->forget('keterangan_manual');
              session()->forget('nominal_manual');
              session()->forget('manual');
-            Cart::instance('sale')->destroy();
-             //return response()->json(['success'=>'Sales Sukses disimpan.']);
-
-            
              toast('POS Sale Created!', 'success');
               return redirect()->route('sales.index');
 

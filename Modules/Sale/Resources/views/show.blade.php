@@ -52,9 +52,7 @@
                                     Status: <strong>{{ $sale->status }}</strong>
                                 </div> 
 
-                                 <div>
-                                    type: <strong>{{ $sale->saleDetails->first()->manual }}</strong>
-                                </div>
+                                
                                 
                             </div>
 
