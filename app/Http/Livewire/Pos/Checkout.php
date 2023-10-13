@@ -38,8 +38,8 @@ class Checkout extends Component
 
 
     public $keterangan_manual = '';
-
-
+    public $manual = 0;
+    public $nominal_manual = 0;
 
     public $sub_total = 0;
     public $sub_total_hidden = 0;
@@ -164,6 +164,9 @@ class Checkout extends Component
         $this->item_discount = [];
         $this->cart = [];
         $this->total_amount;
+        $this->keterangan_manual = session('keterangan_manual', 'kosong');
+        $this->nominal_manual = session('nominal_manual', '0');
+        $this->manual = session('manual', '0');
        
         
     }
@@ -262,9 +265,6 @@ class Checkout extends Component
                 'harga_karat'   =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
 
                 'product_tax'           => 1,
-                'manual'                => 0,
-                'nominal_manual'        => 0,
-                'keterangan_manual'     => 'kosong',
                 'unit_price'            =>1
             ]
             ]);
@@ -277,13 +277,16 @@ class Checkout extends Component
         //$this->emit('cartModal', $product);
     }
 
-public function setManualtype($rowId) {
-        Cart::instance($this->cart_instance)->update($rowId, ['options' => [
-            'keterangan_manual' => $this->keterangan_manual,
-        ]]);
-    }
 
-
+   public function setManualtype()
+    {
+        session([
+                'manual' => $this->manual,
+                'keterangan_manual' => $this->keterangan_manual,
+                'nominal_manual' => $this->nominal_manual
+                ]);
+       session()->flash('manual', 'Manual tipe diupdate');
+      }
 
 
 

@@ -36,8 +36,7 @@
     <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
     <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
     <input type="hidden" value="Other" name="payment_method"> 
-    <input type="hidden" value="Other" name="payment_method"> 
-
+   
 
 
 <div class="px-1">
@@ -96,28 +95,16 @@
     <label for="note">Grand Total</label> <span class="text-danger small" id="message"></span>
     {{-- <span id="final" class="text-black text-4xl"></span> --}}
     <input id="final" type="text" class="form-control text-black text-2xl" name="final" value="{{ $total_amount }}" disabled>  
-
-
     <input value="{{ $total_amount }}" id="final_unmask" type="hidden" class="form-control" name="final_unmask">
+
+
 </div>
 
-
-@php
-   $manual = Cart::instance($this->cart_instance)->content();
-@endphp
- @foreach($manual as $items)
-              
-           <div class="form-group text-left">
-            <label class="text-left" for="nominal">Nominal <span class="text-danger">*</span>
-            </label>
-       <input id="keterangan_manual" type="text" class="form-control"
-        name="keterangan_manual" value=" {{ $items->options->keterangan_manual }}" required>
-            </div>
-  @endforeach
+ <input type="hidden" id="nominal_manual" name="nominal_manual" value="{{ $nominal_manual }}">
+ <input type="hidden" id="keterangan_manual" name="keterangan_manual" value="{{ $keterangan_manual }}">
 
 
-
-
+ 
 </div>
 
 

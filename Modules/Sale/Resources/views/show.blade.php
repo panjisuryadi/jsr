@@ -50,7 +50,9 @@
                                 <div>Date: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</div>
                                 <div>
                                     Status: <strong>{{ $sale->status }}</strong>
-                                </div>
+                                </div> 
+
+                                
                                 
                             </div>
 

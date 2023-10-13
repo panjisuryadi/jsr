@@ -13,6 +13,7 @@ use Modules\Product\Entities\Product;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
+use Modules\Sale\Entities\SaleManual;
 use Modules\Sale\Http\Requests\StorePosSaleRequest;
 use Auth;
 
@@ -37,7 +38,7 @@ class PosController extends Controller
 
       $input = $request->all();
       $input = $request->except('_token');
-     // dd($input);
+    
         if ($input['tipebayar'] == 'cicil') {
             $tipebayar = 'cicilan';
             $payment_status = 'partial';
@@ -48,12 +49,13 @@ class PosController extends Controller
 
         } else {
             $tipebayar = 'tunai';
-            $bayar = preg_replace("/[^0-9]/", "", $input['tunai']);
+            $bayar = preg_replace("/[^0-9]/", "", $input['tunai'] ?? $input['harga_awal']);
             $payment_status = 'Paid';
             $jatuh_tempo = null;
             $total_amount = $input['final_unmask'];
         }
 
+      //dd($input['harga_awal']);
      // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
          $sale = Sale::create([
                 'date' => date('Y-m-d'),
@@ -79,13 +81,46 @@ class PosController extends Controller
                 'cabang_id' => Auth::user()->namacabang->cabang()->first()->id,
             ]);
 
+  
+       foreach (Cart::instance('sale')->content() as $cart_item) {
+                SaleDetails::create([
+                    'sale_id' => $sale->id,
+                    'product_id' => $cart_item->id,
+                    'product_name' => $cart_item->name,
+                    'product_code' => $cart_item->options->code,
+                    'quantity' => $cart_item->qty,
+                    'price' => $cart_item->price,
+                    'unit_price' => 1,
+                    'product_discount_amount' => 0,
+                    'product_tax_amount' => 0,
+                   
+                
+                ]);
+
+            }
+
+          Cart::instance('sale')->destroy();
              //return response()->json(['success'=>'Sales Sukses disimpan.']);
+           if ($request->nominal_manual > 0) {
+                SaleManual::create([
+                    'date' => now()->format('Y-m-d'),
+                    'reference' => 'INV/'.$sale->reference,
+                    'nominal' => $request->nominal_manual,
+                    'sale_id' => $sale->id,
+                    'note' => $request->keterangan_manual
+                ]);
+            }
+             session()->forget('keterangan_manual');
+             session()->forget('nominal_manual');
+             session()->forget('manual');
              toast('POS Sale Created!', 'success');
               return redirect()->route('sales.index');
 
 
 
 }
+
+
     public function store_old(StorePosSaleRequest $request) {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
