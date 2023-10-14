@@ -44,7 +44,7 @@
         <tr>
             <td class="w-50">
                 <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-                Nama Pegawai</label>
+                Nama Cabang</label>
             </td>
             <td class="w-50">
                 <div class="form-group">
@@ -53,9 +53,10 @@
                    
                       
                         class="form-control">
-                        <option value="01">Asep</option>
-                        <option value="02">Wawan</option>
-                
+                        <option value="" selected disabled>Pilih Cabang</option>
+                        @foreach ($cabang_for_incentive as $cabang )
+                            <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </td>

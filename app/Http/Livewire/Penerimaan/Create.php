@@ -24,10 +24,11 @@ class Create extends Component
    
     public $bulan = '';
 
+    public $cabang_for_incentive;
   
     public function mount()
     {
-       
+       $this->cabang_for_incentive = Cabang::whereIn('id',[2,3])->get();
       
     }
     public function render()

@@ -343,13 +343,11 @@ public function index_data_insentif(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
-            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang()->first()->id)->get();
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.tambah_insentif',
                compact('module_name',
                 'module_action',
                 'module_title',
-                'cabang',
                 'module_icon', 'module_model'));
         }
 
