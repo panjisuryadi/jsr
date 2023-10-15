@@ -17,20 +17,20 @@
 
             <div class="card-body">
                 @include('utils.alerts')
-                <form action="{{ route('adjustments.store') }}" method="POST">
+                <form wire:submit.prevent="store">
                     @csrf
                     <div class="form-row">
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="reference">Reference <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" name="reference" required readonly value="ADJ">
+                                <input type="text" class="form-control form-control-sm" name="reference" wire:model="reference" required readonly>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="from-group">
                                 <div class="form-group">
                                     <label for="date">Date <span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control form-control-sm" name="date" required value="{{ now()->format('Y-m-d') }}">
+                                    <input type="date" class="form-control form-control-sm" name="date" wire:model="date" required>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
 
                     <div class="form-group">
                         <label for="notes">Note <span class="small text-danger">( @lang('If Needed'))</span></label>
-                        <textarea name="notes" id="notes" rows="3" class="form-control"></textarea>
+                        <textarea wire:model="note" name="notes" id="notes" rows="3" class="form-control"></textarea>
                     </div>
 
 

@@ -24,4 +24,8 @@ class AdjustmentSetting extends Model
     {
         return \Modules\Adjustment\Database\factories\AdjustmentSettingFactory::new();
     }
+
+    public static function stop(){
+        self::first()->delete();
+    }
 }
