@@ -347,7 +347,7 @@ class AdjustmentController extends Controller
     }
 
     public function getdata(Request $request){
-        $get_data = Adjustment::whereNotNull('id');
+        $get_data = Adjustment::withCount('products')->whereNotNull('id');
 
         $get_data = $get_data->orderBy('created_at','desc')->get();
 
@@ -357,10 +357,10 @@ class AdjustmentController extends Controller
                 return view('adjustment::partials.actions', compact('data'));
             })
             ->addColumn('locations', function ($data) {
-                return $data->adjustedProducts->count().' Location';
+                return $data->location->descriptive_location_type;
             })
             ->addColumn('product', function ($data) {
-                return $data->adjustedProducts->count().' Product';
+                return $data->products_count.' Product';
             })
             ->addColumn('summary', function ($data) {
                 $lebih = 0;

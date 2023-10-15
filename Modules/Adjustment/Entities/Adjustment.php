@@ -32,5 +32,13 @@ class Adjustment extends Model
         return $this->morphedByMany(StockOffice::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps();
     }
 
+    public function products(){
+        return $this->hasMany(AdjustmentLocation::class,'adjustment_id');
+    }
+
+    public function location(){
+        return $this->hasOne(AdjustmentLocation::class, 'adjustment_id');
+    }
+
 
 }
