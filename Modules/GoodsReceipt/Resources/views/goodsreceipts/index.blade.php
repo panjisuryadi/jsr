@@ -171,8 +171,8 @@ jQuery.noConflict();
          {
 
             $('.modal-dialog').removeClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').addClass('modal-xl');
+            // $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-sm');
             $('#ModalHeaderGroupkategori').html('<i class="bi bi-grid-fill"></i> &nbspGroup {{ Label_case(' Kategori') }}');
         }
         $('#ModalContentGroupKategori').load($(this).attr('href'));

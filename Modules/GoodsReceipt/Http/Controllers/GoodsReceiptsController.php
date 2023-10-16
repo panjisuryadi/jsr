@@ -326,8 +326,10 @@ public function index_data(Request $request)
  */
 public function edit_status($id)
 {
+    $module_title = $this->module_title;
     $module_name = $this->module_name;
     $module_path = $this->module_path;
+    $module_icon = $this->module_icon;
     $module_model = $this->module_model;
     $module_name_singular = Str::singular($module_name);
     $module_action = 'Update Status';
@@ -371,6 +373,10 @@ public function update_status_pembelian (Request $request){
             }
 
             DB::commit();
+        } else {
+            $tipe_pembelian = TipePembelian::findOrFail($pembelian_id);
+            $tipe_pembelian->lunas = 'lunas';
+            $tipe_pembelian->save();
         }
     
     } catch (\Throwable $e) {
