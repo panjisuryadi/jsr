@@ -271,10 +271,16 @@ public function index_data(Request $request)
                      {
                          $info =  'Jatuh Tempo';
                          $pembayaran =  tgljam(@$data->pembelian->jatuh_tempo);
+                         if(!empty(@$data->pembelian->lunas) && @$data->pembelian->lunas == 'lunas') {
+                            $info .=' (Lunas) ';
+                         }
                      }else if ($data->pembelian->tipe_pembayaran == 'cicil') 
                      {
                          $info =  'Cicilan';
                          $pembayaran =  @$data->pembelian->cicil .' kali';
+                         if(!empty(@$data->pembelian->lunas) && @$data->pembelian->lunas == 'lunas') {
+                            $pembayaran .=' (Lunas) ';
+                         }
                      }
                      else{
                          $info =  '';
