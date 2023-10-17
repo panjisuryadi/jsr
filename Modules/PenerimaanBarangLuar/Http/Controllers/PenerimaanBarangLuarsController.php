@@ -303,7 +303,12 @@ public function index_data_insentif(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
-            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang()->first()->id)->get();
+            $cabang = null;
+            if(auth()->user()->isUserCabang()){
+                $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+            }else{
+                $cabang = Cabang::all();
+            }
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
@@ -399,11 +404,12 @@ public function store(Request $request)
             'nama_products' => 'required',
             'kadar' => 'required',
             'berat' => 'required',
-            'nominal' => 'required',
+            'nilai_angkat' => 'required',
+            'nilai_tafsir' => 'required',
+            'nilai_selisih' => 'required',
             'cabang_id' => 'required|exists:cabangs,id'
         ]);
 
-        $nominal = preg_replace("/[^0-9]/", "", $request->input('nominal'));
         $penerimaanBarangLuar = PenerimaanBarangLuar::create([
             'date' => $request->input('date'),
             'customer_name' => $request->input('customer_name')??null,
@@ -412,7 +418,9 @@ public function store(Request $request)
             'product_name' => $request->input('nama_products'),
             'karat_id' => $request->input('kadar'),
             'weight' => $request->input('berat'),
-            'nominal' =>  $nominal,
+            'nilai_angkat' =>  $request->input('nilai_angkat'),
+            'nilai_tafsir' =>  $request->input('nilai_tafsir'),
+            'nilai_selisih' =>  $request->input('nilai_selisih'),
             'cabang_id' => $request->input('cabang_id')
         ]);
         event(new PenerimaanBarangLuarCreated($penerimaanBarangLuar));

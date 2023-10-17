@@ -206,11 +206,11 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
         <input class="form-control"
         type="text"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
-        type-currency="IDR"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
         @if ($errors->has($field_name))
@@ -232,11 +232,11 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
         <input class="form-control"
         type="text"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
-        type-currency="IDR"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
         @if ($errors->has($field_name))
@@ -250,20 +250,20 @@
 
  <div class="form-group">
         <?php
-        $field_name = 'selisih';
+        $field_name = 'nilai_selisih';
         $field_lable = label_case($field_name);
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
+        <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
         <input class="form-control"
         type="text"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
-        type-currency="IDR"
         value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
+        placeholder="{{ $field_placeholder }}" readonly>
         @if ($errors->has($field_name))
             <span class="invalid feedback"role="alert">
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -327,6 +327,7 @@
     <x-toastr />
 
 @push('page_scripts')
+<script src="{{  asset('js/jquery.min.js') }}"></script>
 <script type="text/javascript">
     document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
         element.addEventListener('keyup', function(e) {
@@ -345,6 +346,26 @@
                 this.setSelectionRange(cursorPostion, cursorPostion);
             }
         });
+    });
+
+    function unmaskedCurrency(input){
+        return input.replace(/[^0-9]/g, "");
+    }
+
+    function calculateSelisih(){
+        if($('#nilai_angkat').val() && $('#nilai_tafsir').val()){
+            $('#nilai_selisih').val($('#nilai_angkat').val() - $('#nilai_tafsir').val())
+            $('#nilai_selisih_text').html('Rp. '+Number($('#nilai_selisih').val()).toLocaleString())
+        }
+    }
+
+    $('#nilai_angkat').on('keyup', function () {
+        $('#nilai_angkat_text').html('Rp. '+Number($(this).val()).toLocaleString())
+        calculateSelisih()
+    });
+    $('#nilai_tafsir').on('keyup', function () {
+        $('#nilai_tafsir_text').html('Rp. '+Number($(this).val()).toLocaleString())
+        calculateSelisih()
     });
 </script>
 @endpush

@@ -102,4 +102,8 @@ class User extends Authenticatable implements HasMedia
     public function scopeIsActive(Builder $builder) {
         return $builder->where('is_active', 1);
     }
+
+    public function isUserCabang(){
+        return !is_null($this->namacabang);
+    }
 }
