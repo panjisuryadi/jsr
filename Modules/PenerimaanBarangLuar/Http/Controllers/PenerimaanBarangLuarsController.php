@@ -198,7 +198,7 @@ public function index_data_insentif(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = PenerimaanBarangLuarIncentive::all();
+        $$module_name = PenerimaanBarangLuarIncentive::whereNotNull('cabang_id')->get();
         $data = $$module_name;
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {

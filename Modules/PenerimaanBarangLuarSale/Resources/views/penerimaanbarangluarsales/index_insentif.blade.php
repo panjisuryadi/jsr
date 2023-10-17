@@ -37,7 +37,7 @@
                                 <tr>
               <th style="width: 5%!important;">No</th>
               <th style="width: 9%!important;">Bulan</th>
-              <th style="width: 10%!important;">Cabang</th>
+              <th style="width: 10%!important;">Sales</th>
               <th style="width: 10%!important;">Insentif</th>
               <th style="width: 10%!important;" class="text-center">{{ __('Action') }}
                                     </th>
@@ -100,9 +100,9 @@
                 },
 
                 {data: 'bulan', name:  'bulan'},
-                {data: 'cabang', name: 'cabang'},
+                {data: 'sales', name: 'sales'},
                       
-                {data: 'nominal_beli', name: 'nominal_beli'},
+                {data: 'incentive', name: 'incentive'},
            
 
                 {

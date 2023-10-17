@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuarIncentive;
 use Modules\PenerimaanBarangLuarSale\Events\PenerimaanBarangLuarSaleCreated;
 use Modules\PenerimaanBarangLuarSale\Models\PenerimaanBarangLuarSale;
 
@@ -182,7 +183,7 @@ public function index_data_insentif(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = $module_model::get();
+        $$module_name = PenerimaanBarangLuarIncentive::whereNotNull('sales_id')->get();
         $data = $$module_name;
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
@@ -193,44 +194,26 @@ public function index_data_insentif(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                           ->editColumn('bulan', function ($data) {
-                                return \Carbon\Carbon::parse($data->created_at)->format('F');
-                              })
-
-                            ->editColumn('kadar', function ($data) {
+                            ->editColumn('bulan', function ($data) {
                                 $tb = '<div class="font-semibold items-center text-center">
-                                        ' . $data->karat->name . '
-                                       </div>';
-                                   return $tb;
-                               })
-                            ->editColumn('berat', function ($data) {
-                            $tb = '<div class="font-semibold items-center text-center">
-                                    ' . $data->weight . '
-                                     gram </div>';
-                                return $tb;
-                            })
-                            ->editColumn('nominal_beli', function ($data) {
-                            $tb = '<div class="font-semibold items-center text-center">
-                                    ' . format_uang($data->nominal) . '
+                                    ' . \Carbon\Carbon::parse($data->date)->format('F Y') . '
                                     </div>';
                                 return $tb;
                             })
 
-                         ->addColumn('status', function ($data) {
-                            $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            $module_path = $this->module_path;
-                            return view(''.$module_name.'::'.$module_path.'.status',
-                            compact('module_name', 'data', 'module_model'));
-                                })
-
-
-                            ->editColumn('cabang', function ($data) {
-                                $tb = '<div class="font-semibold items-center text-center">
-                                        ' . $data->cabang->name . '
+                            ->editColumn('incentive', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">Rp.
+                                        ' . number_format($data->incentive) . '
                                         </div>';
                                     return $tb;
-                            })
+                                })
+    
+                                ->editColumn('sales', function ($data) {
+                                    $tb = '<div class="font-semibold items-center text-center">
+                                            ' . $data->sales->name . '
+                                            </div>';
+                                        return $tb;
+                                })
 
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
@@ -242,16 +225,12 @@ public function index_data_insentif(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['action','nama_customer',
+                        ->rawColumns(['action',
                                'bulan',
-                               'cabang',
-                               'kadar',
-                               'berat',
-                               'status',
-                               'nominal_beli',
                                'updated_at',
-                               'keterangan',
-                               'cabang'])
+                               'sales',
+                               'incentive'
+                               ])
                         ->make(true);
                      }
 
