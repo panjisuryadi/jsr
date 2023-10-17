@@ -26,7 +26,7 @@ use Modules\GoodsReceipt\Models\TipePembelian;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Modules\Stok\Models\StockOffice;
-
+use Illuminate\Support\Facades\DB;
 
 class GoodsReceiptsController extends Controller
 {
@@ -205,7 +205,7 @@ public function index_data(Request $request)
         $module_action = 'List';
 
        // $$module_name = $module_model::active()->latest()->get();
-        $$module_name = $module_model::latest()->get();
+        $$module_name = $module_model::with('pembelian')->latest()->get();
 
         $data = $$module_name;
 
@@ -271,10 +271,16 @@ public function index_data(Request $request)
                      {
                          $info =  'Jatuh Tempo';
                          $pembayaran =  tgljam(@$data->pembelian->jatuh_tempo);
+                         if(!empty(@$data->pembelian->lunas) && @$data->pembelian->lunas == 'lunas') {
+                            $info .=' (Lunas) ';
+                         }
                      }else if ($data->pembelian->tipe_pembayaran == 'cicil') 
                      {
                          $info =  'Cicilan';
                          $pembayaran =  @$data->pembelian->cicil .' kali';
+                         if(!empty(@$data->pembelian->lunas) && @$data->pembelian->lunas == 'lunas') {
+                            $pembayaran .=' (Lunas) ';
+                         }
                      }
                      else{
                          $info =  '';
@@ -318,6 +324,86 @@ public function index_data(Request $request)
                         ->make(true);
                      }
 
+
+/**
+ * Show the form for editing the specified resource.
+ * @param int $id
+ * @return Renderable
+ */
+public function edit_status($id)
+{
+    $module_title = $this->module_title;
+    $module_name = $this->module_name;
+    $module_path = $this->module_path;
+    $module_icon = $this->module_icon;
+    $module_model = $this->module_model;
+    $module_name_singular = Str::singular($module_name);
+    $module_action = 'Update Status';
+    abort_if(Gate::denies('edit_'.$module_name.''), 403);
+    $data = TipePembelian::where('goodsreceipt_id',$id)->with('detailCicilan', 'goodreceipt')->first();
+    return view(''.$module_name.'::'.$module_path.'.modal.edit_status',
+        compact('module_name',
+        'module_action',
+        'data',
+        'module_title',
+        'module_icon', 'module_model'));
+}
+
+public function update_status_pembelian (Request $request){
+    $is_cicilan = $request->post('is_cicilan', false);
+    $pembelian_id = $request->post('pembelian_id');
+    try {
+        if ( $is_cicilan ) {
+            $validator = \Validator::make($request->all(),[
+                'cicilan_id' => 'required',
+                'jumlah_cicilan' => 'required|max:' .$request->post('total_harus_bayar')+1,
+            ], 
+            [
+                'jumlah_cicilan.max' => 'Jumlah cicilan tidak boleh lebih dari harus dibayar',
+            ]);
+            
+            if (!$validator->passes()) {
+                return response()->json(['error'=>$validator->errors()]);
+            }
+                    
+            $penerimaan_barang_cicilan_id = $request->post('cicilan_id');
+            $jumlah_cicilan = $request->post('jumlah_cicilan');
+
+            DB::beginTransaction();
+            $penerimaan_barang_cicilan = GoodsReceiptInstallment::findOrFail($penerimaan_barang_cicilan_id);
+            $penerimaan_barang_cicilan->jumlah_cicilan = $jumlah_cicilan;
+            $penerimaan_barang_cicilan->save();
+
+            $tipe_pembelian = TipePembelian::with('goodreceipt')->findOrFail($pembelian_id);
+            if ($this->cicilanExist($pembelian_id) == $tipe_pembelian->goodreceipt->total_emas) {
+                $tipe_pembelian->lunas = 'lunas';
+                $tipe_pembelian->save();
+            }
+
+            DB::commit();
+        } else {
+            $tipe_pembelian = TipePembelian::findOrFail($pembelian_id);
+            $tipe_pembelian->lunas = 'lunas';
+            $tipe_pembelian->save();
+        }
+    
+    } catch (\Throwable $e) {
+        DB::rollBack();
+        return response()->json(['failed'=> $e->getMessage()]);
+    }
+
+    return response()->json(['success'=>' Sukses update cicilan.']);
+}
+
+/** Fungsi ini digunakan untuk mengecek apakah masih ada cicilan atau tidak */
+private function cicilanExist($payment_id) {
+    return GoodsReceiptInstallment::where('payment_id', $payment_id)
+    // ->where(function($q) {
+    //     $q->whereNull('jumlah_cicilan')
+    //     ->orWhere('jumlah_cicilan', 0);
+    // })
+    ->sum('jumlah_cicilan');
+}
 
 
 public function index_data_completed(Request $request)

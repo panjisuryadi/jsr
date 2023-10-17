@@ -1,11 +1,14 @@
 <div class="text-center">
 
-  <a href="{{ route("$module_name.cetak",encode_id($data->id)) }}"
-    data-toggle="tooltip"
-    target="_blank" 
-     class="btn btn-outline-success btn-sm py-1">
-        @lang('Cetak')
-    </a> 
+    @can('edit_'.$module_name.'')
+        <a href="{{ route(''.$module_name.'.edit_status', $data->id) }}"
+        id="edit_status"
+        data-toggle="tooltip"
+        class="btn btn-outline-info btn-sm {{ !empty($data->pembelian->lunas) || $data->pembelian->tipe_pembayaran == 'lunas' ? 'disabled' : '' }}">
+            &nbsp;@lang('Status')
+        </a>
+    @endcan
+
 <a href="{{ route("$module_name.show",encode_id($data->id)) }}"
 
     data-toggle="tooltip"

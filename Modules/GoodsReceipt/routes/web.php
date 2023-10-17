@@ -41,6 +41,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/add-products-categories/{id}", ['as' => "$module_name.add_products_by_categories", 'uses' => "$controller_name@add_products_by_categories"]);
 
+    Route::get("$module_name/{id}/edit_status", ['as' => "$module_name.edit_status", 'uses' => "$controller_name@edit_status"]);
+    Route::post("$module_name/update_status_pembelian/", ['as' => "$module_name.update_status_pembelian", 'uses' => "$controller_name@update_status_pembelian"]);
+
+
     Route::resource("$module_name", "$controller_name");
 
 });
