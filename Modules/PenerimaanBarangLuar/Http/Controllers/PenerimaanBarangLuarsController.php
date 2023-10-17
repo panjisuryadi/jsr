@@ -295,6 +295,7 @@ public function index_data_insentif(Request $request)
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
             $cabang = null;
+            $code = $module_model::generateCode();
             if(auth()->user()->isUserCabang()){
                 $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
             }else{
@@ -306,6 +307,7 @@ public function index_data_insentif(Request $request)
                 'module_action',
                 'module_title',
                 'cabang',
+                'code',
                 'module_icon', 'module_model'));
         }
 

@@ -155,6 +155,7 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
     </script>
 
 <script type="text/javascript">
+var table = jQuery('#datatable').DataTable();
 jQuery.noConflict();
 (function( $ ) {
 //group modal kategori
@@ -170,8 +171,8 @@ jQuery.noConflict();
          {
 
             $('.modal-dialog').removeClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').addClass('modal-xl');
+            // $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').addClass('modal-sm');
             $('#ModalHeaderGroupkategori').html('<i class="bi bi-grid-fill"></i> &nbspGroup {{ Label_case(' Kategori') }}');
         }
         $('#ModalContentGroupKategori').load($(this).attr('href'));
@@ -181,6 +182,16 @@ jQuery.noConflict();
                         keyboard: true,
                         show: true
                 });
+    });
+
+    $(document).on('click', '#edit_status', function(e){
+         e.preventDefault();
+        $('.modal-dialog').addClass('modal-md');
+        $('.modal-dialog').removeClass('modal-sm');
+        $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp; Edit Status Pembelian');
+
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
     });
 
 
