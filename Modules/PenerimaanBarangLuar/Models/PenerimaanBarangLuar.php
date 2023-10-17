@@ -22,6 +22,8 @@ class PenerimaanBarangLuar extends Model
 
     //  ];
     protected $guarded = [];
+    public const GRCODE = 'BL';
+
 
   // public function products() {
   //       return $this->hasMany(Product::class, 'category_id', 'id');
@@ -41,6 +43,23 @@ class PenerimaanBarangLuar extends Model
 
     public function cabang(){
       return $this->belongsTo(Cabang::class);
+    }
+
+    public static function generateCode()
+    {
+        $dateCode = self::GRCODE . '-';
+        $lastOrder = self::select([\DB::raw('MAX(penerimaanbarangluars.no_barang_luar) AS last_code')])
+            ->where('no_barang_luar', 'like', $dateCode . '%')
+            ->first();
+        $lastGrCode = !empty($lastOrder['last_code']) ? $lastOrder['last_code'] : null;
+        $orderCode = $dateCode . '00001';
+        if ($lastGrCode) {
+            $lastOrderNumber = str_replace($dateCode, '', $lastGrCode);
+            $nextOrderNumber = sprintf('%05d', (int)$lastOrderNumber + 1);
+            $orderCode = $dateCode . $nextOrderNumber;
+        }
+
+        return $orderCode;
     }
 
 

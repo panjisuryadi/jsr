@@ -43,8 +43,8 @@
             <input type="text" name="{{ $field_name }}"
             class="form-control {{ $invalid }}"
             name="{{ $field_name }}"
-            value="{{ old($field_name) }}"
-            placeholder="{{ $field_placeholder }}" {{ $required }}>
+            value="{{ !empty(old($field_name)) ? old($field_name) : $code }}"
+            placeholder="{{ $field_placeholder }}" {{ $required }} readonly>
             @if ($errors->has($field_name))
             <span class="invalid feedback"role="alert">
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
