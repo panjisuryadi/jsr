@@ -123,12 +123,7 @@ public function index_data(Request $request)
                                      gram </div>';
                                 return $tb;
                             })
-                            ->editColumn('nominal_beli', function ($data) {
-                            $tb = '<div class="font-semibold items-center text-center">
-                                    ' . format_uang($data->nominal) . '
-                                    </div>';
-                                return $tb;
-                            })
+                            
 
                          ->addColumn('status', function ($data) {
                             $module_name = $this->module_name;
@@ -156,15 +151,31 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
+                        ->addColumn('nilai', function ($data) {
+                            $tb = '<div class="justify items-left text-left">'; 
+                          
+                            $tb .= '<div class="text-gray-800">
+                                    Nilai Angkat :<strong>Rp.' . number_format($data->nilai_angkat) . '
+                                   </strong></div>'; 
+                            $tb .= '<div class="text-gray-800">
+                                    Nilai Tafsir :<strong>Rp.' . number_format($data->nilai_tafsir) . '
+                                   </strong></div>';   
+
+                            $tb .= '<div class="text-gray-800">
+                                    Nilai Selisih :<strong>Rp.' . number_format($data->nilai_selisih) . '
+                                   </strong></div>';               
+                            $tb .= '</div>'; 
+                               return $tb;
+                        })
                         ->rawColumns(['action','nama_customer',
                                'no_barang_luar',
                                'nama_produk',
                                'kadar',
                                'berat',
                                'status',
-                               'nominal_beli',
                                'updated_at',
                                'keterangan',
+                               'nilai',
                                'cabang'])
                         ->make(true);
                      }

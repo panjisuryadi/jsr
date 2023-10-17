@@ -88,9 +88,9 @@
                                     <th style="width: 5%!important;">No</th>
                                     <th style="width: 9%!important;">No Barang Luar</th>
                                     <th style="width: 10%!important;">Detail Produk</th>
+                                    <th style="width: 10%!important;">Nilai Produk</th>
                                    
                              <th style="width: 10%!important;">Status</th>
-                             <th style="width: 10%!important;">Nominal Beli</th>
                                   
                                     <th style="width: 10%!important;" class="text-center">
                                         {{ __('Action') }}
@@ -155,9 +155,9 @@
 
                 {data: 'no_barang_luar', name:  'no_barang_luar'},
                 {data: 'nama_produk', name: 'nama_produk'},
+                {data: 'nilai', name: 'nilai'},
                 {data: 'status', name: 'status'},
             
-                {data: 'nominal_beli', name: 'nominal_beli'},
            
 
                 {
