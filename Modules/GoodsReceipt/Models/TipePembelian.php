@@ -15,7 +15,7 @@ class TipePembelian extends Model
 
 
     public function goodreceipt() {
-        return $this->belongsTo(GoodsReceipt::class);
+        return $this->belongsTo(GoodsReceipt::class,'goodsreceipt_id', 'id');
     }
 
     public function isCicil(){

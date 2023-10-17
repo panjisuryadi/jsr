@@ -340,7 +340,7 @@ public function edit_status($id)
     $module_name_singular = Str::singular($module_name);
     $module_action = 'Update Status';
     abort_if(Gate::denies('edit_'.$module_name.''), 403);
-    $data = TipePembelian::where('goodsreceipt_id',$id)->with('detailCicilan')->first();
+    $data = TipePembelian::where('goodsreceipt_id',$id)->with('detailCicilan', 'goodreceipt')->first();
     return view(''.$module_name.'::'.$module_path.'.modal.edit_status',
         compact('module_name',
         'module_action',
@@ -356,8 +356,10 @@ public function update_status_pembelian (Request $request){
         if ( $is_cicilan ) {
             $validator = \Validator::make($request->all(),[
                 'cicilan_id' => 'required',
-                'jumlah_cicilan' => 'required',
-                
+                'jumlah_cicilan' => 'required|max:' .$request->post('total_harus_bayar')+1,
+            ], 
+            [
+                'jumlah_cicilan.max' => 'Jumlah cicilan tidak boleh lebih dari harus dibayar',
             ]);
             
             if (!$validator->passes()) {
@@ -372,8 +374,8 @@ public function update_status_pembelian (Request $request){
             $penerimaan_barang_cicilan->jumlah_cicilan = $jumlah_cicilan;
             $penerimaan_barang_cicilan->save();
 
-            if ($this->cicilanExist($pembelian_id) == 0) {
-                $tipe_pembelian = TipePembelian::findOrFail($pembelian_id);
+            $tipe_pembelian = TipePembelian::with('goodreceipt')->findOrFail($pembelian_id);
+            if ($this->cicilanExist($pembelian_id) == $tipe_pembelian->goodreceipt->total_emas) {
                 $tipe_pembelian->lunas = 'lunas';
                 $tipe_pembelian->save();
             }
@@ -396,10 +398,11 @@ public function update_status_pembelian (Request $request){
 /** Fungsi ini digunakan untuk mengecek apakah masih ada cicilan atau tidak */
 private function cicilanExist($payment_id) {
     return GoodsReceiptInstallment::where('payment_id', $payment_id)
-    ->where(function($q) {
-        $q->whereNull('jumlah_cicilan')
-        ->orWhere('jumlah_cicilan', 0);
-    })->count();
+    // ->where(function($q) {
+    //     $q->whereNull('jumlah_cicilan')
+    //     ->orWhere('jumlah_cicilan', 0);
+    // })
+    ->sum('jumlah_cicilan');
 }
 
 

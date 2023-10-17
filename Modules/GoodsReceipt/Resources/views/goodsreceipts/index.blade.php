@@ -186,7 +186,7 @@ jQuery.noConflict();
 
     $(document).on('click', '#edit_status', function(e){
          e.preventDefault();
-        $('.modal-dialog').addClass('modal-lg');
+        $('.modal-dialog').addClass('modal-md');
         $('.modal-dialog').removeClass('modal-sm');
         $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp; Edit Status Pembelian');
 

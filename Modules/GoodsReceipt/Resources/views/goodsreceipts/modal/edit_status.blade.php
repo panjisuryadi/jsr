@@ -1,5 +1,22 @@
+@php
+    $dibayar = 0;
+    $isCicil = ($data->tipe_pembayaran == 'cicil') ? true : false;
+    if($data->tipe_pembayaran == 'cicil') {
+        foreach ($data->detailCicilan as $key => $value) {
+            $dibayar += $value->jumlah_cicilan;
+        }
+    }
+    $total_harus_bayar = number_format($data->goodreceipt->total_emas, 2) - $dibayar;
+@endphp
 <div class="px-3">
     <x-library.alert />
+    @if(!empty($total_harus_bayar) && $isCicil )
+        <span class="text-dark"> Total emas yang harus dibayarkan </span> <span class="ml-1 text-danger"> {{  $total_harus_bayar }} </span>
+    @else 
+        <span class="ml-1 text-warning">Tidak ada yang harus dibayar </span>
+    @endif
+
+
     <form id="FormEdit" action="{{ route(''.$module_name.'.update_status_pembelian' )}}" method="POST">
         @csrf
         @method('post')
@@ -7,7 +24,7 @@
         <div class="form-group">
             <input class="form-control" type="hidden" name="pembelian_id" id="" value="{{ $data->id }}">
         </div>
-        @if($data->tipe_pembayaran == 'cicil')
+        @if($isCicil)
             <div class="flex flex-row grid grid-cols-2 gap-4">
                 <div class="form-group">
                     <label for="cicilan_id">@lang('Pilih Cicilan') <span class="text-danger">*</span></label>
@@ -39,12 +56,12 @@
                 </div>
             </div>
         @else
+        <span class="text-dark"> Tanggal jatuh tempo {{ $data->jatuh_tempo }} <span class="ml-1 text-warning">23:59 .</span> <span class="text-danger"> Klik update untuk memproses. </span>
+
         <div class="flex flex-row grid grid-cols-2 gap-4">
             <div class="form-group">
-                <label >  <div class="text-center"><span class="text-dark"> Tanggal jatuh tempo {{ $data->jatuh_tempo }} </span><span class="ml-1 text-warning">23:59</span></div> <span class="text-danger">Klik update untuk memproses. </span></label>
-            </div>
-            <div class="form-group">
                 <input class="form-control" type="hidden" name="is_cicilan" id="" value="0">
+                <input class="form-control" type="hidden" name="total_harus_bayar" id="" value="{{ $total_harus_bayar }}">
             </div>
         </div>
             
@@ -59,13 +76,9 @@ jQuery.noConflict();
 (function( $ ) {
 
 function autoRefresh(){
-    // if(!table){
-    //     var table = $('#datatable').DataTable();
-    // }
-    console.log(table)
     table.ajax.reload();
-
 }
+
 function Update()
 {
     $.ajax({
@@ -84,7 +97,6 @@ function Update()
                             $('#tombol_close').trigger('click');
                         }, 3000);
 
-                    console.log(table)
                 }else{
                     printErrorMsg(data.error);
                 }
