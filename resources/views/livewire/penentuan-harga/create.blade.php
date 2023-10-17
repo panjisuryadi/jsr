@@ -8,7 +8,9 @@
             wire.model="karat_id" 
             wire:change="pilihKarat($event.target.value)" 
             name="karat_id" id="karat_id" required>
-                @foreach(\Modules\Karat\Models\Karat::all() as $jp)
+                <option value=""> Pilih Karat</option>
+
+                @foreach(\Modules\Karat\Models\Karat::whereNull('parent_id')->get() as $jp)
                 <option value="{{ $jp->id }}">{{ $jp->name }} | {{ $jp->kode }}</option>
                 @endforeach
             </select>
@@ -98,6 +100,7 @@
         <input class="form-control"
         type="text"
         wire:model="harga_emas"
+        wire:change="setHargaModal($event.target.value)"
         type-currency="IDR"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
@@ -131,11 +134,11 @@
         type-currency="IDR"
         name="{{ $field_name }}"
         wire:model="harga_modal"
-        wire:change="recalculateTotal"
-        wire:keyup="recalculateTotal"
+        {{-- wire:change="recalculateTotal"
+        wire:keyup="recalculateTotal" --}}
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
+        placeholder="{{ $field_placeholder }}" readonly>
         <span class="invalid feedback" role="alert">
             <span class="text-danger error-text {{ $field_name }}_err"></span>
         </span>
@@ -159,8 +162,7 @@
         type-currency="IDR"
         name="{{ $field_name }}"
         wire:model="harga_margin"
-        wire:change="recalculateTotal"
-        wire:keyup="recalculateTotal"
+        wire:change="setHargaJual($event.target.value)"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
         placeholder="{{ $field_placeholder }}">
@@ -181,14 +183,14 @@
            <td style="width: 23%;" class="text-left">
                 <input 
                 type="text" 
-                value="{{$HargaFinalRp}}" 
+                value="{{$harga_jual}}" 
                 class="form-control" 
                  readonly>  
 
                  <input 
                 type="hidden" 
                 wire.model="harga_jual" 
-                value="{{$HargaFinal}}" 
+                value="{{$harga_jual}}" 
                 class="form-control" 
                 name="harga_jual">
 
