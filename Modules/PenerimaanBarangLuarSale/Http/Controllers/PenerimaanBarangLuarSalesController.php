@@ -112,50 +112,60 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                                ->editColumn('nama_customer', function ($data) {
-                                    $tb = '<div class="items-center text-center">
-                                           <h3 class="text-sm font-medium text-gray-800">
-                                            ' . $data->customerSale->customer_name . '</h3>
-                                           </div>';
+                                ->editColumn('no_barang_luar', function ($data) {
+                                    $tb = '<div class="justify items-left text-left">'; 
+                                    $tb .= '<div class="text-gray-800">
+                                            Nomor :<strong><br>' . $data->no_barang_luar . '
+                                           </strong></div>';
+                                    $tb .= '<div class="text-gray-800">
+                                            Nama Customer Sales :<br><strong>' . $data->customerSale->customer_name . '
+                                           </strong></div>'; 
+                                    $tb .= '<div class="text-gray-800">
+                                            Sales :<strong><br>' . $data->sales->name . '
+                                           </strong></div>';               
+                                    $tb .= '</div>'; 
                                        return $tb;
-                                   })
-                                ->editColumn('nama_produk', function ($data) {
-                                    $tb = '<div class="font-semibold items-center text-center">
-                                            ' . $data->product_name . '
-                                        </div>';
-                                    return $tb;
-                                })
-                                ->editColumn('kadar', function ($data) {
-                                    $tb = '<div class="font-semibold items-center text-center">
-                                            ' . $data->karat->name . '
-                                            </div>';
+                                     })
+                                ->addColumn('detail_produk', function ($data) {
+                                    $tb = '<div class="justify items-left text-left">'; 
+                                    
+                                    $tb .= '<div class="text-gray-800">
+                                            Produk :<strong> ' . $data->product_name . '
+                                            </strong></div>'; 
+                                    $tb .= '<div class="text-gray-800">
+                                            Karat :<strong> ' . $data->karat->name . '
+                                            </strong></div>';   
+
+                                    $tb .= '<div class="text-gray-800">
+                                            Berat :<strong> ' . $data->weight . '
+                                            gram </strong></div>';               
+                                    $tb .= '</div>'; 
                                         return $tb;
-                                    })
-                                ->editColumn('berat', function ($data) {
-                                $tb = '<div class="font-semibold items-center text-center">
-                                        ' . $data->weight . '
-                                            gram </div>';
-                                    return $tb;
                                 })
-                                ->editColumn('nominal_beli', function ($data) {
-                                $tb = '<div class="font-semibold items-center text-center">
-                                        ' . $data->nominal . '
-                                        </div>';
-                                    return $tb;
-                                })
+                                
                                 ->editColumn('keterangan', function ($data) {
                                     $tb = '<div class="font-semibold items-center text-center">
                                             ' . $data->note . '
                                             </div>';
                                         return $tb;
                                 })
-                                ->editColumn('sales', function ($data) {
-                                    $tb = '<div class="font-semibold items-center text-center">
-                                            ' . $data->sales->name . '
-                                            </div>';
-                                        return $tb;
+                                ->addColumn('nilai_produk', function ($data) {
+                                    $tb = '<div class="justify items-left text-left">'; 
+                                  
+                                    $tb .= '<div class="text-gray-800">
+                                            Nilai Angkat :<strong> Rp.' . number_format($data->nilai_angkat) . '
+                                           </strong></div>'; 
+                                    $tb .= '<div class="text-gray-800">
+                                            Nilai Tafsir :<strong> Rp.' . number_format($data->nilai_tafsir) . '
+                                           </strong></div>';   
+        
+                                    $tb .= '<div class="text-gray-800">
+                                            Nilai Selisih :<strong> Rp.' . number_format($data->nilai_selisih) . '
+                                           </strong></div>';               
+                                    $tb .= '</div>'; 
+                                       return $tb;
                                 })
-                        ->rawColumns(['action','nama_customer','nama_produk','kadar','berat','nominal_beli','keterangan','sales'])
+                        ->rawColumns(['action','no_barang_luar','detail_produk','keterangan','nilai_produk'])
                         ->make(true);
                      }
 
@@ -332,7 +342,9 @@ public function store(Request $request)
             'nama_product' => 'required',
             'kadar' => 'required',
             'berat' => 'required',
-            'nominal' => 'required',
+            'nilai_angkat' => 'required',
+            'nilai_tafsir' => 'required',
+            'nilai_selisih' => 'required'
         ]);
         
         $penerimaanBarangLuar = PenerimaanBarangLuarSale::create([
@@ -344,7 +356,9 @@ public function store(Request $request)
             'product_name' => $request->input('nama_product'),
             'karat_id' => $request->input('kadar'),
             'weight' => $request->input('berat'),
-            'nominal' => $request->input('nominal'),
+            'nilai_angkat' => $request->input('nilai_angkat'),
+            'nilai_tafsir' => $request->input('nilai_tafsir'),
+            'nilai_selisih' => $request->input('nilai_selisih'),
         ]);
 
         event(new PenerimaanBarangLuarSaleCreated($penerimaanBarangLuar));

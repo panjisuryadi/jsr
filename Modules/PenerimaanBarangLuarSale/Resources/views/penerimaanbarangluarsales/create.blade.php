@@ -220,6 +220,7 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
         <input class="form-control"
         type="number"
         name="{{ $field_name }}"
@@ -243,6 +244,7 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+        <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
         <input class="form-control"
         type="number"
         name="{{ $field_name }}"
@@ -258,13 +260,14 @@
     </div>
  <div class="form-group">
         <?php
-        $field_name = 'selisih';
+        $field_name = 'nilai_selisih';
         $field_lable = label_case($field_name);
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger small">&nbsp; Nilai Angkat - Nilai Tafsir</span></label>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
+        <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
         <input class="form-control"
         type="number"
         name="{{ $field_name }}"
@@ -327,3 +330,47 @@
     </form>
 </div>
 @endsection
+
+@push('page_scripts')
+<script src="{{  asset('js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+        element.addEventListener('keyup', function(e) {
+            let cursorPostion = this.selectionStart;
+            let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+            let originalLenght = this.value.length;
+            if (isNaN(value)) {
+                this.value = "";
+            } else {
+                this.value = value.toLocaleString('id-ID', {
+                    currency: 'IDR',
+                    style: 'currency',
+                    minimumFractionDigits: 0
+                });
+                cursorPostion = this.value.length - originalLenght + cursorPostion;
+                this.setSelectionRange(cursorPostion, cursorPostion);
+            }
+        });
+    });
+
+    function unmaskedCurrency(input){
+        return input.replace(/[^0-9]/g, "");
+    }
+
+    function calculateSelisih(){
+        if($('#nilai_angkat').val() && $('#nilai_tafsir').val()){
+            $('#nilai_selisih').val($('#nilai_angkat').val() - $('#nilai_tafsir').val())
+            $('#nilai_selisih_text').html('Rp. '+Number($('#nilai_selisih').val()).toLocaleString())
+        }
+    }
+
+    $('#nilai_angkat').on('keyup', function () {
+        $('#nilai_angkat_text').html('Rp. '+Number($(this).val()).toLocaleString())
+        calculateSelisih()
+    });
+    $('#nilai_tafsir').on('keyup', function () {
+        $('#nilai_tafsir_text').html('Rp. '+Number($(this).val()).toLocaleString())
+        calculateSelisih()
+    });
+</script>
+@endpush
