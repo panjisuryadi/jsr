@@ -12,8 +12,6 @@
     <x-library.alert />
     @if(!empty($total_harus_bayar) && $isCicil )
         <span class="text-dark"> Total emas yang harus dibayarkan </span> <span class="ml-1 text-danger"> {{  $total_harus_bayar }} </span>
-    @else 
-        <span class="ml-1 text-warning">Tidak ada yang harus dibayar </span>
     @endif
 
 
@@ -53,6 +51,7 @@
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="hidden" name="is_cicilan" id="" value="1">
+                    <input class="form-control" type="hidden" name="total_harus_bayar" id="" value="{{ $total_harus_bayar }}">
                 </div>
             </div>
         @else
