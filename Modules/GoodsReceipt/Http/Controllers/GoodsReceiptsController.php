@@ -356,7 +356,7 @@ public function update_status_pembelian (Request $request){
         if ( $is_cicilan ) {
             $validator = \Validator::make($request->all(),[
                 'cicilan_id' => 'required',
-                'jumlah_cicilan' => 'required|max:' .$request->post('total_harus_bayar')+1,
+                'jumlah_cicilan' => 'required|numeric|between:0.00,' . floatval($request->post('total_harus_bayar')),
             ], 
             [
                 'jumlah_cicilan.max' => 'Jumlah cicilan tidak boleh lebih dari harus dibayar',
