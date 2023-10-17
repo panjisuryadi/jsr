@@ -1,123 +1,149 @@
+<form wire:submit.prevent="store">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="flex relative py-3">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-b border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-left">
+                            <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{__('Tambah Insentif')}} &nbsp;<i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="{{__('Tambah Insentif')}}"></i>
+                            </span>
+                        </div>
+                    </div>
 
 
-<div>
-<table style="width:100%;" class="table table-borderlees">
-    <tbody>
-        <tr>
-            
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">Bulan </label>
-            </td>
-            <td class="w-50">
-                <div class="form-group">
-                    <?php
-                    $field_name = 'bulan';
-                    $field_lable = label_case('Code');
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = "required";
-                    ?>
-                    
-                    <select
-                        name="{{ $field_name }}"
-                        id="{{ $field_name }}"
-                        wire:change="pilihBulan($event.target.value)"
-                        class="form-control">
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </select>
-                    
-                </div>
-            </td>
-            
-        </tr>
-        <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-                Nama Cabang</label>
-            </td>
-            <td class="w-50">
-                <div class="form-group">
-                <select
-                        name="nama_pegawai"
-                   
-                      
-                        class="form-control">
-                        <option value="" selected disabled>Pilih Cabang</option>
-                        @foreach ($cabang_for_incentive as $cabang )
-                            <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-              Nilai Angkat </label>
-            </td>
-            <td class="w-50">
-                <div class="form-group">
-                <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
-                </div>
-            </td>
-        </tr> 
+                    <div class="flex flex-row grid grid-cols-1 gap-2">
 
-        <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-              Nilai Tafsir </label>
-            </td>
-            <td class="w-50">
-                <div class="form-group">
-                  <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-                Selisih </label>
-            </td>
-            <td class="w-50">
-                <div class="form-group">
-                   <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-                Persentase </label>
-            </td>
-            <td class="w-50">
-                <div class="form-group">
-                       <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat">
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="w-50">
-                <label class="px-1 font-semibold text-lg uppercase text-gray-600">
-                Nilai insentif </label>
-            </td>
-            <td class="w-50">
-                <div class="form-group">
-                     <input class="form-control" type="text" name="nilai_angkat" id="nilai_angkat" readonly>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                        <table style="width:100%;" class="table table-borderlees">
+                            <tbody>
+                                <tr>
 
-</div>
+                                    <td class="w-50">
+                                        <label class="px-1 font-semibold text-lg uppercase text-gray-600">Bulan </label>
+                                    </td>
+                                    <td class="w-50">
+                                        <div class="form-group">
+                                            <?php
+                                            $field_name = 'bulan';
+                                            $field_lable = label_case('bulan');
+                                            $field_placeholder = $field_lable;
+                                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                            $required = "required";
+                                            ?>
+
+                                            <input type="month" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{$field_name}}" wire:change="pilihBulan($event.target.value)" class="form-control">
+                                            </input>
+                                            @if ($errors->has($field_name))
+                                            <span class="invalid feedback"role="alert">
+                                                <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                                class="text-danger">
+                                            </span>
+                                            @endif
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="w-50">
+                                        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+                                            Nama Cabang</label>
+                                    </td>
+                                    <td class="w-50">
+                                        <div class="form-group">
+                                            <select name="cabang_id" class="form-control" wire:model="cabang_id" wire:change="fetchNilai">
+                                                <option value="" selected disabled>Pilih Cabang</option>
+                                                @foreach ($cabang_for_incentive as $cabang )
+                                                <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('cabang_id'))
+                                            <span class="invalid feedback"role="alert">
+                                                <small class="text-danger">{{ $errors->first('cabang_id') }}.</small
+                                                class="text-danger">
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-50">
+                                        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+                                            Nilai Angkat </label>
+                                    </td>
+                                    <td class="w-50">
+                                        <span>Rp. {{ number_format($this->nilai_angkat) }}</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="w-50">
+                                        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+                                            Nilai Tafsir </label>
+                                    </td>
+                                    <td class="w-50">
+                                        <span>Rp. {{ number_format($this->nilai_tafsir) }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-50">
+                                        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+                                            Selisih </label>
+                                    </td>
+                                    <td class="w-50">
+                                        <span>Rp. {{ number_format($this->nilai_selisih) }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-50">
+                                        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+                                            Persentase </label>
+                                    </td>
+                                    <td class="w-50">
+                                        <div class="form-group">
+                                            <input class="form-control" type="number" name="persentase" id="persentase" wire:model="persentase" wire:change="calculateIncentive">
+                                            @if ($errors->has('persentase'))
+                                            <span class="invalid feedback"role="alert">
+                                                <small class="text-danger">{{ $errors->first('persentase') }}.</small
+                                                class="text-danger">
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-50">
+                                        <label class="px-1 font-semibold text-lg uppercase text-gray-600">
+                                            Nilai insentif </label>
+                                    </td>
+                                    <td class="w-50">
+                                        <span>Rp. {{ number_format($this->nilai_insentif) }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+
+
+
+                    <div class="flex justify-between">
+                        <div></div>
+                        <div class="form-group">
+                            <a class="px-5 btn btn-danger" href="{{ route("penerimaanbarangluar.index") }}">
+                                @lang('Cancel')</a>
+                            <button type="submit" class="px-5 btn btn-success">@lang('Create') <i class="bi bi-check"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

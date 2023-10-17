@@ -102,7 +102,7 @@
                 {data: 'bulan', name:  'bulan'},
                 {data: 'cabang', name: 'cabang'},
                       
-                {data: 'nominal_beli', name: 'nominal_beli'},
+                {data: 'incentive', name: 'incentive'},
            
 
                 {
