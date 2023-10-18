@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Penerimaan\BarangLuar\Sales;
 
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Modules\DataSale\Models\DataSale;
 use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuarIncentive;
@@ -45,6 +46,7 @@ class Insentif extends Component
 
     private function resetInput(){
       $this->persentase = 0;
+      $this->nilai_insentif = 0;
     }
 
     public function fetchNilai(){
@@ -64,9 +66,17 @@ class Insentif extends Component
 
      public function rules(){
       return [
-         'bulan' => 'required',
+         'bulan' => [
+          'required',
+            function ($attribute, $value, $fail) {
+              $exist = PenerimaanBarangLuarIncentive::where('sales_id',$this->sales_id)->whereMonth('date',$this->month)->whereYear('date',$this->year)->exists();
+              if ($exist) {
+                  $fail('Insentif sudah ditentukan pada bulan dan sales yang sama');
+              }
+            },
+          ],
          'sales_id' => 'required',
-         'persentase' => 'required'
+         'persentase' => 'required|gt:0'
       ];
      }
 

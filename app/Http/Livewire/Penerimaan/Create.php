@@ -58,6 +58,7 @@ class Create extends Component
 
     private function resetInput(){
       $this->persentase = 0;
+      $this->nilai_insentif = 0;
     }
 
     public function fetchNilai(){
@@ -69,17 +70,6 @@ class Create extends Component
       }
     }
 
-
-    public function getParentlocations(){
-          $this->locations = Locations::orderby('name','asc')
-                          ->select('*')
-                          ->where('parent_id',$this->id_location)
-                          ->get();
-
-          // Reset value
-          $this->sub_location = 0;
-     }
-
      public function calculateIncentive(){
       $this->nilai_insentif = $this->nilai_selisih * $this->persentase / 100;
      }
@@ -87,9 +77,17 @@ class Create extends Component
 
      public function rules(){
       return [
-         'bulan' => 'required',
+         'bulan' => [
+            'required',
+            function ($attribute, $value, $fail) {
+               $exist = PenerimaanBarangLuarIncentive::where('cabang_id',$this->cabang_id)->whereMonth('date',$this->month)->whereYear('date',$this->year)->exists();
+               if ($exist) {
+                   $fail('Insentif sudah ditentukan pada bulan dan cabang yang sama');
+               }
+            },
+         ],
          'cabang_id' => 'required',
-         'persentase' => 'required'
+         'persentase' => 'required|gt:0'
       ];
      }
 
