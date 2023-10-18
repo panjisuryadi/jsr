@@ -198,8 +198,11 @@ class AdjustmentController extends Controller
 
     public function show(Adjustment $adjustment) {
         abort_if(Gate::denies('show_adjustments'), 403);
-        $category = Category::all();
-        return view('adjustment::show', compact('adjustment','category'));
+        $view = match($adjustment->location->location_type){
+            "Modules\Stok\Models\StockOffice" => 'adjustment::gudang-office.show',
+            "Modules\Stok\Models\StockSales" => 'adjustment::sales.show'
+        };
+        return view($view, compact('adjustment'));
     }
 
 
@@ -365,16 +368,16 @@ class AdjustmentController extends Controller
             ->addColumn('summary', function ($data) {
                 $lebih = 0;
                 $kurang = 0;
-                $product = $data->adjustedProducts;
-                foreach ($product as $product) {
-                    if($product->stock_data > $product->quantity){
-                        $kurang = $product->stock_data - $product->quantity;
+                $products = $data->products;
+                foreach ($products as $product) {
+                    if($product->weight_before > $product->weight_after){
+                        $kurang += ($product->weight_before - $product->weight_after);
                     }
-                    if($product->stock_data < $product->quantity){
-                        $lebih = $product->quantity - $product->stock_data;
+                    if($product->weight_before < $product->weight_after){
+                        $lebih += ($product->weight_after - $product->weight_before);
                     }
                 }
-                return '<span class="text-success">Barang Lebih '.$lebih.' PCS </span><br><span class="text-danger">Barang Kurang '.$kurang.' PCS</span>';
+                return '<span class="text-success">Barang Lebih '.$lebih.' gram </span><br><span class="text-danger">Barang Kurang '.$kurang.' gram</span>';
             })
             ->rawColumns(['action','summary'])
             ->make(true);

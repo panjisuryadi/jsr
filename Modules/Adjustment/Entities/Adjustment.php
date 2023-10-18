@@ -29,7 +29,7 @@ class Adjustment extends Model
 
     public function stockOffice()
     {
-        return $this->morphedByMany(StockOffice::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps();
+        return $this->morphedByMany(StockOffice::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps()->withPivot('weight_before', 'weight_after');
     }
 
     public function products(){
