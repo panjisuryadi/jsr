@@ -87,6 +87,12 @@ class PenerimaanBarangLuarSalesController extends Controller
             'module_icon', 'module_model'));
     }
 
+public function destroy_incentive(PenerimaanBarangLuarIncentive $incentive){
+    $incentive->delete();
+    toast('Insentif Berhasil dihapus', 'success');
+    return redirect()->route('penerimaanbarangluarsale.insentif');
+}
+
 
 
 

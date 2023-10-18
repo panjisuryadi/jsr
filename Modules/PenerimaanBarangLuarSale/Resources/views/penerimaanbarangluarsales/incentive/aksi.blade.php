@@ -16,7 +16,7 @@
         }
         ">
         <i class="bi bi-trash"></i>&nbsp;@lang('Delete')
-        <form id="destroy{{ $data->id }}" class="d-none" action="{{ route(''.$module_name.'.destroy', $data->id) }}" method="POST">
+        <form id="destroy{{ $data->id }}" class="d-none" action="{{ route(''.$module_name.'.incentive.destroy', $data->id) }}" method="POST">
             @csrf
             @method('delete')
         </form>

@@ -259,6 +259,12 @@ public function index_data_insentif(Request $request)
         return $pdf->stream($filename.'.pdf');
     }
 
+    public function destroy_incentive(PenerimaanBarangLuarIncentive $incentive){
+        $incentive->delete();
+        toast('Insentif Berhasil dihapus', 'success');
+        return redirect()->route('penerimaanbarangluar.index_insentif');
+    }
+
 
 
 

@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 
    Route::get("$module_name/index_data_insentif", ['as' => "$module_name.index_data_insentif", 'uses' => "$controller_name@index_data_insentif"]);
    Route::get("$module_name/insentif/print/{incentive}", ['as' => "$module_name.incentive.print", 'uses' => "$controller_name@print_incentive"]); 
+   Route::delete("$module_name/insentif/{incentive}", ['as' => "$module_name.incentive.destroy", 'uses' => "$controller_name@destroy_incentive"]); 
 
 
 
