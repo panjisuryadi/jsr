@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use Modules\Adjustment\Entities\AdjustmentSetting;
 use PDF;
 
 class ReturSalesController extends Controller
@@ -34,6 +35,10 @@ class ReturSalesController extends Controller
      */
 
   public function index() {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -128,6 +133,10 @@ public function index_data(Request $request)
      */
         public function create()
         {
+            if(AdjustmentSetting::exists()){
+                toast('Stock Opname sedang Aktif!', 'error');
+                return redirect()->back();
+            }
            $module_title = $this->module_title;
             $module_name = $this->module_name;
             $module_path = $this->module_path;
@@ -236,7 +245,10 @@ public function store(Request $request)
      */
 public function show($id)
     {
-
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
 
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -264,6 +276,10 @@ public function show($id)
      */
     public function edit($id)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
        $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -372,7 +388,10 @@ public function update(Request $request, $id)
      */
     public function destroy($id)
     {
-
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         try {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
