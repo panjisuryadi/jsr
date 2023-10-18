@@ -35,6 +35,8 @@ use Milon\Barcode\Facades\DNS1DFacade;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
 use Auth;
+use Modules\Adjustment\Entities\AdjustmentSetting;
+
 class ProductController extends Controller
 {
 
@@ -64,6 +66,10 @@ public function __construct()
 
 
  public function index() {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -376,6 +382,10 @@ public function index_data(Request $request)
 
 public function index_data_by_kategori(Request $request ,$id)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -1122,6 +1132,10 @@ public function create2()
    //view main kategori modal
 
 public function view_by_kategori(Request $request ,$slug) {
+    if(AdjustmentSetting::exists()){
+        toast('Stock Opname sedang Aktif!', 'error');
+        return redirect()->back();
+    }
         abort_if(Gate::denies('access_products'), 403);
         $type = $request->type;
         $module_title = $this->module_title;

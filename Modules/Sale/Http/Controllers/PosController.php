@@ -16,12 +16,17 @@ use Modules\Sale\Entities\SalePayment;
 use Modules\Sale\Entities\SaleManual;
 use Modules\Sale\Http\Requests\StorePosSaleRequest;
 use Auth;
+use Modules\Adjustment\Entities\AdjustmentSetting;
 
 class PosController extends Controller
 {
 
 
     public function index() {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         Cart::instance('sale')->destroy();
 
         $customers = Customer::all();
@@ -35,6 +40,10 @@ class PosController extends Controller
  
 
  public function store(Request $request) {
+    if(AdjustmentSetting::exists()){
+        toast('Stock Opname sedang Aktif!', 'error');
+        return redirect()->back();
+    }
 
       $input = $request->all();
       $input = $request->except('_token');

@@ -17,7 +17,7 @@ use Modules\Cabang\Models\Cabang;
 use Modules\UserCabang\Models\UserCabang;
 use PDF;
 use Auth;
-
+use Modules\Adjustment\Entities\AdjustmentSetting;
 
 class DistribusiTokosController extends Controller
 {
@@ -40,6 +40,10 @@ class DistribusiTokosController extends Controller
      */
 
   public function index() {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -201,6 +205,10 @@ public function index_data(Request $request)
 
 public function store(Request $request)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -243,7 +251,10 @@ public function store(Request $request)
 public function show($id)
     {
 
-
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -308,6 +319,10 @@ public function cetak($id) {
 
 public function kategori($slug)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -344,6 +359,10 @@ public function kategori($slug)
      */
     public function edit($id)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
        $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -452,7 +471,10 @@ public function update(Request $request, $id)
      */
     public function destroy($id)
     {
-
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         try {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

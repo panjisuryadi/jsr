@@ -7,6 +7,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\People\Entities\Supplier;
 use Modules\Product\Entities\Product;
 use Modules\PurchasesReturn\Entities\PurchaseReturn;
@@ -19,6 +20,10 @@ class PurchasesReturnController extends Controller
 {
 
     public function index(PurchaseReturnsDataTable $dataTable) {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         abort_if(Gate::denies('access_purchase_returns'), 403);
 
         return $dataTable->render('purchasesreturn::index');
@@ -26,6 +31,10 @@ class PurchasesReturnController extends Controller
 
 
     public function create() {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         abort_if(Gate::denies('create_purchase_returns'), 403);
 
         Cart::instance('purchase_return')->destroy();
@@ -35,6 +44,10 @@ class PurchasesReturnController extends Controller
 
 
     public function store(StorePurchaseReturnRequest $request) {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
@@ -107,6 +120,10 @@ class PurchasesReturnController extends Controller
 
 
     public function show(PurchaseReturn $purchase_return) {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         abort_if(Gate::denies('show_purchase_returns'), 403);
 
         $supplier = Supplier::findOrFail($purchase_return->supplier_id);
@@ -116,6 +133,10 @@ class PurchasesReturnController extends Controller
 
 
     public function edit(PurchaseReturn $purchase_return) {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         abort_if(Gate::denies('edit_purchase_returns'), 403);
 
         $purchase_return_details = $purchase_return->purchaseReturnDetails;
@@ -148,6 +169,10 @@ class PurchasesReturnController extends Controller
 
 
     public function update(UpdatePurchaseReturnRequest $request, PurchaseReturn $purchase_return) {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         DB::transaction(function () use ($request, $purchase_return) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
@@ -221,6 +246,10 @@ class PurchasesReturnController extends Controller
 
 
     public function destroy(PurchaseReturn $purchase_return) {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         abort_if(Gate::denies('delete_purchase_returns'), 403);
 
         $purchase_return->delete();

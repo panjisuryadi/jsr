@@ -27,6 +27,8 @@ use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Modules\Stok\Models\StockOffice;
 use Illuminate\Support\Facades\DB;
+use Modules\Adjustment\Entities\Adjustment;
+use Modules\Adjustment\Entities\AdjustmentSetting;
 
 class GoodsReceiptsController extends Controller
 {
@@ -51,6 +53,10 @@ class GoodsReceiptsController extends Controller
      */
 
   public function index() {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -332,6 +338,10 @@ public function index_data(Request $request)
  */
 public function edit_status($id)
 {
+    if(AdjustmentSetting::exists()){
+        toast('Stock Opname sedang Aktif!', 'error');
+        return redirect()->back();
+    }
     $module_title = $this->module_title;
     $module_name = $this->module_name;
     $module_path = $this->module_path;
@@ -522,6 +532,11 @@ public function index_data_completed(Request $request)
      */
         public function create()
         {
+
+            if(AdjustmentSetting::exists()){
+                toast('Stock Opname sedang Aktif!', 'error');
+                return redirect()->back();
+            }
            $module_title = $this->module_title;
             $module_name = $this->module_name;
             $module_path = $this->module_path;
@@ -554,6 +569,10 @@ public function index_data_completed(Request $request)
 
 public function store(Request $request)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -697,6 +716,10 @@ private function _saveStockOffice($items)
      */
     public function edit($id)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $id = decode_id($id);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -720,6 +743,10 @@ private function _saveStockOffice($items)
 
     public function update(Request $request, $id)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -799,6 +826,10 @@ private function _saveStockOffice($items)
 
  public function update_status(Request $request, $id)
      {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
                 $id = decode_id($id);
                 $module_name = $this->module_name;
                 $module_model = $this->module_model;
@@ -857,7 +888,10 @@ public function store_ajax(Request $request)
      */
 public function show($id)
     {
-
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $id = decode_id($id);
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -1114,6 +1148,10 @@ public function cetak($id) {
      */
     public function destroy($id)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
 
         try {
         $module_title = $this->module_title;

@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Auth;
+use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\PenerimaanBarangLuar\Events\PenerimaanBarangLuarCreated;
 use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuar;
 use Modules\Cabang\Models\Cabang;
@@ -40,6 +41,10 @@ class PenerimaanBarangLuarsController extends Controller
      */
 
   public function index() {
+    if(AdjustmentSetting::exists()){
+        toast('Stock Opname sedang Aktif!', 'error');
+        return redirect()->back();
+    }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -302,6 +307,10 @@ public function index_data_insentif(Request $request)
      */
         public function create()
         {
+            if(AdjustmentSetting::exists()){
+                toast('Stock Opname sedang Aktif!', 'error');
+                return redirect()->back();
+            }
            $module_title = $this->module_title;
             $module_name = $this->module_name;
             $module_path = $this->module_path;
@@ -349,6 +358,10 @@ public function index_data_insentif(Request $request)
 
       public function tambah_insentif()
         {
+            if(AdjustmentSetting::exists()){
+                toast('Stock Opname sedang Aktif!', 'error');
+                return redirect()->back();
+            }
            $module_title = $this->module_title;
             $module_name = $this->module_name;
             $module_path = $this->module_path;
@@ -404,6 +417,10 @@ public function index_data_insentif(Request $request)
 
 public function store(Request $request)
     {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         abort_if(Gate::denies('create_penerimaanbarangluars'), 403);
         $validated = $request->validate([
             'no_barang_luar' => 'required',
@@ -445,7 +462,10 @@ public function store(Request $request)
 public function show($id)
     {
 
-
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -638,7 +658,10 @@ public function update(Request $request, $id)
      */
     public function destroy($id)
     {
-
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
         try {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
