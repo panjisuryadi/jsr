@@ -359,7 +359,7 @@
 
     function calculateSelisih(){
         if($('#nilai_angkat').val() && $('#nilai_tafsir').val()){
-            $('#nilai_selisih').val($('#nilai_angkat').val() - $('#nilai_tafsir').val())
+            $('#nilai_selisih').val($('#nilai_tafsir').val() - $('#nilai_angkat').val())
             $('#nilai_selisih_text').html('Rp. '+Number($('#nilai_selisih').val()).toLocaleString())
         }
     }
