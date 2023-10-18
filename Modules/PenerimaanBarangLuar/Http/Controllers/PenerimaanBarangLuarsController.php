@@ -18,6 +18,7 @@ use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuar;
 use Modules\Cabang\Models\Cabang;
 use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuarIncentive;
 use Modules\Status\Models\ProsesStatus;
+use PDF;
 
 class PenerimaanBarangLuarsController extends Controller
 {
@@ -205,7 +206,7 @@ public function index_data_insentif(Request $request)
                             $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             $module_path = $this->module_path;
-                            return view(''.$module_name.'::'.$module_path.'.aksi',
+                            return view(''.$module_name.'::'.$module_path.'.incentive.aksi',
                             compact('module_name', 'data', 'module_model'));
                                 })
 
@@ -249,6 +250,14 @@ public function index_data_insentif(Request $request)
                                'keterangan',])
                         ->make(true);
                      }
+
+
+    public function print_incentive(PenerimaanBarangLuarIncentive $incentive){
+        $month = Carbon::parse($incentive->date)->format('F Y');
+        $filename = "Insentif ". $incentive->cabang->name . " " .$month;
+        $pdf = PDF::loadView('penerimaanbarangluar::penerimaanbarangluars.incentive.print',compact('incentive','month'));
+        return $pdf->stream($filename.'.pdf');
+    }
 
 
 
