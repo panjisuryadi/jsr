@@ -211,7 +211,8 @@ class AdjustmentController extends Controller
         $view = match($adjustment->location->location_type){
             "Modules\Stok\Models\StockOffice" => 'adjustment::gudang-office.show',
             "Modules\Stok\Models\StockSales" => 'adjustment::sales.show',
-            "Modules\Stok\Models\StockPendingOffice" => 'adjustment::pending-office.show'
+            "Modules\Stok\Models\StockPendingOffice" => 'adjustment::pending-office.show',
+            "Modules\Stok\Models\StockKroom" => 'adjustment::kroom.show'
         };
         return view($view, compact('adjustment'));
     }
@@ -358,7 +359,8 @@ class AdjustmentController extends Controller
         return match($active_adjustment){
             '1' => 'adjustment.gudang.office.index',
             '2' => 'adjustment.sales.index',
-            '3' => 'adjustment.pending.office.index'
+            '3' => 'adjustment.pending.office.index',
+            '4' => 'adjustment.kroom.index',
         };
     }
 

@@ -14,6 +14,7 @@
 use Modules\Adjustment\Http\Controllers\GudangOffice;
 use Modules\Adjustment\Http\Controllers\Sales;
 use Modules\Adjustment\Http\Controllers\PendingOffice;
+use Modules\Adjustment\Http\Controllers\Kroom;
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -37,6 +38,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('adjustments/pending-office', [PendingOffice\AdjustmentController::class,'index'])->name('adjustment.pending.office.index');
     Route::get('adjustments/pending-office/create', [PendingOffice\AdjustmentController::class,'create'])->name('adjustment.pending.office.create');
     Route::get('adjustments/pending-office/getdata', [PendingOffice\AdjustmentController::class,'getdata'])->name('adjustment.pending.office.getdata');
+
+    // Pending Office
+    Route::get('adjustments/kroom', [Kroom\AdjustmentController::class,'index'])->name('adjustment.kroom.index');
+    Route::get('adjustments/kroom/create', [Kroom\AdjustmentController::class,'create'])->name('adjustment.kroom.create');
+    Route::get('adjustments/kroom/getdata', [Kroom\AdjustmentController::class,'getdata'])->name('adjustment.kroom.getdata');
 
     Route::resource('adjustments', 'AdjustmentController');
     

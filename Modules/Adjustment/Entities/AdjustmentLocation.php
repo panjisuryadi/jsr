@@ -21,7 +21,8 @@ class AdjustmentLocation extends Model
         return match($this->attributes['location_type']){
             'Modules\Stok\Models\StockOffice' => 'Stock Gudang (Office)',
             'Modules\Stok\Models\StockSales' => 'Stock Sales (Office)',
-            'Modules\Stok\Models\StockPendingOffice' => 'Stock Pending (Office)'
+            'Modules\Stok\Models\StockPendingOffice' => 'Stock Pending (Office)',
+            'Modules\Stok\Models\StockKroom' => 'Stock Kroom (Office)'
         };
     }
 

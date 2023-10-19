@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
 use Modules\Locations\Entities\AdjustedLocations;
 use Modules\Locations\Entities\Locations;
+use Modules\Stok\Models\StockKroom;
 use Modules\Stok\Models\StockOffice;
 use Modules\Stok\Models\StockPendingOffice;
 use Modules\Stok\Models\StockSales;
@@ -49,6 +50,10 @@ class Adjustment extends Model
 
     public function stockPendingOffice(){
         return $this->morphedByMany(StockPendingOffice::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps()->withPivot('weight_before', 'weight_after');
+    }
+
+    public function stockKroom(){
+        return $this->morphedByMany(StockKroom::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps()->withPivot('weight_before', 'weight_after');
     }
 
 
