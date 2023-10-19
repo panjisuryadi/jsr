@@ -89,7 +89,6 @@
                                     <th>Date</th>
                                     <th>Reference</th>
                                     <th>Total Product</th>
-                                    <th>Location</th>
                                     <th>Summary</th>
                                     <th>Action</th>
                                 </thead>
@@ -171,21 +170,20 @@
                     }
                 ],
                 ajax: {
-                    url:'adjustment/getdatatable?location_id='+$('#location').val()+'&category_id='+$('#category').val(),
+                    url:'/adjustments/gudang-office/getdata',
                     type:"GET",
                 },
                 columns: [
                     { data: 'date', name: 'date' },
                     { data: 'reference', name: 'reference' },
                     { data: 'product', name: 'product' },
-                    { data: 'locations', name: 'locations' },
                     { data: 'summary', name: 'summary' },
                     { data: 'action', name: 'action' },
                 ], 
                 columnDefs: [
                     { 
                         width: "10", 
-                        targets: [5]
+                        targets: [4]
                     },
                 ],
                 order : [

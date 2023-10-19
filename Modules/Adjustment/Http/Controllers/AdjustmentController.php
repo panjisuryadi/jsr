@@ -354,7 +354,6 @@ class AdjustmentController extends Controller
 
         $get_data = $get_data->orderBy('created_at','desc')->get();
 
-       // dd($get_data);
         return Datatables::of($get_data)
             ->addColumn('action', function ($data) {
                 return view('adjustment::partials.actions', compact('data'));
@@ -379,7 +378,7 @@ class AdjustmentController extends Controller
                 }
                 return '<span class="text-success">Barang Lebih '.$lebih.' gram </span><br><span class="text-danger">Barang Kurang '.$kurang.' gram</span>';
             })
-            ->rawColumns(['action','summary'])
+            ->rawColumns(['action','summary','product','locations'])
             ->make(true);
    }
 

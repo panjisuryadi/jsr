@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Gudang Office
     Route::get('adjustments/gudang-office', [GudangOffice\AdjustmentController::class,'index'])->name('adjustment.gudang.office.index');
     Route::get('adjustments/gudang-office/create', [GudangOffice\AdjustmentController::class,'create'])->name('adjustment.gudang.office.create');
+    Route::get('adjustments/gudang-office/getdata', [GudangOffice\AdjustmentController::class,'getdata'])->name('adjustment.gudang.office.getdata');
 
 
     Route::resource('adjustments', 'AdjustmentController');
