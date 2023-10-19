@@ -210,7 +210,8 @@ class AdjustmentController extends Controller
         abort_if(Gate::denies('show_adjustments'), 403);
         $view = match($adjustment->location->location_type){
             "Modules\Stok\Models\StockOffice" => 'adjustment::gudang-office.show',
-            "Modules\Stok\Models\StockSales" => 'adjustment::sales.show'
+            "Modules\Stok\Models\StockSales" => 'adjustment::sales.show',
+            "Modules\Stok\Models\StockPendingOffice" => 'adjustment::pending-office.show'
         };
         return view($view, compact('adjustment'));
     }
