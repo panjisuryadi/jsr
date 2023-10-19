@@ -20,7 +20,7 @@ class AdjustmentLocation extends Model
     public function getDescriptiveLocationTypeAttribute(){
         return match($this->attributes['location_type']){
             'Modules\Stok\Models\StockOffice' => 'Stock Gudang (Office)',
-            'Modules\Stok\Models\StockSales' => 'Stock Sales'
+            'Modules\Stok\Models\StockSales' => 'Stock Sales (Office)'
         };
     }
 
