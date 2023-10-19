@@ -334,7 +334,12 @@ public function kategori($slug)
        
         $kategori = $module_kategori::where('slug',$slug)->first();
         $categories = \Modules\Product\Entities\Category::where('kategori_produk_id',$kategori->id)->get();
-        $cabang = Cabang::where('id',Auth::user()->namacabang->cabang()->first()->id)->get();
+        $cabang = null;
+        if(auth()->user()->isUserCabang()){
+            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+        }else{
+            $cabang = Cabang::all();
+        }
         //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.kategori',
            compact('module_name',

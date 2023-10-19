@@ -210,7 +210,12 @@ public function index_data(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
-            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang()->first()->id)->get();
+            $cabang = null;
+            if(auth()->user()->isUserCabang()){
+                $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+            }else{
+                $cabang = Cabang::all();
+            }
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
