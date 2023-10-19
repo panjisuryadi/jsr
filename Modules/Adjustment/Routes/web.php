@@ -13,6 +13,7 @@
 
 use Modules\Adjustment\Http\Controllers\GudangOffice;
 use Modules\Adjustment\Http\Controllers\Sales;
+use Modules\Adjustment\Http\Controllers\PendingOffice;
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -32,6 +33,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('adjustments/sales/create', [Sales\AdjustmentController::class,'create'])->name('adjustment.sales.create');
     Route::get('adjustments/sales/getdata', [Sales\AdjustmentController::class,'getdata'])->name('adjustment.sales.getdata');
 
+    // Pending Office
+    Route::get('adjustments/pending-office', [PendingOffice\AdjustmentController::class,'index'])->name('adjustment.pending.office.index');
+    Route::get('adjustments/pending-office/create', [PendingOffice\AdjustmentController::class,'create'])->name('adjustment.pending.office.create');
+    Route::get('adjustments/pending-office/getdata', [PendingOffice\AdjustmentController::class,'getdata'])->name('adjustment.pending.office.getdata');
 
     Route::resource('adjustments', 'AdjustmentController');
     
