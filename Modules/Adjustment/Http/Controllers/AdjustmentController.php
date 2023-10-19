@@ -18,6 +18,7 @@ use Modules\Product\Entities\Category;
 use Modules\Product\Entities\ProductLocation;
 use Modules\Product\Notifications\NotifyQuantityAlert;
 use Carbon\Carbon;
+use Modules\Adjustment\Entities\AdjustmentLocation;
 use Yajra\DataTables\DataTables;
 use PDF;
 
@@ -48,7 +49,8 @@ class AdjustmentController extends Controller
             $pending = 0;
             $location = "Lokasi Belum di pilih";
         }
-        return view('adjustment::index',compact('status','location'));
+        $latest_location = AdjustmentLocation::latest('created_at')->first()?->descriptive_location_type;
+        return view('adjustment::index',compact('status','location','latest_location'));
     }
 
 

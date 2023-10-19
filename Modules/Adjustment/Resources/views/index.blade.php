@@ -42,7 +42,7 @@
                 <div class="card">
                     <div class="card-body text-dark">
                         <div class="text-value-md">Lokasi Stok Opname Terakhir kali</div>
-                        <div class="text-value-lg my-2" id="totalaset">Stock Gudang (Office)</div>
+                        <div class="text-value-lg my-2" id="totalaset">{{ $latest_location??'-' }}</div>
                         <div class="progress progress-xs my-3">
                             <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
