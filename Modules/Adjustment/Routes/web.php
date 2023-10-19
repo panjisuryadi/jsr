@@ -16,6 +16,7 @@ use Modules\Adjustment\Http\Controllers\GudangOffice;
 
 Route::group(['middleware' => 'auth'], function () {
     //Product Adjustment
+    Route::get('adjustment/continue','AdjustmentController@continue')->name('adjustment.continue');
     Route::get('adjustment/getdatatable', 'AdjustmentController@getdata')->name('adjustment.datatable');
     Route::post('adjustment/getbyqr', 'AdjustmentController@getbyqr')->name('adjustment.getbyqr');
     Route::get('adjustment/print/{id}', 'AdjustmentController@print')->name('adjustment.print');

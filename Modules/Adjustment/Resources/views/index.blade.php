@@ -31,7 +31,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-value-md">Lokasi Stok Opname Saat Ini</div>
-                        <div class="text-value-lg my-2" id="totalcategory">-</div>
+                        <div class="text-value-lg my-2" id="totalcategory">{{ $location }}</div>
                         <div class="progress progress-xs my-3">
                             <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -65,7 +65,10 @@
                               @lang('Run Adjustment') 
                             </a>
                             @else
-                            <a href="javascript:;" class="btn btn-primary" id="stopAdjustment">
+                            <a href="{{route('adjustment.continue')}}" class="btn btn-primary mr-2" id="continueAdjustment">
+                              @lang('Continue Adjustment') 
+                            </a>
+                            <a href="javascript:;" class="btn btn-danger" id="stopAdjustment">
                               @lang('Stop Adjustment') 
                             </a>
                             @endif

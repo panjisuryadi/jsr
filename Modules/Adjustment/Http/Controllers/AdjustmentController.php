@@ -28,6 +28,7 @@ class AdjustmentController extends Controller
     public function index() {
         abort_if(Gate::denies('access_adjustments'), 403);
         $setting = AdjustmentSetting::first();
+        $location = '';
         if(empty($setting)){
             $status = 0;
         }else{
@@ -51,6 +52,13 @@ class AdjustmentController extends Controller
         }
         $latest_location = AdjustmentLocation::latest('created_at')->first()?->descriptive_location_type;
         return view('adjustment::index',compact('status','location','latest_location'));
+    }
+
+    public function continue(){
+        $setting = AdjustmentSetting::first();
+        $id = json_decode($setting->location);
+        $route = $this->getAppropriateRoute($id[0]);
+        return redirect()->route($route);
     }
 
 
