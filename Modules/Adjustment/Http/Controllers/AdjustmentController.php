@@ -370,7 +370,7 @@ class AdjustmentController extends Controller
                 return view('adjustment::partials.actions', compact('data'));
             })
             ->addColumn('locations', function ($data) {
-                return $data->location->descriptive_location_type;
+                return $data->location?->descriptive_location_type;
             })
             ->addColumn('product', function ($data) {
                 return $data->products_count.' Product';
