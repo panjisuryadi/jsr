@@ -37,13 +37,13 @@
                     <td>{{ $value->karat->name }} - {{$value->karat->kode}}</td>
                     <td>{{ $value->berat_real }}</td>
                     <td>
-            <button wire:click="selectProduct('{{ $key }}')"
+            <button wire:click="selectProduct('{{ $value->id }}')"
             class="w-100 btn btn-sm btn-outline-success "
             style="cursor: pointer;"> Tambah
                         </button>
              </td>
                 </tr>
-                @livewire('stock-opname.gudang-office.modal', ['data'=>$value,'key'=>$key,'active_location' => $active_location['label']],key('modal-'.$key))
+                @livewire('stock-opname.gudang-office.modal', ['data'=>$value,'key'=>$value->id,'active_location' => $active_location['label']],key('modal-'.$value->id))
                 @endforeach
                 @else
                 <tr>
