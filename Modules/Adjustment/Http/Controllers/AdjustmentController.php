@@ -356,6 +356,7 @@ class AdjustmentController extends Controller
     private function getAppropriateRoute($active_adjustment) : string {
         return match($active_adjustment){
             '1' => 'adjustment.gudang.office.index',
+            '2' => 'adjustment.sales.index'
         };
     }
 

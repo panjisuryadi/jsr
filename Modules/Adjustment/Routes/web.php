@@ -12,6 +12,7 @@
 */
 
 use Modules\Adjustment\Http\Controllers\GudangOffice;
+use Modules\Adjustment\Http\Controllers\Sales;
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -25,6 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('adjustments/gudang-office', [GudangOffice\AdjustmentController::class,'index'])->name('adjustment.gudang.office.index');
     Route::get('adjustments/gudang-office/create', [GudangOffice\AdjustmentController::class,'create'])->name('adjustment.gudang.office.create');
     Route::get('adjustments/gudang-office/getdata', [GudangOffice\AdjustmentController::class,'getdata'])->name('adjustment.gudang.office.getdata');
+
+    // Sales
+    Route::get('adjustments/sales', [Sales\AdjustmentController::class,'index'])->name('adjustment.sales.index');
+    Route::get('adjustments/sales/create', [Sales\AdjustmentController::class,'create'])->name('adjustment.sales.create');
+    Route::get('adjustments/sales/getdata', [Sales\AdjustmentController::class,'getdata'])->name('adjustment.sales.getdata');
 
 
     Route::resource('adjustments', 'AdjustmentController');

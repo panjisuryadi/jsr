@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Modules\Locations\Entities\AdjustedLocations;
 use Modules\Locations\Entities\Locations;
 use Modules\Stok\Models\StockOffice;
+use Modules\Stok\Models\StockSales;
 
 class Adjustment extends Model
 {
@@ -38,6 +39,11 @@ class Adjustment extends Model
 
     public function location(){
         return $this->hasOne(AdjustmentLocation::class, 'adjustment_id');
+    }
+
+    public function stockSales()
+    {
+        return $this->morphedByMany(StockSales::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps()->withPivot('weight_before', 'weight_after');
     }
 
 
