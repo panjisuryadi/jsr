@@ -54,6 +54,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sales/cetak/{id}', 'SaleController@cetak')
     ->name('sales.cetak');
 
+    Route::get('sales/generate-invoice/{id}', 'SaleController@generateInvoice')
+    ->name('sales.invoice');
+
     Route::get('sales/show-cicilan/{id}', 'SaleController@show_cicilan')
     ->name('sales.show_cicilan');
 

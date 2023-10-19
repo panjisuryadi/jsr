@@ -7,7 +7,7 @@
   </button>
   <div class="dropdown-menu">
      @can('print_sales')
-    <a class="dropdown-item" target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}"> <i class="bi bi-printer"></i>&nbsp;@lang('Print')</a>
+    <a class="dropdown-item" target="_blank" href="{{ route('sales.invoice', $data->id) }}"> <i class="bi bi-printer"></i>&nbsp;@lang('Print')</a>
      @endcan
 
      @can('show_sales')
