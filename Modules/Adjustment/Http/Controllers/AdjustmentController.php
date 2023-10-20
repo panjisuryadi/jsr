@@ -212,7 +212,8 @@ class AdjustmentController extends Controller
             "Modules\Stok\Models\StockOffice" => 'adjustment::gudang-office.show',
             "Modules\Stok\Models\StockSales" => 'adjustment::sales.show',
             "Modules\Stok\Models\StockPendingOffice" => 'adjustment::pending-office.show',
-            "Modules\Stok\Models\StockKroom" => 'adjustment::kroom.show'
+            "Modules\Stok\Models\StockKroom" => 'adjustment::kroom.show',
+            "Modules\Stok\Models\StokDp" => 'adjustment::dp.show'
         };
         return view($view, compact('adjustment'));
     }

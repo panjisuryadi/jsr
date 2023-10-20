@@ -47,18 +47,20 @@
                                         {{ $adjustment->location->descriptive_location_type }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>@lang('Product Name')</th>
-                                    <th>@lang('Stock Data')</th>
-                                    <th>@lang('Stock Rill')</th>
-                                    <th>@lang('Summary')</th>
-                                </tr>
-                                @foreach($adjustment->stockKroom as $item)
+                                
+                                
+                            </table>
+                            @foreach($adjustment->stockDP->groupBy('cabang_id') as $cabangId => $items)
+                            <h4 class="font-bold uppercase mt-5 mb-3">Cabang : {{$items->first()->cabang->name}}</h4>
+                            <table class="table table-bordered">
+                                    
+                                    
+                                    
+                                    @foreach ($items as $item )
                                     @php
                                         $lost = 0;
                                         $new = 0;
                                     @endphp
-                                    
                                     @if($item->pivot->weight_before > $item->pivot->weight_after)
                                     @php
                                         $lost = $lost + ($item->pivot->weight_before - $item->pivot->weight_after);
@@ -69,13 +71,21 @@
                                     @endphp
                                     @endif
                                     <tr>
-                                        <td>{{ $item->karat->name }} | {{$item->karat->kode}}</td>
+                                        <th>@lang('Product Name')</th>
+                                        <th>@lang('Stock Data')</th>
+                                        <th>@lang('Stock Rill')</th>
+                                        <th>@lang('Summary')</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ $item->karat->name }} | {{ $item->karat->kode }}</td>
                                         <td>{{ $item->pivot->weight_before }}</td>
                                         <td>{{ $item->pivot->weight_after }}</td>
                                         <td colspan="2"><span class="text-success">Barang Lebih {{$new}}</span> | <span class="text-danger">Barang Kurang {{$lost}}</span></td>
                                     </tr>
-                                @endforeach
-                            </table>
+                                    @endforeach
+                                    
+                                </table>
+                            @endforeach
                         </div>
                     </div>
                 </div>
