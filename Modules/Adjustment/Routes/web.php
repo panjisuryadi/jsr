@@ -16,6 +16,7 @@ use Modules\Adjustment\Http\Controllers\Sales;
 use Modules\Adjustment\Http\Controllers\PendingOffice;
 use Modules\Adjustment\Http\Controllers\Kroom;
 use Modules\Adjustment\Http\Controllers\DP;
+use Modules\Adjustment\Http\Controllers\PendingCabang;
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -40,15 +41,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('adjustments/pending-office/create', [PendingOffice\AdjustmentController::class,'create'])->name('adjustment.pending.office.create');
     Route::get('adjustments/pending-office/getdata', [PendingOffice\AdjustmentController::class,'getdata'])->name('adjustment.pending.office.getdata');
 
-    // Pending Office
+    // Kroom
     Route::get('adjustments/kroom', [Kroom\AdjustmentController::class,'index'])->name('adjustment.kroom.index');
     Route::get('adjustments/kroom/create', [Kroom\AdjustmentController::class,'create'])->name('adjustment.kroom.create');
     Route::get('adjustments/kroom/getdata', [Kroom\AdjustmentController::class,'getdata'])->name('adjustment.kroom.getdata');
 
-    // Pending Office
+    // DP
     Route::get('adjustments/dp', [DP\AdjustmentController::class,'index'])->name('adjustment.dp.index');
     Route::get('adjustments/dp/create', [DP\AdjustmentController::class,'create'])->name('adjustment.dp.create');
     Route::get('adjustments/dp/getdata', [DP\AdjustmentController::class,'getdata'])->name('adjustment.dp.getdata');
+
+    // Pending Cabang
+    Route::get('adjustments/pending-cabang', [PendingCabang\AdjustmentController::class,'index'])->name('adjustment.pending.cabang.index');
+    Route::get('adjustments/pending-cabang/create', [PendingCabang\AdjustmentController::class,'create'])->name('adjustment.pending.cabang.create');
+    Route::get('adjustments/pending-cabang/getdata', [PendingCabang\AdjustmentController::class,'getdata'])->name('adjustment.pending.cabang.getdata');
 
     Route::resource('adjustments', 'AdjustmentController');
     
