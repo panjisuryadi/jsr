@@ -15,7 +15,8 @@ Route::group(['middleware' => 'auth'], function () {
     $module_name = 'penerimaanbarangluar';
     $controller_name = 'PenerimaanBarangLuarsController';
 
-    Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);  
+    Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
+    Route::get("$module_name/getsummary", ['as' => "$module_name.getsummary", 'uses' => "$controller_name@getsummary"]);  
 
 
      Route::get("$module_name/insentif", ['as' => "$module_name.index_insentif", 'uses' => "$controller_name@index_insentif"]);  

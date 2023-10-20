@@ -52,11 +52,17 @@ class PenerimaanBarangLuarsController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
+        $datacabang = Cabang::all();
+        $total_nilai_angkat = $this->module_model::sum('nilai_angkat');
+        $total_berat = $this->module_model::sum('weight');
         abort_if(Gate::denies('access_'.$module_name.''), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',
             'module_title',
+            'datacabang',
+            'total_nilai_angkat',
+            'total_berat',
             'module_icon', 'module_model'));
     }
 
@@ -73,9 +79,14 @@ public function index_data(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = $module_model::get();
-        $data = $$module_name;
-        return Datatables::of($$module_name)
+        $datas = $module_model::query();
+
+        if(isset($request->cabang)){
+            $datas = $datas->where('cabang_id',$request->cabang);
+        }
+        
+        $datas = $datas->get();
+        return Datatables::of($datas)
                         ->addColumn('action', function ($data) {
                             $module_name = $this->module_name;
                             $module_model = $this->module_model;
@@ -684,6 +695,18 @@ public function update(Request $request, $id)
                 return redirect()->back();
             }
 
+    }
+
+
+    public function getsummary(Request $request){
+        $data = PenerimaanBarangLuar::query();
+        if(isset($request->cabang)){
+            $data = $data->where('cabang_id',$request->cabang);
+        }
+        return response()->json([
+            'total_nilai_angkat' => 'Rp. '.number_format($data->sum('nilai_angkat')),
+            'total_berat' => $data->sum('weight') . ' gram',
+        ]);
     }
 
 }

@@ -14,16 +14,16 @@
     <div class="row">
         <div class="col-12">
 
-<div class="px-0 py-1 grid grid-cols-3 gap-4 m-2 mt-0 mb-2 text-center no-underline">
+<div class="px-0 py-1 grid grid-cols-3 gap-4 m-2 mt-0 mb-2 no-underline">
     
     <div class="bg-white card-body p-0 d-flex align-items-center border shadow">
         <div class="bg-gradient-success p-4 mfe-3 rounded-left">
             <i class="bi bi-currency-dollar text-3xl"></i>
         </div>
         <div>
-            <div class="text-value font-semibold text-lg text-success">122</div>
+            <div id="total_nilai_angkat" class="text-value font-semibold text-lg text-success">Rp. {{ number_format($total_nilai_angkat) }}</div>
             <div class="text-gray-600 text-uppercase font-weight-bold text-md">
-                TOTAL NOMINAL
+                TOTAL NILAI ANGKAT
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
            
         </div>
         <div>
-            <div class="text-xl font-semibold text-value text-success">22</div>
+            <div id="total_berat" class="text-xl font-semibold text-value text-success">{{ $total_berat }} gram</div>
             <div class="text-md text-gray-600 text-uppercase font-weight-bold">
                TOTAL BERAT
             </div>
@@ -46,7 +46,7 @@
 
         </div>
         <div>
-            <div class="text-md font-semibold text-value text-success">Filter /Cabang</div>
+            <div id="cabang_widget" class="text-md font-semibold text-value text-success">Semua Cabang</div>
             <div class="text-gray-600 text-uppercase font-weight-bold text-lg">
         
             </div>
@@ -77,8 +77,18 @@
                                 </a>
 
                         </div>
-                        
-                        <div id="buttons">
+                        <div class="flex gap-x-5">
+                            <div class="form-group">
+                                <select name="cabang_filter" id="cabang_filter" class="form-control">
+                                    <option value="" selected>Semua Cabang</option>
+                                    @foreach ($datacabang as $cabang )
+                                    <option value="{{$cabang->id}}">{{ $cabang->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                            <div id="buttons">
+                            </div>
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
@@ -108,7 +118,16 @@
 
 <x-library.datatable />
 @push('page_scripts')
+<script src="{{  asset('js/jquery.min.js') }}"></script>
    <script type="text/javascript">
+    $(function(){
+        datatable()
+        getSummary()
+    })
+    function datatable(){
+        $('#datatable').DataTable({
+            destroy: true,
+        }).destroy();
         $('#datatable').DataTable({
            processing: true,
            serverSide: true,
@@ -137,7 +156,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("$module_name.index_data") }}?cabang='+$('#cabang_filter').val(),
             dom: 'Blfrtip',
             buttons: [
 
@@ -171,9 +190,30 @@
         .buttons()
         .container()
         .appendTo("#buttons");
+    }
 
 
+    $('#cabang_filter').change(function(){
+        datatable()
+        $('#cabang_widget').text($('#cabang_filter option:selected').text());
+        getSummary()
+    })
 
+    function getSummary(){
+        $.ajax({
+            type: "get",
+            url: '{{route("$module_name.getsummary")}}?cabang='+$('#cabang_filter').val(),
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept' : 'application/json'
+            },
+            success: function(data){
+                $('#total_nilai_angkat').text(data.total_nilai_angkat)
+                $('#total_berat').text(data.total_berat)
+            }
+        })
+    }
     </script>
 <script type="text/javascript">
 jQuery.noConflict();
