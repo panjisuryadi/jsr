@@ -361,6 +361,7 @@ class AdjustmentController extends Controller
             '2' => 'adjustment.sales.index',
             '3' => 'adjustment.pending.office.index',
             '4' => 'adjustment.kroom.index',
+            '5' => 'adjustment.dp.index'
         };
     }
 

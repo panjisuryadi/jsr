@@ -11,6 +11,7 @@ use Modules\Stok\Models\StockKroom;
 use Modules\Stok\Models\StockOffice;
 use Modules\Stok\Models\StockPendingOffice;
 use Modules\Stok\Models\StockSales;
+use Modules\Stok\Models\StokDp;
 
 class Adjustment extends Model
 {
@@ -54,6 +55,10 @@ class Adjustment extends Model
 
     public function stockKroom(){
         return $this->morphedByMany(StockKroom::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps()->withPivot('weight_before', 'weight_after');
+    }
+
+    public function stockDP(){
+        return $this->morphedByMany(StokDp::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps()->withPivot('weight_before', 'weight_after');
     }
 
 

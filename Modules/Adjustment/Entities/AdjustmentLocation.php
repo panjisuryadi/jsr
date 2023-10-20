@@ -22,7 +22,8 @@ class AdjustmentLocation extends Model
             'Modules\Stok\Models\StockOffice' => 'Stock Gudang (Office)',
             'Modules\Stok\Models\StockSales' => 'Stock Sales (Office)',
             'Modules\Stok\Models\StockPendingOffice' => 'Stock Pending (Office)',
-            'Modules\Stok\Models\StockKroom' => 'Stock Kroom (Office)'
+            'Modules\Stok\Models\StockKroom' => 'Stock Kroom (Office)',
+            'Modules\Stok\Models\StokDp' => 'Stock DP (Cabang)',
         };
     }
 
