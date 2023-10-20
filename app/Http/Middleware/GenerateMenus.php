@@ -626,8 +626,8 @@ class GenerateMenus
 
 
           // EMAS - STOK - DAFTAR STOK - STOK KROOM
-            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Kroom'), [
-                'route' => 'stok.kroom',
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Lantakan'), [
+                'route' => 'stok.lantakan',
                 'class' => 'nav-item',
             ])
             ->data([

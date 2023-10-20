@@ -49,9 +49,9 @@ Route::get("$module_name/index_data_pending_office", ['as' => "$module_name.inde
 
 
 
- Route::get("$module_name/kroom", ['as' => "$module_name.kroom", 'uses' => "$controller_name@kroom"]);
+ Route::get("$module_name/lantakan", ['as' => "$module_name.lantakan", 'uses' => "$controller_name@lantakan"]);
 
- Route::get("$module_name/index_data_kroom", ['as' => "$module_name.index_data_kroom", 'uses' => "$controller_name@index_data_kroom"]);
+ Route::get("$module_name/index_data_lantakan", ['as' => "$module_name.index_data_lantakan", 'uses' => "$controller_name@index_data_lantakan"]);
 
 
 
