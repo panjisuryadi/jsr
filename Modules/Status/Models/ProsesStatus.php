@@ -5,6 +5,7 @@ namespace Modules\Status\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\BuysBack\Models\BuysBack;
+use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuar;
 
 class ProsesStatus extends Model
 {
@@ -23,5 +24,9 @@ class ProsesStatus extends Model
 
     public function buybacks(){
         return $this->belongsToMany(BuysBack::class, 'buyback_statuses','status_id','buyback_id');
+    }
+
+    public function barangluar(){
+        return $this->belongsToMany(PenerimaanBarangLuar::class, 'barangluar_statuses','status_id','barangluar_id');
     }
 }

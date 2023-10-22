@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/status/{id}", ['as' => "$module_name.status", 'uses' => "$controller_name@status"]); 
 
-    Route::patch("$module_name/update_status/{id}", ['as' => "$module_name.update_status", 'uses' => "$controller_name@update_status"]);
+    Route::post("$module_name/update_status", ['as' => "$module_name.update_status", 'uses' => "$controller_name@update_status"]);
 
 
     Route::resource("$module_name", "$controller_name");

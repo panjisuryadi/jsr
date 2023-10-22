@@ -1,104 +1,38 @@
-  <div class="px-3">
-  <x-library.alert />
-  <form id="FormEdit" action="{{ route(''.$module_name.'.update_status', $detail) }}" method="POST">
-                            @csrf
-                            @method('patch')
-             <div class="flex flex-row grid grid-cols-1 gap-4">
-            
-             
-        <div class="form-group">
-                    <label for="status_id">Status <span class="text-danger">*</span></label>
-                    <select class="form-control uppercase" name="status_id" id="status_id" required>
+<div class="modal fade" id="modal-status" tabindex="-1" role="dialog" aria-labelledby="detailmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="detailmodalLabel">Ubah Status</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="form-status">
+                    <div id="modal-content">
+                        @csrf
+                        <input type="hidden" name="data_id" id="data_id"  value="">
+                        <div class="flex">
+                            <select class="form-control uppercase" name="status_id" id="status_id" required>
 
-   <option value="" {{ is_null($detail->current_status) ? 'selected' : ''}} disabled>PENDING</option>
+                                <option value="" disabled>PENDING</option>
 
-  @foreach($proses_statuses as $status)
-    <option value="{{$status->id}}" class="uppercase">
-        {{ $status->name }}
-    </option>
-  @endforeach
-
-
-      </select>
-        </div>
+                                @foreach($proses_statuses as $status)
+                                <option value="{{$status->id}}" class="uppercase">
+                                    {{ $status->name }}
+                                </option>
+                                @endforeach
 
 
+                            </select>
+                        </div>
                     </div>
-
-            </form>
-
-
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
 </div>
-{{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
-<script>
-jQuery.noConflict();
-(function( $ ) {
-
- function autoRefresh(){
-      var table = $('#datatable').DataTable();
-        table.ajax.reload();
-
-}
-    function Update()
-    {
-        $.ajax({
-            url: $('#FormEdit').attr('action'),
-            type: "POST",
-            cache: false,
-            data: $('#FormEdit').serialize(),
-            dataType:'json',
-            success: function(data) {
-                  console.log(data.error)
-                    if($.isEmptyObject(data.error)){
-                      $('#ResponseInput').html(data.success);
-                      $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
-                      $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
-                      setTimeout(function(){ autoRefresh(); }, 1000);
-                      setTimeout(function () {
-                              $('#ModalGue').modal('hide');
-                            }, 3000);
-
-                 }else{
-                        printErrorMsg(data.error);
-                    }
-                }
-        });
-    }
-
- function printErrorMsg (msg) {
-            $.each( msg, function( key, value ) {
-            console.log(key);
-             $('#'+key+'').addClass("");
-             $('#'+key+'').addClass("is-invalid");
-              $('.'+key+'_err').text(value);
-
-            });
-        }
-
-$(document).ready(function(){
-
-    var Tombol = "<button type='button' class='btn btn-outline-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
-    Tombol += "<button type='button' class='px-5 btn btn-outline-success' id='SimpanUpdate'>{{ __('Update') }}</button>";
-    $('#ModalFooter').html(Tombol);
-
-    $("#FormEdit").find('input[type=text],textarea,select').filter(':visible:first').focus();
-
-    $('#SimpanUpdate').click(function(e){
-        e.preventDefault();
-        Update();
-    });
-
-    $('#FormEdit').submit(function(e){
-        e.preventDefault();
-        Update();
-    });
-     // $('#potongan_harga').maskMoney({
-     //            prefix: 'Rp ',
-     //            thousands: '.',
-     //            decimal: ',',
-     //            precision: 0
-     //          });
-
-});
-})(jQuery);
-</script>

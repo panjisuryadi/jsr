@@ -55,14 +55,17 @@ class PenerimaanBarangLuarsController extends Controller
         $datacabang = Cabang::all();
         $total_nilai_angkat = $this->module_model::sum('nilai_angkat');
         $total_berat = $this->module_model::sum('weight');
+        $proses_statuses = ProsesStatus::all();
         abort_if(Gate::denies('access_'.$module_name.''), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',
+            'module_path',
             'module_title',
             'datacabang',
             'total_nilai_angkat',
             'total_berat',
+            'proses_statuses',
             'module_icon', 'module_model'));
     }
 
@@ -587,31 +590,24 @@ public function show($id)
 
 
     //update ajax version
-    public function update_status(Request $request, $id)
+    public function update_status(Request $request)
     {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'Update';
-        $$module_name_singular = $module_model::findOrFail($id);
-        $validator = \Validator::make($request->all(),
-            [
-                'status_id' => 'required|exists:proses_statuses,id',
-        ]);
-
-       if (!$validator->passes()) {
-          return response()->json(['error'=>$validator->errors()]);
+        $model = $this->module_model::findOrFail($request->data_id);
+        try {
+            $model->status_id = $request->status_id;
+            if($model->save()){
+                $model->statuses()->attach($request->status_id);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Status Berhasil Diupdate'
+                ]);
+            }   
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
         }
-
-        //$input = $request->all();
-        $params = $request->except('_token');
-        $$module_name_singular->update($params);
-        $$module_name_singular->statuses()->attach($params['status_id']);
-        
-        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }
 

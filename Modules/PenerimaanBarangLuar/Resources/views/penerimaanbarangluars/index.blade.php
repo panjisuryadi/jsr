@@ -113,12 +113,12 @@
             </div>
         </div>
     </div>
+    @include($module_name.'::'.$module_path.'.modal.status')
 </div>
 @endsection
 
 <x-library.datatable />
 @push('page_scripts')
-<script src="{{  asset('js/jquery.min.js') }}"></script>
    <script type="text/javascript">
     $(function(){
         datatable()
@@ -214,37 +214,51 @@
             }
         })
     }
+
+    function showStatus(data){
+        $('#modal-status').modal('show')
+        $('#modal-status #data_id').val(data.id)
+        $('#modal-status #status_id').val(data.status_id)
+    }
+
+    $('#form-status').submit(function(){
+        $.ajax({
+            type: "POST",
+            url: '{{route("penerimaanbarangluar.update_status")}}',
+            data: $('#form-status').serialize(),
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept' : 'application/json'
+            },
+            success: function(data){
+                if(data.status == 'success'){
+                    toastr.success(data.message)
+                    setTimeout(function(){ 
+                        $('#datatable').DataTable().ajax.reload(null, false);
+                        $('#modal-status').modal('hide')
+                    }, 1000);
+                }else{
+                    toastr.error(data.message)
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // if error occured
+					data = JSON.parse(jqXHR.responseText);
+					if(data.message == 'The given data was invalid.'){
+						err = data.errors;
+						$.each(err, function(key, val) {
+							$("."+key+"_field .fv-plugins-message-container").text(val);                   
+							$("."+key+"_field .fv-plugins-message-container").show();
+						});
+
+						toastr.error(data.message);
+					}
+					else{
+						toastr.error("Error occured. "+jqXHR.status+" "+ textStatus +" "+" please try again");
+					}
+				}
+        })
+        return false;
+    })
     </script>
-<script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #Edit, #Status', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }  
-
-        if($(this).attr('id') == 'Status')
-        {
-            $('.modal-dialog').addClass('modal-md');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').removeClass('modal-lg');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status {{ Label_case($module_title) }}');
-        }
-
-
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
-</script>
 @endpush
