@@ -1128,7 +1128,7 @@ class GenerateMenus
 
 
 
- //==== Access Control Dropdown data Parameter
+        //==== Access Control Dropdown data Parameter
          $Parameters = $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Parameters'), [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
@@ -1171,6 +1171,85 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+
+    
+    
+// ================ Start of Berlian =================
+
+            $berlian = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> ' .__('Berlian'), [
+                'class' => 'c-sidebar-nav-dropdown',
+                ])->data([
+                    'order'         => 3,
+                    'activematches' => [
+                        'products*',
+                        'kategoriproduk*',
+                        'product-categories*',
+                        'diamondcertificates*',
+                        'itemrounds*',
+                        'itemshapes*',
+
+                    ],
+                    'permission' => ['access_masterdata',
+                                        'access_kategoriproduks',
+                                        'access_diamondcertificates'],
+                ]);
+            $berlian->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // // BERLIAN - PEMBELIAN
+            $purchase_berlian = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+                ])->data([
+                    'order'         => 1,
+                    'activematches' => [
+                        'purchase-payments*',
+
+                    ],
+                    'permission'    => ['access_purchases'],
+                ]);
+            $purchase_berlian->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // BERLIAN - PEMBELIAN - PENERIMAAN QC
+            $purchase_berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-card-checklist"></i>'.__('Goods Receipts QC'), [
+                    'route' => 'goodsreceiptberlian.qc.index',
+                    'class' => 'nav-item ',
+                ])->data([
+                    'order'         => 1,
+                    'activematches' => ['goodsreceiptsberlian*'],
+                    'permission'    => ['access_goodsreceipts'],
+                ])->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            // BERLIAN - PEMBELIAN - PENERIMAAN QC
+            // $purchase_berlian->add(''.__('Goods Receipts'), [
+            //         'route' => 'goodsreceiptberlian.index',
+            //         'class' => 'nav-item',
+            //     ])->data([
+            //         'order'         => 1,
+            //         'activematches' => ['goodsreceipts*'],
+            //         'permission'    => ['access_goodsreceipts'],
+            //     ])->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
+
+            // // BERLIAN - PEMBELIAN - RETUR PEMBELIAN
+            // $purchase_berlian->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
+            //     '.__('Purchase Returns').'', [
+            //         'route' => 'purchase-returns.index',
+            //         'class' => 'nav-item',
+            //     ])->data([
+            //         'order'         => 2,
+            //         'permission'    => ['create_purchase'],
+            //     ])->link->attr([
+            //         'class' => 'c-sidebar-nav-link',
+            //     ]);
+// ================ End of Berlian =================
 
 
 

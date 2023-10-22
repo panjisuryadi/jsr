@@ -211,7 +211,7 @@ public function index_data(Request $request)
         $module_action = 'List';
 
        // $$module_name = $module_model::active()->latest()->get();
-        $$module_name = $module_model::with('pembelian')->latest()->get();
+        $$module_name = $module_model::with('pembelian')->whereNull('kategoriproduk_id')->orWhere('kategoriproduk_id',1)->latest()->get();
 
         $data = $$module_name;
 
@@ -607,6 +607,7 @@ public function store(Request $request)
             'note'                       => $input['catatan'],
             'count'                      => 0,
             'qty'                        => '8',
+            'kategoriproduk_id'          => 1,
             'pengirim'                   => $input['pengirim']
         ]);
             $goodsreceipt_id = $goodsreceipt->id;
