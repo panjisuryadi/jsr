@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Product;
 
-
+use DateTime;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
@@ -161,6 +161,8 @@ class Sales extends Component
 
     public function mount()
     {
+        $this->distribusi_sales['invoice_no'] = $this->generateInvoice();
+        $this->distribusi_sales['date'] = (new DateTime())->format('Y-m-d');  
         $this->dataSales = DataSale::all();
         $this->dataKarat = Karat::where(function ($query) {
             $query
@@ -169,6 +171,17 @@ class Sales extends Component
                     $query->where('berat_real', '>', 0);
                 });
         })->get();
+    }
+
+    private function generateInvoice()
+    {
+        $lastString = DistribusiSale::orderBy('id', 'desc')->value('invoice_no');
+
+        $numericPart = (int) substr($lastString, 10);
+        $incrementedNumericPart = $numericPart + 1;
+        $nextNumericPart = str_pad($incrementedNumericPart, 5, "0", STR_PAD_LEFT);
+        $nextString = "DISTSALES-" . $nextNumericPart;
+        return $nextString;
     }
 
     public function store()
