@@ -9,6 +9,7 @@ use Modules\People\Entities\Supplier;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\GoodsReceipt\Models\TipePembelian;
 use App\Models\User;
+use Modules\GoodsReceiptBerlian\Models\GoodsReceiptQcAttribute;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -103,6 +104,10 @@ class GoodsReceipt extends Model implements HasMedia
 
             return $orderCode;
         }
+
+    public function goodsReceiptQcAttribute() {
+        return $this->hasMany(GoodsReceiptQcAttribute::class, 'goodsreceipt_id', 'id');
+    }
 
     protected static function newFactory()
     {

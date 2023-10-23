@@ -73,5 +73,7 @@
     "StokCabang": true,
     "Status": true,
     "KeluarMasuk": true,
-    "StoreEmployee": true
+    "StoreEmployee": true,
+    "Test": true,
+    "GoodsReceiptBerlian": true
 }

@@ -14,6 +14,7 @@ use Modules\Locations\Database\Seeders\UsersLocationsDatabaseSeeder;
 use Modules\DiamondCertificate\database\seeders\DiamondCertificateDatabaseSeeder;
 use Modules\Karat\database\seeders\KaratDatabaseSeeder;
 use Modules\KategoriProduk\database\seeders\KategoriProdukDatabaseSeeder;
+use Modules\GoodsReceiptBerlian\database\seeders\SeedQcAttributeTableSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -36,5 +37,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersLocationsDatabaseSeeder::class);
         $this->call(DiamondCertificateDatabaseSeeder::class);
         $this->call(KaratDatabaseSeeder::class);
+        $this->call(SeedQcAttributeTableSeeder::class);
     }
 }
