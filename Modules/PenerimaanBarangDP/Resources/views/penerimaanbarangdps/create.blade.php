@@ -160,7 +160,7 @@ margin-bottom: 0.5rem !important;
                                             <div class="form-group">
                                                 <label for="no_barang_dp">No Barang DP <span class="text-danger">*</span></label>
                                                 <div class="input-group">
-                                                    <input type="text" id="no_barang_dp" class="form-control" name="no_barang_dp" placeholder="No Barang DP">
+                                                    <input type="text" id="no_barang_dp" class="form-control" name="no_barang_dp" placeholder="No Barang DP" value="{{ $no_barang_dp }}" readonly>
                                                 </div>
                                                 @if ($errors->has('no_barang_dp'))
                                                 <span class="invalid feedback" role="alert">
