@@ -23,27 +23,27 @@ use function PHPUnit\Framework\isEmpty;
 class Penerimaan extends Component
 {
     use WithFileUploads;
-    public 
-        $code,
-        $no_penerimaan_barang,
-        $nama_produk,
+    public $code,
+        $no_invoice,
+        $pengirim,
         $supplier_id = '',
+        $tipe_pembayaran = '',
         $tanggal,
-        $harga;
-        // $cicil = '',
-        // $detail_cicilan = [],
-        // $tgl_jatuh_tempo,
-        // $berat_timbangan,
-        // $selisih,
-        // $catatan,
-        // $pic_id = '',
-        // $document = [];
+        $cicil = '',
+        $detail_cicilan = [],
+        $tgl_jatuh_tempo,
+        $berat_timbangan,
+        $selisih,
+        $catatan,
+        $pic_id = '',
+        $karat_id,
+        $document = [];
 
     public $updateMode = false;
     public $total_berat = 0;
     public $inputs = [
         [
-            'karat_id' => '',
+            'karatberlian_id' => '',
             'kategori_id' => '',
             'berat_real' => 0,
             'berat_kotor' => 0
@@ -181,9 +181,9 @@ class Penerimaan extends Component
             'no_invoice' => $this->no_invoice,
             'pengirim'=>$this->pengirim,
             'supplier_id' => $this->supplier_id,
-            // 'tipe_pembayaran'=>$this->tipe_pembayaran,
+            'tipe_pembayaran'=>$this->tipe_pembayaran,
             'tanggal' => $this->tanggal,
-            // 'cicil' => $this->tipe_pembayaran == 'cicil'?$this->cicil:0,
+            'cicil' => $this->tipe_pembayaran == 'cicil'?$this->cicil:0,
             'tgl_jatuh_tempo' => $this->tipe_pembayaran == 'jatuh_tempo'? $this->tgl_jatuh_tempo : null,
             'berat_timbangan' => $this->berat_timbangan,
             'selisih' => $this->selisih,
