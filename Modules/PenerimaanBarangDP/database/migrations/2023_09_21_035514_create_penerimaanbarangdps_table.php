@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Permissions;
 
-return new class extends Migration
+class CreatePenerimaanbarangdpsTable extends Migration
 {
     /**
      * Run the migrations.
