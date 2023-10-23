@@ -22,6 +22,7 @@ class ProsesStatusDatabaseSeeder extends Seeder
         ProsesStatus::create(['id' => 2,'name' => 'masak']);
         ProsesStatus::create(['id' => 3,'name' => 'rongsok']);
         ProsesStatus::create(['id' => 4,'name' => 'second']);
+        ProsesStatus::create(['id' => 5,'name' => 'pending gudang']);
 
         // Enable foreign key checks!
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
