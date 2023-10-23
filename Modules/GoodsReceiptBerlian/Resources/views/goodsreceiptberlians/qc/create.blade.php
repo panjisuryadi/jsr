@@ -5,7 +5,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route("goodsreceipt.index") }}">GoodsReceipt</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("goodsreceiptberlian.qc.index") }}">Goods Receipt Berlian</a></li>
     <li class="breadcrumb-item active">Add</li>
 </ol>
 @endsection
@@ -178,7 +178,7 @@
                                                 <th>Komen</th>
                                             </thead>
                                             <tbody>
-                                                @foreach ( $qcAttribute as $val) : 
+                                                @foreach ( $qcAttribute as $val)
                                                 <tr>
                                                     <td>{{ $val->attribute_name }}</td>
                                                     <td>
@@ -210,10 +210,10 @@
                             </div>
                         </div>
                         <div class="mt-4 flex justify-between">
-                            <div></div>
                             <div class="form-group">
-                                {{-- <a class="px-5 btn btn-danger" href="{{ route("goodsreceiptberli") }}">
-                                    @lang('Cancel')</a> --}}
+                                <a class="px-5 btn btn-danger" href="{{ route("goodsreceiptberlian.qc.index") }}">
+                                    @lang('Cancel')
+                                </a>
                                 <button type="submit" class="px-5 btn btn-success">@lang('Save') <i class="bi bi-check"></i></button>
                             </div>
                         </div>

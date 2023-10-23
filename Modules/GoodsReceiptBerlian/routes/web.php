@@ -17,9 +17,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
     Route::get("$module_name/qc", ['as' => "$module_name.qc.index", 'uses' => "$controller_name@indexqc"]);
     Route::get("$module_name/create-qc", ['as' => "$module_name.createqc", 'uses' => "$controller_name@create_qc"]);
-    Route::get("$module_name/edit-qc", ['as' => "$module_name.qc.edit", 'uses' => "$controller_name@edit_qc"]);
+    Route::get("$module_name/{id}/edit-qc", ['as' => "$module_name.qc.edit", 'uses' => "$controller_name@edit_qc"]);
     Route::get("$module_name/{id}/show-qc", ['as' => "$module_name.qc.show", 'uses' => "$controller_name@show_qc"]);
     Route::post("$module_name/store-qc", ['as' => "$module_name.qc.store", 'uses' => "$controller_name@store_qc"]);
+    Route::post("$module_name/update-qc", ['as' => "$module_name.qc.update", 'uses' => "$controller_name@update_qc"]);
 
     Route::resource("$module_name", "$controller_name");
 

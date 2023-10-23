@@ -347,7 +347,6 @@ class GoodsReceiptBerliansController extends Controller
         $module_action = 'Show';
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-        //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.show',
            compact('module_name',
             'module_action',
@@ -355,6 +354,87 @@ class GoodsReceiptBerliansController extends Controller
             'module_title',
             'module_icon', 'module_model'));
 
+    }
+
+    /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    public function edit_qc($id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+        $dataSupplier = Supplier::all();
+          return view(''.$module_name.'::'.$module_path.'.qc.edit',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'dataSupplier',
+            'module_icon', 'module_model'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Renderable
+     */
+    public function update_qc(Request $request)
+    {
+        try {
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_model = $this->module_model;
+            $id = $request->input('id');
+
+            DB::beginTransaction();
+            
+            $data = $module_model::findOrFail($id);
+            $params = $request->except('_token', 'code');
+            $keterangan = isset($params['keterangan']) && is_array($params['keterangan']) ? $params['keterangan'] : [];
+            $notes = isset($params['note']) && is_array($params['note']) ? $params['note'] : [];
+            $params = [
+                'date'                  => $params['tanggal'],
+                'total_berat_kotor'     => 0,
+                'berat_timbangan'       => 0,
+                'supplier_id'           => $params['supplier_id'],
+                'nama_produk'           => $params['nama_produk'],
+                'kategoriproduk_id'     => $params['kategoriproduk_id'],
+                'is_qc'                 => 1,
+            ];
+            $data->update($params);
+            
+            $goodsreceipt_id = $id;
+            
+            $qcattribute_data = [];
+            foreach ($keterangan as $key => $value) {
+                $qcattribute_data[] = [
+                    'id' => $key,
+                    'goodsreceipt_id' => $goodsreceipt_id,
+                    'attributesqc_id' => $key,
+                    'keterangan' => $value,
+                    'note' => isset($notes[$key]) ? $notes[$key] :'',
+                ];
+            }
+            $update = GoodsReceiptQcAttribute::upsert($qcattribute_data, ['id']);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            toast($th->getMessage() .' '. $module_title.' QC Not Updated!', 'failed');
+            return redirect()->back();
+        }
+
+        toast(''. $module_title.' QC Updated!', 'success');
+        return redirect()->route(''.$module_name.'.qc.index');
     }
 
     /**

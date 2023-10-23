@@ -6,7 +6,7 @@
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ route("goodsreceiptberlian.qc.index") }}">Goods Receipt Berlian QC</a></li>
-    <li class="breadcrumb-item active">Show</li>
+    <li class="breadcrumb-item active">Edit</li>
 </ol>
 @endsection
 
@@ -29,7 +29,7 @@
 </style>
 @endpush
 <div class="container-fluid">
-    <form enctype="multipart/form-data" action="{{route('goodsreceiptberlian.qc.store')}}" method="POST">
+    <form enctype="multipart/form-data" action="{{route('goodsreceiptberlian.qc.update')}}" method="POST">
         @csrf
         @method('POST')
         <div class="row">
@@ -108,6 +108,7 @@
                                         <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value = "{{ $detail->nama_produk}}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                                         <input type="hidden" name="kategoriproduk_id" class="form-control {{ $invalid }}" value = "2" placeholder="{{ $field_placeholder }}">
                                         <input type="hidden" name="is_qc" class="form-control {{ $invalid }}" value = "1" placeholder="{{ $field_placeholder }}">
+                                        <input type="hidden" name="id" class="form-control {{ $invalid }}" value = "{{ $detail->id}}" placeholder="{{ $field_placeholder }}">
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -125,12 +126,12 @@
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">Supplier</label>
                                         <select class="form-control" name="{{ $field_name }}" wire:model="{{$field_name}}">
-                                            <option value="{{ $detail->supplier->id }}" selected disabled> {{ $detail->supplier->supplier_name }} </option>
-                                            {{-- @foreach($dataSupplier as $row)
+                                            <option value="{{ $detail->supplier->id }}" selected> {{ $detail->supplier->supplier_name }} </option>
+                                            @foreach($dataSupplier as $row)
                                             <option value="{{$row->id}}" {{ old('supplier_id') == $row->id ? 'selected' : '' }}>
                                                 {{$row->supplier_name}}
                                             </option>
-                                            @endforeach --}}
+                                            @endforeach
                                         </select>
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
@@ -189,7 +190,7 @@
                                                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                             $required = '';
                                                         ?>
-                                                        <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" value = "{{ $val->note }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
+                                                        <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value = "{{ $val->note }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -202,9 +203,12 @@
                         <div class="mt-4 flex justify-between">
                             <div></div>
                             <div class="form-group">
-                                {{-- <a class="px-5 btn btn-danger" href="{{ route("goodsreceiptberli") }}">
-                                    @lang('Cancel')</a> --}}
-                                {{-- <button type="submit" class="px-5 btn btn-success">@lang('Save') <i class="bi bi-check"></i></button> --}}
+                                <div class="form-group">
+                                    <a class="px-5 btn btn-danger" href="{{ route("goodsreceiptberlian.qc.index") }}">
+                                        @lang('Cancel')
+                                    </a>
+                                    <button type="submit" class="px-5 btn btn-success">@lang('Save') <i class="bi bi-check"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
