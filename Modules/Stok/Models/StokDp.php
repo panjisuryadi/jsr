@@ -4,6 +4,7 @@ namespace Modules\Stok\Models;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Adjustment\Entities\Adjustment;
 use Modules\Karat\Models\Karat;
 use Modules\Cabang\Models\Cabang;
 use Modules\People\Entities\Customer;
@@ -24,6 +25,11 @@ class StokDp extends Model
     }
     public function customer() {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    public function adjustments()
+    {
+        return $this->morphToMany(Adjustment::class, 'location','adjustment_location','location_id','adjustment_id','id','id');
     }
 
 

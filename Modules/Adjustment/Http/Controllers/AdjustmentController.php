@@ -210,7 +210,10 @@ class AdjustmentController extends Controller
         abort_if(Gate::denies('show_adjustments'), 403);
         $view = match($adjustment->location->location_type){
             "Modules\Stok\Models\StockOffice" => 'adjustment::gudang-office.show',
-            "Modules\Stok\Models\StockSales" => 'adjustment::sales.show'
+            "Modules\Stok\Models\StockSales" => 'adjustment::sales.show',
+            "Modules\Stok\Models\StockPendingOffice" => 'adjustment::pending-office.show',
+            "Modules\Stok\Models\StockKroom" => 'adjustment::kroom.show',
+            "Modules\Stok\Models\StokDp" => 'adjustment::dp.show'
         };
         return view($view, compact('adjustment'));
     }
@@ -356,7 +359,11 @@ class AdjustmentController extends Controller
     private function getAppropriateRoute($active_adjustment) : string {
         return match($active_adjustment){
             '1' => 'adjustment.gudang.office.index',
-            '2' => 'adjustment.sales.index'
+            '2' => 'adjustment.sales.index',
+            '3' => 'adjustment.pending.office.index',
+            '4' => 'adjustment.kroom.index',
+            '5' => 'adjustment.dp.index',
+            '6' => 'adjustment.pending.cabang.index'
         };
     }
 
@@ -370,7 +377,7 @@ class AdjustmentController extends Controller
                 return view('adjustment::partials.actions', compact('data'));
             })
             ->addColumn('locations', function ($data) {
-                return $data->location->descriptive_location_type;
+                return $data->location?->descriptive_location_type;
             })
             ->addColumn('product', function ($data) {
                 return $data->products_count.' Product';

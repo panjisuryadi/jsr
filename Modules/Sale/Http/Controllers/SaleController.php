@@ -505,4 +505,29 @@ public function store_ajax(StoreSaleRequest $request)
 
         return redirect()->route('sales.index');
     }
+
+
+
+
+public function generateInvoice($id)
+{
+
+    $sale = \Modules\Sale\Entities\Sale::findOrFail($id);
+
+
+     return view('sale::print', compact('sale'));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

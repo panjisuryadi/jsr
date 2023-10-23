@@ -4,6 +4,7 @@ namespace Modules\Stok\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Adjustment\Entities\Adjustment;
 use Modules\Karat\Models\Karat;
 
 class StockPendingOffice extends Model
@@ -24,5 +25,10 @@ class StockPendingOffice extends Model
 
     public function karat(){
         return $this->belongsTo(Karat::class);
+    }
+
+    public function adjustments()
+    {
+        return $this->morphToMany(Adjustment::class, 'location','adjustment_location','location_id','adjustment_id','id','id');
     }
 }

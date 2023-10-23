@@ -34,7 +34,7 @@ class StoksController extends Controller
         $this->module_pending = "Modules\Stok\Models\StockPending";
         $this->module_pending_office = "Modules\Stok\Models\StockPendingOffice";
         $this->module_sales = "Modules\Stok\Models\StockSales";
-        $this->module_kroom = "Modules\Stok\Models\StockKroom";
+        $this->module_lantakan = "Modules\Stok\Models\StockKroom";
         $this->module_dp = "Modules\Stok\Models\StokDp";
 
     }
@@ -146,16 +146,16 @@ public function pending_office() {
             'module_icon', 'module_model'));
     }
 
- public function kroom() {
+ public function lantakan() {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        $module_action = 'Kroom';
+        $module_action = 'Lantakan';
         abort_if(Gate::denies('access_'.$module_name.''), 403);
-         return view(''.$module_name.'::'.$module_path.'.page.index_kroom',
+         return view(''.$module_name.'::'.$module_path.'.page.index_lantakan',
            compact('module_name',
             'module_action',
             'module_title',
@@ -163,7 +163,7 @@ public function pending_office() {
     }
 
 
-public function index_data_kroom(Request $request)
+public function index_data_lantakan(Request $request)
 
     {
         $module_title = $this->module_title;
@@ -171,12 +171,12 @@ public function index_data_kroom(Request $request)
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
-        $module_kroom = $this->module_kroom;
+        $module_lantakan = $this->module_lantakan;
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
 
-        $$module_name = $module_kroom::get();
+        $$module_name = $module_lantakan::get();
 
         $data = $$module_name;
 
@@ -205,7 +205,7 @@ public function index_data_kroom(Request $request)
                                 return $tb;
                             })
                  
-                        ->rawColumns(['updated_at', 'karat','customer', 'cabang', 'action', 'weight'])
+                        ->rawColumns(['updated_at', 'karat', 'action', 'weight'])
                         ->make(true);
                      }
 

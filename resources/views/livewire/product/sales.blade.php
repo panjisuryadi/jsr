@@ -18,7 +18,7 @@
                       <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Invoice No.</label>
                       <span class="mr-4 inline-block hidden md:block">:</span>
                       <div class="flex-1">
-                          <input wire:model="distribusi_sales.invoice_no" type="text" name="invoice" id="first_name" placeholder="eg. #INV-100001" class="form-control @error('distribusi_sales.invoice_no') is-invalid @enderror">
+                          <input wire:model="distribusi_sales.invoice_no" type="text" name="invoice" id="first_name" placeholder="eg. #INV-100001" class="form-control @error('distribusi_sales.invoice_no') is-invalid @enderror" readonly>
                           @error('distribusi_sales.invoice_no')
                           <div class="invalid-feedback">
                               {{ $message }}

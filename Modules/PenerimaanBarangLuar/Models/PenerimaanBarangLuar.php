@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Cabang\Models\Cabang;
 //use Modules\JenisGroup\Models\JenisGroup;
 use Modules\Karat\Models\Karat;
+use Modules\Status\Models\ProsesStatus;
+
 class PenerimaanBarangLuar extends Model
 {
     use HasFactory;
@@ -60,6 +62,14 @@ class PenerimaanBarangLuar extends Model
         }
 
         return $orderCode;
+    }
+
+    public function statuses(){
+      return $this->belongsToMany(ProsesStatus::class,'barangluar_statuses','barangluar_id','status_id')->withTimestamps();
+    }
+
+    public function current_status(){
+        return $this->belongsTo(ProsesStatus::class, 'status_id');
     }
 
 
