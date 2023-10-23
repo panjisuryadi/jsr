@@ -1259,46 +1259,6 @@ class GenerateMenus
 
 
       //============================Access Control Dropdown
-$products = $menu->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Inventory', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => [
-                    'products*',
-                    'penentuanhargas*',
-                    'datasales*',
-                ],
-                'permission' => ['access_inventory'],
-            ]);
-            $products->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
-       // Submenu: iventory
-            $products->add('
-                <i class="c-sidebar-nav-icon bi bi-list-task mb-2"></i>
-                '.__('List Inventory').'',
-                 [
-                'route' => 'iventory.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => 'iventories*',
-                'permission'    => ['access_iventories'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-          
-
-
-
-
 
 
             // // Submenu: products
