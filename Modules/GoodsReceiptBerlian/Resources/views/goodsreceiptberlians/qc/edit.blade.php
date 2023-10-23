@@ -191,6 +191,7 @@
                                                             $required = '';
                                                         ?>
                                                         <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value = "{{ $val->note }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
+                                                        <input type="hidden" name="attributesqc_id[{{$val->id}}]" class="form-control {{ $invalid }}" value = "{{ $val->attributesqc_id }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                                                     </td>
                                                 </tr>
                                                 @endforeach

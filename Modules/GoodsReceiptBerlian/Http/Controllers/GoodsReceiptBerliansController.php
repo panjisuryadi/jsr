@@ -402,7 +402,9 @@ class GoodsReceiptBerliansController extends Controller
             $params = $request->except('_token', 'code');
             $keterangan = isset($params['keterangan']) && is_array($params['keterangan']) ? $params['keterangan'] : [];
             $notes = isset($params['note']) && is_array($params['note']) ? $params['note'] : [];
-            $params = [
+            $ids = isset($params['attributesqc_id']) && is_array($params['attributesqc_id']) ? $params['attributesqc_id'] : [];
+
+            $update_data = [
                 'date'                  => $params['tanggal'],
                 'total_berat_kotor'     => 0,
                 'berat_timbangan'       => 0,
@@ -411,7 +413,7 @@ class GoodsReceiptBerliansController extends Controller
                 'kategoriproduk_id'     => $params['kategoriproduk_id'],
                 'is_qc'                 => 1,
             ];
-            $data->update($params);
+            $data->update($update_data);
             
             $goodsreceipt_id = $id;
             
@@ -420,14 +422,15 @@ class GoodsReceiptBerliansController extends Controller
                 $qcattribute_data[] = [
                     'id' => $key,
                     'goodsreceipt_id' => $goodsreceipt_id,
-                    'attributesqc_id' => $key,
+                    'attributesqc_id' => isset($ids[$key]) ? $ids[$key] :'',
                     'keterangan' => $value,
                     'note' => isset($notes[$key]) ? $notes[$key] :'',
                 ];
             }
-            $update = GoodsReceiptQcAttribute::upsert($qcattribute_data, ['id']);
+            GoodsReceiptQcAttribute::upsert($qcattribute_data, ['id']);
             DB::commit();
         } catch (\Throwable $th) {
+            return $th->getMessage();
             DB::rollBack();
             toast($th->getMessage() .' '. $module_title.' QC Not Updated!', 'failed');
             return redirect()->back();
