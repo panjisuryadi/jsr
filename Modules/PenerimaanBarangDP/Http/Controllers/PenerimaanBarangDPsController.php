@@ -157,12 +157,23 @@ public function index_data(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
+            $no_barang_dp = $this->generateInvoice();
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
                 'module_title',
+                'no_barang_dp',
                 'module_icon', 'module_model'));
+        }
+
+        private function generateInvoice(){
+            $lastString = $this->module_model::orderBy('id', 'desc')->value('no_barang_dp');
+            $numericPart = (int) substr($lastString, 3);
+            $incrementedNumericPart = $numericPart + 1;
+            $nextNumericPart = str_pad($incrementedNumericPart, 5, "0", STR_PAD_LEFT);
+            $nextString = "DP-" . $nextNumericPart;
+            return $nextString;
         }
 
 
