@@ -254,7 +254,7 @@ class GoodsReceiptBerliansController extends Controller
         try {
             $module_name_singular = Str::singular($this->module_name);
             $input = $request->except('_token','document');
-
+            $input['images'] = '';
             if ($request->filled('image')) {
                 $img = $request->image;
                 $folderPath = "uploads/";
@@ -277,6 +277,7 @@ class GoodsReceiptBerliansController extends Controller
                 'supplier_id'           => $input['supplier_id'],
                 'nama_produk'           => $input['nama_produk'],
                 'kategoriproduk_id'     => $input['kategoriproduk_id'],
+                'images'                => $input['images'],
                 'is_qc'                 => 1,
             ]);
             $goodsreceipt_id = $goodsreceipt->id;
@@ -404,6 +405,20 @@ class GoodsReceiptBerliansController extends Controller
             $notes = isset($params['note']) && is_array($params['note']) ? $params['note'] : [];
             $ids = isset($params['attributesqc_id']) && is_array($params['attributesqc_id']) ? $params['attributesqc_id'] : [];
 
+            $params['images'] =  "";
+            if ($request->filled('image')) {
+                $img = $request->image;
+                $folderPath = "uploads/";
+                $image_parts = explode(";base64,", $img);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName ='webcam_'. uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('public')->put($file,$image_base64);
+                $params['images'] = "$fileName";
+            }
+
             $update_data = [
                 'date'                  => $params['tanggal'],
                 'total_berat_kotor'     => 0,
@@ -411,6 +426,7 @@ class GoodsReceiptBerliansController extends Controller
                 'supplier_id'           => $params['supplier_id'],
                 'nama_produk'           => $params['nama_produk'],
                 'kategoriproduk_id'     => $params['kategoriproduk_id'],
+                'images'                => isset($params['images']) ? $params['images'] : '',
                 'is_qc'                 => 1,
             ];
             $data->update($update_data);
@@ -435,7 +451,7 @@ class GoodsReceiptBerliansController extends Controller
             toast($th->getMessage() .' '. $module_title.' QC Not Updated!', 'failed');
             return redirect()->back();
         }
-
+        activity()->log(' '.auth()->user()->name.' update goodreceipts berlian qc');
         toast(''. $module_title.' QC Updated!', 'success');
         return redirect()->route(''.$module_name.'.qc.index');
     }
