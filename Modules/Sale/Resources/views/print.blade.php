@@ -76,8 +76,8 @@
     </td>
     <td style='border: none !important;vertical-align:top' width='40%' align='left'>
         Invoice: {{ $sale->reference }}</br>
-        Tanggal : Date: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</br>
-        Nama Supplier : Customer: {{ $sale->customer_name }}</br>
+        Tanggal : {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</br>
+        Kostumer: {{ $sale->customer_name }}</br>
         Alamat :  - </br>
     </td>
 </table>
