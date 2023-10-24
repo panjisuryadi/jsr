@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\GoodsReceipt;
+namespace App\Http\Livewire\GoodsReceiptBerlian;
         use Livewire\Component;
         use App\Http\Livewire\Field;
         use Illuminate\Http\Request;
