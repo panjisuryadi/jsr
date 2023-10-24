@@ -509,16 +509,30 @@ public function store_ajax(StoreSaleRequest $request)
 
 
 
-public function generateInvoice($id)
+public function generateInvoice_0ljg($id)
 {
 
     $sale = \Modules\Sale\Entities\Sale::findOrFail($id);
 
+  // $pdf = \PDF::loadView('sale::print', [
+  //           'sale' => $sale,
 
+  //       ]);
+
+  //       return $pdf->stream('sale-'. $sale->reference .'.pdf');
      return view('sale::print', compact('sale'));
 }
 
 
+
+  public function generateInvoice($id) {
+        $sale = Sale::findOrFail($id);
+        $pdf = PDF::loadView('sale::print', [
+            'sale' => $sale,
+        ])->setPaper('a4');
+
+        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+    }
 
 
 
