@@ -34,7 +34,6 @@
         'code'=>$code,
         'module_name' => $module_name,
         'module_action' => $module_action,
-        'kasir' => $kasir,
         'module_title' => $module_title,
         'module_icon' => $module_icon,
         'module_model' => $module_model

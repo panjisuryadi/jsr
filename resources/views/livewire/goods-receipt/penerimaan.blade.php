@@ -503,14 +503,7 @@
                                     $required = '';
                                     ?>
                                     <label class="mb-0" for="{{ $field_name }}">PIC</label>
-                                    <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
-                                        <option value="" selected disabled>Select PIC</option>
-                                        @foreach($kasir as $sup)
-                                        <option value="{{$sup->id}}" {{ old('user_id') == $sup->id ? 'selected' : '' }}>
-                                            {{$sup->name}} | {{$sup->kode_user}}
-                                        </option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value="{{ auth()->user()->name }}" placeholder="{{ $field_placeholder }}" readonly>
                                     @if ($errors->has($field_name))
                                     <span class="invalid feedback" role="alert">
                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">

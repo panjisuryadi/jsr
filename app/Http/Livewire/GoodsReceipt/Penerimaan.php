@@ -54,7 +54,6 @@ class Penerimaan extends Component
     public $dataSupplier = [];
     public $dataKarat = [];
     public $dataKategoriProduk = [];
-    public $kasir = [];
 
     public $hari_ini;
 
@@ -68,6 +67,7 @@ class Penerimaan extends Component
 
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
+        $this->pic_id = auth()->user()->id;
     }
 
     public function addInput()
@@ -93,7 +93,6 @@ class Penerimaan extends Component
     public function render()
 
     {
-        $this->kasir = User::role('Kasir')->orderBy('name')->get();
         return view('livewire.goods-receipt.penerimaan');
     }
 

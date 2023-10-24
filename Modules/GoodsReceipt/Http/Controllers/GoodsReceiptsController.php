@@ -544,14 +544,12 @@ public function index_data_completed(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $code = $module_model::generateCode();
-            $kasir = User::role('Kasir')->orderBy('name')->get();
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
                 'code',
-                'kasir',
                 'module_title',
                 'module_icon', 'module_model'));
         }
