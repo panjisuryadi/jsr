@@ -64,7 +64,7 @@ public function index_data()
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::latest()->get();
 
         $data = $$module_name;
 
@@ -76,30 +76,32 @@ public function index_data()
                             compact('module_name', 'data', 'module_model'));
                                 })
                          
-                           ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
-
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                        ->editColumn('karat', function($data){
+                            $output = '';
+                            if(is_null($data->parent_id)){
+                                $output = "{$data->name} {$data->kode}";
+                            }else{
+                                $output = "{$data->parent->name} {$data->parent->kode} - {$data->name}";
                             }
-                        })
-                        ->editColumn('kode_induk', function($data){
-                            return $data->parent->kode??'';
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .$output . '</h3>
+
+                                    </div>';
                         })  
 
-                          ->editColumn('type', function($data){
-                            return $data->type??'';
-                        })
-                        ->editColumn('kode', function($data){
-                            if(isset($data->parent->kode)){
-                                return "{$data->parent->kode} | {$data->kode}";
+                        ->editColumn('type', function($data){
+                            $output = '';
+                            if(is_null($data->type)){
+                                $output = ($data->parent->type == 'LM')?'Logam Mulia':'Perhiasan';
+                            }else{
+                                $output = ($data->type == 'LM')?'Logam Mulia':'Perhiasan';
                             }
-                            return $data->kode??'';
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-medium text-gray-800"> ' .$output . '</h3>
+
+                                    </div>';
                         })
-                        ->rawColumns(['updated_at', 'action','kode_induk','kode'])
+                        ->rawColumns(['karat', 'action','type'])
                         ->make(true);
     }
 
