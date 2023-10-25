@@ -178,7 +178,6 @@ class PenerimaanQc extends Component
             'kategoriproduk_id' => $this->kategoriproduk_id,
             'detail_cicilan' => $this->detail_cicilan
         ];
-        dd($data, $this->image);
         $request = new Request($data);
         $controller = new GoodsReceiptBerliansController();
         $controller->store_qc($request);
