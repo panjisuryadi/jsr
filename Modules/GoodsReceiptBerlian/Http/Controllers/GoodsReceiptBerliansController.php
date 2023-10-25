@@ -17,7 +17,7 @@ use Modules\People\Entities\Supplier;
 use Lang;
 use Image;
 use Illuminate\Support\Facades\DB;
-use Modules\GoodsReceiptBerlian\Models\GoodsReceiptQcAttribute;
+use Modules\GoodsReceiptBerlian\Models\GoodsReceiptQcItems;
 
 class GoodsReceiptBerliansController extends Controller
 {
@@ -251,6 +251,7 @@ class GoodsReceiptBerliansController extends Controller
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
+        
         try {
             $module_name_singular = Str::singular($this->module_name);
             $input = $request->except('_token','document');
@@ -281,20 +282,15 @@ class GoodsReceiptBerliansController extends Controller
                 'is_qc'                 => 1,
             ]);
             $goodsreceipt_id = $goodsreceipt->id;
-
             $qcattribute_data = [];
-            $keterangan = isset($input['keterangan']) && is_array($input['keterangan']) ? $input['keterangan'] : [];
-            $notes = isset($input['note']) && is_array($input['note']) ? $input['note'] : [];
-            foreach ($keterangan as $key => $value) {
-                $qcattribute_data[] = [
-                    'goodsreceipt_id' => $goodsreceipt_id,
-                    'attributesqc_id' => $key,
-                    'keterangan' => $value,
-                    'note' => isset($notes[$key]) ? $notes[$key] :'',
-                ];
+            if(!empty($input['items'])){
+                foreach($input['items'] as $val) {
+                    $val['goodsreceipt_id'] = $goodsreceipt_id;
+                    $qcattribute_data[] = $val;
+                }
             }
 
-            GoodsReceiptQcAttribute::insert($qcattribute_data);
+            GoodsReceiptQcItems::insert($qcattribute_data);
 
         } catch (\Throwable $th) {
             DB::rollBack();

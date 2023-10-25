@@ -57,7 +57,7 @@ $mp3 = asset('js/webcamjs/shutter.mp3');
                 @else
                 <img id="imageprev">
                 @endif
-                <input type="hidden" value="" name="image" id="valimage">
+                <input type="hidden" value="" name="image" wire:model = "image" id="valimage">
             </div>
             @endif
         </div>
@@ -104,6 +104,7 @@ document.addEventListener('livewire:load', function () {
             document.getElementById('imageprev').src = data_uri
             document.getElementById('valimage').value = data_uri
             Livewire.emit('webcamCaptured',key,data_uri)
+            Livewire.emit('setImageFromWebcam', data_uri); 
         });
         webcam.reset()
     });

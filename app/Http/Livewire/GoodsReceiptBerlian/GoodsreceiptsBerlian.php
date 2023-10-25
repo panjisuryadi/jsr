@@ -21,6 +21,7 @@ namespace App\Http\Livewire\GoodsReceiptBerlian;
              $qty_diterima,
              $pengirim,
              $berat_real,
+             $product_price,
              $employee_id;
 
             public $updateMode = false;

@@ -30,7 +30,7 @@
 @endpush
 <div class="container-fluid">
     <script src="{{  asset('js/jquery.min.js') }}"></script>
-    @livewire('goods-receipt-berlian.penerimaan',[
+    @livewire('goods-receipt-berlian.penerimaan-qc',[
         'code'=>$code,
         'module_name' => $module_name,
         'module_action' => $module_action,
@@ -109,13 +109,18 @@
     (function($) {
 
         $('#up1').change(function() {
-            $('#upload2').toggle();
-            $('#upload1').hide();
+            if( $(this).is(':checked') ) {
+                $('#upload2').toggle();
+                $('#upload1').hide();
+            }
         });
         $('#up2').change(function() {
-            $('#upload1').toggle();
-            $('#upload2').hide();
+            if( $(this).is(':checked') ) {
+                $('#upload1').toggle();
+                $('#upload2').hide();
+            }
         });
+        
 
         $(document).ready(function() {
             $('.numeric').keypress(function(e) {
