@@ -25,7 +25,7 @@
                                                 ?>
                                             <label for="{{ $field_name }}"> No Surat Jalan</label>
                                             <div class="flex-1">
-                                                <input wire:model="{{ $field_name }}" type="text" id="{{ $field_name }}" placeholder="{{ $field_lable }}" class="form-control @error( $field_name) is-invalid @enderror">
+                                                <input wire:model="{{ $field_name }}" type="text" id="{{ $field_name }}" placeholder="{{ $field_lable }}" class="form-control @error( $field_name) is-invalid @enderror" readonly>
                                                 @if ($errors->has($field_name))
                                                     <span class="invalid feedback"role="alert">
                                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small

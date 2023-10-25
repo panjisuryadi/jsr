@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\DistribusiToko;
 
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Entities\Category;
@@ -174,6 +176,18 @@ class Create extends Component
                     $query->where('berat_real', '>', 0);
                 });
         })->get();
+        $this->distribusi_toko['no_distribusi_toko'] = $this->generateInvoice();
+        $this->distribusi_toko['date'] = (new DateTime())->format('Y-m-d');
+    }
+
+    private function generateInvoice(){
+        $lastString = DistribusiToko::orderBy('id', 'desc')->value('no_invoice');
+
+        $numericPart = (int) substr($lastString, 10);
+        $incrementedNumericPart = $numericPart + 1;
+        $nextNumericPart = str_pad($incrementedNumericPart, 5, "0", STR_PAD_LEFT);
+        $nextString = "DIST-TOKO-" . $nextNumericPart;
+        return $nextString;
     }
 
     public function store()
