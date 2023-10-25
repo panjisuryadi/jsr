@@ -42,12 +42,12 @@
                                     </div>
                                 </div>
                                 <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
-                                    <x-library.webcam />
+                                @livewire('webcam', ['key' => 0], key('cam-'. 0))
                                 </div>
-                                <div id="upload1">
+                                <div id="upload1" wire:ignore>
                                     <div class="form-group">
 
-                                        <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone" wire:ignore>
+                                        <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                             <div class="dz-message" data-dz-message>
                                                 <i class="bi bi-cloud-arrow-up"></i>
                                             </div>

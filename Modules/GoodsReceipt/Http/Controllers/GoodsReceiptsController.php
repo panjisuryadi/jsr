@@ -606,7 +606,7 @@ public function store(Request $request)
             'count'                      => 0,
             'qty'                        => '8',
             'kategoriproduk_id'          => $kategori_produk_id,
-            'pengirim'                   => $input['pengirim']
+            'pengirim'                   => $input['pengirim'],
         ]);
             $goodsreceipt_id = $goodsreceipt->id;
             $this->_saveTipePembelian($input ,$goodsreceipt_id);
@@ -630,9 +630,8 @@ public function store(Request $request)
             $image_base64 = base64_decode($image_parts[1]);
             $fileName ='webcam_'. uniqid() . '.jpg';
             $file = $folderPath . $fileName;
-             //$$module_name_singular->addMedia($image_base64)->toMediaCollection('pembelian');
-            Storage::disk('public')->put($file,$image_base64);
-            $input['images'] =  "$fileName";
+            Storage::disk('local')->put($file,$image_base64);
+            $goodsreceipt->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('pembelian');
             }
 
              activity()->log(' '.auth()->user()->name.' input data pembelian');

@@ -36,7 +36,8 @@ class Penerimaan extends Component
         $selisih,
         $catatan,
         $pic_id = '',
-        $document = [];
+        $document = [],
+        $image = '';
 
     public $updateMode = false;
     public $total_berat = 0;
@@ -56,7 +57,21 @@ class Penerimaan extends Component
 
     public $hari_ini;
 
-    protected $listeners = ['imageUploaded','imageRemoved'];
+    protected $listeners = [
+        'imageUploaded',
+        'imageRemoved',
+        'webcamCaptured' => 'handleWebcamCaptured',
+        'webcamReset' => 'handleWebcamReset'
+
+    ];
+
+    public function handleWebcamCaptured($key,$data_uri){
+        $this->image = $data_uri;
+    }
+
+    public function handleWebcamReset($key){
+        $this->image = '';
+    }
 
     public function mount()
     {
@@ -188,7 +203,8 @@ class Penerimaan extends Component
             'total_berat_real' => $this->total_berat_real,
             'total_berat_kotor' => $this->total_berat_kotor,
             'items' => $this->inputs,
-            'detail_cicilan' => $this->detail_cicilan
+            'detail_cicilan' => $this->detail_cicilan,
+            'image' => $this->image
         ];
 
         $request = new Request($data);
