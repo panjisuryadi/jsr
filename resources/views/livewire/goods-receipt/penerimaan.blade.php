@@ -179,31 +179,7 @@
                                         </div>
 
 
-                                        <div class="form-group">
-                                            <?php
-                                            $field_name = 'inputs.' . $key . '.kategori_id';
-                                            $field_lable = __('Kategori');
-                                            $field_placeholder = Label_case($field_lable);
-                                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                            $required = '';
-                                            ?>
-                                            @if ($key==0)
-                                            <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                            @endif
-                                            <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}">
-                                                <option value="" selected disabled>Select Category</option>
-                                                @foreach($dataKategoriProduk as $row)
-                                                <option value="{{$row->id}}" {{ old($field_name) == $row->id ? 'selected' : '' }}>
-                                                    {{$row->name}}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                            @if ($errors->has($field_name))
-                                            <span class="invalid feedback" role="alert">
-                                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                            </span>
-                                            @endif
-                                        </div>
+                                        
 
 
                                         <div class="form-group">
@@ -289,7 +265,7 @@
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}
                                             <span class="text-danger small"> (yg harus dibayar)</span></label>
-                                        <input class="form-control numeric" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" readonly>
+                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" readonly>
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -323,7 +299,7 @@
                                         $required = "required";
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                        <input class="form-control numeric" type="number" name="{{ $field_name }}" min="0" step="0.001" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}">
+                                        <input class="form-control" type="number" name="{{ $field_name }}" min="0" step="0.001" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:change="calculateSelisih">
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -341,7 +317,7 @@
                                         $required = "required";
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger small">(Gram)</span></label>
-                                        <input class="form-control numeric" type="number" name="{{ $field_name }}" min="0" step="0.001" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="0">
+                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="0" readonly>
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">

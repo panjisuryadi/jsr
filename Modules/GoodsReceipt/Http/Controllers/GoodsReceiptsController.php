@@ -588,13 +588,13 @@ public function store(Request $request)
         //      'karat_id.*' => 'required',
         //     ]);
          $input = $request->except('_token','document');
+         $kategori_produk_id = KategoriProduk::whereSlug('gold')->value('id');
          $goodsreceipt = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
             'date'                       => $input['tanggal'],
             'status'                     => 0,
             'karat_id'                   => null,
-            'kategoriproduk_id'          => null,
             'tipe_pembayaran'            => $input['tipe_pembayaran'],
             'supplier_id'                => $input['supplier_id'],
             'user_id'                    => $input['pic_id'],
@@ -605,12 +605,12 @@ public function store(Request $request)
             'note'                       => $input['catatan'],
             'count'                      => 0,
             'qty'                        => '8',
-            'kategoriproduk_id'          => 1,
+            'kategoriproduk_id'          => $kategori_produk_id,
             'pengirim'                   => $input['pengirim']
         ]);
             $goodsreceipt_id = $goodsreceipt->id;
             $this->_saveTipePembelian($input ,$goodsreceipt_id);
-            $this->_saveGoodsReceiptItem($input['items'] ,$goodsreceipt);
+            $this->_saveGoodsReceiptItem($input['items'] ,$goodsreceipt,$kategori_produk_id);
             // $this->_saveStockOffice($input['items']);
 
 
@@ -670,13 +670,13 @@ public function store(Request $request)
       }
 
 
-   private function _saveGoodsReceiptItem($items ,$goodsreceipt)
+   private function _saveGoodsReceiptItem($items ,$goodsreceipt, $kategori_produk_id)
      {
        foreach ($items as $key => $value) {
           $item = GoodsReceiptItem::updateOrCreate([
               'goodsreceipt_id' => $goodsreceipt->id,
               'karat_id' => $items[$key]['karat_id'],
-              'kategoriproduk_id' => $items[$key]['kategori_id'],
+              'kategoriproduk_id' => $kategori_produk_id,
               'berat_real' =>$items[$key]['berat_real'],
               'berat_kotor' =>$items[$key]['berat_kotor']
                ]);
