@@ -19,7 +19,7 @@
 
 
 
-                      <a target="_blank" class="btn  mfs-auto btn-sm btn-success mfe-1" href="{{ route("goodsreceipt.index") }}"><i class="bi bi-house-door"></i> Home
+                      <a  class="btn  mfs-auto btn-sm btn-success mfe-1" href="{{ route("goodsreceipt.index") }}"><i class="bi bi-house-door"></i> Home
                     </a>
 
 
