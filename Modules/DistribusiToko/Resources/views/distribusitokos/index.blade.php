@@ -39,9 +39,10 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
+                                    <th>Date</th>
+                                    <th>No Invoice</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
-                                    <th class="text-left">{{ __('Karat') }}</th>
-                                    <th class="text-left">{{ __('Weight') }}</th>
+                                    <th>{{ __('Karat') }}</th>
 
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
@@ -106,10 +107,10 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
-
+                {data: 'date', name: 'date'},
+                {data: 'no_invoice', name: 'no_invoice'},
                 {data: 'cabang', name: 'cabang'},
                 {data: 'karat', name: 'karat'},
-                {data: 'weight', name: 'weight'},
                 {data: 'updated_at', name: 'updated_at'},
 
                 {
