@@ -16,11 +16,24 @@
                     <div>
                         Invoice: <strong>{{ $detail->no_invoice }}</strong>
                     </div>
-                    <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route(''.$module_name.'.cetak',encode_id($detail->id)) }}"><i class="bi bi-printer"></i> Print
+
+
+
+                      <a target="_blank" class="btn  mfs-auto btn-sm btn-success mfe-1" href="{{ route("goodsreceipt.index") }}"><i class="bi bi-house-door"></i> Home
                     </a>
+
+
+                    <a target="_blank" class="btn btn-sm btn-secondary mfe-1 d-print-none" href="{{ route(''.$module_name.'.cetak',encode_id($detail->id)) }}"><i class="bi bi-printer"></i> Print
+                    </a>
+
                     <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route(''.$module_name.'.cetak',encode_id($detail->id)) }}">
                         <i class="bi bi-save"></i> Save
                     </a>
+
+
+
+
+
                 </div>
                 <div class="card-body">
                     <div class="row mb-4">
@@ -66,9 +79,9 @@
                         </div>
 
 
-                   <div class="col-sm-3 mb-3 mb-md-0">
+                   <div class="col-sm-3 mb-3 mb-md-0 ">
                             <h5 class="mb-2 border-bottom pb-2">Gambar Nota :</h5>
-                           <div class="align-items-center text-center">
+                           <div class="flex align-items-center justify-center">
 
                               @php
                                   if ($detail->images) {
