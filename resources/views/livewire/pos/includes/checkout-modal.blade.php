@@ -1,4 +1,6 @@
-<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade"  class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+
     <div class="modal-lg modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -20,23 +22,78 @@
                 );
                ?>
 {{-- <livewire:pos.payment> --}}
-              
+
+
+<div class="tabs px-5 py-3">
+
+<ul class="flex">
+  <li class="mr-6">
+    <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
+    wire:click.prevent="PaymentType('tunai')" href="#">TUNAI</a>
+  </li>
+   <li class="mr-6">
+    <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
+    wire:click.prevent="PaymentType('edc')" href="#">EDC</a>
+  </li>
+ <li class="mr-6">
+    <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
+    wire:click.prevent="PaymentType('transfer')" href="#">TRANSFER</a>
+  </li>
+ <li class="mr-6">
+    <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
+    wire:click.prevent="PaymentType('qr')" href="#">QR</a>
+  </li>
+
+</ul>
+
+
+
+</div>
+
+
+
+
+
+
  <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
-          
+
                 @csrf
+
+
                 <div class="modal-body py-0 px-3 ">
+
+
+
+
+    <div class="tab-pane px-2 tab-content">
+        @if($showPaymentType === 'tunai')
+            <div class="text-lg text-primary">Tunai</div>
+        @elseif($showPaymentType === 'edc')
+            <div class="text-lg text-success">{{ $showPaymentType }}</div>
+            @elseif($showPaymentType === 'transfer')
+            <div class="text-lg text-danger">{{ $showPaymentType }}</div>
+
+            @elseif($showPaymentType === 'qr')
+            <div class="text-lg text-warning">{{ $showPaymentType }}</div>
+
+        @endif
+    </div>
+
+
+
+
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                           
+
 <div class="px-0 py-2 grid grid-cols-2 gap-4 m-2">
- 
+
 
 <input type="hidden" value="{{ $customer_id }}" name="customer_id">
     <input type="hidden" value="{{ $global_tax }}" name="tax_percentage">
     <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
     <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
-    <input type="hidden" value="Other" name="payment_method"> 
-   
+    <input type="hidden" value="Other" name="payment_method">
+
 
 
 <div class="px-1">
@@ -94,7 +151,7 @@
 <div class="form-group">
     <label for="note">Grand Total</label> <span class="text-danger small" id="message"></span>
     {{-- <span id="final" class="text-black text-4xl"></span> --}}
-    <input id="final" type="text" class="form-control text-black text-2xl" name="final" value="{{ $total_amount }}" disabled>  
+    <input id="final" type="text" class="form-control text-black text-2xl" name="final" value="{{ $total_amount }}" disabled>
     <input value="{{ $total_amount }}" id="final_unmask" type="hidden" class="form-control" name="final_unmask">
 
 
@@ -103,7 +160,7 @@
 
 
 
- 
+
 </div>
 
 
@@ -196,7 +253,7 @@
                             <i class="bi bi-upc-scan"></i>&nbsp;QR</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="tunai-tab" data-toggle="tab" href="#tunai" role="tab" aria-controls="tunai" aria-selected="false"><i class="bi bi bi-credit-card"></i>&nbsp;EDC</a>
+                            <a class="nav-link payment" id="tunai-tab" data-toggle="tab" href="#tunai" role="tab" aria-controls="tunai" aria-selected="false"><i class="bi bi bi-credit-card"></i>&nbsp;EDC</a>
                         </li>
                         
                     </ul>
@@ -317,6 +374,13 @@ $(document).ready(function() {
         rupiah = "Rp " + integerPart + "." + decimalPart;
         return rupiah;
       }
+
+
+$('.tab').on("click", function(e){
+   e.preventDefault();
+   //$('#checkoutModal').modal('show');
+
+});
 
 
     </script>
