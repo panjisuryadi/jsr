@@ -16,6 +16,7 @@ class Checkout extends Component
     public $listeners = ['productSelected',  'discountModalRefresh'];
 
     public $cart_instance;
+    public $row_id;
     public $customers;
     public $global_discount;
     public $global_tax;
@@ -39,7 +40,8 @@ class Checkout extends Component
 
     public $keterangan_manual = '';
     public $manual = 0;
-    public $nominal_manual = 0;
+    public $manual_item = 0;
+    public $manual_price = 0;
 
     public $sub_total = 0;
     public $sub_total_hidden = 0;
@@ -164,17 +166,19 @@ class Checkout extends Component
         $this->item_discount = [];
         $this->cart = [];
         $this->total_amount;
-        $this->keterangan_manual = session('keterangan_manual', 'kosong');
-        $this->nominal_manual = session('nominal_manual', '0');
-        $this->manual = session('manual', '0');
+        $this->manual_item;
+        $this->manual_price;
+        $this->manual;
+        $this->row_id;
        
         
     }
 
-    public function hydrate() {
-        //$this->total_amount = $this->calculateTotal();
-        //$this->updatedCustomerId();
-    }
+
+            public function hydrate() {
+                //$this->total_amount = $this->calculateTotal();
+                //$this->updatedCustomerId();
+            }
 
 
         public function convertRupiah()
@@ -229,8 +233,6 @@ class Checkout extends Component
 
     public function productSelected($product) {
 
-      //  dd($product['product_item'][0]['karat']['penentuan_harga']['harga_emas']);
-
         $cart = Cart::instance($this->cart_instance);
         $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
             return $cartItem->id == $product['id'];
@@ -259,12 +261,15 @@ class Checkout extends Component
                 'sub_total'             => 1,
                 'code'                  => $product['product_code'],
                 'stock'                 => 1,
-                'unit'          =>$product['product_unit'],
-                'karat_id'      =>$product['product_item'][0]['karat']['id'],
-                'karat'         =>$product['product_item'][0]['karat']['name'],
-                'harga_karat'   =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
+                'unit'                  =>$product['product_unit'],
+                'karat_id'              =>$product['product_item'][0]['karat']['id'],
+                'karat'                 =>$product['product_item'][0]['karat']['name'],
+                'harga_karat'           =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
 
                 'product_tax'           => 1,
+                'manual'                 => 0,
+                'manual_item'           => 0,
+                'manual_price'          => 0,
                 'unit_price'            =>1
             ]
             ]);
@@ -280,18 +285,12 @@ class Checkout extends Component
 
    public function setManualtype()
     {
-        session([
-                'manual' => $this->manual,
-                'keterangan_manual' => $this->keterangan_manual,
-                'nominal_manual' => $this->nominal_manual
-                ]);
-       session()->flash('manual', 'Manual tipe diupdate');
+        $manual_price = $this->manual_price;
+        $manual_item = $this->manual_item;
+        $row_id = Cart::instance($this->cart_instance)->content()->first()->rowId;
+        $this->updateManualOptions($row_id, $manual_item,$manual_price);
+            session()->flash('manual', 'Manual tipe diupdate');
       }
-
-
-
-
-
 
 
 
@@ -299,13 +298,19 @@ class Checkout extends Component
         Cart::instance($this->cart_instance)->remove($row_id);
     }
 
+
+
     public function updatedGlobalTax() {
         Cart::instance($this->cart_instance)->setGlobalTax((integer)$this->global_tax);
     }
 
+
+
     public function updatedGlobalDiscount() {
         Cart::instance($this->cart_instance)->setGlobalDiscount((integer)$this->global_discount);
     }
+
+
 
     public function updateQuantity($row_id, $product_id) {
         if ($this->check_quantity[$product_id] < $this->quantity[$product_id]) {
@@ -418,7 +423,16 @@ class Checkout extends Component
         ]]);
     }
 
-  
+    public function updateManualOptions($row_id, $manual_item,$manual_price) {
+        Cart::instance($this->cart_instance)->update($row_id, ['options' => [
+            'manual'                => 1,
+            'manual_item'           => $manual_item,
+            'manual_price'          => $manual_price,
+
+        ]]);
+    }
+
+
 
 
 
