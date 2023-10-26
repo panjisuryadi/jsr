@@ -906,7 +906,7 @@ public function show($id)
         $detail = $module_model::findOrFail($id);
         // $list = $module_products::where('kode_pembelian',$detail->code)->get();
       //  dd($detail->code);
-          return view(''.$module_name.'::'.$module_path.'.detail',
+          return view(''.$module_name.'::'.$module_path.'.show',
            compact('module_name',
             'module_action',
             'detail',

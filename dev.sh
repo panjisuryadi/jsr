@@ -2,10 +2,13 @@ git config --global user.email "n0izestr3am@gmail.com"
 git config --global user.name "n0izestr3am"
 #
 git stash
+
 git pull origin dev
 
 git stash pop
-sudo chown ipunk:ipunk -R /var/www/html/hokkie_jsr
+
+sudo chown ns6:ns6 -R /var/www/html/hokkie_jsr
+
 
 git add .
 
