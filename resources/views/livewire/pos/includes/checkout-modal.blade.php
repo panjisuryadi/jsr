@@ -66,18 +66,31 @@
     <div class="tab-pane px-2 tab-content">
         @if($showPaymentType === 'tunai')
             <div class="text-lg text-primary">Tunai</div>
+             <input type="hidden" value="tunai" name="payment_method">
         @elseif($showPaymentType === 'edc')
+          <input type="hidden" value="edc" name="payment_method">
             <div class="text-lg text-success">{{ $showPaymentType }}</div>
 
             @elseif($showPaymentType === 'transfer')
+              <input type="hidden" value="transfer" name="payment_method">
             <div class="text-lg text-danger">{{ $showPaymentType }}</div>
 
             @elseif($showPaymentType === 'qr')
+            <input type="hidden" value="qr" name="payment_method">
             <div class="text-lg text-warning">{{ $showPaymentType }}</div>
 
         @endif
     </div>
 
+
+@if($cart_items->isNotEmpty())
+ @if($cart_items->first()->options->manual)
+ <input type="text" value="{{ $cart_items->first()->options->manual }}" name="manual">
+ <input type="hidden" value="{{ $cart_items->first()->options->manual_item }}" name="manual_item">
+ <input type="hidden" value="{{ $cart_items->first()->options->manual_price }}" name="manual_price">
+
+   @endif
+@endif
 
 
 
@@ -91,7 +104,7 @@
     <input type="hidden" value="{{ $global_tax }}" name="tax_percentage">
     <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
     <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
-    <input type="hidden" value="Other" name="payment_method">
+
 
 
 
