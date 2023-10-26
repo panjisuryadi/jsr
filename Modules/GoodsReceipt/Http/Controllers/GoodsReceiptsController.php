@@ -577,16 +577,6 @@ public function store(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        // $request->validate([
-        //      'no_invoice' => 'required|min:3|max:191',
-        //      'supplier_id' => 'required',
-        //      'tanggal' => 'required',
-        //      'total_emas' => 'required',
-        //      'berat_timbangan' => 'required',
-        //      'user_id' => 'required',
-        //      'karat_id.0' => 'required',
-        //      'karat_id.*' => 'required',
-        //     ]);
          $input = $request->except('_token','document');
          $kategori_produk_id = KategoriProduk::whereSlug('gold')->value('id');
          $goodsreceipt = $module_model::create([
@@ -672,15 +662,27 @@ public function store(Request $request)
    private function _saveGoodsReceiptItem($items ,$goodsreceipt, $kategori_produk_id)
      {
        foreach ($items as $key => $value) {
-          $item = GoodsReceiptItem::updateOrCreate([
+          $item = GoodsReceiptItem::create([
               'goodsreceipt_id' => $goodsreceipt->id,
               'karat_id' => $items[$key]['karat_id'],
               'kategoriproduk_id' => $kategori_produk_id,
               'berat_real' =>$items[$key]['berat_real'],
               'berat_kotor' =>$items[$key]['berat_kotor']
-               ]);
-        event(new GoodsReceiptItemCreated($goodsreceipt,$item));
-         }
+            ]);
+        $stock_office = StockOffice::where('karat_id', $item['karat_id'])->first();
+        if(is_null($stock_office)){
+            $stock_office = StockOffice::create(['karat_id'=> $item['karat_id']]);
+        }
+        $item->stock_office()->attach($stock_office->id,[
+                'karat_id'=>$item['karat_id'],
+                'in' => true,
+                'berat_real' =>$items[$key]['berat_real'],
+                'berat_kotor' => $items[$key]['berat_kotor']
+        ]);
+        $berat_real = $stock_office->history->sum('berat_real');
+        $berat_kotor = $stock_office->history->sum('berat_kotor');
+        $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
+        }
     }
 
 
