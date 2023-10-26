@@ -103,8 +103,7 @@ document.addEventListener('livewire:load', function () {
         webcam.snap(function(data_uri) {
             document.getElementById('imageprev').src = data_uri
             document.getElementById('valimage').value = data_uri
-            Livewire.emit('webcamCaptured',key,data_uri)
-            Livewire.emit('setImageFromWebcam', data_uri); 
+            Livewire.emit('webcamCaptured',data_uri)
         });
         webcam.reset()
     });

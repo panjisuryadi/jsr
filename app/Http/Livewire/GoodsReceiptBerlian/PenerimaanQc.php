@@ -66,17 +66,29 @@ class PenerimaanQc extends Component
 
     public $hari_ini;
 
-    protected $listeners = ['imageUploaded','imageRemoved'];
+    public $type;
+    public $total_karat;
+
+
+    protected $listeners = [
+        'webcamCaptured' => 'handleWebcamCaptured',
+        'webcamReset' => 'handleWebcamReset'
+    ];
+
+    public function handleWebcamCaptured($data_uri){
+        $this->image= $data_uri;
+    }
 
     public function mount()
     {
         $this->dataSupplier = Supplier::all();
-        $this->dataKarat = Karat::all();
+        $this->dataKarat = Karat::whereNull('parent_id')->get();
         $this->dataKaratBerlian = KaratBerlian::all();
         $this->dataShapes = ShapeBerlian::all();
         $this->dataKategoriProduk = KategoriProduk::all();
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
+        $this->type = 1;
     }
 
     public function addInput()
@@ -121,8 +133,6 @@ class PenerimaanQc extends Component
     {
         $rules = [
             'code' => 'required',
-            // 'no_invoice' => 'string|max:50',
-            'karat_id' => 'required',
             'supplier_id' => 'required',
             'nama_produk' => 'required',
             'tanggal' => [
@@ -137,12 +147,31 @@ class PenerimaanQc extends Component
                     }
                 }
             ],
+            'tipe_pembayaran' => 'required',
+            'cicil' => 'required_if:tipe_pembayaran,cicil',
+            'tgl_jatuh_tempo' => [
+                'required_if:tipe_pembayaran,jatuh_tempo',
+                function ($attribute, $value, $fail) {
+                    $today = Carbon::today();
+                    $inputDate = Carbon::parse($value);
+                    if ($inputDate < $today) {
+                        $fail($attribute . ' harus tanggal hari ini atau setelahnya.');
+                    }
+                }
+            ],
         ];
 
-        foreach ($this->inputs as $key => $value) {
-            $rules['inputs.' . $key . '.karatberlians_id'] = 'required';
-            $rules['inputs.' . $key . '.qty'] = 'required';
+        if($this->type == 2) {
+            $rules['karat_id'] = 'required';
         }
+
+        if(!empty($this->karat_id)) {
+            foreach ($this->inputs as $key => $value) {
+                $rules['inputs.' . $key . '.karatberlians_id'] = 'required';
+                $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
+            }
+        }
+
         return $rules;
     }
 
@@ -162,6 +191,7 @@ class PenerimaanQc extends Component
             'no_invoice' => !empty($this->no_invoice) ? $this->no_invoice : '-',
             'pengirim' => $this->pengirim,
             'supplier_id' => $this->supplier_id,
+            'karat_id' => $this->karat_id,
             'tipe_pembayaran'=>$this->tipe_pembayaran,
             'tanggal' => $this->tanggal,
             'cicil' => $this->tipe_pembayaran == 'cicil'? $this->cicil : 0,
@@ -174,13 +204,15 @@ class PenerimaanQc extends Component
             'document' => $this->document,
             'total_berat_real' => $this->total_berat_real,
             'total_berat_kotor' => $this->total_berat_kotor,
+            'total_karat' => $this->total_karat,
             'items' => $this->inputs,
             'kategoriproduk_id' => $this->kategoriproduk_id,
             'detail_cicilan' => $this->detail_cicilan
         ];
+        
         $request = new Request($data);
         $controller = new GoodsReceiptBerliansController();
-        $controller->store_qc($request);
+        $store = $controller->store_qc($request);
     }
 
 
@@ -234,4 +266,5 @@ class PenerimaanQc extends Component
     public function setImageFromWebcam($image) {
         $this->image = $image;
     }
+    
 }

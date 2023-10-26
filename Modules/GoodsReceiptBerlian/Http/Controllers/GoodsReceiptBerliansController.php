@@ -17,7 +17,7 @@ use Modules\People\Entities\Supplier;
 use Lang;
 use Image;
 use Illuminate\Support\Facades\DB;
-use Modules\GoodsReceiptBerlian\Models\GoodsReceiptQcItems;
+use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 
 class GoodsReceiptBerliansController extends Controller
 {
@@ -273,9 +273,13 @@ class GoodsReceiptBerliansController extends Controller
                 'code'                  => $input['code'],
                 'date'                  => $input['tanggal'],
                 'no_invoice'            => $input['code'],
-                'total_berat_kotor'     => 0,
-                'berat_timbangan'       => 0,
+                'total_berat_kotor'     => !empty($input['total_berat_kotor']) ? $input['total_berat_kotor'] :  0,
+                'total_emas'            => !empty($input['total_emas']) ? $input['total_emas'] :  0,
+                'berat_timbangan'       => !empty($input['berat_timbangan']) ? $input['berat_timbangan'] :  0,
+                'total_karat'           => !empty($input['total_karat']) ? $input['total_karat'] :  0,
                 'supplier_id'           => $input['supplier_id'],
+                'karat_id'              => $input['karat_id'],
+                'user_id'               => $input['pic_id'],
                 'nama_produk'           => $input['nama_produk'],
                 'kategoriproduk_id'     => $input['kategoriproduk_id'],
                 'images'                => $input['images'],
@@ -286,11 +290,17 @@ class GoodsReceiptBerliansController extends Controller
             if(!empty($input['items'])){
                 foreach($input['items'] as $val) {
                     $val['goodsreceipt_id'] = $goodsreceipt_id;
-                    $qcattribute_data[] = $val;
+                    $val['berat_real'] = !empty($val['berat_real']) ? $val['berat_real'] : 0;
+                    $val['berat_kotor'] = !empty($val['berat_kotor']) ? $val['berat_kotor'] : 0;
+                    if(!empty($val['karatberlians_id'])) {
+                        $qcattribute_data[] = $val;
+                    }
                 }
             }
 
-            GoodsReceiptQcItems::insert($qcattribute_data);
+            if(!empty($qcattribute_data)) {
+                GoodsReceiptItem::insert($qcattribute_data);
+            }
 
         } catch (\Throwable $th) {
             DB::rollBack();
