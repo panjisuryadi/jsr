@@ -100,8 +100,7 @@
 
 </div>
 
- <input type="hidden" id="nominal_manual" name="nominal_manual" value="{{ $nominal_manual }}">
- <input type="hidden" id="keterangan_manual" name="keterangan_manual" value="{{ $keterangan_manual }}">
+
 
 
  
