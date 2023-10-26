@@ -27,5 +27,9 @@ class DistribusiToko extends Model
         return \Modules\DistribusiToko\database\factories\DistribusiTokoFactory::new();
     }
 
+    public function items(){
+        return $this->hasMany(DistribusiTokoItem::class,'dist_toko_id','id');
+    }
+
 
 }

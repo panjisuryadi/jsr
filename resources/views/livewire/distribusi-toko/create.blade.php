@@ -201,7 +201,7 @@
                                                     </div>
                                                 </div>
 
-                                                @if($distribusi_toko_details[$key]['product_category'] == '4')
+                                        @if($distribusi_toko_details[$key]['product_category'] == $logam_mulia_id)
                                         <div class="grid grid-cols-2 gap-2">
                                             <div class="form-group">
                                                 <?php
@@ -305,7 +305,7 @@
 
                                         @else
                                         <div class="grid grid-cols-2 gap-2">
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                 <?php
                                                 $field_name = 'distribusi_toko_details.' . $key . '.gold_category';
                                                 $field_lable = label_case('kategori emas');
@@ -328,7 +328,7 @@
                                                 </span>
                                                 @endif
 
-                                            </div>
+                                            </div> -->
                                             <div class="form-group">
                                                 <?php
                                                 $field_name = 'distribusi_toko_details.' . $key . '.karat';
@@ -341,7 +341,7 @@
                                                 <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                     @foreach($dataKarat as $jp)
-                                                    <option value="{{ $jp->id }}">{{ $jp->name }}</option>
+                                                    <option value="{{ $jp->id }}">{{ $jp->name }} {{$jp->kode}}</option>
                                                     @endforeach
                                                 </select>
                                                 @if($errors->has($field_name))
@@ -375,7 +375,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                <input class="form-control numeric @error($field_name) is-invalid @enderror"
+                                                <input class="form-control @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 name="{{ $field_name }}"
                                                 step="0.001"
@@ -383,6 +383,7 @@
                                                 wire:change="calculateTotalWeight({{$key}})"
                                                 id="{{ $field_name }}"
                                                 placeholder="{{ $field_placeholder }}"
+                                                min="0"
                                                 >
                                                 @if ($errors->has($field_name))
                                                 <span class="invalid feedback"role="alert">
@@ -401,7 +402,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                <input class="form-control numeric @error($field_name) is-invalid @enderror"
+                                                <input class="form-control @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 wire:model="{{ $field_name }}"
                                                 wire:change="calculateTotalWeight({{$key}})"
@@ -428,7 +429,7 @@
                                                 <input class="form-control @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 name="{{ $field_name }}"
-                                                min="0" step="0.01"
+                                                min="0" step="0.001"
                                                 id="{{ $field_name }}"
                                                 wire:model="{{ $field_name }}"
                                                 wire:change="calculateTotalWeight({{$key}})"

@@ -4,12 +4,15 @@ namespace App\Http\Livewire\DistribusiToko;
 
 use DateTime;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
+
+use function PHPUnit\Framework\isEmpty;
 
 class Create extends Component
 {
@@ -20,6 +23,8 @@ class Create extends Component
     public $cabang;
 
     public $kategori;
+
+    public $logam_mulia_id;
 
     public $distribusi_toko = [
         'no_distribusi_toko' =>'',
@@ -36,10 +41,10 @@ class Create extends Component
             'model' => '',
             'gold_category' => '',
             'karat' => '',
-            'accessoris_weight' => '',
-            'label_weight' => '',
-            'gold_weight' => '',
-            'total_weight' => '',
+            'accessoris_weight' => 0,
+            'label_weight' => 0,
+            'gold_weight' => 0,
+            'total_weight' => 0,
             'code' => '',
             'file' => '',
             'certificate_id' => '',
@@ -71,10 +76,10 @@ class Create extends Component
             'model' => '',
             'gold_category' => '',
             'karat' => '',
-            'accessoris_weight' => '',
-            'label_weight' => '',
-            'gold_weight' => '',
-            'total_weight' => '',
+            'accessoris_weight' => 0,
+            'label_weight' => 0,
+            'gold_weight' => 0,
+            'total_weight' => 0,
             'code' => '',
             'file' => '',
             'certificate_id' => '',
@@ -99,10 +104,10 @@ class Create extends Component
                 'model' => '',
                 'gold_category' => '',
                 'karat' => '',
-                'accessoris_weight' => '',
-                'label_weight' => '',
-                'gold_weight' => '',
-                'total_weight' => '',
+                'accessoris_weight' => 0,
+                'label_weight' => 0,
+                'gold_weight' => 0,
+                'total_weight' => 0,
                 'code' => '',
                 'file' => '',
                 'certificate_id' => '',
@@ -142,19 +147,15 @@ class Create extends Component
 
             $rules['distribusi_toko_details.'.$key.'.product_category'] = 'required';
             $rules['distribusi_toko_details.'.$key.'.group'] = 'required';
-            $rules['distribusi_toko_details.'.$key.'.code'] = 'required';
-            $rules['distribusi_toko_details.'.$key.'.gold_category'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,4';
-            $rules['distribusi_toko_details.'.$key.'.karat'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,4';
-            $rules['distribusi_toko_details.'.$key.'.accessoris_weight'] = 'required';
-            $rules['distribusi_toko_details.'.$key.'.label_weight'] = 'required';
-            $rules['distribusi_toko_details.'.$key.'.gold_weight'] = 'required';
-            $rules['distribusi_toko_details.'.$key.'.total_weight'] = 'required';
-            $rules['distribusi_toko_details.'.$key.'.certificate_id'] = 'required_if:distribusi_toko_details.'.$key.'.product_category,4';
-            $rules['distribusi_toko_details.'.$key.'.no_certificate'] = 'required_if:distribusi_toko_details.'.$key.'.product_category,4';
-            $rules['distribusi_toko_details.'.$key.'.model'] = [
-                'required',
-                'gt:0',
-            ];
+            $rules['distribusi_toko_details.'.$key.'.code'] = 'required|max:255|unique:products,product_code';
+            // $rules['distribusi_toko_details.'.$key.'.gold_category'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,4';
+            $rules['distribusi_toko_details.'.$key.'.karat'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,' . $this->logam_mulia_id;
+            $rules['distribusi_toko_details.'.$key.'.accessoris_weight'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
+            $rules['distribusi_toko_details.'.$key.'.label_weight'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
+            $rules['distribusi_toko_details.'.$key.'.gold_weight'] = 'required|gt:0';
+            $rules['distribusi_toko_details.'.$key.'.total_weight'] = 'required|gt:0';
+            $rules['distribusi_toko_details.'.$key.'.certificate_id'] = 'required_if:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
+            $rules['distribusi_toko_details.'.$key.'.no_certificate'] = 'required_if:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
             $rules['distribusi_toko_details.'.$key.'.webcam_image'] = 'required';
 
         }
@@ -178,6 +179,8 @@ class Create extends Component
         })->get();
         $this->distribusi_toko['no_distribusi_toko'] = $this->generateInvoice();
         $this->distribusi_toko['date'] = (new DateTime())->format('Y-m-d');
+
+        $this->logam_mulia_id = Category::where('category_name','LIKE','%logam mulia%')->firstOrFail()->id;
     }
 
     private function generateInvoice(){
@@ -193,10 +196,40 @@ class Create extends Component
     public function store()
     {
         $this->validate();
-        // create distribusi sales
+        
         DB::beginTransaction();
         try{
-            
+            $distribusi_toko = DistribusiToko::create([
+                'cabang_id'                   => $this->distribusi_toko['cabang_id'],
+                'date'                        => $this->distribusi_toko['date'],
+                'no_invoice'                  => $this->distribusi_toko['no_distribusi_toko'],
+                'created_by'                  => auth()->user()->name,
+                'is_draft'                    => true
+            ]);
+
+            foreach($this->distribusi_toko_details as $key => $value) {
+                $additional_data = [
+                    "product_information" => [
+                        "product_category" => $this->distribusi_toko_details[$key]['product_category'],
+                        "group" => $this->distribusi_toko_details[$key]['group'],
+                        "model" => $this->distribusi_toko_details[$key]["model"],
+                        "code" => $this->distribusi_toko_details[$key]["code"],
+                        'certificate_id' => $this->distribusi_toko_details[$key]['certificate_id'],
+                        'no_certificate' => $this->distribusi_toko_details[$key]['no_certificate'],
+                    ]
+                ];
+                $detail = $distribusi_toko->items()->create([
+                    'karat_id' => empty($this->distribusi_toko_details[$key]['karat'])?Karat::logam_mulia()->id:$this->distribusi_toko_details[$key]['karat'],
+                    'gold_weight' => $this->distribusi_toko_details[$key]['gold_weight'],
+                    'accessories_weight' => $this->distribusi_toko_details[$key]['accessoris_weight']??null,
+                    'tag_weight' => $this->distribusi_toko_details[$key]['label_weight']??null,
+                    'total_weight' => $this->distribusi_toko_details[$key]['total_weight'],
+                    'additional_data' => json_encode($additional_data),
+                ]);
+                $this->uploadImage($detail, $this->distribusi_toko_details[$key]['webcam_image']);
+            }
+
+
             DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 
@@ -209,6 +242,16 @@ class Create extends Component
         return redirect(route('distribusitoko.index'));
     }
 
+    private function uploadImage($detail,$img){
+        $folderPath = "uploads/";
+        $image_parts = explode(";base64,", $img);
+        $image_base64 = base64_decode($image_parts[1]);
+        $fileName ='webcam_'. uniqid() . '.jpg';
+        $file = $folderPath . $fileName;
+        Storage::disk('local')->put($file,$image_base64);
+        $detail->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('distribusi_toko');
+    }
+
     public function messages(){
         return [
             'distribusi_toko.*.required' => 'Wajib diisi',
@@ -219,19 +262,24 @@ class Create extends Component
     }
 
     public function clearKaratAndTotal($key){
-        $this->distribusi_toko_details[$key]['accessoris_weight'] = '';
-        $this->distribusi_toko_details[$key]['label_weight'] = '';
-        $this->distribusi_toko_details[$key]['gold_weight'] = '';
-        $this->distribusi_toko_details[$key]['total_weight'] = '';
+        $this->distribusi_toko_details[$key]['karat'] = '';
+        $this->distribusi_toko_details[$key]['accessoris_weight'] = 0;
+        $this->distribusi_toko_details[$key]['label_weight'] = 0;
+        $this->distribusi_toko_details[$key]['gold_weight'] = 0;
+        $this->distribusi_toko_details[$key]['total_weight'] = 0;
+        $this->distribusi_toko_details[$key]['certificate_id'] = '';
+        $this->distribusi_toko_details[$key]['no_certificate'] = '';
     }
 
 
     public function calculateTotalWeight($key){
         $this->distribusi_toko_details[$key]['total_weight'] = 0;
-        $this->distribusi_toko_details[$key]['total_weight'] += floatval($this->distribusi_toko_details[$key]['gold_weight']);
+        $this->distribusi_toko_details[$key]['total_weight'] += doubleval($this->distribusi_toko_details[$key]['gold_weight']);
+        $this->distribusi_toko_details[$key]['total_weight'] = round($this->distribusi_toko_details[$key]['total_weight'], 3);
         if($this->distribusi_toko_details[$key]['product_category'] != '4'){
-            $this->distribusi_toko_details[$key]['total_weight'] += floatval($this->distribusi_toko_details[$key]['accessoris_weight']);
-            $this->distribusi_toko_details[$key]['total_weight'] += floatval($this->distribusi_toko_details[$key]['label_weight']);
+            $this->distribusi_toko_details[$key]['total_weight'] += doubleval($this->distribusi_toko_details[$key]['accessoris_weight']);
+            $this->distribusi_toko_details[$key]['total_weight'] += doubleval($this->distribusi_toko_details[$key]['label_weight']);
+            $this->distribusi_toko_details[$key]['total_weight'] = round($this->distribusi_toko_details[$key]['total_weight'], 3);
         }
     }
 
