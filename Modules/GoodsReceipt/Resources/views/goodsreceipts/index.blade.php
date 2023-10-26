@@ -44,7 +44,6 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                             <thead>
                                 <tr>
                                     <th style="width: 3%!important;">No</th>
-                                    <th class="w-5 text-center">{{ __('Image') }}</th>
                                     <th style="width: 22%!important;"  class="text-left">{{ __('Date') }}</th>
                                  
                                     <th style="width: 18%!important;"  class="text-left">{{ __('Berat') }}</th>
@@ -131,7 +130,7 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                     }
                 },
 
-                {data: 'image', name: 'image'},
+
                 {data: 'date', name: 'date'},
                 {data: 'berat', name: 'berat'},
                 {data: 'supplier', name: 'supplier'},
