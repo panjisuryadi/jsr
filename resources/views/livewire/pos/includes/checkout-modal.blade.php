@@ -24,9 +24,9 @@
 {{-- <livewire:pos.payment> --}}
 
 
-<div class="tabs px-5 py-3">
+<div class="flex w-full  tabs px-5 py-3">
 
-<ul class="flex">
+<ul class="flex w-full justify-content-center text-center items-center">
   <li class="mr-6">
     <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
     wire:click.prevent="PaymentType('tunai')" href="#">TUNAI</a>
@@ -63,13 +63,12 @@
                 <div class="modal-body py-0 px-3 ">
 
 
-
-
     <div class="tab-pane px-2 tab-content">
         @if($showPaymentType === 'tunai')
             <div class="text-lg text-primary">Tunai</div>
         @elseif($showPaymentType === 'edc')
             <div class="text-lg text-success">{{ $showPaymentType }}</div>
+
             @elseif($showPaymentType === 'transfer')
             <div class="text-lg text-danger">{{ $showPaymentType }}</div>
 

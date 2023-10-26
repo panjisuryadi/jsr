@@ -94,17 +94,11 @@ class Checkout extends Component
 
  public function PaymentType($type)
     {
-
+        $this->loading = true;
+        sleep(1);
         $this->showPaymentType = $type;
-
+        $this->loading = false;
     }
-
-
-
-
-
-
-
 
 
  public function totalbayar()
