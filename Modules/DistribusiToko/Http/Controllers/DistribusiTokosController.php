@@ -18,6 +18,7 @@ use Modules\UserCabang\Models\UserCabang;
 use PDF;
 use Auth;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\DistribusiToko\Models\DistribusiToko;
 
 class DistribusiTokosController extends Controller
 {
@@ -57,6 +58,33 @@ class DistribusiTokosController extends Controller
             'module_action',
             'module_title',
             'module_icon', 'module_model'));
+    }
+
+
+    public function detail(DistribusiToko $dist_toko){
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+
+        if(!$dist_toko->is_draft){
+            return redirect()->route('distribusitoko.index');
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.detail',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'dist_toko',
+            'module_icon', 'module_model'));
+
     }
 
 

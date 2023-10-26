@@ -238,8 +238,8 @@ class Create extends Component
 
         $this->resetInputFields();
         // $this->resetTotal();
-        toast('Created Successfully','success');
-        return redirect(route('distribusitoko.index'));
+        toast('Saved to Draft Successfully','success');
+        return redirect(route('distribusitoko.detail', $distribusi_toko));
     }
 
     private function uploadImage($detail,$img){
