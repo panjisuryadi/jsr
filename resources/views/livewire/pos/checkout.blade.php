@@ -94,24 +94,6 @@
 
 </div>
 
-{{-- batassss --}}
-@if($cart_items->isNotEmpty())
- @if($cart_items->first()->options->manual)
- <div class="px-3 py-2 flex justify-between border border-gray-300 rounded-md">
-  <div class="font-semibold text-gray-500">
-   {{ $cart_items->first()->options->manual_item }}
-
-  </div>
-   <div class="font-semibold text-gray-500">
-   {{ format_currency($cart_items->first()->options->manual_price) }}
-
-  </div>
-
-</div>
-   @endif
-@endif
-
-
 
 <div class="px-0 py-2 grid grid-cols-3 gap-4 m-2">
 
@@ -136,6 +118,25 @@
 
 
 </div>
+
+
+
+{{-- batassss --}}
+@if($cart_items->isNotEmpty())
+ @if($cart_items->first()->options->manual)
+ <div class="px-3 py-2 flex justify-between border border-gray-300 rounded-md">
+  <div class="font-semibold text-gray-500">
+   {{ $cart_items->first()->options->manual_item }}
+
+  </div>
+   <div class="font-semibold text-gray-500">
+   {{ format_currency($cart_items->first()->options->manual_price) }}
+
+  </div>
+
+</div>
+   @endif
+@endif
 
 
 {{-- batassss --}}

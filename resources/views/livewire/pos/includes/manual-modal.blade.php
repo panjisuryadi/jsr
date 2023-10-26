@@ -31,25 +31,27 @@ class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 te
 				</div>
 			</div>
 			@endif
+@if($cart_items->isNotEmpty())
+
 			<form wire:submit.prevent="setManualtype()" method="POST">
 				<div class="modal-body justify-start">
 					<div class="form-group text-left">
 						<label class="text-left" for="keterangan">Keterangan <span class="text-danger">*</span>
 					</label>
-					@if($cart_items->isNotEmpty())
+
 					<input id="manual_item" wire:model="manual_item" type="text"
 					class="form-control"
 					value="{{ $cart_items->first()->options->manual_item }}" name="manual_item">
-					@endif
+
 				</div>
 				<div class="form-group text-left">
 					<label class="text-left" for="nominal">Nominal <span class="text-danger">*</span>
 				</label>
-				@if($cart_items->isNotEmpty())
+
 				<input id="manual_price" wire:model="manual_price" type="text"
 				class="form-control"
 				value="{{ $cart_items->first()->options->manual_price }}" name="manual_price">
-				@endif
+
 			</div>
 		</div>
 		<div class="modal-footer">
@@ -57,6 +59,27 @@ class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 te
 			<button type="submit" class="btn text-white bg-red-400">Save changes</button>
 		</div>
 	</form>
+
+
+@else
+
+<div class="card h-200">
+
+<div class="flex justify-content-center items-center">
+
+<div class="text-gray-500">
+
+Anda Belum Memilih Produk
+
+</div>
+
+</div>
+
+
+</div>
+
+@endif
+
 </div>
 </div>
 </div>

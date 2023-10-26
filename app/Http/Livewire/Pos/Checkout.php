@@ -52,9 +52,11 @@ class Checkout extends Component
     public $showTransfer = false;
     public $showEdc = false;
     public $loading = false;
+    public $PaymentType;
+    public $showPaymentType = 'tunai';
 
 
- protected function rules()
+    protected function rules()
             {
                return [
                      'total_amount' => 'required|max:191',
@@ -64,6 +66,39 @@ class Checkout extends Component
 
                 ];
              }
+
+
+   public function mount($cartInstance, $customers) {
+        $this->cart_instance = $cartInstance;
+        $this->customers = $customers;
+        $this->global_discount = 0;
+        $this->global_tax = 0;
+        $this->shipping = 0.00;
+        $this->check_quantity = [];
+        $this->quantity = [];
+        $this->discount_type = [];
+        $this->item_discount = [];
+        $this->cart = [];
+        $this->total_amount;
+        $this->manual_item;
+        $this->manual_price;
+        $this->manual;
+        $this->row_id;
+        $this->showPaymentType;
+
+
+
+    }
+
+
+
+ public function PaymentType($type)
+    {
+        $this->loading = true;
+        sleep(1);
+        $this->showPaymentType = $type;
+        $this->loading = false;
+    }
 
 
  public function totalbayar()
@@ -130,6 +165,9 @@ class Checkout extends Component
         $this->loading = false;
     }
 
+
+
+
   public function btnTransfer()
     {
 
@@ -154,25 +192,6 @@ class Checkout extends Component
 
 
 
-    public function mount($cartInstance, $customers) {
-        $this->cart_instance = $cartInstance;
-        $this->customers = $customers;
-        $this->global_discount = 0;
-        $this->global_tax = 0;
-        $this->shipping = 0.00;
-        $this->check_quantity = [];
-        $this->quantity = [];
-        $this->discount_type = [];
-        $this->item_discount = [];
-        $this->cart = [];
-        $this->total_amount;
-        $this->manual_item;
-        $this->manual_price;
-        $this->manual;
-        $this->row_id;
-       
-        
-    }
 
 
             public function hydrate() {
