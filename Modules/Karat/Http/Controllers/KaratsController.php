@@ -92,7 +92,7 @@ public function index_data()
                         ->editColumn('type', function($data){
                             $output = '';
                             if(is_null($data->type)){
-                                $output = ($data->parent->type == 'LM')?'Logam Mulia':'Perhiasan';
+                                $output = ($data->parent?->type == 'LM')?'Logam Mulia':'Perhiasan';
                             }else{
                                 $output = ($data->type == 'LM')?'Logam Mulia':'Perhiasan';
                             }
