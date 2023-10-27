@@ -110,7 +110,7 @@
                                                         $required = "required";
                                                         ?>
                                                         <label for="{{ $field_name }}">Product Category</label>
-                                                        <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="clearKaratAndTotal({{$key}})">
+                                                        <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="clearKaratAndTotal({{$key}})" onchange="setAdditionalAttribute({{$key}},'product_category_name', this);">
                                                         <option value="">All Products</option>
                                                             @foreach($categories as $category)
                                                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -137,7 +137,7 @@
                                                             <span class="text-danger">*</span>
                                                             <span class="small">Jenis Perhiasan</span>
                                                         </label>
-                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute({{$key}},'group_name', this);">
                                                             <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                             @foreach(\Modules\Group\Models\Group::all() as $jp)
                                                             <option value="{{ $jp->id }}">{{ $jp->name }}</option>
@@ -161,7 +161,7 @@
                                                         $required = "required";
                                                         ?>
                                                         <label for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute({{$key}},'model_name', this);">
                                                             <option value="" selected disabled>Pilih Model</option>
                                                             @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
                                                             <option value="{{$sup->id}}">
@@ -544,18 +544,12 @@
 @push('page_scripts')
 
 <script type="text/javascript">
-    jQuery.noConflict();
-    (function($) {
-        $(document).ready(function() {
-            $('.numeric').keypress(function(e) {
-                var verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
-                if (verified) {
-                    e.preventDefault();
-                }
-            });
-        });
 
-    })(jQuery);
+function setAdditionalAttribute(key,name,selectElement){
+    let selectedText = selectElement.options[selectElement.selectedIndex].text;
+    Livewire.emit('setAdditionalAttribute',key,name,selectedText);
+}
+    
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 

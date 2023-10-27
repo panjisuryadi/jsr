@@ -49,13 +49,17 @@ class Create extends Component
             'file' => '',
             'certificate_id' => '',
             'no_certificate' => '',
-            'webcam_image' => ''
+            'webcam_image' => '',
+            'product_category_name' => '',
+            'group_name' => '',
+            'model_name' => '',
         ]
     ];
 
     protected $listeners = [
         'webcamCaptured' => 'handleWebcamCaptured',
-        'webcamReset' => 'handleWebcamReset'
+        'webcamReset' => 'handleWebcamReset',
+        'setAdditionalAttribute'
     ];
 
     public function handleWebcamCaptured($key,$data_uri){
@@ -65,6 +69,11 @@ class Create extends Component
     public function handleWebcamReset($key){
         $this->distribusi_toko_details[$key]['webcam_image'] = '';
     }
+
+    public function setAdditionalAttribute($key,$name,$selectedText){
+        $this->distribusi_toko_details[$key][$name] = $selectedText;
+    }
+
 
 
     public function add()
@@ -84,7 +93,10 @@ class Create extends Component
             'file' => '',
             'certificate_id' => '',
             'no_certificate' => '',
-            'webcam_image' => ''
+            'webcam_image' => '',
+            'product_category_name' => '',
+            'group_name' => '',
+            'model_name' => '',
         ];
     }
 
@@ -112,7 +124,10 @@ class Create extends Component
                 'file' => '',
                 'certificate_id' => '',
                 'no_certificate' => '',
-                'webcam_image' => ''
+                'webcam_image' => '',
+                'product_category_name' => '',
+                'group_name' => '',
+                'model_name' => '',
             ]
         ];
     }
@@ -210,20 +225,28 @@ class Create extends Component
             foreach($this->distribusi_toko_details as $key => $value) {
                 $additional_data = [
                     "product_information" => [
-                        "product_category" => $this->distribusi_toko_details[$key]['product_category'],
-                        "group" => $this->distribusi_toko_details[$key]['group'],
-                        "model" => $this->distribusi_toko_details[$key]["model"],
+                        "product_category" => [
+                            "id" => $this->distribusi_toko_details[$key]['product_category'],
+                            "name" => $this->distribusi_toko_details[$key]['product_category_name']
+                        ],
+                        "group" => [
+                            'id' => $this->distribusi_toko_details[$key]['group'],
+                            'name' => $this->distribusi_toko_details[$key]['group_name']
+                        ],
+                        "model" => [
+                            'id' => $this->distribusi_toko_details[$key]["model"],
+                            'name' => $this->distribusi_toko_details[$key]["model_name"]
+                        ],
                         "code" => $this->distribusi_toko_details[$key]["code"],
                         'certificate_id' => $this->distribusi_toko_details[$key]['certificate_id'],
                         'no_certificate' => $this->distribusi_toko_details[$key]['no_certificate'],
+                        'accessories_weight' => $this->distribusi_toko_details[$key]['accessoris_weight']??null,
+                        'tag_weight' => $this->distribusi_toko_details[$key]['label_weight']??null,
                     ]
                 ];
                 $detail = $distribusi_toko->items()->create([
                     'karat_id' => empty($this->distribusi_toko_details[$key]['karat'])?Karat::logam_mulia()->id:$this->distribusi_toko_details[$key]['karat'],
                     'gold_weight' => $this->distribusi_toko_details[$key]['gold_weight'],
-                    'accessories_weight' => $this->distribusi_toko_details[$key]['accessoris_weight']??null,
-                    'tag_weight' => $this->distribusi_toko_details[$key]['label_weight']??null,
-                    'total_weight' => $this->distribusi_toko_details[$key]['total_weight'],
                     'additional_data' => json_encode($additional_data),
                 ]);
                 $this->uploadImage($detail, $this->distribusi_toko_details[$key]['webcam_image']);

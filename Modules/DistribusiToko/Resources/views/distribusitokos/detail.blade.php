@@ -20,7 +20,7 @@
                         <div class="col-sm-3 mb-3 mb-md-0">
                             <div class="font-extrabold mb-2">Invoice Info: </div>
                             <div>Invoice: <strong>{{ $dist_toko->no_invoice }}</strong></div>
-                            <div>Tanggal: {{ \Carbon\Carbon::parse($dist_toko->date)->format('d M, Y') }}</div>
+                            <div>Tanggal: <strong> {{ \Carbon\Carbon::parse($dist_toko->date)->format('d M, Y') }}</strong></div>
                             <div>Cabang: <strong>{{ $dist_toko->cabang->name }}</strong></div>
                             <div>
                                 Dibuat oleh: <strong>{{ $dist_toko->created_by }}</strong>
@@ -35,7 +35,7 @@
                         <div class="col-sm-3 mb-3 mb-md-0">
                             <div class="font-extrabold mb-2">Distribusi Info: </div>
                             <div>Jumlah Item: <strong>{{ $dist_toko->items->count() }} buah</strong></div>
-                            <div>Jumlah Jenis Karat: {{ $dist_toko->items->groupBy('karat_id')->count() }}</div>
+                            <div>Jumlah Jenis Karat: <strong> {{ $dist_toko->items->groupBy('karat_id')->count() }} </strong></div>
                             <div>Total Berat Emas: <strong> {{ $dist_toko->items->sum('gold_weight') }} gram</strong></div>
                         </div>
 
@@ -56,8 +56,9 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">No</th>
-                                            <th class="text-center">Karat</th>
                                             <th class="text-center">Berat Emas</th>
+                                            <th class="text-justify">Product Information</th>
+                                            <th class="text-justify">Aksi</th>
                                         </tr>
                                     </thead>
 
@@ -67,12 +68,32 @@
                                         @endphp
                                         @forelse($items as $row)
                                         @php
+                                            $data = json_decode($row->additional_data)->product_information;
+
                                             $total_weight = $total_weight + $row->gold_weight;
                                         @endphp
                                         <tr>
                                             <th class="text-center">{{$loop->iteration}}</th>
-                                            <td class="text-center"> {{@$row->karat->name}} {{@$row->karat->kode}}</td>
-                                            <td class="text-center"> {{@$row->gold_weight}}</td>
+                                            <td class="text-center font-extrabold"> {{@$row->gold_weight}} gram</td>
+                                            <td class="text-justify">
+                                                <div>
+                                                    Nama Produk : <strong>{{ $data->product_category->name }}</strong>
+                                                </div>
+                                                <div>
+                                                    Nama Group : <strong>{{ $data->group->name }}</strong>
+                                                </div>
+                                                <div>
+                                                    Nama Model : <strong>{{ $data->model->name }}</strong>
+                                                </div>
+                                                <div>
+                                                    Code : <strong>{{ $data->code }}</strong>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="#" onclick="showEditModal({{$row}})">Edit</a>
+                                                <a class="btn btn-sm btn-danger" href="#">Hapus</a>
+
+                                            </td>
                                         </tr>
                                         @empty
                                         <tr>
@@ -80,8 +101,8 @@
                                         </tr>
                                         @endforelse
                                         <tr>
-                                            <td colspan="2" class="text-right font-extrabold">Jumlah Emas :</td>
-                                            <td class="text-center font-extrabold">{{ $total_weight }}</td>
+                                            <td class="text-right font-extrabold">Jumlah Emas :</td>
+                                            <td class="text-center font-extrabold">{{ $total_weight }} gram</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -96,6 +117,7 @@
             </div>
         </div>
     </div>
+    @include('distribusitoko::distribusitokos.includes.modal.edit')
 </div>
 @endsection
 @push('page_css')
@@ -107,4 +129,11 @@ padding: .2em !important;
 }
 }
 </style>
+@endpush
+@push('page_scripts')
+    <script>
+        function showEditModal(row){
+            $('#editModal').modal('show');
+        }
+    </script>
 @endpush
