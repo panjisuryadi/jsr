@@ -36,7 +36,7 @@
                             <div class="font-extrabold mb-2">Distribusi Info: </div>
                             <div>Jumlah Item: <strong>{{ $dist_toko->items->count() }} buah</strong></div>
                             <div>Jumlah Jenis Karat: <strong> {{ $dist_toko->items->groupBy('karat_id')->count() }} </strong></div>
-                            <div>Total Berat Emas: <strong> {{ $dist_toko->items->sum('gold_weight') }} gram</strong></div>
+                            <div>Total Berat Emas: <strong> {{ $dist_toko->items->sum('gold_weight') }} gr</strong></div>
                         </div>
 
                        
@@ -57,7 +57,7 @@
                                         <tr>
                                             <th class="text-center">No</th>
                                             <th class="text-center">Berat Emas</th>
-                                            <th class="text-justify">Product Information</th>
+                                            <th class="text-justify">Informasi Produk</th>
                                             <th class="text-justify">Aksi</th>
                                         </tr>
                                     </thead>
@@ -74,16 +74,16 @@
                                         @endphp
                                         <tr>
                                             <th class="text-center">{{$loop->iteration}}</th>
-                                            <td class="text-center font-extrabold"> {{@$row->gold_weight}} gram</td>
+                                            <td class="text-center font-extrabold"> {{@$row->gold_weight}} gr</td>
                                             <td class="text-justify">
                                                 <div>
-                                                    Nama Produk : <strong>{{ $data->product_category->name }}</strong>
+                                                    Produk : <strong>{{ $data->product_category->name }}</strong>
                                                 </div>
                                                 <div>
-                                                    Nama Group : <strong>{{ $data->group->name }}</strong>
+                                                    Group : <strong>{{ $data->group->name }}</strong>
                                                 </div>
                                                 <div>
-                                                    Nama Model : <strong>{{ $data->model->name }}</strong>
+                                                    Model : <strong>{{ $data->model->name }}</strong>
                                                 </div>
                                                 <div>
                                                     Code : <strong>{{ $data->code }}</strong>
@@ -102,7 +102,7 @@
                                         @endforelse
                                         <tr>
                                             <td class="text-right font-extrabold">Jumlah Emas :</td>
-                                            <td class="text-center font-extrabold">{{ $total_weight }} gram</td>
+                                            <td class="text-center font-extrabold">{{ $total_weight }} gr</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -117,7 +117,8 @@
             </div>
         </div>
     </div>
-    @include('distribusitoko::distribusitokos.includes.modal.edit')
+    @livewire('distribusi-toko.modal.edit')
+    <!-- @include('distribusitoko::distribusitokos.includes.modal.edit') -->
 </div>
 @endsection
 @push('page_css')
@@ -134,6 +135,7 @@ padding: .2em !important;
     <script>
         function showEditModal(row){
             $('#editModal').modal('show');
+            Livewire.emit('setData',row);
         }
     </script>
 @endpush

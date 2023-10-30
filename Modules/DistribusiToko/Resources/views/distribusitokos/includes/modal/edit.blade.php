@@ -1,48 +1,57 @@
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore>
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" id="addModalLabel">Detail</h3>
+            <h3 class="modal-title text-lg font-bold" id="addModalLabel">Edit Draft Item</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <form action="" id="formadd">
-                <div class="row">
-                    <input type="hidden" name="product_id" id="product_id">
-                    <input type="hidden" name="product_name_val" id="product_name_val">
-                    <input type="hidden" name="location_val" id="location_val">
-                    <input type="hidden" name="location_id" id="location_id">
-                    <input type="hidden" name="product_location_id" id="product_location_id">
-                    <div class="col-md-6">
-                        <div>Name</div>
-                        <div><b><span id="product_name">NAGATA</span></b></div>
+            <form>
+                <input type="hidden" name="data_id" id="data_id">
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="form-group">
+                        <label for="product_category">Product Category</label>
+                        <select id="product_category" class="form-control @error('product_category') is-invalid @enderror">
+                        <option value="" disabled>Semua Produk</option>
+                            @php
+                                $kategori = \Modules\KategoriProduk\Models\KategoriProduk::where('slug','gold')->firstOrFail();
+                                $categories = \Modules\Product\Entities\Category::where('kategori_produk_id',$kategori->id)->get();
+                            @endphp
+                            @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('product_category'))
+                            <span class="invalid feedback"role="alert">
+                                <small class="text-danger">{{ $errors->first('product_category') }}.</small
+                                class="text-danger">
+                            </span>
+                        @endif
                     </div>
-                    <div class="col-md-6">
-                        <div>Location</div>
-                        <div><b><span id="location">Gudang A1</span></b></div>
-                    </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="stock">Stock Data</label>
-                            <input type="text" name="stock" id="stock" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="stock_rill" class="">Stock Rill</label>
-                            <input type="text" name="stock_rill" id="stock_rill" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="note">Note</label>
-                            <textarea name="note" id="note" rows="5" class="form-control"></textarea>
-                        </div>
-                    </div>
+
+                    <div class="form-group">
+                        <label for="group">@lang('Group')
+                            <span class="text-danger">*</span>
+                            <span class="small">Jenis Perhiasan</span>
+                        </label>
+                        <select class="form-control @error('group') is-invalid @enderror" name="group" id="group">
+                            <option value="" selected disabled>Pilih Group</option>
+                            @foreach(\Modules\Group\Models\Group::all() as $jp)
+                            <option value="{{ $jp->id }}">{{ $jp->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('group'))
+                        <span class="invalid feedback"role="alert">
+                            <small class="text-danger">{{ $errors->first('group') }}.</small
+                            class="text-danger">
+                        </span>
+                        @endif
+
+                    </div> 
+
+
                 </div>
             </form>
         </div>
