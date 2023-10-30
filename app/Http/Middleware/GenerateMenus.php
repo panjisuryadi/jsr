@@ -1225,30 +1225,21 @@ class GenerateMenus
                 ])->link->attr([
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
+            
 
-            // BERLIAN - PEMBELIAN - PENERIMAAN QC
-            // $purchase_berlian->add(''.__('Goods Receipts'), [
-            //         'route' => 'goodsreceiptberlian.index',
-            //         'class' => 'nav-item',
-            //     ])->data([
-            //         'order'         => 1,
-            //         'activematches' => ['goodsreceipts*'],
-            //         'permission'    => ['access_goodsreceipts'],
-            //     ])->link->attr([
-            //         'class' => 'c-sidebar-nav-link py-2',
-            //     ]);
 
-            // // BERLIAN - PEMBELIAN - RETUR PEMBELIAN
-            // $purchase_berlian->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
-            //     '.__('Purchase Returns').'', [
-            //         'route' => 'purchase-returns.index',
-            //         'class' => 'nav-item',
-            //     ])->data([
-            //         'order'         => 2,
-            //         'permission'    => ['create_purchase'],
-            //     ])->link->attr([
-            //         'class' => 'c-sidebar-nav-link',
-            //     ]);
+            // Berlian - PRODUKSI
+
+            $produksi = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-card-checklist"></i>'.__('Produksi'), [
+                'route' => 'produksi.index',
+                'class' => 'nav-item ',
+            ])->data([
+                'order'         => 2,
+                'activematches' => ['produksis*'],
+                'permission'    => ['access_produksis'],
+            ])->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 // ================ End of Berlian =================
 
 

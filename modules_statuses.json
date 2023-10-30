@@ -75,5 +75,6 @@
     "KeluarMasuk": true,
     "StoreEmployee": true,
     "Test": true,
-    "GoodsReceiptBerlian": true
+    "GoodsReceiptBerlian": true,
+    "Produksi": true
 }
