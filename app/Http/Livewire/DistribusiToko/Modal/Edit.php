@@ -38,7 +38,7 @@ class Edit extends Component
     }
 
     public function mount(){
-        $kategori = KategoriProduk::where('slug','gold')->firstOrFail();
+        $kategori = KategoriProduk::where('slug','gold')->orWhere('slug','emas')->firstOrFail();
         $this->categories = Category::where('kategori_produk_id',$kategori->id)->get();
         $this->dataKarat = Karat::where(function ($query) {
             $query
