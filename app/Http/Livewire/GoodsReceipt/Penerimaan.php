@@ -36,14 +36,14 @@ class Penerimaan extends Component
         $selisih,
         $catatan,
         $pic_id = '',
-        $document = [];
+        $document = [],
+        $image = '';
 
     public $updateMode = false;
     public $total_berat = 0;
     public $inputs = [
         [
             'karat_id' => '',
-            'kategori_id' => '',
             'berat_real' => 0,
             'berat_kotor' => 0
         ]
@@ -54,27 +54,41 @@ class Penerimaan extends Component
     public $dataSupplier = [];
     public $dataKarat = [];
     public $dataKategoriProduk = [];
-    public $kasir = [];
 
     public $hari_ini;
 
-    protected $listeners = ['imageUploaded','imageRemoved'];
+    protected $listeners = [
+        'imageUploaded',
+        'imageRemoved',
+        'webcamCaptured' => 'handleWebcamCaptured',
+        'webcamReset' => 'handleWebcamReset'
+
+    ];
+
+    public function handleWebcamCaptured($key,$data_uri){
+        $this->image = $data_uri;
+    }
+
+    public function handleWebcamReset($key){
+        $this->image = '';
+    }
 
     public function mount()
     {
         $this->dataSupplier = Supplier::all();
-        $this->dataKarat = Karat::all();
+        $this->dataKarat = Karat::whereNull('parent_id')->get();
         $this->dataKategoriProduk = KategoriProduk::all();
 
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
+        $this->pic_id = auth()->user()->id;
+        $this->tanggal = $this->hari_ini;
     }
 
     public function addInput()
     {
         $this->inputs[] = [
             'karat_id' => '',
-            'kategori_id' => '',
             'berat_real' => 0,
             'berat_kotor' => 0
         ];
@@ -93,7 +107,6 @@ class Penerimaan extends Component
     public function render()
 
     {
-        $this->kasir = User::role('Kasir')->orderBy('name')->get();
         return view('livewire.goods-receipt.penerimaan');
     }
 
@@ -102,7 +115,6 @@ class Penerimaan extends Component
         $this->inputs = [
             [
                 'karat_id' => '',
-                'kategori_id' => '',
                 'berat_real' => 0,
                 'berat_kotor' => 0
             ]
@@ -150,7 +162,6 @@ class Penerimaan extends Component
 
         foreach ($this->inputs as $key => $value) {
             $rules['inputs.' . $key . '.karat_id'] = 'required';
-            $rules['inputs.' . $key . '.kategori_id'] = 'required';
             $rules['inputs.' . $key . '.berat_real'] = 'required|gt:0';
             $rules['inputs.' . $key . '.berat_kotor'] = 'required|gt:0';
         }
@@ -192,7 +203,8 @@ class Penerimaan extends Component
             'total_berat_real' => $this->total_berat_real,
             'total_berat_kotor' => $this->total_berat_kotor,
             'items' => $this->inputs,
-            'detail_cicilan' => $this->detail_cicilan
+            'detail_cicilan' => $this->detail_cicilan,
+            'image' => $this->image
         ];
 
         $request = new Request($data);
@@ -208,10 +220,8 @@ class Penerimaan extends Component
     {
         $this->total_berat_real = 0;
         foreach ($this->inputs as $key => $value) {
-            $this->total_berat_real += floatval($this->inputs[$key]['berat_real']);
-            $this->total_berat_real = number_format(round($this->total_berat_real, 3), 3, '.', '');
-            $this->total_berat_real = rtrim($this->total_berat_real, '0');
-            $this->total_berat_real = formatWeight($this->total_berat_real);
+            $this->total_berat_real += doubleval($this->inputs[$key]['berat_real']);
+            $this->total_berat_real = round($this->total_berat_real, 3);
         }
     }
 
@@ -219,11 +229,13 @@ class Penerimaan extends Component
     {
         $this->total_berat_kotor = 0;
         foreach ($this->inputs as $key => $value) {
-            $this->total_berat_kotor += floatval($this->inputs[$key]['berat_kotor']);
-            $this->total_berat_kotor = number_format(round($this->total_berat_kotor, 3), 3, '.', '');
-            $this->total_berat_kotor = rtrim($this->total_berat_kotor, '0');
-            $this->total_berat_kotor = formatWeight($this->total_berat_kotor);
+            $this->total_berat_kotor += doubleval($this->inputs[$key]['berat_kotor']);
+            $this->total_berat_kotor = round($this->total_berat_kotor, 3);
         }
+    }
+
+    public function calculateSelisih(){
+        $this->selisih = round(doubleval($this->berat_timbangan) - $this->total_berat_real,3);
     }
 
     public function imageUploaded($fileName){

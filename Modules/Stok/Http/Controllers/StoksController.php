@@ -501,13 +501,14 @@ public function index_data_office(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.gudang-office.aksi',
                             compact('module_name', 'data', 'module_model'));
                                 })
                           ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                   ' .$data->karat->kode  . '   | ' .$data->karat->name  . '</h3>
+                                   ' .$data->karat->name  . ' ' .$data->karat->kode  . '</h3>
                                     </div>';
                                 return $tb;
                             }) 
@@ -515,14 +516,14 @@ public function index_data_office(Request $request)
                                ->editColumn('berat_real', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->berat_real . '</h3>
+                                     ' .$data->berat_real . ' gram </h3>
                                     </div>';
                                 return $tb;
                             })  
                               ->editColumn('berat_kotor', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->berat_kotor . '</h3>
+                                     ' .$data->berat_kotor . ' gram </h3>
                                     </div>';
                                 return $tb;
                             })
@@ -536,7 +537,7 @@ public function index_data_office(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'karat','berat_real', 'berat_kotor', 'action', 'weight'])
+                        ->rawColumns(['updated_at', 'karat','berat_real', 'berat_kotor', 'action'])
                         ->make(true);
                      }
 
@@ -758,6 +759,26 @@ public function view_pending($id)
             'module_title',
             'module_icon', 'module_model'));
 
+    }
+
+    public function gudang_office_detail($office)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_office = $this->module_office;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        $detail = $module_office::findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.gudang-office.detail',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
     }
 
 

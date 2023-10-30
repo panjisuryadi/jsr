@@ -64,7 +64,7 @@ class PosController extends Controller
             $total_amount = $input['final_unmask'];
         }
 
-      //dd($input['harga_awal']);
+    //  dd($input);
      // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
          $sale = Sale::create([
                 'date' => date('Y-m-d'),
@@ -79,7 +79,7 @@ class PosController extends Controller
                 'due_amount' => '0',
                 'status' => 'Completed',
                 'payment_status' => $payment_status,
-                'payment_method' =>$tipebayar ?? null,
+                'payment_method' =>$input['payment_method'] ?? $tipebayar,
                 'tipe_bayar' =>$tipebayar ?? null,
                 'cicilan' =>$cicilan ?? null,
                 'tgl_jatuh_tempo' =>$jatuh_tempo,
@@ -110,13 +110,13 @@ class PosController extends Controller
 
           Cart::instance('sale')->destroy();
              //return response()->json(['success'=>'Sales Sukses disimpan.']);
-           if ($request->nominal_manual > 0) {
+           if ($request->manual > 0) {
                 SaleManual::create([
                     'date' => now()->format('Y-m-d'),
                     'reference' => 'INV/'.$sale->reference,
-                    'nominal' => $request->nominal_manual,
+                    'nominal' => $request->manual_price,
                     'sale_id' => $sale->id,
-                    'note' => $request->keterangan_manual
+                    'note' => $request->manual_item
                 ]);
             }
              session()->forget('keterangan_manual');

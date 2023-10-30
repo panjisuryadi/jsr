@@ -18,36 +18,25 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                             <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
-                                Add {{$module_title}}<i class="bi bi-plus"></i>
+                                Tambah {{$module_title}}<i class="bi bi-plus"></i>
                             </a>
                         </div>
                         <div id="buttons"></div>
                     </div>
                     <div class="table-responsive mt-1">
-                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+                        <table id="datatable" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th style="width: 7%!important;">
                                         NO
                                     </th>
-                                     <th style="width:11%;">
-                                        Kode Induk
-                                    </th> 
-
-                                    <th style="width:11%;">
-                                        Kode
-                                    </th> 
-
                                     <th>
                                         Karat
                                     </th>
-                                    <th class="text-center" style="width:10%;">
-                                        Type
+                                    <th>
+                                        Tipe
                                     </th> 
 
-                                     <th style="width:20%;">
-                                        Updated
-                                    </th>
                                     <th style="width: 19%!important;" class="text-center">
                                         Action
                                     </th>
@@ -108,23 +97,11 @@
                 },
 
                 {
-                    data: 'kode_induk',
-                    name: 'kode_induk'
-                },
-                {
-                    data: 'kode',
-                    name: 'kode'
-                }, 
-                {
-                    data: 'name',
-                    name: 'name'
+                    data: 'karat',
+                    name: 'karat'
                 },{
                     data: 'type',
                     name: 'type'
-                },
-                {
-                    data: 'updated_at',
-                    name: 'updated_at'
                 },
                 {
                     data: 'action',

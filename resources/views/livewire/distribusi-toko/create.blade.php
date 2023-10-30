@@ -25,7 +25,7 @@
                                                 ?>
                                             <label for="{{ $field_name }}"> No Surat Jalan</label>
                                             <div class="flex-1">
-                                                <input wire:model="{{ $field_name }}" type="text" id="{{ $field_name }}" placeholder="{{ $field_lable }}" class="form-control @error( $field_name) is-invalid @enderror">
+                                                <input wire:model="{{ $field_name }}" type="text" id="{{ $field_name }}" placeholder="{{ $field_lable }}" class="form-control @error( $field_name) is-invalid @enderror" readonly>
                                                 @if ($errors->has($field_name))
                                                     <span class="invalid feedback"role="alert">
                                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -110,7 +110,7 @@
                                                         $required = "required";
                                                         ?>
                                                         <label for="{{ $field_name }}">Product Category</label>
-                                                        <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="clearKaratAndTotal({{$key}})">
+                                                        <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="clearKaratAndTotal({{$key}})" onchange="setAdditionalAttribute({{$key}},'product_category_name', this);">
                                                         <option value="">All Products</option>
                                                             @foreach($categories as $category)
                                                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -137,7 +137,7 @@
                                                             <span class="text-danger">*</span>
                                                             <span class="small">Jenis Perhiasan</span>
                                                         </label>
-                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute({{$key}},'group_name', this);">
                                                             <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                             @foreach(\Modules\Group\Models\Group::all() as $jp)
                                                             <option value="{{ $jp->id }}">{{ $jp->name }}</option>
@@ -161,7 +161,7 @@
                                                         $required = "required";
                                                         ?>
                                                         <label for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                                        <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute({{$key}},'model_name', this);">
                                                             <option value="" selected disabled>Pilih Model</option>
                                                             @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
                                                             <option value="{{$sup->id}}">
@@ -201,7 +201,7 @@
                                                     </div>
                                                 </div>
 
-                                                @if($distribusi_toko_details[$key]['product_category'] == '4')
+                                        @if($distribusi_toko_details[$key]['product_category'] == $logam_mulia_id)
                                         <div class="grid grid-cols-2 gap-2">
                                             <div class="form-group">
                                                 <?php
@@ -305,7 +305,7 @@
 
                                         @else
                                         <div class="grid grid-cols-2 gap-2">
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                 <?php
                                                 $field_name = 'distribusi_toko_details.' . $key . '.gold_category';
                                                 $field_lable = label_case('kategori emas');
@@ -328,7 +328,7 @@
                                                 </span>
                                                 @endif
 
-                                            </div>
+                                            </div> -->
                                             <div class="form-group">
                                                 <?php
                                                 $field_name = 'distribusi_toko_details.' . $key . '.karat';
@@ -341,7 +341,7 @@
                                                 <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                     @foreach($dataKarat as $jp)
-                                                    <option value="{{ $jp->id }}">{{ $jp->name }}</option>
+                                                    <option value="{{ $jp->id }}">{{ $jp->name }} {{$jp->kode}}</option>
                                                     @endforeach
                                                 </select>
                                                 @if($errors->has($field_name))
@@ -375,7 +375,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                <input class="form-control numeric @error($field_name) is-invalid @enderror"
+                                                <input class="form-control @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 name="{{ $field_name }}"
                                                 step="0.001"
@@ -383,6 +383,7 @@
                                                 wire:change="calculateTotalWeight({{$key}})"
                                                 id="{{ $field_name }}"
                                                 placeholder="{{ $field_placeholder }}"
+                                                min="0"
                                                 >
                                                 @if ($errors->has($field_name))
                                                 <span class="invalid feedback"role="alert">
@@ -401,7 +402,7 @@
                                                 $required = "required";
                                                 ?>
                                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                <input class="form-control numeric @error($field_name) is-invalid @enderror"
+                                                <input class="form-control @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 wire:model="{{ $field_name }}"
                                                 wire:change="calculateTotalWeight({{$key}})"
@@ -428,7 +429,7 @@
                                                 <input class="form-control @error($field_name) is-invalid @enderror"
                                                 type="number"
                                                 name="{{ $field_name }}"
-                                                min="0" step="0.01"
+                                                min="0" step="0.001"
                                                 id="{{ $field_name }}"
                                                 wire:model="{{ $field_name }}"
                                                 wire:change="calculateTotalWeight({{$key}})"
@@ -543,18 +544,12 @@
 @push('page_scripts')
 
 <script type="text/javascript">
-    jQuery.noConflict();
-    (function($) {
-        $(document).ready(function() {
-            $('.numeric').keypress(function(e) {
-                var verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
-                if (verified) {
-                    e.preventDefault();
-                }
-            });
-        });
 
-    })(jQuery);
+function setAdditionalAttribute(key,name,selectElement){
+    let selectedText = selectElement.options[selectElement.selectedIndex].text;
+    Livewire.emit('setAdditionalAttribute',key,name,selectedText);
+}
+    
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 

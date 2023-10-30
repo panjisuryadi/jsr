@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
 
  Route::get("$module_name/index_data_office", ['as' => "$module_name.index_data_office", 'uses' => "$controller_name@index_data_office"]);
 
+ Route::get("$module_name/office/{office}", ['as' => "$module_name.gudang-office.detail", 'uses' => "$controller_name@gudang_office_detail"]);
+
 
  Route::get("$module_name/pending", ['as' => "$module_name.pending", 'uses' => "$controller_name@pending"]);
 

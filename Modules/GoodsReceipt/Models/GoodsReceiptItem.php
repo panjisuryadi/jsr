@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Karat\Models\Karat;
 use Modules\KategoriProduk\Models\KategoriProduk;
-
+use Modules\Stok\Models\StockOffice;
 
 class GoodsReceiptItem extends Model
 {
@@ -28,7 +28,10 @@ class GoodsReceiptItem extends Model
         return $this->belongsTo(KategoriProduk::class, 'kategoriproduk_id', 'id');
     }
 
-
+    public function stock_office()
+    {
+        return $this->morphToMany(StockOffice::class, 'transaction','stock_office_history','transaction_id','stock_office_id','id','id')->withTimestamps();
+    }
 
 
 }

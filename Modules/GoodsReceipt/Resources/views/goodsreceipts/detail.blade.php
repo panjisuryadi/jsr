@@ -72,7 +72,6 @@
                 <p class=" dark:text-gray-300 text-gray-800">{{ $detail->no_invoice }}</p>
             </div>
 
-
   <div class="text-base flex justify-between w-full py-1">
                 <p class="poppins text-gray-600">{{ Label_case('total_berat_kotor') }}</p>
                 <p class="poppins font-semibold text-blue-800">{{ $detail->total_berat_kotor }}

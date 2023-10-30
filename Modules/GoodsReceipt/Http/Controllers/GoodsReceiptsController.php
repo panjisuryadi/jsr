@@ -544,14 +544,12 @@ public function index_data_completed(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $code = $module_model::generateCode();
-            $kasir = User::role('Kasir')->orderBy('name')->get();
             $module_action = 'Create';
             abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
                 'code',
-                'kasir',
                 'module_title',
                 'module_icon', 'module_model'));
         }
@@ -579,24 +577,14 @@ public function store(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        // $request->validate([
-        //      'no_invoice' => 'required|min:3|max:191',
-        //      'supplier_id' => 'required',
-        //      'tanggal' => 'required',
-        //      'total_emas' => 'required',
-        //      'berat_timbangan' => 'required',
-        //      'user_id' => 'required',
-        //      'karat_id.0' => 'required',
-        //      'karat_id.*' => 'required',
-        //     ]);
          $input = $request->except('_token','document');
+         $kategori_produk_id = KategoriProduk::whereSlug('gold')->value('id');
          $goodsreceipt = $module_model::create([
             'code'                       => $input['code'],
             'no_invoice'                 => $input['no_invoice'],
             'date'                       => $input['tanggal'],
             'status'                     => 0,
             'karat_id'                   => null,
-            'kategoriproduk_id'          => null,
             'tipe_pembayaran'            => $input['tipe_pembayaran'],
             'supplier_id'                => $input['supplier_id'],
             'user_id'                    => $input['pic_id'],
@@ -607,12 +595,12 @@ public function store(Request $request)
             'note'                       => $input['catatan'],
             'count'                      => 0,
             'qty'                        => '8',
-            'kategoriproduk_id'          => 1,
-            'pengirim'                   => $input['pengirim']
+            'kategoriproduk_id'          => $kategori_produk_id,
+            'pengirim'                   => $input['pengirim'],
         ]);
             $goodsreceipt_id = $goodsreceipt->id;
             $this->_saveTipePembelian($input ,$goodsreceipt_id);
-            $this->_saveGoodsReceiptItem($input['items'] ,$goodsreceipt);
+            $this->_saveGoodsReceiptItem($input['items'] ,$goodsreceipt,$kategori_produk_id);
             // $this->_saveStockOffice($input['items']);
 
 
@@ -632,9 +620,8 @@ public function store(Request $request)
             $image_base64 = base64_decode($image_parts[1]);
             $fileName ='webcam_'. uniqid() . '.jpg';
             $file = $folderPath . $fileName;
-             //$$module_name_singular->addMedia($image_base64)->toMediaCollection('pembelian');
-            Storage::disk('public')->put($file,$image_base64);
-            $input['images'] =  "$fileName";
+            Storage::disk('local')->put($file,$image_base64);
+            $goodsreceipt->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('pembelian');
             }
 
              activity()->log(' '.auth()->user()->name.' input data pembelian');
@@ -672,18 +659,30 @@ public function store(Request $request)
       }
 
 
-   private function _saveGoodsReceiptItem($items ,$goodsreceipt)
+   private function _saveGoodsReceiptItem($items ,$goodsreceipt, $kategori_produk_id)
      {
        foreach ($items as $key => $value) {
-          $item = GoodsReceiptItem::updateOrCreate([
+          $item = GoodsReceiptItem::create([
               'goodsreceipt_id' => $goodsreceipt->id,
               'karat_id' => $items[$key]['karat_id'],
-              'kategoriproduk_id' => $items[$key]['kategori_id'],
+              'kategoriproduk_id' => $kategori_produk_id,
               'berat_real' =>$items[$key]['berat_real'],
               'berat_kotor' =>$items[$key]['berat_kotor']
-               ]);
-        event(new GoodsReceiptItemCreated($goodsreceipt,$item));
-         }
+            ]);
+        $stock_office = StockOffice::where('karat_id', $item['karat_id'])->first();
+        if(is_null($stock_office)){
+            $stock_office = StockOffice::create(['karat_id'=> $item['karat_id']]);
+        }
+        $item->stock_office()->attach($stock_office->id,[
+                'karat_id'=>$item['karat_id'],
+                'in' => true,
+                'berat_real' =>$items[$key]['berat_real'],
+                'berat_kotor' => $items[$key]['berat_kotor']
+        ]);
+        $berat_real = $stock_office->history->sum('berat_real');
+        $berat_kotor = $stock_office->history->sum('berat_kotor');
+        $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
+        }
     }
 
 
@@ -907,7 +906,7 @@ public function show($id)
         $detail = $module_model::findOrFail($id);
         // $list = $module_products::where('kode_pembelian',$detail->code)->get();
       //  dd($detail->code);
-          return view(''.$module_name.'::'.$module_path.'.detail',
+          return view(''.$module_name.'::'.$module_path.'.show',
            compact('module_name',
             'module_action',
             'detail',

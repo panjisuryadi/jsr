@@ -17,7 +17,12 @@ use Modules\Cabang\Models\Cabang;
 use Modules\UserCabang\Models\UserCabang;
 use PDF;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\DistribusiToko\Models\DistribusiToko;
+use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductItem;
+use Modules\Stok\Models\StockOffice;
 
 class DistribusiTokosController extends Controller
 {
@@ -60,6 +65,128 @@ class DistribusiTokosController extends Controller
     }
 
 
+    public function detail(DistribusiToko $dist_toko){
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+
+        if(!$dist_toko->is_draft){
+            return redirect()->route('distribusitoko.index');
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.detail',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'dist_toko',
+            'module_icon', 'module_model'));
+
+    }
+
+    public function send(DistribusiToko $dist_toko){
+        abort_if(Gate::denies('edit_distribusitoko'), 403);
+        if(!$dist_toko->is_draft){
+            return redirect()->back();
+        }
+
+        DB::beginTransaction();
+        try{
+            $dist_toko->update([
+                'is_draft' => false
+            ]);
+            $this->createProducts($dist_toko->cabang_id,$dist_toko->items);
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
+
+        toast('Produk Berhasil dibuat!', 'success');
+        return redirect()->route('products.index');
+    }
+
+    private function createProducts($cabang_id,$items){
+            foreach($items as $item){
+                $this->reduceStockOffice($item);
+                $additional_data = json_decode($item['additional_data'],true)['product_information'];
+                $product = Product::create([
+                  'category_id'                => $additional_data['product_category']['id'],
+                  'cabang_id'                  => $cabang_id,
+                  'product_stock_alert'        => 5,
+                    'product_name'              => $additional_data['group']['name'] .' '. $additional_data['model']['name'] ?? 'unknown',
+                  'product_code'               => $additional_data['code'],
+                  'product_barcode_symbology'  => 'C128',
+                  'product_unit'               => 'Gram',
+                  'product_cost' => 0,
+                  'product_price' => 0
+                ]);
+      
+                  if (!empty($additional_data['image'])) {
+                      $img = $additional_data['image'];
+                      $folderPath = "uploads/";
+                      $image_parts = explode(";base64,", $img);
+                      $image_type_aux = explode("image/", $image_parts[0]);
+                      $image_type = $image_type_aux[1];
+                      $image_base64 = base64_decode($image_parts[1]);
+                      $fileName ='webcam_'. uniqid() . '.jpg';
+                      $file = $folderPath . $fileName;
+                      Storage::disk('local')->put($file,$image_base64);
+                      $product->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('products');
+                    }
+      
+      
+                    // if ($request->has('document')) {
+                    //       foreach ($request->input('document', []) as $file) {
+                    //           $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
+                    //       }
+                    //   }
+
+                    $this->createProductDetail($product->id, $item, $additional_data);
+                    
+                }
+            
+    }
+
+    private function reduceStockOffice($item){
+        $stock_office = StockOffice::where('karat_id', $item['karat_id'])->first();
+        if(is_null($stock_office)){
+            $stock_office = StockOffice::create(['karat_id'=> $item['karat_id']]);
+        }
+        $item->stock_office()->attach($stock_office->id,[
+                'karat_id'=>$item['karat_id'],
+                'in' => false,
+                'berat_real' => -1 * $item['gold_weight'],
+                'berat_kotor' => -1 * $item['gold_weight']
+        ]);
+        $berat_real = $stock_office->history->sum('berat_real');
+        $berat_kotor = $stock_office->history->sum('berat_kotor');
+        $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
+    }
+
+    private function createProductDetail($product_id, $item, $additional_data){
+        ProductItem::create([
+            'product_id'                  => $product_id,
+            'karat_id'                    => $item['karat_id'],
+            'certificate_id'              => empty($additional_data['certificate_id'])?null:$additional_data['certificate_id'],
+            'berat_emas'                  => $item['gold_weight'],
+            'berat_label'                 => $additional_data['tag_weight'],
+            'berat_accessories'           => $additional_data['accessories_weight'],
+            'produk_model_id'             => $additional_data['model']['id'],
+            'berat_total'                 => $additional_data['total_weight'],
+            'product_cost'                => 0,
+            'product_price'               => 0
+        ]);
+    }
+
+
 
 
 public function index_data(Request $request)
@@ -87,6 +214,20 @@ public function index_data(Request $request)
                             '.includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
+                        ->editColumn('date', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                    ' .  Carbon::parse($data->date)->format('d M, Y') . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                        ->editColumn('no_invoice', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                    ' .$data->no_invoice . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
                           ->editColumn('cabang', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
@@ -95,20 +236,16 @@ public function index_data(Request $request)
                                 return $tb;
                             })
                            ->editColumn('karat', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->karat->name . '</h3>
-                                    </div>';
+                             $tb = '<div class="items-center">
+                                    <h3 class="text-sm text-gray-800">
+                                     Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></h3>
+                                    </div>
+                                    <div class="items-center">
+                                    <h3 class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' gram
+                                    </strong></h3>
+                                   </div>';
                                 return $tb;
                             })
-
-                           ->editColumn('weight', function ($data) {
-                               $tb = '<div class="items-center text-center">
-                                     '.$data->weight .'
-                                    </div>';
-                                return $tb;
-                            })
-
 
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
@@ -121,8 +258,8 @@ public function index_data(Request $request)
                             }
                         })
                         ->rawColumns(['updated_at', 
-                                    'action',  'cabang', 'karat','weight',
-                                      'name'])
+                                    'action',  'cabang','date', 'karat',
+                                      'no_invoice'])
                         ->make(true);
                      }
 

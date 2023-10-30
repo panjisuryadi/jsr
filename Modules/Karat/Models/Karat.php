@@ -59,4 +59,8 @@ class Karat extends Model
 
     }
 
+    public static function logam_mulia(){
+        return self::where('type','LM')->firstOrFail();
+    }
+
 }

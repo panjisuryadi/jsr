@@ -33,9 +33,6 @@
                                     <th class="text-left">{{ __('Karat') }}</th>
                                     <th class="text-left">{{ __('Berat Real') }}</th>
                                     <th class="text-left">{{ __('Berat Kotor') }}</th>
-
-                                    
-                               
                                 </tr>
                             </thead>
                         </table>
@@ -100,9 +97,8 @@
                 {
                     data: 'berat_kotor',
                     name: 'berat_kotor',
-                    orderable: false,
-                    searchable: false
-                }
+                },
+                
             ]
         })
         .buttons()
