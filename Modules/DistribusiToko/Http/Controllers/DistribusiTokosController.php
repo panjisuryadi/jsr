@@ -17,8 +17,11 @@ use Modules\Cabang\Models\Cabang;
 use Modules\UserCabang\Models\UserCabang;
 use PDF;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\DistribusiToko\Models\DistribusiToko;
+use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductItem;
 
 class DistribusiTokosController extends Controller
 {
@@ -85,6 +88,84 @@ class DistribusiTokosController extends Controller
             'dist_toko',
             'module_icon', 'module_model'));
 
+    }
+
+    public function send(DistribusiToko $dist_toko){
+        abort_if(Gate::denies('edit_distribusitoko'), 403);
+        if(!$dist_toko->is_draft){
+            return redirect()->back();
+        }
+
+        DB::beginTransaction();
+        try{
+            $dist_toko->update([
+                'is_draft' => false
+            ]);
+            $this->createProducts($dist_toko->cabang_id,$dist_toko->items);
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
+
+        toast('Produk Berhasil dibuat!', 'success');
+        return redirect()->route('products.index');
+    }
+
+    private function createProducts($cabang_id,$items){
+            foreach($items as $item){
+                $additional_data = json_decode($item['additional_data'],true)['product_information'];
+                $product = Product::create([
+                  'category_id'                => $additional_data['product_category']['id'],
+                  'cabang_id'                  => $cabang_id,
+                  'product_stock_alert'        => 5,
+                    'product_name'              => $additional_data['group']['name'] .' '. $additional_data['model']['name'] ?? 'unknown',
+                  'product_code'               => $additional_data['code'],
+                  'product_barcode_symbology'  => 'C128',
+                  'product_unit'               => 'Gram',
+                  'product_cost' => 0,
+                  'product_price' => 0
+                ]);
+      
+                  if (!empty($additional_data['image'])) {
+                      $img = $additional_data['image'];
+                      $folderPath = "uploads/";
+                      $image_parts = explode(";base64,", $img);
+                      $image_type_aux = explode("image/", $image_parts[0]);
+                      $image_type = $image_type_aux[1];
+                      $image_base64 = base64_decode($image_parts[1]);
+                      $fileName ='webcam_'. uniqid() . '.jpg';
+                      $file = $folderPath . $fileName;
+                      Storage::disk('local')->put($file,$image_base64);
+                      $product->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('products');
+                    }
+      
+      
+                    // if ($request->has('document')) {
+                    //       foreach ($request->input('document', []) as $file) {
+                    //           $$module_name_singular->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
+                    //       }
+                    //   }
+
+                    $this->createProductDetail($product->id, $item, $additional_data);
+                    
+                }
+            
+    }
+
+    private function createProductDetail($product_id, $item, $additional_data){
+        ProductItem::create([
+            'product_id'                  => $product_id,
+            'karat_id'                    => $item['karat_id'],
+            'certificate_id'              => empty($additional_data['certificate_id'])?null:$additional_data['certificate_id'],
+            'berat_emas'                  => $item['gold_weight'],
+            'berat_label'                 => $additional_data['tag_weight'],
+            'berat_accessories'           => $additional_data['accessories_weight'],
+            'produk_model_id'             => $additional_data['model']['id'],
+            'berat_total'                 => $additional_data['total_weight'],
+            'product_cost'                => 0,
+            'product_price'               => 0
+        ]);
     }
 
 

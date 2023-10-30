@@ -107,7 +107,12 @@
                                     </tbody>
                                 </table>
                                 @endforeach
-                                
+                                @if ($dist_toko->is_draft)
+                                <div class="float-right mt-5">
+                                    <a href="{{route('distribusitoko.index')}}" class="btn btn-secondary">Kembali</a>
+                                    <a href="{{route('distribusitoko.send', $dist_toko)}}" class="btn btn-primary">Kirimkan</a>
+                                </div>
+                                @endif
                             </div>
 
                         </div>

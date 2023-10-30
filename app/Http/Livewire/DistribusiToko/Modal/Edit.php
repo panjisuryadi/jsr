@@ -160,6 +160,7 @@ class Edit extends Component
                     'no_certificate' => $this->data['additional_data']['no_certificate'],
                     'accessories_weight' => $this->data['additional_data']['accessories_weight'],
                     'tag_weight' => $this->data['additional_data']['tag_weight'],
+                    'total_weight' => $this->data['total_weight']
                 ]
             ];
             $item = DistribusiTokoItem::findOrFail($this->data['id']);

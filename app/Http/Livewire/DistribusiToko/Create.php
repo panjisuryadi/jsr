@@ -242,14 +242,16 @@ class Create extends Component
                         'no_certificate' => $this->distribusi_toko_details[$key]['no_certificate'],
                         'accessories_weight' => $this->distribusi_toko_details[$key]['accessoris_weight']??null,
                         'tag_weight' => $this->distribusi_toko_details[$key]['label_weight']??null,
+                        'image' => $this->distribusi_toko_details[$key]['webcam_image'],
+                        'total_weight' => $this->distribusi_toko_details[$key]['total_weight']
                     ]
                 ];
-                $detail = $distribusi_toko->items()->create([
+                $distribusi_toko->items()->create([
                     'karat_id' => empty($this->distribusi_toko_details[$key]['karat'])?Karat::logam_mulia()->id:$this->distribusi_toko_details[$key]['karat'],
                     'gold_weight' => $this->distribusi_toko_details[$key]['gold_weight'],
                     'additional_data' => json_encode($additional_data),
                 ]);
-                $this->uploadImage($detail, $this->distribusi_toko_details[$key]['webcam_image']);
+                // $this->uploadImage($detail, $this->distribusi_toko_details[$key]['webcam_image']);
             }
 
 
