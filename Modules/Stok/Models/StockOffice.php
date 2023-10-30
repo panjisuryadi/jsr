@@ -6,6 +6,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\Adjustment\Entities\Adjustment;
+use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Karat\Models\Karat;
 class StockOffice extends Model
@@ -32,6 +33,11 @@ class StockOffice extends Model
     public function goods_receipt_item()
     {
         return $this->morphedByMany(GoodsReceiptItem::class, 'transaction', 'stock_office_history','stock_office_id','transaction_id','id','id')->withTimestamps();
+    }
+
+    public function distribusi_toko_item()
+    {
+        return $this->morphedByMany(DistribusiTokoItem::class, 'transaction', 'stock_office_history','stock_office_id','transaction_id','id','id')->withTimestamps();
     }
 
     public function history(){
