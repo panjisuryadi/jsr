@@ -5,8 +5,7 @@
          {{ tanggal($detail->date)}}
         </h3>
       
-
-         <p class="mt-1 max-w-xl text-sm text-gray-500">
+     <p class="mt-1 max-w-xl text-sm text-gray-500">
            Dibuat Oleh :  {{ @$detail->created_by}}
         </p>
     </div>
@@ -22,14 +21,7 @@
                 </dd>
             </div>     
 
-            <div class="py-3 sm:py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium text-gray-500">
-                   Karat
-                </dt>
-                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ @$detail->karat->kode}} | {{ @$detail->karat->name}}
-                </dd>
-            </div>
+           
 
             <div class="py-3 sm:py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">
@@ -37,10 +29,10 @@
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                       <span class="font-semibold border border-2 border-blue-800 rounded-md px-2 text-lg text-blue-800 py-0.`">
-                           {{ @$detail->weight}}
+                           {{ @$detail->weight ?? '0'}}
                     </span>
                 </dd>
-            </div>
+            </div
       
         </dl>
     </div>

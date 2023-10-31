@@ -8,11 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Stok\Models\StockOffice;
 use Modules\PenentuanHarga\Models\PenentuanHarga;
-<<<<<<< Updated upstream
 use Modules\Stok\Models\StockSales;
 
-=======
->>>>>>> Stashed changes
 
 class Karat extends Model
 {
