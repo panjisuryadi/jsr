@@ -187,13 +187,13 @@ class ProduksisController extends Controller
             DB::beginTransaction();
             $input = $request->except('_token');
             $produksis = $this->module_model::create([
-                'karatasal_id' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : '',
-                'source_kode' => !empty($input['source_kode']) ? $input['source_kode'] : '',
-                'karat_id' => !empty($input['karat_id']) ? $input['karat_id'] : '',
-                'model_id' => !empty($input['model_id']) ? $input['model_id'] : '',
-                'berat_asal' => !empty($input['berat_asal']) ? $input['berat_asal'] : '',
-                'berat' => !empty($input['berat']) ? $input['berat'] : '',
-                'tanggal' => !empty($input['tanggal']) ? $input['tanggal'] : '',
+                'karatasal_id' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : null,
+                'source_kode' => !empty($input['source_kode']) ? $input['source_kode'] : null,
+                'karat_id' => !empty($input['karat_id']) ? $input['karat_id'] : null,
+                'model_id' => !empty($input['model_id']) ? $input['model_id'] : null,
+                'berat_asal' => !empty($input['berat_asal']) ? $input['berat_asal'] : null,
+                'berat' => !empty($input['berat']) ? $input['berat'] : null,
+                'tanggal' => !empty($input['tanggal']) ? $input['tanggal'] : null,
                 'created_by' => auth()->user()->id,
                 'kategoriproduk_id' => !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : '',
             ]);
@@ -202,7 +202,8 @@ class ProduksisController extends Controller
             if(!empty($input['items'])){
                 foreach($input['items'] as $val) {
                     $val['produksis_id'] = $produksi_id;
-                    $val['kategoriproduk_id'] = !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : '';
+                    $val['shapeberlian_id'] = !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null;
+                    $val['kategoriproduk_id'] = !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : null;
                     if(!empty($val['karatberlians_id'])) {
                         $product_items[] = $val;
                     }
