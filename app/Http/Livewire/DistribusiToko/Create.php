@@ -11,6 +11,7 @@ use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
+use Modules\Stok\Models\StockOffice;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -55,6 +56,8 @@ class Create extends Component
             'model_name' => '',
         ]
     ];
+
+    public $used_stock = [];
 
     protected $listeners = [
         'webcamCaptured' => 'handleWebcamCaptured',
@@ -160,14 +163,43 @@ class Create extends Component
 
         foreach ($this->distribusi_toko_details as $key => $value) {
 
-            $rules['distribusi_toko_details.'.$key.'.product_category'] = 'required';
+            $rules['distribusi_toko_details.'.$key.'.product_category'] = [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if($value == $this->logam_mulia_id){
+                        $stock = StockOffice::where('karat_id',Karat::logam_mulia())->value('id');
+                        if(is_null($stock) or $stock->berat_real <= 0){
+                            $fail('Stok tidak tersedia');
+                        }
+                    }
+                }
+            ];
             $rules['distribusi_toko_details.'.$key.'.group'] = 'required';
             $rules['distribusi_toko_details.'.$key.'.code'] = 'required|max:255|unique:products,product_code';
             // $rules['distribusi_toko_details.'.$key.'.gold_category'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,4';
             $rules['distribusi_toko_details.'.$key.'.karat'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,' . $this->logam_mulia_id;
             $rules['distribusi_toko_details.'.$key.'.accessoris_weight'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
             $rules['distribusi_toko_details.'.$key.'.label_weight'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
-            $rules['distribusi_toko_details.'.$key.'.gold_weight'] = 'required|gt:0';
+            $rules['distribusi_toko_details.'.$key.'.gold_weight'] = [
+                'required',
+                'gt:0',
+                function ($attribute, $value, $fail) use ($key) {
+                    // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_office berdasarkan nilai parent id nya
+                    $maxWeight = DB::table('stock_office')
+                        ->where('karat_id', $this->distribusi_toko_details[$key]['karat'])
+                        ->max('berat_real');
+                    $total_input_weight_based_on_karat = $this->getTotalWeightBasedOnKarat($key,$this->distribusi_toko_details[$key]['karat']);
+                    if($total_input_weight_based_on_karat<$maxWeight){
+                        $maxWeight = $maxWeight - $total_input_weight_based_on_karat;
+                        if ($value > $maxWeight) {
+                            $fail("Berat melebihi stok yang tersedia. Sisa Stok ($maxWeight gr)");
+                        }
+                    }else{
+                        $fail("Stok telah habis digunakan");
+                    }
+    
+                },
+            ];
             $rules['distribusi_toko_details.'.$key.'.total_weight'] = 'required|gt:0';
             $rules['distribusi_toko_details.'.$key.'.certificate_id'] = 'required_if:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
             $rules['distribusi_toko_details.'.$key.'.no_certificate'] = 'required_if:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
@@ -175,6 +207,19 @@ class Create extends Component
 
         }
         return $rules;
+    }
+
+    private function getTotalWeightBasedOnKarat($key,$karatId){
+        $total = 0;
+        foreach($this->distribusi_toko_details as $index => $value){
+            if($index == $key){
+                continue;
+            }
+            if($this->distribusi_toko_details[$index]['karat'] == $karatId){
+                $total += doubleval($this->distribusi_toko_details[$index]['gold_weight'])??0;
+            }
+        }
+        return round($total,3);
     }
 
     public function updated($propertyName)
