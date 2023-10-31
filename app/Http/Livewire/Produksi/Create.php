@@ -54,6 +54,7 @@ class Create extends Component
     public $dataShapes = [];
     public $dataKategoriProduk = [];
     public $dataGroup = [];
+    public $arrayKaratBerlian = [];
 
     public $hari_ini;
 
@@ -71,6 +72,12 @@ class Create extends Component
         $this->id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
         $this->dataKategoriProduk = KategoriProduk::all();
 
+        $arrayKaratBerlian = [];
+        foreach($this->dataKaratBerlian as $k => $row){
+            $arrayKaratBerlian[$row->id] = $row->karat;
+        }
+
+        $this->arrayKaratBerlian = $arrayKaratBerlian;
 
     }
 
@@ -134,6 +141,38 @@ class Create extends Component
                 }
 
             ];
+
+            /** validasi stok berlian
+             * cek dulu apakah ini produksi berlian
+             * collect data stok per jenis karat
+             * bandingkan stok
+             */
+            if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['karatberlians_id'])) {
+                $sisa_stok_berlian = GoodsReceipt::where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->sum('total_karat');
+                $total_karat_dipinta = 0;
+                foreach ($this->inputs as $key => $value) {
+                    $rules['inputs.' . $key . '.karatberlians_id'] = 'required';
+                    $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
+
+                    $karatberlians_id = !empty($value['karatberlians_id']) ? $value['karatberlians_id'] : 0;
+                    $qty = !empty($value['qty']) ? $value['qty'] : 0;
+                    $karat = !empty($this->arrayKaratBerlian[$karatberlians_id]) ? $this->arrayKaratBerlian[$karatberlians_id] : 0;
+                    $stok_berlian_terpakai = $karat * $qty;
+                    $total_karat_dipinta += $stok_berlian_terpakai;
+
+                    if($sisa_stok_berlian < $total_karat_dipinta) {
+                        $rules['inputs.' . $key . '.qty'] = [
+                            function ($attribute, $value, $fail) {
+                                $fail('Sisa stok tidak mencukupi');
+                            }
+                            
+                        ];
+
+                    }
+                    
+                }
+
+            }
         }
 
         return $rules;
@@ -161,7 +200,7 @@ class Create extends Component
         $data = [
             'karatasal_id' => $this->karatasal_id,
             'karat_id' => $this->karat_id,
-            'model_id' => $this->model_id,
+            'model_id' => !empty($this->model_id) ? $this->model_id : null,
             'source_kode' => $this->source_kode,
             'berat_asal' => $this->berat_asal,
             'berat' => $this->berat,
