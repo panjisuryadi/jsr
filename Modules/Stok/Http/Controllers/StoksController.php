@@ -15,12 +15,14 @@ use Image;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use Modules\Stok\Models\StockOffice;
-
-
-
+use Modules\Karat\Models\Karat;
+use App\Models\LookUp;
+use Illuminate\Support\Facades\DB;
+use Modules\Stok\Models\PenerimaanLantakan;
 
 class StoksController extends Controller
 {
+    public $model_lantakan;
 
   public function __construct()
     {
@@ -34,7 +36,7 @@ class StoksController extends Controller
         $this->module_pending = "Modules\Stok\Models\StockPending";
         $this->module_pending_office = "Modules\Stok\Models\StockPendingOffice";
         $this->module_sales = "Modules\Stok\Models\StockSales";
-        $this->module_lantakan = "Modules\Stok\Models\StockKroom";
+        $this->model_lantakan = "Modules\Stok\Models\StockKroom";
         $this->module_dp = "Modules\Stok\Models\StokDp";
 
     }
@@ -171,12 +173,12 @@ public function index_data_lantakan(Request $request)
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
-        $module_lantakan = $this->module_lantakan;
+        $model_lantakan = $this->model_lantakan;
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
 
-        $$module_name = $module_lantakan::get();
+        $$module_name = $model_lantakan::get();
 
         $data = $$module_name;
 
@@ -922,4 +924,39 @@ public function update_ajax(Request $request, $id)
 
     }
 
+    public function lantakanApiStore(Request $request){
+        $data = $request->all();
+        $response = [
+            'status' => 200,
+            'message' => 'success',
+        ];
+        try {
+            DB::beginTransaction();
+            if(!empty($data['weight'])){
+                $id_karat = LookUp::select('value')->where('kode', 'id_karat_emas_24k')->first();
+
+                $data['karat_id'] =  !empty($id_karat['value']) ? $id_karat['value'] : 0;
+                $additional_data = !empty($data['additional_data']) ? $data['additional_data'] : [];
+                $data['additional_data'] = json_encode($additional_data);
+                PenerimaanLantakan::create($data);
+                $stok_lantakan = $this->model_lantakan::where('karat_id', $data['karat_id'])->first();
+                $stok_lantakan->weight = $stok_lantakan->weight + $data['weight'];
+                $stok_lantakan->save();
+            }else{
+                $response = [
+                    'status' => 402,
+                    'message' => 'params weight is required',
+                ];
+            }
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $response = [
+                'status' => 500,
+                'message' => "Something wrong " . $e->getMessage(),
+            ];
+        }
+        DB::commit();
+        return response()->json($response);
+    }
 }

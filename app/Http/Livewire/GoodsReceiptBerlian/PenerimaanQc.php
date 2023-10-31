@@ -12,41 +12,46 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Http;
 use Livewire\WithFileUploads;
-use Modules\GoodsReceipt\Http\Controllers\GoodsReceiptsController;
+use Modules\GoodsReceiptBerlian\Http\Controllers\GoodsReceiptBerliansController;
 use Modules\Karat\Models\Karat;
+use Modules\KaratBerlian\Models\KaratBerlian;
+use Modules\KaratBerlian\Models\ShapeBerlian;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\People\Entities\Supplier;
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
 
 use function PHPUnit\Framework\isEmpty;
 
-class Penerimaan extends Component
+class PenerimaanQc extends Component
 {
     use WithFileUploads;
-    public 
-        $code,
-        $no_penerimaan_barang,
-        $nama_produk,
+    public $code,
+        $no_invoice,
+        $pengirim,
         $supplier_id = '',
+        $tipe_pembayaran = '',
         $tanggal,
-        $harga;
-        // $cicil = '',
-        // $detail_cicilan = [],
-        // $tgl_jatuh_tempo,
-        // $berat_timbangan,
-        // $selisih,
-        // $catatan,
-        // $pic_id = '',
-        // $document = [];
+        $cicil = '',
+        $detail_cicilan = [],
+        $tgl_jatuh_tempo,
+        $berat_timbangan,
+        $selisih,
+        $catatan,
+        $pic_id = '',
+        $nama_produk = '',
+        $karat_id,
+        $image,
+        $kategoriproduk_id = 2, //kategori berlian
+        $document = [];
 
     public $updateMode = false;
     public $total_berat = 0;
     public $inputs = [
         [
-            'karat_id' => '',
-            'kategori_id' => '',
-            'berat_real' => 0,
-            'berat_kotor' => 0
+            'karatberlians_id' => '',
+            'shapeberlian_id' => '',
+            'qty' => 0,
+            'keterangan' => ''
         ]
     ];
 
@@ -54,30 +59,45 @@ class Penerimaan extends Component
     public $total_berat_kotor = 0;
     public $dataSupplier = [];
     public $dataKarat = [];
+    public $dataKaratBerlian = [];
+    public $dataShapes = [];
     public $dataKategoriProduk = [];
     public $kasir = [];
 
     public $hari_ini;
 
-    protected $listeners = ['imageUploaded','imageRemoved'];
+    public $type;
+    public $total_karat;
+
+
+    protected $listeners = [
+        'webcamCaptured' => 'handleWebcamCaptured',
+        'webcamReset' => 'handleWebcamReset'
+    ];
+
+    public function handleWebcamCaptured($data_uri){
+        $this->image= $data_uri;
+    }
 
     public function mount()
     {
         $this->dataSupplier = Supplier::all();
-        $this->dataKarat = Karat::all();
+        $this->dataKarat = Karat::whereNull('parent_id')->get();
+        $this->dataKaratBerlian = KaratBerlian::all();
+        $this->dataShapes = ShapeBerlian::all();
         $this->dataKategoriProduk = KategoriProduk::all();
-
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
+        $this->type = 1;
     }
 
     public function addInput()
     {
         $this->inputs[] = [
-            'karat_id' => '',
-            'kategori_id' => '',
-            'berat_real' => 0,
-            'berat_kotor' => 0
+            'karatberlians_id' => '',
+            'shapeberlian_id' => '',
+            'qty' => 0,
+            'keterangan' => ''
         ];
     }
 
@@ -87,25 +107,23 @@ class Penerimaan extends Component
         $this->resetErrorBag();
         unset($this->inputs[$i]);
         $this->inputs = array_values($this->inputs);
-        $this->calculateTotalBeratReal();
-        $this->calculateTotalBeratKotor();
     }
 
     public function render()
-
     {
         $this->kasir = User::role('Kasir')->orderBy('name')->get();
-        return view('livewire.goods-receipt-berlian.penerimaan');
+        $this->tanggal = $this->hari_ini;
+        return view('livewire.goods-receipt-berlian.penerimaanqc');
     }
 
     private function resetInputFields()
     {
         $this->inputs = [
             [
-                'karat_id' => '',
-                'kategori_id' => '',
-                'berat_real' => 0,
-                'berat_kotor' => 0
+                'karatberlians_id' => '',
+                'shapeberlian_id' => '',
+                'qty' => 0,
+                'keterangan' => ''
             ]
         ];
     }
@@ -115,8 +133,8 @@ class Penerimaan extends Component
     {
         $rules = [
             'code' => 'required',
-            'no_invoice' => 'required|string|max:50',
             'supplier_id' => 'required',
+            'nama_produk' => 'required',
             'tanggal' => [
                 'required',
                 'date',
@@ -129,8 +147,6 @@ class Penerimaan extends Component
                     }
                 }
             ],
-            'total_berat_real' => 'required|numeric',
-            'total_berat_kotor' => 'required|numeric',
             'tipe_pembayaran' => 'required',
             'cicil' => 'required_if:tipe_pembayaran,cicil',
             'tgl_jatuh_tempo' => [
@@ -143,24 +159,19 @@ class Penerimaan extends Component
                     }
                 }
             ],
-            'berat_timbangan' => 'required|numeric|gt:0',
-            'selisih' => 'numeric',
-            'pengirim' => 'required',
-            'pic_id' => 'required',
         ];
 
-        foreach ($this->inputs as $key => $value) {
-            $rules['inputs.' . $key . '.karat_id'] = 'required';
-            $rules['inputs.' . $key . '.kategori_id'] = 'required';
-            $rules['inputs.' . $key . '.berat_real'] = 'required|gt:0';
-            $rules['inputs.' . $key . '.berat_kotor'] = 'required|gt:0';
+        if($this->type == 2) {
+            $rules['karat_id'] = 'required';
         }
 
-        if($this->cicil != ''){
-            for($i=1;$i<=$this->cicil;$i++){
-                $rules['detail_cicilan.' . $i] = 'required_if:tipe_pembayaran,cicil';
+        if(!empty($this->karat_id)) {
+            foreach ($this->inputs as $key => $value) {
+                $rules['inputs.' . $key . '.karatberlians_id'] = 'required';
+                $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
             }
         }
+
         return $rules;
     }
 
@@ -170,38 +181,38 @@ class Penerimaan extends Component
         $this->validateOnly($propertyName);
     }
 
-
-
     public function submit(Request $request)
     {
         $this->validate();
 
         $data = [
             'code' => $this->code,
-            'no_invoice' => $this->no_invoice,
-            'pengirim'=>$this->pengirim,
+            'nama_produk' => $this->nama_produk,
+            'no_invoice' => !empty($this->no_invoice) ? $this->no_invoice : '-',
+            'pengirim' => $this->pengirim,
             'supplier_id' => $this->supplier_id,
-            // 'tipe_pembayaran'=>$this->tipe_pembayaran,
+            'karat_id' => $this->karat_id,
+            'tipe_pembayaran'=>$this->tipe_pembayaran,
             'tanggal' => $this->tanggal,
-            // 'cicil' => $this->tipe_pembayaran == 'cicil'?$this->cicil:0,
+            'cicil' => $this->tipe_pembayaran == 'cicil'? $this->cicil : 0,
             'tgl_jatuh_tempo' => $this->tipe_pembayaran == 'jatuh_tempo'? $this->tgl_jatuh_tempo : null,
             'berat_timbangan' => $this->berat_timbangan,
             'selisih' => $this->selisih,
             'catatan' => $this->catatan,
-            'pic_id' => $this->pic_id,
+            'pic_id' => auth()->user()->id,
+            'image' => $this->image,
             'document' => $this->document,
             'total_berat_real' => $this->total_berat_real,
             'total_berat_kotor' => $this->total_berat_kotor,
+            'total_karat' => $this->total_karat,
             'items' => $this->inputs,
+            'kategoriproduk_id' => $this->kategoriproduk_id,
             'detail_cicilan' => $this->detail_cicilan
         ];
-
+        
         $request = new Request($data);
-        $controller = new GoodsReceiptsController();
-        $controller->store($request);
-        $this->resetInputFields();
-
-        session()->flash('message', 'Created Successfully.');
+        $controller = new GoodsReceiptBerliansController();
+        $store = $controller->store_qc($request);
     }
 
 
@@ -251,4 +262,9 @@ class Penerimaan extends Component
             $this->detail_cicilan[$i] = "";
         }
     }
+
+    public function setImageFromWebcam($image) {
+        $this->image = $image;
+    }
+    
 }
