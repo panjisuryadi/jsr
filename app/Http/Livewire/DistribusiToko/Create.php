@@ -10,6 +10,7 @@ use Livewire\Component;
 use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
+use Modules\Cabang\Models\Cabang;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Stok\Models\StockOffice;
@@ -356,8 +357,10 @@ class Create extends Component
 
     public function generateCode($key){
         $this->checkGroup($key);
+
         $namagroup = Group::where('id', $this->distribusi_toko_details[$key]['group'])->first()->code;
-         $cb = Auth::user()->namacabang->cabang()->first()->code;
+
+        $cb = Cabang::where('id', $this->distribusi_toko['cabang_id'])->first()?->code;
          $existingCode = true;
          $codeNumber = '';
          $cabang = $cb ?? 'JSR';
