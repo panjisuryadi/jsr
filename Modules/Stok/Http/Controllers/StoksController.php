@@ -17,7 +17,8 @@ use GuzzleHttp\Client;
 use Modules\Stok\Models\StockOffice;
 use Modules\Karat\Models\Karat;
 use App\Models\LookUp;
-
+use Illuminate\Support\Facades\DB;
+use Modules\Stok\Models\PenerimaanLantakan;
 
 class StoksController extends Controller
 {
@@ -926,32 +927,36 @@ public function update_ajax(Request $request, $id)
     public function lantakanApiStore(Request $request){
         $data = $request->all();
         $response = [
-            'data' => $data['weight'],
             'status' => 200,
             'message' => 'success',
         ];
         try {
+            DB::beginTransaction();
             if(!empty($data['weight'])){
                 $id_karat = LookUp::select('value')->where('kode', 'id_karat_emas_24k')->first();
 
                 $data['karat_id'] =  !empty($id_karat['value']) ? $id_karat['value'] : 0;
                 $additional_data = !empty($data['additional_data']) ? $data['additional_data'] : [];
                 $data['additional_data'] = json_encode($additional_data);
-                $this->model_lantakan::create($data);
+                PenerimaanLantakan::create($data);
+                $stok_lantakan = $this->model_lantakan::where('karat_id', $data['karat_id'])->first();
+                $stok_lantakan->weight = $stok_lantakan->weight + $data['weight'];
+                $stok_lantakan->save();
             }else{
                 $response = [
-                    'data' => $data['weight'],
                     'status' => 402,
                     'message' => 'params weight is required',
                 ];
             }
 
         } catch (\Exception $e) {
+            DB::rollBack();
             $response = [
                 'status' => 500,
                 'message' => "Something wrong " . $e->getMessage(),
             ];
         }
+        DB::commit();
         return response()->json($response);
     }
 }
