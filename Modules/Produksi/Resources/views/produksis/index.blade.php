@@ -109,11 +109,11 @@
                 },
 
                 {data: 'source_kode', name: 'Source Kode'},
-                {data: 'karatasal_id', name: 'karat Asal'},
+                {data: 'karat_asal', name: 'karat Asal'},
                 {data: 'berat_asal', name: 'Berat Asal'},
-                {data: 'karat_id', name: 'Karat Jadi'},
+                {data: 'karat_jadi', name: 'Karat Jadi'},
                 {data: 'berat', name: 'Berat Jadi'},
-                {data: 'model_id', name: 'Model'},
+                {data: 'model', name: 'Model'},
                 {
                     data: 'action',
                     name: 'action',

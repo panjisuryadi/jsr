@@ -1,6 +1,8 @@
 <?php
 
 namespace Modules\Produksi\Http\Controllers;
+
+use App\Models\LookUp;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -59,42 +61,46 @@ class ProduksisController extends Controller
 
     public function index_data(Request $request)
     {
-        $module_title = $this->module_title;
         $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
         $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'List';
+        $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
+        $id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
 
-        $$module_name = $module_model::get();
+        $module_name = $module_model::with('karatasal', 'karatjadi', 'model')->where('kategoriproduk_id', $id_kategoriproduk_berlian)->get();
 
-        $data = $module_name;
-
-        return Datatables::of($$module_name)
+        return Datatables::of($module_name)
+                    ->addColumn('karat_asal', function ($data) {
+                        return $data->karatasal->name;
+                    })
+                    ->addColumn('karat_jadi', function ($data) {
+                        return $data->karatjadi->name;
+                    })
+                    ->addColumn('model', function ($data) {
+                        return $data->model->name;
+                    })
                     ->addColumn('action', function ($data) {
                             $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
-                        })
-                        ->editColumn('name', function ($data) {
-                            $tb = '<div class="items-center text-center">
-                                <h3 class="text-sm font-medium text-gray-800">
-                                    ' .$data->name . '</h3>
-                                </div>';
-                            return $tb;
-                        })
-                        ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
+                    })
+                    ->editColumn('name', function ($data) {
+                        $tb = '<div class="items-center text-center">
+                            <h3 class="text-sm font-medium text-gray-800">
+                                ' .$data->name . '</h3>
+                            </div>';
+                        return $tb;
+                    })
+                    ->editColumn('updated_at', function ($data) {
+                        $module_name = $this->module_name;
 
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                        }
+                        $diff = Carbon::now()->diffInHours($data->updated_at);
+                        if ($diff < 25) {
+                            return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                        } else {
+                            return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                    }
                     })
                     ->rawColumns(['updated_at', 'action', 'name'])
                     ->make(true);
