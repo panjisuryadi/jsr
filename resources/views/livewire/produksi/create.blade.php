@@ -52,7 +52,7 @@
                                                     <option value="" {{ ($source_kode =! 'lantakan') ? 'selected' : '' }} >Select Karat</option>
                                                     @foreach($dataKarat as $row)
                                                         <option value="{{$row->id}}" {{ old('karatasal_id') == $row->id ? 'selected' : '' }}>
-                                                            {{$row->name}} | {{$row->kode}} {{ $row->id }}
+                                                            {{$row->name}} | {{$row->kode}}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -233,7 +233,7 @@
                                                         <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                             <option value="" selected >Select Karat</option>
                                                             @foreach($dataKaratBerlian as $row)
-                                                            <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+                                                            <option value="{{$row->id}}">
                                                                 {{$row->karat}} ct
                                                             </option>
                                                             @endforeach
