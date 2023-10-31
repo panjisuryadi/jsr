@@ -98,7 +98,7 @@ document.addEventListener('livewire:load', function () {
             height: 720,
             image_format: 'jpeg',
             autoplay:false,
-            jpeg_quality: 100,
+            jpeg_quality: 90,
             force_flash: false
         });
         webcam.attach('#camera' + key);
