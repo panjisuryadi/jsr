@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\DistribusiToko;
 
 use DateTime;
+use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -356,9 +357,10 @@ class Create extends Component
     public function generateCode($key){
         $this->checkGroup($key);
         $namagroup = Group::where('id', $this->distribusi_toko_details[$key]['group'])->first()->code;
-        $existingCode = true;
-        $codeNumber = '';
-        $cabang = 'CBR';
+         $cb = Auth::user()->namacabang->cabang()->first()->code;
+         $existingCode = true;
+         $codeNumber = '';
+         $cabang = $cb ?? 'xxx';
         while ($existingCode) {
                $date = now()->format('dmY');
                $randomNumber = mt_rand(100, 999);
