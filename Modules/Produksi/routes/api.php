@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Modules\Stok\Http\Controllers\StoksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +14,6 @@ use Modules\Stok\Http\Controllers\StoksController;
 |
 */
 
-Route::middleware('auth:static.api.token')->get('/stoks', function (Request $request) {
+Route::middleware('auth:api')->get('/produksis', function (Request $request) {
     return $request->user();
 });
-
-Route::middleware('api_token')->get('/lantakan/create',  [StoksController::class, 'lantakanApiStore']);
-
-

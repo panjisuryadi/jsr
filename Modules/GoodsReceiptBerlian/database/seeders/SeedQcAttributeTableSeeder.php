@@ -73,7 +73,7 @@ class SeedQcAttributeTableSeeder extends Seeder
                 'updated_at'         => Carbon::now(),
             ]
 
-            ];
+        ];
 
         foreach ($data as $row) {
             $data = QcAttribute::create($row);

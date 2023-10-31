@@ -7,6 +7,11 @@
     "providers": [
         "Modules\\KaratBerlian\\Providers\\KaratBerlianServiceProvider"
     ],
+    "migration": {
+        "seeds": [
+            "Modules\\KaratBerlian\\database\\seeders\\KaratBerlianSeederTableSeeder"
+        ]
+    },
     "aliases": {},
     "files": [],
     "requires": []
