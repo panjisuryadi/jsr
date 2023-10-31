@@ -29,12 +29,31 @@ class Edit extends Component
 
     public $dataKarat;
 
+    public $temp_image = [];
+
+    public $is_preview = true;
+
     protected $listeners = [
         'setData',
-        'setAdditionalAttribute'
+        'setAdditionalAttribute',
+        'webcamCaptured' => 'handleWebcamCaptured',
+        'webcamReset' => 'handleWebcamReset',
     ];
     public function render(){
         return view("livewire.distribusi-toko.modal.edit");
+    }
+
+    public function handleWebcamCaptured($key,$data_uri){
+        $this->temp_image[$key]['webcam_image'] = $data_uri;
+    }
+
+    public function handleWebcamReset($key){
+        $this->temp_image[$key]['webcam_image'] = '';
+    }
+
+    public function cancelRetake($key){
+        $this->is_preview = true;
+        $this->emit('removePrev',$key);
     }
 
     public function mount(){
@@ -160,6 +179,7 @@ class Edit extends Component
                     'no_certificate' => $this->data['additional_data']['no_certificate'],
                     'accessories_weight' => $this->data['additional_data']['accessories_weight'],
                     'tag_weight' => $this->data['additional_data']['tag_weight'],
+                    'image' => empty($this->temp_image[0]['webcam_image'])?$this->data['additional_data']['image']:$this->temp_image[0]['webcam_image'],
                     'total_weight' => $this->data['total_weight']
                 ]
             ];
