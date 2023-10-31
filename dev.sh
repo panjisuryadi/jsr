@@ -7,7 +7,7 @@ git pull origin dev
 
 git stash pop
 
-sudo chown ns6:ns6 -R /var/www/html/hokkie_jsr
+sudo chown ipunk:ipunk -R /var/www/html/hokkie_jsr
 
 
 git add .

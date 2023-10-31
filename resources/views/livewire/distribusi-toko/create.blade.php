@@ -100,7 +100,7 @@
                                         <div class="grid grid-cols-3 gap-5">
                                             <div class="col-span-2">
 
-                                                <div class="grid grid-cols-3 gap-2">
+                                                <div class="grid grid-cols-2 gap-2">
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'distribusi_toko_details.' . $key . '.product_category';
@@ -152,6 +152,11 @@
         
                                                     </div> 
             
+                                               
+ </div>
+<div class="grid grid-cols-2 gap-2">
+    
+
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'distribusi_toko_details.' . $key . '.model';
@@ -177,29 +182,38 @@
                                                             @endif
                                                     </div>
             
-                                                    <div class="form-group">
-                                                        <?php
-                                                        $field_name = 'distribusi_toko_details.' . $key . '.code';
-                                                        $field_lable = label_case('code');
-                                                        $field_placeholder = $field_lable;
-                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                        $required = "required";
-                                                        ?>
-                                                        <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                                        <div class="input-group">
-                                                            <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}" readonly>
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-info relative rounded-l-none" wire:click.prevent="generateCode({{$key}})">Chek</button>
-                                                            </span>
-                                                        </div>
-                                                        @if ($errors->has($field_name))
-                                                        <span class="invalid feedback"role="alert">
-                                                            <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                                            class="text-danger">
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
+<div class="form-group">
+    <?php
+    $field_name = 'distribusi_toko_details.' . $key . '.code';
+    $field_lable = label_case('code');
+    $field_placeholder = $field_lable;
+    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+    $required = "required";
+    ?>
+    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+    <div class="input-group">
+        <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}" readonly>
+        <span class="input-group-btn">
+            <button class="btn btn-info relative rounded-l-none" wire:click.prevent="generateCode({{$key}})">Chek</button>
+        </span>
+    </div>
+    @if ($errors->has($field_name))
+    <span class="invalid feedback"role="alert">
+        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+        class="text-danger">
+    </span>
+    @endif
+</div>
+
+
+</div>
+
+
+
+
+
+
+                                               
 
                                         @if($distribusi_toko_details[$key]['product_category'] == $logam_mulia_id)
                                         <div class="grid grid-cols-2 gap-2">

@@ -216,33 +216,40 @@ public function index_data(Request $request)
                                 })
                         ->editColumn('date', function ($data) {
                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                    ' .  Carbon::parse($data->date)->format('d M, Y') . '</h3>
+                                    <span class="text-gray-600">
+                                    ' .  Carbon::parse($data->date)->format('d M, Y') . '</span>
                                     </div>';
                                 return $tb;
                             })
                         ->editColumn('no_invoice', function ($data) {
                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                    ' .$data->no_invoice . '</h3>
+                                    <span class="text-gray-600">
+                                    ' .$data->no_invoice . '</span>
                                     </div>';
                                 return $tb;
                             })
                           ->editColumn('cabang', function ($data) {
                              $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->cabang->name . '</h3>
+                                    <span class="text-gray-600">
+                                     ' .$data->cabang->name . '</span>
+                                    </div>';
+                                return $tb;
+                            })  
+
+                             ->editColumn('status', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .draf($data->is_draft) . '
                                     </div>';
                                 return $tb;
                             })
                            ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center">
-                                    <h3 class="text-sm text-gray-800">
+                                    <h3 class="text-sm text-gray-600">
                                      Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></h3>
                                     </div>
                                     <div class="items-center">
-                                    <h3 class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' gram
-                                    </strong></h3>
+                                    <span class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' gram
+                                    </strong></span>
                                    </div>';
                                 return $tb;
                             })
@@ -258,7 +265,7 @@ public function index_data(Request $request)
                             }
                         })
                         ->rawColumns(['updated_at', 
-                                    'action',  'cabang','date', 'karat',
+                                    'action',  'cabang','date', 'karat','status',
                                       'no_invoice'])
                         ->make(true);
                      }
