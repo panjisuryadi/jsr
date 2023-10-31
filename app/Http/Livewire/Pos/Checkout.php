@@ -252,6 +252,10 @@ class Checkout extends Component
 
     public function productSelected($product) {
 
+<<<<<<< Updated upstream
+=======
+        //dd($product['product_item'][0]['karat']['penentuan_harga']['harga_emas']);
+>>>>>>> Stashed changes
         $cart = Cart::instance($this->cart_instance);
         $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
             return $cartItem->id == $product['id'];

@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Stok\Models\StockOffice;
 use Modules\PenentuanHarga\Models\PenentuanHarga;
+<<<<<<< Updated upstream
 use Modules\Stok\Models\StockSales;
 
+=======
+>>>>>>> Stashed changes
 
 class Karat extends Model
 {
@@ -50,6 +53,7 @@ class Karat extends Model
 
     public function penentuanHarga(){
         return $this->hasOne(PenentuanHarga::class,'karat_id','id');
+<<<<<<< Updated upstream
 
 
     }
@@ -61,6 +65,8 @@ class Karat extends Model
 
     public static function logam_mulia(){
         return self::where('type','LM')->firstOrFail();
+=======
+>>>>>>> Stashed changes
     }
 
 }
