@@ -15,5 +15,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/dev.sh
+/push.sh
 .DS_Store
 .phpunit.database.checkum
