@@ -625,6 +625,29 @@ if (!function_exists('statusPo')) {
 
 
 
+if (!function_exists('draf')) {
+    /**
+     * Prepare the Column Name for Lables.
+     */
+    function draf($required)
+    {
+        // status barang baru masuk
+       // $return_text = '';
+        if ($required == 1) {
+             $return_text = '<div class="w-full btn btn-sm text-xs btn-outline-warning items-center text-center">Draft</div>';
+
+        }else{
+
+
+         $return_text = '<div class="w-full btn btn-sm text-xs btn-danger-secondary items-center text-center">Terkirim</div>';        
+
+        }
+
+        return $return_text;
+    }
+}
+
+
 
 
 

@@ -44,9 +44,11 @@
                                    <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
                                     <th>{{ __('Karat') }}</th>
 
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
+                                    <th style="width: 10%!important;" class="text-center">
+                                         {{ __('Status') }}
                                     </th>
+                                  
+                                   
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
@@ -111,7 +113,8 @@
                 {data: 'no_invoice', name: 'no_invoice'},
                 {data: 'cabang', name: 'cabang'},
                 {data: 'karat', name: 'karat'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'status', name: 'status'},
+              
 
                 {
                     data: 'action',
