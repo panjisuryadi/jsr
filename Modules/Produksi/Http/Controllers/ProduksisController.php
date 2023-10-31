@@ -71,13 +71,13 @@ class ProduksisController extends Controller
 
         return Datatables::of($module_name)
                     ->addColumn('karat_asal', function ($data) {
-                        return $data->karatasal->name;
+                        return $data->karatasal?->name;
                     })
                     ->addColumn('karat_jadi', function ($data) {
-                        return $data->karatjadi->name;
+                        return $data->karatjadi?->name;
                     })
                     ->addColumn('model', function ($data) {
-                        return $data->model->name;
+                        return $data->model?->name;
                     })
                     ->addColumn('action', function ($data) {
                             $module_name = $this->module_name;
