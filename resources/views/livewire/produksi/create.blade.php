@@ -21,8 +21,9 @@
                                     </div>
                                     @endif
                                     <div class="col-span-3 px-2">
-                                        <div class="flex flex-row grid grid-cols-3 gap-1">
-
+                                        Form Sumber
+                                        <hr>
+                                        <div class="flex flex-row grid grid-cols-3 gap-1 mt-2">
                                             <div class="form-group">
                                                 <?php
                                                     $field_name = 'source_kode';
@@ -86,7 +87,11 @@
                                                 </span>
                                                 @endif
                                             </div>
+                                        </div>
 
+                                        From Hasil
+                                        <hr>
+                                        <div class="flex flex-row grid grid-cols-3 gap-1 mt-2">
                                             <div class="form-group">
                                                 <?php
                                                     $field_name = 'model_id';
