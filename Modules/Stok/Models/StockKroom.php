@@ -25,5 +25,12 @@ class StockKroom extends Model
     }
 
  
+    public function history(){
+        return $this->hasMany(StockKroomHistory::class,'stock_kroom_id');
+    }
+
+    public function penerimaan_lantakan(){
+        return $this->morphedByMany(PenerimaanLantakan::class, 'transaction', 'stock_kroom_history','stock_kroom_id','transaction_id','id','id')->withTimestamps();
+    }
 
 }
