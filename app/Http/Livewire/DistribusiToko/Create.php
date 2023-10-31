@@ -360,7 +360,7 @@ class Create extends Component
          $cb = Auth::user()->namacabang->cabang()->first()->code;
          $existingCode = true;
          $codeNumber = '';
-         $cabang = $cb ?? 'xxx';
+         $cabang = $cb ?? 'JSR';
         while ($existingCode) {
                $date = now()->format('dmY');
                $randomNumber = mt_rand(100, 999);
