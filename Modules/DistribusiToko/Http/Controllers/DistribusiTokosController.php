@@ -248,7 +248,7 @@ public function index_data(Request $request)
                                      Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></h3>
                                     </div>
                                     <div class="items-center">
-                                    <span class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' gram
+                                    <span class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' Gram
                                     </strong></span>
                                    </div>';
                                 return $tb;
