@@ -53,20 +53,14 @@ class Karat extends Model
 
     public function penentuanHarga(){
         return $this->hasOne(PenentuanHarga::class,'karat_id','id');
-<<<<<<< Updated upstream
-
-
     }
 
     public function stockSales(){
         return $this->hasOne(StockSales::class, 'karat_id','id');
-
     }
 
     public static function logam_mulia(){
         return self::where('type','LM')->firstOrFail();
-=======
->>>>>>> Stashed changes
     }
 
 }
