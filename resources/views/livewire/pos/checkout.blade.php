@@ -85,18 +85,10 @@
                     
                 </div>
 
-
-          
-
-    @php
+  @php
     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
-   @endphp
-
-</div>
-
-
-<div class="px-0 py-2 grid grid-cols-3 gap-4 m-2">
-
+    $qty = Cart::instance($cart_instance);
+  @endphp
 
 <div class="px-1 text-center justify-items-center">
    <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">

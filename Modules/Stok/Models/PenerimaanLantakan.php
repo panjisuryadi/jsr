@@ -19,4 +19,9 @@ class PenerimaanLantakan extends Model
     {
         return \Modules\Stok\Database\factories\PenerimaanLantakanFactory::new();
     }
+
+    public function stock_kroom()
+    {
+        return $this->morphToMany(StockKroom::class, 'transaction','stock_kroom_history','transaction_id','stock_kroom_id','id','id')->withTimestamps();
+    }
 }

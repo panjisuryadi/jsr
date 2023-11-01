@@ -1,5 +1,5 @@
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title text-lg font-bold" id="addModalLabel">Edit Draft Item</h3>
@@ -7,102 +7,103 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body p-4">
                 <form wire:submit.prevent="update">
-                    <div class="grid grid-cols-3 gap-2">
-                        <div class="form-group">
-                            <label for="product_category">Product Category</label>
-                            <select id="product_category" wire:model="data.additional_data.product_category.id" class="form-control @error('product_category') is-invalid @enderror" wire:change="productCategoryChanged" onchange="setAdditionalAttribute('product_category', this);">
-                            <option value="">Semua Produk</option>
-                                @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('product_category'))
-                                <span class="invalid feedback"role="alert">
-                                    <small class="text-danger">{{ $errors->first('product_category') }}.</small
-                                    class="text-danger">
-                                </span>
-                            @endif
-                        </div>
-    
-                        <div class="form-group">
-                            <?php
-                            $field_name = 'data.additional_data.group.id';
-                            $field_lable = label_case('group');
-                            $field_placeholder = $field_lable;
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = "required";
-                            ?>
-                            <label for="{{ $field_name }}">@lang($field_lable)
-                                <span class="text-danger">*</span>
-                                <span class="small">Jenis Perhiasan</span>
-                            </label>
-                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute('group', this);">
-                                <option value="" selected disabled>Pilih {{ $field_lable }}</option>
-                                @foreach(\Modules\Group\Models\Group::all() as $jp)
-                                <option value="{{ $jp->id }}">{{ $jp->name }}</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has($field_name))
-                            <span class="invalid feedback"role="alert">
-                                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                class="text-danger">
-                            </span>
-                            @endif
-    
-                        </div> 
-                        <div class="form-group">
-                            <?php
-                            $field_name = 'data.additional_data.model.id';
-                            $field_lable = label_case('model');
-                            $field_placeholder = $field_lable;
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = "required";
-                            ?>
-                            <label for="{{ $field_name }}">{{ $field_lable }}</label>
-                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute('model', this);">
-                                <option value="" selected disabled>Pilih Model</option>
-                                @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
-                                <option value="{{$sup->id}}">
-                                    {{$sup->name}}
-                                </option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has($field_name))
-                            <span class="invalid feedback"role="alert">
-                                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                class="text-danger">
-                            </span>
-                            @endif
-                        </div>
-    
-                        <div class="form-group">
-                            <?php
-                            $field_name = 'data.additional_data.code';
-                            $field_lable = label_case('code');
-                            $field_placeholder = $field_lable;
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = "required";
-                            ?>
-                            <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}" readonly>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-info relative rounded-l-none" wire:click.prevent="generateCode">Check</button>
-                                </span>
+                    <div class="grid grid-cols-4 gap-10">
+                        <div class="col-span-2">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="form-group">
+                                    <label for="product_category">Product Category</label>
+                                    <select id="product_category" wire:model="data.additional_data.product_category.id" class="form-control @error('product_category') is-invalid @enderror" wire:change="productCategoryChanged" onchange="setAdditionalAttribute('product_category', this);">
+                                    <option value="">Semua Produk</option>
+                                        @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('product_category'))
+                                        <span class="invalid feedback"role="alert">
+                                            <small class="text-danger">{{ $errors->first('product_category') }}.</small
+                                            class="text-danger">
+                                        </span>
+                                    @endif
+                                </div>
+            
+                                <div class="form-group">
+                                    <?php
+                                    $field_name = 'data.additional_data.group.id';
+                                    $field_lable = label_case('group');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = "required";
+                                    ?>
+                                    <label for="{{ $field_name }}">@lang($field_lable)
+                                        <span class="text-danger">*</span>
+                                        <span class="small">Jenis Perhiasan</span>
+                                    </label>
+                                    <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute('group', this);">
+                                        <option value="" selected disabled>Pilih {{ $field_lable }}</option>
+                                        @foreach(\Modules\Group\Models\Group::all() as $jp)
+                                        <option value="{{ $jp->id }}">{{ $jp->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback"role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                        class="text-danger">
+                                    </span>
+                                    @endif
+            
+                                </div> 
+                                <div class="form-group">
+                                    <?php
+                                    $field_name = 'data.additional_data.model.id';
+                                    $field_lable = label_case('model');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = "required";
+                                    ?>
+                                    <label for="{{ $field_name }}">{{ $field_lable }}</label>
+                                    <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute('model', this);">
+                                        <option value="" selected disabled>Pilih Model</option>
+                                        @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
+                                        <option value="{{$sup->id}}">
+                                            {{$sup->name}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback"role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                        class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+            
+                                <div class="form-group">
+                                    <?php
+                                    $field_name = 'data.additional_data.code';
+                                    $field_lable = label_case('code');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = "required";
+                                    ?>
+                                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}" readonly>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-info relative rounded-l-none" wire:click.prevent="generateCode">Check</button>
+                                        </span>
+                                    </div>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback"role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small
+                                        class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+
                             </div>
-                            @if ($errors->has($field_name))
-                            <span class="invalid feedback"role="alert">
-                                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                class="text-danger">
-                            </span>
-                            @endif
-                        </div>
-    
-    
-                    </div>
-                    @if($isLogamMulia)
+                            @if($isLogamMulia)
     
                     <div class="grid grid-cols-2 gap-2">
                         <div class="form-group">
@@ -157,7 +158,7 @@
                     </div>
     
     
-                    <div class="flex flex-row grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-2 gap-2">
                         
                         <div class="form-group">
                             <?php
@@ -339,7 +340,37 @@
                             </div>
                             
                         </div>
-                    @endif
+                        @endif
+                        </div>
+                        <div class="col-span-2">
+                            <div class="form-group">
+                                <div class="@if (!$is_preview)
+                                    hidden @else flex justify-center
+                                @endif">
+                                    <img src="{{ is_null($data)?url('images/fallback_product_image.png'):$data['additional_data']['image'] }}" alt="">
+                                </div>
+                                <div class="@if ($is_preview)
+                                    hidden
+                                @endif align-items-center justify-content-center">
+                                    @livewire('webcam', ['key' => 0], key('cam-'. 0))
+                                </div>
+                               
+                            </div>
+                            <div class="py-1">
+                                <div class="form-check form-check-inline flex justify-center">
+                                    @if ($is_preview)
+                                    <button class="btn btn-sm btn-success" wire:click.prevent="$toggle('is_preview')">Ambil Ulang</button>
+                                    @else
+                                    <button class="btn btn-sm btn-danger" wire:click.prevent="cancelRetake(0)">Batal Ambil Ulang</button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        
+    
+    
+                    </div>
+                    
                     <div class="float-right mt-5">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Update</button>
@@ -364,5 +395,7 @@
             toastr.success('Item Berhasil di update')
         });
     });
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 @endpush

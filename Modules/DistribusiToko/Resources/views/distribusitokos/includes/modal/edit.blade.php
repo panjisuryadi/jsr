@@ -16,7 +16,7 @@
                         <select id="product_category" class="form-control @error('product_category') is-invalid @enderror">
                         <option value="" disabled>Semua Produk</option>
                             @php
-                                $kategori = \Modules\KategoriProduk\Models\KategoriProduk::where('slug','gold')->firstOrFail();
+                                $kategori = \Modules\KategoriProduk\Models\KategoriProduk::where('slug','gold')->orWhere('slug','emas')->firstOrFail();
                                 $categories = \Modules\Product\Entities\Category::where('kategori_produk_id',$kategori->id)->get();
                             @endphp
                             @foreach($categories as $category)
