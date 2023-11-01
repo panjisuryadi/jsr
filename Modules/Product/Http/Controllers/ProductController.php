@@ -1543,6 +1543,31 @@ public function show($id)
 
 
 
+public function show_distribusi($id)
+    {
+
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('approve_distribusi'), 403);
+        $product = $module_model::akses()->with('product_item.karat.penentuanHarga')->where('id',$id)->first();
+  
+        //dd($detail);
+          return view('product::products.modal.show_distribusi',
+           compact('module_name',
+            'module_action',
+            'product',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
 
 
    public function show_sortir(Product $product) {

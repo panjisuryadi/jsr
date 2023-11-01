@@ -222,6 +222,7 @@
    Distribusi
 </div>
     <div class="card-body">
+ <div class="flex flex-row grid grid-cols-2 gap-1 mb-2">     
 <div class="custom-control custom-switch">
 
     <input type="checkbox" class="custom-control-input"
@@ -244,7 +245,7 @@
     <input type="checkbox" class="custom-control-input"
     id="edit_distribusi" name="permissions[]"
     value="edit_distribusi" {{ $role->hasPermissionTo('edit_distribusi') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="show_distribusi">Edit Distribusi</label>
+    <label class="custom-control-label" for="edit_distribusi">Edit Distribusi</label>
 </div>
 
 
@@ -253,7 +254,29 @@
     <input type="checkbox" class="custom-control-input"
     id="delete_distribusi" name="permissions[]"
     value="delete_distribusi" {{ $role->hasPermissionTo('delete_distribusi') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="show_distribusi">Hapus Distribusi</label>
+    <label class="custom-control-label" for="delete_distribusi">Hapus Distribusi</label>
+</div>
+
+
+<div class="custom-control custom-switch">
+
+    <input type="checkbox" class="custom-control-input"
+    id="approve_distribusi" name="permissions[]"
+    value="approve_distribusi" {{ $role->hasPermissionTo('approve_distribusi') ? 'checked' : '' }}>
+    <label class="custom-control-label" for="approve_distribusi">Approve Distribusi</label>
+</div>
+
+
+
+<div class="custom-control custom-switch">
+
+    <input type="checkbox" class="custom-control-input"
+    id="reject_distribusi" name="permissions[]"
+    value="reject_distribusi" {{ $role->hasPermissionTo('reject_distribusi') ? 'checked' : '' }}>
+    <label class="custom-control-label" for="reject_distribusi">Reject Distribusi</label>
+</div>
+
+
 </div>
 
 

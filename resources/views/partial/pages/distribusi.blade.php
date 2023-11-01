@@ -27,7 +27,7 @@
           
                       <th style="width: 8%!important;" class="text-center">{{ Label_case('Status') }}</th>
 
-<th style="width: 8%!important;" class="text-center">
+<th style="width: 13%!important;" class="text-center">
   {{ Label_case('Aksi') }}
  </th>
 
@@ -213,10 +213,10 @@ $(document).on('click', '#Tambah,#QrCode,#Show, #Edit', function(e){
 
          if($(this).attr('id') == 'Show')
         {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-xl');
+            $('.modal-dialog').addClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Detail');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Approve Distribusi');
         }
         
         $('#ModalContent').load($(this).attr('href'));
