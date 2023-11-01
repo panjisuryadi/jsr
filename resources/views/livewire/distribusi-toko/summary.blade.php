@@ -33,6 +33,9 @@
 
 
                     </div>
+                    <div class="row flex justify-end items-center mr-auto mb-3">
+                        <a class="btn btn-md btn-primary" href="#" onclick="showCreateModal()">Tambah Item</a>
+                    </div>
                     <div class="card">
                         <div class="card-header">
                            <span class="text-gray-600 text-md font-semibold">Detail</span>
