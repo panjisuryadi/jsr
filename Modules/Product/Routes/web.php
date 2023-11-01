@@ -18,6 +18,11 @@ Route::group(['middleware' => 'auth'], function () {
 
       Route::get("products/index_data", ['as' => "products.index_data", 'uses' => "ProductController@index_data"]);
 
+  Route::get("products/index_distribusi", ['as' => "products.index_distribusi", 'uses' => "ProductController@index_distribusi"]);
+
+
+      
+
       Route::get("products/list-reparasi", ['as' => "products.reparasi", 'uses' => "ProductController@listReparasi"]);
 
      Route::get("products/list-rfid", ['as' => "products.rfid", 'uses' => "ProductController@listRfid"]);

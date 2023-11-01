@@ -1,4 +1,4 @@
-<div class="flex row justify-center items-center">
+<div class="flex row justify-center items-center px-3">
 {{-- {{$data->status}} --}}
 @if($data->status == 2)
 <a id="Approve" href="{{ route('products.transfer.approve', $data->id) }}" class="btn btn-outline-warning btn-sm"> Need Approve

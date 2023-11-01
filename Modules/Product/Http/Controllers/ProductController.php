@@ -1771,6 +1771,83 @@ public function show($id)
 
 
 
+public function index_distribusi(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = $module_model::with('category','product_item')
+        ->latest()->get();
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.partials.aksi_distribusi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+
+              ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                           <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+                            ' . $data->category->category_name . '</div>
+                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                           
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
+               ->addColumn('product_image', function ($data) {
+                       return view('product::products.partials.image', compact('data'));
+                    })
+
+              ->addColumn('status', function ($data) {
+                       return view('product::products.partials.status', compact('data'));
+                    })
+
+         ->editColumn('cabang', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                    <h3 class="text-sm text-center text-gray-800">
+                     ' . @$data->cabang->code . ' |  ' . @$data->cabang->name . '</h3>
+                        </div>';
+                return $tb;
+            })
+
+           ->editColumn('karat', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                    <h3 class="text-sm font-semibold text-center text-gray-800">
+                     ' . @$data->product_item[0]->karat->kode . ' |  ' . @$data->product_item[0]->karat->name . ' </h3>
+                        </div>';
+                return $tb;
+            })
+
+      
+         ->addColumn('tracking', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('product::products.partials.qrcode_button',
+                            compact('module_name', 'data', 'module_model'));
+                      })
+          
+
+               ->editColumn('created_at', function ($data) {
+                    $module_name = $this->module_name;
+                      return tgljam($data->created_at);
+                    })
+           ->rawColumns(['created_at','product_image','weight','status','tracking',
+            'product_name','karat','cabang', 'action'])
+           ->make(true);
+    }
+
 
 
 
@@ -1818,6 +1895,7 @@ public function show($id)
         toast('Product Deleted!', 'warning');
         return redirect()->route('products.index');
     }
+
 
 
 
