@@ -16,6 +16,7 @@ use Modules\Produksi\Models\Produksi;
 use Illuminate\Support\Facades\DB;
 use Lang;
 use Image;
+use Modules\Stok\Models\PenerimaanLantakan;
 use Modules\Stok\Models\StockKroom;
 
 class ProduksisController extends Controller
@@ -215,7 +216,7 @@ class ProduksisController extends Controller
                 ProduksiItems::insert($product_items);
             }
 
-            $stok_lantakan = StockKroom::where('karat_id', $produksis->karatasal_id)->first();
+            $stok_lantakan = PenerimaanLantakan::where('karat_id', $produksis->karatasal_id)->first();
             $stok_lantakan->weight = $stok_lantakan->weight - $produksis->berat_asal;
             $stok_lantakan->save();
 
