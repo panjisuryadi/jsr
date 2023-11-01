@@ -938,10 +938,17 @@ public function update_ajax(Request $request, $id)
                 $data['karat_id'] =  !empty($id_karat['value']) ? $id_karat['value'] : 0;
                 $additional_data = !empty($data['additional_data']) ? $data['additional_data'] : [];
                 $data['additional_data'] = json_encode($additional_data);
-                PenerimaanLantakan::create($data);
+                $penerimaan_lantakan = PenerimaanLantakan::create($data);
                 $stok_lantakan = $this->model_lantakan::where('karat_id', $data['karat_id'])->first();
-                $stok_lantakan->weight = $stok_lantakan->weight + $data['weight'];
-                $stok_lantakan->save();
+                if($stok_lantakan) {
+                    $stok_lantakan->weight = (!empty($stok_lantakan->weight) ? $stok_lantakan->weight : 0) + $data['weight'];
+                    if(!empty($data['additional_data'])) {
+                        $stok_lantakan->additional_data = $data['additional_data'];
+                    }
+                    $stok_lantakan->save();
+                } else {
+                    $this->model_lantakan::create($data);
+                }
             }else{
                 $response = [
                     'status' => 402,
