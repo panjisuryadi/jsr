@@ -12,7 +12,7 @@ class PenerimaanLantakan extends Model
     protected $table = 'penerimaanlantakan';
     
     protected $fillable = [
-        'weight'
+        'karat_id', 'weight', 'additional_data'
     ];
     
     protected static function newFactory()

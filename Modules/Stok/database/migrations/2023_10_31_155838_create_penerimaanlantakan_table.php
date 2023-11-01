@@ -15,6 +15,7 @@ class CreatePenerimaanlantakanTable extends Migration
     {
         Schema::create('penerimaanlantakan', function (Blueprint $table) {
             $table->id();
+            $table->integer('karat_id');
             $table->float('weight')->nullable()->default(0);
             $table->json('additional_data')->nullable();
             $table->timestamps();

@@ -18,6 +18,11 @@ Route::group(['middleware' => 'auth'], function () {
 
       Route::get("products/index_data", ['as' => "products.index_data", 'uses' => "ProductController@index_data"]);
 
+  Route::get("products/index_distribusi", ['as' => "products.index_distribusi", 'uses' => "ProductController@index_distribusi"]);
+
+
+      
+
       Route::get("products/list-reparasi", ['as' => "products.reparasi", 'uses' => "ProductController@listReparasi"]);
 
      Route::get("products/list-rfid", ['as' => "products.rfid", 'uses' => "ProductController@listRfid"]);
@@ -37,8 +42,19 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("products/show-sortir/{product}", ['as' => "products.show_sortir", 'uses' => "ProductController@show_sortir"]);
 
+   Route::get("products/show-distribusi/{product}", ['as' => "products.show_distribusi", 'uses' => "ProductController@show_distribusi"]);
+
+  Route::patch("products/distribusi-update-status/{id}", ['as' => "products.update_status_distribusi", 'uses' => "ProductController@update_status_distribusi"]);
+
+
+
+
+
 
    Route::patch("products/sortir_update/{id}", ['as' => "products.sortir_update", 'uses' => "ProductController@sortirUpdate"]);
+
+
+
 
    Route::get("products/kategori/{slug}", ['as' => "products.view_by_kategori", 'uses' => "ProductController@view_by_kategori"]);
 

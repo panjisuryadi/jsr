@@ -721,19 +721,6 @@ if(! function_exists('rupiah')) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 if (!function_exists('array_merge_numeric_values')) {
     function array_merge_numeric_values() {
         $arrays = func_get_args();
