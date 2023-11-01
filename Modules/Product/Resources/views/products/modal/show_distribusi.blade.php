@@ -1,6 +1,6 @@
 <div class="px-3">
   <x-library.alert />
-<form id="FormEdit" action="#" method="POST">
+<form id="FormEdit" action="{{ route('products.update_status_distribusi', $product->id) }}" method="POST">
     @csrf
     @method('patch')
 
@@ -48,7 +48,15 @@
 
     </div>
     <div class="px-2">
-        
+<div class="flex relative py-1">
+    <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-b border-gray-300"></div>
+    </div>
+    <div class="relative flex justify-left">
+        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">Tracking Status Barang<i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Status Tracking."></i>
+        </span>
+    </div>
+</div>
         <div class="justify-center text-center items-center">
             {{-- {!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG($product->product_code,'QRCODE', 12, 12) !!} --}}
 
@@ -63,9 +71,12 @@
           <!-- Dot Follwing the Left Vertical Line -->
           <div class="w-5 h-5 bg-gray-600 absolute -left-10 transform -translate-x-2/4 rounded-full z-10 mt-2 md:mt-0"></div>
           <div class="w-10 h-1 bg-gray-300 absolute -left-10 z-0"></div>
-           <div class="flex justify-between gap-3">
-            <div class="justify-start">Keterangan</div>
-            <div class="justify-end">Tanggal</div>
+           <div class="justify-self-stretch gap-3">
+            <div style="font-size: 0.7rem;" class="text-left text-gray-200">{{ tgl($product->created_at) }}</div>
+            <div class="font-normal text-left leading-5">
+            Barang di Approve oleh: Kepala Cabang 
+           </div>
+
           </div>
          
         </div>
@@ -74,9 +85,12 @@
           <!-- Dot Follwing the Left Vertical Line -->
           <div class="w-5 h-5 bg-yellow-600 absolute -left-10 transform -translate-x-2/4 rounded-full z-10 mt-2 md:mt-0"></div>
           <div class="w-10 h-1 bg-yellow-300 absolute -left-10 z-0"></div>
-           <div class="flex justify-between gap-3">
-            <div class="justify-start">Keterangan</div>
-            <div class="justify-end">Tanggal</div>
+             <div class="justify-self-stretch gap-3">
+            <div style="font-size: 0.7rem;" class="text-left text-gray-200">{{ tgl($product->created_at) }}</div>
+            <div class="font-normal text-left leading-5">
+            Barang di Approve oleh: Manager 
+           </div>
+
           </div>
          
         </div>

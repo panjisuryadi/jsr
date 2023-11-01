@@ -25,7 +25,7 @@
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
 
           
-                      <th style="width: 8%!important;" class="text-center">{{ Label_case('Status') }}</th>
+                      <th style="width: 17%!important;" class="text-center">{{ Label_case('Status') }}</th>
 
 <th style="width: 13%!important;" class="text-center">
   {{ Label_case('Aksi') }}

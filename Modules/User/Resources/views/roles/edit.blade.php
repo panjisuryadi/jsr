@@ -228,7 +228,7 @@
     <input type="checkbox" class="custom-control-input"
     id="create_distribusi" name="permissions[]"
     value="create_distribusi" {{ $role->hasPermissionTo('create_distribusi') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="create_distribusi">Create Distribusi</label>
+    <label class="custom-control-label" for="create_distribusi">Akses Distribusi</label>
 </div>
 
 <div class="custom-control custom-switch">

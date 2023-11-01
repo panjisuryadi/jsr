@@ -13,7 +13,7 @@
 <button class="btn btn-success px btn-sm">Purchase</button>
 
 @elseif($data->status == 0)
-<button class="btn btn-info px  btn-sm p-1 text-xs">Ready</button>
+<button class="btn btn-info px  btn-sm p-1 text-xs">In Progress</button>
 @endif
 
 </div>

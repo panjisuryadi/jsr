@@ -1570,6 +1570,35 @@ public function show_distribusi($id)
 
 
 
+  public function update_status_distribusi(Request $request, $id)
+        {
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Update';
+            $$module_name_singular = $module_model::findOrFail($id);
+            $validator = \Validator::make($request->all(),
+               [
+                'status' => 'required',
+               ]);
+
+           if (!$validator->passes()) {
+              return response()->json(['error'=>$validator->errors()]);
+            }
+
+            $input = $request->all();
+            $params = $request->except('_token');
+            $params['status'] = $params['status'];
+            $$module_name_singular->update($params);
+                    return response()->json(['success'=>'  '.$module_title.' Sukses di update.']);
+
+                    }
+
+
+
    public function show_sortir(Product $product) {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

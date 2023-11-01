@@ -44,8 +44,17 @@ Route::group(['middleware' => 'auth'], function () {
 
    Route::get("products/show-distribusi/{product}", ['as' => "products.show_distribusi", 'uses' => "ProductController@show_distribusi"]);
 
+  Route::patch("products/distribusi-update-status/{id}", ['as' => "products.update_status_distribusi", 'uses' => "ProductController@update_status_distribusi"]);
+
+
+
+
+
 
    Route::patch("products/sortir_update/{id}", ['as' => "products.sortir_update", 'uses' => "ProductController@sortirUpdate"]);
+
+
+
 
    Route::get("products/kategori/{slug}", ['as' => "products.view_by_kategori", 'uses' => "ProductController@view_by_kategori"]);
 
