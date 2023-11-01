@@ -44,7 +44,7 @@ class Create extends Component
         [
             'karatberlians_id' => '',
             'shapeberlian_id' => '',
-            'qty' => 0,
+            'qty' => 1,
             'keterangan' => ''
         ]
     ];
@@ -86,7 +86,7 @@ class Create extends Component
         $this->inputs[] = [
             'karatberlians_id' => '',
             'shapeberlian_id' => '',
-            'qty' => 0,
+            'qty' => 1,
             'keterangan' => ''
         ];
     }
@@ -110,7 +110,7 @@ class Create extends Component
             [
                 'karatberlians_id' => '',
                 'shapeberlian_id' => '',
-                'qty' => 0,
+                'qty' => 1,
                 'keterangan' => ''
             ]
         ];
@@ -161,9 +161,9 @@ class Create extends Component
                     $total_karat_dipinta += $stok_berlian_terpakai;
 
                     if($sisa_stok_berlian < $total_karat_dipinta) {
-                        $rules['inputs.' . $key . '.qty'] = [
-                            function ($attribute, $value, $fail) {
-                                $fail('Sisa stok tidak mencukupi');
+                        $rules['inputs.' . $key . '.karatberlians_id'] = [
+                            function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
+                                $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
                             }
                             
                         ];
