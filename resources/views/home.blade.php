@@ -18,22 +18,6 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
 
 
 
-     @if (Auth::user()->roles->first()->name == 'Kasir')
-        @include('partial.pages.kasir')
-     @endif
-
-    
-
- @if (Auth::user()->id !== 1)
-  @if (Auth::user()->roles->first()->name == 'Manager')
-        @include('partial.pages.distribusi')
-       
-     @endif
- @endif
-
-
-
-
 
 
 
@@ -165,11 +149,20 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
  @can('access_sortir')
  @include('product::products.sortir_dashboard')
  @endcan
+
+ @if (Auth::user()->roles->first()->name == 'Kasir')
+        @include('partial.pages.kasir')
+ @endif
+
+ @if (Auth::user()->roles->first()->name == 'Manager')
+        @include('partial.pages.distribusi')
+ @endif
+
  @endif
 
 
 
-
+  
 
  @can('show_logs_dashboard')
 
