@@ -1590,6 +1590,7 @@ public function show_distribusi($id)
             }
 
             $input = $request->all();
+            dd($input);
             $params = $request->except('_token');
             $params['status'] = $params['status'];
             $$module_name_singular->update($params);

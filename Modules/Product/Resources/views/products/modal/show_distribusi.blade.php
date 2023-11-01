@@ -1,8 +1,9 @@
 <div class="px-3">
   <x-library.alert />
-<form id="FormEdit" action="{{ route('products.update_status_distribusi', $product->id) }}" method="POST">
+<form id="FormEdit" action="{{ route('products.update_status_distribusi', $product) }}" method="POST">
     @csrf
     @method('patch')
+
 
 <div class="grid grid-cols-2 gap-2 m-2">
     
