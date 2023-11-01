@@ -18,8 +18,7 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                             
-                           <a href="#"
-                                id="Tambah"
+                           <a href="{{ route('produksi.create') }}"
                                 class="btn btn-primary px-3">
                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
                             </a>
@@ -53,12 +52,6 @@
 </div>
 {{-- Modal --}}
 
-@livewire('produksi.create',[
-    'module_name' => $module_name,
-    'module_action' => $module_action,
-    'module_title' => $module_title,
-    'module_model' => $module_model
-])
 @endsection
 
 <x-library.datatable />
