@@ -55,7 +55,7 @@
 </div>
 
 
-<div class="flex items-center justify-center">
+<div class="flex items-center justify-center mb-2">
 
 <div class="font-weight-bold py-1 px-2 text-lg">
     <span class="text-gray-500">  {{ ucfirst(Auth::user()->roles->first()->name) }} </span>
@@ -69,7 +69,7 @@
 
 </div>
 
-
+<hr class="mt-3">
 
 
 
