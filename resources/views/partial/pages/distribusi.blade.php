@@ -2,48 +2,58 @@
   <div class="w-3/4 card">
 
 
-    <div class="card">
-                <div class="card-body">
-                    <div class="flex justify-between pb-2">
-                        <div> 
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Distrbusi </span>
-                        </div>
-                        <div id="buttons"></div>
+  <div class="card">
+    <div class="card-body">
+        <div class="flex justify-between py-1 border-bottom">
+            <div>
+                
+                <div class="dropdown show">
+                    <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Pilih Kategori
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $category)
+                        <a href="{{ route('distribusitoko.kategori',$category->slug) }}"
+                        class="dropdown-item" >{{ $category->name }}</a>
+                        @endforeach
                     </div>
-      
-                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm"
-                        data-hidecolumn="{{ auth()->user()->can('show_product_transfer') }}"
-                        >
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%!important;">NO</th>
-                                    <th style="width: 9%!important;">{{ Label_case('image') }}</th>
-                                    <th>{{ Label_case('product_name') }}</th>
-                                    <th class="text-center">{{ Label_case('Cabang') }}</th>
-                                 
-
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
-
-          
-                      <th style="width: 17%!important;" class="text-center">{{ Label_case('Status') }}</th>
-
-<th style="width: 13%!important;" class="text-center">
-  {{ Label_case('Aksi') }}
- </th>
-
-                                   
-                                </tr>
-                            </thead>
-                        </table>
-   
                 </div>
             </div>
+            <div id="buttons">
+            </div>
+        </div>
+        <div class="table-responsive mt-1">
+            <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+                <thead>
+                    <tr>
+                        <th style="width: 6%!important;">No</th>
+                        <th>Date</th>
+                        <th>No Invoice</th>
+                        <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
+                        <th>{{ __('Karat') }}</th>
+                        <th style="width: 10%!important;" class="text-center">
+                            {{ __('Status') }}
+                        </th>
+                        
+                        
+                        <th style="width: 14%!important;" class="text-center">
+                            {{ __('Action') }}
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
 
 
 
 
 
   </div>
+
+
+
   <div class="w-1/4 card">
     <div class="flex justify-center items-center mt-5">
     <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" class="rounded-full h-20 w-20" alt="Centered Image">
@@ -108,16 +118,15 @@
 <x-library.datatable />
 @push('page_scripts')
 
-<script type="text/javascript">
-     let hidecolumn = $('#datatable').data('hidecolumn');
-    $('#datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        autoWidth: true,
-        responsive: true,
-        lengthChange: true,
-        searching: true,
-        "oLanguage": {
+  <script type="text/javascript">
+        $('#datatable').DataTable({
+           processing: true,
+           serverSide: true,
+           autoWidth: true,
+           responsive: true,
+           lengthChange: true,
+            searching: true,
+           "oLanguage": {
             "sSearch": "<i class='bi bi-search'></i> {{ __("labels.table.search") }} : ",
             "sLengthMenu": "_MENU_ &nbsp;&nbsp;Data Per {{ __("labels.table.page") }} ",
             "sInfo": "{{ __("labels.table.showing") }} _START_ s/d _END_ {{ __("labels.table.from") }} <b>_TOTAL_ data</b>",
@@ -129,60 +138,54 @@
                 "sPrevious": "{{ __("labels.table.prev") }}",
                 "sNext": "{{ __("labels.table.next") }}"
             }
-        },
+            },
+            "aaSorting": [[ 0, "desc" ]],
+            "columnDefs": [
+                {
+                    "targets": 'no-sort',
+                    "orderable": false,
+                }
+            ],
+            "sPaginationType": "simple_numbers",
+            ajax: '{{ route("distribusitoko.index_data_table") }}',
+            dom: 'Blfrtip',
+            buttons: [
 
-        "aaSorting": [[ 0, "desc" ]],
-        "columnDefs": [
-        {
-            "targets": 'no-sort',
-            "orderable": false,
-        }
-        ],
-        "sPaginationType": "simple_numbers",
-        ajax: '{{ route("products.index_distribusi") }}',
-        dom: 'Blfrtip',
-        buttons: [
-        'excel',
-        'pdf',
-        'print'
-        ],
-        columns: [{
-            "data": 'id',
-            "sortable": false,
-            render: function(data, type, row, meta) {
-                return meta.row + meta.settings._iDisplayStart + 1;
-            }
-        },
-        {
-            data: 'product_image',
-            name: 'product_image'
-        }, {
-            data: 'product_name',
-            name: 'product_name'
-        },
-        {
-            data: 'cabang',
-            name: 'cabang'
-        }, {
-            data: 'created_at',
-            name: 'created_at'
-        },{
-            data: 'status',
-            name: 'status'
-        },
-        {
-            data: 'action',
-            name: 'action',
-            orderable: false,
-            searchable: false
-        }
-        ]
-    })
-    .buttons()
-    .container()
-    .appendTo("#buttons");
+                'excel',
+                'pdf',
+                'print'
+            ],
+            columns: [{
+                    "data": 'id',
+                    "sortable": false,
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {data: 'date', name: 'date'},
+                {data: 'no_invoice', name: 'no_invoice'},
+                {data: 'cabang', name: 'cabang'},
+                {data: 'karat', name: 'karat'},
+                {data: 'status', name: 'status'},
+              
 
-</script>
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ]
+        })
+        .buttons()
+        .container()
+        .appendTo("#buttons");
+
+
+
+    </script>
+
+
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
