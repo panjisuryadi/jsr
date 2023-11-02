@@ -16,7 +16,7 @@
                     <div>
                         <span>DISTRIBUSI TOKO</span>
                     </div>
-                    <a class="btn  mfs-auto btn-sm btn-success mfe-1" href="{{ route('home') }}"><i class="bi bi-house-door"></i> Dashboard
+                    <a class="btn  mfs-auto btn-sm btn-success mfe-1" href="#"><i class="bi bi-house-door"></i> Dashboard
                     </a>
                     <a target="_blank" class="btn btn-sm btn-secondary mfe-1 d-print-none" href="#"><i class="bi bi-printer"></i> Print
                     </a>
