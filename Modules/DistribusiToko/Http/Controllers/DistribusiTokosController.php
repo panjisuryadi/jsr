@@ -97,8 +97,8 @@ class DistribusiTokosController extends Controller
             return redirect()->back();
         }
 
-        if(!$dist_toko->is_draft){
-            return redirect()->route('dashboard.index');
+        if(!$dist_toko->isDraft()){
+            return redirect()->route('home');
         }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
