@@ -163,7 +163,7 @@
 <div></div>
 <div>
     
-    <button type="submit" class="px-5 btn btn-lg btn-success">Approve</button>
+    <button type="submit" class="px-5 btn btn-lg btn-success">Submit</button>
 </div> 
 </div>
 
