@@ -7,6 +7,11 @@
     "providers": [
         "Modules\\Produksi\\Providers\\ProduksiServiceProvider"
     ],
+    "migration": {
+        "seeds": [
+            "Modules\\Produksi\\database\\seeders\\DiamondCertificateAttributesTableSeeder"
+        ]
+    },
     "aliases": {},
     "files": [],
     "requires": []

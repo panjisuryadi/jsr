@@ -22,6 +22,7 @@ use Modules\Produksi\Models\Produksi;
 use Modules\Stok\Models\StockKroom;
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
 use App\Models\LookUp;
+use Modules\Produksi\Models\DiamondCertificateAttributes;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -38,6 +39,8 @@ class Create extends Component
         $type = 1,
         $karat24k,
         $id_kategoriproduk_berlian,
+        $code,
+        $image,
         $model_id;
 
     public $inputs = [
@@ -55,6 +58,11 @@ class Create extends Component
     public $dataKategoriProduk = [];
     public $dataGroup = [];
     public $arrayKaratBerlian = [];
+    public $dataCertificateAttribute = [];
+    public $sertifikat = [];
+
+    public $currentKey;
+    public $tmpCertificate = [];
 
     public $hari_ini;
 
@@ -71,6 +79,8 @@ class Create extends Component
         $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $this->id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
         $this->dataKategoriProduk = KategoriProduk::all();
+        $this->dataCertificateAttribute = DiamondCertificateAttributes::all();
+        $this->code = Produksi::generateCode();
 
         $arrayKaratBerlian = [];
         foreach($this->dataKaratBerlian as $k => $row){
@@ -79,6 +89,15 @@ class Create extends Component
 
         $this->arrayKaratBerlian = $arrayKaratBerlian;
 
+    }
+
+    protected $listeners = [
+        'webcamCaptured' => 'handleWebcamCaptured',
+        'webcamReset' => 'handleWebcamReset'
+    ];
+
+    public function handleWebcamCaptured($data_uri){
+        $this->image= $data_uri;
     }
 
     public function addInput()
@@ -136,7 +155,7 @@ class Create extends Component
                     $stok_lantakan_terpakai = Produksi::where('source_kode', $this->source_kode)->sum('berat_asal');
                     $sisa_stok_lantakan = $stok_lantakan - $stok_lantakan_terpakai;
                     if ($value > $sisa_stok_lantakan) {
-                        $fail('Sisa stok tidak mencukupi, ' . $attribute . ' harus kurang kurang dari sama dengan '. $sisa_stok_lantakan);
+                        $fail('Sisa stok tidak mencukupi, berat asal harus kurang dari sama dengan '. $sisa_stok_lantakan);
                     }
                 }
 
@@ -195,9 +214,18 @@ class Create extends Component
 
     public function submit(Request $request)
     {
+        /** Blok untuk ngeset sertifikat ke item diamond */
+        if(!empty($this->inputs)) {
+            foreach($this->inputs as $k => $item) {
+                $this->inputs[$k]['sertifikat'] = !empty($this->sertifikat[$k]) ? $this->sertifikat[$k] : [];
+            }
+        }
+
         $this->validate();
 
         $data = [
+            'code' => $this->code,
+            'image' => $this->image,
             'karatasal_id' => $this->karatasal_id,
             'karat_id' => $this->karat_id,
             'model_id' => !empty($this->model_id) ? $this->model_id : null,
@@ -212,6 +240,12 @@ class Create extends Component
         $request = new Request($data);
         $controller = new ProduksisController();
         $store = $controller->store($request);
+        dd($store);
+    }
+
+    public function setCurrentKey($key)
+    {
+        $this->currentKey = $key;
     }
     
 }

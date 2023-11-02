@@ -4,6 +4,7 @@ namespace Modules\Produksi\Http\Controllers;
 
 use App\Models\LookUp;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,8 +15,11 @@ use Illuminate\Support\Str;
 use Modules\Produksi\Models\ProduksiItems;
 use Modules\Produksi\Models\Produksi;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Lang;
 use Image;
+use Modules\Produksi\Models\DiamondCertificateAttribute;
+use Modules\Produksi\Models\DiamondCertifikatT;
 use Modules\Stok\Models\PenerimaanLantakan;
 use Modules\Stok\Models\StockKroom;
 
@@ -188,7 +192,24 @@ class ProduksisController extends Controller
 
             DB::beginTransaction();
             $input = $request->except('_token');
+
+            $input['image'] = '';
+            if ($request->filled('image')) {
+                $img = $request->image;
+                $folderPath = "uploads/produksi/";
+                $image_parts = explode(";base64,", $img);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName ='webcam_'. uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('public')->put($file,$image_base64);
+                $input['image'] = "$fileName";
+            }
+            dd($input['image']);
             $produksis = $this->module_model::create([
+                'code' => !empty($input['code']) ? $input['code'] : null,
+                'image' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : null,
                 'karatasal_id' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : null,
                 'source_kode' => !empty($input['source_kode']) ? $input['source_kode'] : null,
                 'karat_id' => !empty($input['karat_id']) ? $input['karat_id'] : null,
@@ -213,7 +234,37 @@ class ProduksisController extends Controller
             }
 
             if(!empty($product_items)) {
-                ProduksiItems::insert($product_items);
+                $arraySertifikatAttributes = [];
+                $hari_ini = new DateTime();
+                $hari_ini = $hari_ini->format('Y-m-d');
+                foreach($product_items as $val) {
+                    $sertifikat = !empty($val['sertifikat']) ? $val['sertifikat'] : [];
+                    if(!empty($sertifikat)) {
+                        $attribute = !empty($sertifikat['attribute']) ? $sertifikat['attribute'] : [];
+                        if(isset($sertifikat['attribute'])) {
+                            unset($sertifikat['attribute']);
+                        }
+                        $sertifikat['tanggal'] = empty($sertifikat['tanggal']) ? $sertifikat['tanggal'] : $hari_ini;
+                        $diamond_certificate = DiamondCertifikatT::create($sertifikat);
+                        $arraySertifikatAttributes[$diamond_certificate->id] = $attribute;
+                        $val['diamond_certificate_id'] = $diamond_certificate->id;
+                    }
+                    if(isset($val['sertifikat'])) {
+                        unset($val['sertifikat']);
+                    }
+                    ProduksiItems::create($val);
+                }
+                $dataInsertSertifikatAttribute = [];
+                foreach($arraySertifikatAttributes as $key => $val) { 
+                    foreach($val as $k => $row){
+                        $dataInsertSertifikatAttribute[] = [
+                            'diamond_certificate_id' => $key,
+                            'diamond_certificate_attributes_id' => $k,
+                            'keterangan' => !empty($row['keterangan']) ? $row['keterangan'] : '',
+                        ];
+                    }
+                }
+                DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
             }
 
             $stok_lantakan = PenerimaanLantakan::where('karat_id', $produksis->karatasal_id)->first();
