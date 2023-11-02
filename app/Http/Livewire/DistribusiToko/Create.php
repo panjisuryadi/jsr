@@ -29,6 +29,8 @@ class Create extends Component
 
     public $logam_mulia_id;
 
+    public $karat_logam_mulia;
+
     public $distribusi_toko = [
         'no_distribusi_toko' =>'',
         'date' => '',
@@ -169,7 +171,7 @@ class Create extends Component
                 'required',
                 function ($attribute, $value, $fail) {
                     if($value == $this->logam_mulia_id){
-                        $stock = StockOffice::where('karat_id',Karat::logam_mulia())->value('id');
+                        $stock = StockOffice::where('karat_id',$this->karat_logam_mulia)->first();
                         if(is_null($stock) or $stock->berat_real <= 0){
                             $fail('Stok tidak tersedia');
                         }
@@ -179,7 +181,7 @@ class Create extends Component
             $rules['distribusi_toko_details.'.$key.'.group'] = 'required';
             $rules['distribusi_toko_details.'.$key.'.code'] = 'required|max:255|unique:products,product_code';
             // $rules['distribusi_toko_details.'.$key.'.gold_category'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,4';
-            $rules['distribusi_toko_details.'.$key.'.karat'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,' . $this->logam_mulia_id;
+            $rules['distribusi_toko_details.'.$key.'.karat'] = 'required';
             $rules['distribusi_toko_details.'.$key.'.accessoris_weight'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
             $rules['distribusi_toko_details.'.$key.'.label_weight'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,'.$this->logam_mulia_id;
             $rules['distribusi_toko_details.'.$key.'.gold_weight'] = [
@@ -243,6 +245,7 @@ class Create extends Component
         $this->distribusi_toko['date'] = (new DateTime())->format('Y-m-d');
 
         $this->logam_mulia_id = Category::where('category_name','LIKE','%logam mulia%')->firstOrFail()->id;
+        $this->karat_logam_mulia = Karat::logam_mulia()->id;
     }
 
     private function generateInvoice(){
@@ -294,7 +297,7 @@ class Create extends Component
                     ]
                 ];
                 $distribusi_toko->items()->create([
-                    'karat_id' => empty($this->distribusi_toko_details[$key]['karat'])?Karat::logam_mulia()->id:$this->distribusi_toko_details[$key]['karat'],
+                    'karat_id' => $this->distribusi_toko_details[$key]['karat'],
                     'gold_weight' => $this->distribusi_toko_details[$key]['gold_weight'],
                     'additional_data' => json_encode($additional_data),
                 ]);
@@ -333,6 +336,13 @@ class Create extends Component
         ];
     }
 
+    public function changeProductCategory($key){
+        $this->clearKaratAndTotal($key);
+        if($this->distribusi_toko_details[$key]['product_category'] == $this->logam_mulia_id){
+            $this->distribusi_toko_details[$key]['karat'] = $this->karat_logam_mulia;
+        }
+    }
+
     public function clearKaratAndTotal($key){
         $this->distribusi_toko_details[$key]['karat'] = '';
         $this->distribusi_toko_details[$key]['accessoris_weight'] = 0;
@@ -348,7 +358,7 @@ class Create extends Component
         $this->distribusi_toko_details[$key]['total_weight'] = 0;
         $this->distribusi_toko_details[$key]['total_weight'] += doubleval($this->distribusi_toko_details[$key]['gold_weight']);
         $this->distribusi_toko_details[$key]['total_weight'] = round($this->distribusi_toko_details[$key]['total_weight'], 3);
-        if($this->distribusi_toko_details[$key]['product_category'] != '4'){
+        if($this->distribusi_toko_details[$key]['product_category'] != $this->logam_mulia_id){
             $this->distribusi_toko_details[$key]['total_weight'] += doubleval($this->distribusi_toko_details[$key]['accessoris_weight']);
             $this->distribusi_toko_details[$key]['total_weight'] += doubleval($this->distribusi_toko_details[$key]['label_weight']);
             $this->distribusi_toko_details[$key]['total_weight'] = round($this->distribusi_toko_details[$key]['total_weight'], 3);

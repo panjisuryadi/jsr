@@ -10,7 +10,7 @@
 @section('content')
 <div class="container-fluid">
     @livewire('distribusi-toko.summary',['dist_toko' => $dist_toko])
-    @livewire('distribusi-toko.modal.edit')
+    @livewire('distribusi-toko.modal.edit',['dist_toko' => $dist_toko])
     @livewire('distribusi-toko.modal.create',['dist_toko' => $dist_toko])
     <!-- @include('distribusitoko::distribusitokos.includes.modal.edit') -->
 </div>

@@ -13,11 +13,13 @@ use Modules\Karat\Models\Karat;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
+use Modules\Stok\Models\StockOffice;
 
 use function PHPUnit\Framework\isEmpty;
 
 class Edit extends Component
 {
+    public $dist_toko;
     public $data = [
         'additional_data' => [
             'product_category' => [
@@ -47,6 +49,8 @@ class Edit extends Component
     public $isLogamMulia;
     public $logam_mulia_id;
 
+    public $karat_logam_mulia;
+
     public $dataLabel;
 
     public $categories;
@@ -56,6 +60,8 @@ class Edit extends Component
     public $temp_image = [];
 
     public $is_preview = true;
+
+    public $total_weight_per_karat = [];
 
     protected $listeners = [
         'setData',
@@ -92,6 +98,13 @@ class Edit extends Component
         })->get();
         
         $this->logam_mulia_id = Category::where('category_name','LIKE','%logam mulia%')->value('id');
+        $this->karat_logam_mulia = Karat::logam_mulia()->id;
+    }
+
+    private function getTotalWeightBasedOnKarat(){
+        foreach($this->dist_toko->items->groupBy('karat_id') as $karat_id => $items){
+            $this->total_weight_per_karat[$karat_id] = $items->sum('gold_weight');
+        }
     }
 
     public function setAdditionalAttribute($name,$selectedText){
@@ -101,6 +114,9 @@ class Edit extends Component
     public function productCategoryChanged(){
         $this->clearKaratAndTotal();
         $this->isLogamMulia();
+        if($this->data['additional_data']['product_category']['id'] == $this->logam_mulia_id){
+            $this->data['karat_id'] = $this->karat_logam_mulia;
+        }
     }
 
     public function clearKaratAndTotal(){
@@ -125,8 +141,12 @@ class Edit extends Component
     public function setData($data){
         $this->data = $data;
         $this->data["additional_data"] = json_decode($data['additional_data'],true)['product_information'];
+        $this->getTotalWeightBasedOnKarat();
+        $this->total_weight_per_karat[$this->data['karat_id']] = $this->total_weight_per_karat[$this->data['karat_id']] - $this->data['gold_weight'];
         $this->calculateTotalWeight();
         $this->isLogamMulia();
+        $this->resetErrorBag();
+
     }
 
     private function isLogamMulia(){
@@ -162,14 +182,43 @@ class Edit extends Component
         ];
 
 
-        $rules['data.additional_data.product_category.id'] = 'required';
+        $rules['data.additional_data.product_category.id'] = [
+            'required',
+            function ($attribute, $value, $fail) {
+                if($value == $this->logam_mulia_id){
+                    $stock = StockOffice::where('karat_id',$this->karat_logam_mulia)->first();
+                    if(is_null($stock) or $stock->berat_real <= 0){
+                        $fail('Stok tidak tersedia');
+                    }
+                }
+            }
+        ];
         $rules['data.additional_data.group.id'] = 'required';
         $rules['data.additional_data.code'] = 'required|max:255|unique:products,product_code';
         // $rules['distribusi_toko_details.'.$key.'.gold_category'] = 'required_unless:distribusi_toko_details.'.$key.'.product_category,4';
-        $rules['data.karat_id'] = 'required_unless:data.additional_data.product_category.id,' . $this->logam_mulia_id;
+        $rules['data.karat_id'] = 'required';
         $rules['data.additional_data.accessories_weight'] = 'required_unless:data.additional_data.product_category.id,'.$this->logam_mulia_id;
         $rules['data.additional_data.tag_weight'] = 'required_unless:data.additional_data.product_category.id,'.$this->logam_mulia_id;
-        $rules['data.gold_weight'] = 'required|gt:0';
+        $rules['data.gold_weight'] = [
+            'required',
+            'gt:0',
+            function ($attribute, $value, $fail) {
+                // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_office berdasarkan nilai parent id nya
+                $maxWeight = DB::table('stock_office')
+                    ->where('karat_id', $this->data['karat_id'])
+                    ->max('berat_real');
+                $total_input_weight_based_on_karat = $this->total_weight_per_karat[$this->data['karat_id']]??0;
+                if($total_input_weight_based_on_karat<$maxWeight){
+                    $maxWeight = $maxWeight - $total_input_weight_based_on_karat;
+                    if ($value > $maxWeight) {
+                        $fail("Berat melebihi stok yang tersedia. Sisa Stok ($maxWeight gr)");
+                    }
+                }else{
+                    $fail("Stok telah habis digunakan");
+                }
+
+            },
+        ];
         $rules['data.total_weight'] = 'required|gt:0';
         $rules['data.additional_data.certificate_id'] = 'required_if:data.additional_data.product_category.id,'.$this->logam_mulia_id;
         $rules['data.additional_data.no_certificate'] = 'required_if:data.additional_data.product_category.id,'.$this->logam_mulia_id;
@@ -210,7 +259,7 @@ class Edit extends Component
             $item = DistribusiTokoItem::findOrFail($this->data['id']);
             
             $item->update([
-                'karat_id' => empty($this->data['karat_id'])?Karat::logam_mulia()->id:$this->data['karat_id'],
+                'karat_id' =>  $this->data['karat_id'],
                 'gold_weight' => $this->data['gold_weight'],
                 'additional_data' => json_encode($additional_data),
             ]);
