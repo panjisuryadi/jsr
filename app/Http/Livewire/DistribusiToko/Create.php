@@ -269,7 +269,6 @@ class Create extends Component
                 'date'                        => $this->distribusi_toko['date'],
                 'no_invoice'                  => $this->distribusi_toko['no_distribusi_toko'],
                 'created_by'                  => auth()->user()->name,
-                'is_draft'                    => true
             ]);
 
             foreach($this->distribusi_toko_details as $key => $value) {
@@ -303,7 +302,7 @@ class Create extends Component
                 ]);
                 // $this->uploadImage($detail, $this->distribusi_toko_details[$key]['webcam_image']);
             }
-
+            $distribusi_toko->setAsDraft();
 
             DB::commit();
         }catch (\Exception $e) {

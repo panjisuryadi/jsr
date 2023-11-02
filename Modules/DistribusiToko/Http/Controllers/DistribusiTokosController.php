@@ -71,7 +71,7 @@ class DistribusiTokosController extends Controller
             return redirect()->back();
         }
 
-        if(!$dist_toko->is_draft){
+        if(!$dist_toko->isDraft()){
             return redirect()->route('distribusitoko.index');
         }
         $module_title = $this->module_title;
@@ -237,8 +237,8 @@ public function index_data(Request $request)
                             })  
 
                              ->editColumn('status', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .draf($data->is_draft) . '
+                             $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
+                                     ' . $data->current_status()->name . '
                                     </div>';
                                 return $tb;
                             })

@@ -48,14 +48,14 @@ class Summary extends Component
         abort_if(Gate::denies('edit_distribusitoko'), 403);
         DB::beginTransaction();
         try{
-            
+            $this->dist_toko->setInProgress();
             DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 
             throw $e;
         }
 
-        toast('Produk Berhasil dibuat!', 'success');
+        toast('Distribusi In Progress!', 'success');
         return redirect()->route('distribusitoko.index');
     }
 
