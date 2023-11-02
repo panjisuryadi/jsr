@@ -5,6 +5,8 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\UserCabang\Models\UserCabang;
+
 //use Modules\JenisGroup\Models\JenisGroup;
 class Cabang extends Model
 {
@@ -20,7 +22,7 @@ class Cabang extends Model
 
 
       public function usercabang() {
-        return $this->hasMany(UserCabang::class, 'user_id', 'id');
+        return $this->hasMany(UserCabang::class);
     }
 
 

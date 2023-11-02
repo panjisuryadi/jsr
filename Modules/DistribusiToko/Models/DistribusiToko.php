@@ -2,7 +2,7 @@
 
 namespace Modules\DistribusiToko\Models;
 use Carbon\Carbon;
-
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Karat\Models\Karat;
@@ -13,6 +13,18 @@ class DistribusiToko extends Model
     use HasFactory;
     protected $table = 'history_distribusi_toko';
     protected $guarded = [];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        if(auth()->user()->isUserCabang()){
+            $cabang = auth()->user()->namacabang->id;
+            static::addGlobalScope('filter_by_branch', function (Builder $builder) use ($cabang) {
+                $builder->where('cabang_id', $cabang); // Sesuaikan dengan nama kolom yang sesuai di tabel
+            });
+        }
+    }
 
     public function cabang() {
         return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
