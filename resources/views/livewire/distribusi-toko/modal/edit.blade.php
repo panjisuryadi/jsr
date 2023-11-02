@@ -14,7 +14,7 @@
                             <div class="grid grid-cols-2 gap-2">
                                 <div class="form-group">
                                     <label for="product_category">Product Category</label>
-                                    <select id="product_category" wire:model="data.additional_data.product_category.id" class="form-control @error('data.additional_data.product_category.id') is-invalid @enderror" wire:change="productCategoryChanged" onchange="setAdditionalAttribute('data.additional_data.product_category.id', this);">
+                                    <select id="product_category" wire:model="data.additional_data.product_category.id" class="form-control @error('data.additional_data.product_category.id') is-invalid @enderror" wire:change="productCategoryChanged" onchange="setAdditionalAttribute('product_category', this);">
                                     <option value="">Semua Produk</option>
                                         @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
