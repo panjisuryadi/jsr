@@ -14,15 +14,15 @@
                             <div class="grid grid-cols-2 gap-2">
                                 <div class="form-group">
                                     <label for="product_category">Product Category</label>
-                                    <select id="product_category" wire:model="data.additional_data.product_category.id" class="form-control @error('product_category') is-invalid @enderror" wire:change="productCategoryChanged" onchange="setAdditionalAttribute('product_category', this);">
+                                    <select id="product_category" wire:model="data.additional_data.product_category.id" class="form-control @error('data.additional_data.product_category.id') is-invalid @enderror" wire:change="productCategoryChanged" onchange="setAdditionalAttribute('data.additional_data.product_category.id', this);">
                                     <option value="">Semua Produk</option>
                                         @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('product_category'))
+                                    @if ($errors->has('data.additional_data.product_category.id'))
                                         <span class="invalid feedback"role="alert">
-                                            <small class="text-danger">{{ $errors->first('product_category') }}.</small
+                                            <small class="text-danger">{{ $errors->first('data.additional_data.product_category.id') }}.</small
                                             class="text-danger">
                                         </span>
                                     @endif
@@ -137,7 +137,7 @@
                             $required = "required";
                             ?>
                             <label for="{{ $field_name }}">@lang('No .Certificate') <span class="text-danger">*</span></label>
-                            <input id="{{ $field_name }}" type="text" class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" wire:model="{{ $field_name }}">
+                            <input id="{{ $field_name }}" type="text" class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" wire:model.lazy="{{ $field_name }}">
                             @if ($errors->has($field_name))
                             <span class="invalid feedback"role="alert">
                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -174,7 +174,7 @@
                             name="{{ $field_name }}"
                             min="0" step="0.01"
                             id="{{ $field_name }}"
-                            wire:model="{{ $field_name }}"
+                            wire:model.lazy="{{ $field_name }}"
                             wire:change="calculateTotalWeight"
                             placeholder="{{ $field_placeholder }}">
                             @if ($errors->has($field_name))
@@ -258,7 +258,7 @@
                                 type="number"
                                 name="{{ $field_name }}"
                                 step="0.001"
-                                wire:model="{{ $field_name }}"
+                                wire:model.lazy="{{ $field_name }}"
                                 wire:change="calculateTotalWeight()"
                                 id="{{ $field_name }}"
                                 placeholder="{{ $field_placeholder }}"
@@ -283,7 +283,7 @@
                                 <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
                                 <input class="form-control @error($field_name) is-invalid @enderror"
                                 type="number"
-                                wire:model="{{ $field_name }}"
+                                wire:model.lazy="{{ $field_name }}"
                                 wire:change="calculateTotalWeight()"
                                 min="0" step="0.001"
                                 id="{{ $field_name }}"
@@ -310,7 +310,7 @@
                                 name="{{ $field_name }}"
                                 min="0" step="0.001"
                                 id="{{ $field_name }}"
-                                wire:model="{{ $field_name }}"
+                                wire:model.lazy="{{ $field_name }}"
                                 wire:change="calculateTotalWeight()"
                                 placeholder="{{ $field_placeholder }}">
                                 @if ($errors->has($field_name))

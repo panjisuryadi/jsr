@@ -169,7 +169,7 @@ class Edit extends Component
     }
 
     private function checkGroup(){
-        $this->validateOnly($this->data["additional_data"]["group"]["id"]);
+        $this->validateOnly("data.additional_data.group.id");
     }
 
 
