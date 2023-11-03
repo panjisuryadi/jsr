@@ -82,7 +82,7 @@ class DistribusiTokosController extends Controller
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
         abort_if(Gate::denies('access_'.$module_name.''), 403);
-         return view(''.$module_name.'::'.$module_path.'.detail',
+         return view(''.$module_name.'::'.$module_path.'.detail_retur',
            compact('module_name',
             'module_action',
             'module_title',
@@ -90,6 +90,10 @@ class DistribusiTokosController extends Controller
             'module_icon', 'module_model'));
 
     }
+
+
+
+
 
     public function detail_distribusi(DistribusiToko $dist_toko){
         if(AdjustmentSetting::exists()){
