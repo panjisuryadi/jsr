@@ -4,6 +4,7 @@ namespace App\Http\Livewire\GoodsReceiptBerlian;
 
 use Livewire\Component;
 use App\Http\Livewire\Field;
+use App\Models\LookUp as ModelsLookUp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
@@ -18,6 +19,7 @@ use Modules\KaratBerlian\Models\KaratBerlian;
 use Modules\KaratBerlian\Models\ShapeBerlian;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\People\Entities\Supplier;
+use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Lookup;
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
 
 use function PHPUnit\Framework\isEmpty;
@@ -41,7 +43,7 @@ class PenerimaanQc extends Component
         $nama_produk = '',
         $karat_id,
         $image,
-        $kategoriproduk_id = 2, //kategori berlian
+        $kategoriproduk_id,
         $document = [];
 
     public $updateMode = false;
@@ -89,6 +91,9 @@ class PenerimaanQc extends Component
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
         $this->type = 1;
+
+        $id_kategoriproduk_berlian = ModelsLookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
+        $this->kategoriproduk_id = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
     }
 
     public function addInput()

@@ -1,6 +1,8 @@
 <?php
 
 namespace Modules\GoodsReceiptBerlian\Http\Controllers;
+
+use App\Models\LookUp;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -86,7 +88,10 @@ class GoodsReceiptBerliansController extends Controller
     {
         $module_name = $this->module_name;
         $module_name = \Modules\GoodsReceipt\Models\GoodsReceipt::with('pembelian');
-        $module_name->where('kategoriproduk_id', '2');
+        $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
+        $id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
+
+        $module_name->where('kategoriproduk_id', $id_kategoriproduk_berlian);
         if($request->has('is_qc')){
             $module_name->where('is_qc', $request->input('is_qc'));
         }
