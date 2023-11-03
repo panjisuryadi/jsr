@@ -1240,6 +1240,71 @@ class GenerateMenus
             ])->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+            // Berlian - TOKO
+            $berlianToko = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Toko').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                    'penentuanhargas*',
+
+                ],
+                'permission'    => ['access_penentuanhargas'],
+            ]);
+            $berlianToko->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+            
+            // Berlian - TOKO - Distribusi Toko
+            $distribusiTokoBerlian = $berlianToko->add(
+                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
+                '.__('Distribusi Toko').'', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => [
+                    'datasales*',
+                    'distribusitokos*',
+
+                ],
+                'permission'    => ['access_distribusitoko'],
+            ]);
+            $distribusiTokoBerlian->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - TOKO - Distribusi Toko - PRODUK
+            $distribusiTokoBerlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Produk'), [
+                'route' => 'products.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['products*'],
+                'permission'    => ['access_products'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+            // EMAS - TOKO - Distribusi Toko - LIST DISTRIBUSI TOKO
+            $distribusiTokoBerlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
+                'route' => 'distribusitoko.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['distribusitokos*'],
+                'permission'    => ['access_distribusitoko'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 // ================ End of Berlian =================
 
 

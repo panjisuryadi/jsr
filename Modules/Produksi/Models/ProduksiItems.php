@@ -11,7 +11,7 @@ class ProduksiItems extends Model
 
     protected $table = 'produksi_items';
 
-    protected $fillable = [];
+    protected $fillable = ['produksis_id','karatberlians_id', 'qty', 'keterangan'];
     
     protected static function newFactory()
     {
