@@ -209,7 +209,7 @@ class ProduksisController extends Controller
             }
             $produksis = $this->module_model::create([
                 'code' => !empty($input['code']) ? $input['code'] : null,
-                'image' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : null,
+                'image' => !empty($input['image']) ? $input['image'] : null,
                 'karatasal_id' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : null,
                 'source_kode' => !empty($input['source_kode']) ? $input['source_kode'] : null,
                 'karat_id' => !empty($input['karat_id']) ? $input['karat_id'] : null,
