@@ -20,14 +20,14 @@
                     </a>
                     <a target="_blank" class="btn btn-sm btn-secondary mfe-1 d-print-none" href="#"><i class="bi bi-printer"></i> Print
                     </a>
-                    <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="#">
+                    <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('distribusitoko.tracking', $dist_toko) }}">
                         <i class="bi bi-save"></i> Tracking Product
                     </a>
                 </div>
 
 
 
-                
+
                 <div class="card-body px-4">
                     <div class="row mb-4">
                         
@@ -227,4 +227,31 @@ font-size: 0.9rem !important;
         checkboxes.forEach(checkbox => checkbox.checked = this.checked);
     });
 </script>
+
+
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+$(document).on('click', '#Tracking,#View', function(e){
+         e.preventDefault();
+        if($(this).attr('id') == 'Tracking')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTracking {{ Label_case('distribusi') }}');
+        }
+        if($(this).attr('id') == 'View')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;view {{ Label_case('distribusi') }}');
+        } 
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
+</script>
+
+
+
 @endpush
