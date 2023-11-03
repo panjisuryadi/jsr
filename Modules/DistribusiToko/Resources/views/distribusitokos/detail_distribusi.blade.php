@@ -50,7 +50,7 @@
                     </div>
                     
                     <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
-                        @foreach($dist_toko->items->groupBy('karat_id') as $karat_id => $items)
+                      
                         
                         <div class="flex relative py-1 pb-3">
                             <div class="absolute inset-0 flex items-center">
@@ -58,27 +58,35 @@
                             </div>
                             <div class="relative flex justify-left">
                                 <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark"> 
-                                    <span class="text-yellow-600">Karat :</span> {{$items->first()->karat->name}} {{$items->first()->karat->kode}}
-                        <span class="small">Distribusi Toko Detail</span>
+                                    <span class="text-blue-400">Distribusi Toko Detail
+                      
                                 </span>
 
                             </div>
                         </div>
-                        <table style="width: 100% !important;" class="table table-sm table-striped rounded rounded-lg table-bordered">
+
+
+ <form action="{{ route('distribusitoko.approve_distribusi', $dist_toko) }}" method="POST">
+
+        @csrf
+
+                    <table style="width: 100% !important;" class="table table-sm table-striped rounded rounded-lg table-bordered">
                             <thead>
                                 <tr>
                                  <th class="text-center">
                                     <div class="p-1">
-                                <input  type="checkbox" id="checkAll"> 
+                              <input type="checkbox" id="select-all">
                                     </div>
                                  
                                    </th>
                                     <th class="text-center">No</th>
+                                    <th class="text-center">Karat</th>
                                     <th class="text-center">Berat Emas</th>
                                     <th class="text-center">Produk</th>
                                     <th class="text-center">Group</th>
                                     <th class="text-center">Model</th>
                                     <th class="text-center">Code</th>
+                                    <th class="text-center">Aksi</th>
                                     
                                 </tr>
                             </thead>
@@ -86,40 +94,54 @@
                                 @php
                                 $total_weight = 0;
                                 @endphp
-                                @forelse($items as $row)
+                                @forelse($dist_toko->items as $row)
                                 @php
                                 $data = json_decode($row->additional_data)->product_information;
                                 $total_weight = $total_weight + $row->gold_weight;
                                 @endphp
-                                <tr>
-                            <td class="text-center"><input type="checkbox" class="checkItem"></td>
-                                    <td class="text-center">{{$loop->iteration}}</td>
-                                    <td class="text-center font-semibold"> {{@$row->gold_weight}} gr</td>
-                                    <td class="text-center font-semibold">{{ $data->product_category->name }}</td>
-                                    <td class="text-center font-semibold">{{ $data->group->name }}</td>
-                                    <td class="text-center font-semibold">{{ $data->model->name }}</td>
-                                    <td class="text-center font-semibold">{{ $data->code }}</td>
-                                    
-                                </tr>
+            <tr>
+        <td class="text-center">
+            <input type="checkbox" name="selected_items[]" value="{{ $row->id }}">
+        </td>
+                <td class="text-center">{{$loop->iteration}}</td>
+                <td class="text-center font-semibold"> {{@$row->karat->name}} gr</td>
+                <td class="text-center font-semibold"> {{@$row->gold_weight}} gr</td>
+                <td class="text-center font-semibold">{{ $data->product_category->name }}</td>
+                <td class="text-center font-semibold">{{ $data->group->name }}</td>
+                <td class="text-center font-semibold">{{ $data->model->name }}</td>
+                <td class="text-center font-semibold">{{ $data->code }}</td>
+                <td class="text-center font-semibold">
+                    <a href="#" class="hover:text-blue-400 btn btn-sm btn-danger px-4">Preview</a>
+                   
+                </td>
+                
+            </tr>
                                 @empty
                                 <tr>
                                     <th colspan="5" class="text-center">Tidak ada data</th>
                                 </tr>
                                 @endforelse
                                 <tr>
-                                    <td class="border-0" colspan="2 " ></td>
+                                    <td class="border-0" colspan="3" ></td>
                                     <td class="border-0"></td>
                                     <td class="border-0"></td>
                                     <td class="border-0"></td>
+                                    <td class="border-0">
                                     
-                                    <td class="border-0 text-center font-semibold">Jumlah Emas :
-                                        {{ $total_weight }} GR
+                                    </td>
+                                    
+                                    <td colspan="2"  class="border-0 text-center font-semibold">
+                                    <div class="text-right px-3 text-2xl">  
+                                      <span class="text-base text-gray-500"> Jumlah Emas : </span> 
+                               
+                                    <span class="px-2"> {{ $total_weight }} <small>GR</small></span>
+                                   </div>    
                                     </td>
                                 </tr>
                             </tbody>
                             
                         </table>
-                        @endforeach
+                      
                         
                     </div>
 
@@ -169,7 +191,7 @@
 
 
 
-
+</form>
 
 
 
@@ -196,23 +218,9 @@ font-size: 0.9rem !important;
 @push('page_scripts')
 
 <script type="text/javascript">
-   $(document).ready(function() {
-  // Check All checkbox click event
-  $("#checkAll").click(function() {
-    $(".checkItem").prop('checked', $(this).prop('checked'));
-  });
-
-  // Individual checkbox click event
-  $(".checkItem").click(function() {
-    if ($(".checkItem:checked").length === $(".checkItem").length) {
-      $("#checkAll").prop('checked', true);
-    } else {
-      $("#checkAll").prop('checked', false);
-    }
-  });
-});
- 
-
-
+    document.getElementById('select-all').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
 </script>
 @endpush
