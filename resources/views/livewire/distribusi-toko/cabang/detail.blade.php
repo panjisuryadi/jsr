@@ -9,10 +9,14 @@
                 </a>
                 <a target="_blank" class="btn btn-sm btn-secondary mfe-1 d-print-none" href="#"><i class="bi bi-printer"></i> Print
                 </a>
-                <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="#">
-                    <i class="bi bi-save"></i> Save
+                <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('distribusitoko.tracking', $dist_toko) }}">
+                    <i class="bi bi-save"></i> Tracking Product
                 </a>
             </div>
+
+
+
+
             <div class="card-body px-4">
                 <div class="row mb-4">
 
@@ -32,7 +36,7 @@
                         <div>Jumlah Jenis Karat: <strong> {{ $dist_toko->items->groupBy('karat_id')->count() }} </strong></div>
                         <div>Total Berat Emas: <strong> {{ $dist_toko->items->sum('gold_weight') }} gr</strong></div>
                         <div>
-                            {{ Label_case('Status') }}: <label class="bg-white border-2 font-semibold uppercase border-green-500  text-green-500 py-0 px-4 m-1">{{ ucfirst($dist_toko->current_status->name) }}</label>
+                            {{ Label_case('Status') }}: <label class="bg-white border-2 font-semibold uppercase border-green-500  text-green-500 py-0 px-4 m-1">Draft</label>
                         </div>
 
                     </div>

@@ -41,5 +41,12 @@ font-size: 0.9rem !important;
     window.addEventListener('summary:modal', event => {
         $('#summary-modal').modal('show');
     });
+
+    function showTrackingModal(){
+        // 
+    }
+    
 </script>
+
+
 @endpush

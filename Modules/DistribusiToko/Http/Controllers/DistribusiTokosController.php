@@ -81,8 +81,8 @@ class DistribusiTokosController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
-         return view(''.$module_name.'::'.$module_path.'.detail',
+       
+         return view(''.$module_name.'::'.$module_path.'.detail_retur',
            compact('module_name',
             'module_action',
             'module_title',
@@ -90,6 +90,10 @@ class DistribusiTokosController extends Controller
             'module_icon', 'module_model'));
 
     }
+
+
+
+
 
     public function detail_distribusi(DistribusiToko $dist_toko){
         if(AdjustmentSetting::exists()){
@@ -530,7 +534,29 @@ public function show($id)
 
 
 
+ public function tracking(DistribusiToko $dist_toko){
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        $distribusi = $dist_toko->items;
+       
+         return view(''.$module_name.'::'.$module_path.'.modal.tracking',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'dist_toko',
+            'distribusi',
+            'module_icon', 'module_model'));
 
+    }
 
 
 
