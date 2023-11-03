@@ -678,26 +678,27 @@ if (!function_exists('keBulan')) {
 
 if (!function_exists('tanggal')) {
     date_default_timezone_set("Asia/Jakarta");
-function tanggal($tgl, $tampil_hari=true){
-   $nama_hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu");
-   $nama_bulan = array(1=>"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+        function tanggal($tgl, $tampil_hari=true){
 
-   $tahun = substr($tgl,0,4);
-   $bulan = $nama_bulan[(int)substr($tgl,5,2)];
-   $tanggal = substr($tgl,8,2);
+           $nama_hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu");
+           $nama_bulan = array(1=>"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 
-   $text = "";
+           $tahun = substr($tgl,0,4);
+           $bulan = $nama_bulan[(int)substr($tgl,5,2)];
+           $tanggal = substr($tgl,8,2);
 
-   if($tampil_hari){
-      $urutan_hari = date('w', mktime(0,0,0, substr($tgl,5,2), $tanggal, $tahun));
-      $hari = $nama_hari[$urutan_hari];
-      $text .= $hari.", ";
-   }
+           $text = "";
 
-   $text .= $tanggal ." ". $bulan ." ". $tahun;
+           if($tampil_hari){
+              $urutan_hari = date('w', mktime(0,0,0, substr($tgl,5,2), $tanggal, $tahun));
+              $hari = $nama_hari[$urutan_hari];
+              $text .= $hari.", ";
+           }
 
-   return $text;
-}
+           $text .= $tanggal ." ". $bulan ." ". $tahun;
+
+           return $text;
+        }
 
 }
 
@@ -710,25 +711,13 @@ if(! function_exists('rupiah')) {
       if($trim){
         $parts = explode(".",(round($number,$dec) * 1));
         $dec = isset($parts[1]) ? strlen($parts[1]) : 0;
-      }
+       }
       $formatted = number_format($number,$dec);
       return $formatted;
     }
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

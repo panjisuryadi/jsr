@@ -1,4 +1,4 @@
-<div class="flex row justify-center items-center">
+<div class="flex row justify-center items-center px-3">
 {{-- {{$data->status}} --}}
 @if($data->status == 2)
 <a id="Approve" href="{{ route('products.transfer.approve', $data->id) }}" class="btn btn-outline-warning btn-sm"> Need Approve
@@ -13,7 +13,7 @@
 <button class="btn btn-success px btn-sm">Purchase</button>
 
 @elseif($data->status == 0)
-<button class="btn btn-info px  btn-sm p-1 text-xs">Ready</button>
+<button class="btn btn-info px  btn-sm p-1 text-xs">In Progress</button>
 @endif
 
 </div>

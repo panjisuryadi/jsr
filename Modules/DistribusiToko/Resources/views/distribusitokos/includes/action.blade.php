@@ -1,17 +1,18 @@
 <div class="text-center">
 @can('edit_'.$module_name.'')
-    <a href="{{ route(''.$module_name.'.show', $data->id) }}"
-    id="Show"
-    data-toggle="tooltip"
+@if ($data->isDraft())
+    <a href="{{ route(''.$module_name.'.detail', $data->id) }}"
      class="btn btn-outline-success btn-sm">
         <i class="bi bi-eye"></i> &nbsp;@lang('View')
     </a>
+@endif
 
 
 
 @endcan
 
-    @can('delete_'.$module_name.'')
+@can('delete_'.$module_name.'')
+@if ($data->isDraft())
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
         if (confirm('Are you sure? It will delete the data permanently!')) {
@@ -24,6 +25,7 @@
             @method('delete')
         </form>
     </button>
+@endif
 @endcan
 
 

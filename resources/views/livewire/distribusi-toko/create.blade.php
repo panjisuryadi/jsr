@@ -110,7 +110,7 @@
                                                         $required = "required";
                                                         ?>
                                                         <label for="{{ $field_name }}">Product Category</label>
-                                                        <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="clearKaratAndTotal({{$key}})" onchange="setAdditionalAttribute({{$key}},'product_category_name', this);">
+                                                        <select id="{{ $field_name }}" wire:model="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:change="changeProductCategory({{$key}})" onchange="setAdditionalAttribute({{$key}},'product_category_name', this);">
                                                         <option value="">All Products</option>
                                                             @foreach($categories as $category)
                                                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>

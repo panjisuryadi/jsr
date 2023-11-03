@@ -45,9 +45,10 @@ class Create extends Component
 
     public $inputs = [
         [
-            'karatberlians_id' => '',
+            'karatberlians' => '',
             'shapeberlian_id' => '',
             'qty' => 1,
+            'gia_report_number' => '',
             'keterangan' => ''
         ]
     ];
@@ -103,9 +104,10 @@ class Create extends Component
     public function addInput()
     {
         $this->inputs[] = [
-            'karatberlians_id' => '',
+            'karatberlians' => '',
             'shapeberlian_id' => '',
             'qty' => 1,
+            'gia_report_number' => '',
             'keterangan' => ''
         ];
     }
@@ -127,9 +129,10 @@ class Create extends Component
     {
         $this->inputs = [
             [
-                'karatberlians_id' => '',
+                'karatberlians' => '',
                 'shapeberlian_id' => '',
                 'qty' => 1,
+                'gia_report_number' => '',
                 'keterangan' => ''
             ]
         ];
@@ -166,27 +169,39 @@ class Create extends Component
              * collect data stok per jenis karat
              * bandingkan stok
              */
-            if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['karatberlians_id'])) {
+            if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['karatberlians'])) {
                 $sisa_stok_berlian = GoodsReceipt::where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->sum('total_karat');
                 $total_karat_dipinta = 0;
                 foreach ($this->inputs as $key => $value) {
-                    $rules['inputs.' . $key . '.karatberlians_id'] = 'required';
+                    $rules['inputs.' . $key . '.karatberlians'] = 'required|gt:0';
                     $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
 
-                    $karatberlians_id = !empty($value['karatberlians_id']) ? $value['karatberlians_id'] : 0;
                     $qty = !empty($value['qty']) ? $value['qty'] : 0;
-                    $karat = !empty($this->arrayKaratBerlian[$karatberlians_id]) ? $this->arrayKaratBerlian[$karatberlians_id] : 0;
-                    $stok_berlian_terpakai = $karat * $qty;
-                    $total_karat_dipinta += $stok_berlian_terpakai;
+                    $karat = !empty($value['karatberlians']) ? $value['karatberlians'] : 0;
+                    if(filter_var($karat, FILTER_VALIDATE_FLOAT)) {
+                        $stok_berlian_terpakai = $karat * $qty;
+                        $total_karat_dipinta += $stok_berlian_terpakai;
+    
+                        if($sisa_stok_berlian < $total_karat_dipinta) {
+                            $rules['inputs.' . $key . '.karatberlians'] = [
+                                function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
+                                    $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
+                                }
+                            ];
 
-                    if($sisa_stok_berlian < $total_karat_dipinta) {
-                        $rules['inputs.' . $key . '.karatberlians_id'] = [
+                            $rules['inputs.' . $key . '.qty'] = [
+                                function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
+                                    $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
+                                }
+                            ];
+    
+                        }
+                    }else{
+                        $rules['inputs.' . $key . '.karatberlians'] = [
                             function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
-                                $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
+                                $fail('input karat berlians harus berupa decimal');
                             }
-                            
                         ];
-
                     }
                     
                 }

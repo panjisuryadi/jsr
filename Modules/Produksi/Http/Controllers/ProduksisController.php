@@ -16,6 +16,7 @@ use Modules\Produksi\Models\ProduksiItems;
 use Modules\Produksi\Models\Produksi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Lang;
 use Image;
 use Modules\Produksi\Models\DiamondCertificateAttribute;
@@ -208,7 +209,7 @@ class ProduksisController extends Controller
             }
             $produksis = $this->module_model::create([
                 'code' => !empty($input['code']) ? $input['code'] : null,
-                'image' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : null,
+                'image' => !empty($input['image']) ? $input['image'] : null,
                 'karatasal_id' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : null,
                 'source_kode' => !empty($input['source_kode']) ? $input['source_kode'] : null,
                 'karat_id' => !empty($input['karat_id']) ? $input['karat_id'] : null,
@@ -226,7 +227,8 @@ class ProduksisController extends Controller
                     $val['produksis_id'] = $produksi_id;
                     $val['shapeberlian_id'] = !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null;
                     $val['kategoriproduk_id'] = !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : null;
-                    if(!empty($val['karatberlians_id'])) {
+
+                    if(!empty($val['karatberlians'])) {
                         $product_items[] = $val;
                     }
                 }
@@ -236,8 +238,18 @@ class ProduksisController extends Controller
                 $arraySertifikatAttributes = [];
                 $hari_ini = new DateTime();
                 $hari_ini = $hari_ini->format('Y-m-d');
+                $arrayProdukItems = [];
                 foreach($product_items as $val) {
                     $sertifikat = !empty($val['sertifikat']) ? $val['sertifikat'] : [];
+
+                    /** Insert sertifikat per diamond. NOTE : (formnya di depan sudah ditakedown tapi fungsinya tetap ada, jaga jaga nanti akan dipakai)
+                     * jika produk items sertifikatnya terisi
+                     * maka insert sertifikat terlbih dahulu
+                     * lalu id certifikatnya dicolect dan dimasukkan ke produk items
+                     * array sertifikatnya diisi dari form sertifikat (yang sekarang sudah ditake down karena jsr itu satu perhiasan satu certifikat kecuali GIA)
+                     * kolom gia certifikatnya sendiri sudah disediakan yaitu gia_report_number
+                     * dimana hanya akan menyimpan kode sertifikatnya saja, detailnya bisa dilihat / dicek di website GIA nya.
+                     */
                     if(!empty($sertifikat)) {
                         $attribute = !empty($sertifikat['attribute']) ? $sertifikat['attribute'] : [];
                         if(isset($sertifikat['attribute'])) {
@@ -252,22 +264,27 @@ class ProduksisController extends Controller
                     if(isset($val['sertifikat'])) {
                         unset($val['sertifikat']);
                     }
-                    ProduksiItems::create($val);
+                    $arrayProdukItems[] = $val;
                 }
+
+                ProduksiItems::insert($arrayProdukItems);
+
                 $dataInsertSertifikatAttribute = [];
-                foreach($arraySertifikatAttributes as $key => $val) { 
-                    foreach($val as $k => $row){
-                        $dataInsertSertifikatAttribute[] = [
-                            'diamond_certificate_id' => $key,
-                            'diamond_certificate_attributes_id' => $k,
-                            'keterangan' => !empty($row['keterangan']) ? $row['keterangan'] : '',
-                        ];
+                if(!empty($arraySertifikatAttributes)) {
+                    foreach($arraySertifikatAttributes as $key => $val) { 
+                        foreach($val as $k => $row){
+                            $dataInsertSertifikatAttribute[] = [
+                                'diamond_certificate_id' => $key,
+                                'diamond_certificate_attributes_id' => $k,
+                                'keterangan' => !empty($row['keterangan']) ? $row['keterangan'] : '',
+                            ];
+                        }
                     }
+                    DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
                 }
-                DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
             }
 
-            $stok_lantakan = PenerimaanLantakan::where('karat_id', $produksis->karatasal_id)->first();
+            $stok_lantakan = StockKroom::where('karat_id', $produksis->karatasal_id)->first();
             $stok_lantakan->weight = $stok_lantakan->weight - $produksis->berat_asal;
             $stok_lantakan->save();
 
@@ -393,7 +410,7 @@ public function update(Request $request, $id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
-        $validator = \Validator::make($request->all(),
+        $validator = FacadesValidator::make($request->all(),
             [
             'code' => [
                 'required',
@@ -429,25 +446,35 @@ public function update(Request $request, $id)
     {
 
         try {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'Delete';
+            $module_action = 'Delete';
 
-        $$module_name_singular = $module_model::findOrFail($id);
+            DB::beginTransaction();
 
-        $$module_name_singular->delete();
-         toast(''. $module_title.' Deleted!', 'success');
-         return redirect()->route(''.$module_name.'.index');
+            $module_name_singular = $module_model::findOrFail($id);
+            $product_items = ProduksiItems::where('produksis_id', $id);
 
-          } catch (\Exception $e) {
-                toast(''. $module_title.' error!', 'warning');
-                return redirect()->back();
-            }
+            $stok_lantakan = StockKroom::where('karat_id', $module_name_singular->karatasal_id)->first();
+            $stok_lantakan->weight = $stok_lantakan->weight + $module_name_singular->berat_asal;
+            $stok_lantakan->save();
+            $module_name_singular->delete();
+            $product_items->delete();
+
+            DB::commit();
+            toast(''. $module_title.' Deleted!', 'success');
+            return redirect()->route(''.$module_name.'.index');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            toast(''. $module_title.' error!', 'warning');
+            return redirect()->back();
+        }
 
     }
 

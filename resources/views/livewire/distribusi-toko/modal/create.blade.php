@@ -1,14 +1,14 @@
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title text-lg font-bold" id="addModalLabel">Edit Draft Item</h3>
+            <h3 class="modal-title text-lg font-bold" id="addModalLabel">Tambah Draft Item</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body p-4">
-                <form wire:submit.prevent="update">
+                <form wire:submit.prevent="store">
                     <div class="grid grid-cols-4 gap-10">
                         <div class="col-span-2">
                             <div class="grid grid-cols-2 gap-2">
@@ -344,26 +344,13 @@
                         </div>
                         <div class="col-span-2">
                             <div class="form-group">
-                                <div class="@if (!$is_preview)
-                                    hidden @else flex justify-center
-                                @endif">
-                                    <img src="{{ empty($data['additional_data']['image'])?url('images/fallback_product_image.png'):$data['additional_data']['image'] }}" alt="">
-                                </div>
-                                <div class="@if ($is_preview)
-                                    hidden
-                                @endif align-items-center justify-content-center">
-                                    @livewire('webcam', ['key' => 0], key('cam-'. 0))
-                                </div>
-                               
-                            </div>
-                            <div class="py-1">
-                                <div class="form-check form-check-inline flex justify-center">
-                                    @if ($is_preview)
-                                    <button class="btn btn-sm btn-success" wire:click.prevent="$toggle('is_preview')">Ambil Ulang</button>
-                                    @else
-                                    <button class="btn btn-sm btn-danger" wire:click.prevent="cancelRetake(0)">Batal Ambil Ulang</button>
-                                    @endif
-                                </div>
+                                <x-library.distribusi-toko.webcam />
+                                @if ($errors->has('data.additional_data.image'))
+                                <span class="invalid feedback"role="alert">
+                                    <small class="text-danger">{{ $errors->first('data.additional_data.image') }}.</small
+                                    class="text-danger">
+                                </span>
+                                @endif
                             </div>
                         </div>
                         
@@ -373,7 +360,7 @@
                     
                     <div class="float-right mt-5">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>
         </div>
@@ -390,9 +377,9 @@
     }
 
     document.addEventListener('livewire:load', function () {
-        Livewire.on('reload-page-update', function () {
+        Livewire.on('reload-page-create', function () {
             window.location.reload();
-            toastr.success('Item Berhasil di update')
+            toastr.success('Item Berhasil di ditambahkan')
         });
     });
 

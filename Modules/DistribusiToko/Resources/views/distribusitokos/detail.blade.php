@@ -10,7 +10,8 @@
 @section('content')
 <div class="container-fluid">
     @livewire('distribusi-toko.summary',['dist_toko' => $dist_toko])
-    @livewire('distribusi-toko.modal.edit')
+    @livewire('distribusi-toko.modal.edit',['dist_toko' => $dist_toko])
+    @livewire('distribusi-toko.modal.create',['dist_toko' => $dist_toko])
     <!-- @include('distribusitoko::distribusitokos.includes.modal.edit') -->
 </div>
 @endsection
@@ -30,5 +31,9 @@ padding: .2em !important;
             $('#editModal').modal('show');
             Livewire.emit('setData',row);
         }
+        function showCreateModal(){
+            $('#createModal').modal('show');
+        }
     </script>
+
 @endpush

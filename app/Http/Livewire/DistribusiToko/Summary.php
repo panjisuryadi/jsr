@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\DistribusiToko;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
+use Modules\Product\Entities\Product;
 
 class Summary extends Component
 {
@@ -43,5 +45,18 @@ class Summary extends Component
 
     public function send(){
         $this->validate();
+        abort_if(Gate::denies('edit_distribusitoko'), 403);
+        DB::beginTransaction();
+        try{
+            $this->dist_toko->setInProgress();
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
+
+        toast('Distribusi In Progress!', 'success');
+        return redirect()->route('distribusitoko.index');
     }
+
 }

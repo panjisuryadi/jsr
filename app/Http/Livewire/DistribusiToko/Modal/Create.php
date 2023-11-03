@@ -17,7 +17,7 @@ use Modules\Stok\Models\StockOffice;
 
 use function PHPUnit\Framework\isEmpty;
 
-class Edit extends Component
+class Create extends Component
 {
     public $dist_toko;
     public $data = [
@@ -57,34 +57,27 @@ class Edit extends Component
 
     public $dataKarat;
 
-    public $temp_image = [];
-
-    public $is_preview = true;
-
     public $total_weight_per_karat = [];
 
     protected $listeners = [
-        'setData',
         'setAdditionalAttribute',
         'webcamCaptured' => 'handleWebcamCaptured',
         'webcamReset' => 'handleWebcamReset',
     ];
     public function render(){
-        return view("livewire.distribusi-toko.modal.edit");
+        return view("livewire.distribusi-toko.modal.create");
     }
 
-    public function handleWebcamCaptured($key,$data_uri){
-        $this->temp_image[$key]['webcam_image'] = $data_uri;
+    public function handleWebcamCaptured($data_uri){
+        $this->data['additional_data']['image'] = $data_uri;
     }
 
-    public function handleWebcamReset($key){
-        $this->temp_image[$key]['webcam_image'] = '';
+    public function handleWebcamReset(){
+        $this->data['additional_data']['image'] = '';
     }
 
-    public function cancelRetake($key){
-        $this->is_preview = true;
-        $this->emit('removePrev',$key);
-    }
+    
+
 
     public function mount(){
         $kategori = KategoriProduk::where('slug','gold')->orWhere('slug','emas')->firstOrFail();
@@ -99,6 +92,7 @@ class Edit extends Component
         
         $this->logam_mulia_id = Category::where('category_name','LIKE','%logam mulia%')->value('id');
         $this->karat_logam_mulia = Karat::logam_mulia()->id;
+        $this->getTotalWeightBasedOnKarat();
     }
 
     private function getTotalWeightBasedOnKarat(){
@@ -137,17 +131,6 @@ class Edit extends Component
         $this->data['total_weight'] = round($this->data['total_weight'], 3);
     }
 
-
-    public function setData($data){
-        $this->data = $data;
-        $this->data["additional_data"] = json_decode($data['additional_data'],true)['product_information'];
-        $this->getTotalWeightBasedOnKarat();
-        $this->total_weight_per_karat[$this->data['karat_id']] = $this->total_weight_per_karat[$this->data['karat_id']] - $this->data['gold_weight'];
-        $this->calculateTotalWeight();
-        $this->isLogamMulia();
-        $this->resetErrorBag();
-
-    }
 
     private function isLogamMulia(){
         $this->isLogamMulia = $this->data['additional_data']['product_category']['id'] == $this->logam_mulia_id;
@@ -222,12 +205,12 @@ class Edit extends Component
         $rules['data.total_weight'] = 'required|gt:0';
         $rules['data.additional_data.certificate_id'] = 'required_if:data.additional_data.product_category.id,'.$this->logam_mulia_id;
         $rules['data.additional_data.no_certificate'] = 'required_if:data.additional_data.product_category.id,'.$this->logam_mulia_id;
-        //     $rules['distribusi_toko_details.'.$key.'.webcam_image'] = 'required';
+        $rules['data.additional_data.image'] = 'required';
 
         return $rules;
     }
 
-    public function update()
+    public function store()
     {
         $this->validate();
         
@@ -252,14 +235,13 @@ class Edit extends Component
                     'no_certificate' => $this->data['additional_data']['no_certificate'],
                     'accessories_weight' => $this->data['additional_data']['accessories_weight'],
                     'tag_weight' => $this->data['additional_data']['tag_weight'],
-                    'image' => empty($this->temp_image[0]['webcam_image'])?$this->data['additional_data']['image']:$this->temp_image[0]['webcam_image'],
+                    'image' => $this->data['additional_data']['image'],
                     'total_weight' => $this->data['total_weight']
                 ]
             ];
-            $item = DistribusiTokoItem::findOrFail($this->data['id']);
             
-            $item->update([
-                'karat_id' =>  $this->data['karat_id'],
+            $this->dist_toko->items()->create([
+                'karat_id' => $this->data['karat_id'],
                 'gold_weight' => $this->data['gold_weight'],
                 'additional_data' => json_encode($additional_data),
             ]);
@@ -270,7 +252,7 @@ class Edit extends Component
             throw $e;
         }
 
-        $this->emit('reload-page-update');
+        $this->emit('reload-page-create');
     }
 
     public function updated($propertyName)

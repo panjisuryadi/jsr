@@ -71,7 +71,7 @@ class DistribusiTokosController extends Controller
             return redirect()->back();
         }
 
-        if(!$dist_toko->is_draft){
+        if(!$dist_toko->isDraft()){
             return redirect()->route('distribusitoko.index');
         }
         $module_title = $this->module_title;
@@ -90,6 +90,32 @@ class DistribusiTokosController extends Controller
             'module_icon', 'module_model'));
 
     }
+
+    public function detail_distribusi(DistribusiToko $dist_toko){
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('approve_distribusi'), 403);
+         return view(''.$module_name.'::'.$module_path.'.detail_distribusi',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'dist_toko',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+
 
     public function send(DistribusiToko $dist_toko){
         abort_if(Gate::denies('edit_distribusitoko'), 403);
@@ -237,8 +263,8 @@ public function index_data(Request $request)
                             })  
 
                              ->editColumn('status', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .draf($data->is_draft) . '
+                             $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
+                                     ' . $data->current_status->name . '
                                     </div>';
                                 return $tb;
                             })
@@ -271,6 +297,88 @@ public function index_data(Request $request)
                      }
 
 
+
+//buat dashboard manager
+public function index_data_table(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                        return view(''.$module_name.'::'.$module_path.
+                            '.includes.aksi_distribusi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                        ->editColumn('date', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <span class="text-gray-600">
+                                    ' .  Carbon::parse($data->date)->format('d M, Y') . '</span>
+                                    </div>';
+                                return $tb;
+                            })
+                        ->editColumn('no_invoice', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <span class="text-gray-600">
+                                    ' .$data->no_invoice . '</span>
+                                    </div>';
+                                return $tb;
+                            })
+                          ->editColumn('cabang', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <span class="text-gray-600">
+                                     ' .$data->cabang->name . '</span>
+                                    </div>';
+                                return $tb;
+                            })  
+
+                             ->editColumn('status', function ($data) {
+                             $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
+                                     ' . $data->current_status->name . '
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center">
+                                    <h3 class="text-sm text-gray-600">
+                                     Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></h3>
+                                    </div>
+                                    <div class="items-center">
+                                    <span class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' Gram
+                                    </strong></span>
+                                   </div>';
+                                return $tb;
+                            })
+
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at', 
+                                    'action',  'cabang','date', 'karat','status',
+                                      'no_invoice'])
+                        ->make(true);
+                     }
 
 
 
@@ -417,6 +525,9 @@ public function show($id)
             'module_icon', 'module_model'));
 
     }
+
+
+
 
 
 
@@ -610,6 +721,61 @@ public function update(Request $request, $id)
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }
+
+
+
+
+
+
+//update ajax version
+public function approve_distribusi(Request $request, $id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update';
+        $$module_name_singular = $module_model::findOrFail($id);
+        $validator = \Validator::make($request->all(),
+            [
+            'code' => [
+                'required',
+                'unique:'.$module_model.',code,'.$id
+            ],
+            'name' => 'required|max:191',
+
+
+        ]);
+
+       if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+
+        $input = $request->all();
+        $params = $request->except('_token');
+        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+        $params['code'] = $params['code'];
+        $params['name'] = $params['name'];
+        $$module_name_singular->update($params);
+        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
