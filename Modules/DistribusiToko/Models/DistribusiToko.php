@@ -20,7 +20,7 @@ class DistribusiToko extends Model
 
         if(auth()->check()){
             if(auth()->user()->isUserCabang()){
-                $cabang = auth()->user()->namacabang->id;
+                $cabang = auth()->user()->namacabang->cabang_id;
                 static::addGlobalScope('filter_by_branch', function (Builder $builder) use ($cabang) {
                     $builder->whereIn('status_id', [2,3,4])
                             ->where('cabang_id', $cabang); // Sesuaikan dengan nama kolom yang sesuai di tabel

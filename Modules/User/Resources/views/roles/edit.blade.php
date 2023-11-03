@@ -563,9 +563,9 @@
                                                 <div class="col-6">
                                                     <div class="custom-control custom-switch">
                                                         <input type="checkbox" class="custom-control-input"
-                                                               id="delete_customers" name="permissions[]"
-                                                               value="delete_customers" {{ $role->hasPermissionTo('delete_customers') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="delete_customers">Delete</label>
+                                                               id="delete_suppliers" name="permissions[]"
+                                                               value="delete_suppliers" {{ $role->hasPermissionTo('delete_suppliers') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="delete_suppliers">Delete</label>
                                                     </div>
                                                 </div>
                                             </div>
