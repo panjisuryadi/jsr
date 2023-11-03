@@ -240,7 +240,6 @@ class Create extends Component
         $request = new Request($data);
         $controller = new ProduksisController();
         $store = $controller->store($request);
-        dd($store);
     }
 
     public function setCurrentKey($key)

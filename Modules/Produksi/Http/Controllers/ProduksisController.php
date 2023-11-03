@@ -206,7 +206,6 @@ class ProduksisController extends Controller
                 Storage::disk('public')->put($file,$image_base64);
                 $input['image'] = "$fileName";
             }
-            dd($input['image']);
             $produksis = $this->module_model::create([
                 'code' => !empty($input['code']) ? $input['code'] : null,
                 'image' => !empty($input['karatasal_id']) ? $input['karatasal_id'] : null,
@@ -244,7 +243,8 @@ class ProduksisController extends Controller
                         if(isset($sertifikat['attribute'])) {
                             unset($sertifikat['attribute']);
                         }
-                        $sertifikat['tanggal'] = empty($sertifikat['tanggal']) ? $sertifikat['tanggal'] : $hari_ini;
+                        $sertifikat['tanggal'] = !empty($sertifikat['tanggal']) ? $sertifikat['tanggal'] : $hari_ini;
+                        $sertifikat['code'] = !empty($sertifikat['code']) ? $sertifikat['code'] : '-';
                         $diamond_certificate = DiamondCertifikatT::create($sertifikat);
                         $arraySertifikatAttributes[$diamond_certificate->id] = $attribute;
                         $val['diamond_certificate_id'] = $diamond_certificate->id;
@@ -273,6 +273,9 @@ class ProduksisController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollBack();
+            if(!empty($file)) {
+                Storage::disk('public')->delete($file);
+            }
             return $th->getMessage();
         }
         DB::commit();
