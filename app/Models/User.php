@@ -25,7 +25,26 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
 
+
+
     public const USERCODE = 'U';
+
+     public static function boot()
+        {
+            parent::boot();
+
+            if(auth()->check()){
+                if(auth()->user()->isUserCabang()){
+                    $cabang = auth()->user()->namacabang->cabang_id;
+                    static::addGlobalScope('filter_by_branch', function (Builder $builder) use ($cabang) {
+                        $builder->whereHas('namacabang', function($query) use ($cabang){
+                            $query->where('cabang_id',$cabang);
+                        }); // Sesuaikan dengan nama kolom yang sesuai di tabel
+                    });
+                }
+            }
+        }
+
     protected $fillable = [
         'name',
         'email',
