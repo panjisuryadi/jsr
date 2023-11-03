@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\DistribusiToko\Models;
-use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,11 +47,23 @@ class DistribusiToko extends Model
     }
 
     public function statuses(){
-        return $this->belongsToMany(DistribusiTokoStatus::class,'distribusi_toko_tracking_statuses','dist_toko_id','status_id');
+        return $this->belongsToMany(DistribusiTokoStatus::class,'distribusi_toko_tracking_statuses','dist_toko_id','status_id')->using(DistribusiTokoStatusTracking::class)->withPivot(['pic_id','date']);
     }
 
     public function current_status(){
         return $this->belongsTo(DistribusiTokoStatus::class, 'status_id');
+    }
+
+    public function latest_status_tracking(){
+        return $this->statuses()->orderBy('date','desc')->first();
+    }
+
+    public function current_status_pic(){
+        return $this->latest_status_tracking()->pivot->pic;
+    }
+
+    public function current_status_date(){
+        return $this->latest_status_tracking()->pivot->date;
     }
 
     public function setAsDraft($note = null){
@@ -78,6 +90,14 @@ class DistribusiToko extends Model
                 'date' => now()
             ]);
         }
+    }
+
+    public function isRetur(){
+        return $this->current_status->id == 3;
+    }
+
+    public function isDraftOrRetur(){
+        return $this->isDraft() || $this->isRetur();
     }
 
 }
