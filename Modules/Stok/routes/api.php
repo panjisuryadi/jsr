@@ -19,6 +19,6 @@ Route::middleware('auth:static.api.token')->get('/stoks', function (Request $req
     return $request->user();
 });
 
-Route::middleware('api_token')->get('/lantakan/create',  [StoksController::class, 'lantakanApiStore']);
+Route::middleware('api_token')->post('/lantakan/create',  [StoksController::class, 'lantakanApiStore']);
 
 

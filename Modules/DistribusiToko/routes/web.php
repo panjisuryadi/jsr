@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-    Route::patch("$module_name/approve-distribusi/{id}", ['as' => "$module_name.approve_distribusi", 'uses' => "$controller_name@approve_distribusi"]);
+    Route::post("$module_name/approve-distribusi/{id}", ['as' => "$module_name.approve_distribusi", 'uses' => "$controller_name@approve_distribusi"]);
 
 
     

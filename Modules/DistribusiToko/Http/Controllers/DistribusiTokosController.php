@@ -103,12 +103,14 @@ class DistribusiTokosController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
+        $distribusi = $dist_toko->items;
         abort_if(Gate::denies('approve_distribusi'), 403);
          return view(''.$module_name.'::'.$module_path.'.detail_distribusi',
            compact('module_name',
             'module_action',
             'module_title',
             'dist_toko',
+            'distribusi',
             'module_icon', 'module_model'));
 
     }
@@ -738,28 +740,22 @@ public function approve_distribusi(Request $request, $id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
-        $validator = \Validator::make($request->all(),
-            [
-            'code' => [
-                'required',
-                'unique:'.$module_model.',code,'.$id
-            ],
-            'name' => 'required|max:191',
-
-
-        ]);
-
-       if (!$validator->passes()) {
-          return response()->json(['error'=>$validator->errors()]);
-        }
-
-        $input = $request->all();
+        $params = $request->all();
         $params = $request->except('_token');
-        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $params['code'] = $params['code'];
-        $params['name'] = $params['name'];
-        $$module_name_singular->update($params);
-        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+        $params['selected_items'] = $params['selected_items'];
+
+        $dist_toko = $params['selected_items'];
+
+        if (is_array($dist_toko) && count($dist_toko) > 0) {
+         foreach ($dist_toko as $itemId) {
+                      dd($itemId);
+            }
+
+         }
+
+         //  $$module_name_singular->update($params);
+         // toast(''. $module_title.' Updated!', 'success');
+         // return redirect()->route(''.$module_name.'.index');
 
  }
 
