@@ -96,10 +96,6 @@ class DistribusiTokosController extends Controller
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
-
-        if(!$dist_toko->isDraft()){
-            return redirect()->route('home');
-        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -268,7 +264,7 @@ public function index_data(Request $request)
 
                              ->editColumn('status', function ($data) {
                              $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
-                                     ' . $data->current_status()->name . '
+                                     ' . $data->current_status->name . '
                                     </div>';
                                 return $tb;
                             })
@@ -351,8 +347,8 @@ public function index_data_table(Request $request)
                             })  
 
                              ->editColumn('status', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .draf($data->is_draft) . '
+                             $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
+                                     ' . $data->current_status->name . '
                                     </div>';
                                 return $tb;
                             })

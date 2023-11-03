@@ -18,11 +18,14 @@ class DistribusiToko extends Model
     {
         parent::boot();
 
-        if(auth()->user()->isUserCabang()){
-            $cabang = auth()->user()->namacabang->id;
-            static::addGlobalScope('filter_by_branch', function (Builder $builder) use ($cabang) {
-                $builder->where('cabang_id', $cabang); // Sesuaikan dengan nama kolom yang sesuai di tabel
-            });
+        if(auth()->check()){
+            if(auth()->user()->isUserCabang()){
+                $cabang = auth()->user()->namacabang->id;
+                static::addGlobalScope('filter_by_branch', function (Builder $builder) use ($cabang) {
+                    $builder->whereIn('status_id', [2,3,4])
+                            ->where('cabang_id', $cabang); // Sesuaikan dengan nama kolom yang sesuai di tabel
+                });
+            }
         }
     }
 
@@ -48,27 +51,33 @@ class DistribusiToko extends Model
     }
 
     public function current_status(){
-        return $this->statuses()->latest('date')->first();
+        return $this->belongsTo(DistribusiTokoStatus::class, 'status_id');
     }
 
     public function setAsDraft($note = null){
-        $this->statuses()->attach(1,[
-            'pic_id'=> auth()->id(),
-            'note' => $note,
-            'date' => now()
-        ]);
+        $this->status_id = 1;
+        if($this->save()){
+            $this->statuses()->attach($this->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => $note,
+                'date' => now()
+            ]);
+        }
     }
 
     public function isDraft(){
-        return $this->current_status()->id == 1;
+        return $this->current_status->id == 1;
     }
 
     public function setInProgress($note = null){
-        $this->statuses()->attach(2,[
-            'pic_id'=> auth()->id(),
-            'note' => $note,
-            'date' => now()
-        ]);
+        $this->status_id = 2;
+        if($this->save()){
+            $this->statuses()->attach($this->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => $note,
+                'date' => now()
+            ]);
+        }
     }
 
 }

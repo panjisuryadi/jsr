@@ -7,17 +7,6 @@
         <div class="flex justify-between py-1 border-bottom">
             <div>
                 
-                <div class="dropdown show">
-                    <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Pilih Kategori
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $category)
-                        <a href="{{ route('distribusitoko.kategori',$category->slug) }}"
-                        class="dropdown-item" >{{ $category->name }}</a>
-                        @endforeach
-                    </div>
-                </div>
             </div>
             <div id="buttons">
             </div>
@@ -31,7 +20,7 @@
                         <th>No Invoice</th>
                         <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
                         <th>{{ __('Karat') }}</th>
-                        <th style="width: 10%!important;" class="text-center">
+                        <th style="width: 13%!important;" class="text-center">
                             {{ __('Status') }}
                         </th>
                         
