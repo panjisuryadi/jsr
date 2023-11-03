@@ -267,7 +267,7 @@ class ProduksisController extends Controller
                 DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
             }
 
-            $stok_lantakan = PenerimaanLantakan::where('karat_id', $produksis->karatasal_id)->first();
+            $stok_lantakan = StockKroom::where('karat_id', $produksis->karatasal_id)->first();
             $stok_lantakan->weight = $stok_lantakan->weight - $produksis->berat_asal;
             $stok_lantakan->save();
 
