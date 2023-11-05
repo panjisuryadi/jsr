@@ -407,6 +407,9 @@
                                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                 </span>
                                             </button>
+                                            <button class="btn text-white text-sm btn-info btn-md" onclick="showModal()">
+                                                <span > Input Sertifikat<i class="bi bi-plus"></i></span>
+                                            </button>
                                         </div>
                                     </div>
                                     @endif
@@ -424,7 +427,7 @@
 </form>
 
 
-{{-- Modal --}}
+{{-- Modal Sertifikat per diamond update terbaru sudah ditakedown jadi perhiasan, tapi takut berubah jadi tidak dihapus --}}
 <div class="modal fade" id="sertifikatModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-lg" role="document">
     <form wire:submit.prevent="" enctype="multipart/form-data">
@@ -527,11 +530,116 @@
     </div>
 </div>
 
+{{-- Modal Sertifikat per perhiasan --}}
+
+
+<div class="modal fade" id="singleSertifikatModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal-dialog modal-lg" role="document">
+    <form wire:submit.prevent="" enctype="multipart/form-data">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="addModalLabel">Add Sertifikat</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+                @csrf
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="flex flex-row grid grid-cols-2 gap-2">
+                                    @if (session()->has('message'))
+                                    <div class="alert alert-success">
+                                        {{ session('message') }}
+                                    </div>
+                                    @endif
+                                    <div class="col-span-3 px-2">
+                                        <div class="flex flex-row grid grid-cols-2 gap-1 mt-2">
+                                            <div class="form-group">
+                                                <?php
+                                                $field_name = "sertifikat.code";
+                                                $field_lable = "Code";
+                                                $field_placeholder = $field_lable;
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = '';
+                                                ?>
+                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                <input class="form-control" type="text" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                                <input id="key" type="hidden" name="key" class="form-control" value="">
+
+                                                @if ($errors->has($field_name))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                </span>
+                                                @endif
+                                            </div>
+
+                                            <div class="form-group">
+                                                <?php
+                                                $field_name = "sertifikat.tanggal";
+                                                $field_lable = __('Tanggal');
+                                                $field_placeholder = Label_case($field_lable);
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = '';
+                                                ?>
+                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
+                                                <input id="{{ $field_name }}" type="date" name="{{ $field_name }}" class="form-control {{ $invalid }}" wire:model="{{ $field_name }}" value="{{ $hari_ini }}" placeholder="{{ $field_placeholder }}" {{ $required }} max="{{ $hari_ini }}">
+                                                @if ($errors->has($field_name))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-row grid grid-cols-2 gap-1 mt-2">
+
+                                            @foreach ($dataCertificateAttribute as $key => $item)
+                                                <div class="form-group">
+                                                    <?php
+                                                    $field_name = "sertifikat.attribute.$item->id.keterangan";
+                                                    $field_name_attribute_id = "sertifikat.0.attribute.$item->id.diamond_certificate_attribute_id";
+                                                    $field_lable = $item->name;
+                                                    $field_placeholder = $field_lable;
+                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                    $required = '';
+                                                    ?>
+                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                    <input type="hidden" name="{{ $field_name_attribute_id }}" wire:model = "{{ $field_name_attribute_id }}" value="{{ $item->id }}" class="form-control">
+                                                    <input class="form-control" type="text" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+
+                                                    @if ($errors->has($field_name))
+                                                    <span class="invalid feedback" role="alert">
+                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                    </span>
+                                                    @endif
+                                                </div>
+                                                
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+
 @push('page_scripts')
     <script type="text/javascript">
 
         function showModal(key) {
-            $("#sertifikatModal").modal('show')
+            $("#singleSertifikatModal").modal('show')
         }
 
         $('#up1').change(function() {
