@@ -84,6 +84,8 @@ class Detail extends Component
                 throw $e;
             }
         }
+        toast('Penerimaan Distribusi Berhasil dilakukan','success');
+        return redirect(route('home'));
     }
 
     private function createProducts(){
@@ -98,7 +100,20 @@ class Detail extends Component
                   'product_barcode_symbology'  => 'C128',
                   'product_unit'               => 'Gram',
                   'product_cost' => 0,
-                  'product_price' => 0
+                  'product_price' => 0,
+                  'images' => $additional_data['image']
+            ]);
+
+            $product->product_item()->create([
+                'karat_id'                    => $item->karat_id,
+                'certificate_id'              => empty($additional_data['certificate_id'])?null:$additional_data['certificate_id'],
+                'berat_emas'                  => $item->gold_weight,
+                'berat_label'                 => $additional_data['tag_weight'],
+                'berat_accessories'           => $additional_data['accessories_weight'],
+                'produk_model_id'             => $additional_data['model']['id'],
+                'berat_total'                 => $additional_data['total_weight'],
+                'product_cost'                => 0,
+                'product_price'               => 0
             ]);
         }
     }
