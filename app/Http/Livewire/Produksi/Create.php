@@ -60,7 +60,10 @@ class Create extends Component
     public $dataGroup = [];
     public $arrayKaratBerlian = [];
     public $dataCertificateAttribute = [];
-    public $sertifikat = [];
+    public $sertifikat = [
+        'code' => '',
+        'tanggal' => '',
+    ];
 
     public $currentKey;
     public $tmpCertificate = [];
@@ -82,6 +85,7 @@ class Create extends Component
         $this->dataKategoriProduk = KategoriProduk::all();
         $this->dataCertificateAttribute = DiamondCertificateAttributes::all();
         $this->code = Produksi::generateCode();
+        $this->sertifikat['tanggal'] = $this->hari_ini;
 
         $arrayKaratBerlian = [];
         foreach($this->dataKaratBerlian as $k => $row){
@@ -229,12 +233,14 @@ class Create extends Component
 
     public function submit(Request $request)
     {
-        /** Blok untuk ngeset sertifikat ke item diamond */
-        if(!empty($this->inputs)) {
-            foreach($this->inputs as $k => $item) {
-                $this->inputs[$k]['sertifikat'] = !empty($this->sertifikat[$k]) ? $this->sertifikat[$k] : [];
-            }
-        }
+        /** Blok untuk ngeset sertifikat ke item diamond 
+         * Blok ini dicomment dlu, awalnya ini untuk sertifikat per item diamond
+        */
+        // if(!empty($this->inputs)) {
+        //     foreach($this->inputs as $k => $item) {
+        //         $this->inputs[$k]['sertifikat'] = !empty($this->sertifikat[$k]) ? $this->sertifikat[$k] : [];
+        //     }
+        // }
 
         $this->validate();
 
@@ -251,6 +257,7 @@ class Create extends Component
             'created_by' => auth()->user()->id,
             'items' => $this->inputs,
             'kategoriproduk_id' => $this->kategoriproduk_id,
+            'sertifikat' => $this->sertifikat,
         ];
         $request = new Request($data);
         $controller = new ProduksisController();

@@ -17,11 +17,16 @@ class DiamondCertificateAttributesTableSeeder extends Seeder
     public function run()
     {
         $data = [
+            [ 'name' => 'Jewelry Type'],
+            [ 'name' => 'Metal Type'],
+            [ 'name' => 'Metal Weight'],
+            [ 'name' => 'Carat Weight'],
+            [ 'name' => 'Clarity Grade'],
+            [ 'name' => 'Colour Grade'],
             [ 'name' => 'Shape and cutting style'],
             [ 'name' => 'Measurement'],
             [ 'name' => 'Carat weight'],
             [ 'name' => 'Color grade'],
-            [ 'name' => 'Clarity grade'],
             [ 'name' => 'Cut grade'],
             [ 'name' => 'Polish'],
             [ 'name' => 'Symmentry'],

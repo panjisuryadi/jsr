@@ -207,6 +207,19 @@ class ProduksisController extends Controller
                 Storage::disk('public')->put($file,$image_base64);
                 $input['image'] = "$fileName";
             }
+
+            /** Handle Sertifikat per perhiasan 
+             * @param $produksis->id
+             */
+
+                if(!empty($input['sertifikat'])) {
+                    $sertifikat = $input['sertifikat'];
+                    if(isset($sertifikat['attribute'])) {
+                        unset($sertifikat['attribute']);
+                    }
+                }
+                $diamond_certificate = DiamondCertifikatT::create($sertifikat);
+
             $produksis = $this->module_model::create([
                 'code' => !empty($input['code']) ? $input['code'] : null,
                 'image' => !empty($input['image']) ? $input['image'] : null,
@@ -218,9 +231,11 @@ class ProduksisController extends Controller
                 'berat' => !empty($input['berat']) ? $input['berat'] : null,
                 'tanggal' => !empty($input['tanggal']) ? $input['tanggal'] : null,
                 'created_by' => auth()->user()->id,
-                'kategoriproduk_id' => !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : '',
+                'kategoriproduk_id' => !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : null,
+                'diamond_certificate_id' => !empty($diamond_certificate->id) ? $diamond_certificate->id : null,
             ]);
             $produksi_id = $produksis->id;
+
             $product_items = [];
             if(!empty($input['items'])){
                 foreach($input['items'] as $val) {
@@ -268,7 +283,7 @@ class ProduksisController extends Controller
                 }
 
                 ProduksiItems::insert($arrayProdukItems);
-
+                
                 $dataInsertSertifikatAttribute = [];
                 if(!empty($arraySertifikatAttributes)) {
                     foreach($arraySertifikatAttributes as $key => $val) { 
@@ -280,10 +295,18 @@ class ProduksisController extends Controller
                             ];
                         }
                     }
-                    DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
+                }else{
+                    $dataInsertSertifikatAttribute = !empty($input['sertifikat']['attribute']) ? $input['sertifikat']['attribute'] : [];
+                    foreach($dataInsertSertifikatAttribute as $k => $row) {
+                        $dataInsertSertifikatAttribute[$k]['diamond_certificate_id'] = $diamond_certificate->id;
+                        $dataInsertSertifikatAttribute[$k]['diamond_certificate_attributes_id'] = $k;
+                        $dataInsertSertifikatAttribute[$k]['keterangan'] = !empty($row['keterangan']) ? $row['keterangan'] : '';
+                    }
                 }
-            }
 
+                DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
+            }
+            
             $stok_lantakan = StockKroom::where('karat_id', $produksis->karatasal_id)->first();
             $stok_lantakan->weight = $stok_lantakan->weight - $produksis->berat_asal;
             $stok_lantakan->save();
