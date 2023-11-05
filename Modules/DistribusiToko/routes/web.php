@@ -26,8 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get("$module_name/detail-distribusi/{dist_toko}", ['as' => "$module_name.detail_distribusi", 'uses' => "$controller_name@detail_distribusi"]);
 
 
+  Route::get("$module_name/tracking-distribusi/{dist_toko}", ['as' => "$module_name.tracking", 'uses' => "$controller_name@tracking"]);
 
-    Route::patch("$module_name/approve-distribusi/{id}", ['as' => "$module_name.approve_distribusi", 'uses' => "$controller_name@approve_distribusi"]);
+
+
+    Route::post("$module_name/approve-distribusi/{id}", ['as' => "$module_name.approve_distribusi", 'uses' => "$controller_name@approve_distribusi"]);
 
 
     

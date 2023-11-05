@@ -1,6 +1,8 @@
 <div class="row">
         <div class="col-lg-12">
             <div class="card">
+
+
                 <div class="card-header">
                     <h1 class="text-lg font-bold">Summary Distribusi</h1>
                 </div>
@@ -33,6 +35,9 @@
 
 
                     </div>
+
+
+
                     <div class="row flex justify-end items-center mr-auto mb-3">
                         <a class="btn btn-md btn-primary" href="#" onclick="showCreateModal()">Tambah Item</a>
                     </div>
@@ -40,7 +45,11 @@
                         <div class="card-header">
                            <span class="text-gray-600 text-md font-semibold">Detail</span>
                         </div>
+
+
+
                         <div class="card-body">
+
                             <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
                                 <form wire:submit.prevent="send">
                                 @foreach($dist_toko->items->groupBy('karat_id') as $karat_id => $items)

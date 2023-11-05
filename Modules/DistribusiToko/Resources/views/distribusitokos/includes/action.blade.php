@@ -1,11 +1,11 @@
 <div class="text-center">
 @can('edit_'.$module_name.'')
-@if ($data->isDraft())
-    <a href="{{ route(''.$module_name.'.detail', $data->id) }}"
-     class="btn btn-outline-success btn-sm">
-        <i class="bi bi-eye"></i> &nbsp;@lang('View')
-    </a>
-@endif
+<a href="{{ route(''.$module_name.'.detail', $data->id) }}"
+    class="btn btn-outline-success btn-sm @if (!$data->isDraftOrRetur())
+        disabled
+    @endif">
+    <i class="bi bi-eye"></i> &nbsp;@lang('View')
+</a>
 
 
 
