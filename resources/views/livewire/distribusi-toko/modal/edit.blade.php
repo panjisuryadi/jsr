@@ -347,7 +347,7 @@
                                 <div class="@if (!$is_preview)
                                     hidden @else flex justify-center
                                 @endif">
-                                    <img src="{{ empty($data['additional_data']['image'])?url('images/fallback_product_image.png'):$data['additional_data']['image'] }}" alt="">
+                                    <img src="{{ empty($data['additional_data']['image'])?url('images/fallback_product_image.png'):asset(imageUrl().$data['additional_data']['image']) }}" alt="">
                                 </div>
                                 <div class="@if ($is_preview)
                                     hidden

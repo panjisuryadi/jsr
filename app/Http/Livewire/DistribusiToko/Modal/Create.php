@@ -235,7 +235,7 @@ class Create extends Component
                     'no_certificate' => $this->data['additional_data']['no_certificate'],
                     'accessories_weight' => $this->data['additional_data']['accessories_weight'],
                     'tag_weight' => $this->data['additional_data']['tag_weight'],
-                    'image' => $this->data['additional_data']['image'],
+                    'image' => $this->uploadImage($this->data['additional_data']['image']),
                     'total_weight' => $this->data['total_weight']
                 ]
             ];
@@ -253,6 +253,16 @@ class Create extends Component
         }
 
         $this->emit('reload-page-create');
+    }
+
+    private function uploadImage($img){
+        $folderPath = "uploads/";
+        $image_parts = explode(";base64,", $img);
+        $image_base64 = base64_decode($image_parts[1]);
+        $fileName ='webcam_'. uniqid() . '.jpg';
+        $file = $folderPath . $fileName;
+        Storage::disk('public')->put($file,$image_base64);
+        return $fileName;
     }
 
     public function updated($propertyName)

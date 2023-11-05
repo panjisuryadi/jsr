@@ -291,7 +291,7 @@ class Create extends Component
                         'no_certificate' => $this->distribusi_toko_details[$key]['no_certificate'],
                         'accessories_weight' => $this->distribusi_toko_details[$key]['accessoris_weight']??null,
                         'tag_weight' => $this->distribusi_toko_details[$key]['label_weight']??null,
-                        'image' => $this->distribusi_toko_details[$key]['webcam_image'],
+                        'image' => $this->uploadImage($this->distribusi_toko_details[$key]['webcam_image']),
                         'total_weight' => $this->distribusi_toko_details[$key]['total_weight']
                     ]
                 ];
@@ -316,14 +316,14 @@ class Create extends Component
         return redirect(route('distribusitoko.detail', $distribusi_toko));
     }
 
-    private function uploadImage($detail,$img){
+    private function uploadImage($img){
         $folderPath = "uploads/";
         $image_parts = explode(";base64,", $img);
         $image_base64 = base64_decode($image_parts[1]);
         $fileName ='webcam_'. uniqid() . '.jpg';
         $file = $folderPath . $fileName;
-        Storage::disk('local')->put($file,$image_base64);
-        $detail->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('distribusi_toko');
+        Storage::disk('public')->put($file,$image_base64);
+        return $fileName;
     }
 
     public function messages(){
