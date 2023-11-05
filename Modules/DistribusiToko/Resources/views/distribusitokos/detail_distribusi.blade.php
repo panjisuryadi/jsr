@@ -11,6 +11,7 @@
 <div class="container-fluid">
     @livewire('distribusi-toko.cabang.detail',['dist_toko' => $dist_toko])
     @include('distribusitoko::distribusitokos.cabang.modal.summary')
+    @include('distribusitoko::distribusitokos.cabang.modal.tracking',['dist_toko'=>$dist_toko])
 </div>
 @endsection
 @push('page_css')
@@ -42,9 +43,11 @@ font-size: 0.9rem !important;
         $('#summary-modal').modal('show');
     });
 
-    function showTrackingModal(){
-        // 
-    }
+    window.addEventListener('tracking:modal', event => {
+        $('#tracking-modal').modal('show');
+    });
+
+    
     
 </script>
 

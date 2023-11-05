@@ -9,7 +9,7 @@
                 </a>
                 <a target="_blank" class="btn btn-sm btn-secondary mfe-1 d-print-none" href="#"><i class="bi bi-printer"></i> Print
                 </a>
-                <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('distribusitoko.tracking', $dist_toko) }}">
+                <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="#" wire:click.prevent="showTracking">
                     <i class="bi bi-save"></i> Tracking Product
                 </a>
             </div>

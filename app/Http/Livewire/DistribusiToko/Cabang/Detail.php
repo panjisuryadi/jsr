@@ -41,4 +41,8 @@ class Detail extends Component
             $this->dispatchBrowserEvent('summary:modal');
         }
     }
+
+    public function showTracking(){
+        $this->dispatchBrowserEvent('tracking:modal');
+    }
 }
