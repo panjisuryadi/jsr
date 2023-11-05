@@ -92,6 +92,17 @@ class DistribusiToko extends Model
         }
     }
 
+    public function setAsCompleted($note = null){
+        $this->status_id = 4;
+        if($this->save()){
+            $this->statuses()->attach($this->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => $note,
+                'date' => now()
+            ]);
+        }
+    }
+
     public function isRetur(){
         return $this->current_status->id == 3;
     }

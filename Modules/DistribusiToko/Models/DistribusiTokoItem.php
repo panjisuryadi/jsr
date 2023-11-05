@@ -5,6 +5,7 @@ namespace Modules\DistribusiToko\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Karat\Models\Karat;
+use Modules\Product\Entities\Product;
 use Modules\Stok\Models\StockOffice;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -28,5 +29,9 @@ class DistribusiTokoItem extends Model implements HasMedia
     public function stock_office()
     {
         return $this->morphToMany(StockOffice::class, 'transaction','stock_office_history','transaction_id','stock_office_id','id','id')->withTimestamps();
+    }
+
+    public function product(){
+        return $this->hasOne(Product::class,'dist_toko_item_id','id');
     }
 }

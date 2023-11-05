@@ -43,27 +43,5 @@ padding: .2em !important;
             // $('#viewModal').modal('show');
         }
     </script>
-<script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tracking,#View', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tracking')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTracking Retur {{ Label_case('distribusi') }}');
-        }
-        if($(this).attr('id') == 'View')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;view {{ Label_case('distribusi') }}');
-        } 
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
-</script>
 
 @endpush
