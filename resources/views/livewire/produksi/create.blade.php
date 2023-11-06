@@ -407,7 +407,7 @@
                                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                 </span>
                                             </button>
-                                            <button class="btn text-white text-sm btn-info btn-md" onclick="showModal()">
+                                            <button type="button" class="btn text-white text-sm btn-info btn-md" onclick="showModal()">
                                                 <span > Input Sertifikat<i class="bi bi-plus"></i></span>
                                             </button>
                                         </div>
