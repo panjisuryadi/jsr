@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
+use Modules\Stok\Models\StockKroom;
 
 //use Modules\JenisGroup\Models\JenisGroup;
 class Produksi extends Model
@@ -53,6 +54,11 @@ class Produksi extends Model
         }
 
         return $orderCode;
+    }
+
+    public function stock_kroom()
+    {
+        return $this->morphToMany(StockKroom::class, 'transaction','stock_kroom_history','transaction_id','stock_kroom_id','id','id')->withTimestamps();
     }
 
 

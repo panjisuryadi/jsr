@@ -941,11 +941,19 @@ public function update_ajax(Request $request, $id)
                 $penerimaan_lantakan = PenerimaanLantakan::create($data);
                 $stok_lantakan = $this->model_lantakan::where('karat_id', $data['karat_id'])->first();
                 if($stok_lantakan) {
-                    $stok_lantakan->weight = (!empty($stok_lantakan->weight) ? $stok_lantakan->weight : 0) + $data['weight'];
                     if(!empty($data['additional_data'])) {
                         $stok_lantakan->additional_data = $data['additional_data'];
                     }
-                    $stok_lantakan->save();
+
+                    $penerimaan_lantakan->stock_kroom()->attach($stok_lantakan->id,[
+                        'karat_id'=> $data['karat_id'],
+                        'in' => true,
+                        'berat_real' => $data['weight'],
+                        'berat_kotor' => $data['weight']
+                    ]);
+
+                    $berat_real = $stok_lantakan->history->sum('berat_real');
+                    $stok_lantakan->update(['weight'=> $berat_real]);
                 } else {
                     $this->model_lantakan::create($data);
                 }
