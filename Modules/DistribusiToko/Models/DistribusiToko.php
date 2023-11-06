@@ -2,6 +2,7 @@
 
 namespace Modules\DistribusiToko\Models;
 
+use App\Models\LookUp;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -128,6 +129,11 @@ class DistribusiToko extends Model
 
     public function isDraftOrRetur(){
         return $this->isDraft() || $this->isRetur();
+    }
+
+    public function scopeGold($query)
+    {
+        return $query->where('kategori_produk_id', LookUp::where('kode','id_kategori_produk_emas')->value('value'));
     }
 
 }

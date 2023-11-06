@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\DistribusiToko;
 
+use App\Models\LookUp;
 use DateTime;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -269,6 +270,7 @@ class Create extends Component
                 'date'                        => $this->distribusi_toko['date'],
                 'no_invoice'                  => $this->distribusi_toko['no_distribusi_toko'],
                 'created_by'                  => auth()->user()->name,
+                'kategori_produk_id'          => LookUp::where('kode','id_kategori_produk_emas')->value('value')
             ]);
 
             foreach($this->distribusi_toko_details as $key => $value) {
