@@ -67,13 +67,7 @@ class Detail extends Component
 
     public function proses()
     {
-        if (count($this->selectedItems) == 0) {
-            $this->dispatchBrowserEvent('items:not-selected', [
-                'message' => 'Barang belum dipilih'
-            ]);
-        } else {
-            $this->dispatchBrowserEvent('summary:modal');
-        }
+        $this->dispatchBrowserEvent('summary:modal');
     }
 
     public function showTracking(){
