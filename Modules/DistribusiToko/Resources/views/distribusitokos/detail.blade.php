@@ -38,10 +38,6 @@ padding: .2em !important;
         function showCreateModal(){
             $('#createModal').modal('show');
         }
-        function showViewModal(){
-            console.log('hello');
-            // $('#viewModal').modal('show');
-        }
     </script>
 
 @endpush

@@ -96,7 +96,7 @@
                 <td class="text-center font-semibold">{{ $data->model->name }}</td>
                 <td class="text-center font-semibold">{{ $data->code }}</td>
                 <td class="text-center font-semibold">
-                    <a href="#" class="hover:text-blue-400 btn btn-sm btn-info px-4">View</a>
+                    <a href="#" class="hover:text-blue-400 btn btn-sm btn-info px-4" onclick="showDetailModal({{ $row }})">View</a>
                    
                 </td>
                 
@@ -129,7 +129,8 @@
                 </div>
             </div>
         </div>
-        @include('distribusitoko::distribusitokos.modal.history')
+        @include('distribusitoko::distribusitokos.modal.retur.history')
+        @livewire('distribusi-toko.modal.retur.detail',['dist_toko' => $dist_toko])
     </div>
 
     @push('page_scripts')
@@ -137,6 +138,11 @@
     <script>
         function showHistory(){
             $('#history-modal').modal('show');
+        }
+
+        function showDetailModal(row){
+            $('#retur-detail').modal('show');
+            Livewire.emitTo('distribusi-toko.modal.retur.detail', 'setData', row)
         }
     </script>
         
