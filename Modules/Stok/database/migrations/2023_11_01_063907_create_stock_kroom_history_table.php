@@ -14,6 +14,7 @@ class CreateStockKroomHistoryTable extends Migration
     public function up()
     {
         Schema::create('stock_kroom_history', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('stock_kroom_id')->constrained('stock_kroom');
             $table->morphs('transaction');
             $table->boolean('in');
