@@ -41,6 +41,7 @@ class Create extends Component
         $id_kategoriproduk_berlian,
         $code,
         $image,
+        $harga_jual,
         $model_id;
 
     public $inputs = [
@@ -93,6 +94,8 @@ class Create extends Component
         }
 
         $this->arrayKaratBerlian = $arrayKaratBerlian;
+
+        $this->karatasal_id = $this->karat24k;
 
     }
 
@@ -257,6 +260,7 @@ class Create extends Component
             'created_by' => auth()->user()->id,
             'items' => $this->inputs,
             'kategoriproduk_id' => $this->kategoriproduk_id,
+            'harga_jual' => $this->harga_jual,
             'sertifikat' => $this->sertifikat,
         ];
         $request = new Request($data);
