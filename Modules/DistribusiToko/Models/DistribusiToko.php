@@ -50,6 +50,10 @@ class DistribusiToko extends Model
         return $this->belongsToMany(DistribusiTokoStatus::class,'distribusi_toko_tracking_statuses','dist_toko_id','status_id')->using(DistribusiTokoStatusTracking::class)->withPivot(['pic_id','date','note']);
     }
 
+    public function history(){
+        return $this->hasMany(DistribusiTokoStatusTracking::class,'dist_toko_id');
+    }
+
     public function current_status(){
         return $this->belongsTo(DistribusiTokoStatus::class, 'status_id');
     }

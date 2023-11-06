@@ -10,8 +10,8 @@
                     <a class="btn  mfs-auto btn-sm btn-success mfe-1" href="#"><i class="bi bi-house-door"></i> Dashboard
                     </a>
                   
-                    <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('distribusitoko.tracking', $dist_toko) }}">
-                        <i class="bi bi-save"></i> Tracking Product
+                    <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="#" onclick="showHistory()">
+                        <i class="bi bi-save"></i> History Distribusi
                     </a>
                 </div>
 
@@ -129,4 +129,15 @@
                 </div>
             </div>
         </div>
+        @include('distribusitoko::distribusitokos.modal.history')
     </div>
+
+    @push('page_scripts')
+
+    <script>
+        function showHistory(){
+            $('#history-modal').modal('show');
+        }
+    </script>
+        
+    @endpush
