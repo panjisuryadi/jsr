@@ -54,7 +54,7 @@
                                             <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                                 <option value="" {{ ($source_kode =! 'lantakan') ? 'selected' : '' }} >Select Karat</option>
                                                 @foreach($dataKarat as $row)
-                                                    <option value="{{$row->id}}" {{ old('karatasal_id') == $row->id ? 'selected' : '' }}>
+                                                    <option value="{{$row->id}}" {{ old('karatasal_id') == $row->id ? 'selected' : '' }} {{ $karat24k == $row->id ? '' : 'disabled'}}>
                                                         {{$row->name}} | {{$row->kode}}
                                                     </option>
                                                 @endforeach
@@ -390,6 +390,31 @@
                                                 <?php
                                                     $field_name = 'berat';
                                                     $field_lable = label_case('Berat Jadi');
+                                                    $field_placeholder = $field_lable;
+                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                    $required = "required";
+                                                ?>
+                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                                <input class="form-control"
+                                                    type="number"
+                                                    name="{{ $field_name }}"
+                                                    id="{{ $field_name }}"
+                                                    wire:model = "{{ $field_name }}"
+                                                    placeholder="{{ $field_placeholder }}">
+                                                <span class="invalid feedback" role="alert">
+                                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                                </span>
+                                                @if ($errors->has($field_name))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                </span>
+                                                @endif
+                                            </div>
+
+                                            <div class="form-group">
+                                                <?php
+                                                    $field_name = 'harga_jual';
+                                                    $field_lable = label_case('Harga');
                                                     $field_placeholder = $field_lable;
                                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                     $required = "required";

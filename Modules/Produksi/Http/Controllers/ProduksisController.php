@@ -232,6 +232,7 @@ class ProduksisController extends Controller
                 'tanggal' => !empty($input['tanggal']) ? $input['tanggal'] : null,
                 'created_by' => auth()->user()->id,
                 'kategoriproduk_id' => !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : null,
+                'harga_jual' => !empty($input['harga_jual']) ? $input['harga_jual'] : null,
                 'diamond_certificate_id' => !empty($diamond_certificate->id) ? $diamond_certificate->id : null,
             ]);
             $produksi_id = $produksis->id;
@@ -492,8 +493,17 @@ public function update(Request $request, $id)
             $product_items = ProduksiItems::where('produksis_id', $id);
 
             $stok_lantakan = StockKroom::where('karat_id', $module_name_singular->karatasal_id)->first();
-            $stok_lantakan->weight = $stok_lantakan->weight + $module_name_singular->berat_asal;
-            $stok_lantakan->save();
+
+            $module_name_singular->stock_kroom()->attach($stok_lantakan->id,[
+                'karat_id'=>$module_name_singular->karatasal_id,
+                'in' => true,
+                'berat_real' => $module_name_singular->berat_asal,
+                'berat_kotor' => $module_name_singular->berat_asal
+            ]);
+
+            $berat_real = $stok_lantakan->history->sum('berat_real');
+            $stok_lantakan->update(['weight'=> $berat_real]);
+
             $module_name_singular->delete();
             $product_items->delete();
 
