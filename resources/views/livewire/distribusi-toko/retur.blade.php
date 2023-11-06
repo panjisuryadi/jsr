@@ -33,10 +33,10 @@
 
                         <div class="col-sm-6 mb-3 mb-md-0">
                             <div class="font-semibold mb-2 border-bottom pb-2">Retur Info: </div>
-                            <div>Jumlah Item: <strong>{{ $dist_toko->items->count() }} buah</strong></div>
-                            <div>Jumlah Jenis Karat: <strong> {{ $dist_toko->items->groupBy('karat_id')->count() }} </strong></div>
-                            <div>Total Berat Emas: <strong> {{ $dist_toko->items->sum('gold_weight') }} gr</strong></div>
-                            <div>Alasan Retur: <strong> </strong></div>
+                            <div>Jumlah Item: <strong>{{ $dist_toko->items()->returned()->count() }} buah</strong></div>
+                            <div>Jumlah Jenis Karat: <strong> {{ $dist_toko->items()->returned()->groupBy('karat_id')->count() }} </strong></div>
+                            <div>Total Berat Emas: <strong> {{ $dist_toko->items()->returned()->sum('gold_weight') }} gr</strong></div>
+                            <div>Alasan Retur: <strong>{{ $dist_toko->current_status_note() }}</strong></div>
                         </div>
 
                        
@@ -81,7 +81,7 @@
                                 @php
                                 $total_weight = 0;
                                 @endphp
-                                @forelse($dist_toko->items as $row)
+                                @forelse($dist_toko->items()->returned()->get() as $row)
                                 @php
                                 $data = json_decode($row->additional_data)->product_information;
                                 $total_weight = $total_weight + $row->gold_weight;

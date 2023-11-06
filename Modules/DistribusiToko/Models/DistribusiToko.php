@@ -47,7 +47,7 @@ class DistribusiToko extends Model
     }
 
     public function statuses(){
-        return $this->belongsToMany(DistribusiTokoStatus::class,'distribusi_toko_tracking_statuses','dist_toko_id','status_id')->using(DistribusiTokoStatusTracking::class)->withPivot(['pic_id','date']);
+        return $this->belongsToMany(DistribusiTokoStatus::class,'distribusi_toko_tracking_statuses','dist_toko_id','status_id')->using(DistribusiTokoStatusTracking::class)->withPivot(['pic_id','date','note']);
     }
 
     public function current_status(){
@@ -64,6 +64,10 @@ class DistribusiToko extends Model
 
     public function current_status_date(){
         return $this->latest_status_tracking()->pivot->date;
+    }
+
+    public function current_status_note(){
+        return $this->latest_status_tracking()->pivot->note;
     }
 
     public function setAsDraft($note = null){
@@ -94,6 +98,17 @@ class DistribusiToko extends Model
 
     public function setAsCompleted($note = null){
         $this->status_id = 4;
+        if($this->save()){
+            $this->statuses()->attach($this->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => $note,
+                'date' => now()
+            ]);
+        }
+    }
+
+    public function setAsReturned($note = null){
+        $this->status_id = 3;
         if($this->save()){
             $this->statuses()->attach($this->status_id,[
                 'pic_id'=> auth()->id(),

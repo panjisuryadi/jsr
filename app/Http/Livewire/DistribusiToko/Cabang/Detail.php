@@ -17,6 +17,8 @@ class Detail extends Component
 
     public $selectAll = false;
 
+    public $note = '';
+
     protected $listeners = [
         'selectAllItem' => 'handleSelectAllItem',
         'isSelectAll' => 'handleIsSelectAll'
@@ -51,10 +53,16 @@ class Detail extends Component
 
     public function rules()
     {
-        $rules = [];
-
-
+        $rules = [
+            'note' => 'required_if:selectAll,false'
+        ];
         return $rules;
+    }
+
+    public function messages(){
+        return [
+            'note.required_if' => 'Wajib di isi',
+        ];
     }
 
     public function proses()
@@ -73,11 +81,22 @@ class Detail extends Component
     }
 
     public function confirm(){
+        $this->validate();
         if($this->selectAll){
             DB::beginTransaction();
             try{
                 $this->dist_toko->setAsCompleted();
-                $this->createProducts();
+                $this->createProducts($this->selectedItems);
+                DB::commit();
+            }catch (\Exception $e) {
+                DB::rollBack(); 
+                throw $e;
+            }
+        }else{
+            DB::beginTransaction();
+            try{
+                $this->dist_toko->setAsReturned($this->note);
+                $this->createProducts($this->selectedItems);
                 DB::commit();
             }catch (\Exception $e) {
                 DB::rollBack(); 
@@ -88,33 +107,38 @@ class Detail extends Component
         return redirect(route('home'));
     }
 
-    private function createProducts(){
+    private function createProducts($selected_items){
         foreach($this->dist_toko_items as $item){
-            $additional_data = json_decode($item['additional_data'],true)['product_information'];
-            $product = $item->product()->create([
-                'category_id'                => $additional_data['product_category']['id'],
-                  'cabang_id'                  => $this->dist_toko->cabang_id,
-                  'product_stock_alert'        => 5,
-                    'product_name'              => $additional_data['group']['name'] .' '. $additional_data['model']['name'] ?? 'unknown',
-                  'product_code'               => $additional_data['code'],
-                  'product_barcode_symbology'  => 'C128',
-                  'product_unit'               => 'Gram',
-                  'product_cost' => 0,
-                  'product_price' => 0,
-                  'images' => $additional_data['image']
-            ]);
-
-            $product->product_item()->create([
-                'karat_id'                    => $item->karat_id,
-                'certificate_id'              => empty($additional_data['certificate_id'])?null:$additional_data['certificate_id'],
-                'berat_emas'                  => $item->gold_weight,
-                'berat_label'                 => $additional_data['tag_weight'],
-                'berat_accessories'           => $additional_data['accessories_weight'],
-                'produk_model_id'             => $additional_data['model']['id'],
-                'berat_total'                 => $additional_data['total_weight'],
-                'product_cost'                => 0,
-                'product_price'               => 0
-            ]);
+            if(in_array($item->id, $selected_items)){
+                $item->approved();
+                $additional_data = json_decode($item['additional_data'],true)['product_information'];
+                $product = $item->product()->create([
+                    'category_id'                => $additional_data['product_category']['id'],
+                      'cabang_id'                  => $this->dist_toko->cabang_id,
+                      'product_stock_alert'        => 5,
+                        'product_name'              => $additional_data['group']['name'] .' '. $additional_data['model']['name'] ?? 'unknown',
+                      'product_code'               => $additional_data['code'],
+                      'product_barcode_symbology'  => 'C128',
+                      'product_unit'               => 'Gram',
+                      'product_cost' => 0,
+                      'product_price' => 0,
+                      'images' => $additional_data['image']
+                ]);
+    
+                $product->product_item()->create([
+                    'karat_id'                    => $item->karat_id,
+                    'certificate_id'              => empty($additional_data['certificate_id'])?null:$additional_data['certificate_id'],
+                    'berat_emas'                  => $item->gold_weight,
+                    'berat_label'                 => $additional_data['tag_weight'],
+                    'berat_accessories'           => $additional_data['accessories_weight'],
+                    'produk_model_id'             => $additional_data['model']['id'],
+                    'berat_total'                 => $additional_data['total_weight'],
+                    'product_cost'                => 0,
+                    'product_price'               => 0
+                ]);
+            }else{
+                $item->returned();
+            }
         }
     }
 }

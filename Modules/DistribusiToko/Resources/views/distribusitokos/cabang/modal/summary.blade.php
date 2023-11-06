@@ -1,4 +1,4 @@
-<div class="modal fade" id="summary-modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+<div class="modal fade" id="summary-modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,6 +19,12 @@
                 <div class="form-group mt-3">
                     <label for="note" class="font-medium">Catatan / Berita Acara</label>
                     <textarea id="note" class="form-control" wire:model="note" cols="30" rows="10" placeholder="Tulis disini..."></textarea>
+                    @if($errors->has('note'))
+                    <span class="invalid feedback"role="alert">
+                        <small class="text-danger">{{ $errors->first('note') }}.</small
+                        class="text-danger">
+                    </span>
+                    @endif
                 </div>
                 @endif
 

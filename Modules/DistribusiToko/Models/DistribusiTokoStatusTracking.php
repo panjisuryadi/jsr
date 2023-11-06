@@ -13,6 +13,10 @@ class DistribusiTokoStatusTracking extends Pivot
 
     protected $fillable = [];
 
+    protected $casts = [
+        "additional_information" => 'array'
+    ];
+
     protected $table = 'distribusi_toko_tracking_statuses';
     
     protected static function newFactory()

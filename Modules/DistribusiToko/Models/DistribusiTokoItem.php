@@ -34,4 +34,25 @@ class DistribusiTokoItem extends Model implements HasMedia
     public function product(){
         return $this->hasOne(Product::class,'dist_toko_item_id','id');
     }
+
+    public function approved(){
+        $this->status_id = 1;
+        $this->save();
+    }
+
+    public function returned(){
+        $this->status_id = 2;
+        $this->save();
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status_id', 1);
+    }
+
+    public function scopeReturned($query)
+    {
+        return $query->where('status_id', 2);
+    }
+
 }
