@@ -308,8 +308,16 @@ class ProduksisController extends Controller
             }
             
             $stok_lantakan = StockKroom::where('karat_id', $produksis->karatasal_id)->first();
-            $stok_lantakan->weight = $stok_lantakan->weight - $produksis->berat_asal;
-            $stok_lantakan->save();
+
+            $produksis->stock_kroom()->attach($stok_lantakan->id,[
+                'karat_id'=>$produksis->karatasal_id,
+                'in' => false,
+                'berat_real' => -1 * $produksis->berat_asal,
+                'berat_kotor' => -1 * $produksis->berat_asal
+            ]);
+
+            $berat_real = $stok_lantakan->history->sum('berat_real');
+            $stok_lantakan->update(['weight'=> $berat_real]);
 
         } catch (\Throwable $th) {
             DB::rollBack();
