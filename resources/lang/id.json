@@ -180,8 +180,7 @@
     "Goods Receipt": "Pembelian",
     "Goods Receipts QC": "Penerimaan QC",
 
-
-
+    "Create Distribution": "Simpan Distribusi",
 
     "password confirmation": "Konfirmasi Kata sandi",
     "The :attribute must contain at least one letter.": ":attribute harus mengandung setidaknya satu huruf.",
@@ -190,5 +189,6 @@
     "The :attribute must contain at least one uppercase and one lowercase letter.": "Kata sandi harus mengandung setidaknya satu huruf besar dan satu huruf kecil.",
     "The given :attribute has appeared in a data leak. Please choose a different :attribute.": ":attribute sudah banyak digunakan coba pilih :attribute lain",
     "Unpublished": "Unpublished"
+    
 }
 

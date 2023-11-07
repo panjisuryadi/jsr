@@ -1294,7 +1294,7 @@ class GenerateMenus
 
             // EMAS - TOKO - Distribusi Toko - LIST DISTRIBUSI TOKO
             $distribusiTokoBerlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
-                'route' => 'distribusitoko.index',
+                'route' => 'distribusitoko.berlian',
                 'class' => 'nav-item',
             ])
             ->data([

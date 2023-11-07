@@ -16,7 +16,7 @@ use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\Cabang\Models\Cabang;
 use Modules\UserCabang\Models\UserCabang;
 use PDF;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\DistribusiToko\Models\DistribusiToko;
@@ -26,6 +26,8 @@ use Modules\Stok\Models\StockOffice;
 
 class DistribusiTokosController extends Controller
 {
+    public $module_name;
+    public $module_path;
 
   public function __construct()
     {
@@ -834,6 +836,20 @@ public function approve_distribusi(Request $request, $id)
                 return redirect()->back();
             }
 
+    }
+
+    public function index_berlian(){
+        $cabang = [];
+        if(auth()->user()->isUserCabang()){
+            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+        }else{
+            $cabang = Cabang::all();
+        }
+        return view(''.$this->module_name.'::'.$this->module_path.'.berlian.create',
+            compact(
+                'cabang'
+            )
+        );
     }
 
 }
