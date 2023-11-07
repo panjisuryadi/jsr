@@ -233,7 +233,6 @@
 </div>
 
 <div class="custom-control custom-switch">
-
     <input type="checkbox" class="custom-control-input"
     id="show_distribusi" name="permissions[]"
     value="show_distribusi" {{ $role->hasPermissionTo('show_distribusi') ? 'checked' : '' }}>

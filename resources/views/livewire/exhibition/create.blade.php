@@ -3,7 +3,7 @@
                 <input name="rfid" class="form-control rounded rounded-lg sortir text-center" wire:keydown.enter="clickQuery"
                 type="text"
                 wire:model="search"
-                placeholder="@lang('Exhibition')" autofocus>
+                placeholder="@lang('Scan product')" autofocus>
             </div>
 
 

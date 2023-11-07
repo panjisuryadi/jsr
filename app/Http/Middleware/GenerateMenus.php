@@ -267,7 +267,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => ['buysbacks*'],
-                'permission'    => ['access_buysbacks'],
+                'permission'    => ['access_buybacktoko'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
