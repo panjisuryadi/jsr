@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::group(['middleware' => 'auth'], function () {
     $module_name = 'distribusitoko';
     $controller_name = 'DistribusiTokosController';
@@ -43,7 +45,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get("$module_name/send/{dist_toko}", ['as' => "$module_name.send", 'uses' => "$controller_name@send"]);
+
+    Route::get("$module_name/berlian", ['as' => "$module_name.berlian", 'uses' => "$controller_name@index_berlian"]);
+    
     Route::resource("$module_name", "$controller_name");
+
 
 });
 

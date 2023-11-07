@@ -142,6 +142,7 @@ class GenerateMenus
                 ],
                 'permission' => ['access_masterdata',
                                       'access_kategoriproduks',
+                                      'access_buybacktoko',
                                       'access_diamondcertificates'],
             ]);
             $emas->link->attr([
@@ -203,9 +204,11 @@ class GenerateMenus
                 'order'         => 2,
                 'activematches' => [
                     'penentuanhargas*',
+                    
 
                 ],
-                'permission'    => ['access_penentuanhargas'],
+                'permission'    => [
+                    'access_buybacktoko'],
             ]);
             $toko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -220,7 +223,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => ['storeemployees*'],
-                'permission'    => ['access_storeemployees'],
+                'permission'    => ['access_buybacktoko'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -235,7 +238,7 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['penentuanhargas*'],
-                'permission'    => ['access_penentuanhargas'],
+                'permission'    => ['access_buybacktoko'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -251,7 +254,7 @@ class GenerateMenus
                     'penentuanhargas*',
 
                 ],
-                'permission'    => ['access_penentuanhargas'],
+                'permission'    => ['access_penentuanhargas','access_buybacktoko'],
             ]);
             $penerimaan->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -266,8 +269,8 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 1,
-                'activematches' => ['buysbacks*'],
-                'permission'    => ['access_buysbacks'],
+               
+                'permission'    => ['access_buybacktoko'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -374,7 +377,7 @@ class GenerateMenus
             ->data([
                 'order'         => 3,
                 'activematches' => [],
-                'permission' => [],
+                'permission' => ['access_sales'],
             ]);
             $sales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -557,7 +560,7 @@ class GenerateMenus
                 'activematches' => [
                            'stoks*',
                     ],
-                  'permission' => ['access_stoks'],
+                  'permission' => ['access_stoks','access_menu_stok'],
             ]);
             $stok->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -829,7 +832,7 @@ class GenerateMenus
             ->data([
                 'order'         => 5,
                 'activematches' => [],
-                'permission' => [],
+                'permission' => ['access_menu_proses'],
             ]);
             $proses->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -843,7 +846,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => [],
-                'permission' => [],
+                'permission' => ['access_menu_proses'],
             ]);
             $cuci->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -1294,7 +1297,7 @@ class GenerateMenus
 
             // EMAS - TOKO - Distribusi Toko - LIST DISTRIBUSI TOKO
             $distribusiTokoBerlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
-                'route' => 'distribusitoko.index',
+                'route' => 'distribusitoko.berlian',
                 'class' => 'nav-item',
             ])
             ->data([

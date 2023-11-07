@@ -37,10 +37,12 @@
                     </div>
 
 
-
+                    @if ($dist_toko->kategori_produk_id != $id_kategoriproduk_berlian)
+                        
                     <div class="row flex justify-end items-center mr-auto mb-3">
                         <a class="btn btn-md btn-primary" href="#" onclick="showCreateModal()">Tambah Item</a>
                     </div>
+                    @endif
                     <div class="card">
                         <div class="card-header">
                            <span class="text-gray-600 text-md font-semibold">Detail</span>
@@ -79,10 +81,10 @@
                                             <td class="text-center font-extrabold"> {{@$row->gold_weight}} gr</td>
                                             <td class="text-justify">
                                                 <div>
-                                                    Produk : <strong>{{ $data->product_category->name }}</strong>
+                                                    Produk : <strong>{{ !empty($data->product_category->name) ? $data->product_category->name : '-' }}</strong>
                                                 </div>
                                                 <div>
-                                                    Group : <strong>{{ $data->group->name }}</strong>
+                                                    Group : <strong>{{ !empty($data->group->name) ? $data->group->name : '' }}</strong>
                                                 </div>
                                                 <div>
                                                     Model : <strong>{{ $data->model->name }}</strong>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\DistribusiToko;
 
+use App\Models\LookUp;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
@@ -13,12 +14,15 @@ class Summary extends Component
     public $dist_toko;
 
     public $total_weight_per_karat = [];
+    
+    public $id_kategoriproduk_berlian;
 
     public function render(){
         return view("livewire.distribusi-toko.summary");
     }
 
     public function mount(){
+        $this->id_kategoriproduk_berlian = LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
         foreach($this->dist_toko->items->groupBy('karat_id') as $karat_id => $items){
             $this->total_weight_per_karat[$karat_id] = $items->sum('gold_weight');
         }
