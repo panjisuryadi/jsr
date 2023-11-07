@@ -4,11 +4,25 @@
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
     
-    <li class="breadcrumb-item active">{{$module_action}}</li>
+   <li class="breadcrumb-item active">{{ucfirst($dist_toko->current_status->name)}}</li>
 </ol>
 @endsection
 @section('content')
 <div class="container-fluid">
+
+    @if($dist_toko->isDraft())
+         <span class="text-gray-600">draft</span>
+    @elseif ($dist_toko->isRetur())
+         <span class="text-gray-600">retur</span>
+    @elseif ($dist_toko->isCompleted())
+        <span class="text-gray-600">completed</span>
+        @else
+        sdsddsdsdxzxzxz
+    @endif
+
+{{ $dist_toko }}
+
+
     @livewire('distribusi-toko.cabang.detail',['dist_toko' => $dist_toko])
     @include('distribusitoko::distribusitokos.cabang.modal.tracking',['dist_toko'=>$dist_toko])
 </div>
