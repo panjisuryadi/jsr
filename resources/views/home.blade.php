@@ -154,9 +154,12 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
         @include('partial.pages.kasir')
  @endif
 
- @if (Auth::user()->roles->first()->name == 'Manager')
-        @include('partial.pages.distribusi')
- @endif
+ 
+ @can('access_distribusi')
+  @include('partial.pages.distribusi')
+ @endcan
+
+
 
  @endif
 

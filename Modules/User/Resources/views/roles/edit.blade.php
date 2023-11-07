@@ -111,7 +111,8 @@
             <input type="checkbox" class="custom-control-input"
             id="access_distribusi" name="permissions[]"
             value="access_distribusi" {{ $role->hasPermissionTo('access_distribusi') ? 'checked' : '' }}>
-            <label class="custom-control-label" for="access_distribusi">Distribusi</label>
+            <label class="custom-control-label" for="access_distribusi">
+            Tampilkan list Distribusi Dashboard</label>
         </div>
         
 
@@ -228,7 +229,7 @@
     <input type="checkbox" class="custom-control-input"
     id="create_distribusi" name="permissions[]"
     value="create_distribusi" {{ $role->hasPermissionTo('create_distribusi') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="create_distribusi">Akses Distribusi</label>
+    <label class="custom-control-label" for="create_distribusi">Buat Distribusi</label>
 </div>
 
 <div class="custom-control custom-switch">
@@ -236,7 +237,7 @@
     <input type="checkbox" class="custom-control-input"
     id="show_distribusi" name="permissions[]"
     value="show_distribusi" {{ $role->hasPermissionTo('show_distribusi') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="show_distribusi">Buat Distribusi</label>
+    <label class="custom-control-label" for="show_distribusi">Lihat Distribusi</label>
 </div>
 
 
