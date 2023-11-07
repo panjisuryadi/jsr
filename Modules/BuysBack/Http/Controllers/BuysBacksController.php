@@ -55,7 +55,7 @@ class BuysBacksController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_buybacktoko'), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',
