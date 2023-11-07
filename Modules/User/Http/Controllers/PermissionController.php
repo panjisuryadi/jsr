@@ -171,6 +171,9 @@ public function store(Request $request)
         Permissions::firstOrCreate(['name' => 'show_'.$name.'']);
         Permissions::firstOrCreate(['name' => 'edit_'.$name.'']);
         Permissions::firstOrCreate(['name' => 'delete_'.$name.'']);
+        Permissions::firstOrCreate(['name' => 'print_'.$name.'']);
+        Permissions::firstOrCreate(['name' => 'reject_'.$name.'']);
+        Permissions::firstOrCreate(['name' => 'approve_'.$name.'']);
 
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
@@ -274,13 +277,30 @@ public function update(Request $request, $id)
            }
 
 
-    public function destroy(Role $role) {
-        abort_if(Gate::denies('access_user_management'), 403);
+    public function destroy($id)
+    {
 
-        $role->delete();
+        try {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
 
-        toast('Role Deleted!', 'success');
+        $module_action = 'Delete';
 
-        return redirect()->route('roles.index');
+        $$module_name_singular = $module_model::findOrFail($id);
+
+        $$module_name_singular->delete();
+         toast(''. $module_title.' Deleted!', 'success');
+         return redirect()->route(''.$module_name.'.index');
+
+          } catch (\Exception $e) {
+           // dd($e);
+                toast(''. $module_title.' error!', 'warning');
+                return redirect()->back();
+            }
+
     }
 }
