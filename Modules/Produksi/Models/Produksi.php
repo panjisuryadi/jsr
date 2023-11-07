@@ -39,6 +39,11 @@ class Produksi extends Model
         return $this->belongsTo(Group::class, 'model_id', 'id');
     }
 
+    public function produksi_items()
+    {
+        return $this->hasMany(ProduksiItems::class, 'id', 'produksi_items');
+    }
+
     public static function generateCode()
     {
         $dateCode = self::PRDCODE . '-';
