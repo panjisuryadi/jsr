@@ -377,7 +377,7 @@ class GenerateMenus
             ->data([
                 'order'         => 3,
                 'activematches' => [],
-                'permission' => [],
+                'permission' => ['access_sales'],
             ]);
             $sales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -832,7 +832,7 @@ class GenerateMenus
             ->data([
                 'order'         => 5,
                 'activematches' => [],
-                'permission' => [],
+                'permission' => ['access_menu_proses'],
             ]);
             $proses->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -846,7 +846,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => [],
-                'permission' => [],
+                'permission' => ['access_menu_proses'],
             ]);
             $cuci->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',

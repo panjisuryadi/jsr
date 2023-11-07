@@ -471,6 +471,13 @@
         <label class="custom-control-label" for="access_stoks">{{ Label_case('access_stoks') }}</label>
     </div>
     
+       <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input"
+        id="access_menu_proses" name="permissions[]"
+        value="access_menu_proses" {{ $role->hasPermissionTo('access_menu_proses') ? 'checked' : '' }}>
+        <label class="custom-control-label" for="access_menu_proses">{{ Label_case('access_menu_proses') }}</label>
+    </div>
+    
     
 </div>
 
