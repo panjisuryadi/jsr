@@ -105,6 +105,7 @@ class Detail extends Component
     private function createProducts($selected_items){
         foreach($this->dist_toko_items as $item){
             if(in_array($item->id, $selected_items)){
+                $item->approved();
                 $this->addStockCabang($item,$this->dist_toko->cabang_id);
                 $additional_data = json_decode($item['additional_data'],true)['product_information'];
                 $product = $item->product()->create([

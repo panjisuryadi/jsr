@@ -71,9 +71,6 @@ class DistribusiTokosController extends Controller
             return redirect()->back();
         }
 
-        if(!$dist_toko->isDraftOrRetur()){
-            return redirect()->route('distribusitoko.index');
-        }
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -82,7 +79,7 @@ class DistribusiTokosController extends Controller
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
        
-         return view(''.$module_name.'::'.$module_path.'.detail_retur',
+         return view(''.$module_name.'::'.$module_path.'.detail',
            compact('module_name',
             'module_action',
             'module_title',
