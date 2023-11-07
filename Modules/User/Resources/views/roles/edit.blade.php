@@ -289,7 +289,7 @@
 
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
-        Buys back Sales
+        Buys back Sales 
     </div>
     <div class="card-body">
         <div class="flex flex-row grid grid-cols-2 gap-1 mb-2">
@@ -358,6 +358,93 @@
 
 
 
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+      Buys Back Toko
+    </div>
+    <div class="card-body">
+
+
+<div class="flex flex-row grid grid-cols-2 gap-1">
+        <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_buybacktoko" name="permissions[]"
+                value="access_buybacktoko" {{ $role->hasPermissionTo('access_buybacktoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_buybacktoko">Akses Buys Back Toko</label>
+            </div>
+
+
+          <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_buybacktoko" name="permissions[]"
+                value="create_buybacktoko" {{ $role->hasPermissionTo('create_buybacktoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_buybacktoko">Buat Buys Back Toko</label>
+            </div>
+
+         <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_buybacktoko" name="permissions[]"
+                value="edit_buybacktoko" {{ $role->hasPermissionTo('edit_buybacktoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_buybacktoko">
+                Edit Buys Back Toko</label>
+            </div>
+
+ <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="delete_buybacktoko" name="permissions[]"
+                value="delete_buybacktoko" {{ $role->hasPermissionTo('delete_buybacktoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="delete_buybacktoko">
+                Hapus Buys Back Toko</label>
+            </div>
+
+
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="approve_buybacktoko" name="permissions[]"
+                value="approve_buybacktoko" {{ $role->hasPermissionTo('approve_buybacktoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="approve_buybacktoko">
+                Approve Buys Back Toko</label>
+            </div>
+
+
+
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="reject_buybacktoko" name="permissions[]"
+                value="reject_buybacktoko" {{ $role->hasPermissionTo('reject_buybacktoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="reject_buybacktoko">
+                Reject Buys Back Toko</label>
+            </div>
+
+     <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="print_buybacktoko" name="permissions[]"
+                value="print_buybacktoko" {{ $role->hasPermissionTo('print_buybacktoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="print_buybacktoko">
+                Print Buys Back Toko</label>
+            </div>
+
+    
+    
+</div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
       Akses Menu
@@ -391,6 +478,25 @@
 </div>
 </div>
 
+
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Settings
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_settings" name="permissions[]"
+                value="access_settings" {{ $role->hasPermissionTo('access_settings') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_settings">Access</label>
+            </div>
+            
+        </div>
+    </div>
+</div>
 
 
 
@@ -911,26 +1017,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Settings -->
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
-                                            Settings
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="access_settings" name="permissions[]"
-                                                               value="access_settings" {{ $role->hasPermissionTo('access_settings') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="access_settings">Access</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                     
 
 
                             </div>
