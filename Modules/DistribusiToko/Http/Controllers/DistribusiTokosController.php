@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\DistribusiToko\Models\DistribusiToko;
+use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
 use Modules\Stok\Models\StockOffice;
@@ -838,16 +839,20 @@ public function approve_distribusi(Request $request, $id)
 
     }
 
-    public function index_berlian(){
+    public function index_berlian()
+    {
         $cabang = [];
         if(auth()->user()->isUserCabang()){
             $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
         }else{
             $cabang = Cabang::all();
         }
+        $produksis_id = DistribusiTokoItem::whereNotNull('produksis_id')->pluck('produksis_id')->toArray();
+
         return view(''.$this->module_name.'::'.$this->module_path.'.berlian.create',
             compact(
-                'cabang'
+                'cabang',
+                'produksis_id'
             )
         );
     }

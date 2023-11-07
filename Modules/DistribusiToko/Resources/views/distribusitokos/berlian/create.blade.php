@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="container-fluid mb-1">
-        @livewire('distribusi-toko.berlian.create',['cabang' => $cabang])
+        @livewire('distribusi-toko.berlian.create',['cabang' => $cabang, 'produksis_id' => $produksis_id])
     </div>
 
 @endsection

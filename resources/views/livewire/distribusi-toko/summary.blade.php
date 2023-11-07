@@ -79,10 +79,10 @@
                                             <td class="text-center font-extrabold"> {{@$row->gold_weight}} gr</td>
                                             <td class="text-justify">
                                                 <div>
-                                                    Produk : <strong>{{ $data->product_category->name }}</strong>
+                                                    Produk : <strong>{{ !empty($data->product_category->name) ? $data->product_category->name : '-' }}</strong>
                                                 </div>
                                                 <div>
-                                                    Group : <strong>{{ $data->group->name }}</strong>
+                                                    Group : <strong>{{ !empty($data->group->name) ? $data->group->name : '' }}</strong>
                                                 </div>
                                                 <div>
                                                     Model : <strong>{{ $data->model->name }}</strong>

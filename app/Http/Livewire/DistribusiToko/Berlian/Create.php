@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\DistribusiToko\Berlian;
 
+use App\Models\LookUp;
 use DateTime;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,7 @@ use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Cabang\Models\Cabang;
+use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Produksi\Models\Produksi;
@@ -51,6 +53,8 @@ class Create extends Component
     ];
 
     public $exceptProduksiId = [];
+
+    public $produksis_id;
 
     public function handleWebcamCaptured($key,$data_uri){
         $this->distribusi_toko_details[$key]['webcam_image'] = $data_uri;
@@ -97,7 +101,8 @@ class Create extends Component
     }
 
     public function render(){
-        $data = Produksi::with('karatjadi', 'model', );
+        $this->exceptProduksiId = array_merge($this->exceptProduksiId, $this->produksis_id);
+        $data = Produksi::with('karatjadi', 'model');
         if(!empty($this->exceptProduksiId)){
             $data = $data->whereNotIn('id', $this->exceptProduksiId);
         }
@@ -160,6 +165,7 @@ class Create extends Component
     public function store()
     {
         $this->validate();
+        $kategoriproduk_id = LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
 
         DB::beginTransaction();
         try{
@@ -167,6 +173,7 @@ class Create extends Component
                 'cabang_id'                   => $this->distribusi_toko['cabang_id'],
                 'date'                        => $this->distribusi_toko['date'],
                 'no_invoice'                  => $this->distribusi_toko['no_distribusi_toko'],
+                'kategori_produk_id'          => $kategoriproduk_id,
                 'created_by'                  => auth()->user()->name,
             ]);
 
@@ -175,8 +182,9 @@ class Create extends Component
                     "product_information" => $value
                 ];
                 $distribusi_toko->items()->create([
-                    'karat_id' => $value->karat_id,
-                    'gold_weight' => $value->berat,
+                    'karat_id' => !empty($value['karat_id']) ? $value['karat_id'] : 0,
+                    'gold_weight' => !empty($value['berat']) ? $value['berat'] : 0,
+                    'produksis_id' => !empty($value['id']) ? $value['id'] : null,
                     'additional_data' => json_encode($additional_data),
                 ]);
             }
