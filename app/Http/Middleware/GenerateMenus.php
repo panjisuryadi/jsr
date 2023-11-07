@@ -560,7 +560,7 @@ class GenerateMenus
                 'activematches' => [
                            'stoks*',
                     ],
-                  'permission' => ['access_stoks'],
+                  'permission' => ['access_stoks','access_menu_stok'],
             ]);
             $stok->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
