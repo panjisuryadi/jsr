@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Modules\Product\Entities\Product;
+use Modules\Stok\Models\StockCabang;
 
 class Detail extends Component
 {
@@ -104,7 +105,7 @@ class Detail extends Component
     private function createProducts($selected_items){
         foreach($this->dist_toko_items as $item){
             if(in_array($item->id, $selected_items)){
-                $item->approved();
+                $this->addStockCabang($item,$this->dist_toko->cabang_id);
                 $additional_data = json_decode($item['additional_data'],true)['product_information'];
                 $product = $item->product()->create([
                     'category_id'                => $additional_data['product_category']['id'],
@@ -134,5 +135,21 @@ class Detail extends Component
                 $item->returned();
             }
         }
+    }
+
+    private function addStockCabang($item,$cabang_id){
+        $stock_cabang = StockCabang::where(['karat_id' => $item->karat_id, 'cabang_id' => $cabang_id])->first();
+        if(is_null($stock_cabang)){
+            $stock_cabang = StockCabang::create(['karat_id' => $item->karat_id, 'cabang_id' => $cabang_id]);
+        }
+        $item->stock_cabang()->attach($stock_cabang->id,[
+            'karat_id'=>$item->karat_id,
+            'in' => true,
+            'berat_real' =>$item->gold_weight,
+            'berat_kotor' => $item->gold_weight
+        ]);
+        $berat_real = $stock_cabang->history->sum('berat_real');
+        $berat_kotor = $stock_cabang->history->sum('berat_kotor');
+        $stock_cabang->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
     }
 }
