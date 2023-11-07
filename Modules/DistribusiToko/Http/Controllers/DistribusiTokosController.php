@@ -301,10 +301,14 @@ public function index_data(Request $request)
 
 
 
+
+//buat dashboard manager
 //buat dashboard manager
 public function index_data_table(Request $request)
 
     {
+
+
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -313,7 +317,7 @@ public function index_data_table(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-
+        
         $$module_name = $module_model::get();
 
         $data = $$module_name;
@@ -349,12 +353,14 @@ public function index_data_table(Request $request)
                                 return $tb;
                             })  
 
-                             ->editColumn('status', function ($data) {
-                             $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
-                                     ' . $data->current_status->name . '
-                                    </div>';
-                                return $tb;
-                            })
+                           ->addColumn('status', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                             return view(''.$module_name.'::'.$module_path.
+                            '.includes.status_distribusi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
                            ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center">
                                     <h3 class="text-sm text-gray-600">
@@ -383,6 +389,106 @@ public function index_data_table(Request $request)
                         ->make(true);
                      }
 
+
+
+
+
+
+public function index_data_complete(Request $request)
+
+    {
+
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        
+        $$module_name = $module_model::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                             return view(''.$module_name.'::'.$module_path.
+                            '.includes.aksi_distribusi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+
+                        ->editColumn('date', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <span class="text-gray-600">
+                                    ' .  Carbon::parse($data->date)->format('d M, Y') . '</span>
+                                    </div>';
+                                return $tb;
+                            })
+                        ->editColumn('no_invoice', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <span class="text-gray-600">
+                                    ' .$data->no_invoice . '</span>
+                                    </div>';
+                                return $tb;
+                            })
+                          ->editColumn('cabang', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <span class="text-gray-600">
+                                     ' .$data->cabang->name . '</span>
+                                    </div>';
+                                return $tb;
+                            })  
+
+                            //  ->editColumn('status', function ($data) {
+                            //  $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
+                            //          ' . $data->current_status->name . '
+                            //         </div>';
+                            //     return $tb;
+                            // })
+
+                        ->addColumn('status', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                             return view(''.$module_name.'::'.$module_path.
+                            '.includes.status_distribusi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
+
+                           ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center">
+                                    <span class="text-sm text-gray-600">
+                                     Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></span>
+                                    </div>
+                                    <div class="items-center">
+                                    <span class="text-sm text-gray-800">Total Berat: <strong> '.$data->items->sum('gold_weight') .' Gram
+                                    </strong></span>
+                                   </div>';
+                                return $tb;
+                            })
+
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['updated_at', 
+                                    'action',  'cabang','date', 'karat','status',
+                                      'no_invoice'])
+                        ->make(true);
+                     }
 
 
 
