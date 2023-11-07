@@ -9,22 +9,14 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-
-    @if($dist_toko->isDraft())
-         <span class="text-gray-600">draft</span>
+    @if ($dist_toko->isInProgress())
+        @livewire('distribusi-toko.cabang.detail',['dist_toko' => $dist_toko])
     @elseif ($dist_toko->isRetur())
-         <span class="text-gray-600">retur</span>
+        @livewire('distribusi-toko.cabang.retur',['dist_toko' => $dist_toko])
     @elseif ($dist_toko->isCompleted())
-        <span class="text-gray-600">completed</span>
-        @else
-        sdsddsdsdxzxzxz
+        @livewire('distribusi-toko.cabang.completed',['dist_toko' => $dist_toko])
     @endif
 
-{{ $dist_toko }}
-
-
-    @livewire('distribusi-toko.cabang.detail',['dist_toko' => $dist_toko])
-    @include('distribusitoko::distribusitokos.cabang.modal.tracking',['dist_toko'=>$dist_toko])
 </div>
 @endsection
 @push('page_css')
@@ -62,10 +54,6 @@ font-size: 0.9rem !important;
 
     window.addEventListener('summary:modal', event => {
         $('#summary-modal').modal('show');
-    });
-
-    window.addEventListener('tracking:modal', event => {
-        $('#tracking-modal').modal('show');
     });
 
     window.addEventListener('check:all-selected', event => {
