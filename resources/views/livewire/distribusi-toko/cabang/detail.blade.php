@@ -3,14 +3,14 @@
         <div class="card">
             <div class="card-header d-flex flex-wrap align-items-center">
                 <div>
-                    <span>DISTRIBUSI TOKO</span>
+                    <span>PENERIMAAN DISTRIBUSI TOKO</span>
                 </div>
                 <a class="btn  mfs-auto btn-sm btn-success mfe-1" href="#"><i class="bi bi-house-door"></i> Dashboard
                 </a>
                 <a target="_blank" class="btn btn-sm btn-secondary mfe-1 d-print-none" href="#"><i class="bi bi-printer"></i> Print
                 </a>
-                <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('distribusitoko.tracking', $dist_toko) }}">
-                    <i class="bi bi-save"></i> Tracking Product
+                <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="#" wire:click.prevent="showTracking">
+                    <i class="bi bi-save"></i> History Distribusi
                 </a>
             </div>
 
@@ -36,7 +36,7 @@
                         <div>Jumlah Jenis Karat: <strong> {{ $dist_toko->items->groupBy('karat_id')->count() }} </strong></div>
                         <div>Total Berat Emas: <strong> {{ $dist_toko->items->sum('gold_weight') }} gr</strong></div>
                         <div>
-                            {{ Label_case('Status') }}: <label class="bg-white border-2 font-semibold uppercase border-green-500  text-green-500 py-0 px-4 m-1">Draft</label>
+                            {{ Label_case('Status') }}: <label class="bg-white border-2 font-semibold uppercase border-green-500  text-green-500 py-0 px-4 m-1">{{ $dist_toko->current_status->name }}</label>
                         </div>
 
                     </div>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="relative flex justify-left">
                             <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">
-                                <span class="text-blue-400">Distribusi Toko Detail
+                                <span class="text-blue-400">Penerimaan Distribusi Toko Detail
 
                                 </span>
 
@@ -68,7 +68,7 @@
                                 <tr>
                                     <th class="text-center">
                                         <div class="p-1">
-                                            <input type="checkbox" id="select-all">
+                                            <input type="checkbox" wire:model="selectAll" id="select-all">
                                         </div>
 
                                     </th>
@@ -94,7 +94,7 @@
                                 @endphp
                                 <tr>
                                     <td class="text-center">
-                                        <input type="checkbox" wire:model.lazy="selectedItems" value="{{$row->id}}" />
+                                        <input type="checkbox" wire:model="selectedItems" value="{{$row->id}}" name="selected_items[]" />
                                     </td>
                                     <td class="text-center">{{$loop->iteration}}</td>
                                     <td class="text-center font-semibold"> {{@$row->karat->name}} gr</td>
@@ -123,13 +123,6 @@
 
                                     </td>
 
-                                    <td colspan="2" class="border-0 text-center font-semibold">
-                                        <div class="text-right px-3 text-2xl">
-                                            <span class="text-base text-gray-500"> Jumlah Emas : </span>
-
-                                            <span class="px-2"> {{ $total_weight }} <small>GR</small></span>
-                                        </div>
-                                    </td>
                                 </tr>
                             </tbody>
 
@@ -138,44 +131,13 @@
 
                 </div>
 
-                <div class="flex flex-col grid grid-cols-2 gap-2">
 
-                    <div></div>
-
-                    <div class="px-2">
-
-                        <div class="form-group">
-                            <?php
-                            $field_name = 'status';
-                            $field_lable = label_case('Status');
-                            $field_placeholder = $field_lable;
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = "required";
-                            ?>
-                            <label class="mb-0" for="{{ $field_name }}">@lang('Status') <span class="text-danger">*</span></label>
-                            <select class="form-control form-control-sm" name="{{ $field_name }}" id="{{ $field_name }}" required>
-                                <option value="" selected disabled>@lang('Status')</option>
-                                <option value="3">Approved</option>
-                                <option value="4">Reject</option>
-                            </select>
-                            <div class="invalid feedback" role="alert">
-                                <span class="text-danger error-text {{ $field_name }}_err"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <label style="font-size: 0.7rem;" class="mb-0" for="status">@lang('Note') <span class="text-danger">(Optional)</span></label>
-                            <textarea name="note" id="note" rows="2" class="form-control form-control-sm"></textarea>
-                        </div>
-
-
+                <div class="flex justify-end items-center mt-1 gap-3">
+                    <div>
+                        <span class="font-bold text-gray-800-500">
+                            <strong>{{ count($selectedItems) }}</strong> barang yang dipilih
+                        </span>
                     </div>
-
-
-                </div>
-
-                <div class="flex justify-between mt-1 ">
-                    <div></div>
                     <div>
 
                         <a href="#" class="px-5 btn btn-lg btn-success" wire:click.prevent="proses">Proses</a>
@@ -192,4 +154,5 @@
             </div>
         </div>
     </div>
+    @include('distribusitoko::distribusitokos.cabang.modal.summary')
 </div>

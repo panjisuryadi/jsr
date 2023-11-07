@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Modules\Product\Entities\Product;
+use Modules\Stok\Models\StockOffice;
 
 class Summary extends Component
 {
@@ -49,6 +50,7 @@ class Summary extends Component
         DB::beginTransaction();
         try{
             $this->dist_toko->setInProgress();
+            $this->reduceStockOffice($this->dist_toko->items);
             DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 
@@ -57,6 +59,24 @@ class Summary extends Component
 
         toast('Distribusi In Progress!', 'success');
         return redirect()->route('distribusitoko.index');
+    }
+
+    private function reduceStockOffice($items){
+        foreach($items as $item){
+            $stock_office = StockOffice::where('karat_id', $item->karat_id)->first();
+            if(is_null($stock_office)){
+                $stock_office = StockOffice::create(['karat_id'=> $item->karat_id]);
+            }
+            $item->stock_office()->attach($stock_office->id,[
+                'karat_id'=>$item->karat_id,
+                'in' => false,
+                'berat_real' => -1 * $item->gold_weight,
+                'berat_kotor' => -1 * $item->gold_weight
+            ]);
+            $berat_real = $stock_office->history->sum('berat_real');
+            $berat_kotor = $stock_office->history->sum('berat_kotor');
+            $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
+        }
     }
 
 }

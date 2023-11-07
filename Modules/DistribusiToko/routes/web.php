@@ -21,6 +21,8 @@ Route::group(['middleware' => 'auth'], function () {
 
      Route::get("$module_name/index_data_table", ['as' => "$module_name.index_data_table", 'uses' => "$controller_name@index_data_table"]);
 
+     Route::get("$module_name/index_data_complete", ['as' => "$module_name.index_data_complete", 'uses' => "$controller_name@index_data_complete"]);
+
     
 
     Route::get("$module_name/detail/{dist_toko}", ['as' => "$module_name.detail", 'uses' => "$controller_name@detail"]);

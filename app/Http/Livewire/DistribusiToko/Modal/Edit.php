@@ -252,7 +252,7 @@ class Edit extends Component
                     'no_certificate' => $this->data['additional_data']['no_certificate'],
                     'accessories_weight' => $this->data['additional_data']['accessories_weight'],
                     'tag_weight' => $this->data['additional_data']['tag_weight'],
-                    'image' => empty($this->temp_image[0]['webcam_image'])?$this->data['additional_data']['image']:$this->temp_image[0]['webcam_image'],
+                    'image' => empty($this->temp_image[0]['webcam_image'])?$this->data['additional_data']['image']:$this->manageImage(),
                     'total_weight' => $this->data['total_weight']
                 ]
             ];
@@ -271,6 +271,28 @@ class Edit extends Component
         }
 
         $this->emit('reload-page-update');
+    }
+
+    private function manageImage(){
+        $this->deletePreviousImage();
+        return $this->uploadImage($this->temp_image[0]['webcam_image']);
+    }
+
+    private function deletePreviousImage(){
+        $file_path = 'uploads/'.$this->data['additional_data']['image'];
+        if (Storage::disk('public')->exists($file_path)) {
+            Storage::disk('public')->delete($file_path);
+        }
+    }
+
+    private function uploadImage($img){
+        $folderPath = "uploads/";
+        $image_parts = explode(";base64,", $img);
+        $image_base64 = base64_decode($image_parts[1]);
+        $fileName ='webcam_'. uniqid() . '.jpg';
+        $file = $folderPath . $fileName;
+        Storage::disk('public')->put($file,$image_base64);
+        return $fileName;
     }
 
     public function updated($propertyName)

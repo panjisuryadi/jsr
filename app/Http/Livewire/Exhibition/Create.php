@@ -83,7 +83,7 @@ class Create extends Component
 
       //572983278902945089029458
       public function clickQuery() {
-              $string = "572983278902945089029458";
+             // $string = "572983278902945089029458";
               $length = 8;
               $cari = $this->search;
               $hasilcari = preg_replace('/\s+/', '', $cari);
@@ -96,6 +96,8 @@ class Create extends Component
               $this->emit('addProduk', $product);
               $this->resetForm();
             }
+
+
 
             public function selectProduct($product) {
                 $this->emit('productSelected', $product);

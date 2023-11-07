@@ -2,6 +2,7 @@
 
 namespace Modules\DistribusiToko\Models;
 
+use App\Models\LookUp;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,7 +48,11 @@ class DistribusiToko extends Model
     }
 
     public function statuses(){
-        return $this->belongsToMany(DistribusiTokoStatus::class,'distribusi_toko_tracking_statuses','dist_toko_id','status_id')->using(DistribusiTokoStatusTracking::class)->withPivot(['pic_id','date']);
+        return $this->belongsToMany(DistribusiTokoStatus::class,'distribusi_toko_tracking_statuses','dist_toko_id','status_id')->using(DistribusiTokoStatusTracking::class)->withPivot(['pic_id','date','note']);
+    }
+
+    public function history(){
+        return $this->hasMany(DistribusiTokoStatusTracking::class,'dist_toko_id');
     }
 
     public function current_status(){
@@ -64,6 +69,10 @@ class DistribusiToko extends Model
 
     public function current_status_date(){
         return $this->latest_status_tracking()->pivot->date;
+    }
+
+    public function current_status_note(){
+        return $this->latest_status_tracking()->pivot->note;
     }
 
     public function setAsDraft($note = null){
@@ -92,12 +101,43 @@ class DistribusiToko extends Model
         }
     }
 
+    public function setAsCompleted($note = null){
+        $this->status_id = 4;
+        if($this->save()){
+            $this->statuses()->attach($this->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => $note,
+                'date' => now()
+            ]);
+        }
+    }
+
+    public function setAsReturned($note = null){
+        $this->status_id = 3;
+        if($this->save()){
+            $this->statuses()->attach($this->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => $note,
+                'date' => now()
+            ]);
+        }
+    }
+
     public function isRetur(){
         return $this->current_status->id == 3;
     }
 
     public function isDraftOrRetur(){
         return $this->isDraft() || $this->isRetur();
+    }
+
+    public function scopeGold($query)
+    {
+        return $query->where('kategori_produk_id', LookUp::where('kode','id_kategori_produk_emas')->value('value'));
+    }
+
+    public function isCompleted(){
+        return $this->current_status->id == 4;
     }
 
 }

@@ -13,6 +13,10 @@ class DistribusiTokoStatusTracking extends Pivot
 
     protected $fillable = [];
 
+    protected $casts = [
+        "additional_information" => 'array'
+    ];
+
     protected $table = 'distribusi_toko_tracking_statuses';
     
     protected static function newFactory()
@@ -21,6 +25,10 @@ class DistribusiTokoStatusTracking extends Pivot
     }
 
     public function pic(){
-        return $this->belongsTo(User::class,'pic_id','id');
+        return $this->belongsTo(User::class,'pic_id','id')->withoutGlobalScopes();
+    }
+
+    public function status(){
+        return $this->belongsTo(DistribusiTokoStatus::class,'status_id','id');
     }
 }
