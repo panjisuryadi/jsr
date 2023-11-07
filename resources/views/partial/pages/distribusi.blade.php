@@ -83,7 +83,7 @@
 </div>
 <div class="flex items-center justify-center">
 
- <div class="font-weight-bold py-1 px-2 text-lg">{{ auth()->user()->name }}</div>
+ <div class="font-weight-bold py-1 px-2 text-lg">{{ ucfirst(auth()->user()->name) }}</div>
 
 </div>
 
@@ -94,7 +94,7 @@
     <div class="text-gray-500">
       {{ ucfirst(Auth::user()->roles->first()->name) }} 
     </div>
-    <div class="text-blue-600">
+    <div class="text-blue-400">
         {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }}
     </div>
 </div>
