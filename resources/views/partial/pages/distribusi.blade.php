@@ -91,11 +91,12 @@
 <div class="flex items-center justify-center mb-2">
 
 <div class="font-weight-bold py-1 px-2 text-lg">
-    <span class="text-gray-500">  {{ ucfirst(Auth::user()->roles->first()->name) }} </span>
-    |
-    <span class="text-blue-600">
+    <div class="text-gray-500">
+      {{ ucfirst(Auth::user()->roles->first()->name) }} 
+    </div>
+    <div class="text-blue-600">
         {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }}
-    </span>
+    </div>
 </div>
  
 

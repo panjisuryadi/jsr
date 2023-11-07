@@ -135,7 +135,7 @@
                 <input type="checkbox" class="custom-control-input"
                 id="access_user_management" name="permissions[]"
                 value="access_user_management" {{ $role->hasPermissionTo('access_user_management') ? 'checked' : '' }}>
-                <label class="custom-control-label" for="access_user_management">Access</label>
+                <label class="custom-control-label" for="access_user_management">Access Menu Users</label>
             </div>
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
