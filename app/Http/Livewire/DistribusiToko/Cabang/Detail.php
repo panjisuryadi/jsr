@@ -116,8 +116,6 @@ class Detail extends Component
                       'product_code'               => $additional_data['code'],
                       'product_barcode_symbology'  => 'C128',
                       'product_unit'               => 'Gram',
-                      'product_cost' => 0,
-                      'product_price' => 0,
                       'images' => $additional_data['image']
                 ]);
     
@@ -129,8 +127,6 @@ class Detail extends Component
                     'berat_accessories'           => $additional_data['accessories_weight'],
                     'produk_model_id'             => $additional_data['model']['id'],
                     'berat_total'                 => $additional_data['total_weight'],
-                    'product_cost'                => 0,
-                    'product_price'               => 0
                 ]);
             }else{
                 $item->returned();
