@@ -29,6 +29,7 @@ class DistribusiTokosController extends Controller
 {
     public $module_name;
     public $module_path;
+    public $module_model;
 
   public function __construct()
     {
@@ -944,6 +945,28 @@ public function approve_distribusi(Request $request, $id)
 
     public function index_berlian()
     {
+        
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.berlian.index',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+    public function create_berlian()
+    {
         $cabang = [];
         if(auth()->user()->isUserCabang()){
             $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
@@ -958,6 +981,79 @@ public function approve_distribusi(Request $request, $id)
                 'produksis_id'
             )
         );
+    }
+
+    public function index_data_berlian(Request $request)
+    {
+        $module_name = $this->module_model::diamond()->get();
+
+        return Datatables::of($module_name)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+            return view(''.$module_name.'::'.$module_path.
+                '.includes.action',
+                compact('module_name', 'data', 'module_model'));
+                    })
+            ->editColumn('date', function ($data) {
+                $tb = '<div class="items-center text-center">
+                        <span class="text-gray-600">
+                        ' .  Carbon::parse($data->date)->format('d M, Y') . '</span>
+                        </div>';
+                    return $tb;
+                })
+            ->editColumn('no_invoice', function ($data) {
+                $tb = '<div class="items-center text-center">
+                        <span class="text-gray-600">
+                        ' .$data->no_invoice . '</span>
+                        </div>';
+                    return $tb;
+                })
+                ->editColumn('cabang', function ($data) {
+                    $tb = '<div class="items-center text-center">
+                        <span class="text-gray-600">
+                            ' .$data->cabang->name . '</span>
+                        </div>';
+                    return $tb;
+                })  
+
+                    ->editColumn('status', function ($data) {
+                    $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
+                            ' . $data->current_status->name . '
+                        </div>';
+                    return $tb;
+                })
+                ->editColumn('karat', function ($data) {
+                    $tb = '<div class="items-center">
+                        <h3 class="text-sm text-gray-600">
+                            Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></h3>
+                        </div>
+                        <div class="items-center">
+                        <span class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' Gram
+                        </strong></span>
+                        </div>';
+                    return $tb;
+                })
+
+                ->editColumn('updated_at', function ($data) {
+                $module_name = $this->module_name;
+
+                $diff = Carbon::now()->diffInHours($data->updated_at);
+                if ($diff < 25) {
+                    return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                } else {
+                    return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                }
+            })
+            ->rawColumns(['updated_at',
+                        'action',
+                        'cabang',
+                        'date',
+                        'karat',
+                        'status',
+                        'no_invoice'])
+            ->make(true);
     }
 
 }

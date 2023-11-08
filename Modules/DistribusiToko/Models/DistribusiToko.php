@@ -136,6 +136,11 @@ class DistribusiToko extends Model
         return $query->where('kategori_produk_id', LookUp::where('kode','id_kategori_produk_emas')->value('value'));
     }
 
+    public function scopeDiamond($query)
+    {
+        return $query->where('kategori_produk_id', LookUp::where('kode','id_kategoriproduk_berlian')->value('value'));
+    }
+
     public function isCompleted(){
         return $this->current_status->id == 4;
     }
