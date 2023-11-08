@@ -4,7 +4,7 @@
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ route("buysback.index") }}">{{__('Buys Back')}}</a></li>
-    <li class="breadcrumb-item active">Add</li>
+    <li class="breadcrumb-item active">Buys Back Nota</li>
 </ol>
 @endsection
 @section('content')
@@ -85,7 +85,10 @@
             <td class="text-center">2</td>
             <td class="text-center">0.6</td>
             <td class="text-center">11.5</td>
-            <td class="text-center">xx</td>
+            <td class="text-center">
+                
+                <button class="px-3 btn btn-sm btn-outline-success">view</button>
+            </td>
         </tr>
 
          <tr>
@@ -95,7 +98,7 @@
             <td class="text-center">32</td>
             <td class="text-center">4.6</td>
             <td class="text-center">22.5</td>
-            <td class="text-center">xx</td>
+            <td class="text-center"><button class="px-3 btn btn-sm btn-outline-success">view</button></td>
         </tr>
 
         <tr>
