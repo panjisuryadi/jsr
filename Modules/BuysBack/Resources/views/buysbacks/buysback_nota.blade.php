@@ -115,20 +115,17 @@
 
 
 
-
 {{-- batas --}}
 
-
-
-    <div class="flex justify-between">
-        <div></div>
-        <div class="form-group">
-         <a class="px-5 btn btn-danger"
-        href="{{ route("buysback.index") }}">
-        @lang('Cancel')</a>
-            <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
-        </div>
-    </div>
+                <div class="flex justify-between">
+                    <div></div>
+                    <div class="form-group">
+                     <a class="px-5 btn btn-danger"
+                    href="{{ route("buysback.index") }}">
+                    @lang('Cancel')</a>
+                        <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
+                    </div>
+                </div>
 
                     </div>
                 </div>

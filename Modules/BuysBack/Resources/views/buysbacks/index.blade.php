@@ -49,25 +49,32 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="flex justify-between py-1 border-bottom">
-                        <div>
+<div class="flex justify-between py-1 border-bottom">
+
+<div>
        
+ @if(auth()->user()->isUserCabang())
 <div class="btn-group btn-group-md">
+     @can('create_buybacktoko')     
    <a href="{{ route(''.$module_name.'.create') }}"
                                  data-toggle="tooltip"
                                  class="btn btn-outline-primary btn-md px-3">
                                  <i class="bi bi-plus"></i>
                                  @lang('Buys Back')
     </a>
+    @endcan
+    @can('create_buysback_nota')
   <a href="{{ route(''.$module_name.'.buysback_nota') }}"
                                  data-toggle="tooltip"
                                  class="btn btn-outline-success btn-md px-3">
                                  <i class="bi bi-plus"></i>
                                  @lang('Buys back Nota')
     </a>
+    @endcan
 
 
 </div>
+    @endif
 
 
  

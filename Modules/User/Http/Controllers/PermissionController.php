@@ -174,6 +174,7 @@ public function store(Request $request)
         Permissions::firstOrCreate(['name' => 'print_'.$name.'']);
         Permissions::firstOrCreate(['name' => 'reject_'.$name.'']);
         Permissions::firstOrCreate(['name' => 'approve_'.$name.'']);
+        Permissions::firstOrCreate(['name' => 'dashboard_'.$name.'']);
 
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
