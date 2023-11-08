@@ -244,7 +244,7 @@ public function index_data(Request $request)
             }else{
                 $cabang = Cabang::all();
             }
-            abort_if(Gate::denies('add_'.$module_name.''), 403);
+            // abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.buysback_nota',
                compact('module_name',
                 'module_action',

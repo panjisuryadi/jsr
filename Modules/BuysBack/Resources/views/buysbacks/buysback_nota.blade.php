@@ -25,253 +25,107 @@
         <div class="w-full border-b border-gray-300"></div>
     </div>
     <div class="relative flex justify-left">
-        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{__('Buys Back Nota')}} &nbsp;<i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="{{__('Buys back')}}"></i>
+        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{__('Buys Back Nota')}} &nbsp;<i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="{{__('Buys back Nota')}}"></i>
         </span> 
     </div>
 </div>
 
+{{-- batas --}}
 
-<div class="flex flex-row grid grid-cols-2 gap-2">
+<div class="flex flex-row grid grid-cols-1 gap-2">
     
-     <div class="form-group">
-            <?php
-            $field_name = 'no_buy_back';
-            $field_lable = __('no_buys_back');
-            $field_placeholder = Label_case($field_lable);
-            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-            $required = '';
-            ?>
-            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <input type="text" name="{{ $field_name }}"
-            class="form-control {{ $invalid }}"
-            name="{{ $field_name }}"
-            value="{{ old($field_name) }}"
-            placeholder="{{ $field_placeholder }}" {{ $required }}>
-            @if ($errors->has($field_name))
-            <span class="invalid feedback"role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
+<div class="rounded-md border px-3 py-2">
+    <div class="font-semibold mb-2 border-bottom pb-2">Invoice Info: </div>
+    <div>Invoice: <strong>DIST-TOKO-00002</strong></div>
+    <div>Tanggal Distribusi: <strong> 03 Nov, 2023</strong></div>
+    <div>Tanggal Retur: <strong> 03 Nov, 2023</strong></div>
+    <div>Cabang: <strong>PUSAT</strong></div>
+   
+</div>
+
+
+
+
+</div>
+
+
+<div class="flex relative px-2 py-3 pb-3">
+    <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-b border-gray-300"></div>
+    </div>
+    <div class="relative flex justify-left">
+        <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">
+            <span class="text-green-500"> Item Buysback
             </span>
-            @endif
+        </span></div>
+    </div>
+
+
+
+
+
+<table style="width: 100% !important;" class="table table-sm table-striped rounded rounded-lg table-bordered">
+    <thead>
+        <tr>
+            <th class="text-center"><input type="checkbox" id="checkAll"></th>
+            <th class="text-center">No</th>
+            <th class="text-center">Karat</th>
+            <th class="text-center">Berat Emas</th>
+      
+            <th class="text-center">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        <tr>
+            <td class="text-center">
+                <input type="checkbox" class="checkbox">
+            </td>
+            <td class="text-center">2</td>
+            <td class="text-center">0.6</td>
+            <td class="text-center">11.5</td>
+            <td class="text-center">xx</td>
+        </tr>
+
+         <tr>
+            <td class="text-center">
+                <input type="checkbox" class="checkbox">
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">4.6</td>
+            <td class="text-center">22.5</td>
+            <td class="text-center">xx</td>
+        </tr>
+
+        <tr>
+            <td class="border-0"></td>
+            <td class="border-0"></td>
+          
+            <td colspan="3" class="border-0 text-center">
+           <div class="text-right uppercase px-3 font-semibold">total</div>
+           </td>
+        </tr>
+       
+    </tbody>
+</table>
+
+
+
+
+{{-- batas --}}
+
+
+
+    <div class="flex justify-between">
+        <div></div>
+        <div class="form-group">
+         <a class="px-5 btn btn-danger"
+        href="{{ route("buysback.index") }}">
+        @lang('Cancel')</a>
+            <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
         </div>
-
-  <div class="form-group">
-            <?php
-            $field_name = 'date';
-            $field_lable = __('Tanggal');
-            $field_placeholder = Label_case($field_lable);
-            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-            $required = 'required';
-            ?>
-            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <input type="date" name="{{ $field_name }}"
-            class="form-control {{ $invalid }}"
-            name="{{ $field_name }}"
-            value="{{ old($field_name) }}"
-            placeholder="{{ $field_placeholder }}" {{ $required }}>
-            @if ($errors->has($field_name))
-            <span class="invalid feedback"role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
-            </span>
-            @endif
-        </div>
-
-</div>
-
-
-<div class="flex flex-row grid grid-cols-2 gap-2">
-<div class="form-group">
-    <div class="py-0">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio"
-            name="customer" value="1" id="sup1" checked>
-            <label class="form-check-label" for="sup1">Customer</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" value="2" type="radio" name="customer"
-            id="sup2">
-            <label class="form-check-label" for="sup2">Non member</label>
-        </div>
     </div>
-    <div id="supplier1" style="display: none !important;" class="align-items-center justify-content-center">
-        <input type="text" class="form-control" placeholder="Nama Customer" name="none_customer" >
-    </div>
-    <div id="supplier2" style="display: block !important;" class="align-items-center justify-content-center">
-        <select class="form-control select2" name="customer_id" id="customer_id" >
-            @foreach(\Modules\People\Entities\Customer::all() as $cust)
-            <option value="{{ $cust->id }}">{{ $cust->customer_name }}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
-<div class="form-group">
-    <div>
-        <label for="cabang_id" style="margin-bottom: 0.2rem;">Cabang <span class="text-danger">*</span></label>
-        <div class="input-group">
-            <select class="form-control select2" name="cabang_id" id="cabang_id" >
-                <option value="" selected disabled>Pilih Cabang</option>
-                @foreach($cabang as $cabang)
-                <option value="{{ $cabang->id }}">{{ $cabang->name }}</option>
-                @endforeach
-            </select>
-            @if ($errors->has('cabang_id'))
-            <span class="invalid feedback" role="alert">
-                <small class="text-danger">{{ $errors->first('cabang_id') }}.</small
-                class="text-danger">
-            </span>
-            @endif
-        </div>
-    </div>
-</div>
-
-</div>
-
-
-<div class="flex flex-row grid grid-cols-2 gap-2"> 
-
- <div class="form-group">
-        <?php
-        $field_name = 'nama_products';
-        $field_lable = label_case($field_name);
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
-        type="text"
-        name="{{ $field_name }}"
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
-        @if ($errors->has($field_name))
-            <span class="invalid feedback" role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
-            </span>
-        @endif
-    </div>
- <div class="form-group">
-        <?php
-        $field_name = 'kadar';
-        $field_lable = label_case('kadar');
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" >
-            <option value="" selected disabled>Pilih Karat</option>
-            @foreach(\Modules\Karat\Models\Karat::all() as $karat)
-            <option value="{{ $karat->id }}">{{ $karat->name }}</option>
-            @endforeach
-        </select>
-        @if ($errors->has($field_name))
-            <span class="invalid feedback" role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
-            </span>
-        @endif
-    </div>
-
-
-</div>
-
-
-
-<div class="flex flex-row grid grid-cols-2 gap-2"> 
-
-    <div class="form-group">
-        <?php
-        $field_name = 'berat';
-        $field_lable = label_case($field_name);
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
-        type="number"
-        name="{{ $field_name }}"
-        min="0" step="0.001"
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
-        @if ($errors->has($field_name))
-            <span class="invalid feedback" role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
-            </span>
-        @endif
-    </div>
-
-
-
-
-
- <div class="form-group">
-        <?php
-        $field_name = 'nominal';
-        $field_lable = label_case($field_name);
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
-        type="text"
-        name="{{ $field_name }}"
-        id="{{ $field_name }}"
-        type-currency="IDR"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
-        @if ($errors->has($field_name))
-            <span class="invalid feedback" role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                class="text-danger">
-            </span>
-        @endif
-    </div>
-
-
-
-</div>
-
-
-    
-  <div class="form-group">
-    <?php
-    $field_name = 'note';
-    $field_lable = __('Keterangan');
-    $field_placeholder = Label_case($field_lable);
-    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-    $required = '';
-    ?>
-    <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-    <textarea name="{{ $field_name }}"
-    placeholder="{{ $field_placeholder }}"
-    rows="5"
-    id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}"></textarea>
-    @if ($errors->has($field_name))
-    <span class="invalid feedback"role="alert">
-        <small class="text-danger">{{ $errors->first($field_name) }}.</small
-        class="text-danger">
-    </span>
-    @endif
-</div>
-
-
-
-                        <div class="flex justify-between">
-                            <div></div>
-                            <div class="form-group">
-                             <a class="px-5 btn btn-danger"
-                            href="{{ route("buysback.index") }}">
-                            @lang('Cancel')</a>
-                                <button type="submit" class="px-5 btn btn-success">@lang('Create')  <i class="bi bi-check"></i></button>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
@@ -285,6 +139,8 @@
     <x-toastr />
 
 @push('page_scripts')
+
+
 <script type="text/javascript">
  jQuery.noConflict();
 (function( $ ) {   
@@ -296,6 +152,18 @@
             $('#supplier1').toggle();
             $('#supplier2').hide();
         });
+
+           $("#checkAll").on("change", function () {
+                $(".checkbox").prop("checked", $(this).prop("checked"));
+            });
+
+            $(".checkbox").on("change", function () {
+                if (!$(this).prop("checked")) {
+                    $("#checkAll").prop("checked", false);
+                }
+            });
+
+
  })(jQuery); 
 
 </script>
@@ -319,8 +187,30 @@
             }
         });
     });
+
+
+
+
 </script>
 
 
 
 @endpush
+
+    @push('page_css')
+        <style type="text/css">
+        @media (max-width: 767.98px) { 
+         .table-sm th,
+         .table-sm td {
+             padding: .4em !important;
+          }
+        }
+
+        table {
+                width: 100%;
+                margin-bottom: 1rem;
+                color: #3c4b64;
+                font-size: 0.8rem !important;
+            }
+        </style>
+        @endpush
