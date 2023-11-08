@@ -51,11 +51,25 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-         <a href="{{ route(''.$module_name.'.create') }}"
-                                    data-toggle="tooltip"
-                                 class="btn btn-primary btn-md px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a>
+       
+<div class="btn-group btn-group-md">
+   <a href="{{ route(''.$module_name.'.create') }}"
+                                 data-toggle="tooltip"
+                                 class="btn btn-outline-primary btn-md px-3">
+                                 <i class="bi bi-plus"></i>
+                                 @lang('Buys Back')
+    </a>
+  <a href="{{ route(''.$module_name.'.buysback_nota') }}"
+                                 data-toggle="tooltip"
+                                 class="btn btn-outline-success btn-md px-3">
+                                 <i class="bi bi-plus"></i>
+                                 @lang('Buys back Nota')
+    </a>
+
+
+</div>
+
+
  
                         </div>
                         <div id="buttons">

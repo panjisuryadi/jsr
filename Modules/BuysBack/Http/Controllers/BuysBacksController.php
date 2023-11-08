@@ -203,7 +203,7 @@ public function index_data(Request $request)
                 toast('Stock Opname sedang Aktif!', 'error');
                 return redirect()->back();
             }
-           $module_title = $this->module_title;
+            $module_title = $this->module_title;
             $module_name = $this->module_name;
             $module_path = $this->module_path;
             $module_icon = $this->module_icon;
@@ -225,6 +225,38 @@ public function index_data(Request $request)
                 'module_icon', 'module_model'));
             }
 
+       public function buysback_nota()
+        {
+            if(AdjustmentSetting::exists()){
+                toast('Stock Opname sedang Aktif!', 'error');
+                return redirect()->back();
+            }
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Create';
+            $cabang = null;
+            if(auth()->user()->isUserCabang()){
+                $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+            }else{
+                $cabang = Cabang::all();
+            }
+            abort_if(Gate::denies('add_'.$module_name.''), 403);
+              return view(''.$module_name.'::'.$module_path.'.buysback_nota',
+               compact('module_name',
+                'module_action',
+                'module_title',
+                'cabang',
+                'module_icon',
+                'module_model'));
+            }
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -245,7 +277,7 @@ public function index_data(Request $request)
                     if ($type == 'NonMember') {
                      return view(''.$module_name.'::'.$module_path.'.type.member');
                     }
-                     elseif ($type == 'toko') {
+                    elseif ($type == 'toko') {
                     return view(''.$module_name.'::'.$module_path.'.type.toko');
                     }
                     else {
@@ -379,8 +411,6 @@ public function index_data(Request $request)
         ]);
 
         event(new BuysBackCreated($newBuyBack));
-
-
         toast('Buys Back Created!', 'success');
         return redirect()->route('buysback.index');
     }
@@ -431,13 +461,12 @@ public function store_ajax(Request $request)
      * @param int $id
      * @return Renderable
      */
-public function show($id)
+   public function show($id)
     {
         if(AdjustmentSetting::exists()){
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
-
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -483,7 +512,7 @@ public function show($id)
             'detail',
             'module_title',
             'module_icon', 'module_model'));
-    }
+        }
 
 
      public function status($id)

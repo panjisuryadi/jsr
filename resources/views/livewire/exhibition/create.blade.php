@@ -10,15 +10,15 @@
        <div class="px-5">
         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
   @foreach($list_product as $row)
-    <?php
-    if ($row['id'] == $listrfid) {
-       $info = 'bi bi-x-square';
-    }else{
-      $info = 'bi bi-x-circle';
-    }
+            <?php
+            if ($row['id'] == $listrfid) {
+               $info = 'bi bi-x-square';
+            }else{
+              $info = 'bi bi-x-circle';
+            }
 
 
-     ?>
+             ?>
 
 <li class="py-3 sm:py-4">
                         <div class="flex items-center space-x-4">
