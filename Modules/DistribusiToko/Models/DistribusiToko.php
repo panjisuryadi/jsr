@@ -145,4 +145,7 @@ class DistribusiToko extends Model
         return $this->current_status->id == 4;
     }
 
+    public function isInProgress(){
+        return $this->current_status->id == 2;
+    }
 }

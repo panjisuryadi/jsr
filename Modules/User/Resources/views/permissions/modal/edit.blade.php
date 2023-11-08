@@ -25,6 +25,7 @@
                 <option value="print_" >Print</option>
                 <option value="approve_" >Approve</option>
                 <option value="reject_" >Reject</option>
+                <option value="dashboard_" >Dashboard</option>
             </select>
 
                <span class="invalid feedback" role="alert">
