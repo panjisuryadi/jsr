@@ -236,4 +236,16 @@ class Create extends Component
         $this->distribusi_toko_details[] = $val;
         
     }
+
+    public function remove($index)
+    {
+        $data = $this->distribusi_toko_details[$index];
+        unset($this->distribusi_toko_details[$index]);
+        $produksis_id = !empty($data['id']) ? $data['id'] : '';
+        if (!empty($produksis_id)) {
+            if(($key = array_search($produksis_id, $this->exceptProduksiId)) != false) {
+                unset($this->exceptProduksiId[$key]);
+            }
+        }
+    }
 }
