@@ -22,14 +22,20 @@
                            <a href="{{ route('permissions.create') }}"
                                 id="Tambah"
                                 data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
+                                 class="btn btn-outline-primary px-3">
                                  <i class="bi bi-plus"></i>&nbsp;@lang('Add Full')
                                 </a>
                                <a href="{{ route('permissions.addsingle') }}"
                                 id="addSingle"
                                 data-toggle="tooltip"
-                                 class="btn btn-info px-3">
+                                 class="btn btn-outline-info px-3">
                                  <i class="bi bi-plus"></i>@lang('Add Single')
+                                </a> 
+
+                                <a href="{{ route('roles.index') }}"
+                                    data-toggle="tooltip"
+                                 class="btn btn-outline-success px-3">
+                                 <i class="bi bi-plus"></i>@lang('Roles')
                                 </a>
 
                         </div>

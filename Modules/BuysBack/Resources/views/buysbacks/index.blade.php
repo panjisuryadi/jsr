@@ -82,6 +82,8 @@
                         <div id="buttons">
                         </div>
                     </div>
+
+         
                     <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
@@ -94,8 +96,16 @@
                                   
                                     <th style="width: 10%!important;">Status</th>
                                     <th style="width: 10%!important;">Nominal</th>
-                                  
-                                    <th style="width: 15%!important;" class="text-center">
+                          
+
+
+
+                  <th style="width: 15%!important;" 
+                     class="@if(auth()->user()->can('edit_buybacktoko') || auth()->user()->can('show_buybacktoko') || auth()->user()->can('delete_buybacktoko'))
+                               @else
+                               no-sort 
+                                @endif
+                                    text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -137,8 +147,10 @@
                 {
                     "targets": 'no-sort',
                     "orderable": false,
+                    "visible": false,
                 }
             ],
+           
             "sPaginationType": "simple_numbers",
             ajax: '{{ route("$module_name.index_data") }}',
             dom: 'Blfrtip',

@@ -454,6 +454,14 @@
                 value="edit_buybacktoko" {{ $role->hasPermissionTo('edit_buybacktoko') ? 'checked' : '' }}>
                 <label class="custom-control-label" for="edit_buybacktoko">
                 Edit Buys Back Toko</label>
+            </div>   
+
+             <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_buybacktoko" name="permissions[]"
+                value="show_buybacktoko" {{ $role->hasPermissionTo('show_buybacktoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_buybacktoko">
+                Show Buys Back Toko</label>
             </div>
 
  <div class="custom-control custom-switch">
