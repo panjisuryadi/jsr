@@ -321,7 +321,7 @@ public function index_data_table(Request $request)
 
         $module_action = 'List';
         
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::inprogress()->get();
 
         $data = $$module_name;
 
@@ -411,7 +411,7 @@ public function index_data_complete(Request $request)
 
         $module_action = 'List';
         
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::completed()->get();
 
         $data = $$module_name;
 
@@ -424,7 +424,6 @@ public function index_data_complete(Request $request)
                             '.includes.aksi_distribusi',
                             compact('module_name', 'data', 'module_model'));
                                 })
-
 
                         ->editColumn('date', function ($data) {
                             $tb = '<div class="items-center text-center">

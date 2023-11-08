@@ -188,11 +188,6 @@ public function index_data(Request $request)
                      }
 
 
-
-
-
-
-
     /**
      * Show the form for creating a new resource.
      * @return Renderable
@@ -225,6 +220,8 @@ public function index_data(Request $request)
                 'module_icon', 'module_model'));
             }
 
+
+
        public function buysback_nota()
         {
             if(AdjustmentSetting::exists()){
@@ -253,8 +250,6 @@ public function index_data(Request $request)
                 'module_icon',
                 'module_model'));
             }
-
-
 
 
 
