@@ -147,7 +147,7 @@
         <img style="width: 100px;height: 100px;" class="d-block mx-auto img-thumbnail img-fluid rounded-circle mb-2" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
         
 <div class="flex items-center justify-center">
-    <div class="font-weight-bold py-1 px-2 text-lg">{{ ucfirst(auth()->user()->name) }}</div>
+    <div class="leading-5 font-weight-bold py-1 px-2 text-base">{{ ucfirst(auth()->user()->name) }}</div>
    
 </div>
 <div class="flex items-center justify-center">
