@@ -10,14 +10,14 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Cari Produk" style="width: 100%;" wire:model="searchTerm" >
+                                <input type="text" class="form-control" placeholder="Cari Produk" style="width: 100%;" wire:model="search" >
                             </div>
                         </div>
                     </div>
 
                     <!-- Paginated records -->
                     <div class="table-responsive">
-                        <table class="table table-sm table-striped" style="width: 100%;">
+                        <table id="produksisTable" class="table table-sm table-striped" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th class="no-sort text-center">No</th>

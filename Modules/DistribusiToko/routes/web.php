@@ -46,7 +46,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/send/{dist_toko}", ['as' => "$module_name.send", 'uses' => "$controller_name@send"]);
 
+    Route::get("$module_name/berlian/create", ['as' => "$module_name.berlian.create", 'uses' => "$controller_name@create_berlian"]);
     Route::get("$module_name/berlian", ['as' => "$module_name.berlian", 'uses' => "$controller_name@index_berlian"]);
+    Route::get("$module_name/index_data_berlian", ['as' => "$module_name.index_data_berlian", 'uses' => "$controller_name@index_data_berlian"]);
     
     Route::resource("$module_name", "$controller_name");
 

@@ -56,6 +56,8 @@ class Create extends Component
 
     public $produksis_id;
 
+    public $search;
+
     public function handleWebcamCaptured($key,$data_uri){
         $this->distribusi_toko_details[$key]['webcam_image'] = $data_uri;
     }
@@ -103,8 +105,15 @@ class Create extends Component
     public function render(){
         $this->exceptProduksiId = array_merge($this->exceptProduksiId, $this->produksis_id);
         $data = Produksi::with('karatjadi', 'model');
-        if(!empty($this->exceptProduksiId)){
+        if (!empty($this->exceptProduksiId)) {
             $data = $data->whereNotIn('id', $this->exceptProduksiId);
+        }
+        if (!empty($this->search)) {
+            $search = $this->search;
+            $data->where(function($query) use ($search) {
+                $query->where('code','like', '%'. $search . '%');
+                $query->orWhere('berat','like', '%'. $search . '%');
+            });
         }
         $data = $data->paginate(5);
         return view("livewire.distribusi-toko.berlian.create",[
