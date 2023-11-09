@@ -1,17 +1,70 @@
 <div class="flex gap-1">
-  <div class="w-3/4 card">
 
 
-      <div class="card">
-        <div class="card-body">
-     <div class="flex items-center justify-center">
-        <h1> ini halaman office</h1> 
-    </div>
+
+
+
+
+
+  <div class="w-3/4">
+
+  <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
+<div class="card border-0">
+    <div class="card-body p-0 d-flex align-items-center shadow-sm">
+        <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
+            <i class="bi bi-bar-chart font-2xl"></i>
+        </div>
+        <div>
+            <div class="text-value text-primary">77</div>
+            <div class="text-muted text-uppercase font-weight-bold small">
+            menu office
+            </div>
 
         </div>
     </div>
+</div>
+
+<div class="card border-0">
+    <div class="card-body p-0 d-flex align-items-center shadow-sm">
+        <div class="bg-gradient-success p-4 mfe-3 rounded-left">
+            <i class="bi bi-bar-chart font-2xl"></i>
+        </div>
+        <div>
+            <div class="text-value text-success">20</div>
+            <div class="text-muted text-uppercase font-weight-bold small">
+            menu office
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card border-0">
+    <div class="card-body p-0 d-flex align-items-center shadow-sm">
+        <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
+            <i class="bi bi-bar-chart font-2xl"></i>
+        </div>
+        <div>
+            <div class="text-value text-warning">20</div>
+            <div class="text-muted text-uppercase font-weight-bold small">
+            menu office
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
+
+</div>
+
+<div class="card mt-0">
+    <div class="card-body">
+        <div class="flex items-center justify-center">
+            <h1> ini halaman office</h1>
+        </div>
+    </div>
+</div>
 
 
 

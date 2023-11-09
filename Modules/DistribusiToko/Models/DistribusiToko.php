@@ -143,7 +143,12 @@ class DistribusiToko extends Model
         return $query->where('status_id', 4);
     }
 
- public function scopeInProgress($query)
+ public function scopeRetur($query)
+    {
+        return $query->where('status_id', 3);
+    }
+
+   public function scopeInProgress($query)
     {
         return $query->where('status_id', 2);
     }

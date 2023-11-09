@@ -6,7 +6,8 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">{{$module_title}}</li>
+    <li class="breadcrumb-item">{{$module_title}}</li>
+    <li class="breadcrumb-item active">{{$status}}</li>
 </ol>
 @endsection
 @section('content')
@@ -94,7 +95,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: "{{ route("$module_name.index_data", ['status'=>$status]) }}",
             dom: 'Blfrtip',
             buttons: [
 

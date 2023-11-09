@@ -1,12 +1,75 @@
 <div class="flex gap-1">
-  <div class="w-3/4 card">
+  <div class="w-3/4">
+
+
+
+
+<div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
+<div class="card border-0">
+    <div  onclick="location.href='{{ route("home.distribusi", ['status'=>'inprogress']) }}';" class="cursor-pointer h-zoom hover:scale-125 transition-all duration-500 hover:bg-primary card-body p-0 d-flex align-items-center shadow-sm">
+        <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
+            <i class="bi bi-bar-chart font-2xl"></i>
+        </div>
+        <div>
+
+@php
+   
+@endphp
+
+            <div class="text-value text-primary text-lg">{{ \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->count() }}</div>
+            <div class="text-muted text-uppercase font-weight-bold small">
+            In Progress
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card border-0">
+    <div onclick="location.href='{{ route("home.distribusi", ['status'=>'completed']) }}';" class="cursor-pointer h-zoom hover:scale-125 transition-all duration-500 hover:bg-primary card-body p-0 d-flex align-items-center shadow-sm">
+        <div class="bg-gradient-success p-4 mfe-3 rounded-left">
+            <i class="bi bi-bar-chart font-2xl"></i>
+        </div>
+        <div>
+            <div class="text-value text-success">{{ \Modules\DistribusiToko\Models\DistribusiToko::completed()->count() }}</div>
+            <div class="text-muted text-uppercase font-weight-bold small">
+           Completed
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card border-0">
+    <div onclick="location.href='{{ route("home.distribusi", ['status'=>'retur']) }}';" class="cursor-pointer h-zoom hover:scale-125 transition-all duration-500 hover:bg-primary card-body p-0 d-flex align-items-center shadow-sm">
+        <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
+            <i class="bi bi-bar-chart font-2xl"></i>
+        </div>
+        <div>
+            <div class="text-value text-warning">{{ \Modules\DistribusiToko\Models\DistribusiToko::retur()->count() }}</div>
+            <div class="text-muted text-uppercase font-weight-bold small">
+           Retur
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+
+
+
 
 
   <div class="card">
     <div class="card-body">
         <div class="flex justify-between py-1 border-bottom">
             <div>
-             <span class="font-semibold text-gray-600 text-lg">List In Progress</span> 
+             <span class="font-semibold text-gray-600 text-lg">{{ ucfirst($status) }}</span> 
             </div>
             <div id="buttons">
             </div>
@@ -35,7 +98,7 @@
 
 <hr>
 
-      <div class="flex justify-between py-1 border-bottom">
+     {{--  <div class="flex justify-between py-1 border-bottom">
             <div>
                 <span class="font-semibold text-gray-600 text-lg">List Complete</span>
             </div>
@@ -62,7 +125,7 @@
                     </tr>
                 </thead>
             </table>
-        </div>
+        </div> --}}
 
 
 
@@ -78,38 +141,32 @@
 
 
   <div class="w-1/4 card">
-    <div class="flex justify-center items-center mt-5">
-    <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" class="rounded-full h-20 w-20" alt="Centered Image">
+ <div class="card-body">
+    <div class="form-group">
+        <label for="image">Users Info <span class="text-danger">*</span></label>
+        <img style="width: 100px;height: 100px;" class="d-block mx-auto img-thumbnail img-fluid rounded-circle mb-2" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
+        
+<div class="flex items-center justify-center">
+    <div class="font-weight-bold py-1 px-2 text-lg">{{ ucfirst(auth()->user()->name) }}</div>
+   
 </div>
 <div class="flex items-center justify-center">
-
- <div class="font-weight-bold py-1 px-2 text-lg">{{ ucfirst(auth()->user()->name) }}</div>
-
-</div>
-
-
-<div class="flex items-center justify-center mb-2">
-
-<div class="font-weight-bold py-1 px-2 text-lg">
-    <div class="text-gray-500">
-      {{ ucfirst(Auth::user()->roles->first()->name) }} 
+    
+     <div class="text-gray-500">
+      Roles : {{ ucfirst(Auth::user()->roles->first()->name) }} 
     </div>
+   
+</div>
+<div class="flex items-center justify-center">
+    
+   
     <div class="text-blue-400">
-        {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }}
+        Cabang : {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }}
     </div>
 </div>
- 
 
-
+    </div>
 </div>
-
-<hr class="mt-3">
-
-
-
-
-
-
 
 
   </div>
@@ -194,7 +251,7 @@ div.dataTables_wrapper div.dataTables_paginate {
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("distribusitoko.index_data_table") }}',
+             ajax: "{{ route("distribusitoko.index_data_table", ['status'=>$status]) }}",
             dom: 'Blfrtip',
             buttons: [
 
