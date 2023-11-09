@@ -12,35 +12,6 @@
 @section('content')
 <div class="container-fluid">
 
-{{-- <div class="flex grid grid-cols-2 gap-4 py-2 text-center items-center">
-    <div onclick="location.href='{{ route('buys-back.type', ['type' => 'NonMember']) }}';" class="cursor-pointer p-1 w-full">
-        <div class="justify-center items-center border-2 border-blue-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-            <div class="justify-center text-center items-center">
-                <?php
-                $image = asset('images/logo.png');
-                ?>
-                <img id="default_1" src="{{ $image }}" alt="images"
-                class="h-16 w-16 object-contain mx-auto" />
-            </div class="py-1">
-            <div class="leading-tight py-3 font-semibold">Member / Non Member</div>
-        </div>
-    </div>
-    <div onclick="location.href='{{ route('buys-back.type', ['type' => 'toko']) }}';" class="cursor-pointer p-1 w-full">
-        <div class="justify-center items-center border-2 border-green-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-            <div class="justify-center text-center items-center">
-                <?php
-                $image = asset('images/logo.png');
-                ?>
-                <img id="default_1" src="{{ $image }}" alt="images"
-                class="h-16 w-16 object-contain mx-auto" />
-            </div class="py-1">
-            <div class="leading-tight font-semibold py-3">Toko / Gudang</div>
-        </div>
-    </div>
-</div>
-
- --}}
-
 
     <div class="row">
 
@@ -56,9 +27,9 @@
  @if(auth()->user()->isUserCabang())
 <div class="btn-group btn-group-md">
      @can('create_buybacktoko')     
-   <a href="{{ route(''.$module_name.'.create') }}"
+   <a href="#"
                                  data-toggle="tooltip"
-                                 class="btn btn-outline-primary btn-md px-3">
+                                 class="btn btn-outline-primary btn-md px-3" onclick="createModal()">
                                  <i class="bi bi-plus"></i>
                                  @lang('Buys Back')
     </a>
@@ -116,6 +87,7 @@
             </div>
         </div>
     </div>
+    @livewire('buysback.item.modal.create')
 </div>
 @endsection
 
@@ -193,35 +165,8 @@
     </script>
 
 <script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #Edit, #Status', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }  
-
-        if($(this).attr('id') == 'Status')
-        {
-            $('.modal-dialog').addClass('modal-md');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').removeClass('modal-lg');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status {{ Label_case($module_title) }}');
-        }
-
-
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
+function createModal(){
+    $('#buyback-create-modal').modal('show');
+}
 </script>
 @endpush

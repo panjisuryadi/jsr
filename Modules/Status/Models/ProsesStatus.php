@@ -16,6 +16,15 @@ class ProsesStatus extends Model
     protected $fillable = [
         'name'
     ];
+
+    const STATUS = [
+        'PENDING' => 1,
+        'PENDING_OFFICE' => 2,
+        'CUCI' => 3,
+        'MASAK' => 4,
+        'RONGSOK' => 5,
+        'SECOND' => 6
+    ];
     
     protected static function newFactory()
     {
