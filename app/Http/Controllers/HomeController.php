@@ -17,6 +17,7 @@ use Modules\Sale\Entities\SalePayment;
 use Modules\SalesReturn\Entities\SaleReturn;
 use Modules\SalesReturn\Entities\SaleReturnPayment;
 use App\Models\ActivityLog;
+use Modules\Adjustment\Entities\AdjustmentSetting;
 class HomeController extends Controller
 {
 
@@ -56,9 +57,13 @@ class HomeController extends Controller
 
         $revenue = ($sales - $sale_returns) / 100;
         $profit = $revenue - $product_costs;
+        $sales = Sale::completed()->sum('total_amount');
+        $status = $request->status ?? '';
 
         return view('home', [
             'userlogin'     => $userlogin,
+            'sales'     => $sales,
+            'status'     => $status,
             'lastActivity'     => $lastActivity,
             'revenue'          => $revenue,
             'sale_returns'     => $sale_returns / 100,
@@ -66,6 +71,27 @@ class HomeController extends Controller
             'profit'           => $profit
         ]);
     }
+
+
+
+
+  public function distribusi(Request $request) {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $status = $request->status ?? '';
+        $sales = Sale::completed()->sum('total_amount');
+        return view('home', [
+            'status'           => $status,
+            'sales'            => $sales
+        ]);
+    }
+
+
+
+
+
 
 
     public function currentMonthChart() {

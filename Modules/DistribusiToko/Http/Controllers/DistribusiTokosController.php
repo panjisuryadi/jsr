@@ -48,11 +48,12 @@ class DistribusiTokosController extends Controller
      * @return Renderable
      */
 
-  public function index() {
+  public function index(Request $request) {
         if(AdjustmentSetting::exists()){
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
+        $status = $request->status ?? '';
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -65,6 +66,7 @@ class DistribusiTokosController extends Controller
            compact('module_name',
             'module_action',
             'module_title',
+            'status',
             'module_icon', 'module_model'));
     }
 
@@ -234,9 +236,26 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::gold()->get();
+        $status = $request->status;
+        $$module_name = $module_model::gold();
+        if($status == 'inprogress') {
+           $$module_name->inprogress();
+           $$module_name->orderBy('created_at', 'desc');
+         }
+         else if($status == 'completed') {
+           $$module_name->completed();
+           $$module_name->orderBy('created_at', 'desc');
+         }
+         else if($status == 'retur') {
+           $$module_name->retur();
+           $$module_name->orderBy('created_at', 'desc');
+         }else{
+             $$module_name->orderBy('created_at', 'desc');
+         }
+         $$module_name->get();
 
-        $data = $$module_name;
+         $data = $$module_name;
+
 
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
@@ -320,11 +339,25 @@ public function index_data_table(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'List';
-        
-        $$module_name = $module_model::inprogress()->get();
+        $status = $request->status;
+        $$module_name = $module_model::gold();
+        if($status == 'inprogress') {
+           $$module_name->inprogress();
+           $$module_name->orderBy('created_at', 'desc');
+         }
+         else if($status == 'completed') {
+           $$module_name->completed();
+           $$module_name->orderBy('created_at', 'desc');
+         }
+         else if($status == 'retur') {
+           $$module_name->retur();
+           $$module_name->orderBy('created_at', 'desc');
+         }else{
+             $$module_name->orderBy('created_at', 'desc');
+         }
+         $$module_name->get();
 
-        $data = $$module_name;
+         $data = $$module_name;
 
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
