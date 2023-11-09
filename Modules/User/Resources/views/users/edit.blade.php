@@ -108,7 +108,7 @@
 <select class="form-control" name="cabang_id" id="cabang_id" required>
  <option value="" selected disabled>Select Cabang</option>
          @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
-            <option value="{{ $cabang->id }}" {{ (old('cabang_id',$user->namacabang->cabang_id) == $cabang->id) ? 'selected' : '' }}>
+            <option value="{{ $cabang->id }}" {{ (old('cabang_id',@$user->namacabang->cabang_id) == $cabang->id) ? 'selected' : '' }}>
                {{ $cabang->code }} | {{ $cabang->name }}
             </option>
         @endforeach

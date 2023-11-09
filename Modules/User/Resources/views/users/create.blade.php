@@ -30,20 +30,56 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="name">Name <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="name" required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="email">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="email" name="email" required>
-                                    </div>
-                                </div>
-                            </div>
+                     
+
+<div class="flex flex-row grid grid-cols-2 gap-2">
+<div class="form-group">
+    <label for="name">Name <span class="text-danger">*</span></label>
+    <input class="form-control" type="text" name="name" required>
+</div>
+
+    <div class="form-group">
+        <label for="is_active">Cabang <span class="text-danger">*</span></label>
+{{-- {{$user->namacabang->user_id}} --}}
+<select class="form-control" name="cabang_id" id="cabang_id" required>
+ <option value="" selected disabled>Select Cabang</option>
+         @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
+            <option value="{{ $cabang->id }}">
+               {{ $cabang->code }} | {{ $cabang->name }}
+            </option>
+        @endforeach
+    </select>
+
+    </div>
+
+</div>
+<div class="flex flex-row grid grid-cols-2 gap-2">
+
+    <div class="form-group">
+        <label for="email">Email <span class="text-danger">*</span></label>
+        <input class="form-control" type="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+        <label for="kode_user">Code Sales<span class="text-danger">*</span></label>
+        <div class="input-group">
+            <input type="text" id="code" class="form-control" name="kode_user">
+            <span class="input-group-btn">
+                <button class="btn btn-info relative rounded-l-none" id="generate-code">Generate</button>
+            </span>
+        </div>
+        <span class="invalid feedback" role="alert">
+            <span class="text-danger error-text product_code_err"></span>
+        </span>
+    </div>
+
+</div>
+
+
+
+
+
+
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -60,7 +96,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+
+
+
+
+
+
+<div class="flex flex-row grid grid-cols-2 gap-2">
+     <div class="form-group">
                                 <label for="role">Role <span class="text-danger">*</span></label>
                                 <select class="form-control" name="role" id="role" required>
                                     <option value="" selected disabled>Select Role</option>
@@ -68,7 +111,9 @@
                                         <option value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div>   
+
+
 
                             <div class="form-group">
                                 <label for="is_active">Status <span class="text-danger">*</span></label>
@@ -78,6 +123,11 @@
                                     <option value="2">Deactive</option>
                                 </select>
                             </div>
+
+</div>
+
+                        
+
                         </div>
                     </div>
                 </div>
@@ -124,6 +174,39 @@
                 }
             }
         });
+
+
+ $('#generate-code').click(function() {
+           // var group = $('#group_id').val();
+            //alert(group);
+            $(this).prop('disabled', true);
+            $(this).addClass('loading');
+            $.ajax({
+                url: '{{ route('users.code') }}',
+                type: 'GET',
+            //    data:{group:group},
+                dataType: 'json',
+                     success: function(response) {
+                    if (response.code === '0') {
+                             $('#code').prop('disabled', true);
+                             $('#code').val('Kode Sales tidak boleh kosong..!!');
+                            } else {
+                              $('#code').val(response.code);
+                            }
+
+                      console.log(response);
+
+                    },
+                complete: function() {
+                    $('#generate-code').prop('disabled', false);
+                    $('#generate-code').removeClass('loading');
+                }
+            });
+        });
+
+
+
+
     </script>
 @endpush
 

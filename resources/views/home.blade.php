@@ -145,13 +145,18 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
         @endcan
 
 
- @if (Auth::user()->id !== 1)
+ @if(Auth::user()->id !== 1)
  @can('access_sortir')
  @include('product::products.sortir_dashboard')
  @endcan
 
- @if (Auth::user()->roles->first()->name == 'Kasir')
+ @if(Auth::user()->roles->first()->name == 'Kasir')
         @include('partial.pages.kasir')
+ @endif
+
+
+ @if(Auth::user()->roles->first()->name == 'Office')
+    @include('partial.pages.office')
  @endif
 
  

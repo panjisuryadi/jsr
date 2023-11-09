@@ -42,8 +42,14 @@ class UsersController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'is_active' => $request->is_active
+            'is_active' => $request->is_active,
+            'kode_user' => $request->kode_user
         ]);
+
+       UserCabang::create([
+            'user_id'         => $user->id,
+            'cabang_id'       => $request->cabang_id
+             ]);
 
         $user->assignRole($request->role);
 
