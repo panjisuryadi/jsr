@@ -17,7 +17,9 @@ Route::get('language/{language}', 'LanguageController@switch')->name('language.s
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')
-        ->name('home');
+        ->name('home');  
+    Route::get('/home/distribusi', 'HomeController@distribusi')
+        ->name('home.distribusi');
 
     Route::get('/sales-purchases/chart-data', 'HomeController@salesPurchasesChart')
         ->name('sales-purchases.chart');

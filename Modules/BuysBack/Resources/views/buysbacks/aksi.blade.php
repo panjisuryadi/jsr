@@ -1,5 +1,5 @@
 <div class="text-center">
-@can('edit_'.$module_name.'')
+@can('edit_buybacktoko')
     <a href="{{ route(''.$module_name.'.show', $data->id) }}"
     id="Show"
     data-toggle="tooltip"
@@ -8,7 +8,7 @@
     </a>
 @endcan
 
-    @can('delete_'.$module_name.'')
+    @can('delete_buybacktoko')
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
         if (confirm('Are you sure? It will delete the data permanently!')) {

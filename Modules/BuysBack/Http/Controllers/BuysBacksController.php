@@ -188,11 +188,6 @@ public function index_data(Request $request)
                      }
 
 
-
-
-
-
-
     /**
      * Show the form for creating a new resource.
      * @return Renderable
@@ -216,7 +211,7 @@ public function index_data(Request $request)
             }else{
                 $cabang = Cabang::all();
             }
-            abort_if(Gate::denies('add_'.$module_name.''), 403);
+            abort_if(Gate::denies('create_buybacktoko'), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
@@ -224,6 +219,8 @@ public function index_data(Request $request)
                 'cabang',
                 'module_icon', 'module_model'));
             }
+
+
 
        public function buysback_nota()
         {
@@ -253,8 +250,6 @@ public function index_data(Request $request)
                 'module_icon',
                 'module_model'));
             }
-
-
 
 
 
@@ -524,7 +519,7 @@ public function store_ajax(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Status';
-        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        abort_if(Gate::denies('edit_buybacktoko'), 403);
         $detail = $module_model::findOrFail($id);
         $proses_statuses = ProsesStatus::all();
           return view(''.$module_name.'::'.$module_path.'.modal.status',

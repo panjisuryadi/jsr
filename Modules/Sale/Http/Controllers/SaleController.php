@@ -55,6 +55,7 @@ class SaleController extends Controller
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $type = $request->type ?? '';
+        
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
         $cabangs = Cabang::get();

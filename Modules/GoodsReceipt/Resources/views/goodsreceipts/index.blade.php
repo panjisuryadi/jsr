@@ -40,7 +40,7 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
-                        <table id="datatable" style="width: 100%" class="table table-striped table-hover table-responsive-sm">
+                        <table id="datatable" style="width: 100%" class="table table-striped table-hover table-bordered table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th style="width: 3%!important;">No</th>
@@ -50,7 +50,7 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                                     <th style="width: 19%!important;" class="text-left">{{ __('Supplier') }}</th>
                                     <th class="text-center">{{ __('Pembayaran') }}
                                     </th>
-                                    <th style="width: 35%!important;" class="text-center">{{ __('Action') }}
+                                    <th style="width:23%!important;" class="text-center">{{ __('Action') }}
                                     </th> 
 
                                 </tr>
