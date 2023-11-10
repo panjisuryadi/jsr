@@ -33,6 +33,8 @@ class ProduksisController extends Controller
     public $module_icon;
     public $module_model;
 
+    const IMG_PATH_PRD ='produksi/';
+
 
     public function __construct()
     {
@@ -74,17 +76,16 @@ class ProduksisController extends Controller
         $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
 
-        $module_name = $module_model::with('karatasal', 'karatjadi', 'model')->where('kategoriproduk_id', $id_kategoriproduk_berlian)->get();
-
+        $module_name = $module_model::with('karatasal', 'karatjadi', 'model', 'produksi_items.shape')->where('kategoriproduk_id', $id_kategoriproduk_berlian)->get();
         return Datatables::of($module_name)
-                    ->addColumn('karat_asal', function ($data) {
-                        return $data->karatasal?->name;
-                    })
-                    ->addColumn('karat_jadi', function ($data) {
-                        return $data->karatjadi?->name;
-                    })
-                    ->addColumn('model', function ($data) {
-                        return $data->model?->name;
+                    ->editColumn('code', function ($data) {
+                        $tb = '<div class="text-xs font-semibold">
+                            ' .$data->code . '
+                            </div>';
+                        $tb .= '<div class="text-xs text-left">
+                                ' .tanggal($data->tanggal) . '
+                            </div>';   
+                        return $tb;
                     })
                     ->addColumn('action', function ($data) {
                             $module_name = $this->module_name;
@@ -92,24 +93,32 @@ class ProduksisController extends Controller
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                     })
-                    ->editColumn('name', function ($data) {
-                        $tb = '<div class="items-center text-center">
-                            <h3 class="text-sm font-medium text-gray-800">
-                                ' .$data->name . '</h3>
-                            </div>';
-                        return $tb;
+                    ->addColumn('asal', function ($data) {
+                        return label_case($data->source_kode) . ': ' . $data->karatasal?->name . ' ' . $data->berat_asal . ' gr ';
                     })
-                    ->editColumn('updated_at', function ($data) {
-                        $module_name = $this->module_name;
-
-                        $diff = Carbon::now()->diffInHours($data->updated_at);
-                        if ($diff < 25) {
-                            return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                    ->addColumn('hasil', function ($data) {
+                        $berlian_info = '';
+                        if (!empty($data->produksi_items)) {
+                            foreach($data->produksi_items as $item) {
+                                $shape_code = !empty($item->shape?->shape_code) ? $item->shape?->shape_code : '';
+                                $shape_name = !empty($item->shape?->shape_name) ? $item->shape?->shape_name : '';
+                                $shape = !empty($shape_code) ? $shape_code : $shape_name;
+                                $berlian_info .= ' '.$shape . $item->qty . ': ' . (float)$item->karatberlians . ' ct ';
+                            }
+                        }
+                        return $data->model?->name . ' ' . $data->karatjadi?->name . ' ' . $data->berat . ' gr <br> Berlian : ' . $berlian_info;
+                    })
+                    ->editColumn('image', function ($data) {
+                        if ($data->image) {
+                            $url = imageUrl() . self::IMG_PATH_PRD . @$data->image;
                         } else {
-                            return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                    }
+                            $url = '';
+                        }
+                        return '<a href="'.$url.'" data-lightbox="'. @$data->image .' " b class="single_image">
+                                    <img src="'.$url.'" order="0" width="100" class="img-thumbnail" align="center"/>
+                                    </a>';
                     })
-                    ->rawColumns(['updated_at', 'action', 'name'])
+                    ->rawColumns(['action', 'code', 'hasil', 'image'])
                     ->make(true);
     }
 
