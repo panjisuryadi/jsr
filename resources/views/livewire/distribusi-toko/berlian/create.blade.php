@@ -5,12 +5,38 @@
         <div class="pt-3">
             {{-- <livewire:distribusi-toko.berlian.table /> --}}
             <div>
-                <div class="col-md-12">
+
+                <p class="uppercase text-lg text-gray-600 font-semibold">Input Barcode</p>
+                <hr style="
+                    height: 1px;
+                    border: none;
+                    color: #333;
+                    background-color: #333;">
+
+                <div class="col-md-12 mt-2">
                     <!-- Search box -->
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Cari Produk" style="width: 100%;" wire:model="search" >
+                                <input id = "barcodeForm" type="text" class="form-control" placeholder="Kode Produk" style="width: 100%;" wire:model='kode_produk' wire:keydown.enter="submitBarcode()" autofocus>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <p class="uppercase text-lg text-gray-600 font-semibold">Input Manual</p>
+                <hr style="
+                    height: 1px;
+                    border: none;
+                    color: #333;
+                    background-color: #333;">
+                <div class="col-md-12 mt-2">
+                    <!-- Search box -->
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Cari Produk" style="width: 100%;" >
                             </div>
                         </div>
                     </div>
@@ -21,6 +47,7 @@
                             <thead>
                                 <tr>
                                     <th class="no-sort text-center">No</th>
+                                    <th class="no-sort">Image</th>
                                     <th class="no-sort">Kode Produksi</th>
                                     <th class="no-sort">Produk Informasi</th>
                                     <th class="no-sort text-center">Aksi</th>
@@ -31,6 +58,10 @@
                                 @foreach ($products as $key => $value)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td> <a href="/{{ imageUrl() .'produksi/' . @$value->image }}" data-lightbox="{{ $value->image }} " b class="single_image">
+                                            <img src="/{{ imageUrl() .'produksi/' . @$value->image }}" order="0" width="100" class="img-thumbnail" align="center"/>
+                                        </a>
+                                    </td>
                                     <td> {{ $value->code }} </td>
                                     <td> {{ $value->model?->name }} {{ $value->karatjadi?->name  }} | {{ $value->berat }} gr </td>
                                     <td>

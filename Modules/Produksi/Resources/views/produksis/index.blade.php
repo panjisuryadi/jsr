@@ -31,16 +31,14 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ __('Sumber') }}</th>
-                                    <th class="text-lef">{{ __('Karat Asal') }}</th>
-                                    <th class="text-lef">{{ __('Berat Asal') }}</th>
-                                    <th class="text-lef">{{ __('Karat Hasil') }}</th>
-                                    <th class="text-lef">{{ __('Berat Hasil ') }}</th>
-                                    <th class="text-lef">{{ __('Model') }}</th>
-                                    <th style="width: 18%!important;" class="text-center">
+                                    <th style="">No</th>
+                                    <th style="width: 15%!important;" class="text-center">{{ __('Image') }}</th>
+                                    <th style="width: 15%!important;" class="text-center">{{ __('Kode Produksi') }}</th>
+                                    <th class="text-lef">{{ __('Asal') }}</th>
+                                    <th class="text-lef">{{ __('Hasil') }}</th>
+                                    {{-- <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
-                                    </th>
+                                    </th> --}}
                                 </tr>
                             </thead>
                         </table>
@@ -101,18 +99,16 @@
                     }
                 },
 
-                {data: 'source_kode', name: 'Source Kode'},
-                {data: 'karat_asal', name: 'karat Asal'},
-                {data: 'berat_asal', name: 'Berat Asal'},
-                {data: 'karat_jadi', name: 'Karat Jadi'},
-                {data: 'berat', name: 'Berat Jadi'},
-                {data: 'model', name: 'Model'},
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
+                {data: 'image', name: 'Image'},
+                {data: 'code', name: 'Kode Produksi'},
+                {data: 'asal', name: 'Asal'},
+                {data: 'hasil', name: 'Hasil'},
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // }
             ]
         })
         .buttons()
