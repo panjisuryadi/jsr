@@ -4,6 +4,9 @@ namespace Modules\BuysBack\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Karat\Models\Karat;
+use Modules\People\Entities\Customer;
+use Modules\Product\Entities\Product;
 use Modules\Stok\Models\StockPending;
 
 class BuyBackItem extends Model
@@ -33,5 +36,17 @@ class BuyBackItem extends Model
     public function stock_pending()
     {
         return $this->morphToMany(StockPending::class, 'transaction','stock_pending_history','transaction_id','stock_pending_id','id','id')->withTimestamps();
+    }
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
+
+    public function karat(){
+        return $this->belongsTo(Karat::class);
+    }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class);
     }
 }
