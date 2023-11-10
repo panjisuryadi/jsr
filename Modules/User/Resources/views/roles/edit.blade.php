@@ -752,6 +752,58 @@
 
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
+       Pegawai Toko
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_storeemployees" name="permissions[]"
+                value="access_storeemployees" {{ $role->hasPermissionTo('access_storeemployees') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_storeemployees">
+                  {{ label_Case('access_pegawai_toko') }}
+               </label>
+            </div>
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_storeemployees" name="permissions[]"
+                value="create_storeemployees" {{ $role->hasPermissionTo('create_storeemployees') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_storeemployees">
+                  {{ label_Case('create_pegawai_toko') }}
+               </label>
+            </div>
+
+ <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_storeemployees" name="permissions[]"
+                value="edit_storeemployees" {{ $role->hasPermissionTo('edit_storeemployees') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_storeemployees">
+                  {{ label_Case('edit_pegawai_toko') }}
+               </label>
+            </div>
+
+
+ <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="delete_storeemployees" name="permissions[]"
+                value="delete_storeemployees" {{ $role->hasPermissionTo('delete_storeemployees') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="delete_storeemployees">
+                  {{ label_Case('delete_pegawai_toko') }}
+               </label>
+            </div>
+
+
+
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
        Settings
     </div>
     <div class="card-body">

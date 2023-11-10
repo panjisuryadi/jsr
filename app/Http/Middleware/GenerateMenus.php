@@ -207,8 +207,7 @@ class GenerateMenus
                     
 
                 ],
-                'permission'    => [
-                    'access_buybacktoko'],
+                'permission'    => ['access_penentuanharga','access_buybacktoko'],
             ]);
             $toko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -223,7 +222,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => ['storeemployees*'],
-                'permission'    => ['access_buybacktoko'],
+                'permission'    => ['access_storeemployees'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -238,7 +237,7 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['penentuanhargas*'],
-                'permission'    => ['access_buybacktoko'],
+                'permission'    => ['access_penentuanharga'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
