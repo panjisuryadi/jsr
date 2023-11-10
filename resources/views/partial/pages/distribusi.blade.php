@@ -98,34 +98,6 @@
 
 <hr>
 
-     {{--  <div class="flex justify-between py-1 border-bottom">
-            <div>
-                <span class="font-semibold text-gray-600 text-lg">List Complete</span>
-            </div>
-            <div id="buttons_completed">
-            </div>
-        </div>
-        <div class="table-responsive mt-1">
-            <table id="datatable_completed" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
-                <thead>
-                    <tr>
-                        <th style="width: 6%!important;">No</th>
-                        <th>Date</th>
-                        <th>No Invoice</th>
-                      
-                        <th>{{ __('Karat') }}</th>
-                        <th style="width: 17%!important;" class="text-center">
-                            {{ __('Status') }}
-                        </th>
-                        
-                        
-                        <th style="width: 14%!important;" class="text-center">
-                            {{ __('Action') }}
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-        </div> --}}
 
 
 

@@ -59,15 +59,16 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 3%!important;">No</th>
-                                    <th style="width: 22%!important;">No BuyBack</th>
-                                   
-                                    
-                                    <th style="width: 20%!important;">Detail Produk</th>
-                                  
-                                    <th style="width: 10%!important;">Status</th>
-                                    <th style="width: 10%!important;">Nominal</th>
-                          
+                        <th style="width: 3%!important;">No</th>
+
+                        <th style="width: 20%!important;">Produk</th>
+                        <th style="width: 22%!important;">No BuyBack</th>
+                       
+                        
+                      
+                        <th style="width: 10%!important;">Status</th>
+                        <th style="width: 10%!important;">Nominal</th>
+              
 
 
 
@@ -140,10 +141,10 @@
                     }
                 },
 
+                {data: 'nama_produk', name: 'nama_produk'},
                 {data: 'no_buy_back', name:  'no_buy_back'},
              
               
-                {data: 'nama_produk', name: 'nama_produk'},
                 {data: 'status', name: 'status'},
                 {data: 'nominal_beli', name: 'nominal_beli'},
               
