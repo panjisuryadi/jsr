@@ -19,11 +19,11 @@
                         <div>
                             Invoice: <strong>{{@$detail->no_buy_back}}</strong>
                         </div>
-                        <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="#"><i class="bi bi-printer"></i> Print
+                        @can('print_buybacktoko')
+                        <a target="_blank" class="btn btn-sm btn-success mfs-auto mfe-1 d-print-none" href="#"><i class="bi bi-printer"></i> Print
                         </a>
-                        <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="#">
-                            <i class="bi bi-save"></i> Save
-                        </a>
+                        @endcan
+                       
                     </div>
                     <div class="card-body">
                         <div class="row mb-4">
