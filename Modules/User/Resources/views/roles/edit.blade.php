@@ -506,6 +506,13 @@
                 <label class="custom-control-label" for="create_buysback_nota">
                 Buat Buys Back Nota</label>
             </div>
+  <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_buysback_nota" name="permissions[]"
+                value="access_buysback_nota" {{ $role->hasPermissionTo('access_buysback_nota') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_buysback_nota">
+                Akses Buys Back Nota</label>
+            </div>
 
     
     

@@ -20,6 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('home');  
     Route::get('/home/distribusi', 'HomeController@distribusi')
         ->name('home.distribusi');
+    Route::get('/home/buys-backnota', 'HomeController@buysbacknota')
+        ->name('home.buysbacknota');
 
     Route::get('/sales-purchases/chart-data', 'HomeController@salesPurchasesChart')
         ->name('sales-purchases.chart');

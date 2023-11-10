@@ -22,7 +22,7 @@ class HomeController extends Controller
 {
 
     public function index() {
-        activity()->log(' '.auth()->user()->name.' Masuk ke halaman Dashoard ');
+        activity()->log(' '.auth()->user()->name.'Masuk ke halaman Dashoard ');
 
       $lastActivity = ActivityLog::latest()->Join('users', 'activity_log.causer_id', '=', 'users.id')
             ->select(['activity_log.id', 'activity_log.description',  'activity_log.log_name',  'activity_log.created_at',
@@ -88,7 +88,18 @@ class HomeController extends Controller
         ]);
     }
 
-
+  public function buysbacknota(Request $request) {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $status = $request->status ?? '';
+        $sales = Sale::completed()->sum('total_amount');
+        return view('partial.pages.buysbacknota.index', [
+            'status'           => $status,
+            'sales'            => $sales
+        ]);
+    }
 
 
 
@@ -96,7 +107,6 @@ class HomeController extends Controller
 
     public function currentMonthChart() {
         abort_if(!request()->ajax(), 404);
-
         $currentMonthSales = Sale::where('status', 'Completed')->whereMonth('date', date('m'))
                 ->whereYear('date', date('Y'))
                 ->sum('total_amount') / 100;
@@ -117,10 +127,8 @@ class HomeController extends Controller
 
     public function salesPurchasesChart() {
         abort_if(!request()->ajax(), 404);
-
         $sales = $this->salesChartData();
         $purchases = $this->purchasesChartData();
-
         return response()->json(['sales' => $sales, 'purchases' => $purchases]);
     }
 
@@ -265,4 +273,6 @@ class HomeController extends Controller
         return response()->json(['data' => $data, 'days' => $days]);
 
     }
+
+
 }

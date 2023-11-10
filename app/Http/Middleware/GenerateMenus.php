@@ -58,6 +58,9 @@ class GenerateMenus
             ]);
 
 
+
+
+
             // Pelanggan And Supplier
             $customers_suppliers = $masterData->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-people-fill"></i>
@@ -320,6 +323,44 @@ class GenerateMenus
             ]);
 
 
+        // buysbacknota
+        $buysbacknota = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i>Buys Back Nota', [
+            'class' => 'c-sidebar-nav-dropdown',
+        ])
+        ->data([
+            'order'         => 2,
+            'activematches' => [
+                'home*',
+                'buysback*',
+          
+            ],
+            'permission' => ['access_buysback_nota','create_buysback_nota'],
+        ]);
+        $buysbacknota->link->attr([
+            'class' => 'c-sidebar-nav-dropdown-toggle',
+            'href'  => '#',
+        ]);
+
+        $buysbacknota->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Buysback Nota'), [
+            'route' => 'home.buysbacknota',
+            'class' => 'nav-item',
+        ])
+        ->data([
+            'order'         => 2,
+            'activematches' => ['buysback*'],
+            'permission'    => ['access_buysback_nota'],
+        ])
+        ->link->attr([
+            'class' => 'c-sidebar-nav-link py-2',
+        ]);
+
+
+
+
+
+
+
+
             // EMAS - TOKO - Distribusi Toko
             $distribusiToko = $toko->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
@@ -566,6 +607,42 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
+
+
+       // EMAS - STOK - DAFTAR STOK
+            $stock_office = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok Office', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => [
+                           'stoks*',
+                    ],
+                  'permission' => ['access_stoks'],
+            ]);
+
+
+
+            $stock_office->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // EMAS - STOK - DAFTAR STOK
             $stock_office = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok Office', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -577,10 +654,15 @@ class GenerateMenus
                     ],
                   'permission' => ['access_stoks'],
             ]);
+
+
+
             $stock_office->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
+
+
 
             // EMAS - STOK - DAFTAR STOK - STOK SALES
             $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Sales'), [
@@ -701,6 +783,8 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
+
+
 
 
             // EMAS - STOK - STOK Opname
@@ -1492,6 +1576,11 @@ class GenerateMenus
 
 
 
+
+
+
+
+
       
 
             // customers Access Control Dropdown ==================================
@@ -1846,6 +1935,14 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
+
+
+
+
+
 
 
 

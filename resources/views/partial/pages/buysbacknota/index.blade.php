@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('title', $module_title)
+@section('title', 'BuysBack Nota')
 @section('third_party_stylesheets')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 @endsection
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">{{$module_title}}</li>
+    <li class="breadcrumb-item active">Buys Back Nota</li>
 </ol>
 @endsection
 @section('content')
@@ -26,16 +26,8 @@
        
  @if(auth()->user()->isUserCabang())
 <div class="btn-group btn-group-md">
-     @can('create_buybacktoko')     
-   <a href="#"
-                                 data-toggle="tooltip"
-                                 class="btn btn-outline-primary btn-md px-3" onclick="createModal()">
-                                 <i class="bi bi-plus"></i>
-                                 @lang('Buys Back')
-    </a>
-    @endcan
-    @can('create_buysback_nota')
-  <a href="{{ route(''.$module_name.'.buysback_nota') }}" data-toggle="tooltip"
+      @can('create_buysback_nota')
+  <a href="{{ route('buysback.buysback_nota') }}" data-toggle="tooltip"
                                  class="btn btn-outline-success btn-md px-3">
                                  <i class="bi bi-plus"></i>
                                  @lang('Buys back Nota')
@@ -117,7 +109,7 @@
             ],
            
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("buysback.nota.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
 
