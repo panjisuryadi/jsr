@@ -125,14 +125,26 @@ class Create extends Component
                 'note' => empty($this->note)?null:$this->note
             ];
             $buyback_nota = BuyBackNota::create($data);
-            
+            $this->attachBuyBackItems($buyback_nota, $this->selectedItems);
             DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 
             throw $e;
         }
         toast('BuyBack Nota Berhasil dibuat','success');
-        return redirect(route('home'));
+        return redirect(route('buysback.index'));
+    }
+
+    private function attachBuyBackItems($buyback_nota, $selectedItems){
+        foreach($this->buyback_items as $item){
+            if(in_array($item->id, $selectedItems)){
+                $item->update([
+                    'buyback_nota_id' => $buyback_nota->id,
+                    'status_id' => null
+                ]);
+                $item->reduceStockPending();
+            }
+        }
     }
 
     

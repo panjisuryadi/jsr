@@ -10,18 +10,34 @@ class BuyBackNota extends Model
     use HasFactory;
 
     protected $fillable = [
-        'no_invoice',
+        'invoice',
+        'invoice_number',
+        'invoice_series',
         'date',
         'cabang_id',
         'status_id',
         'kategori_produk_id',
-        'pic_id'
+        'pic_id',
+        'note'
     ];
 
     protected $table = 'buyback_nota';
-    
-    protected static function newFactory()
+
+    protected static function booted(): void
     {
-        return \Modules\BuysBack\Database\factories\BuyBackNotaFactory::new();
+        parent::booted();
+        self::created(static function (BuyBackNota $buyback_nota) {
+            $buyback_nota->statuses()->attach($buyback_nota->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => empty($buyback_nota->note)?null:$buyback_nota->note,
+                'date' => now()
+            ]);
+        });
+    }
+    
+    
+
+    public function statuses(){
+        return $this->belongsToMany(BuyBackNotaStatus::class,'buyback_nota_tracking','buyback_nota_id','status_id')->using(BuyBackNotaTracking::class)->withPivot(['pic_id','date','note']);
     }
 }
