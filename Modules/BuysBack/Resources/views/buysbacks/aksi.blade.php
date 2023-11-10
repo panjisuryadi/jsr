@@ -1,5 +1,5 @@
 <div class="text-center">
-@can('edit_buybacktoko')
+@can('show_buybacktoko')
     <a href="{{ route(''.$module_name.'.show', $data->id) }}"
     id="Show"
     data-toggle="tooltip"

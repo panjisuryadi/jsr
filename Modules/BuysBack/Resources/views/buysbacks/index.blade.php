@@ -35,8 +35,7 @@
     </a>
     @endcan
     @can('create_buysback_nota')
-  <a href="{{ route(''.$module_name.'.buysback_nota') }}"
-                                 data-toggle="tooltip"
+  <a href="{{ route(''.$module_name.'.buysback_nota') }}" data-toggle="tooltip"
                                  class="btn btn-outline-success btn-md px-3">
                                  <i class="bi bi-plus"></i>
                                  @lang('Buys back Nota')
@@ -62,7 +61,7 @@
                         <th style="width: 3%!important;">No</th>
 
                         <th style="width: 20%!important;">Produk</th>
-                        <th style="width: 22%!important;">No BuyBack</th>
+                        <th style="width: 22%!important;">Customer</th>
                        
                         
                       
@@ -72,7 +71,7 @@
 
 
 
-                  <th style="width: 15%!important;" 
+                     <th style="width: 15%!important;" 
                      class="@if(auth()->user()->can('edit_buybacktoko') || auth()->user()->can('show_buybacktoko') || auth()->user()->can('delete_buybacktoko'))
                                @else
                                no-sort 
