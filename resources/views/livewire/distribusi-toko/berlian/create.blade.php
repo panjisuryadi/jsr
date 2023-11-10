@@ -16,9 +16,9 @@
                 <div class="col-md-12 mt-2">
                     <!-- Search box -->
                     <div class="row">
-                        <div class="col-md-6 col-sm-6">
+                        <div class="col-md-12 col-sm-6">
                             <div class="form-group">
-                                <input id = "barcodeForm" type="text" class="form-control" placeholder="Kode Produk" style="width: 100%;" wire:model='kode_produk' wire:keydown.enter="submitBarcode()" autofocus>
+                                <input id = "barcodeForm" type="text" class="form-control rounded rounded-lg sortir text-center" placeholder="Kode Produk" style="width: 100%;" wire:model='kode_produk' wire:keydown.enter="submitBarcode()" autofocus>
                             </div>
                         </div>
                     </div>
