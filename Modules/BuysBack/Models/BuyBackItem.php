@@ -49,4 +49,20 @@ class BuyBackItem extends Model
     public function customer(){
         return $this->belongsTo(Customer::class);
     }
+
+    public function reduceStockPending(){
+        $stock_pending = StockPending::firstOrCreate(
+            ['karat_id' => $this->karat_id, 'cabang_id' => $this->cabang_id]
+        );
+        $this->stock_pending()->attach($stock_pending->id,[
+            'karat_id'=>$this->karat_id,
+            'cabang_id' => $this->cabang_id,
+            'in' => false,
+            'berat_real' => -1 * $this->weight,
+            'berat_kotor' => -1 * $this->weight
+        ]);
+        $berat_real = $stock_pending->history->sum('berat_real');
+        $berat_kotor = $stock_pending->history->sum('berat_kotor');
+        $stock_pending->update(['weight'=> $berat_real]);
+    }
 }
