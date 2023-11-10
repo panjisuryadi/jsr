@@ -178,7 +178,7 @@ public function index_data()
 
         toast('Role Updated With Selected Permissions!', 'success');
 
-        return redirect()->route('roles.index');
+        return redirect()->back();
     }
 
 

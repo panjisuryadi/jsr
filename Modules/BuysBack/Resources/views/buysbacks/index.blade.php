@@ -35,8 +35,7 @@
     </a>
     @endcan
     @can('create_buysback_nota')
-  <a href="{{ route(''.$module_name.'.buysback_nota') }}"
-                                 data-toggle="tooltip"
+  <a href="{{ route(''.$module_name.'.buysback_nota') }}" data-toggle="tooltip"
                                  class="btn btn-outline-success btn-md px-3">
                                  <i class="bi bi-plus"></i>
                                  @lang('Buys back Nota')
@@ -59,19 +58,20 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 3%!important;">No</th>
-                                    <th style="width: 22%!important;">No BuyBack</th>
-                                   
-                                    
-                                    <th style="width: 20%!important;">Detail Produk</th>
-                                  
-                                    <th style="width: 10%!important;">Status</th>
-                                    <th style="width: 10%!important;">Nominal</th>
-                          
+                        <th style="width: 3%!important;">No</th>
+
+                        <th style="width: 20%!important;">Produk</th>
+                        <th style="width: 22%!important;">Customer</th>
+                       
+                        
+                      
+                        <th style="width: 10%!important;">Status</th>
+                        <th style="width: 10%!important;">Nominal</th>
+              
 
 
 
-                  <th style="width: 15%!important;" 
+                     <th style="width: 15%!important;" 
                      class="@if(auth()->user()->can('edit_buybacktoko') || auth()->user()->can('show_buybacktoko') || auth()->user()->can('delete_buybacktoko'))
                                @else
                                no-sort 
@@ -140,10 +140,10 @@
                     }
                 },
 
+                {data: 'nama_produk', name: 'nama_produk'},
                 {data: 'no_buy_back', name:  'no_buy_back'},
              
               
-                {data: 'nama_produk', name: 'nama_produk'},
                 {data: 'status', name: 'status'},
                 {data: 'nominal_beli', name: 'nominal_beli'},
               
