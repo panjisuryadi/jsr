@@ -36,9 +36,9 @@
                                     <th style="width: 15%!important;" class="text-center">{{ __('Kode Produksi') }}</th>
                                     <th class="text-lef">{{ __('Asal') }}</th>
                                     <th class="text-lef">{{ __('Hasil') }}</th>
-                                    <th style="width: 18%!important;" class="text-center">
+                                    {{-- <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
-                                    </th>
+                                    </th> --}}
                                 </tr>
                             </thead>
                         </table>
@@ -103,12 +103,12 @@
                 {data: 'code', name: 'Kode Produksi'},
                 {data: 'asal', name: 'Asal'},
                 {data: 'hasil', name: 'Hasil'},
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // }
             ]
         })
         .buttons()
