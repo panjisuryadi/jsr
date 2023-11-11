@@ -96,7 +96,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="5" class="text-center">Tidak ada data</th>
+                                <th colspan="9" class="text-center">Tidak ada data</th>
                             </tr>
                             @endforelse
                             <tr>
