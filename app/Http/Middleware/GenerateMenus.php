@@ -265,7 +265,7 @@ class GenerateMenus
 
             // EMAS - TOKO - PENERIMAAN - BUYBACK
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                <div class="break">'.__('Penerimaan Barang Buys Backs').'</div>', [
+                <div class="break">'.__('Barang Buy Back').'</div>', [
                 'route' => 'buysback.index',
                 'class' => 'nav-item',
             ])
@@ -280,7 +280,7 @@ class GenerateMenus
 
             // EMAS - TOKO - PENERIMAAN - Penerimaan Barang Luar
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Penerimaan Barang Luar'), [
+                '.__('Barang Luar'), [
                 'route' => 'penerimaanbarangluar.index',
                 'class' => 'nav-item',
             ])
@@ -294,7 +294,7 @@ class GenerateMenus
             ]);
 
             // EMAS - TOKO - PENERIMAAN - Penerimaan Barang DP
-            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penerimaan Barang DP'), [
+            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Barang DP'), [
                 'route' => 'penerimaanbarangdp.index',
                 'class' => 'nav-item',
             ])
