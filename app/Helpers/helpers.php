@@ -760,7 +760,7 @@ if (!function_exists('formatBerat')) {
 if (!function_exists('format_uang')) {
     function format_uang($angka) {
        $hasil = number_format($angka,0,',','.');
-       return 'Rp .' .$hasil;
+       return 'Rp. ' .$hasil;
     }
 }
 

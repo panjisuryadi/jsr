@@ -17,6 +17,8 @@ Route::group(['middleware' => 'auth'], function () {
     $controller_name = 'BuysBacksController';
 
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
+    Route::get("$module_name/index_buyback_item_data", ['as' => "$module_name.index_buyback_item_data", 'uses' => "$controller_name@index_buyback_item_data"]);
+    Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
     Route::get("$module_name/buysback-nota", ['as' => "$module_name.buysback_nota", 'uses' => "$controller_name@buysback_nota"]);
     //save type
     Route::post('buys-back/save-customer', 'BuysBacksController@saveTypeCustomer')->name('buysback.save.customer'); 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Karat\Models\Karat;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
+use Modules\Status\Models\ProsesStatus;
 use Modules\Stok\Models\StockPending;
 
 class BuyBackItem extends Model
@@ -64,5 +65,13 @@ class BuyBackItem extends Model
         $berat_real = $stock_pending->history->sum('berat_real');
         $berat_kotor = $stock_pending->history->sum('berat_kotor');
         $stock_pending->update(['weight'=> $berat_real]);
+    }
+
+    public function scopePending(){
+        return $this->where('status_id', ProsesStatus::STATUS['PENDING']);
+    }
+
+    public function status(){
+        return $this->belongsTo(ProsesStatus::class);
     }
 }

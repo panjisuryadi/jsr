@@ -22,6 +22,7 @@ use Modules\BuysBack\Http\Requests\StoreBuyBackRequest;
 use Lang;
 use Auth;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\BuysBack\Models\BuyBackItem;
 use Modules\Status\Models\ProsesStatus;
 
 class BuysBacksController extends Controller
@@ -30,7 +31,7 @@ class BuysBacksController extends Controller
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'Buys Back';
+        $this->module_title = 'Buy Back';
         $this->module_name =  'buysback';
         $this->module_path =  'buysbacks';
         $this->module_icon =  'fas fa-sitemap';
@@ -186,6 +187,79 @@ public function index_data(Request $request)
                                'updated_at','keterangan','cabang'])
                         ->make(true);
                      }
+
+    
+                     public function index_buyback_item_data(Request $request)
+
+                     {
+                         $module_title = $this->module_title;
+                         $module_name = $this->module_name;
+                         $module_path = $this->module_path;
+                         $module_icon = $this->module_icon;
+                         $module_model = $this->module_model;
+                         $module_name_singular = Str::singular($module_name);
+                 
+                         $module_action = 'List';
+                         $$module_name = BuyBackItem::get();
+                         return Datatables::of($$module_name)
+                                         ->addColumn('action', function ($data) {
+                                             $module_name = $this->module_name;
+                                             $module_model = $this->module_model;
+                                             $module_path = $this->module_path;
+                                             return view(''.$module_name.'::'.$module_path.'.aksi',
+                                             compact('module_name', 'data', 'module_model'));
+                                                 })
+                 
+                                              ->editColumn('barang', function ($data) {
+                                              $tb = '<div class="justify items-left text-left">'; 
+                                            
+                                              $tb .= '<div class="text-gray-800">
+                                                      Nama Produk : <strong>' . $data->product->product_name . '
+                                                     </strong></div>'; 
+                                              $tb .= '<div class="text-gray-800">
+                                                      Karat : <strong>' . $data->karat->label . '
+                                                     </strong></div>';   
+                 
+                                              $tb .= '<div class="text-gray-800">
+                                                      Berat : <strong>' . $data->weight . '
+                                                      gr</strong></div>';               
+                                              $tb .= '</div>'; 
+                                                 return $tb;
+                                               })
+                 
+                 
+                                           ->editColumn('customer', function ($data) {
+                                                 $tb = '<div class="font-semibold items-center text-center">
+                                                         ' . $data->customer->customer_name . '
+                                                        </div>';
+                                                    return $tb;
+                                                })
+                                             ->editColumn('status', function ($data) {
+                                             $tb = '<div class="items-center text-center"><span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">'. $data->status->name .'</span></div>';
+                                                 return $tb;
+                                             })
+                                             ->editColumn('nominal', function ($data) {
+                                             $tb = '<div class="font-semibold items-center text-center">
+                                                     ' . format_uang($data->nominal) . '
+                                                     </div>';
+                                                 return $tb;
+                                             })
+        
+                 
+                                            ->editColumn('date', function ($data) {
+                                                $tb = '<div class="font-semibold items-center text-center">
+                                                ' . $data->date . '
+                                                </div>';
+                                            return $tb;
+                                            })
+                                            ->rawColumns(['action','barang',
+                                                    'customer',
+                                                    'status',
+                                                    'nominal',
+                                                    'date',
+                                                    ])
+                                            ->make(true);
+                    }
 
 
     /**
