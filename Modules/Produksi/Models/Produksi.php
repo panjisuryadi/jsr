@@ -41,7 +41,7 @@ class Produksi extends Model
 
     public function produksi_items()
     {
-        return $this->hasMany(ProduksiItems::class, 'id', 'produksi_items');
+        return $this->hasMany(ProduksiItems::class, 'produksis_id', 'id');
     }
 
     public static function generateCode()

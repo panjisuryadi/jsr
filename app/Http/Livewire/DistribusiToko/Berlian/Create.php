@@ -58,6 +58,8 @@ class Create extends Component
 
     public $search;
 
+    public $kode_produk;
+
     public function handleWebcamCaptured($key,$data_uri){
         $this->distribusi_toko_details[$key]['webcam_image'] = $data_uri;
     }
@@ -256,5 +258,23 @@ class Create extends Component
                 unset($this->exceptProduksiId[$key]);
             }
         }
+    }
+
+    public function submitBarcode()
+    {
+        $this->kode_produk;
+        if(!empty($this->kode_produk)){
+            $data = Produksi::with('karatjadi', 'model')->where('code',$this->kode_produk);
+            if (!empty($this->exceptProduksiId)) {
+                $data = $data->whereNotIn('id', $this->exceptProduksiId);
+            }
+            $data = $data->first();
+            if ($data) {
+                $this->selectProduct($data);
+                $this->kode_produk = '';
+            }
+
+        }
+
     }
 }
