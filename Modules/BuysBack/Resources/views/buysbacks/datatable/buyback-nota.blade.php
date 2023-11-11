@@ -34,10 +34,10 @@
                         <thead>
                             <tr>
                                 <th style="width: 3%!important;">No</th>
-                                <th style="width: 20%!important;">Produk</th>
-                                <th style="width: 22%!important;">Customer</th>
+                                <th style="width: 20%!important;">Tanggal</th>
+                                <th style="width: 22%!important;">Nota</th>
                                 <th style="width: 10%!important;">Status</th>
-                                <th style="width: 10%!important;">Nominal</th>
+                                <th style="width: 10%!important;">Jumlah Barang</th>
 
                                 <th style="width: 15%!important;" class="@if(auth()->user()->can('edit_buybacktoko') || auth()->user()->can('show_buybacktoko') || auth()->user()->can('delete_buybacktoko'))
                                @else
@@ -88,7 +88,7 @@
             ],
            
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("$module_name.index_buyback_nota_data") }}',
             dom: 'Blfrtip',
             buttons: [
 
@@ -104,12 +104,12 @@
                     }
                 },
 
-                {data: 'nama_produk', name: 'nama_produk'},
-                {data: 'no_buy_back', name:  'no_buy_back'},
+                {data: 'date', name: 'date'},
+                {data: 'nota', name:  'nota'},
              
               
                 {data: 'status', name: 'status'},
-                {data: 'nominal_beli', name: 'nominal_beli'},
+                {data: 'total_item', name: 'total_item'},
               
 
                 {

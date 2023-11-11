@@ -16,6 +16,8 @@ class BuyBackNotaStatus extends Model
         'RETURN' => 2,
         'COMPLETED' => 3,
     ];
+
+    protected $table = 'buyback_nota_status';
     
     protected static function newFactory()
     {

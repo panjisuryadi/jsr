@@ -40,4 +40,12 @@ class BuyBackNota extends Model
     public function statuses(){
         return $this->belongsToMany(BuyBackNotaStatus::class,'buyback_nota_tracking','buyback_nota_id','status_id')->using(BuyBackNotaTracking::class)->withPivot(['pic_id','date','note']);
     }
+
+    public function current_status(){
+        return $this->belongsTo(BuyBackNotaStatus::class, 'status_id');
+    }
+
+    public function items(){
+        return $this->hasMany(BuyBackItem::class,'buyback_nota_id');
+    }
 }

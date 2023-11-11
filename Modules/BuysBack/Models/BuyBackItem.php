@@ -15,6 +15,7 @@ class BuyBackItem extends Model
     use HasFactory;
 
     protected $fillable = [
+        'buyback_nota_id',
         'product_id',
         'cabang_id',
         'customer_id',

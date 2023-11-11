@@ -2,7 +2,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h2 class="text-lg font-bold uppercase">Barang Buy Back</h2>
+                <div class="flex justify-between">
+                    <h2 class="text-lg font-bold uppercase">Barang Buy Back</h2>
+                </div>
             </div>
             <div class="card-body">
                 <div class="flex justify-between py-1 border-bottom">
