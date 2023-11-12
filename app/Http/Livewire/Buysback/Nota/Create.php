@@ -115,7 +115,7 @@ class Create extends Component
         try{
             $data = [
                 'cabang_id' => $this->cabang->id,
-                'status_id' => BuyBackNotaStatus::STATUS['WAITING_CONFIRMATION'],
+                'status_id' => BuyBackNotaStatus::STATUS['CREATED'],
                 'kategori_produk_id' => LookUp::where('kode','id_kategori_produk_emas')->value('value'),
                 'pic_id' => auth()->id(),
                 'invoice_number' => $this->invoice_number,
@@ -125,6 +125,7 @@ class Create extends Component
                 'note' => empty($this->note)?null:$this->note
             ];
             $buyback_nota = BuyBackNota::create($data);
+            $buyback_nota->send();
             $this->attachBuyBackItems($buyback_nota, $this->selectedItems);
             DB::commit();
         }catch (\Exception $e) {

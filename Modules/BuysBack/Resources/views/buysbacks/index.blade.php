@@ -11,15 +11,51 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    @include('buysback::buysbacks.datatable.buyback-item')
-    @include('buysback::buysbacks.datatable.buyback-nota')
+    @if (auth()->user()->isUserCabang())
+        @include('buysback::buysbacks.cabang.datatable.buyback-item')
+        @include('buysback::buysbacks.cabang.datatable.buyback-nota')
+    @else
+        @include('buysback::buysbacks.office.datatable.buyback-nota')
+    @endif
 </div>
 @endsection
 
 @push('page_scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
 function createModal(){
     $('#buyback-create-modal').modal('show');
 }
+
+function process(data){
+        Swal.fire({
+            title: "Proses Nota",
+            text: "Proses Nota #"+ data.invoice +"?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0a0",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Proses"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{route('buysback.nota.process')}}/",
+                    type: 'PATCH',
+                    data: {data},
+                    dataType: 'json',
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        window.location.href = response.redirectRoute;
+                        toastr.success('Processing Nota')
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.success('Gagal memproses Nota')
+                    }
+                });
+            }
+        });
+    }
 </script>
 @endpush

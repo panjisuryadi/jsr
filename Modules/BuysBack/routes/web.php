@@ -17,6 +17,9 @@ Route::group(['middleware' => 'auth'], function () {
     $controller_name = 'BuysBacksController';
 
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
+    Route::get("$module_name/office/index_data", ['as' => "$module_name.office.index_data", 'uses' => "Office\BuyBackController@index_data"]);
+    Route::patch("$module_name/nota-process", ['as' => "$module_name.nota.process", 'uses' => "Office\BuyBackController@process"]);
+
     Route::get("$module_name/index_buyback_item_data", ['as' => "$module_name.index_buyback_item_data", 'uses' => "$controller_name@index_buyback_item_data"]);
     Route::get("$module_name/index_buyback_nota_data", ['as' => "$module_name.index_buyback_nota_data", 'uses' => "$controller_name@index_buyback_nota_data"]);
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
@@ -24,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     //save type
     Route::post('buys-back/save-customer', 'BuysBacksController@saveTypeCustomer')->name('buysback.save.customer'); 
     Route::patch('buys-back/update-status/{id}', 'BuysBacksController@update_status')->name('buysback.update_status');
+
 
 
     Route::get('/buysback-status/{id}', 'BuysBacksController@status')->name('buysback.status');

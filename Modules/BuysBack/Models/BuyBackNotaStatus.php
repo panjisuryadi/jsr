@@ -12,9 +12,12 @@ class BuyBackNotaStatus extends Model
     protected $fillable = ['name'];
 
     const STATUS = [
-        'WAITING_CONFIRMATION' => 1,
-        'RETURN' => 2,
-        'COMPLETED' => 3,
+        'CREATED' => 1,
+        'SENT' => 2,
+        'PROCESSING' => 3,
+        'APPROVED' => 4,
+        'RETURNED' => 5,
+        'COMPLETED' => 6
     ];
 
     protected $table = 'buyback_nota_status';

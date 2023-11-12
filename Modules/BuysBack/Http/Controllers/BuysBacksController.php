@@ -599,12 +599,11 @@ public function store_ajax(Request $request)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
         abort_if(Gate::denies('show_buybacktoko'), 403);
-        $detail = $module_model::with('customer','product','karat')->where('id',$id)->first();
-        //dd($detail);
+        $buyback_nota = BuyBackNota::findOrFail($id);
           return view(''.$module_name.'::'.$module_path.'.show',
            compact('module_name',
             'module_action',
-            'detail',
+            'buyback_nota',
             'module_title',
             'module_icon', 'module_model'));
 
