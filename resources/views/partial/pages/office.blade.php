@@ -7,7 +7,7 @@
 
 
   <div class="w-3/4">
-
+  @can('dashboard_sales_office')
   <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
 <div class="card border-0">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">
@@ -23,6 +23,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 <div class="card border-0">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">
@@ -57,6 +60,8 @@
 
 
 </div>
+@endcan
+
 
 <div class="card">
     <div class="card-body">
@@ -75,7 +80,7 @@
                         <th>Date</th>
                         <th>No Invoice</th>
                         <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
-                        <th>{{ __('Karat') }}</th>
+                        
                         <th style="width: 16%!important;" class="text-center">
                             {{ __('Status') }}
                         </th>
@@ -232,9 +237,8 @@ div.dataTables_wrapper div.dataTables_paginate {
                     }
                 },
                 {data: 'date', name: 'date'},
-                {data: 'no_invoice', name: 'no_invoice'},
+                {data: 'invoice', name: 'invoice'},
                 {data: 'cabang', name: 'cabang'},
-                {data: 'karat', name: 'karat'},
                 {data: 'status', name: 'status'},
               
 
