@@ -340,7 +340,7 @@ public function index_data_table(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $status = $request->status;
-        $$module_name = $module_model::gold();
+        $$module_name = $module_model::query();
         if($status == 'inprogress') {
            $$module_name->inprogress();
            $$module_name->orderBy('created_at', 'desc');
