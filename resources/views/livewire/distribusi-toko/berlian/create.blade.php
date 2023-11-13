@@ -174,8 +174,15 @@
                             </thead>
                             <tbody>
                                 @foreach ($distribusi_toko_details as $index => $val )
+                                @php
+                                    $image = !empty($val['image']) ? $val['image'] : '';
+                                @endphp
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td> <a href="/{{ imageUrl() .'produksi/' . @$image }}" data-lightbox="{{ $image }} " b class="single_image">
+                                            <img src="/{{ imageUrl() .'produksi/' . @$image }}" order="0" width="100" class="img-thumbnail" align="center"/>
+                                        </a>
+                                    </td>
                                     <td> {{ !empty($val['code']) ? $val['code'] : ''  }} </td>
                                     <td> {{ $val['model']['name'] }} {{ $val['karatjadi']['name']  }} | {{ $val['berat'] }} gr </td>
                                     <td>
