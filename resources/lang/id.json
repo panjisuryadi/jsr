@@ -188,7 +188,8 @@
     "The :attribute must contain at least one number.": ":attribute harus mengandung setidaknya satu nomor atau angka.",
     "The :attribute must contain at least one uppercase and one lowercase letter.": "Kata sandi harus mengandung setidaknya satu huruf besar dan satu huruf kecil.",
     "The given :attribute has appeared in a data leak. Please choose a different :attribute.": ":attribute sudah banyak digunakan coba pilih :attribute lain",
-    "Unpublished": "Unpublished"
+    "Unpublished": "Unpublished",
+    "Confirm": "Konfirmasi"
     
 }
 

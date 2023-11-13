@@ -12,6 +12,8 @@ use Modules\Product\Entities\ProductLocation;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Cabang\Models\Cabang;
 use Auth;
+use Modules\Karat\Models\Karat;
+
 class Product extends Model implements HasMedia
 {
 
@@ -133,6 +135,10 @@ class Product extends Model implements HasMedia
 
      public function productlocation() {
         return $this->hasMany(ProductLocation::class, 'product_id');
+       }
+
+       public function karat(){
+        return $this->belongsTo(Karat::class,'karat_id');
        }
 
 

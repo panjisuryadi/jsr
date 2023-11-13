@@ -11,217 +11,51 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-
-{{-- <div class="flex grid grid-cols-2 gap-4 py-2 text-center items-center">
-    <div onclick="location.href='{{ route('buys-back.type', ['type' => 'NonMember']) }}';" class="cursor-pointer p-1 w-full">
-        <div class="justify-center items-center border-2 border-blue-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-            <div class="justify-center text-center items-center">
-                <?php
-                $image = asset('images/logo.png');
-                ?>
-                <img id="default_1" src="{{ $image }}" alt="images"
-                class="h-16 w-16 object-contain mx-auto" />
-            </div class="py-1">
-            <div class="leading-tight py-3 font-semibold">Member / Non Member</div>
-        </div>
-    </div>
-    <div onclick="location.href='{{ route('buys-back.type', ['type' => 'toko']) }}';" class="cursor-pointer p-1 w-full">
-        <div class="justify-center items-center border-2 border-green-500 bg-white  px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
-            <div class="justify-center text-center items-center">
-                <?php
-                $image = asset('images/logo.png');
-                ?>
-                <img id="default_1" src="{{ $image }}" alt="images"
-                class="h-16 w-16 object-contain mx-auto" />
-            </div class="py-1">
-            <div class="leading-tight font-semibold py-3">Toko / Gudang</div>
-        </div>
-    </div>
-</div>
-
- --}}
-
-
-    <div class="row">
-
-
-
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-<div class="flex justify-between py-1 border-bottom">
-
-<div>
-       
- @if(auth()->user()->isUserCabang())
-<div class="btn-group btn-group-md">
-     @can('create_buybacktoko')     
-   <a href="{{ route(''.$module_name.'.create') }}"
-                                 data-toggle="tooltip"
-                                 class="btn btn-outline-primary btn-md px-3">
-                                 <i class="bi bi-plus"></i>
-                                 @lang('Buys Back')
-    </a>
-    @endcan
-    @can('create_buysback_nota')
-  <a href="{{ route(''.$module_name.'.buysback_nota') }}"
-                                 data-toggle="tooltip"
-                                 class="btn btn-outline-success btn-md px-3">
-                                 <i class="bi bi-plus"></i>
-                                 @lang('Buys back Nota')
-    </a>
-    @endcan
-
-
-</div>
+    @if (auth()->user()->isUserCabang())
+        @include('buysback::buysbacks.cabang.datatable.buyback-item')
+        @include('buysback::buysbacks.cabang.datatable.buyback-nota')
+    @else
+        @include('buysback::buysbacks.office.datatable.buyback-nota')
     @endif
-
-
- 
-                        </div>
-                        <div id="buttons">
-                        </div>
-                    </div>
-
-         
-                    <div class="table-responsive mt-1">
-                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
-                            <thead>
-                                <tr>
-                                    <th style="width: 3%!important;">No</th>
-                                    <th style="width: 22%!important;">No BuyBack</th>
-                                   
-                                    
-                                    <th style="width: 20%!important;">Detail Produk</th>
-                                  
-                                    <th style="width: 10%!important;">Status</th>
-                                    <th style="width: 10%!important;">Nominal</th>
-                          
-
-
-
-                  <th style="width: 15%!important;" 
-                     class="@if(auth()->user()->can('edit_buybacktoko') || auth()->user()->can('show_buybacktoko') || auth()->user()->can('delete_buybacktoko'))
-                               @else
-                               no-sort 
-                                @endif
-                                    text-center">
-                                        {{ __('Action') }}
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
 
-<x-library.datatable />
 @push('page_scripts')
-   <script type="text/javascript">
-        $('#datatable').DataTable({
-           processing: true,
-           serverSide: true,
-           autoWidth: true,
-           responsive: true,
-           lengthChange: true,
-            searching: true,
-           "oLanguage": {
-            "sSearch": "<i class='bi bi-search'></i> {{ __("labels.table.search") }} : ",
-            "sLengthMenu": "_MENU_ &nbsp;&nbsp;Data Per {{ __("labels.table.page") }} ",
-            "sInfo": "{{ __("labels.table.showing") }} _START_ s/d _END_ {{ __("labels.table.from") }} <b>_TOTAL_ data</b>",
-            "sInfoFiltered": "(filter {{ __("labels.table.from") }} _MAX_ total data)",
-            "sZeroRecords": "{{ __("labels.table.not_found") }}",
-            "sEmptyTable": "{{ __("labels.table.empty") }}",
-            "sLoadingRecords": "Harap Tunggu...",
-            "oPaginate": {
-                "sPrevious": "{{ __("labels.table.prev") }}",
-                "sNext": "{{ __("labels.table.next") }}"
-            }
-            },
-            "aaSorting": [[ 0, "desc" ]],
-            "columnDefs": [
-                {
-                    "targets": 'no-sort',
-                    "orderable": false,
-                    "visible": false,
-                }
-            ],
-           
-            "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
-            dom: 'Blfrtip',
-            buttons: [
-
-                'excel',
-                'pdf',
-                'print'
-            ],
-            columns: [{
-                    "data": 'id',
-                    "sortable": false,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-
-                {data: 'no_buy_back', name:  'no_buy_back'},
-             
-              
-                {data: 'nama_produk', name: 'nama_produk'},
-                {data: 'status', name: 'status'},
-                {data: 'nominal_beli', name: 'nominal_beli'},
-              
-
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
-            ]
-        })
-        .buttons()
-        .container()
-        .appendTo("#buttons");
-
-
-
-    </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #Edit, #Status', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }  
+function createModal(){
+    $('#buyback-create-modal').modal('show');
+}
 
-        if($(this).attr('id') == 'Status')
-        {
-            $('.modal-dialog').addClass('modal-md');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').removeClass('modal-lg');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status {{ Label_case($module_title) }}');
-        }
-
-
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
+function process(data){
+        Swal.fire({
+            title: "Proses Nota",
+            text: "Proses Nota #"+ data.invoice +"?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0a0",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Proses"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{route('buysback.nota.process')}}/",
+                    type: 'PATCH',
+                    data: {data},
+                    dataType: 'json',
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        window.location.href = response.redirectRoute;
+                        toastr.success('Processing Nota')
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.success('Gagal memproses Nota')
+                    }
+                });
+            }
+        });
+    }
 </script>
 @endpush

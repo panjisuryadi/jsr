@@ -21,6 +21,7 @@ class KategoriProduk extends Model
 
      ];
 
+
     protected static function newFactory()
     {
         return \Modules\KategoriProduk\database\factories\KategoriProdukFactory::new();

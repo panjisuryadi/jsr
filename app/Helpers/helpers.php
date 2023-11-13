@@ -715,12 +715,7 @@ if(! function_exists('rupiah')) {
       $formatted = number_format($number,$dec);
       return $formatted;
     }
-
-
 }
-
-
-
 
 
 if (!function_exists('array_merge_numeric_values')) {
@@ -765,7 +760,7 @@ if (!function_exists('formatBerat')) {
 if (!function_exists('format_uang')) {
     function format_uang($angka) {
        $hasil = number_format($angka,0,',','.');
-       return 'Rp .' .$hasil;
+       return 'Rp. ' .$hasil;
     }
 }
 

@@ -60,4 +60,7 @@ class Karat extends Model
         return self::where('type','LM')->firstOrFail();
     }
 
+    public function getLabelAttribute(){
+        return $this->name . ' | ' . $this->kode;
+    }
 }

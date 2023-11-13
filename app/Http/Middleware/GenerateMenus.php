@@ -58,6 +58,9 @@ class GenerateMenus
             ]);
 
 
+
+
+
             // Pelanggan And Supplier
             $customers_suppliers = $masterData->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-people-fill"></i>
@@ -207,8 +210,7 @@ class GenerateMenus
                     
 
                 ],
-                'permission'    => [
-                    'access_buybacktoko'],
+                'permission'    => ['access_penentuanharga','access_buybacktoko'],
             ]);
             $toko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -223,7 +225,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => ['storeemployees*'],
-                'permission'    => ['access_buybacktoko'],
+                'permission'    => ['access_storeemployees'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -238,7 +240,7 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['penentuanhargas*'],
-                'permission'    => ['access_buybacktoko'],
+                'permission'    => ['access_penentuanharga'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -263,7 +265,7 @@ class GenerateMenus
 
             // EMAS - TOKO - PENERIMAAN - BUYBACK
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                <div class="break">'.__('Penerimaan Barang Buys Backs').'</div>', [
+                <div class="break">'.__('Barang Buy Back').'</div>', [
                 'route' => 'buysback.index',
                 'class' => 'nav-item',
             ])
@@ -278,7 +280,7 @@ class GenerateMenus
 
             // EMAS - TOKO - PENERIMAAN - Penerimaan Barang Luar
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Penerimaan Barang Luar'), [
+                '.__('Barang Luar'), [
                 'route' => 'penerimaanbarangluar.index',
                 'class' => 'nav-item',
             ])
@@ -292,7 +294,7 @@ class GenerateMenus
             ]);
 
             // EMAS - TOKO - PENERIMAAN - Penerimaan Barang DP
-            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Penerimaan Barang DP'), [
+            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Barang DP'), [
                 'route' => 'penerimaanbarangdp.index',
                 'class' => 'nav-item',
             ])
@@ -319,6 +321,44 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+        // buysbacknota
+        $buysbacknota = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i>Buys Back Nota', [
+            'class' => 'c-sidebar-nav-dropdown',
+        ])
+        ->data([
+            'order'         => 2,
+            'activematches' => [
+                'home*',
+                'buysback*',
+          
+            ],
+            'permission' => ['access_buysback_nota','create_buysback_nota'],
+        ]);
+        $buysbacknota->link->attr([
+            'class' => 'c-sidebar-nav-dropdown-toggle',
+            'href'  => '#',
+        ]);
+
+        $buysbacknota->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Buysback Nota'), [
+            'route' => 'home.buysbacknota',
+            'class' => 'nav-item',
+        ])
+        ->data([
+            'order'         => 2,
+            'activematches' => ['buysback*'],
+            'permission'    => ['access_buysback_nota'],
+        ])
+        ->link->attr([
+            'class' => 'c-sidebar-nav-link py-2',
+        ]);
+
+
+
+
+
+
 
 
             // EMAS - TOKO - Distribusi Toko
@@ -567,6 +607,42 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
+
+
+       // EMAS - STOK - DAFTAR STOK
+            $stock_office = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok Office', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => [
+                           'stoks*',
+                    ],
+                  'permission' => ['access_stoks'],
+            ]);
+
+
+
+            $stock_office->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // EMAS - STOK - DAFTAR STOK
             $stock_office = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok Office', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -578,10 +654,15 @@ class GenerateMenus
                     ],
                   'permission' => ['access_stoks'],
             ]);
+
+
+
             $stock_office->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
+
+
 
             // EMAS - STOK - DAFTAR STOK - STOK SALES
             $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Sales'), [
@@ -702,6 +783,8 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
+
+
 
 
             // EMAS - STOK - STOK Opname
@@ -1493,6 +1576,11 @@ class GenerateMenus
 
 
 
+
+
+
+
+
       
 
             // customers Access Control Dropdown ==================================
@@ -1847,6 +1935,14 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
+
+
+
+
+
 
 
 
