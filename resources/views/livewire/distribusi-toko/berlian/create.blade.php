@@ -167,6 +167,7 @@
                             <thead>
                                 <tr class="align-middle">
                                     <th class="align-middle">@lang('No')</th>
+                                    <th class="align-middle">@lang('Image')</th>
                                     <th class="align-middle">@lang('Kode Produksi')</th>
                                     <th class="align-middle">@lang('Produk Informasi')</th>
                                     <th class="align-middle">@lang('Action')</th>
