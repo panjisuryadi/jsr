@@ -35,12 +35,18 @@ class Summary extends Component
         foreach ($this->total_weight_per_karat as $karat_id => $value) {
             $rules['total_weight_per_karat.'.$karat_id] = [
                 function ($attribute, $value, $fail) use ($karat_id) {
+                    /** Validasi stok emas
+                     * penambahan kondisi jika kategorinya bukan berlian maka akan mengabaikan validasi stok emas gudang office
+                     * karena stok emas yang ada di berlian berasal dari stok produksi
+                     */
+                    if ($this->dist_toko->kategori_produk_id != $this->id_kategoriproduk_berlian) {
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_office berdasarkan nilai parent id nya
                     $maxWeight = DB::table('stock_office')
                         ->where('karat_id', $karat_id)
                         ->max('berat_real');
                     if ($value > $maxWeight) {
                         $fail("Jumlah emas melebihi stok yang tersedia. Sisa Stok ($maxWeight gr)");
+                    }
                     }
                 },
             ];
@@ -54,7 +60,14 @@ class Summary extends Component
         DB::beginTransaction();
         try{
             $this->dist_toko->setInProgress();
-            $this->reduceStockOffice($this->dist_toko->items);
+
+            /** Validasi stok emas
+             * penambahan kondisi jika kategorinya bukan berlian maka akan mengabaikan pengurangan stok emas gudang office
+             * karena stok emas yang ada di berlian berasal dari stok produksi
+             */
+            if ($this->dist_toko->kategori_produk_id != $this->id_kategoriproduk_berlian) {
+                $this->reduceStockOffice($this->dist_toko->items);
+            }
             DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 

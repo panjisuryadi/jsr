@@ -94,7 +94,9 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a class="btn btn-sm btn-primary" href="#" onclick="showEditModal({{$row}})">Edit</a>
+                                                @if ($dist_toko->kategori_produk_id != $id_kategoriproduk_berlian)
+                                                    <a class="btn btn-sm btn-primary" href="#" onclick="showEditModal({{$row}})">Edit</a>
+                                                @endif
                                                 <a class="btn btn-sm btn-danger" href="#">Hapus</a>
 
                                             </td>
