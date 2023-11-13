@@ -105,7 +105,7 @@
                                 }
                                 $image = $data->image;
                                 $imagePath = '/' .imageUrl() .'produksi/' . @$image;
-                                if(!File::exists(storage_path().'/app/public/uploads/produksi/'.@$image)){
+                                if(!file_exists(storage_path().'/app/public/uploads/produksi/'.@$image)){
                                     $imagePath = '/' .imageUrl() .'/' . @$image;
                                 }
                                 @endphp
