@@ -140,11 +140,15 @@ class GenerateMenus
                     'product-categories*',
                     'diamondcertificates*',
                     'itemrounds*',
+                    'penjualansales*',
+                    'retursales*',
                     'itemshapes*',
 
                 ],
                 'permission' => ['access_masterdata',
+                                      'access_penjualansales',
                                       'access_kategoriproduks',
+                                      'access_retursale',
                                       'access_buybacktoko',
                                       'access_diamondcertificates'],
             ]);
@@ -199,7 +203,7 @@ class GenerateMenus
             ]);
 
 
-            // EMAS - TOKO
+            // EMAS - TOKO master menu
             $toko = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Toko').'', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
@@ -207,10 +211,19 @@ class GenerateMenus
                 'order'         => 2,
                 'activematches' => [
                     'penentuanhargas*',
-                    
-
+                    'datasales*',
+                    'products*',
+                    'distribusitokos*',
+                    'distribusisales*',
+                    'penjualansales*',
                 ],
-                'permission'    => ['access_penentuanharga','access_buybacktoko'],
+                'permission'    => ['access_penentuanharga',
+                                     'access_distribusitoko',
+                                     'access_sales',
+                                     'access_products',
+                                     'access_sales',
+                                     'access_penjualansales',
+                                     'access_buybacktoko'],
             ]);
             $toko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -233,7 +246,7 @@ class GenerateMenus
 
             // EMAS - TOKO - PENENTUAN HARGA
             $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-     '.__('Penentuan Harga'), [
+                '.__('Penentuan Harga'), [
                 'route' => 'penentuanharga.index',
                 'class' => 'nav-item',
             ])
@@ -332,9 +345,13 @@ class GenerateMenus
             'activematches' => [
                 'home*',
                 'buysback*',
+              
+
           
             ],
-            'permission' => ['access_buysback_nota','create_buysback_nota'],
+            'permission' => ['access_buysback_nota',
+                          
+                             'create_buysback_nota'],
         ]);
         $buysbacknota->link->attr([
             'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -348,21 +365,15 @@ class GenerateMenus
         ->data([
             'order'         => 2,
             'activematches' => ['buysback*'],
-            'permission'    => ['access_buysback_nota'],
+            'permission'    => ['access_buysback_nota','access_products'],
         ])
         ->link->attr([
             'class' => 'c-sidebar-nav-link py-2',
         ]);
 
 
-
-
-
-
-
-
             // EMAS - TOKO - Distribusi Toko
-            $distribusiToko = $toko->add(
+         $distribusiToko = $toko->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
                 '.__('Distribusi Toko').'', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -370,11 +381,12 @@ class GenerateMenus
             ->data([
                 'order'         => 4,
                 'activematches' => [
-                    'datasales*',
+                    
                     'distribusitokos*',
+              
 
                 ],
-                'permission'    => ['access_distribusitoko'],
+                'permission'  => ['access_distribusitoko'],
             ]);
             $distribusiToko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -410,14 +422,25 @@ class GenerateMenus
             ]);
 
 
-            // EMAS - SALES
+            // EMAS - SALES master menu
             $sales = $emas->add('<i class="c-sidebar-nav-icon cil-apps"></i> Sales', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
                 'order'         => 3,
-                'activematches' => [],
-                'permission' => ['access_sales'],
+                  'activematches' => [
+                    'datasales*',
+                    'products*',
+                    'distribusitokos*',
+                    'distribusisales*',
+                    'penjualansales*',
+
+                ],
+                'permission'  => ['access_distribusitoko',
+                                     'access_sales',
+                                     'access_products',
+                                     'access_sales',
+                                     'access_penjualansales'],
             ]);
             $sales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -454,7 +477,7 @@ class GenerateMenus
                     'penjualansales*',
 
                 ],
-                'permission'    => ['access_distribusisales'],
+                'permission'    => ['access_penjualansales'],
             ]);
             $distribusisales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -506,7 +529,7 @@ class GenerateMenus
             ->data([
                 'order'         => 3,
                 'activematches' => ['retursales*'],
-                'permission'    => ['access_retursales'],
+                'permission'    => ['access_retursale'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -553,7 +576,7 @@ class GenerateMenus
             ->data([
                 'order'         => 3,
                 'activematches' => [],
-                'permission'    => [],
+                'permission'    => ['access_reports'],
             ]);
             $laporansales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -1439,7 +1462,7 @@ class GenerateMenus
 
 
 // Penjualan
-    $Penjualan = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-cart"></i>'.__('Penjualan').'', [
+  $Penjualan = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-cart"></i>'.__('Penjualan').'', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -1471,12 +1494,6 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
-
-
-
-
-
-
 
 
       //============================Access Control Dropdown

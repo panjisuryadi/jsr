@@ -106,7 +106,7 @@ class Create extends Component
 
     public function render(){
         $this->exceptProduksiId = array_merge($this->exceptProduksiId, $this->produksis_id);
-        $data = Produksi::with('karatjadi', 'model');
+        $data = Produksi::with('karatjadi', 'model', 'produksi_items.shape')->where('status',1);
         if (!empty($this->exceptProduksiId)) {
             $data = $data->whereNotIn('id', $this->exceptProduksiId);
         }
@@ -188,6 +188,7 @@ class Create extends Component
                 'created_by'                  => auth()->user()->name,
             ]);
 
+            $ids = [];
             foreach($this->distribusi_toko_details as $key => $value) {
                 $additional_data = [
                     "product_information" => $value
@@ -198,6 +199,13 @@ class Create extends Component
                     'produksis_id' => !empty($value['id']) ? $value['id'] : null,
                     'additional_data' => json_encode($additional_data),
                 ]);
+
+                if (!empty($value['id'])) {
+                    $ids[] = $value['id'];
+                }
+            }
+            if(!empty($ids)) {
+                Produksi::whereIn('id', $ids)->update(['status' => 2]);
             }
             $distribusi_toko->setAsDraft();
 

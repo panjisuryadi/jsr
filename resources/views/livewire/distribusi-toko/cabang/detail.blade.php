@@ -73,12 +73,13 @@
 
                                     </th>
                                     <th class="text-center">No</th>
-                                    <th class="text-center">Karat</th>
+                                    {{-- <th class="text-center">Karat</th>
                                     <th class="text-center">Berat Emas</th>
                                     <th class="text-center">Produk</th>
                                     <th class="text-center">Group</th>
-                                    <th class="text-center">Model</th>
-                                    <th class="text-center">Code</th>
+                                    <th class="text-center">Model</th> --}}
+                                    <th class="text-center">Image</th>
+                                    <th class="text-center">Informasi Produk</th>
                                     <th class="text-center">Aksi</th>
 
                                 </tr>
@@ -91,18 +92,40 @@
                                 @php
                                 $data = json_decode($row->additional_data)->product_information;
                                 $total_weight = $total_weight + $row->gold_weight;
+                                $model = !empty($data->model->name) ? $data->model->name : '';
+                                
+                                $berlian_info = '';
+                                if (!empty($data->produksi_items)) {
+                                    foreach($data->produksi_items as $item) {
+                                        $shape_code = !empty($item->shape?->shape_code) ? $item->shape?->shape_code : '';
+                                        $shape_name = !empty($item->shape?->shape_name) ? $item->shape?->shape_name : '';
+                                        $shape = !empty($shape_code) ? $shape_code : $shape_name;
+                                        $berlian_info .= ' '.$shape . ' '. $item->qty . ': ' . (float)$item->karatberlians . ' ct ';
+                                    }
+                                }
+                                $image = $data->image;
+                                $imagePath = '/' .imageUrl() .'produksi/' . @$image;
+                                if(!file_exists(storage_path().'/app/public/uploads/produksi/'.@$image)){
+                                    $imagePath = '/' .imageUrl() .'/' . @$image;
+                                }
                                 @endphp
                                 <tr>
                                     <td class="text-center">
                                         <input type="checkbox" wire:model="selectedItems" value="{{$row->id}}" name="selected_items[]" />
                                     </td>
                                     <td class="text-center">{{$loop->iteration}}</td>
-                                    <td class="text-center font-semibold"> {{@$row->karat->name}} gr</td>
-                                    <td class="text-center font-semibold"> {{@$row->gold_weight}} gr</td>
-                                    <td class="text-center font-semibold">{{ !empty($data->product_category->name) ? $data->product_category->name : '-' }}</td>
-                                    <td class="text-center font-semibold">{{ !empty($data->group->name) ? $data->group->name : '-' }}</td>
-                                    <td class="text-center font-semibold">{{ $data->model->name }}</td>
-                                    <td class="text-center font-semibold">{{ $data->code }}</td>
+                                    <td> <a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " b class="single_image">
+                                            <img src="{{ $imagePath }}" order="0" width="100" class="img-thumbnail" align="center"/>
+                                        </a>
+                                    </td>
+                                    <td class="text-center font-semibold">  
+                                        {{ $model .' '. @$row->karat->name . ' ' . @$row->gold_weight }} gr 
+                                        @if(!empty($berlian_info))
+                                        <br>
+                                        Berlian : {{ $berlian_info }}
+                                        @endif
+                                    
+                                    </td>
                                     <td class="text-center font-semibold">
                                         <a href="#" class="hover:text-blue-400 btn btn-sm btn-danger px-4">Preview</a>
 

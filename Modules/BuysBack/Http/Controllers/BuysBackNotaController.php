@@ -88,55 +88,22 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                           ->editColumn('no_buy_back', function ($data) {
-
-
-                            $is_non_member = is_null($data->customer_id);
-                            $customer_name = '';
-                            if($is_non_member){
-                                $customer_name = $data->customer_name;
-                            }else{
-                                $customer_name = $data->customer->customer_name;
-                            }
-                             $tb = '<div class="justify items-left text-left">'; 
-                             $tb .= '<div class="text-blue-400">
-                                     Nomor :<strong>' . $data->no_buy_back . '
-                                    </strong></div>';
-                             $tb .= '<div class="text-gray-800">
-                                     Cabang :<strong>' . $data->cabang->name . '
-                                    </strong></div>'; 
-                             $tb .= '<div class="text-gray-800">
-                                     Customer :<strong>' . $customer_name . '
-                                    </strong></div>';               
-                             $tb .= '</div>'; 
-                                return $tb;
-                              })
-
-                      
-                             ->editColumn('nama_produk', function ($data) {
-                             $tb = '<div class="justify items-left text-left">'; 
-                           
-                             $tb .= '<div class="text-gray-800">
-                                     Prduk :<strong>' . $data->product_name . '
-                                    </strong></div>'; 
-                             $tb .= '<div class="text-gray-800">
-                                     Karat :<strong>' . $data->karat->name . '
-                                    </strong></div>';   
-
-                             $tb .= '<div class="text-gray-800">
-                                     Berat :<strong>' . $data->weight . '
-                                    </strong></div>';               
-                             $tb .= '</div>'; 
-                                return $tb;
-                              })
-
-
-                          ->editColumn('kadar', function ($data) {
+                    
+                          ->editColumn('date', function ($data) {
                                 $tb = '<div class="font-semibold items-center text-center">
-                                        ' . $data->karat->name . '
+                                        ' . tanggal2($data->date) . '
                                        </div>';
                                    return $tb;
                                })
+
+                          ->editColumn('invoice', function ($data) {
+                                $tb = '<div class="font-semibold items-center text-center">
+                                        ' . $data->invoice . '
+                                       </div>';
+                                   return $tb;
+                               })
+
+
                             ->editColumn('berat', function ($data) {
                             $tb = '<div class="font-semibold items-center text-center">
                                     ' . $data->weight . '
@@ -159,7 +126,7 @@ public function index_data(Request $request)
                                 })
                             ->editColumn('cabang', function ($data) {
                                 $tb = '<div class="font-semibold items-center text-center">
-                                        ' . $data->cabang->name . '
+                                        ' . @$data->cabang->name . '
                                         </div>';
                                     return $tb;
                             })
@@ -175,8 +142,8 @@ public function index_data(Request $request)
                             }
                         })
                         ->rawColumns(['action','nama_customer',
-                               'no_buy_back',
-                               'nama_produk',
+                               'invoice',
+                               'date',
                                'kadar',
                                'berat',
                                'status',

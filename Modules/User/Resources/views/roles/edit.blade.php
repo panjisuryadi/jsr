@@ -109,9 +109,9 @@
         </div>
            <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input"
-            id="access_distribusi" name="permissions[]"
-            value="access_distribusi" {{ $role->hasPermissionTo('access_distribusi') ? 'checked' : '' }}>
-            <label class="custom-control-label" for="access_distribusi">
+            id="dashboard_distribusi" name="permissions[]"
+            value="dashboard_distribusi" {{ $role->hasPermissionTo('dashboard_distribusi') ? 'checked' : '' }}>
+            <label class="custom-control-label" for="dashboard_distribusi">
             Tampilkan list Distribusi Dashboard</label>
         </div>
         
