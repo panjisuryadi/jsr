@@ -16,7 +16,7 @@ use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
 use Modules\Stok\Models\StockOffice;
-use Modules\GoodsReceipt\Models\Toko;
+use Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -256,7 +256,7 @@ class Create extends Component
                 'type' => 2,
             ];
 
-            Toko\GoodsReceiptItem::create($data);
+            BuyBackBarangLuar\GoodsReceiptItem::create($data);
 
             DB::commit();
         }catch (\Exception $e) {
@@ -265,7 +265,7 @@ class Create extends Component
         }
 
         toast('Berhasil Menyimpan Barang Luar','success');
-        return redirect(route('goodsreceipt.toko.index'));
+        return redirect(route('goodsreceipt.toko.buyback-barangluar.index'));
     }
 
     private function uploadImage($img){

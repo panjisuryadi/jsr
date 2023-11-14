@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\GoodsReceipt\Http\Controllers\Toko;
+namespace Modules\GoodsReceipt\Http\Controllers\Toko\BuyBackBarangLuar;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
@@ -38,10 +38,10 @@ class GoodsReceiptsController extends Controller
         // Page Title
         $this->module_title = 'Goods Receipt';
         $this->module_name = 'goodsreceipt';
-        $this->module_path = 'goodsreceipts/toko';
+        $this->module_path = 'goodsreceipts/toko/buyback-barangluar';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\GoodsReceipt\Models\Toko\GoodsReceipt";
-        $this->module_model_item = "Modules\GoodsReceipt\Models\Toko\GoodsReceiptItem";
+        $this->module_model_item = "Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptItem";
         $this->module_categories = "Modules\Product\Entities\Category";
         $this->module_products = "Modules\Product\Entities\Product";
 

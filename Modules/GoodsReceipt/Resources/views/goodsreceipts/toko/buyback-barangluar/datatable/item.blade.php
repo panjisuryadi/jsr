@@ -16,14 +16,14 @@
                             @can('create_buybacktoko')
                             <a href="#" data-toggle="tooltip" class="btn btn-primary btn-md px-3" onclick="createModal()">
                                 <i class="bi bi-plus"></i>
-                                {{ __('Add BuyBack Item') }}
+                                {{ __('BuyBack Item') }}
                             </a>
                             @endcan
                         </div>
                         <div class="btn-group btn-group-md">
                             <a href="#" data-toggle="tooltip" class="btn btn-primary btn-md px-3" onclick="createBarangLuar()">
                                 <i class="bi bi-plus"></i>
-                                {{ __('Add Outside Item') }}
+                                {{ __('Outside Item') }}
                             </a>
                         </div>
                         @endif
@@ -35,14 +35,14 @@
 
 
                 <div class="table-responsive mt-1">
-                    <table id="goodsreceipt-item-datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+                    <table id="goodsreceipt-buyback-barangluar-item-datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                         <thead>
                             <tr>
                                 <th style="width: 3%!important;">No</th>
-                                <th style="width: 12%!important;">Tanggal</th>
-                                <th style="width: 20%!important;">Produk</th>
+                                <th style="width: 10%!important;">Tanggal</th>
+                                <th style="width: 16%!important;">Produk</th>
                                 <th style="width: 10%!important;">Tipe</th>
-                                <th style="width: 22%!important;">Customer</th>
+                                <th style="width: 17%!important;">Customer</th>
                                 <th style="width: 10%!important;">Status</th>
                                 <th style="width: 10%!important;">Nominal</th>
 
@@ -64,7 +64,7 @@
 
 @push('page_scripts')
 <script type="text/javascript">
-        $('#goodsreceipt-item-datatable').DataTable({
+        $('#goodsreceipt-buyback-barangluar-item-datatable').DataTable({
            processing: true,
            serverSide: true,
            autoWidth: true,
@@ -94,7 +94,7 @@
             ],
            
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.toko.index_data_item") }}',
+            ajax: '{{ route("$module_name.toko.buyback-barangluar.index_data_item") }}',
             dom: 'Blfrtip',
             buttons: [
 

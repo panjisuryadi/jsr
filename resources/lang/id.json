@@ -190,8 +190,8 @@
     "The given :attribute has appeared in a data leak. Please choose a different :attribute.": ":attribute sudah banyak digunakan coba pilih :attribute lain",
     "Unpublished": "Unpublished",
     "Confirm": "Konfirmasi",
-    "Add BuyBack Item": "Tambah Barang BuyBack",
-    "Add Outside Item": "Tambah Barang Luar"
+    "BuyBack Item": "Barang BuyBack",
+    "Outside Item": "Barang Luar"
     
 }
 

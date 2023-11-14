@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\GoodsReceipt\Models\Toko;
+namespace Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;

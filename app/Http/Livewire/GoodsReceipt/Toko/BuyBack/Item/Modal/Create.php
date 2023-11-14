@@ -6,7 +6,7 @@ use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Modules\BuysBack\Models\BuyBackItem;
-use Modules\GoodsReceipt\Models\Toko;
+use Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
@@ -40,7 +40,7 @@ class Create extends Component
                     if(is_null($product)){
                         $fail('Produk tidak ditemukan');
                     }else{
-                        $is_exist = Toko\GoodsReceiptItem::where('product_id',$product->id)->exists();
+                        $is_exist = BuyBackBarangLuar\GoodsReceiptItem::where('product_id',$product->id)->exists();
                         if($is_exist){
                             $fail('Produk yang sama telah ditambahkan');
                         }else{
@@ -89,13 +89,14 @@ class Create extends Component
                 'type' => 1
             ];
 
-            $item = Toko\GoodsReceiptItem::create($data);
+            $item = BuyBackBarangLuar\GoodsReceiptItem::create($data);
             $product = $item->product;
             $product->update([
                 'cabang_id' => $item->cabang_id,
                 'status_id' => ProductStatus::PENDING_CABANG
             ]);
-            $product->statuses()->attach($product->status_id,['cabang_id' => $product->cabang_id, 'properties' => $item]);
+            $product->refresh();
+            $product->statuses()->attach($product->status_id,['cabang_id' => $product->cabang_id, 'properties' => json_encode(['product'=>$product])]);
 
             DB::commit();
         }catch (\Exception $e) {
@@ -104,7 +105,7 @@ class Create extends Component
         }
 
         toast('Berhasil Menyimpan Barang Buy Back','success');
-        return redirect(route('goodsreceipt.toko.index'));
+        return redirect(route('goodsreceipt.toko.buyback-barangluar.index'));
         
     }
 
