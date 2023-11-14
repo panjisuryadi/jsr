@@ -23,7 +23,8 @@ class GoodsReceiptItem extends Model
         'note',
         'date',
         'type',
-        'customer'
+        'customer',
+        'goodsreceipt_toko_nota_id'
     ];
     protected $table = 'goodsreceipt_toko_items';
 

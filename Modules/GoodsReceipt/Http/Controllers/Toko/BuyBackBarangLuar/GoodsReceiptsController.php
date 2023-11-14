@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\GoodsReceipt\Http\Controllers\Toko\BuyBackBarangLuar;
+
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
@@ -29,11 +30,12 @@ use Modules\Stok\Models\StockOffice;
 use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\Adjustment;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar;
 
 class GoodsReceiptsController extends Controller
 {
 
-  public function __construct()
+    public function __construct()
     {
         // Page Title
         $this->module_title = 'Goods Receipt';
@@ -44,8 +46,6 @@ class GoodsReceiptsController extends Controller
         $this->module_model_item = "Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptItem";
         $this->module_categories = "Modules\Product\Entities\Category";
         $this->module_products = "Modules\Product\Entities\Product";
-
-
     }
 
     /**
@@ -53,8 +53,9 @@ class GoodsReceiptsController extends Controller
      * @return Renderable
      */
 
-  public function index() {
-        if(AdjustmentSetting::exists()){
+    public function index()
+    {
+        if (AdjustmentSetting::exists()) {
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
@@ -65,93 +66,182 @@ class GoodsReceiptsController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-         return view(''.$module_name.'::'.$module_path.'.index',
-           compact('module_name',
-            'module_action',
-            'module_title',
-            'module_icon', 'module_model'));
+        return view(
+            '' . $module_name . '::' . $module_path . '.index',
+            compact(
+                'module_name',
+                'module_action',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
     }
 
 
     public function index_data_item(Request $request)
 
-                     {
-                         $module_title = $this->module_title;
-                         $module_name = $this->module_name;
-                         $module_path = $this->module_path;
-                         $module_icon = $this->module_icon;
-                         $module_model = $this->module_model;
-                         $module_name_singular = Str::singular($module_name);
-                 
-                         $module_action = 'List';
-                         $$module_name = $this->module_model_item::with(['product','customer'])->pending()->get();
-                         return Datatables::of($$module_name)
-                                         ->addColumn('action', function ($data) {
-                                             $module_name = $this->module_name;
-                                             $module_model = $this->module_model;
-                                             $module_path = $this->module_path;
-                                             return view(''.$module_name.'::'.$module_path.'.item.action',
-                                             compact('module_name', 'data', 'module_model'));
-                                                 })
-                 
-                                              ->editColumn('barang', function ($data) {
-                                              $tb = '<div class="justify items-left text-left">'; 
-                                            
-                                              $tb .= '<div class="text-gray-800">
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = $this->module_model_item::pending()->with(['product'])->where('goodsreceipt_toko_nota_id',null)->get();
+        return Datatables::of($$module_name)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view(
+                    '' . $module_name . '::' . $module_path . '.datatable.item.action',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+
+            ->editColumn('barang', function ($data) {
+                $tb = '<div class="justify items-left text-left">';
+
+                $tb .= '<div class="text-gray-800">
                                                       Nama Produk : <strong>' . $data->product->product_name . '
-                                                     </strong></div>'; 
-                                              $tb .= '<div class="text-gray-800">
+                                                     </strong></div>';
+                $tb .= '<div class="text-gray-800">
                                                       Karat : <strong>' . $data->product->karat->label . '
-                                                     </strong></div>';   
-                 
-                                              $tb .= '<div class="text-gray-800">
+                                                     </strong></div>';
+
+                $tb .= '<div class="text-gray-800">
                                                       Berat : <strong>' . $data->product->weight . '
-                                                      gr</strong></div>';               
-                                              $tb .= '</div>'; 
-                                                 return $tb;
-                                               })
-                 
-                 
-                                           ->editColumn('customer', function ($data) {
-                                                 $tb = '<div class="font-semibold items-center text-center">
+                                                      gr</strong></div>';
+                $tb .= '</div>';
+                return $tb;
+            })
+
+
+            ->editColumn('customer', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
                                                          ' . $data->customer_name . '
                                                         </div>';
-                                                    return $tb;
-                                                })
-                                             ->editColumn('status', function ($data) {
-                                             $tb = '<button class="btn bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">'. $data->product->current_status->name .'</button>';
-                                                 return $tb;
-                                             })
-                                             ->editColumn('nominal', function ($data) {
-                                             $tb = '<div class="font-semibold items-center text-center">
+                return $tb;
+            })
+            ->editColumn('status', function ($data) {
+                $tb = '<button class="btn bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">' . $data->product->current_status->name . '</button>';
+                return $tb;
+            })
+            ->editColumn('nominal', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
                                                      ' . format_uang($data->nominal) . '
                                                      </div>';
-                                                 return $tb;
-                                             })
-        
-                 
-                                            ->editColumn('date', function ($data) {
-                                                $tb = '<div class="font-semibold items-center text-center">
+                return $tb;
+            })
+
+
+            ->editColumn('date', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
                                                 ' . $data->date . '
                                                 </div>';
-                                            return $tb;
-                                            })
-                                            ->editColumn('tipe', function ($data) {
-                                                $tb = '<div class="font-semibold items-center text-center">
+                return $tb;
+            })
+            ->editColumn('tipe', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
                                                 ' . $data->type_label . '
                                                 </div>';
-                                            return $tb;
-                                            })
-                                            ->rawColumns(['action','barang',
-                                                    'customer',
-                                                    'status',
-                                                    'nominal',
-                                                    'date',
-                                                    'tipe'
-                                                    ])
-                                            ->make(true);
-                    }
+                return $tb;
+            })
+            ->rawColumns([
+                'action', 'barang',
+                'customer',
+                'status',
+                'nominal',
+                'date',
+                'tipe'
+            ])
+            ->make(true);
+    }
 
- 
 
+    public function index_data_nota(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = BuyBackBarangLuar\GoodsReceiptNota::get();
+        return Datatables::of($$module_name)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view(
+                    '' . $module_name . '::' . $module_path . '.datatable.nota.action',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+
+            ->editColumn('total_item', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
+                                                        ' . $data->items->count() . '
+                                                       </div>';
+                return $tb;
+            })
+            ->editColumn('status', function ($data) {
+                $tb = '<button class="btn bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">' . $data->current_status->name . '</button>';
+                return $tb;
+            })
+            ->editColumn('nota', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
+                                                    ' . $data->invoice . '
+                                                    </div>';
+                return $tb;
+            })
+
+
+            ->editColumn('date', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
+                                               ' . $data->date . '
+                                               </div>';
+                return $tb;
+            })
+            ->rawColumns([
+                'action', 'barang',
+                'total_item',
+                'status',
+                'nota',
+                'date',
+            ])
+            ->make(true);
+    }
+
+
+    public function create_nota()
+    {
+        if (AdjustmentSetting::exists()) {
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Create';
+        return view(
+            '' . $module_name . '::' . $module_path . '.datatable.nota.create',
+            compact(
+                'module_name',
+                'module_action',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
+    }
 }

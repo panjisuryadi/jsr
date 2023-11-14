@@ -14,6 +14,7 @@
 <div class="container-fluid">
     @if (auth()->user()->isUserCabang())
         @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.datatable.item')
+        @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.datatable.nota')
     @endif
 </div>
 @endsection
