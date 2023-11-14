@@ -34,7 +34,7 @@ class Product extends Model implements HasMedia
 
 
   public function product_item() {
-        return $this->hasMany(ProductItem::class, 'product_id', 'id');
+        return $this->hasOne(ProductItem::class, 'product_id', 'id');
     }
 
     public function scopeAkses($query)

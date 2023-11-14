@@ -20,6 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Toko - BuyBack Barang Luar
     Route::get("$module_name/toko/buyback-barangluar", ['as' => "$module_name.toko.buyback-barangluar.index", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index"]);
 
+    Route::get("$module_name/toko/buyback-barangluar/{item}/print/", ['as' => "$module_name.toko.buyback-barangluar.print", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@print_item"]);  
+
     Route::get("$module_name/toko/buyback-barangluar/create-nota", ['as' => "$module_name.toko.buyback-barangluar.create-nota", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@create_nota"]);
 
     Route::get("$module_name/toko/buyback-barangluar/index_data_nota", ['as' => "$module_name.toko.buyback-barangluar.index_data_nota", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index_data_nota"]);

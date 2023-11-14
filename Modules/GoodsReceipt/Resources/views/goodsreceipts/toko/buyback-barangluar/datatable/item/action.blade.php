@@ -8,6 +8,13 @@
     </a>
 @endcan
 
+@can('show_buybacktoko')
+    <a href="{{ route(''.$module_name.'.toko.buyback-barangluar.print', $data->id) }}"
+     class="btn btn-outline-info btn-sm">
+        <i class="bi bi-printer"></i> &nbsp;@lang('Print')
+    </a>
+@endcan
+
     @can('delete_buybacktoko')
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();

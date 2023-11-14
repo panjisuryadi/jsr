@@ -4,6 +4,7 @@ namespace Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Cabang\Models\Cabang;
 use Modules\Karat\Models\Karat;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
@@ -54,6 +55,10 @@ class GoodsReceiptItem extends Model
             return $this->customer;
         }
         return $this->member_customer->customer_name;
+    }
+
+    public function cabang(){
+        return $this->belongsTo(Cabang::class);
     }
 
 }

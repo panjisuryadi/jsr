@@ -4,6 +4,7 @@ namespace Modules\Product\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\DiamondCertificate\Models\DiamondCertificate;
 use Modules\Karat\Models\Karat;
 use Modules\People\Entities\Supplier;
 

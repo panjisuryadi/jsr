@@ -244,4 +244,11 @@ class GoodsReceiptsController extends Controller
             )
         );
     }
+
+    public function print_item(BuyBackBarangLuar\GoodsReceiptItem $item){
+        $datetime = Carbon::parse($item->created_at);
+        $filename = "Penerimaan " . ucwords($item->type_label) . " " . $item->cabang->name . " " . ucwords($item->customer_name);
+        $pdf = PDF::loadView('goodsreceipt::goodsreceipts.toko.buyback-barangluar.datatable.item.print',compact('item','filename','datetime'));
+        return $pdf->stream($filename.'.pdf');
+    }
 }
