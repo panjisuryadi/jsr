@@ -114,7 +114,7 @@ class GoodsReceiptsController extends Controller
                  
                                            ->editColumn('customer', function ($data) {
                                                  $tb = '<div class="font-semibold items-center text-center">
-                                                         ' . $data->member_customer->customer_name . '
+                                                         ' . $data->customer_name . '
                                                         </div>';
                                                     return $tb;
                                                 })

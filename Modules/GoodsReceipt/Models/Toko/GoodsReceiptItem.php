@@ -22,7 +22,8 @@ class GoodsReceiptItem extends Model
         'nominal',
         'note',
         'date',
-        'type'
+        'type',
+        'customer'
     ];
     protected $table = 'goodsreceipt_toko_items';
 
@@ -45,6 +46,13 @@ class GoodsReceiptItem extends Model
             1 => 'barang buyback',
             2 => 'barang luar'
         };
+    }
+
+    public function getCustomerNameAttribute(){
+        if(is_null($this->customer_id)){
+            return $this->customer;
+        }
+        return $this->member_customer->customer_name;
     }
 
 }

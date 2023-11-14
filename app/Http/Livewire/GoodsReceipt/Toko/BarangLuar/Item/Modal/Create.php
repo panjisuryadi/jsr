@@ -16,6 +16,7 @@ use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
 use Modules\Stok\Models\StockOffice;
+use Modules\GoodsReceipt\Models\Toko;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -230,16 +231,21 @@ class Create extends Component
                 'product_code'               => $this->data['additional_data']['code'],
                 'product_barcode_symbology'  => 'C128',
                 'product_unit'               => 'Gram',
-                'images' => $this->uploadImage($this->data['additional_data']['image'])
+                'images' => $this->uploadImage($this->data['additional_data']['image']),
             ];
             $product = Product::create($product_data);
 
-            $product->product_item()->create([
+            $product_item = $product->product_item()->create([
                 'certificate_id'              => empty($this->data['additional_data']['certificate_id'])?null:$this->data['additional_data']['certificate_id'],
                 'berat_label'                 => $this->data['additional_data']['tag_weight'],
                 'berat_accessories'           => $this->data['additional_data']['accessories_weight'],
                 'berat_total'                 => $this->data['total_weight'],
             ]);
+            $product->statuses()->attach($product->status_id,['cabang_id' => $product->cabang_id, 'properties' => json_encode([
+                'product' => $product,
+                'product_additional_information' =>  $product_item
+            ])]);
+
             $data = [
                 'product_id' => $product->id,
                 'cabang_id' => $this->cabang->id,
@@ -247,11 +253,10 @@ class Create extends Component
                 'pic_id' => auth()->id(),
                 'nominal' => $this->nominal,
                 'date' => $this->date,
-                'type' => 2
+                'type' => 2,
             ];
 
-            $item = Toko\GoodsReceiptItem::create($data);
-            $product->statuses()->attach($product->status_id,['cabang_id' => $product->cabang_id, 'properties' => $item]);
+            Toko\GoodsReceiptItem::create($data);
 
             DB::commit();
         }catch (\Exception $e) {

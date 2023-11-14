@@ -383,7 +383,7 @@
                         </div>
                         <div class="col-span-2">
                             <div class="form-group">
-                                <x-library.goodsreceipt-toko.webcam />
+                                <x-library.goodsreceipt-toko.barangluar.webcam />
                                 @if ($errors->has('data.additional_data.image'))
                                 <span class="invalid feedback"role="alert">
                                     <small class="text-danger">{{ $errors->first('data.additional_data.image') }}.</small

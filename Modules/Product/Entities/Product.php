@@ -15,6 +15,7 @@ use Auth;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Models\ProductStatus;
+use Modules\Product\Models\ProductTrackingHistory;
 use Modules\ProdukModel\Models\ProdukModel;
 
 class Product extends Model implements HasMedia
@@ -145,7 +146,7 @@ class Product extends Model implements HasMedia
        }
 
        public function statuses(){
-        return $this->belongsToMany(ProductStatus::class,'product_tracking_history','product_id','status_id')->withTimestamps()->withPivot('cabang_id','properties');
+        return $this->belongsToMany(ProductStatus::class,'product_tracking_history','product_id','status_id')->using(ProductTrackingHistory::class)->withTimestamps()->withPivot('cabang_id','properties');
        }
 
        public function current_status(){
