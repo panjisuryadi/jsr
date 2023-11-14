@@ -2,9 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <div class="flex justify-between">
-                    <h2 class="text-lg font-bold uppercase">Penerimaan Barang BuyBack - Barang Luar</h2>
-                </div>
+                <h2 class="text-lg font-bold uppercase">Pengiriman Barang ke Office</h2>
             </div>
             <div class="card-body">
                 <div class="flex justify-between py-1 border-bottom">
@@ -13,40 +11,39 @@
 
                         @if(auth()->user()->isUserCabang())
                         <div class="btn-group btn-group-md">
-                            @can('create_buybacktoko')
-                            <a href="#" data-toggle="tooltip" class="btn btn-primary btn-md px-3" onclick="createModal()">
+                            @can('create_buysback_nota')
+                            <a href="{{ route(''.$module_name.'.toko.buyback-barangluar.create-nota') }}" data-toggle="tooltip" class="btn btn-primary btn-md px-3">
                                 <i class="bi bi-plus"></i>
-                                {{ __('BuyBack Item') }}
+                                {{ __('Add') }} Nota
                             </a>
                             @endcan
-                        </div>
-                        <div class="btn-group btn-group-md">
-                            <a href="#" data-toggle="tooltip" class="btn btn-primary btn-md px-3" onclick="createBarangLuar()">
-                                <i class="bi bi-plus"></i>
-                                {{ __('Outside Item') }}
-                            </a>
+
+
                         </div>
                         @endif
 
 
 
                     </div>
+
                 </div>
 
 
                 <div class="table-responsive mt-1">
-                    <table id="goodsreceipt-buyback-barangluar-item-datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+                    <table id="goodsreceipt-toko-barangbuyback-barangluar-nota-datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                         <thead>
                             <tr>
                                 <th style="width: 3%!important;">No</th>
-                                <th style="width: 10%!important;">Tanggal</th>
-                                <th style="width: 16%!important;">Produk</th>
-                                <th style="width: 10%!important;">Tipe</th>
-                                <th style="width: 17%!important;">Customer</th>
+                                <th style="width: 20%!important;">Tanggal</th>
+                                <th style="width: 22%!important;">Nota</th>
                                 <th style="width: 10%!important;">Status</th>
-                                <th style="width: 10%!important;">Nominal</th>
+                                <th style="width: 10%!important;">Jumlah Barang</th>
 
-                                <th style="width: 15%!important;" class="text-center">
+                                <th style="width: 15%!important;" class="@if(auth()->user()->can('edit_buybacktoko') || auth()->user()->can('show_buybacktoko') || auth()->user()->can('delete_buybacktoko'))
+                               @else
+                               no-sort 
+                                @endif
+                                    text-center">
                                     {{ __('Action') }}
                                 </th>
                             </tr>
@@ -56,15 +53,12 @@
             </div>
         </div>
     </div>
-    @livewire('goods-receipt.toko.buy-back.item.modal.create')
-    @livewire('goods-receipt.toko.barang-luar.item.modal.create')
 </div>
-
 <x-library.datatable />
 
 @push('page_scripts')
 <script type="text/javascript">
-        $('#goodsreceipt-buyback-barangluar-item-datatable').DataTable({
+        $('#goodsreceipt-toko-barangbuyback-barangluar-nota-datatable').DataTable({
            processing: true,
            serverSide: true,
            autoWidth: true,
@@ -94,7 +88,7 @@
             ],
            
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.toko.buyback-barangluar.index_data_item") }}',
+            ajax: '{{ route("$module_name.toko.buyback-barangluar.index_data_nota") }}',
             dom: 'Blfrtip',
             buttons: [
 
@@ -109,14 +103,13 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
+
                 {data: 'date', name: 'date'},
-                {data: 'barang', name: 'barang'},
-                {data: 'tipe', name:'tipe'},
-                {data: 'customer', name:  'customer'},
+                {data: 'nota', name:  'nota'},
              
               
                 {data: 'status', name: 'status'},
-                {data: 'nominal', name: 'nominal'},
+                {data: 'total_item', name: 'total_item'},
               
 
                 {
