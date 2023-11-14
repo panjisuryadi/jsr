@@ -12,7 +12,10 @@ use Modules\Product\Entities\ProductLocation;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Cabang\Models\Cabang;
 use Auth;
+use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
+use Modules\Product\Models\ProductStatus;
+use Modules\ProdukModel\Models\ProdukModel;
 
 class Product extends Model implements HasMedia
 {
@@ -139,6 +142,26 @@ class Product extends Model implements HasMedia
 
        public function karat(){
         return $this->belongsTo(Karat::class,'karat_id');
+       }
+
+       public function statuses(){
+        return $this->belongsToMany(ProductStatus::class,'product_tracking_history','product_id','status_id')->withTimestamps()->withPivot('cabang_id','properties');
+       }
+
+       public function current_status(){
+        return $this->belongsTo(ProductStatus::class,'status_id');
+       }
+
+       public function group(){
+        return $this->belongsTo(Group::class);
+       }
+
+       public function model(){
+        return $this->belongsTo(ProdukModel::class,'model_id');
+       }
+
+       public function getProductNameAttribute(){
+        return $this->group?->name . ' ' . $this->model?->name;
        }
 
 

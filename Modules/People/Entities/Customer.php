@@ -12,6 +12,8 @@ class Customer extends Model
 
     protected $guarded = [];
 
+    protected $table = "customers";
+
     protected static function newFactory() {
         return \Modules\People\Database\factories\CustomerFactory::new();
     }

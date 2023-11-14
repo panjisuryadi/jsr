@@ -16,6 +16,12 @@ Route::group(['middleware' => 'auth'], function () {
     $module_name = 'goodsreceipt';
     $controller_name = 'GoodsReceiptsController';
 
+
+    // Toko
+    Route::get("$module_name/toko/", ['as' => "$module_name.toko.index", 'uses' => "Toko\GoodsReceiptsController@index"]);
+
+    Route::get("$module_name/toko/index_data_item", ['as' => "$module_name.toko.index_data_item", 'uses' => "Toko\GoodsReceiptsController@index_data_item"]);
+
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
 
       Route::get("$module_name/riwayat-penerimaan", ['as' => "$module_name.riwayat_penerimaan", 'uses' => "$controller_name@riwayat_penerimaan"]);
