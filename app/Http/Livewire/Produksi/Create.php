@@ -96,6 +96,7 @@ class Create extends Component
         $this->arrayKaratBerlian = $arrayKaratBerlian;
 
         $this->karatasal_id = $this->karat24k;
+        $this->kategoriproduk_id = $this->id_kategoriproduk_berlian;
 
     }
 
