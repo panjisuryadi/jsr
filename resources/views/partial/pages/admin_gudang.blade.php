@@ -69,13 +69,16 @@
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#home">Penerimaan</a>
         </li>
+         @can('show_distribusi')
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#sales">Distribusi Toko</a>
         </li> 
-
+          @endcan
+       @can('show_products')
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#DataSales">Produk</a>
         </li>
+        @endcan
     </ul>
 
     <div class="tab-content py-3 mb-2">

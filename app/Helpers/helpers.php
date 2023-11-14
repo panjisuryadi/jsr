@@ -542,6 +542,8 @@ if (!function_exists('bpstts')) {
          }
       }
 
+      
+
  if (!function_exists('shortdate')) {
         function shortdate($value)
         {

@@ -244,75 +244,6 @@
 
 
 
-
-
-
-
-
-
-
-
-<div class="card h-100 border-0 shadow">
-<div class="card-header">
-   Produk
-</div>
-    <div class="card-body">
-  <div class="flex flex-row grid grid-cols-2 gap-1 mb-2">     
-<div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input"
-    id="access_products" name="permissions[]"
-    value="access_products" {{ $role->hasPermissionTo('access_products') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="access_products">Access</label>
-</div>
-<div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input"
-    id="show_products" name="permissions[]"
-    value="show_products" {{ $role->hasPermissionTo('show_products') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="show_products">View</label>
-</div>
-<div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input"
-    id="create_products" name="permissions[]"
-    value="create_products" {{ $role->hasPermissionTo('create_products') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="create_products">Create</label>
-</div>
-
-<div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input"
-    id="edit_products" name="permissions[]"
-    value="edit_products" {{ $role->hasPermissionTo('edit_products') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="edit_products">Edit</label>
-</div>
-
-<div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input"
-    id="delete_products" name="permissions[]"
-    value="delete_products" {{ $role->hasPermissionTo('delete_products') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="delete_products">Delete</label>
-</div>
-
-<div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input"
-    id="access_product_categories" name="permissions[]"
-    value="access_product_categories" {{ $role->hasPermissionTo('access_product_categories') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="access_product_categories">Category</label>
-</div>
-
-<div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input"
-    id="print_barcodes" name="permissions[]"
-    value="print_barcodes" {{ $role->hasPermissionTo('print_barcodes') ? 'checked' : '' }}>
-    <label class="custom-control-label" for="print_barcodes">Print Barcodes</label>
-</div>
-
-
-</div>
-
-
-    </div>
-</div>
-
-
 <div class="card h-100 border-0 shadow">
 <div class="card-header font-semibold">
    Distribusi
@@ -1817,6 +1748,93 @@
 
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
+       Products
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_products" name="permissions[]"
+                value="access_products" {{ $role->hasPermissionTo('access_products') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_products">
+                  {{ label_Case('access_products') }}
+               </label>
+            </div>
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_products" name="permissions[]"
+                value="create_products" {{ $role->hasPermissionTo('create_products') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_products">
+                  {{ label_Case('create_products') }}
+               </label>
+            </div>
+
+        <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_products" name="permissions[]"
+                value="show_products" {{ $role->hasPermissionTo('show_products') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_products">
+                  {{ label_Case('show_products') }}
+               </label>
+            </div>
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_products" name="permissions[]"
+                value="edit_products" {{ $role->hasPermissionTo('edit_products') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_products">
+                  {{ label_Case('edit_products') }}
+               </label>
+            </div>
+
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_products" name="permissions[]"
+                value="edit_products" {{ $role->hasPermissionTo('edit_products') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_products">
+                  {{ label_Case('edit_products') }}
+               </label>
+            </div>
+
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="delete_products" name="permissions[]"
+                value="delete_products" {{ $role->hasPermissionTo('delete_products') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="delete_products">
+                  {{ label_Case('delete_products') }}
+               </label>
+            </div>
+
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_tracking_products" name="permissions[]"
+                value="show_tracking_products" {{ $role->hasPermissionTo('show_tracking_products') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_tracking_products">
+                  {{ label_Case('show_tracking_products') }}
+               </label>
+            </div>
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_approve_product" name="permissions[]"
+                value="access_approve_product" {{ $role->hasPermissionTo('access_approve_product') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_approve_product">
+                  {{ label_Case('access_approve_product') }}
+               </label>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
        Reports
     </div>
     <div class="card-body">
@@ -1829,6 +1847,82 @@
                   {{ label_Case('access_reports') }}
                </label>
             </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Products Transfer
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_product_transfer" name="permissions[]"
+                value="access_product_transfer" {{ $role->hasPermissionTo('access_product_transfer') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_product_transfer">
+                  {{ label_Case('access_product_transfer') }}
+               </label>
+            </div>
+
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_tracking_products" name="permissions[]"
+                value="show_tracking_products" {{ $role->hasPermissionTo('show_tracking_products') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_tracking_products">
+                  {{ label_Case('show_tracking_products') }}
+               </label>
+            </div>
+
+
+   
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_product_transfer" name="permissions[]"
+                value="create_product_transfer" {{ $role->hasPermissionTo('create_product_transfer') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_product_transfer">
+                  {{ label_Case('create_product_transfer') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_product_transfer" name="permissions[]"
+                value="show_product_transfer" {{ $role->hasPermissionTo('show_product_transfer') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_product_transfer">
+                  {{ label_Case('show_product_transfer') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_product_transfer" name="permissions[]"
+                value="edit_product_transfer" {{ $role->hasPermissionTo('edit_product_transfer') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_product_transfer">
+                  {{ label_Case('edit_product_transfer') }}
+               </label>
+            </div>
+
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="delete_product_transfer" name="permissions[]"
+                value="delete_product_transfer" {{ $role->hasPermissionTo('delete_product_transfer') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="delete_product_transfer">
+                  {{ label_Case('delete_product_transfer') }}
+               </label>
+            </div>
+
+
+
+
             
         </div>
     </div>
