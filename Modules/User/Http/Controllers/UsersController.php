@@ -111,9 +111,17 @@ class UsersController extends Controller
         }
 
         $cabangs = UserCabang::where('user_id',$user->id)->first();
+        if (is_null($cabangs)) {
+              UserCabang::create([
+                'user_id'         => $user->id,
+                'cabang_id'       => $request->cabang_id
+                 ]);
+        }else{
         $cabangs->update([
                         'cabang_id' => $request->cabang_id
                        ]);
+                   }
+
 
         toast("User Updated & Assigned '$request->role' Role!", 'info');
 

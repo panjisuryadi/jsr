@@ -155,12 +155,12 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
  @endif
 
 
- @if(Auth::user()->roles->first()->name == 'Office')
-    @include('partial.pages.office')
- @endif
+  @can('dashboard_sales_office')
+   @include('partial.pages.office')
+ @endcan
 
- 
- @can('access_distribusi')
+
+@can('dashboard_distribusi')
   @include('partial.pages.distribusi')
  @endcan
 
