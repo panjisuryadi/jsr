@@ -160,9 +160,15 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
  @endcan
 
 
-@can('dashboard_distribusi')
+  @can('dashboard_distribusi')
   @include('partial.pages.distribusi')
- @endcan
+  @endcan
+
+
+
+  @can('dashboard_sales')
+  @include('partial.pages.admin_sales')
+  @endcan
 
 
 

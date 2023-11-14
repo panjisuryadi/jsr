@@ -475,9 +475,10 @@ class GenerateMenus
                     'datasales*',
                     'distribusitokos*',
                     'penjualansales*',
+                    'retursales*',
 
                 ],
-                'permission'    => ['access_penjualansales'],
+                'permission'    => ['access_penjualansales','access_retursale'],
             ]);
             $distribusisales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -537,7 +538,7 @@ class GenerateMenus
 
 
             // SALES - DISTRIBUSI SALES - BuyBackSales
-            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Buy Back'), [
+            $distribusisales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Buy Back Sales'), [
                 'route' => 'buybacksale.index',
                 'class' => 'nav-item',
             ])
@@ -576,7 +577,9 @@ class GenerateMenus
             ->data([
                 'order'         => 3,
                 'activematches' => [],
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_reports',
+                                    'access_piutang_sales',
+                                    'access_hutang_sales'],
             ]);
             $laporansales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -587,26 +590,26 @@ class GenerateMenus
            
 
           // EMAS - SALES - LAPORAN SALES - Laporan Hutang
-            $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Hutang').'', [
+            $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Hutang Sales').'', [
                 'route' => 'hutang-report.index',
                 'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 1,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_hutang_sales'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
 
              // EMAS - SALES - LAPORAN SALES - Laporan Piutang
-             $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Piutang').'', [
+             $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Piutang Sales').'', [
                 'route' => 'piutang-report.index',
                 'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 2,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_piutang_sales'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -650,17 +653,6 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1758,7 +1750,8 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link',
             ]);
 
- // Submenu: Users
+
+             // Submenu: Users
             $report->add('<i class="c-sidebar-nav-icon bi bi-receipt mb-2"></i> '.__('Purchases Report').'', [
                 'route' => 'purchases-report.index',
                 'class' => 'nav-item',
