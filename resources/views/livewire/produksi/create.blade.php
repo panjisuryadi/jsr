@@ -102,10 +102,12 @@
                                             <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} id="type">
                                                 <option value="" selected >Select Tipe</option>
                                                 @foreach($dataKategoriProduk as $row)
+                                                    @if($id_kategoriproduk_berlian == $row->id) 
                                                     <option value="{{$row->id}}" {{ old('kategoriproduk_id') == $row->id ? 'selected' : '' }}
                                                         {{ $row->id != $id_kategoriproduk_berlian ? 'disabled' : '' }}>
                                                         {{$row->name}}
                                                     </option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                             @if ($errors->has($field_name))

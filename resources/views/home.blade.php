@@ -18,13 +18,6 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
 
 
 
-
-
-
-
-
-
-
         @can('show_total_stats')
         <div class="row">
             <div class="col-md-6 col-lg-3">
@@ -168,6 +161,10 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
 
   @can('dashboard_sales')
   @include('partial.pages.admin_sales')
+  @endcan
+
+  @can('access_gudang')
+  @include('partial.pages.admin_gudang')
   @endcan
 
 

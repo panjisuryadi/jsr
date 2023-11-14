@@ -161,6 +161,35 @@
  <div class="flex flex-row grid grid-cols-2 gap-1 mb-2">
 
 
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Akses Roles
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_gudang" name="permissions[]"
+                value="access_gudang" {{ $role->hasPermissionTo('access_gudang') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_gudang">
+                  {{ label_Case('access_gudang') }}
+               </label>
+            </div>
+            
+                <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="dashboard_gudang" name="permissions[]"
+                value="dashboard_gudang" {{ $role->hasPermissionTo('dashboard_gudang') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="dashboard_gudang">
+                  {{ label_Case('dashboard_gudang') }}
+               </label>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
 
 
 <div class="card h-100 border-0 shadow">
@@ -1633,6 +1662,140 @@
 
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
+       Kelola Stok
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_stock_sales" name="permissions[]"
+                value="show_stock_sales" {{ $role->hasPermissionTo('show_stock_sales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_stock_sales">
+                  {{ label_Case('show_stock_sales') }}
+               </label>
+            </div>
+
+  <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_stock_opname" name="permissions[]"
+                value="show_stock_opname" {{ $role->hasPermissionTo('show_stock_opname') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_stock_opname">
+                  {{ label_Case('show_stock_opname') }}
+               </label>
+            </div>
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_stock_in_out" name="permissions[]"
+                value="show_stock_in_out" {{ $role->hasPermissionTo('show_stock_in_out') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_stock_in_out">
+                  {{ label_Case('show_stock_in_out') }}
+               </label>
+            </div>
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_stock_pending_office" name="permissions[]"
+                value="show_stock_pending_office" {{ $role->hasPermissionTo('show_stock_pending_office') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_stock_pending_office">
+                  {{ label_Case('show_stock_pending_office') }}
+               </label>
+            </div>
+
+
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_stock_lantakan" name="permissions[]"
+                value="show_stock_lantakan" {{ $role->hasPermissionTo('show_stock_lantakan') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_stock_lantakan">
+                  {{ label_Case('show_stock_lantakan') }}
+               </label>
+            </div>
+
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_stock_gudang" name="permissions[]"
+                value="show_stock_gudang" {{ $role->hasPermissionTo('show_stock_gudang') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_stock_gudang">
+                  {{ label_Case('show_stock_gudang') }}
+               </label>
+            </div>
+
+
+
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Customer
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_customers" name="permissions[]"
+                value="access_customers" {{ $role->hasPermissionTo('access_customers') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_customers">
+                  {{ label_Case('access_customers') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_customers" name="permissions[]"
+                value="create_customers" {{ $role->hasPermissionTo('create_customers') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_customers">
+                  {{ label_Case('create_customers') }}
+               </label>
+            </div>
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_customers" name="permissions[]"
+                value="show_customers" {{ $role->hasPermissionTo('show_customers') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_customers">
+                  {{ label_Case('show_customers') }}
+               </label>
+            </div>
+
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_customers" name="permissions[]"
+                value="edit_customers" {{ $role->hasPermissionTo('edit_customers') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_customers">
+                  {{ label_Case('edit_customers') }}
+               </label>
+            </div>
+
+  <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="delete_customers" name="permissions[]"
+                value="delete_customers" {{ $role->hasPermissionTo('delete_customers') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="delete_customers">
+                  {{ label_Case('delete_customers') }}
+               </label>
+            </div>
+
+
+
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
        Settings
     </div>
     <div class="card-body">
@@ -1646,6 +1809,133 @@
                   {{ label_Case('access_settings') }}
                </label>
             </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Reports
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_reports" name="permissions[]"
+                value="access_reports" {{ $role->hasPermissionTo('access_reports') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_reports">
+                  {{ label_Case('access_reports') }}
+               </label>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Penerimaan Barang (Goodsreceipts)
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_goodsreceipts" name="permissions[]"
+                value="access_goodsreceipts" {{ $role->hasPermissionTo('access_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_goodsreceipts">
+                  {{ label_Case('access_goodsreceipts') }}
+               </label>
+            </div>
+
+   
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_goodsreceipts" name="permissions[]"
+                value="create_goodsreceipts" {{ $role->hasPermissionTo('create_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_goodsreceipts">
+                  {{ label_Case('create_goodsreceipts') }}
+               </label>
+            </div>
+
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_goodsreceipts" name="permissions[]"
+                value="show_goodsreceipts" {{ $role->hasPermissionTo('show_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_goodsreceipts">
+                  {{ label_Case('show_goodsreceipts') }}
+               </label>
+            </div>
+
+
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_goodsreceipts" name="permissions[]"
+                value="edit_goodsreceipts" {{ $role->hasPermissionTo('edit_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_goodsreceipts">
+                  {{ label_Case('edit_goodsreceipts') }}
+               </label>
+            </div>
+
+
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="delete_goodsreceipts" name="permissions[]"
+                value="delete_goodsreceipts" {{ $role->hasPermissionTo('delete_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="delete_goodsreceipts">
+                  {{ label_Case('delete_goodsreceipts') }}
+               </label>
+            </div>
+
+
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="print_goodsreceipts" name="permissions[]"
+                value="print_goodsreceipts" {{ $role->hasPermissionTo('print_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="print_goodsreceipts">
+                  {{ label_Case('print_goodsreceipts') }}
+               </label>
+            </div>
+
+
+  <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="reject_goodsreceipts" name="permissions[]"
+                value="reject_goodsreceipts" {{ $role->hasPermissionTo('reject_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="reject_goodsreceipts">
+                  {{ label_Case('reject_goodsreceipts') }}
+               </label>
+            </div>
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="approve_goodsreceipts" name="permissions[]"
+                value="approve_goodsreceipts" {{ $role->hasPermissionTo('approve_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="approve_goodsreceipts">
+                  {{ label_Case('approve_goodsreceipts') }}
+               </label>
+            </div>
+
+
+      <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="dashboard_goodsreceipts" name="permissions[]"
+                value="dashboard_goodsreceipts" {{ $role->hasPermissionTo('dashboard_goodsreceipts') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="dashboard_goodsreceipts">
+                  {{ label_Case('dashboard_goodsreceipts') }}
+               </label>
+            </div>
+
+
+
+
             
         </div>
     </div>
@@ -1774,58 +2064,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Customers Permission -->
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
-                                            Customers
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="access_customers" name="permissions[]"
-                                                               value="access_customers" {{ $role->hasPermissionTo('access_customers') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="access_customers">Access</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="create_customers" name="permissions[]"
-                                                               value="create_customers" {{ $role->hasPermissionTo('create_customers') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="create_customers">Create</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="show_customers" name="permissions[]"
-                                                               value="show_customers" {{ $role->hasPermissionTo('show_customers') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="show_customers">View</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="edit_customers" name="permissions[]"
-                                                               value="edit_customers" {{ $role->hasPermissionTo('edit_customers') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="edit_customers">Edit</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="delete_customers" name="permissions[]"
-                                                               value="delete_customers" {{ $role->hasPermissionTo('delete_customers') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="delete_customers">Delete</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                      
 
                                 <!-- Suppliers Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
@@ -2065,27 +2304,7 @@
                                     </div>
                                 </div>
                                 <!-- Reports -->
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
-                                            Reports
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="access_reports" name="permissions[]"
-                                                               value="access_reports" {{ $role->hasPermissionTo('access_reports') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="access_reports">Access</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                     
+                                               
 
 
                             </div>
