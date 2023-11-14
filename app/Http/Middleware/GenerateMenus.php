@@ -143,6 +143,7 @@ class GenerateMenus
                     'penjualansales*',
                     'retursales*',
                     'itemshapes*',
+                    'goodsreceipts*',
 
                 ],
                 'permission' => ['access_masterdata',
@@ -150,6 +151,7 @@ class GenerateMenus
                                       'access_kategoriproduks',
                                       'access_retursale',
                                       'access_buybacktoko',
+                                      'access_goodsreceipts',
                                       'access_diamondcertificates'],
             ]);
             $emas->link->attr([
@@ -165,9 +167,10 @@ class GenerateMenus
                 'order'         => 1,
                 'activematches' => [
                     'purchase-payments*',
+                    'purchase-goodsreceipts*',
 
                 ],
-                'permission'    => ['access_purchases'],
+                'permission'    => ['access_purchases','access_goodsreceipts'],
             ]);
             $Purchases->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -187,6 +190,9 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+
 
             // EMAS - PEMBELIAN - RETUR PEMBELIAN
             $Purchases->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
