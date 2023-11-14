@@ -9,7 +9,7 @@
             <i class="bi bi-bar-chart font-2xl"></i>
         </div>
         <div>
-            <div class="text-value text-primary">77</div>
+            <div class="text-value text-primary">{{ \Modules\BuyBackSale\Models\BuyBackSale::count() }}</div>
             <div class="text-muted text-uppercase font-weight-bold">
            Buys Back Sales
             </div>
@@ -27,7 +27,9 @@
             <i class="bi bi-bar-chart font-2xl"></i>
         </div>
         <div>
-            <div class="text-value text-success">20</div>
+            <div class="text-value text-success">
+            {{ \Modules\ReturSale\Models\ReturSale::count() }}
+           </div>
             <div class="text-muted text-uppercase font-weight-bold">
            Retur Sales
             </div>
@@ -42,8 +44,11 @@
             <i class="bi bi-bar-chart font-2xl"></i>
         </div>
         <div>
-            <div class="text-value text-warning">20</div>
+            <div class="text-value text-warning">
+                {{ \Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuar::count() }}
+            </div>
             <div class="text-muted text-uppercase font-weight-bold">
+
             Barang Luar Sales
             </div>
 
@@ -74,15 +79,36 @@
     </ul>
 
     <div class="tab-content py-3 mb-2">
-        <div id="home" class="container px-0 tab-pane">
-            <div class="pt-3">
-                @forelse(\Modules\BuyBackSale\Models\BuyBackSale::get() as $row)
-                    <p>{{ $row }}</p>
-                @empty
-                    <p>Tidak ada Data</p>
-                @endforelse
+        <div id="home" class="container px-0 tab-pane active">
 
-  
+
+            <div class="pt-3">
+
+                    <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{ label_case('No') }}</th>
+                            <th>{{ label_case('Produk') }}</th>
+                            <th>{{ label_case('Customer') }}</th>
+                            <th>{{ label_case('weight') }}</th>
+                            <th>{{ label_case('nominal') }}</th>
+                        </tr>
+                      @forelse(\Modules\BuyBackSale\Models\BuyBackSale::get() as $row)
+                            @if($loop->index > 4)
+                                                @break
+                                            @endif
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $row->product_name }}</td>
+                            <td>{{ $row->customersale->customer_name }}</td>
+                            <td>{{ $row->weight ?? ' - ' }}</td>
+                            <td>{{ $row->nominal ?? ' - ' }}</td>
+                        </tr>
+                        @empty
+                        <p>Tidak ada Data</p>
+                        @endforelse
+                        
+                    </table>
+
 
 
 
@@ -91,13 +117,32 @@
 
   <div id="sales" class="container px-0 tab-pane">
             <div class="pt-3">
-                  @forelse(\Modules\ReturSale\Models\ReturSale::get() as $row)
-                    <p>{{ $row }}</p>
-                @empty
-                    <p>Tidak ada Data</p>
-                @endforelse
-
-  
+             <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{ label_case('No') }}</th>
+                            <th>{{ label_case('No Retur') }}</th>
+                            <th>{{ label_case('Sales') }}</th>
+                            <th>{{ label_case('weight') }}</th>
+                            <th>{{ label_case('nominal') }}</th>
+                            <th>{{ label_case('Admin') }}</th>
+                        </tr>
+                      @forelse(\Modules\ReturSale\Models\ReturSale::get() as $row)
+                            @if($loop->index > 4)
+                               @break
+                            @endif
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $row->retur_no }}</td>
+                            <td>{{ $row->sales->name }}</td>
+                            <td>{{ $row->total_weight }}</td>
+                            <td>{{ rupiah($row->total_nominal) }}</td>
+                            <td>{{ $row->created_by ?? ' - ' }}</td>
+                        </tr>
+                        @empty
+                        <p>Tidak ada Data</p>
+                        @endforelse
+                        
+                    </table>
 
             </div>
         </div>
@@ -107,10 +152,10 @@
 
                     <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
-                            <th class="text-center">{{ __('No') }}</th>
-                            <th>{{ __('Nama') }}</th>
-                            <th>{{ __('phone') }}</th>
-                            <th>{{ __('address') }}</th>
+                            <th class="text-center">{{ label_case('No') }}</th>
+                            <th>{{ label_case('Nama') }}</th>
+                            <th>{{ label_case('phone') }}</th>
+                            <th>{{ label_case('address') }}</th>
                         </tr>
                         @forelse(\Modules\DataSale\Models\DataSale::get() as $sale)
                             @if($loop->index > 4)
@@ -229,6 +274,10 @@ table.dataTable {
     vertical-align: top;
     border-top: 1px solid;
     border-top-color: #d8dbe0;
+}
+
+.table td {
+      text-align: center !important;
 }
 
 div.dataTables_wrapper div.dataTables_paginate {
