@@ -1,13 +1,7 @@
 <div class="flex gap-1">
 
-
-
-
-
-
-
   <div class="w-3/4">
-  @can('dashboard_sales_office')
+  @can('dashboard_sales')
   <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
 <div class="card border-0">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">
@@ -16,8 +10,8 @@
         </div>
         <div>
             <div class="text-value text-primary">77</div>
-            <div class="text-muted text-uppercase font-weight-bold small">
-            menu office
+            <div class="text-muted text-uppercase font-weight-bold">
+           Buys Back Sales
             </div>
 
         </div>
@@ -34,8 +28,8 @@
         </div>
         <div>
             <div class="text-value text-success">20</div>
-            <div class="text-muted text-uppercase font-weight-bold small">
-            menu office
+            <div class="text-muted text-uppercase font-weight-bold">
+           Retur Sales
             </div>
 
         </div>
@@ -49,8 +43,8 @@
         </div>
         <div>
             <div class="text-value text-warning">20</div>
-            <div class="text-muted text-uppercase font-weight-bold small">
-            menu office
+            <div class="text-muted text-uppercase font-weight-bold">
+            Barang Luar Sales
             </div>
 
         </div>
@@ -64,43 +58,103 @@
 
 
 <div class="card">
-    <div class="card-body">
-        <div class="flex justify-between py-1 border-bottom">
-            <div>
-             <span class="font-semibold text-gray-600 text-lg">Buys Back Nota</span> 
-            </div>
-            <div id="buttons">
+<div class="card-body">
+    
+    <ul class="nav nav-tabs py-1" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">BuysBack Sales</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#sales">Retur Sales</a>
+        </li> 
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#DataSales">Data Sales</a>
+        </li>
+    </ul>
+
+    <div class="tab-content py-3 mb-2">
+        <div id="home" class="container px-0 tab-pane">
+            <div class="pt-3">
+                @forelse(\Modules\BuyBackSale\Models\BuyBackSale::get() as $row)
+                    <p>{{ $row }}</p>
+                @empty
+                    <p>Tidak ada Data</p>
+                @endforelse
+
+  
+
+
+
             </div>
         </div>
-        <div class="table-responsive mt-1">
-            <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
-                <thead>
-                    <tr>
-                        <th style="width: 6%!important;">No</th>
-                        <th>Date</th>
-                        <th>No Invoice</th>
-                        <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
-                        
-                        <th style="width: 16%!important;" class="text-center">
-                            {{ __('Status') }}
-                        </th>
-                        
-                        
-                        <th style="width: 14%!important;" class="text-center">
-                            {{ __('Action') }}
-                        </th>
-                    </tr>
-                </thead>
-            </table>
+
+  <div id="sales" class="container px-0 tab-pane">
+            <div class="pt-3">
+                  @forelse(\Modules\ReturSale\Models\ReturSale::get() as $row)
+                    <p>{{ $row }}</p>
+                @empty
+                    <p>Tidak ada Data</p>
+                @endforelse
+
+  
+
+            </div>
         </div>
 
-<hr>
+  <div id="DataSales" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                    <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{ __('No') }}</th>
+                            <th>{{ __('Nama') }}</th>
+                            <th>{{ __('phone') }}</th>
+                            <th>{{ __('address') }}</th>
+                        </tr>
+                        @forelse(\Modules\DataSale\Models\DataSale::get() as $sale)
+                            @if($loop->index > 4)
+                                                @break
+                                            @endif
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $sale->name }}</td>
+                            <td>{{ $sale->phone }}</td>
+                            <td>{{ $sale->address ?? ' - ' }}</td>
+                        </tr>
+                        @empty
+                        <p>Tidak ada Data</p>
+                        @endforelse
+                        
+                    </table>
 
 
 
 
+
+
+
+
+         
+            </div>
+        </div>
+
+
+
+
+
+        
     </div>
+
+
+
+
 </div>
+
+</div>
+
+
+
 
   </div>
 
