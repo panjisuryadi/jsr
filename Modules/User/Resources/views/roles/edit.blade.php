@@ -186,6 +186,30 @@
                </label>
             </div>
             
+        <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_admin_sales" name="permissions[]"
+                value="access_admin_sales" {{ $role->hasPermissionTo('access_admin_sales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_admin_sales">
+                  {{ label_Case('access_admin_sales') }}
+               </label>
+            </div>
+
+
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_kepala_toko" name="permissions[]"
+                value="access_kepala_toko" {{ $role->hasPermissionTo('access_kepala_toko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_kepala_toko">
+                  {{ label_Case('access_kepala_toko') }}
+               </label>
+            </div>
+
+
+
+
+              
+            
         </div>
     </div>
 </div>

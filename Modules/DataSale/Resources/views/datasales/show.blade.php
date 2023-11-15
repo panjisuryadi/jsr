@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-lg-12">
             <!-- component -->
-            <div class="px-5 py-5">
+            <div class="px-2 py-1">
                 <div class="w-full">
                     <div class="-mx-2 md:grid grid-cols-3 grid-rows-2 mb-4 gap-y-4">
                         <div class="w-full h-full px-2 row-span-2">
@@ -32,9 +32,13 @@
                                         @if ($detail->address)
                                         <p class="text-lg text-gray-500 font-medium"> <i class="cil-location-pin"></i> {{ $detail->address }}</p>
                                         @endif
+                                        
                                         @if ($detail->phone)
                                         <p class="text-lg text-gray-500 font-medium"> <i class="cil-phone"></i> {{ $detail->phone }}</p>
                                         @endif
+
+
+
                                     </div>
                                 </div>
                             </div>

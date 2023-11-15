@@ -100,6 +100,17 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
  @endif
 
 
+ @can('access_kepala_toko')
+   @include('partial.pages.kepala_toko')
+ @endcan
+
+
+
+@can('access_sales')
+   @include('partial.pages.sales')
+ @endcan
+
+
   @can('dashboard_sales_office')
    @include('partial.pages.office')
  @endcan
@@ -108,7 +119,7 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
   @include('partial.pages.distribusi')
   @endcan
 
-  @can('dashboard_sales')
+  @can('access_admin_sales')
   @include('partial.pages.admin_sales')
   @endcan
 
