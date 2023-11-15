@@ -542,6 +542,8 @@ if (!function_exists('bpstts')) {
          }
       }
 
+      
+
  if (!function_exists('shortdate')) {
         function shortdate($value)
         {
@@ -715,7 +717,9 @@ if(! function_exists('rupiah')) {
       $formatted = number_format($number,$dec);
       return $formatted;
     }
+
 }
+
 
 
 if (!function_exists('array_merge_numeric_values')) {

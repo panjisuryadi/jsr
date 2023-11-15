@@ -64,7 +64,7 @@ class GoodsReceiptsController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_goodsreceipts'), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',
@@ -902,7 +902,7 @@ public function show($id)
         $module_products = $this->module_products;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
-        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        abort_if(Gate::denies('show_goodsreceipts'), 403);
         $detail = $module_model::findOrFail($id);
         // $list = $module_products::where('kode_pembelian',$detail->code)->get();
       //  dd($detail->code);
