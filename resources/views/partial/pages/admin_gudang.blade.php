@@ -78,7 +78,9 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#DataSales">Produk</a>
         </li>
-        @endcan
+        @endcan  
+
+      
     </ul>
 
     <div class="tab-content py-3 mb-2">
@@ -230,11 +232,74 @@
         </div>
 
 
-
-
-
         
     </div>
+{{-- batas --}}
+
+
+
+
+
+<div class="px-1 py-1 border-t-black">
+    
+<div class="flex relative py-2">
+  <div class="absolute inset-0 flex items-center">
+    <div class="w-full border-b border-gray-300"></div>
+  </div>
+  <div class="relative flex justify-left">
+    <span class="bg-white pl-0 pr-3  text-sm uppercase  font-semibold text-dark">
+    Stock Pending
+   </span>
+  </div>
+</div>
+<table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">
+                            {{ label_case('No') }}
+                           </th>
+                          
+                            <th>{{ label_case('Cabang') }}</th>
+                            <th>{{ label_case('Karat') }}</th>
+                            <th>{{ label_case('Weight') }}</th>
+                            <th>{{ label_case('Aksi') }}</th>
+                          
+                        </tr>
+                        @forelse(\Modules\Stok\Models\StockPending::get() as $stok)
+                            @if($loop->index > 4)
+                                                @break
+                                            @endif
+
+
+
+                            {{-- {{ $stok }} --}}
+
+                           <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $stok->karat->name }}</td>
+                            <td>{{ $stok->cabang->name }}</td>
+                            <td>{{ $stok->weight }}</td>
+                            <td>
+                            @can('show_stock_pending_office')
+                                <a id="Detail" href="{{ route('stok.view_pending', $stok) }}"
+                                 class="btn btn-outline-success btn-sm">
+                                    <i class="bi bi-eye"></i> &nbsp;@lang('Detail')
+                                </a>
+                             @endcan
+                            </td>
+                            
+                        </tr> 
+                        @empty
+                        <p>Tidak ada Data</p>
+                        @endforelse
+                        
+                    </table>
+
+
+</div>
+
+
+
+
 
 
 
@@ -405,5 +470,46 @@ div.dataTables_wrapper div.dataTables_paginate {
 
 
     </script>
+
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+$(document).on('click', '#Tambah, #Detail, #Status', function(e){
+         e.preventDefault();
+        if($(this).attr('id') == 'Tambah')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah Stok');
+        }
+        if($(this).attr('id') == 'Status')
+        {
+            $('.modal-dialog').addClass('modal-md');
+            $('.modal-dialog').removeClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status Stok');
+        }
+
+        if($(this).attr('id') == 'Detail')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-md');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Detail Stok Pending');
+        }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
+</script>
+
+
+
+
+
+
+
+
+
 
 @endpush

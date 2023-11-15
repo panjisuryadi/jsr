@@ -750,7 +750,7 @@ public function view_pending($id)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
-        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        abort_if(Gate::denies('show_stock_pending_office'), 403);
         $detail = $module_pending::with('karat','cabang')->findOrFail($id);
         //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.modal.view_pending',
