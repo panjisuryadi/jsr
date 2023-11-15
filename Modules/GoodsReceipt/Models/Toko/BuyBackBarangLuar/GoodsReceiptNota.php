@@ -63,6 +63,11 @@ class GoodsReceiptNota extends Model
         return $this->status_id == TrackingStatus::PROCESSING;
     }
 
+    public function isReturned(){
+        return $this->status_id == TrackingStatus::RETURNED;
+    }
+
+
     public function isSent(){
         return $this->status_id == TrackingStatus::SENT;
     }
@@ -93,8 +98,37 @@ class GoodsReceiptNota extends Model
             $this->statuses()->attach($this->status_id,[
                 'pic_id'=> auth()->id(),
                 'note' => null,
-                'date' => now()
+                'date' => now(),
+                'cabang_id' => null
             ]);
         }
+    }
+
+    public function updateTracking($status_id, $cabang_id, $note = null){
+        $this->status_id = $status_id;
+        if($this->save()){
+            $this->statuses()->attach($this->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => $note,
+                'date' => now(),
+                'cabang_id' => $cabang_id
+            ]);
+        }
+    }
+
+    public function latest_status_tracking(){
+        return $this->statuses()->orderBy('date','desc')->first();
+    }
+
+    public function current_status_pic(){
+        return $this->latest_status_tracking()->pivot->pic;
+    }
+
+    public function current_status_date(){
+        return $this->latest_status_tracking()->pivot->date;
+    }
+
+    public function current_status_note(){
+        return $this->latest_status_tracking()->pivot->note;
     }
 }

@@ -15,6 +15,8 @@
     @if (auth()->user()->isUserCabang())
         @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.datatable.item')
         @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.datatable.nota')
+    @else
+        @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.datatable.nota-office')
     @endif
 </div>
 @endsection
@@ -29,5 +31,36 @@ function createModal(){
 function createBarangLuar(){
     $('#create-barangluar-modal').modal('show');
 }
+
+function process(data){
+        Swal.fire({
+            title: "Proses Nota",
+            text: "Proses Nota #"+ data.invoice +"?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0a0",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Proses"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{route('goodsreceipt.toko.buyback-barangluar.nota-process')}}/",
+                    type: 'PATCH',
+                    data: {data},
+                    dataType: 'json',
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        window.location.href = response.redirectRoute;
+                        toastr.success('Processing Nota')
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.success('Gagal memproses Nota')
+                    }
+                });
+            }
+        });
+    }
 </script>
 @endpush

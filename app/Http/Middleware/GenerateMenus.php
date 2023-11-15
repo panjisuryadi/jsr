@@ -282,10 +282,10 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
-            // EMAS - TOKO - PENERIMAAN - BUYBACK
+            // EMAS - TOKO - PENERIMAAN - BUYBACK BARANG LUAR
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                <div class="break">'.__('Barang Buy Back').'</div>', [
-                'route' => 'buysback.index',
+                <div class="break">'.__('Buy Back & Barang Luar').'</div>', [
+                'route' => 'goodsreceipt.toko.buyback-barangluar.index',
                 'class' => 'nav-item',
             ])
             ->data([

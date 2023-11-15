@@ -24,7 +24,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/toko/buyback-barangluar/create-nota", ['as' => "$module_name.toko.buyback-barangluar.create-nota", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@create_nota"]);
 
+    Route::get("$module_name/toko/buyback-barangluar/nota/{id}", ['as' => "$module_name.toko.buyback-barangluar.nota.show", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@show_nota"]);
+
     Route::get("$module_name/toko/buyback-barangluar/index_data_nota", ['as' => "$module_name.toko.buyback-barangluar.index_data_nota", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index_data_nota"]);
+
+    Route::get("$module_name/toko/buyback-barangluar/index_data_nota_office", ['as' => "$module_name.toko.buyback-barangluar.index_data_nota_office", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index_data_nota_office"]);
+
+    Route::patch("$module_name/toko/buyback-barangluar/nota-process", ['as' => "$module_name.toko.buyback-barangluar.nota-process", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@nota_process"]);
 
     Route::get("$module_name/toko/buyback-barangluar/index_data_item", ['as' => "$module_name.toko.buyback-barangluar.index_data_item", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index_data_item"]);
 

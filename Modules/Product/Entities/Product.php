@@ -166,6 +166,16 @@ class Product extends Model implements HasMedia
        }
 
 
+       public function updateTracking($status_id, $cabang_id = null){
+            $this->update([
+                'cabang_id' => $cabang_id,
+                'status_id' => $status_id
+            ]);
+            $this->refresh();
+            $this->statuses()->attach($this->status_id,['cabang_id' => $this->cabang_id, 'properties' => json_encode(['product'=>$this])]);
+       }
+
+
 
 
 
