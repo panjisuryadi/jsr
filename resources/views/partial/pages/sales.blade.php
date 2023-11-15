@@ -1,7 +1,13 @@
+
+
 <div class="flex gap-1">
 
   <div class="w-3/4">
-  @can('dashboard_gudang')
+
+
+
+
+  @can('dashboard_sales')
   <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
 <div class="card border-0">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">
@@ -9,9 +15,9 @@
             <i class="bi bi-bar-chart font-2xl"></i>
         </div>
         <div>
-            <div class="text-value text-primary">{{ \Modules\GoodsReceipt\Models\GoodsReceipt::count() }}</div>
+            <div class="text-value text-primary">{{ \Modules\DataSale\Models\DataSale::count() }}</div>
             <div class="text-muted text-uppercase font-weight-bold">
-           Penerimaan
+           Data Sales
             </div>
 
         </div>
@@ -28,10 +34,10 @@
         </div>
         <div>
             <div class="text-value text-success">
-            {{ \Modules\DistribusiToko\Models\DistribusiToko::count() }}
+            {{ \Modules\ReturSale\Models\ReturSale::count() }}
            </div>
             <div class="text-muted text-uppercase font-weight-bold">
-          Distribusi Toko
+           Retur Sales
             </div>
 
         </div>
@@ -45,11 +51,11 @@
         </div>
         <div>
             <div class="text-value text-warning">
-                {{ \Modules\Product\Entities\Product::count() }}
+                {{ \Modules\Stok\Models\StockSales::count() }}
             </div>
             <div class="text-muted text-uppercase font-weight-bold">
 
-           Produk
+           Stock Sales
             </div>
 
         </div>
@@ -63,14 +69,19 @@
 
 
 <div class="card">
+
+
+
+
 <div class="card-body">
-    <div class="flex relative py-2">
+
+<div class="flex relative py-2">
   <div class="absolute inset-0 flex items-center">
     <div class="w-full border-b border-gray-300"></div>
   </div>
   <div class="relative flex justify-left">
-    <span class="bg-white pl-0 pr-3  text-sm uppercase  font-semibold text-dark">
-    Dashboard Gudang
+    <span class="bg-white pl-0 pr-3  text-sm uppercase tracking-wider font-semibold text-dark">
+    Dashboard Sales
    </span>
   </div>
 </div>
@@ -78,64 +89,52 @@
     
     <ul class="nav nav-tabs py-1" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#home">Penerimaan</a>
+            <a class="nav-link active" data-toggle="tab" href="#dataSales">Data Sales</a>
         </li>
-         @can('show_distribusi')
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#sales">Distribusi Toko</a>
+            <a class="nav-link" data-toggle="tab" href="#sales">Retur Sales</a>
         </li> 
-          @endcan
-       @can('show_products')
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#DataSales">Produk</a>
-        </li>
-        @endcan  
 
-      
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#BuybackSales">Stok Sales</a>
+        </li>
     </ul>
 
     <div class="tab-content py-3 mb-2">
-        <div id="home" class="container px-0 tab-pane active">
+        <div id="dataSales" class="container px-0 tab-pane active">
 
 
             <div class="pt-3">
 
-                    <table style="width: 100%;" class="table table-striped table-bordered">
+
+  <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('tgl') }}</th>
-                            <th>{{ label_case('Supplier') }}</th>
-                            <th>{{ label_case('berat_kotor') }}</th>
-                            <th>{{ label_case('berat_timbangan') }}</th>
-                            <th>{{ label_case('selisih') }}</th>
-                            <th>{{ label_case('pengirim') }}</th>
+                            <th>{{ label_case('Nama') }}</th>
+                            <th>{{ label_case('phone') }}</th>
+                            <th>{{ label_case('target') }}</th>
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
-
-                          @forelse(\Modules\GoodsReceipt\Models\GoodsReceipt::get() as $row)
+                        @forelse(\Modules\DataSale\Models\DataSale::get() as $sale)
                             @if($loop->index > 4)
-                                  @break
-                            @endif
-                        
+                                                @break
+                                            @endif
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td> <p class="text-blue-500">{{ shortdate($row->date) }}</p></td>
-                            <td>{{ $row->supplier->toko }}</td>
-                            <td>{{ $row->total_berat_kotor }}</td>
-                            <td>{{ $row->berat_timbangan }}</td>
-                            <td>{{ $row->selisih }}</td>
-                            <td>{{ $row->pengirim }}</td>
+                            <td>{{ $sale->name }}</td>
+                            <td>{{ $sale->phone }}</td>
+                            <td>{{ $sale->target ?? ' - ' }}</td>
+                          
                             <td>
-                            @can('show_goodsreceipts')
-                                    <a href="{{ route("goodsreceipt.show",encode_id($row->id)) }}"
+
+                               @can('show_sales')
+                                    <a href="{{ route("datasale.show",$sale->id) }}"
                                      class="btn btn-outline-info btn-sm">
                                         <i class="bi bi-eye"></i> &nbsp;@lang('Show')
                                     </a>
                                 @endcan
 
                             </td>
-                      
-                          
                         </tr>
                         @empty
                         <p>Tidak ada Data</p>
@@ -154,39 +153,22 @@
              <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('Tanggal') }}</th>
-                            <th>{{ label_case('Invoice') }}</th>
-                            <th>{{ label_case('Cabang') }}</th>
-                            <th>{{ label_case('Status') }}</th>
+                            <th>{{ label_case('No Retur') }}</th>
+                            <th>{{ label_case('Sales') }}</th>
+                            <th>{{ label_case('weight') }}</th>
+                            <th>{{ label_case('nominal') }}</th>
                             <th>{{ label_case('Admin') }}</th>
                         </tr>
-                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::get() as $row)
+                      @forelse(\Modules\ReturSale\Models\ReturSale::get() as $row)
                             @if($loop->index > 4)
                                @break
                             @endif
-
                         <tr>
-
                             <td>{{ $loop->iteration }}</td>
-                        <td> <p class="text-blue-500">{{ shortdate($row->date) }}</p></td>
-                            <td>{{ $row->no_invoice }}</td>
-                            <td>{{ $row->cabang->name }}</td>
-                            <td>
-                         @if($row->current_status->id == 2)
-                        <button class="w-full btn uppercase btn-outline-warning px  leading-5 btn-sm">In Progress</button>
-
-                        @elseif($row->current_status->id == 3)
-                        <button class="w-full btn uppercase btn-outline-danger px  btn-sm">Retur</button>
-
-                        @elseif($row->current_status->id == 4)
-                        <button class="w-full btn uppercase btn-outline-info px btn-sm">Completed</button>
-
-                        @elseif($row->current_status->id == 1)
-                        <button class="w-full btn uppercase btn-success px btn-sm">Draft</button>
-                        @endif
-
-                            </td>
-                         
+                            <td>{{ $row->retur_no }}</td>
+                            <td>{{ $row->sales->name }}</td>
+                            <td>{{ $row->total_weight }}</td>
+                            <td>{{ rupiah($row->total_nominal) }}</td>
                             <td>{{ $row->created_by ?? ' - ' }}</td>
                         </tr>
                         @empty
@@ -198,39 +180,43 @@
             </div>
         </div>
 
-  <div id="DataSales" class="container px-0 tab-pane">
+  <div id="BuybackSales" class="container px-0 tab-pane">
             <div class="pt-3">
 
-                    <table style="width: 100%;" class="table table-striped table-bordered">
+                   <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
-                            <th class="text-center">
-                            {{ label_case('No') }}
-                           </th>
-                            <th>{{ label_case('Code') }}</th>
-                            <th>{{ label_case('Cabang') }}</th>
-                            <th>{{ label_case('kategori') }}</th>
-                          
+                            <th class="text-center">{{ label_case('No') }}</th>
+                            <th>{{ label_case('Sales') }}</th>
+                            <th>{{ label_case('karat') }}</th>
+                            <th>{{ label_case('Berat') }}</th>
+                            <th>{{ label_case('Aksi') }}</th>
                         </tr>
-                        @forelse(\Modules\Product\Entities\Product::get() as $sale)
+                    @forelse(\Modules\Stok\Models\StockSales::get() as $row)
                             @if($loop->index > 4)
                                                 @break
                                             @endif
-
-
-
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $sale->product_code }}</td>
-                            <td>{{ $sale->cabang->name }}</td>
-                            <td>{{ $sale->category->category_name }}</td>
-                            
+                            <td>{{ $row->karat->kode }} | {{ $row->karat->name }}</td>
+                            <td>{{ $row->sales->name }}</td>
+                            <td>{{ $row->weight ?? ' - ' }}</td>
+                            <td>
+                                
+                                @can('show_sales')
+                                    <a href="{{ route("sales.show",$row->id) }}"
+                                     class="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-eye"></i> &nbsp;@lang('Detail')
+                                    </a>
+                                @endcan
+
+
+                            </td>
                         </tr>
                         @empty
                         <p>Tidak ada Data</p>
                         @endforelse
                         
                     </table>
-
 
 
 
@@ -243,74 +229,11 @@
         </div>
 
 
+
+
+
         
     </div>
-{{-- batas --}}
-
-
-
-
-
-<div class="px-1 py-1 border-t-black">
-    
-<div class="flex relative py-2">
-  <div class="absolute inset-0 flex items-center">
-    <div class="w-full border-b border-gray-300"></div>
-  </div>
-  <div class="relative flex justify-left">
-    <span class="bg-white pl-0 pr-3  text-sm uppercase  font-semibold text-dark">
-    Stock Pending
-   </span>
-  </div>
-</div>
-<table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">
-                            {{ label_case('No') }}
-                           </th>
-                          
-                            <th>{{ label_case('Cabang') }}</th>
-                            <th>{{ label_case('Karat') }}</th>
-                            <th>{{ label_case('Weight') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
-                          
-                        </tr>
-                        @forelse(\Modules\Stok\Models\StockPending::get() as $stok)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
-
-
-
-                            {{-- {{ $stok }} --}}
-
-                           <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $stok->karat->name }}</td>
-                            <td>{{ $stok->cabang->name }}</td>
-                            <td>{{ $stok->weight }}</td>
-                            <td>
-                            @can('show_stock_pending_office')
-                                <a id="Detail" href="{{ route('stok.view_pending', $stok) }}"
-                                 class="btn btn-outline-success btn-sm">
-                                    <i class="bi bi-eye"></i> &nbsp;@lang('Detail')
-                                </a>
-                             @endcan
-                            </td>
-                            
-                        </tr> 
-                        @empty
-                        <p>Tidak ada Data</p>
-                        @endforelse
-                        
-                    </table>
-
-
-</div>
-
-
-
-
 
 
 
@@ -481,46 +404,5 @@ div.dataTables_wrapper div.dataTables_paginate {
 
 
     </script>
-
-<script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #Detail, #Status', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah Stok');
-        }
-        if($(this).attr('id') == 'Status')
-        {
-            $('.modal-dialog').addClass('modal-md');
-            $('.modal-dialog').removeClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status Stok');
-        }
-
-        if($(this).attr('id') == 'Detail')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-md');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Detail Stok Pending');
-        }
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
-</script>
-
-
-
-
-
-
-
-
-
 
 @endpush

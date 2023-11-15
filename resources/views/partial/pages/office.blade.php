@@ -65,6 +65,19 @@
 
 <div class="card">
     <div class="card-body">
+
+<div class="flex relative py-2">
+  <div class="absolute inset-0 flex items-center">
+    <div class="w-full border-b border-gray-300"></div>
+  </div>
+  <div class="relative flex justify-left">
+    <span class="bg-white pl-0 pr-3  text-sm uppercase  font-semibold text-dark">
+    Dashboard Office
+   </span>
+  </div>
+</div>
+
+
         <div class="flex justify-between py-1 border-bottom">
             <div>
              <span class="font-semibold text-gray-600 text-lg">Buys Back Nota</span> 
