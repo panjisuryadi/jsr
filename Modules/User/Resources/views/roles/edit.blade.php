@@ -1666,6 +1666,74 @@
 
 
 
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Stok Cabang
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_stok_cabang" name="permissions[]"
+                value="access_stok_cabang" {{ $role->hasPermissionTo('access_stok_cabang') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_stok_cabang">
+                  {{ label_Case('access_stok_cabang') }}
+               </label>
+            </div>
+
+          <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_stok_pending" name="permissions[]"
+                value="access_stok_pending" {{ $role->hasPermissionTo('access_stok_pending') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_stok_pending">
+                  {{ label_Case('access_stok_pending') }}
+               </label>
+            </div>
+
+
+          <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_stok_dp" name="permissions[]"
+                value="access_stok_dp" {{ $role->hasPermissionTo('access_stok_dp') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_stok_dp">
+                  {{ label_Case('access_stok_dp') }}
+               </label>
+            </div>
+
+
+          <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_stok_pending_office" name="permissions[]"
+                value="access_stok_pending_office" {{ $role->hasPermissionTo('access_stok_pending_office') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_stok_pending_office">
+                  {{ label_Case('access_stok_pending_office') }}
+               </label>
+            </div>
+
+
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
        Customer
