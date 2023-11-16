@@ -95,10 +95,9 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
  @include('product::products.sortir_dashboard')
  @endcan
 
- @if(Auth::user()->roles->first()->name == 'Kasir')
-        @include('partial.pages.kasir')
- @endif
-
+ @can('access_kasir')
+    @include('partial.pages.kasir')
+ @endcan
 
  @can('access_kepala_toko')
    @include('partial.pages.kepala_toko')
@@ -111,11 +110,11 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
  @endcan
 
 
-  @can('dashboard_sales_office')
+  @can('access_sales_office')
    @include('partial.pages.office')
  @endcan
 
-  @can('dashboard_distribusi')
+  @can('access_distribusi')
   @include('partial.pages.distribusi')
   @endcan
 

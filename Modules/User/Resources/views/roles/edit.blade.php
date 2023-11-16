@@ -207,6 +207,17 @@
 
 
 
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_kasir" name="permissions[]"
+                value="access_kasir" {{ $role->hasPermissionTo('access_kasir') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_kasir">
+                  {{ label_Case('access_kasir') }}
+               </label>
+            </div>
+
+
+
 
               
             

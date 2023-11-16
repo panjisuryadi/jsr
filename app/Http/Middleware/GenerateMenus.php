@@ -624,8 +624,6 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link',
             ]);
 
-
-
             // EMAS - STOK
             $stok = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -634,8 +632,13 @@ class GenerateMenus
                 'order'         => 4,
                 'activematches' => [
                            'stoks*',
+                           'stokcabangs*',
                     ],
-                  'permission' => ['access_stoks','access_menu_stok'],
+                  'permission' => ['access_stoks',
+                                      'access_stok_cabang',
+                                      'access_stok_dp',
+                                      'access_stok_pending',
+                                      'access_menu_stok'],
             ]);
             $stok->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
