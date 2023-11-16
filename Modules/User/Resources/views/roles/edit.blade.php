@@ -158,15 +158,15 @@
 
 
 {{-- batas --}}
- <div class="flex flex-row grid grid-cols-2 gap-1 mb-2">
 
+ <div class="flex flex-row grid grid-cols-1 gap-1 mb-2">
 
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
        Akses Roles
     </div>
     <div class="card-body">
-        <div class="flex flex-row grid grid-cols-2 gap-1">
+        <div class="flex flex-row grid grid-cols-3 gap-1">
             
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
@@ -249,6 +249,12 @@
         </div>
     </div>
 </div>
+
+
+ </div>
+ <div class="flex flex-row grid grid-cols-2 gap-1 mb-2">
+
+
 
 
 
