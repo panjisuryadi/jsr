@@ -13,7 +13,7 @@
 
                         @if(auth()->user()->isUserCabang())
                         <div class="btn-group btn-group-md">
-                            @can('create_buybacktoko')
+                            @can('access_buys_back_luar')
                             <a href="#" data-toggle="tooltip" class="btn btn-primary btn-md px-3" onclick="createModal()">
                                 <i class="bi bi-plus"></i>
                                 {{ __('BuyBack Item') }}
