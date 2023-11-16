@@ -89,6 +89,12 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#DataSales">Produk</a>
         </li>
+        @endcan    
+
+         @can('show_products')
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#GoodsReceiptNota">Goods Receipt Nota </a>
+        </li>
         @endcan  
 
       
@@ -215,9 +221,6 @@
                             @if($loop->index > 4)
                                                 @break
                                             @endif
-
-
-
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $sale->product_code }}</td>
@@ -228,19 +231,43 @@
                         @empty
                         <p>Tidak ada Data</p>
                         @endforelse
-                        
                     </table>
-
-
-
-
-
-
-
-
-         
+     
             </div>
         </div>
+
+<div id="GoodsReceiptNota" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{ label_case('No') }}</th>
+                            <th>{{ label_case('Code') }}</th>                          
+                        </tr>
+                        @forelse(\Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptNota::get() as $sale)
+                            @if($loop->index > 4)
+                                                @break
+                                            @endif
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $sale->product_code }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="2">Tidak Ada Data</td>
+                        </tr>
+                        @endforelse
+                    </table>
+     
+            </div>
+        </div>
+
+
+
+
+
+
+
 
 
         

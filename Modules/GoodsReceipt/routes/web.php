@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("$module_name/toko/buyback-barangluar/index_data_nota", ['as' => "$module_name.toko.buyback-barangluar.index_data_nota", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index_data_nota"]);
 
     Route::get("$module_name/toko/buyback-barangluar/index_data_nota_office", ['as' => "$module_name.toko.buyback-barangluar.index_data_nota_office", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index_data_nota_office"]);
+    
 
     Route::patch("$module_name/toko/buyback-barangluar/nota-process", ['as' => "$module_name.toko.buyback-barangluar.nota-process", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@nota_process"]);
 

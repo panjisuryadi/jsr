@@ -228,6 +228,7 @@ class GenerateMenus
                                      'access_sales',
                                      'access_products',
                                      'access_sales',
+                                     'access_buys_back_luar',
                                      'access_penjualansales',
                                      'access_buybacktoko'],
             ]);
@@ -275,7 +276,9 @@ class GenerateMenus
                     'penentuanhargas*',
 
                 ],
-                'permission'    => ['access_penentuanhargas','access_buybacktoko'],
+                'permission'    => ['access_penentuanhargas',
+                                    'access_buys_back_luar',
+                                    'access_buybacktoko'],
             ]);
             $penerimaan->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -291,7 +294,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                
-                'permission'    => ['access_buybacktoko'],
+                'permission'    => ['access_buys_back_luar'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
