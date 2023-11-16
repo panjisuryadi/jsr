@@ -19,6 +19,7 @@ use Modules\KaratBerlian\Models\KaratBerlian;
 use Modules\KaratBerlian\Models\ShapeBerlian;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\People\Entities\Supplier;
+use Modules\Produksi\Models\DiamondCertificateAttributes;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Lookup;
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
 
@@ -44,15 +45,17 @@ class PenerimaanQc extends Component
         $karat_id,
         $image,
         $kategoriproduk_id,
+        $harga_beli,
+        $jenis_sertifikat,
         $document = [];
 
     public $updateMode = false;
     public $total_berat = 0;
     public $inputs = [
         [
-            'karatberlians_id' => '',
+            'karatberlians' => '',
             'shapeberlian_id' => '',
-            'qty' => 0,
+            'qty' => 1,
             'keterangan' => ''
         ]
     ];
@@ -71,6 +74,12 @@ class PenerimaanQc extends Component
     public $type;
     public $total_karat;
 
+    public $dataCertificateAttribute = [];
+    
+    public $sertifikat = [
+        'code' => '',
+        'tanggal' => '',
+    ];
 
     protected $listeners = [
         'webcamCaptured' => 'handleWebcamCaptured',
@@ -94,14 +103,18 @@ class PenerimaanQc extends Component
 
         $id_kategoriproduk_berlian = ModelsLookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $this->kategoriproduk_id = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
+        $this->dataCertificateAttribute = DiamondCertificateAttributes::where('status', 1)->get();
+
+        $this->sertifikat['tanggal'] = $this->hari_ini;
+
     }
 
     public function addInput()
     {
         $this->inputs[] = [
-            'karatberlians_id' => '',
+            'karatberlians' => '',
             'shapeberlian_id' => '',
-            'qty' => 0,
+            'qty' => 1,
             'keterangan' => ''
         ];
     }
@@ -125,9 +138,9 @@ class PenerimaanQc extends Component
     {
         $this->inputs = [
             [
-                'karatberlians_id' => '',
+                'karatberlians' => '',
                 'shapeberlian_id' => '',
-                'qty' => 0,
+                'qty' => 1,
                 'keterangan' => ''
             ]
         ];
@@ -172,7 +185,7 @@ class PenerimaanQc extends Component
 
         if(!empty($this->karat_id)) {
             foreach ($this->inputs as $key => $value) {
-                $rules['inputs.' . $key . '.karatberlians_id'] = 'required';
+                $rules['inputs.' . $key . '.karatberlians'] = 'required';
                 $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
             }
         }
@@ -189,6 +202,14 @@ class PenerimaanQc extends Component
     public function submit(Request $request)
     {
         $this->validate();
+        $total_karat = 0;
+        if(!empty($this->inputs)) {
+
+            foreach ($this->inputs as $item) {
+                $total_karat += !empty($item['karatberlians']) ? $item['karatberlians'] : 0;
+            }
+
+        }
 
         $data = [
             'code' => $this->code,
@@ -207,17 +228,21 @@ class PenerimaanQc extends Component
             'pic_id' => auth()->user()->id,
             'image' => $this->image,
             'document' => $this->document,
+            'harga_beli' => $this->harga_beli,
             'total_berat_real' => $this->total_berat_real,
             'total_berat_kotor' => $this->total_berat_kotor,
-            'total_karat' => $this->total_karat,
+            'total_karat' => !empty($this->total_karat) ? $this->total_karat : $total_karat,
             'items' => $this->inputs,
             'kategoriproduk_id' => $this->kategoriproduk_id,
+            'sertifikat' => $this->sertifikat,
+            'tipe_penerimaan_barang' => $this->type,
             'detail_cicilan' => $this->detail_cicilan
         ];
         
         $request = new Request($data);
         $controller = new GoodsReceiptBerliansController();
         $store = $controller->store_qc($request);
+        
     }
 
 
