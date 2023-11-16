@@ -421,6 +421,13 @@
                                 $required = '';
                                 ?>
                                 <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
+                                <span class="ml-2">
+                                    @foreach($dataCurrency as $row)
+                                        <input type="radio" wire:model="currency_id" value="{{ $row->id }}" wire:change="clearHarga()">
+                                        <label class="text-black mb-0"> {{ $row->symbol }}</label>
+                                    @endforeach
+
+                                </span>
                                 <input type="number" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                                 @if ($errors->has($field_name))
                                 <span class="invalid feedback" role="alert">
