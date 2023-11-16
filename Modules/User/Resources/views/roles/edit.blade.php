@@ -205,6 +205,15 @@
                </label>
             </div>
 
+ <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="dashboard_kepala_toko" name="permissions[]"
+                value="dashboard_kepala_toko" {{ $role->hasPermissionTo('dashboard_kepala_toko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="dashboard_kepala_toko">
+                  {{ label_Case('dashboard_kepala_toko') }}
+               </label>
+            </div>
+
 
 
    <div class="custom-control custom-switch">
