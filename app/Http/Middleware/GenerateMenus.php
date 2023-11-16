@@ -128,7 +128,7 @@ class GenerateMenus
             ]);
 
 
-            // EMAS
+            //menuemas
             $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Emas', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
@@ -143,6 +143,7 @@ class GenerateMenus
                     'penjualansales*',
                     'retursales*',
                     'itemshapes*',
+                    'stokcabangs*',
                     'goodsreceipts*',
 
                 ],
@@ -152,6 +153,9 @@ class GenerateMenus
                                       'access_retursale',
                                       'access_buybacktoko',
                                       'access_goodsreceipts',
+                                      'access_stok_cabang',
+                                      'access_stok_dp',
+                                      'access_stok_pending',
                                       'access_diamondcertificates'],
             ]);
             $emas->link->attr([
@@ -625,7 +629,6 @@ class GenerateMenus
             ]);
 
 
-
             // EMAS - STOK
             $stok = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -634,36 +637,18 @@ class GenerateMenus
                 'order'         => 4,
                 'activematches' => [
                            'stoks*',
+                           'stokcabangs*',
                     ],
-                  'permission' => ['access_stoks','access_menu_stok'],
+                  'permission' => ['access_stoks',
+                                      'access_stok_cabang',
+                                      'access_stok_dp',
+                                      'access_stok_pending',
+                                      'access_menu_stok'],
             ]);
             $stok->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
-
-
-
-       // EMAS - STOK - DAFTAR STOK
-            $stock_office = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok Office', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 1,
-                'activematches' => [
-                           'stoks*',
-                    ],
-                  'permission' => ['access_stoks'],
-            ]);
-
-
-
-            $stock_office->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
 
 
 
@@ -754,7 +739,9 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['stokcabangs*'],
-                'permission'    => ['access_stokcabangs'],
+                'permission'    => ['access_stok_cabang',
+                                     'access_stok_dp',
+                                     'access_stok_pending'],
             ]);
             $stock_cabang->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -770,7 +757,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => ['stoks*'],
-                'permission'    => ['access_stoks'],
+                'permission'    => ['access_stok_pending'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -784,7 +771,7 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['stoks*'],
-                'permission'    => ['access_stoks'],
+                'permission'    => ['access_stok_dp'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',

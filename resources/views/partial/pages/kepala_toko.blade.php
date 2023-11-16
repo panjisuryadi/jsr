@@ -4,7 +4,7 @@
 
   <div class="w-3/4">
 
-  @can('dashboard_sales')
+  @can('dashboard_kepala_toko')
   <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
 <div class="card border-0">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">

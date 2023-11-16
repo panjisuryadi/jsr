@@ -93,7 +93,7 @@ class StoksController extends Controller
         $karat_ids = Product::pending()->get()->groupBy('karat_id')->keys()->toArray();
         $datakarat = Karat::find($karat_ids);
         $module_action = 'Pending';
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_stok_pending'), 403);
          return view(''.$module_name.'::'.$module_path.'.page.index_pending',
            compact('module_name',
             'module_action',
@@ -144,7 +144,7 @@ public function pending_office() {
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'DP';
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_stok_dp'), 403);
          return view(''.$module_name.'::'.$module_path.'.page.index_dp',
            compact('module_name',
             'module_action',
