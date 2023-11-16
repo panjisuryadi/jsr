@@ -296,6 +296,7 @@ class GoodsReceiptBerliansController extends Controller
                 'pengirim'              => !empty($input['pengirim']) ? $input['pengirim'] :  0,
                 'harga_beli'            => !empty($input['harga_beli']) ? $input['harga_beli'] :  0,
                 'tipe_penerimaan_barang'=> !empty($input['tipe_penerimaan_barang']) ? $input['tipe_penerimaan_barang'] :  null,
+                'currency_id'           => !empty($input['currency_id']) ? $input['currency_id'] :  1,
                 'supplier_id'           => $input['supplier_id'],
                 'karat_id'              => $input['karat_id'],
                 'user_id'               => $input['pic_id'],

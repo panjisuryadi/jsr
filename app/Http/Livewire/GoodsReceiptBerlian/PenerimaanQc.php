@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Http;
 use Livewire\WithFileUploads;
+use Modules\Currency\Entities\Currency;
 use Modules\GoodsReceiptBerlian\Http\Controllers\GoodsReceiptBerliansController;
 use Modules\Karat\Models\Karat;
 use Modules\KaratBerlian\Models\KaratBerlian;
@@ -47,6 +48,7 @@ class PenerimaanQc extends Component
         $kategoriproduk_id,
         $harga_beli,
         $jenis_sertifikat,
+        $currency_id,
         $document = [];
 
     public $updateMode = false;
@@ -75,6 +77,7 @@ class PenerimaanQc extends Component
     public $total_karat;
 
     public $dataCertificateAttribute = [];
+    public $dataCurrency = [];
     
     public $sertifikat = [
         'code' => '',
@@ -100,6 +103,7 @@ class PenerimaanQc extends Component
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
         $this->type = 1;
+        $this->dataCurrency = Currency::all();
 
         $id_kategoriproduk_berlian = ModelsLookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $this->kategoriproduk_id = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
@@ -149,6 +153,7 @@ class PenerimaanQc extends Component
 
     public function rules()
     {
+        $currency_id = $this->currency_id;
         $rules = [
             'code' => 'required',
             'supplier_id' => 'required',
@@ -174,6 +179,15 @@ class PenerimaanQc extends Component
                     $inputDate = Carbon::parse($value);
                     if ($inputDate < $today) {
                         $fail($attribute . ' harus tanggal hari ini atau setelahnya.');
+                    }
+                }
+            ],
+            'harga_beli' => [
+                'required',
+                function ($attribute, $value, $fail) use ($currency_id){
+
+                    if (empty($currency_id)) {
+                        $fail('Mata uang belum dipilih');
                     }
                 }
             ],
@@ -236,13 +250,14 @@ class PenerimaanQc extends Component
             'kategoriproduk_id' => $this->kategoriproduk_id,
             'sertifikat' => $this->sertifikat,
             'tipe_penerimaan_barang' => $this->type,
+            'currency_id' => $this->currency_id,
             'detail_cicilan' => $this->detail_cicilan
         ];
         
         $request = new Request($data);
         $controller = new GoodsReceiptBerliansController();
         $store = $controller->store_qc($request);
-        
+
     }
 
 
@@ -295,6 +310,11 @@ class PenerimaanQc extends Component
 
     public function setImageFromWebcam($image) {
         $this->image = $image;
+    }
+
+    public function clearHarga()
+    {
+        $this->harga_beli = 0;
     }
     
 }
