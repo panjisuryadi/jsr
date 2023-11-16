@@ -31,7 +31,8 @@ class Product extends Model implements HasMedia
 
     protected static function booted()
     {
-        if(auth()->check() && $user = auth()->user()->isUserCabang()){
+        if(auth()->check() && auth()->user()->isUserCabang()){
+            $user = auth()->user();
             $cabang_id = $user->namacabang->cabang_id;
             static::addGlobalScope('filter_by_cabang', function (Builder $builder) use ($cabang_id) {
                 $builder->where('cabang_id', $cabang_id);
