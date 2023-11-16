@@ -21,23 +21,38 @@
                        <p class="uppercase text-lg text-gray-600 font-semibold">
                       Stok 
                       <span class="text-yellow-500 uppercase">{{$module_action}}</span>
-                  </p>
+                        </p>
                         </div>
-                        <div id="buttons">
-                        </div>
+                        <div></div>
                     </div>
+                    <div class="flex justify-between">
+                            <div class="card">
+                                <div class="card-body font-semibold">
+                                    <p>Info Stok</p>
+                                    <p>Karat : <span id="karat"></span></p>
+                                    <p>Sisa Stok : <span id="sisa-stok"></span></p>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="karat_filter" class="font-bold">Pilih Karat</label>
+                                <select name="karat_filter" id="karat_filter" class="form-control">
+                                    @foreach ($datakarat as $karat )
+                                    <option value="{{$karat->id}}">{{ $karat->name }} | {{$karat->kode}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
                     <div class="table-responsive mt-1">
 
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                 <th style="width: 6%!important;">No</th>
+                                <th class="text-left">{{ Label_Case('Image') }}</th>
+                                <th class="text-left">{{ Label_Case('Product') }}</th>
                                 <th class="text-left">{{ Label_Case('Karat') }}</th>
-                                <th class="text-left">{{ Label_Case('Cabang') }}</th>
                                 <th class="text-left">{{ Label_Case('weight') }}</th>
-                                <th style="width: 16%!important;" class="text-left">{{ Label_Case('Status') }}</th>
-                   
-                               
                                 </tr>
                             </thead>
                         </table>
@@ -52,6 +67,15 @@
 <x-library.datatable />
 @push('page_scripts')
    <script type="text/javascript">
+    $(function(){
+        datatable()
+        getStockInfo()
+    })
+
+    function datatable(){
+        $('#datatable').DataTable({
+            destroy: true,
+        }).destroy();
         $('#datatable').DataTable({
            processing: true,
            serverSide: true,
@@ -80,7 +104,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data_pending") }}',
+            ajax: '{{ route("$module_name.index_data_pending") }}?karat='+$('#karat_filter').val(),
             dom: 'Blfrtip',
             buttons: [
                 'excel',
@@ -95,55 +119,42 @@
                     }
                 },
 
+                {data: 'image', name: 'image'},
+                {data: 'product', name: 'product'},
                 {data: 'karat', name: 'karat'},
-                {data: 'cabang', name: 'cabang'},
                 {data: 'weight', name: 'weight'},
               
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
             ]
         })
-        .buttons()
+        .buttons().remove()
         .container()
         .appendTo("#buttons");
+    }
 
+
+        $('#karat_filter').change(function(){
+            datatable()
+            getStockInfo()
+        })
+
+        function getStockInfo(){
+        $.ajax({
+            type: "get",
+            url: '{{ route("$module_name.get_stock_pending") }}?karat='+$('#karat_filter').val(),
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept' : 'application/json'
+            },
+            success: function(data){
+                console.log(data);
+                $('#karat').text(data.karat)
+                $('#sisa-stok').text(data.sisa_stok + ' gr')
+            }
+        })
+    }
 
 
     </script>
 
-<script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #Detail, #Status', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'Status')
-        {
-            $('.modal-dialog').addClass('modal-md');
-            $('.modal-dialog').removeClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Status {{ Label_case($module_title) }}');
-        }
-
-        if($(this).attr('id') == 'Detail')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-md');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Detail Stok Pending');
-        }
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
-</script>
 @endpush
