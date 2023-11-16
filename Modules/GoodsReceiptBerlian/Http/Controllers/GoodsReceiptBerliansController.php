@@ -20,6 +20,7 @@ use Lang;
 use Image;
 use Illuminate\Support\Facades\DB;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
+use Modules\Produksi\Models\DiamondCertifikatT;
 
 class GoodsReceiptBerliansController extends Controller
 {
@@ -273,6 +274,16 @@ class GoodsReceiptBerliansController extends Controller
                 Storage::disk('public')->put($file,$image_base64);
                 $input['images'] = "$fileName";
             }
+
+
+            if(!empty($input['sertifikat'])) {
+                $sertifikat = $input['sertifikat'];
+                if(isset($sertifikat['attribute'])) {
+                    unset($sertifikat['attribute']);
+                }
+            }
+            $diamond_certificate = DiamondCertifikatT::create($sertifikat);
+
             DB::beginTransaction();
             $goodsreceipt = $this->module_model::create([
                 'code'                  => $input['code'],
@@ -282,12 +293,16 @@ class GoodsReceiptBerliansController extends Controller
                 'total_emas'            => !empty($input['total_emas']) ? $input['total_emas'] :  0,
                 'berat_timbangan'       => !empty($input['berat_timbangan']) ? $input['berat_timbangan'] :  0,
                 'total_karat'           => !empty($input['total_karat']) ? $input['total_karat'] :  0,
+                'pengirim'              => !empty($input['pengirim']) ? $input['pengirim'] :  0,
+                'harga_beli'            => !empty($input['harga_beli']) ? $input['harga_beli'] :  0,
+                'tipe_penerimaan_barang'=> !empty($input['tipe_penerimaan_barang']) ? $input['tipe_penerimaan_barang'] :  null,
                 'supplier_id'           => $input['supplier_id'],
                 'karat_id'              => $input['karat_id'],
                 'user_id'               => $input['pic_id'],
                 'nama_produk'           => $input['nama_produk'],
                 'kategoriproduk_id'     => $input['kategoriproduk_id'],
                 'images'                => $input['images'],
+                'diamond_certificate_id'=> $diamond_certificate->id,
                 'is_qc'                 => 1,
             ]);
             $goodsreceipt_id = $goodsreceipt->id;
@@ -297,7 +312,7 @@ class GoodsReceiptBerliansController extends Controller
                     $val['goodsreceipt_id'] = $goodsreceipt_id;
                     $val['berat_real'] = !empty($val['berat_real']) ? $val['berat_real'] : 0;
                     $val['berat_kotor'] = !empty($val['berat_kotor']) ? $val['berat_kotor'] : 0;
-                    if(!empty($val['karatberlians_id'])) {
+                    if(!empty($val['karatberlians'])) {
                         $qcattribute_data[] = $val;
                     }
                 }
