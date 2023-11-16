@@ -216,7 +216,23 @@
                </label>
             </div>
 
+     <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="dashboard_sales" name="permissions[]"
+                value="dashboard_sales" {{ $role->hasPermissionTo('dashboard_sales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="dashboard_sales">
+                  {{ label_Case('dashboard_sales') }}
+               </label>
+            </div>
 
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_sales" name="permissions[]"
+                value="access_sales" {{ $role->hasPermissionTo('access_sales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_sales">
+                  {{ label_Case('access_sales') }}
+               </label>
+            </div>
 
 
               
@@ -1336,23 +1352,7 @@
     <div class="card-body">
         <div class="flex flex-row grid grid-cols-2 gap-1">
             
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input"
-                id="dashboard_sales" name="permissions[]"
-                value="dashboard_sales" {{ $role->hasPermissionTo('dashboard_sales') ? 'checked' : '' }}>
-                <label class="custom-control-label" for="dashboard_sales">
-                  {{ label_Case('dashboard_sales') }}
-               </label>
-            </div>
-
-           <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input"
-                id="access_sales" name="permissions[]"
-                value="access_sales" {{ $role->hasPermissionTo('access_sales') ? 'checked' : '' }}>
-                <label class="custom-control-label" for="access_sales">
-                  {{ label_Case('access_sales') }}
-               </label>
-            </div>
+       
 
       <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
