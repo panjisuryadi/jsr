@@ -779,12 +779,26 @@
             
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
+                id="access_buys_back_luar" name="permissions[]"
+                value="access_buys_back_luar" {{ $role->hasPermissionTo('access_buys_back_luar') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_buys_back_luar">
+                  {{ label_Case('access_buys_back_luar') }}
+               </label>
+            </div> 
+
+
+
+             <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
                 id="access_penerimaanbarangluars" name="permissions[]"
                 value="access_penerimaanbarangluars" {{ $role->hasPermissionTo('access_penerimaanbarangluars') ? 'checked' : '' }}>
                 <label class="custom-control-label" for="access_penerimaanbarangluars">
                   {{ label_Case('access') }}
                </label>
             </div> 
+
+
+
 
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
