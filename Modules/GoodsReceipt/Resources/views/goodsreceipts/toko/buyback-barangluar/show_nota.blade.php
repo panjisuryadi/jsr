@@ -14,6 +14,8 @@
     <div class="container-fluid">
     @if ($nota->isProcessing())
         @livewire('goods-receipt.toko.nota.confirm',['nota' => $nota])
+    @elseif ($nota->isSent())
+        @livewire('goods-receipt.toko.nota.sent',['nota' => $nota])
     @else
         @livewire('goods-receipt.toko.nota.detail',['nota' => $nota])
     @endif
