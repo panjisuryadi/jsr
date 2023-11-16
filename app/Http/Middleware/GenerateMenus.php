@@ -128,7 +128,7 @@ class GenerateMenus
             ]);
 
 
-            // EMAS
+            //menuemas
             $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Emas', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
@@ -143,6 +143,7 @@ class GenerateMenus
                     'penjualansales*',
                     'retursales*',
                     'itemshapes*',
+                    'stokcabangs*',
                     'goodsreceipts*',
 
                 ],
@@ -152,6 +153,9 @@ class GenerateMenus
                                       'access_retursale',
                                       'access_buybacktoko',
                                       'access_goodsreceipts',
+                                      'access_stok_cabang',
+                                      'access_stok_dp',
+                                      'access_stok_pending',
                                       'access_diamondcertificates'],
             ]);
             $emas->link->attr([
@@ -623,6 +627,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
+
 
             // EMAS - STOK
             $stok = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
