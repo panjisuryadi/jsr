@@ -14,7 +14,10 @@
 <div class="container-fluid">
 
 @include('stok::stoks.datatables.pending')
+
+@if (auth()->user()->isUserCabang())
 @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.datatable.nota')
+@endif
 
 </div>
 @endsection
