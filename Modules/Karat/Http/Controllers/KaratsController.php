@@ -151,6 +151,7 @@ public function store(Request $request)
             
              'name' => 'required|max:191',
              'kode' => 'required',
+             'coef' => 'required',
              'type' => 'required'
 
         ]);
@@ -253,11 +254,13 @@ public function update(Request $request, $id)
           return response()->json(['error'=>$validator->errors()]);
         }
 
-       // $input = $request->all();
+        $input = $request->all();
+       // dd($input);
         $params = $request->except('_token');
         $params['kode'] = $params['kode'];
         $params['name'] = $params['name'];
         $params['type'] = $params['type'];
+        $params['coef'] = $params['coef'];
             $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

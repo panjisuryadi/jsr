@@ -73,3 +73,11 @@ modul penentuan Harga
 tabel pembelian dan iventory
  - distribusi == option ke retail & Sales
 
+=========================================
+
+Tabel Karat
+
+-- kolom coef
+
+
+
