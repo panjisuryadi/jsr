@@ -29,8 +29,11 @@ class GoodsReceiptItem extends Model
     ];
     protected $table = 'goodsreceipt_toko_items';
 
+    const APPROVED = 1;
+    const REJECTED = 2;
+
     public function product(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withoutGlobalScope('filter_by_cabang');
     }
 
     public function scopePending(){
@@ -59,6 +62,26 @@ class GoodsReceiptItem extends Model
 
     public function cabang(){
         return $this->belongsTo(Cabang::class);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status_id', self::APPROVED);
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status_id', self::REJECTED);
+    }
+
+    public function approve(){
+        $this->status_id = self::APPROVED;
+        $this->save();
+    }
+
+    public function reject(){
+        $this->status_id = self::REJECTED;
+        $this->save();
     }
 
 }

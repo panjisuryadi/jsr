@@ -128,7 +128,7 @@ class GenerateMenus
             ]);
 
 
-            // EMAS
+            //menuemas
             $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Emas', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
@@ -143,6 +143,7 @@ class GenerateMenus
                     'penjualansales*',
                     'retursales*',
                     'itemshapes*',
+                    'stokcabangs*',
                     'goodsreceipts*',
 
                 ],
@@ -152,6 +153,9 @@ class GenerateMenus
                                       'access_retursale',
                                       'access_buybacktoko',
                                       'access_goodsreceipts',
+                                      'access_stok_cabang',
+                                      'access_stok_dp',
+                                      'access_stok_pending',
                                       'access_diamondcertificates'],
             ]);
             $emas->link->attr([
@@ -228,6 +232,7 @@ class GenerateMenus
                                      'access_sales',
                                      'access_products',
                                      'access_sales',
+                                     'access_buys_back_luar',
                                      'access_penjualansales',
                                      'access_buybacktoko'],
             ]);
@@ -275,23 +280,25 @@ class GenerateMenus
                     'penentuanhargas*',
 
                 ],
-                'permission'    => ['access_penentuanhargas','access_buybacktoko'],
+                'permission'    => ['access_penentuanhargas',
+                                    'access_buys_back_luar',
+                                    'access_buybacktoko'],
             ]);
             $penerimaan->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
 
-            // EMAS - TOKO - PENERIMAAN - BUYBACK
+            // EMAS - TOKO - PENERIMAAN - BUYBACK BARANG LUAR
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                <div class="break">'.__('Barang Buy Back').'</div>', [
-                'route' => 'buysback.index',
+                <div class="break">'.__('Buy Back & Barang Luar').'</div>', [
+                'route' => 'goodsreceipt.toko.buyback-barangluar.index',
                 'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 1,
                
-                'permission'    => ['access_buybacktoko'],
+                'permission'    => ['access_buys_back_luar'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -622,7 +629,6 @@ class GenerateMenus
             ]);
 
 
-
             // EMAS - STOK
             $stok = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -631,36 +637,18 @@ class GenerateMenus
                 'order'         => 4,
                 'activematches' => [
                            'stoks*',
+                           'stokcabangs*',
                     ],
-                  'permission' => ['access_stoks','access_menu_stok'],
+                  'permission' => ['access_stoks',
+                                      'access_stok_cabang',
+                                      'access_stok_dp',
+                                      'access_stok_pending',
+                                      'access_menu_stok'],
             ]);
             $stok->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
-
-
-
-       // EMAS - STOK - DAFTAR STOK
-            $stock_office = $stok->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok Office', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 1,
-                'activematches' => [
-                           'stoks*',
-                    ],
-                  'permission' => ['access_stoks'],
-            ]);
-
-
-
-            $stock_office->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
 
 
 
@@ -751,7 +739,9 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['stokcabangs*'],
-                'permission'    => ['access_stokcabangs'],
+                'permission'    => ['access_stok_cabang',
+                                     'access_stok_dp',
+                                     'access_stok_pending'],
             ]);
             $stock_cabang->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -767,7 +757,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => ['stoks*'],
-                'permission'    => ['access_stoks'],
+                'permission'    => ['access_stok_pending'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -781,7 +771,7 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['stoks*'],
-                'permission'    => ['access_stoks'],
+                'permission'    => ['access_stok_dp'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',

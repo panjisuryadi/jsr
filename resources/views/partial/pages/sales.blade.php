@@ -1,7 +1,12 @@
-@can('dashboard_admin_sales')
+  @can('dashboard_sales')
+
 <div class="flex gap-1">
 
   <div class="w-3/4">
+
+
+
+
 
   <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
 <div class="card border-0">
@@ -10,9 +15,9 @@
             <i class="bi bi-bar-chart font-2xl"></i>
         </div>
         <div>
-            <div class="text-value text-primary">{{ \Modules\BuyBackSale\Models\BuyBackSale::count() }}</div>
+            <div class="text-value text-primary">{{ \Modules\DataSale\Models\DataSale::count() }}</div>
             <div class="text-muted text-uppercase font-weight-bold">
-           Buys Back Sales
+           Data Sales
             </div>
 
         </div>
@@ -46,11 +51,11 @@
         </div>
         <div>
             <div class="text-value text-warning">
-                {{ \Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuar::count() }}
+                {{ \Modules\Stok\Models\StockSales::count() }}
             </div>
             <div class="text-muted text-uppercase font-weight-bold">
 
-            Barang Luar Sales
+           Stock Sales
             </div>
 
         </div>
@@ -64,56 +69,72 @@
 
 
 <div class="card">
+
+
+
+
 <div class="card-body">
-    <div class="flex relative py-2">
+
+<div class="flex relative py-2">
   <div class="absolute inset-0 flex items-center">
     <div class="w-full border-b border-gray-300"></div>
   </div>
   <div class="relative flex justify-left">
     <span class="bg-white pl-0 pr-3  text-sm uppercase tracking-wider font-semibold text-dark">
-    Dashboard Admin Sales
+    Dashboard Sales
    </span>
   </div>
 </div>
 
-  
+    
     <ul class="nav nav-tabs py-1" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#home">BuysBack Sales</a>
+            <a class="nav-link active" data-toggle="tab" href="#dataSales">Data Sales</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#sales">Retur Sales</a>
         </li> 
 
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#DataSales">Data Sales</a>
+            <a class="nav-link" data-toggle="tab" href="#BuybackSales">Stok Sales</a>
         </li>
     </ul>
 
     <div class="tab-content py-3 mb-2">
-        <div id="home" class="container px-0 tab-pane active">
+        <div id="dataSales" class="container px-0 tab-pane active">
 
 
             <div class="pt-3">
 
-                    <table style="width: 100%;" class="table table-striped table-bordered">
+
+  <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('Produk') }}</th>
-                            <th>{{ label_case('Customer') }}</th>
-                            <th>{{ label_case('weight') }}</th>
-                            <th>{{ label_case('nominal') }}</th>
+                            <th>{{ label_case('Nama') }}</th>
+                            <th>{{ label_case('phone') }}</th>
+                            <th>{{ label_case('target') }}</th>
+                            <th>{{ label_case('Aksi') }}</th>
                         </tr>
-                      @forelse(\Modules\BuyBackSale\Models\BuyBackSale::get() as $row)
+                        @forelse(\Modules\DataSale\Models\DataSale::get() as $sale)
                             @if($loop->index > 4)
                                                 @break
                                             @endif
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $row->product_name }}</td>
-                            <td>{{ $row->customersale->customer_name }}</td>
-                            <td>{{ $row->weight ?? ' - ' }}</td>
-                            <td>{{ $row->nominal ?? ' - ' }}</td>
+                            <td>{{ $sale->name }}</td>
+                            <td>{{ $sale->phone }}</td>
+                            <td>{{ $sale->target ?? ' - ' }}</td>
+                          
+                            <td>
+
+                               @can('show_sales')
+                                    <a href="{{ route("datasale.show",$sale->id) }}"
+                                     class="btn btn-outline-info btn-sm">
+                                        <i class="bi bi-eye"></i> &nbsp;@lang('Show')
+                                    </a>
+                                @endcan
+
+                            </td>
                         </tr>
                         @empty
                         <p>Tidak ada Data</p>
@@ -159,32 +180,43 @@
             </div>
         </div>
 
-  <div id="DataSales" class="container px-0 tab-pane">
+  <div id="BuybackSales" class="container px-0 tab-pane">
             <div class="pt-3">
 
-                    <table style="width: 100%;" class="table table-striped table-bordered">
+                   <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('Nama') }}</th>
-                            <th>{{ label_case('phone') }}</th>
-                            <th>{{ label_case('address') }}</th>
+                            <th>{{ label_case('Sales') }}</th>
+                            <th>{{ label_case('karat') }}</th>
+                            <th>{{ label_case('Berat') }}</th>
+                            <th>{{ label_case('Aksi') }}</th>
                         </tr>
-                        @forelse(\Modules\DataSale\Models\DataSale::get() as $sale)
+                    @forelse(\Modules\Stok\Models\StockSales::get() as $row)
                             @if($loop->index > 4)
                                                 @break
                                             @endif
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $sale->name }}</td>
-                            <td>{{ $sale->phone }}</td>
-                            <td>{{ $sale->address ?? ' - ' }}</td>
+                            <td>{{ $row->karat->kode }} | {{ $row->karat->name }}</td>
+                            <td>{{ $row->sales->name }}</td>
+                            <td>{{ $row->weight ?? ' - ' }}</td>
+                            <td>
+                                
+                                @can('show_sales')
+                                    <a href="{{ route("sales.show",$row->id) }}"
+                                     class="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-eye"></i> &nbsp;@lang('Detail')
+                                    </a>
+                                @endcan
+
+
+                            </td>
                         </tr>
                         @empty
                         <p>Tidak ada Data</p>
                         @endforelse
                         
                     </table>
-
 
 
 
@@ -253,11 +285,11 @@
   </div>
 </div>
 
+
+
+
+
 @endcan
-
-
-
-
 
 
 @section('third_party_stylesheets')

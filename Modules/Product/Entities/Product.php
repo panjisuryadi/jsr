@@ -12,6 +12,7 @@ use Modules\Product\Entities\ProductLocation;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Cabang\Models\Cabang;
 use Auth;
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Models\ProductStatus;
@@ -28,6 +29,16 @@ class Product extends Model implements HasMedia
     protected $with = ['media'];
 
 
+    protected static function booted()
+    {
+        if(auth()->check() && auth()->user()->isUserCabang()){
+            $user = auth()->user();
+            $cabang_id = $user->namacabang->cabang_id;
+            static::addGlobalScope('filter_by_cabang', function (Builder $builder) use ($cabang_id) {
+                $builder->where('cabang_id', $cabang_id);
+            });
+        }
+    }
 
    public const PRODUKCODE = 'P';
    public const URL = 'P';
@@ -165,6 +176,32 @@ class Product extends Model implements HasMedia
         return $this->group?->name . ' ' . $this->model?->name;
        }
 
+
+       public function updateTracking($status_id, $cabang_id = null){
+            $this->update([
+                'cabang_id' => $cabang_id,
+                'status_id' => $status_id
+            ]);
+            $this->refresh();
+            $this->statuses()->attach($this->status_id,['cabang_id' => $this->cabang_id, 'properties' => json_encode(['product'=>$this])]);
+       }
+
+       public function scopePending($query){
+            return $this->where('status_id', ProductStatus::PENDING_CABANG);
+       }
+
+       public function scopePendingOffice($query){
+        return $this->where('status_id', ProductStatus::PENDING_OFFICE);
+   }
+
+       public function getImageUrlPathAttribute(){
+            $image = $this->images;
+            if(empty($image)){
+                return url('images/fallback_product_image.png');
+            }else{
+                return asset(imageUrl().$image);
+            }
+       }
 
 
 

@@ -2,40 +2,17 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h2 class="text-lg font-bold uppercase">Pengiriman Barang ke Office</h2>
+                <h2 class="text-lg font-bold uppercase">Penerimaan Barang Buy Back & Barang Luar (Toko)</h2>
             </div>
             <div class="card-body">
-                <div class="flex justify-between py-1 border-bottom">
-
-                    <div>
-
-                        @if(auth()->user()->isUserCabang())
-                        <div class="btn-group btn-group-md">
-                            @can('access_buys_back_luar')
-                            <a href="{{ route('goodsreceipt.toko.buyback-barangluar.create-nota') }}" data-toggle="tooltip" class="btn btn-primary btn-md px-3">
-                                <i class="bi bi-plus"></i>
-                                {{ __('Add') }} Nota
-                            </a>
-                            @endcan
-
-
-                        </div>
-                        @endif
-
-
-
-                    </div>
-
-                </div>
-
-
                 <div class="table-responsive mt-1">
-                    <table id="goodsreceipt-toko-barangbuyback-barangluar-nota-datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+                    <table id="buyback-barangluar-nota-datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                         <thead>
                             <tr>
                                 <th style="width: 3%!important;">No</th>
-                                <th style="width: 20%!important;">Tanggal</th>
-                                <th style="width: 22%!important;">Nota</th>
+                                <th style="width: 12%!important;">Tanggal</th>
+                                <th style="width: 16%!important;">Nota</th>
+                                <th style="width: 16%!important;">Cabang</th>
                                 <th style="width: 10%!important;">Status</th>
                                 <th style="width: 10%!important;">Jumlah Barang</th>
 
@@ -58,7 +35,7 @@
 
 @push('page_scripts')
 <script type="text/javascript">
-        $('#goodsreceipt-toko-barangbuyback-barangluar-nota-datatable').DataTable({
+        $('#buyback-barangluar-nota-datatable').DataTable({
            processing: true,
            serverSide: true,
            autoWidth: true,
@@ -88,7 +65,7 @@
             ],
            
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("goodsreceipt.toko.buyback-barangluar.index_data_nota") }}',
+            ajax: '{{ route("$module_name.toko.buyback-barangluar.index_data_nota_office") }}',
             dom: 'Blfrtip',
             buttons: [
 
@@ -106,7 +83,7 @@
 
                 {data: 'date', name: 'date'},
                 {data: 'nota', name:  'nota'},
-             
+                {data: 'cabang', name:  'cabang'},
               
                 {data: 'status', name: 'status'},
                 {data: 'total_item', name: 'total_item'},

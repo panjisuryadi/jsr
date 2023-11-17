@@ -59,14 +59,12 @@
 
                         </th>
                         <th class="text-center">No</th>
+                        <th class="text-center">Preview</th>
+                        <th class="text-center">Tipe</th>
                         <th class="text-center">Produk</th>
-                        <th class="text-center">Karat</th>
-                        <th class="text-center">Berat Emas</th>
                         <th class="text-center">Customer</th>
                         <th class="text-center">Nominal</th>
                         <th class="text-center">Note</th>
-                        <th class="text-center">Aksi</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -76,23 +74,32 @@
                     @forelse($goodsreceipt_items as $row)
                     @php
                     $total_weight = $total_weight + $row->gold_weight;
+                    $image = $row->product->images;
+                    $imagePath = '';
+                    if(empty($image)){
+                        $imagePath = url('images/fallback_product_image.png');
+                    }else{
+                        $imagePath = asset(imageUrl().$image);
+                    }
                     @endphp
                     <tr>
                         <td class="text-center">
                             <input type="checkbox" wire:model="selectedItems" value="{{$row->id}}" name="selected_items[]" />
                         </td>
                         <td class="text-center">{{$loop->iteration}}</td>
-                        <td class="text-center font-semibold"> {{@$row->product->product_name}} gr</td>
-                        <td class="text-center font-semibold"> {{@$row->product->karat->name}} </td>
-                        <td class="text-center font-semibold">{{@$row->product->berat_emas}} gr</td>
+                        <td class="flex justify-center"> <a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " class="single_image">
+                                            <img src="{{ $imagePath }}" order="0" width="100" class="img-thumbnail"/>
+                                        </a>
+                        </td>
+                        <td class="text-center font-semibold"> {{ucwords(@$row->type_label)}}</td>
+                        <td class="font-semibold"> 
+                            <p>Nama Produk : {{@$row->product->product_name}}</p>
+                            <p>Karat : {{@$row->product->karat->name}}</p>
+                            <p>Berat : {{@$row->product->berat_emas}} gr</p>
+                        </td>
                         <td class="text-center font-semibold">{{ @$row->customer_name }}</td>
                         <td class="text-center font-semibold">{{ $this->nominalText(@$row->nominal) }}</td>
                         <td class="text-center font-semibold">{{ @$row->note }}</td>
-                        <td class="text-center font-semibold">
-                            <a href="#" class="hover:text-blue-400 btn btn-sm btn-danger px-4">Preview</a>
-
-                        </td>
-
                     </tr>
                     @empty
                     <tr>

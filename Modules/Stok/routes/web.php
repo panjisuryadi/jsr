@@ -15,6 +15,10 @@ Route::group(['middleware' => 'auth'], function () {
     $module_name = 'stok';
     $controller_name = 'StoksController';
 
+    Route::get("$module_name/get_stock_pending", ['as' => "$module_name.get_stock_pending", 'uses' => "$controller_name@get_stock_pending"]); 
+    
+    Route::get("$module_name/get_stock_pending_office", ['as' => "$module_name.get_stock_pending_office", 'uses' => "$controller_name@get_stock_pending_office"]); 
+
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
 
    Route::get("$module_name/nolate", ['as' => "$module_name.nolate", 'uses' => "$controller_name@nolate"]);

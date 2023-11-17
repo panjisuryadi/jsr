@@ -90,76 +90,35 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
 
 
 
-
-        @can('show_weekly_sales_purchases|show_month_overview')
-        <div class="row mb-4">
-            @can('show_weekly_sales_purchases')
-            <div class="col-lg-7">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header">
-                        @lang('Sales & Purchases of Last 7 Days')
-                    </div>
-                    <div class="card-body">
-                        <canvas id="salesPurchasesChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            @endcan
-            @can('show_month_overview')
-            <div class="col-lg-5">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header">
-                        Overview of {{ now()->format('F, Y') }}
-                    </div>
-                    <div class="card-body d-flex justify-content-center">
-                        <div class="chart-container" style="position: relative; height:auto; width:280px">
-                            <canvas id="currentMonthChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endcan
-        </div>
-        @endcan
-
-        @can('show_monthly_cashflow')
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header">
-                         @lang('Monthly Cash Flow') <small class="text-success">@lang('Payment Sent & Received')</small>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="paymentChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endcan
-
-
  @if(Auth::user()->id !== 1)
  @can('access_sortir')
  @include('product::products.sortir_dashboard')
  @endcan
 
- @if(Auth::user()->roles->first()->name == 'Kasir')
-        @include('partial.pages.kasir')
- @endif
+ @can('access_kasir')
+    @include('partial.pages.kasir')
+ @endcan
 
-
-  @can('dashboard_sales_office')
-   @include('partial.pages.office')
+ @can('access_kepala_toko')
+   @include('partial.pages.kepala_toko')
  @endcan
 
 
-  @can('dashboard_distribusi')
+
+@can('access_sales')
+   @include('partial.pages.sales')
+ @endcan
+
+
+  @can('access_sales_office')
+   @include('partial.pages.office')
+ @endcan
+
+  @can('access_distribusi')
   @include('partial.pages.distribusi')
   @endcan
 
-
-
-  @can('dashboard_sales')
+  @can('access_admin_sales')
   @include('partial.pages.admin_sales')
   @endcan
 
@@ -172,6 +131,10 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
  @endif
 
 
+
+
+
+@include('partial.pages.chart')   
 
   
 

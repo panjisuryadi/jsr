@@ -251,4 +251,116 @@ class GoodsReceiptsController extends Controller
         $pdf = PDF::loadView('goodsreceipt::goodsreceipts.toko.buyback-barangluar.datatable.item.print',compact('item','filename','datetime'));
         return $pdf->stream($filename.'.pdf');
     }
+
+
+    public function index_data_nota_office(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = BuyBackBarangLuar\GoodsReceiptNota::get();
+        return Datatables::of($$module_name)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view(
+                    '' . $module_name . '::' . $module_path . '.datatable.nota.office-action',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+
+            ->editColumn('total_item', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
+                                                        ' . $data->items->count() . '
+                                                       </div>';
+                return $tb;
+            })
+            ->editColumn('status', function ($data) {
+                $tb = '<button class="btn bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">' . $data->current_status->name . '</button>';
+                return $tb;
+            })
+            ->editColumn('nota', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
+                                                    ' . $data->invoice . '
+                                                    </div>';
+                return $tb;
+            })
+
+
+            ->editColumn('date', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
+                                               ' . $data->date . '
+                                               </div>';
+                return $tb;
+            })
+            ->editColumn('cabang', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
+                                               ' . $data->cabang->name . '
+                                               </div>';
+                return $tb;
+            })
+            ->rawColumns([
+                'action', 'cabang',
+                'total_item',
+                'status',
+                'nota',
+                'date',
+            ])
+            ->make(true);
+    }
+
+
+    public function nota_process(Request $request){
+        try {
+            if(!auth()->user()->isUserCabang()){
+                $data = $request->input('data');
+                if(empty($data) && isset($data)){
+                    throw new \Exception('Data Kosong');
+                }else{
+                    $nota = BuyBackBarangLuar\GoodsReceiptNota::find($data['id']);
+                    $nota->process();
+                }
+            }else{
+                throw new \Exception('You are not authorized');
+            }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Nota Berhasil diproses',
+                'redirectRoute' => route('goodsreceipt.toko.buyback-barangluar.nota.show',$nota->id)
+            ],200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function show_nota($id)
+    {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('access_buys_back_luar'), 403);
+        $nota = BuyBackBarangLuar\GoodsReceiptNota::findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.show_nota',
+           compact('module_name',
+            'module_action',
+            'nota',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
 }
