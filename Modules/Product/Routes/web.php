@@ -28,11 +28,15 @@ Route::group(['middleware' => 'auth'], function () {
   // Cuci
   Route::get("products/process/cuci", ['as' => "products.process.cuci", 'uses' => "Proses\ProductController@cuci"]);
   Route::get("products/process/get_cuci", ['as' => "products.process.get_cuci", 'uses' => "Proses\ProductController@get_cuci"]);
-
   Route::get("products/get_stock_cuci", ['as' => "products.get_stock_cuci", 'uses' => "Proses\ProductController@get_stock_cuci"]); 
 
   Route::get("products/process/rongsok", ['as' => "products.process.rongsok", 'uses' => "Proses\ProductController@rongsok"]);
+
   Route::get("products/process/masak", ['as' => "products.process.masak", 'uses' => "Proses\ProductController@masak"]);
+  Route::get("products/process/get_masak", ['as' => "products.process.get_masak", 'uses' => "Proses\ProductController@get_masak"]);
+  Route::get("products/get_stock_masak", ['as' => "products.get_stock_masak", 'uses' => "Proses\ProductController@get_stock_masak"]); 
+
+
   Route::get("products/process/reparasi", ['as' => "products.process.reparasi", 'uses' => "Proses\ProductController@reparasi"]);
   Route::get("products/process/second", ['as' => "products.process.second", 'uses' => "Proses\ProductController@second"]);
       

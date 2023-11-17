@@ -14,7 +14,7 @@
                         <input type="hidden" name="data_id" id="data_id"  value="">
                         <div class="flex">
                             <select class="form-control uppercase" name="status_id" id="status_id" required>
-
+                                <option value="" selected disabled>Pilih Status</option>
                                 @foreach($product_status as $status)
                                 <option value="{{$status->id}}" class="uppercase">
                                     {{ $status->name }}

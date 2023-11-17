@@ -192,7 +192,11 @@ class Product extends Model implements HasMedia
 
        public function scopeCuci($query){
         return $this->where('status_id', ProductStatus::CUCI);
-   }
+        }
+
+        public function scopeMasak($query){
+            return $this->where('status_id', ProductStatus::MASAK);
+        }
 
        public function scopePendingOffice($query){
         return $this->where('status_id', ProductStatus::PENDING_OFFICE);
