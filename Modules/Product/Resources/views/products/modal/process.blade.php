@@ -1,4 +1,4 @@
-<div class="modal fade" id="process-pending-office-modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
+<div class="modal fade" id="product-process-modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" id="form-process-pending-office">
+                <form action="" id="form-product-process">
                     <div id="modal-content">
                         @csrf
                         <input type="hidden" name="data_id" id="data_id"  value="">

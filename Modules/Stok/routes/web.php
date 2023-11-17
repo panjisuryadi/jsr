@@ -19,8 +19,6 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get("$module_name/get_stock_pending_office", ['as' => "$module_name.get_stock_pending_office", 'uses' => "$controller_name@get_stock_pending_office"]); 
 
-    Route::get("$module_name/process_pending_office/{id}", ['as' => "$module_name.process_pending_office", 'uses' => "$controller_name@process_pending_office"]); 
-
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
 
    Route::get("$module_name/nolate", ['as' => "$module_name.nolate", 'uses' => "$controller_name@nolate"]);

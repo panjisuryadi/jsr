@@ -830,24 +830,6 @@ public function view_pending($id)
 
     }
 
-    public function process_pending_office($id)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_pending = $this->module_pending;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        abort_if(Gate::denies('show_stock_pending_office'), 403);
-        $product = Product::with('karat','cabang')->findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.modal.process_pending_office',
-           compact('module_name',
-            'product',
-            'module_title', 'module_model'));
-
-    }
-
     public function gudang_office_detail($office)
     {
         $module_title = $this->module_title;
