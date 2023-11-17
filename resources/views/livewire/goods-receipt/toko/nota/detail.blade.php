@@ -70,7 +70,7 @@
                                 @forelse($nota->items()->approved()->get() as $row)
                                 @php
                                 $total_weight = $total_weight + $row->gold_weight;
-                                $image = $row->product->images;
+                                $image = $row->product?->images;
                                 $imagePath = '';
                                 if(empty($image)){
                                     $imagePath = url('images/fallback_product_image.png');
@@ -148,7 +148,7 @@
                                 @forelse($nota->items()->rejected()->get() as $row)
                                 @php
                                 $total_weight = $total_weight + $row->gold_weight;
-                                $image = $row->product->images;
+                                $image = $row->product?->images;
                                 $imagePath = '';
                                 if(empty($image)){
                                     $imagePath = url('images/fallback_product_image.png');

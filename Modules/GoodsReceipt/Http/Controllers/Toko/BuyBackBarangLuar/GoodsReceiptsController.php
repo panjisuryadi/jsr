@@ -353,7 +353,7 @@ class GoodsReceiptsController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
-        abort_if(Gate::denies('show_buybacktoko'), 403);
+        abort_if(Gate::denies('access_buys_back_luar'), 403);
         $nota = BuyBackBarangLuar\GoodsReceiptNota::findOrFail($id);
           return view(''.$module_name.'::'.$module_path.'.show_nota',
            compact('module_name',

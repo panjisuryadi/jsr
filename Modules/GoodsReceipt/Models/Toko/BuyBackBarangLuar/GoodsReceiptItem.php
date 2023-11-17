@@ -33,7 +33,7 @@ class GoodsReceiptItem extends Model
     const REJECTED = 2;
 
     public function product(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withoutGlobalScope('filter_by_cabang');
     }
 
     public function scopePending(){

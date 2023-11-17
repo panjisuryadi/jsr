@@ -190,6 +190,10 @@ class Product extends Model implements HasMedia
             return $this->where('status_id', ProductStatus::PENDING_CABANG);
        }
 
+       public function scopePendingOffice($query){
+        return $this->where('status_id', ProductStatus::PENDING_OFFICE);
+   }
+
        public function getImageUrlPathAttribute(){
             $image = $this->images;
             if(empty($image)){

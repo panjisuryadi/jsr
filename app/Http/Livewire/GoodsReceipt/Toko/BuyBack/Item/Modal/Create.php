@@ -36,7 +36,7 @@ class Create extends Component
             'code' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    $product = Product::where(['product_code' => $value])->first();
+                    $product = Product::withoutGlobalScope('filter_by_cabang')->where(['product_code' => $value])->first();
                     if(is_null($product)){
                         $fail('Produk tidak ditemukan');
                     }else{
@@ -70,7 +70,7 @@ class Create extends Component
     }
 
     private function setProduct(){
-        $this->product = Product::with('karat')->where(['product_code' => $this->code])->first();
+        $this->product = Product::withoutGlobalScope('filter_by_cabang')->with('karat')->where(['product_code' => $this->code])->first();
     }
 
     public function store(){

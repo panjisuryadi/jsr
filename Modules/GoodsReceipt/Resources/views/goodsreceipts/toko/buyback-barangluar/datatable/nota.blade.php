@@ -11,8 +11,8 @@
 
                         @if(auth()->user()->isUserCabang())
                         <div class="btn-group btn-group-md">
-                            @can('create_buysback_nota')
-                            <a href="{{ route(''.$module_name.'.toko.buyback-barangluar.create-nota') }}" data-toggle="tooltip" class="btn btn-primary btn-md px-3">
+                            @can('access_buys_back_luar')
+                            <a href="{{ route('goodsreceipt.toko.buyback-barangluar.create-nota') }}" data-toggle="tooltip" class="btn btn-primary btn-md px-3">
                                 <i class="bi bi-plus"></i>
                                 {{ __('Add') }} Nota
                             </a>
@@ -88,7 +88,7 @@
             ],
            
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.toko.buyback-barangluar.index_data_nota") }}',
+            ajax: '{{ route("goodsreceipt.toko.buyback-barangluar.index_data_nota") }}',
             dom: 'Blfrtip',
             buttons: [
 

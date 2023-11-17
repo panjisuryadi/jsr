@@ -5,7 +5,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('goodsreceipt.toko.buyback-barangluar.index') }}">Barang BuyBack & Barang Luar (Toko)</a></li>
+        <li class="breadcrumb-item"><a href="#">Barang BuyBack & Barang Luar (Toko)</a></li>
         <li class="breadcrumb-item active">#{{ $nota->invoice }}</li>
     </ol>
 @endsection
