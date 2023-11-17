@@ -14,6 +14,7 @@ use DateTime;
 use Illuminate\Support\Facades\Http;
 use Livewire\WithFileUploads;
 use Modules\Currency\Entities\Currency;
+use Modules\GoodsReceipt\Models\KlasifikasiBerlian;
 use Modules\GoodsReceiptBerlian\Http\Controllers\GoodsReceiptBerliansController;
 use Modules\Karat\Models\Karat;
 use Modules\KaratBerlian\Models\KaratBerlian;
@@ -57,6 +58,10 @@ class PenerimaanQc extends Component
         [
             'karatberlians' => '',
             'shapeberlian_id' => '',
+            'colour' => '',
+            'clarity' => '',
+            'harga_beli' => '',
+            'currency_id' => '',
             'qty' => 1,
             'keterangan' => ''
         ]
@@ -73,11 +78,12 @@ class PenerimaanQc extends Component
 
     public $hari_ini;
 
-    public $type;
+    public $type; // 1 pcs - 2 Mata tabur
     public $total_karat;
 
     public $dataCertificateAttribute = [];
     public $dataCurrency = [];
+    public $dataKlasifikasiBerlian = [];
     
     public $sertifikat = [
         'code' => '',
@@ -104,10 +110,13 @@ class PenerimaanQc extends Component
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
         $this->type = 1;
         $this->dataCurrency = Currency::all();
+        $this->dataKlasifikasiBerlian = KlasifikasiBerlian::all();
 
         $id_kategoriproduk_berlian = ModelsLookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $this->kategoriproduk_id = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
         $this->dataCertificateAttribute = DiamondCertificateAttributes::where('status', 1)->get();
+
+        $this->inputs[0]['code'] = $this->generateCodeItems(0);
 
         $this->sertifikat['tanggal'] = $this->hari_ini;
 
@@ -116,8 +125,13 @@ class PenerimaanQc extends Component
     public function addInput()
     {
         $this->inputs[] = [
+            'code' => $this->generateCodeItems(),
             'karatberlians' => '',
             'shapeberlian_id' => '',
+            'colour' => '',
+            'clarity' => '',
+            'harga_beli' => '',
+            'currency_id' => '',
             'qty' => 1,
             'keterangan' => ''
         ];
@@ -144,6 +158,10 @@ class PenerimaanQc extends Component
             [
                 'karatberlians' => '',
                 'shapeberlian_id' => '',
+                'colour' => '',
+                'clarity' => '',
+                'harga_beli' => '',
+                'currency_id' => '',
                 'qty' => 1,
                 'keterangan' => ''
             ]
@@ -157,7 +175,7 @@ class PenerimaanQc extends Component
         $rules = [
             'code' => 'required',
             'supplier_id' => 'required',
-            'nama_produk' => 'required',
+            // 'nama_produk' => 'required',
             'tanggal' => [
                 'required',
                 'date',
@@ -182,20 +200,20 @@ class PenerimaanQc extends Component
                     }
                 }
             ],
-            'harga_beli' => [
-                'required',
-                function ($attribute, $value, $fail) use ($currency_id){
+            // 'harga_beli' => [
+            //     'required',
+            //     function ($attribute, $value, $fail) use ($currency_id){
 
-                    if (empty($currency_id)) {
-                        $fail('Mata uang belum dipilih');
-                    }
-                }
-            ],
+            //         if (empty($currency_id)) {
+            //             $fail('Mata uang belum dipilih');
+            //         }
+            //     }
+            // ],
         ];
 
-        if($this->type == 2) {
-            $rules['karat_id'] = 'required';
-        }
+        // if($this->type == 2) {
+        //     $rules['karat_id'] = 'required';
+        // }
 
         if(!empty($this->karat_id)) {
             foreach ($this->inputs as $key => $value) {
@@ -227,7 +245,7 @@ class PenerimaanQc extends Component
 
         $data = [
             'code' => $this->code,
-            'nama_produk' => $this->nama_produk,
+            'nama_produk' => $this->type == 2 ? 'mata-tabur' : $this->nama_produk,
             'no_invoice' => !empty($this->no_invoice) ? $this->no_invoice : '-',
             'pengirim' => $this->pengirim,
             'supplier_id' => $this->supplier_id,
@@ -248,7 +266,7 @@ class PenerimaanQc extends Component
             'total_karat' => !empty($this->total_karat) ? $this->total_karat : $total_karat,
             'items' => $this->inputs,
             'kategoriproduk_id' => $this->kategoriproduk_id,
-            'sertifikat' => $this->sertifikat,
+            'sertifikat' => !empty($this->sertifikat['code']) ? $this->sertifikat : [],
             'tipe_penerimaan_barang' => $this->type,
             'currency_id' => $this->currency_id,
             'detail_cicilan' => $this->detail_cicilan
@@ -312,9 +330,38 @@ class PenerimaanQc extends Component
         $this->image = $image;
     }
 
-    public function clearHarga()
+    public function clearHarga($key=null)
     {
-        $this->harga_beli = 0;
+        if(!is_null($key)) {
+            if(isset($this->inputs[$key]['harga_beli'])){
+                $this->inputs[$key]['harga_beli'] = 0;
+            }
+        }else{
+            $this->harga_beli = 0;
+        }
+    }
+
+    public function generateCodeItems($key = '')
+    {
+        $dateCode = "POITM" . '-';
+        $penerimaan_code = $this->code;
+        $penerimaan_code_number = str_replace('PO-', '', $penerimaan_code);
+        $orderCode = $dateCode . $penerimaan_code_number .  '001';
+        $lastkey = array_key_last($this->inputs);
+        $lastGrCode = '';
+        if(!empty($this->inputs[$lastkey]['code'])) {
+            $lastGrCode = $this->inputs[$lastkey]['code'];
+            $lastOrderNumber = str_replace($dateCode . $penerimaan_code_number, '', $lastGrCode);
+            $nextOrderNumber = sprintf('%03d', (int)$lastOrderNumber + 1);
+            $orderCode = $dateCode . $penerimaan_code_number . $nextOrderNumber;
+            return $orderCode;
+
+        }else{
+            return $orderCode;
+        }
+        if ($lastGrCode) {
+        }
+
     }
     
 }

@@ -9,6 +9,11 @@
         "Modules\\GoodsReceipt\\Providers\\EventServiceProvider"
     ],
     "aliases": {},
+    "migration": {
+        "seeds": [
+            "Modules\\GoodsReceipt\\database\\seeders\\KlasifikasiBerlianTableSeeder"
+        ]
+    },
     "files": [],
     "requires": []
 }
