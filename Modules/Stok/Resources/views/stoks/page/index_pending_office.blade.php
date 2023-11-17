@@ -26,6 +26,7 @@
                         </div>
                     </div>
                     <div class="flex justify-between">
+                            @if (count($datakarat))
                             <div class="card">
                                 <div class="card-body font-semibold">
                                     <p>Info Stok</p>
@@ -41,6 +42,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @endif
 
                     </div>
                     <div class="table-responsive mt-1">
@@ -52,7 +54,8 @@
                                 <th class="text-left">{{ Label_Case('Image') }}</th>
                                 <th class="text-left">{{ Label_Case('Product') }}</th>
                                 <th class="text-left">{{ Label_Case('Karat') }}</th>
-                                <th class="text-left">{{ Label_Case('weight') }}</th>
+                                <th class="text-left">{{ Label_Case('Berat') }}</th>
+                                <th class="text-left">{{ Label_Case('aksi') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -61,6 +64,7 @@
             </div>
         </div>
     </div>
+    @include('stok::stoks.modal.process_pending_office')
 </div>
 @endsection
 
@@ -122,9 +126,10 @@
                     {data: 'product', name: 'product'},
                     {data: 'karat', name: 'karat'},
                     {data: 'weight', name: 'weight'},
+                    {data: 'action', name: 'action'}
                 ]
             })
-            .buttons()
+            .buttons().remove()
             .container()
             .appendTo("#buttons");
         }
@@ -148,6 +153,52 @@
                 }
             })
         }
+
+
+        function process(data){
+            $('#process-pending-office-modal').modal('show')
+            $('#process-pending-office-modal #data_id').val(data.id)
+        }
+
+        $('#form-process-pending-office').submit(function(){
+            $.ajax({
+                type: "POST",
+                url: '{{route("products.update_status")}}',
+                data: $('#form-process-pending-office').serialize(),
+                dataType:'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Accept' : 'application/json'
+                },
+                success: function(data){
+                    if(data.status == 'success'){
+                        toastr.success(data.message)
+                        setTimeout(function(){ 
+                           window.location.reload()
+                            $('#process-pending-office-modal').modal('hide')
+                        }, 1000);
+                    }else{
+                        toastr.error(data.message)
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) { // if error occured
+                        data = JSON.parse(jqXHR.responseText);
+                        if(data.message == 'The given data was invalid.'){
+                            err = data.errors;
+                            $.each(err, function(key, val) {
+                                $("."+key+"_field .fv-plugins-message-container").text(val);                   
+                                $("."+key+"_field .fv-plugins-message-container").show();
+                            });
+
+                            toastr.error(data.message);
+                        }
+                        else{
+                            toastr.error("Error occured. "+jqXHR.status+" "+ textStatus +" "+" please try again");
+                        }
+                    }
+            })
+            return false;
+        })
 
 
 

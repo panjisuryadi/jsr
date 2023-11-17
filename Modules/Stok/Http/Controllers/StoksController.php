@@ -19,6 +19,7 @@ use Modules\Karat\Models\Karat;
 use App\Models\LookUp;
 use Illuminate\Support\Facades\DB;
 use Modules\Product\Entities\Product;
+use Modules\Product\Models\ProductStatus;
 use Modules\Stok\Models\PenerimaanLantakan;
 
 class StoksController extends Controller
@@ -111,6 +112,13 @@ public function pending_office() {
     $module_name_singular = Str::singular($module_name);
     $karat_ids = Product::pendingOffice()->get()->groupBy('karat_id')->keys()->toArray();
     $datakarat = Karat::find($karat_ids);
+    $product_status = ProductStatus::find([
+        ProductStatus::CUCI,
+        ProductStatus::MASAK,
+        ProductStatus::RONGSOK,
+        ProductStatus::REPARASI,
+        ProductStatus::SECOND,
+    ]);
     $module_action = 'Pending Gudang';
     abort_if(Gate::denies('access_'.$module_name.''), 403);
         return view(''.$module_name.'::'.$module_path.'.page.index_pending_office',
@@ -118,6 +126,7 @@ public function pending_office() {
         'module_action',
         'module_title',
         'datakarat',
+        'product_status',
         'module_icon', 'module_model'));
 }
 
@@ -392,7 +401,7 @@ public function index_data_pending_office(Request $request)
                             $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             $module_path = $this->module_path;
-                            return view(''.$module_name.'::'.$module_path.'.aksi',
+                            return view(''.$module_name.'::'.$module_path.'.pending-office.aksi',
                             compact('module_name', 'data', 'module_model'));
                                 })
                             ->editColumn('karat', function ($data) {
@@ -818,6 +827,24 @@ public function view_pending($id)
             'detail',
             'module_title',
             'module_icon', 'module_model'));
+
+    }
+
+    public function process_pending_office($id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_pending = $this->module_pending;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        abort_if(Gate::denies('show_stock_pending_office'), 403);
+        $product = Product::with('karat','cabang')->findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.modal.process_pending_office',
+           compact('module_name',
+            'product',
+            'module_title', 'module_model'));
 
     }
 

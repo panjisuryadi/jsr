@@ -1953,5 +1953,22 @@ public function index_distribusi(Request $request)
 
 
 
+    public function update_status(Request $request)
+    {
+        $model = $this->module_model::findOrFail($request->data_id);
+        try {
+            $model->updateTracking($request->status_id);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Status Berhasil Diupdate'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
+
+    }
 
 }

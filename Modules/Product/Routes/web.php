@@ -13,6 +13,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Product
       Route::post("products/save", ['as' => "products.save", 'uses' => "ProductController@save"]);
 
+      //Product
+      Route::post("products/update_status", ['as' => "products.update_status", 'uses' => "ProductController@update_status"]);
+
   //Product
       Route::post("products/saveajax", ['as' => "products.saveajax", 'uses' => "ProductController@saveAjax"]);
 
