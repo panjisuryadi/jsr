@@ -20,6 +20,7 @@ class Karat extends Model
         'name',
         'kode',
         'type',
+        'coef',
         'description',
         'start_date',
         'end_date',

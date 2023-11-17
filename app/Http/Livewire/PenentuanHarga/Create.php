@@ -64,7 +64,7 @@ class Create extends Component
 
       public function calculatePriceTotal()
        {
-           dd($this->harga_modal);
+           dd($this->inputs);
        }
 
 

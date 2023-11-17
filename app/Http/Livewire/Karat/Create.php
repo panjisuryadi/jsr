@@ -24,6 +24,7 @@ class Create extends Component
     public $kode = '';
 
     public $type = '';
+    public $coef = '';
     public $isParentSelected = false;
 
     public function mount(){
@@ -96,6 +97,7 @@ class Create extends Component
             'name' => $this->parent_karat_id?$this->model:$this->name,
             'type' => $this->type,
             'kode' => $this->kode,
+            'coef' => $this->coef,
         ];
 
 

@@ -92,16 +92,21 @@ public function index_data()
                         ->editColumn('type', function($data){
                             $output = '';
                             if(is_null($data->type)){
-                                $output = ($data->parent?->type == 'LM')?'Logam Mulia':'Perhiasan';
+               $output = ($data->parent?->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
                             }else{
-                                $output = ($data->type == 'LM')?'Logam Mulia':'Perhiasan';
+          $output = ($data->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
                             }
+                            return '<div class="items-center text-center">' .$output . '</div>';
+                        }) 
+                          ->editColumn('coef', function($data){
+                            $output = '';
+                          
                             return '<div class="items-center text-center">
-                                            <h3 class="text-sm font-medium text-gray-800"> ' .$output . '</h3>
+                                            <span class="text-sm font-medium text-gray-800"> ' .$data->coef . '</span>
 
                                     </div>';
                         })
-                        ->rawColumns(['karat', 'action','type'])
+                        ->rawColumns(['karat', 'action','coef','type'])
                         ->make(true);
     }
 
@@ -151,6 +156,7 @@ public function store(Request $request)
             
              'name' => 'required|max:191',
              'kode' => 'required',
+             'coef' => 'required',
              'type' => 'required'
 
         ]);
@@ -253,11 +259,13 @@ public function update(Request $request, $id)
           return response()->json(['error'=>$validator->errors()]);
         }
 
-       // $input = $request->all();
+        $input = $request->all();
+       // dd($input);
         $params = $request->except('_token');
         $params['kode'] = $params['kode'];
         $params['name'] = $params['name'];
         $params['type'] = $params['type'];
+        $params['coef'] = $params['coef'];
             $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

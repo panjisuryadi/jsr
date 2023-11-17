@@ -3,7 +3,7 @@
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
-     <div class="flex flex-row grid grid-cols-3 gap-4">
+     <div class="flex flex-row grid grid-cols-2 gap-4">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'kode';
@@ -22,7 +22,8 @@
                                 </span>
 
                             </div>
-                            <div class="form-group">
+
+                          <div class="form-group">
                                 <?php
                                 $field_name = 'name';
                                 $field_lable = label_case('kadar');
@@ -40,6 +41,38 @@
                                 </span>
 
                             </div>
+
+
+
+
+
+
+                       </div> 
+
+                    <div class="flex flex-row grid grid-cols-2 gap-4">
+
+                      
+                          <div class="form-group">
+                                <?php
+                                $field_name = 'coef';
+                                $field_lable = label_case('Coef');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" 
+                        type="number"
+                        name="{{ $field_name }}"
+                        step="0.01"
+                        id="{{ $field_name }}"
+                        value="{{$detail->coef }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
+
+                            </div>
+
 
                       <div class="form-group">
                                 <?php

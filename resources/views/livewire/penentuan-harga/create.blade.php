@@ -54,18 +54,19 @@
         <th style="width:12%;" class="text-center">{{ Label_case('Harga_emas') }}</th>
         <th style="width:12%;" class="text-center">{{ Label_case('Harga_modal') }}</th>
         <th style="width:12%;" class="text-center">{{ Label_case('margin') }}</th>
+        <th style="width:12%;" class="text-center">{{ Label_case('harga_jual') }}</th>
         <th style="width:10%;" class="text-center">{{ Label_case('Status') }}</th>
         <th style="width:10%;" class="text-center">{{ Label_case('user') }}</th>
-     
-          
     </tr>
 
-  @foreach ($inputs as $row)
+  @foreach ($inputs as $index => $row)
 
     <tr>
         <td>{{ $loop->iteration }}</td> 
         <td class="text-center text-blue-600"> {{ shortdate($row->list_harga->first()->tgl_update ?? '') }}</td> 
-        <td class="font-semibold"> {{ $row->kode }} | {{ $row->name }}</td> 
+        <td class="font-semibold"> {{ $row->kode }} | {{ $row->name }}
+           <input wire:model="pharga.{{ $index }}.karat_id" type="text" class="form-control form-control-sm" name="karat_id">
+        </td> 
         <td> 
                 @if(isset($row->list_harga->first()->harga_emas))
             <input type="text" class="form-control form-control-sm" 
@@ -79,8 +80,7 @@
             @if(isset($row->list_harga->first()->harga_modal))
                   
              <input type="text" class="form-control form-control-sm" 
-             value="{{ $row->list_harga->first()->harga_modal ?? ''}} " name="harga_modal">
-                @else
+             value="{{ $row->list_harga->first()->harga_modal ?? ''}} " name="harga_modal">   @else
                  <input type="text" class="form-control form-control-sm" name="harga_modal">
               @endif
 
@@ -89,10 +89,10 @@
         <td>  
 
               @if(isset($row->list_harga->first()->margin))
-               <input type="text" wire:model="pharga.0.margin"  class="form-control form-control-sm" 
-               value="{{ $row->list_harga->first()->margin ?? ''}}" name="margin">
+               <input type="text" wire:model="pharga.{{ $index }}.margin"  class="form-control form-control-sm" 
+               placeholder="{{ $row->list_harga->first()->margin ?? ''}}" name="margin">
                 @else
-                 <input wire:model="pharga.0.margin" type="text" class="form-control form-control-sm" name="margin">
+                 <input wire:model="pharga.{{ $index }}.margin" type="text" class="form-control form-control-sm" name="margin">
               @endif
 
         </td> 
