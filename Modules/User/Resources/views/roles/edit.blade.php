@@ -194,6 +194,15 @@
                   {{ label_Case('access_admin_sales') }}
                </label>
             </div>
+            
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="dashboard_admin_sales" name="permissions[]"
+                value="dashboard_admin_sales" {{ $role->hasPermissionTo('dashboard_admin_sales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="dashboard_admin_sales">
+                  {{ label_Case('dashboard_admin_sales') }}
+               </label>
+            </div>
 
 
    <div class="custom-control custom-switch">

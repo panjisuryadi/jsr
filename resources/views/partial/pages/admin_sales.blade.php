@@ -1,7 +1,8 @@
+@can('dashboard_admin_sales')
 <div class="flex gap-1">
 
   <div class="w-3/4">
-  @can('dashboard_sales')
+
   <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
 <div class="card border-0">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">
@@ -59,12 +60,23 @@
 
 
 </div>
-@endcan
+
 
 
 <div class="card">
 <div class="card-body">
-    
+    <div class="flex relative py-2">
+  <div class="absolute inset-0 flex items-center">
+    <div class="w-full border-b border-gray-300"></div>
+  </div>
+  <div class="relative flex justify-left">
+    <span class="bg-white pl-0 pr-3  text-sm uppercase tracking-wider font-semibold text-dark">
+    Dashboard Admin Sales
+   </span>
+  </div>
+</div>
+
+  
     <ul class="nav nav-tabs py-1" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#home">BuysBack Sales</a>
@@ -241,7 +253,7 @@
   </div>
 </div>
 
-
+@endcan
 
 
 
