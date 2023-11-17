@@ -48,6 +48,10 @@ class Karat extends Model
         return $this->hasMany(Karat::class, 'parent_id');
     }
 
+  public function list_harga(){
+        return $this->hasMany(PenentuanHarga::class,'karat_id','id');
+    }
+
     public function penentuanHarga(){
         return $this->hasOne(PenentuanHarga::class,'karat_id','id');
     }

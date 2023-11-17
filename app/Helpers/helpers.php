@@ -575,12 +575,10 @@ if (!function_exists('bpstts')) {
    if (!function_exists('tanggal2')) {
         function tanggal2($value)
         {
-
         $date = '';
         $date = \Carbon\Carbon::parse($value);
         $tgl = $date->isoFormat('dddd, LL');
         $jam = $date->format('H:i');
-
          return $date = ''. $tgl.' ';
 
          }
@@ -648,22 +646,6 @@ if (!function_exists('draf')) {
         return $return_text;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if (!function_exists('keBulan')) {
@@ -761,6 +743,7 @@ if (!function_exists('formatBerat')) {
         return $weight;
     }
 }
+
 
 if (!function_exists('format_uang')) {
     function format_uang($angka) {
