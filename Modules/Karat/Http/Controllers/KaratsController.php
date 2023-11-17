@@ -92,16 +92,21 @@ public function index_data()
                         ->editColumn('type', function($data){
                             $output = '';
                             if(is_null($data->type)){
-                                $output = ($data->parent?->type == 'LM')?'Logam Mulia':'Perhiasan';
+               $output = ($data->parent?->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
                             }else{
-                                $output = ($data->type == 'LM')?'Logam Mulia':'Perhiasan';
+          $output = ($data->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
                             }
+                            return '<div class="items-center text-center">' .$output . '</div>';
+                        }) 
+                          ->editColumn('coef', function($data){
+                            $output = '';
+                          
                             return '<div class="items-center text-center">
-                                            <h3 class="text-sm font-medium text-gray-800"> ' .$output . '</h3>
+                                            <span class="text-sm font-medium text-gray-800"> ' .$data->coef . '</span>
 
                                     </div>';
                         })
-                        ->rawColumns(['karat', 'action','type'])
+                        ->rawColumns(['karat', 'action','coef','type'])
                         ->make(true);
     }
 

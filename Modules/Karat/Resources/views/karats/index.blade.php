@@ -35,6 +35,10 @@
                                     </th>
                                     <th>
                                         Tipe
+                                    </th>  
+
+                                     <th>
+                                        Coef
                                     </th> 
 
                                     <th style="width: 19%!important;" class="text-center">
@@ -102,6 +106,9 @@
                 },{
                     data: 'type',
                     name: 'type'
+                },{
+                    data: 'coef',
+                    name: 'coef'
                 },
                 {
                     data: 'action',
