@@ -245,7 +245,7 @@ class PenerimaanQc extends Component
 
         $data = [
             'code' => $this->code,
-            'nama_produk' => $this->nama_produk,
+            'nama_produk' => $this->type == 2 ? 'mata-tabur' : $this->nama_produk,
             'no_invoice' => !empty($this->no_invoice) ? $this->no_invoice : '-',
             'pengirim' => $this->pengirim,
             'supplier_id' => $this->supplier_id,
@@ -350,6 +350,7 @@ class PenerimaanQc extends Component
         $lastkey = array_key_last($this->inputs);
         $lastGrCode = '';
         if(!empty($this->inputs[$lastkey]['code'])) {
+            $lastGrCode = $this->inputs[$lastkey]['code'];
             $lastOrderNumber = str_replace($dateCode . $penerimaan_code_number, '', $lastGrCode);
             $nextOrderNumber = sprintf('%03d', (int)$lastOrderNumber + 1);
             $orderCode = $dateCode . $penerimaan_code_number . $nextOrderNumber;
