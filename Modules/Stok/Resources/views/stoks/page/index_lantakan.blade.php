@@ -39,12 +39,14 @@
                     </div>
                 </div>
             </div>
+            @include('produksi::produksis.partial.index')
+
         </div>
     </div>
 </div>
 @endsection
 
-<x-library.datatable />
+{{-- <x-library.datatable /> --}}
 @push('page_scripts')
    <script type="text/javascript">
         $('#datatable').DataTable({
@@ -77,12 +79,12 @@
             "sPaginationType": "simple_numbers",
             ajax: '{{ route("$module_name.index_data_lantakan") }}',
             dom: 'Blfrtip',
-            buttons: [
+            // buttons: [
 
-                'excel',
-                'pdf',
-                'print'
-            ],
+            //     'excel',
+            //     'pdf',
+            //     'print'
+            // ],
             columns: [{
                     "data": 'id',
                     "sortable": false,
@@ -113,8 +115,11 @@
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
-         e.preventDefault();
+
+    $("#buttons").toggle('hide');
+
+    $(document).on('click', '#Tambah, #Edit', function(e){
+        e.preventDefault();
         if($(this).attr('id') == 'Tambah')
         {
             $('.modal-dialog').addClass('modal-lg');
