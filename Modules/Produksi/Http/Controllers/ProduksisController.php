@@ -16,6 +16,7 @@ use Modules\Produksi\Models\ProduksiItems;
 use Modules\Produksi\Models\Produksi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Lang;
 use Image;
@@ -110,7 +111,7 @@ class ProduksisController extends Controller
                     })
                     ->editColumn('image', function ($data) {
                         if ($data->image) {
-                            $url = imageUrl() . self::IMG_PATH_PRD . @$data->image;
+                            $url = URL::to( imageUrl() . self::IMG_PATH_PRD . @$data->image);
                         } else {
                             $url = '';
                         }
@@ -143,6 +144,27 @@ class ProduksisController extends Controller
             'module_icon', 'module_model'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     * @return Renderable
+     */
+    public function proses()
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Create';
+        abort_if(Gate::denies('add_'.$module_name.''), 403);
+            return view(''.$module_name.'::'.$module_path.'.partial.proses',
+            compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -165,23 +187,9 @@ class ProduksisController extends Controller
              'name' => 'required|min:3|max:191',
              'description' => 'required|min:3|max:191',
          ]);
-       // $params = $request->all();
-        //dd($params);
         $params = $request->except('_token');
         $params['name'] = $params['name'];
         $params['description'] = $params['description'];
-        //  if ($image = $request->file('image')) {
-        //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
-        //             $constraint->aspectRatio();
-        //             })->encode();
-        //  $normalpath = 'uploads/' . $gambar;
-        //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-        //  Storage::disk($storage)->put($normalpath, (string) $normal);
-        //  $params['image'] = "$gambar";
-        // }else{
-        //    $params['image'] = 'no_foto.png';
-        // }
 
          $module_name_singular = $module_model::create($params);
          toast(''. $module_title.' Created!', 'success');
@@ -217,18 +225,6 @@ class ProduksisController extends Controller
                 $input['image'] = "$fileName";
             }
 
-            /** Handle Sertifikat per perhiasan 
-             * @param $produksis->id
-             */
-
-                if(!empty($input['sertifikat'])) {
-                    $sertifikat = $input['sertifikat'];
-                    if(isset($sertifikat['attribute'])) {
-                        unset($sertifikat['attribute']);
-                    }
-                }
-                $diamond_certificate = DiamondCertifikatT::create($sertifikat);
-
             $produksis = $this->module_model::create([
                 'code' => !empty($input['code']) ? $input['code'] : null,
                 'image' => !empty($input['image']) ? $input['image'] : null,
@@ -241,8 +237,7 @@ class ProduksisController extends Controller
                 'tanggal' => !empty($input['tanggal']) ? $input['tanggal'] : null,
                 'created_by' => auth()->user()->id,
                 'kategoriproduk_id' => !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : null,
-                'harga_jual' => !empty($input['harga_jual']) ? $input['harga_jual'] : null,
-                'diamond_certificate_id' => !empty($diamond_certificate->id) ? $diamond_certificate->id : null,
+                'harga_jual' => !empty($input['harga_jual']) ? $input['harga_jual'] : 0,
             ]);
             $produksi_id = $produksis->id;
 
@@ -253,7 +248,12 @@ class ProduksisController extends Controller
                     $val['shapeberlian_id'] = !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null;
                     $val['kategoriproduk_id'] = !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : null;
 
-                    if(!empty($val['karatberlians'])) {
+                    $val['model_id'] = !empty($val['model_id']) ? $val['model_id'] : null;
+                    $val['karat_id'] = !empty($val['karat_id']) ? $val['karat_id'] : null;
+                    $val['berat_asal_item'] = !empty($val['berat_asal_item']) ? $val['berat_asal_item'] : null;
+                    $val['berat'] = !empty($val['berat']) ? $val['berat'] : null;
+
+                    if(!empty($val['karatberlians']) || (!empty($val['model_id'])) && !empty($val['berat']) ) {
                         $product_items[] = $val;
                     }
                 }
@@ -316,7 +316,7 @@ class ProduksisController extends Controller
 
                 DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
             }
-            
+
             $stok_lantakan = StockKroom::where('karat_id', $produksis->karatasal_id)->first();
 
             $produksis->stock_kroom()->attach($stok_lantakan->id,[
@@ -327,6 +327,7 @@ class ProduksisController extends Controller
             ]);
 
             $berat_real = $stok_lantakan->history->sum('berat_real');
+            $berat_real = $stok_lantakan->weight - $produksis->berat_asal;
             $stok_lantakan->update(['weight'=> $berat_real]);
 
         } catch (\Throwable $th) {
@@ -339,7 +340,7 @@ class ProduksisController extends Controller
         DB::commit();
         activity()->log(' '.auth()->user()->name.' input data pembuatan stok produksi ' . !empty($produksis->id) ? $produksis->id : '');
         toast(''. $this->module_title.' Berhasil dibuat!', 'success');
-        return redirect()->route(''.$this->module_name.'.index');
+        return redirect()->route('stok.lantakan');
 
     }
 
@@ -360,7 +361,6 @@ class ProduksisController extends Controller
         $module_action = 'Show';
         abort_if(Gate::denies('show_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-        //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.show',
            compact('module_name',
             'module_action',

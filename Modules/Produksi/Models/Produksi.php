@@ -46,7 +46,8 @@ class Produksi extends Model
 
     public static function generateCode()
     {
-        $dateCode = self::PRDCODE . '-';
+        $date = now()->format('dmY');
+        $dateCode = self::PRDCODE . $date;
         $lastOrder = self::select([DB::raw('MAX(produksis.code) AS last_code')])
             ->where('code', 'like', $dateCode . '%')
             ->first();
