@@ -198,6 +198,18 @@ class Product extends Model implements HasMedia
             return $this->where('status_id', ProductStatus::MASAK);
         }
 
+        public function scopeRongsok($query){
+            $query->where('status_id', ProductStatus::RONGSOK);
+        }
+
+        public function scopeReparasi($query){
+            $query->where('status_id', ProductStatus::REPARASI);
+        }
+
+        public function scopeSecond($query){
+            $query->where('status_id', ProductStatus::SECOND);
+        }
+
        public function scopePendingOffice($query){
         return $this->where('status_id', ProductStatus::PENDING_OFFICE);
         }
