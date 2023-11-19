@@ -22,7 +22,11 @@ use Modules\Produksi\Models\Produksi;
 use Modules\Stok\Models\StockKroom;
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
 use App\Models\LookUp;
+use Modules\GoodsReceipt\Models\GoodsReceiptItem;
+use Modules\Product\Entities\Category;
+use Modules\Product\Entities\Product;
 use Modules\Produksi\Models\DiamondCertificateAttributes;
+use Modules\Produksi\Models\ProduksiItems;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -36,7 +40,6 @@ class Create extends Component
         $kategoriproduk_id,
         $berat,
         $tanggal,
-        $type = 1,
         $karat24k,
         $id_kategoriproduk_berlian,
         $code,
@@ -46,6 +49,8 @@ class Create extends Component
 
     public $inputs = [
         [
+            'id_items' => '',
+            'type' => '2',
             'karatberlians' => '',
             'shapeberlian_id' => '',
             'qty' => 1,
@@ -61,6 +66,9 @@ class Create extends Component
     public $dataGroup = [];
     public $arrayKaratBerlian = [];
     public $dataCertificateAttribute = [];
+    public $dataItemProduksi = [];
+    public $dataPenerimaanBerlian = [];
+    public $dataPenerimaanBerlianArray = [];
     public $sertifikat = [
         'code' => '',
         'tanggal' => '',
@@ -70,6 +78,8 @@ class Create extends Component
     public $tmpCertificate = [];
 
     public $hari_ini;
+    public $category_id;
+    public $produksi_item_id;
 
     public function mount()
     {
@@ -83,9 +93,10 @@ class Create extends Component
         $this->karat24k = !empty($id_karat_24k['value']) ? $id_karat_24k['value'] : 0;
         $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $this->id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
-        $this->dataKategoriProduk = KategoriProduk::all();
+        // $this->dataKategoriProduk = KategoriProduk::all();
+        $this->dataKategoriProduk = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->get();
         $this->dataCertificateAttribute = DiamondCertificateAttributes::all();
-        $this->code = Produksi::generateCode();
+        $this->code = Product::generateCode();
         $this->sertifikat['tanggal'] = $this->hari_ini;
 
         $arrayKaratBerlian = [];
@@ -97,7 +108,15 @@ class Create extends Component
 
         $this->karatasal_id = $this->karat24k;
         $this->kategoriproduk_id = $this->id_kategoriproduk_berlian;
-
+        $this->category_id = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->first()->value('id');
+        $this->dataItemProduksi = ProduksiItems::with('model', 'karat')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
+        $this->dataPenerimaanBerlian = GoodsReceiptItem::with('shape_berlian', 'goodsreceiptitem')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
+        $this->dataPenerimaanBerlianArray = $this->dataPenerimaanBerlian->map(function($data){
+                                                                        return $data;
+                                                                    })
+                                                                    ->flatten()
+                                                                    ->keyBy('id')
+                                                                    ->toArray();
     }
 
     protected $listeners = [
@@ -112,6 +131,8 @@ class Create extends Component
     public function addInput()
     {
         $this->inputs[] = [
+            'id_items' => '',
+            'type' => '2',
             'karatberlians' => '',
             'shapeberlian_id' => '',
             'qty' => 1,
@@ -137,6 +158,8 @@ class Create extends Component
     {
         $this->inputs = [
             [
+                'id_items' => '',
+                'type' => '2',
                 'karatberlians' => '',
                 'shapeberlian_id' => '',
                 'qty' => 1,
@@ -150,37 +173,84 @@ class Create extends Component
     public function rules()
     {
         $rules = [
-            'source_kode' => 'required',
-            'karatasal_id' => 'required',
-            'berat_asal' => 'required',
+            'produksi_item_id' => 'required',
+            'code' => 'required',
+            'model_id' => 'required',
             'karat_id' => 'required',
+            'category_id' => 'required',
+            'harga_jual' => 'required',
             'berat' => 'required',
         ];
 
         /** rules cek stok lantakan */
-        if($this->source_kode == "lantakan") {
-            $rules['berat_asal'] = [
-                'required',
-                function ($attribute, $value, $fail) {
-                    $stok_lantakan = StockKroom::sum('weight');
-                    $stok_lantakan_terpakai = Produksi::where('source_kode', $this->source_kode)->sum('berat_asal');
-                    $sisa_stok_lantakan = $stok_lantakan - $stok_lantakan_terpakai;
-                    if ($value > $sisa_stok_lantakan) {
-                        $fail('Sisa stok tidak mencukupi, berat asal harus kurang dari sama dengan '. $sisa_stok_lantakan);
-                    }
-                }
+        // if($this->source_kode == "lantakan") {
+        //     $rules['berat_asal'] = [
+        //         'required',
+        //         function ($attribute, $value, $fail) {
+        //             $stok_lantakan = StockKroom::sum('weight');
+        //             $stok_lantakan_terpakai = Produksi::where('source_kode', $this->source_kode)->sum('berat_asal');
+        //             $sisa_stok_lantakan = $stok_lantakan - $stok_lantakan_terpakai;
+        //             if ($value > $sisa_stok_lantakan) {
+        //                 $fail('Sisa stok tidak mencukupi, berat asal harus kurang dari sama dengan '. $sisa_stok_lantakan);
+        //             }
+        //         }
 
-            ];
+        //     ];
 
+        //     /** validasi stok berlian
+        //      * cek dulu apakah ini produksi berlian
+        //      * collect data stok per jenis karat
+        //      * bandingkan stok
+        //      */
+        //     if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['karatberlians'])) {
+        //         $sisa_stok_berlian = GoodsReceipt::where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->sum('total_karat');
+        //         $total_karat_dipinta = 0;
+        //         foreach ($this->inputs as $key => $value) {
+        //             $rules['inputs.' . $key . '.karatberlians'] = 'required|gt:0';
+        //             $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
+
+        //             $qty = !empty($value['qty']) ? $value['qty'] : 0;
+        //             $karat = !empty($value['karatberlians']) ? $value['karatberlians'] : 0;
+        //             if(filter_var($karat, FILTER_VALIDATE_FLOAT)) {
+        //                 $stok_berlian_terpakai = $karat * $qty;
+        //                 $total_karat_dipinta += $stok_berlian_terpakai;
+    
+        //                 if($sisa_stok_berlian < $total_karat_dipinta) {
+        //                     $rules['inputs.' . $key . '.karatberlians'] = [
+        //                         function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
+        //                             $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
+        //                         }
+        //                     ];
+
+        //                     $rules['inputs.' . $key . '.qty'] = [
+        //                         function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
+        //                             $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
+        //                         }
+        //                     ];
+    
+        //                 }
+        //             }else{
+        //                 $rules['inputs.' . $key . '.karatberlians'] = [
+        //                     function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
+        //                         $fail('input karat berlians harus berupa decimal');
+        //                     }
+        //                 ];
+        //             }
+                    
+        //         }
+
+        //     }
+        // }
             /** validasi stok berlian
-             * cek dulu apakah ini produksi berlian
-             * collect data stok per jenis karat
-             * bandingkan stok
-             */
+              * cek dulu apakah ini produksi berlian
+              * collect data stok per jenis karat
+              * bandingkan stok
+              */
             if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['karatberlians'])) {
                 $sisa_stok_berlian = GoodsReceipt::where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->sum('total_karat');
                 $total_karat_dipinta = 0;
                 foreach ($this->inputs as $key => $value) {
+                    $rules['inputs.' . $key . '.id_items'] = 'required';
                     $rules['inputs.' . $key . '.karatberlians'] = 'required|gt:0';
                     $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
 
@@ -215,7 +285,6 @@ class Create extends Component
                 }
 
             }
-        }
 
         return $rules;
     }
@@ -249,6 +318,7 @@ class Create extends Component
         $this->validate();
 
         $data = [
+            'produksi_item_id' => $this->produksi_item_id,
             'code' => $this->code,
             'image' => $this->image,
             'karatasal_id' => $this->karatasal_id,
@@ -261,9 +331,10 @@ class Create extends Component
             'created_by' => auth()->user()->id,
             'items' => $this->inputs,
             'kategoriproduk_id' => $this->kategoriproduk_id,
+            'category_id' => $this->category_id,
             'harga_jual' => $this->harga_jual,
-            'sertifikat' => $this->sertifikat,
         ];
+        dd($data);
         $request = new Request($data);
         $controller = new ProduksisController();
         $store = $controller->store($request);
