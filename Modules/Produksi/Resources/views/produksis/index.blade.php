@@ -64,7 +64,12 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div> 
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk </span>
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk  </span> 
+
+                            
+                           <a href="{{ route('produksi.create') }}"class="btn btn-primary px-3">
+                           <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                       </a>
                         </div>
                         <div id="buttons"></div>
                     </div>
