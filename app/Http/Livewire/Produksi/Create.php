@@ -74,6 +74,7 @@ class Create extends Component
     public $arrayKaratBerlian = [];
     public $dataCertificateAttribute = [];
     public $dataItemProduksi = [];
+    public $dataItemProduksiArray = [];
     public $dataPenerimaanBerlian = [];
     public $dataPenerimaanBerlianArray = [];
     public $sertifikat = [
@@ -136,6 +137,15 @@ class Create extends Component
                                                 ->flatten()
                                                 ->keyBy('id')
                                                 ->toArray();
+        $this->dataItemProduksiArray = $this->dataKarat->map(function($data){
+                                                    return $data;
+                                                })
+                                                ->flatten()
+                                                ->keyBy('id')
+                                                ->toArray();
+
+
+        $this->model_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['model_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['model_id'] : null;
 
                                                                     
     }
@@ -415,6 +425,7 @@ class Create extends Component
                 'product_barcode_symbology' => 'C128',
                 'product_unit'              => 'Gram',
                 'karat_id'                  => $this->karat_id,
+                'group_id'                  => $this->model_id,
                 'berat_emas'                => $this->berat,
                 'total_karatberlians'       => $total_karat_berlians,
                 'diamond_certificate_id'    => !empty($diamond_certificate->id) ? $diamond_certificate->id : null,
