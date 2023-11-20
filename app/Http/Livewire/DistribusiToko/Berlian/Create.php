@@ -205,7 +205,7 @@ class Create extends Component
                 }
             }
             if(!empty($ids)) {
-                Product::whereIn('id', $ids)->update(['status' => 12]);
+                $product_insert = Product::whereIn('id', $ids)->update(['status_id' => 12, 'cabang_id' => $distribusi_toko->cabang_id]);
             }
             $distribusi_toko->setAsDraft();
 

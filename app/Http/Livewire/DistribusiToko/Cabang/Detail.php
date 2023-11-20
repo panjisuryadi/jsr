@@ -221,9 +221,9 @@ class Detail extends Component
                 $item->returned();
             }
         }
-
+        
         if(!empty($ids)) {
-            Product::whereIn('id', $ids)->update(['status' => 1]);
+            Product::whereIn('id', $ids)->update(['status_id' => 1]);
         }
     }
 }
