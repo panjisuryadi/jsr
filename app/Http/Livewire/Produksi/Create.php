@@ -420,6 +420,7 @@ class Create extends Component
                 'diamond_certificate_id'    => !empty($diamond_certificate->id) ? $diamond_certificate->id : null,
                 'images'                    => $image,
                 'status_id'                 => 11,
+                'produksi_item_id'          => $this->produksi_item_id,
             ]);
 
             
@@ -427,24 +428,44 @@ class Create extends Component
 
             if (!empty($produksi_items)) {
                 $array_produksi_items = [];
+                $array_goodsreceipt_item = [];
                 foreach($produksi_items as $val) {
                     $goodsreceipt_item_id = !empty($val['id_items']) ? $val['id_items'] : null;
                     $valItem = !empty( $dataPenerimaanBerlianArray[$goodsreceipt_item_id]) ?  $dataPenerimaanBerlianArray[$goodsreceipt_item_id] : [];
                     $diamond_berlian_item = !empty($valItem['diamond_certificate_id']) ? $valItem['diamond_certificate_id'] : null;
                     $valGoodReceipt = !empty($valItem['goodsreceipt']) ? $valItem['goodsreceipt'] : [];
                     $diamond_berlian = !empty($valGoodReceipt['diamond_certificate_id']) ? $valGoodReceipt['diamond_certificate_id'] : null;
+                    $karatberlians = !empty($val['karatberlians']) ? $val['karatberlians'] : 0;
                     $array_produksi_items[] = [
                         'product_id' => $product->id,
                         'goodsreceipt_item_id' => $goodsreceipt_item_id,
-                        'karatberlians' => !empty($val['karatberlians']) ? $val['karatberlians'] : 0,
+                        'karatberlians' => $karatberlians,
                         'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
                         'qty' => !empty($val['qty']) ? $val['qty'] : 0,
                         'diamond_certificate_id' => !empty($diamond_berlian_item) ? $diamond_berlian_item : $diamond_berlian,
                         'gia_report_number' => !empty($val['gia_report_number']) ? $val['gia_report_number'] : null
                     ];
+                    $oldkaratberlian = !empty($valItem['karatberlians']) ? $valItem['karatberlians'] : 0;
+                    $karatberlianterpakai = !empty($valItem['karatberlians_terpakai']) ? $valItem['karatberlians_terpakai'] : 0;
+                    
+                    $status = ($oldkaratberlian == $karatberlianterpakai + $karatberlians) ? 2 : 1;
+                    $array_goodsreceipt_item[] = [
+                        'id' => $goodsreceipt_item_id,
+                        'karatberlians_terpakai' => $karatberlianterpakai + $karatberlians,
+                        'status' => $status,
+                    ];
                 }
 
-                $product_items = ProductItem::insert($array_produksi_items);
+                ProductItem::insert($array_produksi_items);
+                if(!empty($array_goodsreceipt_item)) { 
+                    foreach($array_goodsreceipt_item as $item) {
+                        GoodsReceiptItem::where('id', $item['id'])->update([
+                            'karatberlians_terpakai' => $item['karatberlians_terpakai'],
+                            'status' => $status,
+                        ]);
+                    }
+                }
+                ProduksiItems::where('id', $this->produksi_item_id)->update(['status'=>2]);
 
             }
 
@@ -453,6 +474,7 @@ class Create extends Component
             if(!empty($file)) {
                 Storage::disk('public')->delete($file);
             }
+            dd($th->getMessage());
             return $th->getMessage();
         }
         DB::commit();
