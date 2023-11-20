@@ -23,24 +23,24 @@
 @section('content')
 <div class="container-fluid">
 
-
+{{-- 
 <div class=" px-0 py-2 grid grid-cols-2 gap-4 m-2 text-center no-underline">
-<?php  
+@php  
 $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
-?>  
+@endphp 
     @foreach($jp as $category)
     <div class="no-underline cursor-pointer px-0 py-2 w-full">
            <a class="w-full no-underline hover:no-underline" id="openModalKategori"
                 href="{{ route('products.view_by_kategori',$category->slug) }}" >
         <div class="justify-center items-center border-2 border-gray-400 bg-white  px-2 py-3 rounded-lg transform transition duration-500 hover:scale-110">
             <div class="justify-center text-center items-center">
-                <?php
+                @php
                 if ($category->image) {
                 $image = asset(imageUrl() . $category->image);
                 }else{
                 $image = asset('images/logo.png');
                 }
-                ?>
+                @endphp
                 <img id="default_1" src="{{ $image }}" alt="images"
                 class="h-16 w-16 object-contain mx-auto"/>
             </div>
@@ -54,7 +54,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 
 
     @endforeach
-</div>
+</div> --}}
 
 
 
