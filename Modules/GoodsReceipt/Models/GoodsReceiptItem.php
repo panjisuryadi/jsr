@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Karat\Models\Karat;
+use Modules\KaratBerlian\Models\ShapeBerlian;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\Stok\Models\StockOffice;
 
@@ -31,6 +32,11 @@ class GoodsReceiptItem extends Model
     public function stock_office()
     {
         return $this->morphToMany(StockOffice::class, 'transaction','stock_office_history','transaction_id','stock_office_id','id','id')->withTimestamps();
+    }
+
+    public function shape_berlian()
+    {
+        return $this->hasOne(ShapeBerlian::class, 'id', 'shapeberlian_id');
     }
 
 

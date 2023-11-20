@@ -4,6 +4,8 @@ namespace Modules\Produksi\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Group\Models\Group;
+use Modules\Karat\Models\Karat;
 use Modules\KaratBerlian\Models\ShapeBerlian;
 
 class ProduksiItems extends Model
@@ -21,5 +23,15 @@ class ProduksiItems extends Model
 
     public function shape(){
         return $this->hasOne(ShapeBerlian::class, 'id', 'shapeberlian_id');
+    }
+
+    public function model()
+    {
+        return $this->hasOne(Group::class, 'id', 'model_id');
+    }
+
+    public function karat()
+    {
+        return $this->hasOne(Karat::class, 'id', 'karat_id');
     }
 }
