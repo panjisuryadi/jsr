@@ -283,8 +283,10 @@ class Create extends Component
                     $rules['inputs.' . $key . '.id_items'] = 'required';
                     $rules['inputs.' . $key . '.karatberlians'] = 'required|gt:0';
                     $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
-                    $sisa_stok_berlian = GoodsReceiptItem::where('id', $value['id_items'])->first();
-                    $sisa_stok_berlian = $sisa_stok_berlian->karatberlians - $sisa_stok_berlian->karatberlians_terpakai;
+                    $stokitemberlian = GoodsReceiptItem::where('id', $value['id_items'])->first();
+                    if($stokitemberlian) {
+                        $sisa_stok_berlian = (int) $stokitemberlian->karatberlians - (int) $stokitemberlian->karatberlians_terpakai;
+                    }
                     $qty = !empty($value['qty']) ? $value['qty'] : 0;
                     $karat = !empty($value['karatberlians']) ? $value['karatberlians'] : 0;
                     if(filter_var($karat, FILTER_VALIDATE_FLOAT)) {
