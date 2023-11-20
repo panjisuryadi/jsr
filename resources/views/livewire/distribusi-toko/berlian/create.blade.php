@@ -48,7 +48,7 @@
                                 <tr>
                                     <th class="no-sort text-center">No</th>
                                     <th class="no-sort">Image</th>
-                                    <th class="no-sort">Kode Produksi</th>
+                                    <th class="no-sort">Kode Produk</th>
                                     <th class="no-sort">Produk Informasi</th>
                                     <th class="no-sort text-center">Aksi</th>
                                 </tr>
@@ -58,12 +58,12 @@
                                 @foreach ($products as $key => $value)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td> <a href="/{{ imageUrl() .'produksi/' . @$value->image }}" data-lightbox="{{ $value->image }} " b class="single_image">
-                                            <img src="/{{ imageUrl() .'produksi/' . @$value->image }}" order="0" width="100" class="img-thumbnail" align="center"/>
+                                    <td> <a href="/{{ imageUrl() .'produksi/' . @$value->images }}" data-lightbox="{{ $value->images }} " b class="single_image">
+                                            <img src="/{{ imageUrl() .'produksi/' . @$value->images }}" order="0" width="100" class="img-thumbnail" align="center"/>
                                         </a>
                                     </td>
-                                    <td> {{ $value->code }} </td>
-                                    <td> {{ $value->model?->name }} {{ $value->karatjadi?->name  }} | {{ $value->berat }} gr </td>
+                                    <td> {{ $value->product_code }} </td>
+                                    <td> {{ $value->group?->name }} {{ $value->karat?->name  }} | {{ $value->berat }} gr </td>
                                     <td>
                                         <button wire:click="selectProduct('{{ $value }}')"
                                         class="w-100 btn btn-sm btn-outline-success "
@@ -168,7 +168,7 @@
                                 <tr class="align-middle">
                                     <th class="align-middle">@lang('No')</th>
                                     <th class="align-middle">@lang('Image')</th>
-                                    <th class="align-middle">@lang('Kode Produksi')</th>
+                                    <th class="align-middle">@lang('Kode Produk')</th>
                                     <th class="align-middle">@lang('Produk Informasi')</th>
                                     <th class="align-middle">@lang('Action')</th>
                                 </tr>
@@ -176,7 +176,7 @@
                             <tbody>
                                 @foreach ($distribusi_toko_details as $index => $val )
                                 @php
-                                    $image = !empty($val['image']) ? $val['image'] : '';
+                                    $image = !empty($val['images']) ? $val['images'] : '';
                                 @endphp
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
@@ -184,8 +184,8 @@
                                             <img src="/{{ imageUrl() .'produksi/' . @$image }}" order="0" width="100" class="img-thumbnail" align="center"/>
                                         </a>
                                     </td>
-                                    <td> {{ !empty($val['code']) ? $val['code'] : ''  }} </td>
-                                    <td> {{ $val['model']['name'] }} {{ $val['karatjadi']['name']  }} | {{ $val['berat'] }} gr </td>
+                                    <td> {{ !empty($val['product_code']) ? $val['product_code'] : ''  }} </td>
+                                    <td> {{ $val['group']['name'] }} {{ $val['karat']['name']  }} | {{ $val['berat_emas'] }} gr </td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $index }})">
                                             <i class="bi bi-trash"></i>

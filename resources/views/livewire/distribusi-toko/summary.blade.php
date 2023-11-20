@@ -73,12 +73,13 @@
                                         @forelse($items as $row)
                                         @php
                                             $data = json_decode($row->additional_data)->product_information;
+                                            $row->gold_weight = !empty($row->gold_weight) ? $row->gold_weight : $row->berat_emas;
 
                                             $total_weight = $total_weight + $row->gold_weight;
                                         @endphp
                                         <tr>
                                             <th class="text-center">{{$loop->iteration}}</th>
-                                            <td class="text-center font-extrabold"> {{@$row->gold_weight}} gr</td>
+                                            <td class="text-center font-extrabold"> {{$row->gold_weight}} gr</td>
                                             <td class="text-justify">
                                                 <div>
                                                     Produk : <strong>{{ !empty($data->product_category->name) ? $data->product_category->name : '-' }}</strong>
@@ -87,10 +88,10 @@
                                                     Group : <strong>{{ !empty($data->group->name) ? $data->group->name : '' }}</strong>
                                                 </div>
                                                 <div>
-                                                    Model : <strong>{{ $data->model->name }}</strong>
+                                                    Model : <strong>{{ !empty($data->model->name) ? $data->model->name : '' }}</strong>
                                                 </div>
                                                 <div>
-                                                    Code : <strong>{{ $data->code }}</strong>
+                                                    Code : <strong>{{ !empty($data->code) ? $data->code : (!empty($data->product_code) ? $data->product_code : '-')  }}</strong>
                                                 </div>
                                             </td>
                                             <td>
