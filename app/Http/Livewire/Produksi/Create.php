@@ -22,10 +22,15 @@ use Modules\Produksi\Models\Produksi;
 use Modules\Stok\Models\StockKroom;
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
 use App\Models\LookUp;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
+use Modules\Product\Entities\ProductItem;
+use Modules\Produksi\Models\DiamondCertificateAttribute;
 use Modules\Produksi\Models\DiamondCertificateAttributes;
+use Modules\Produksi\Models\DiamondCertifikatT;
 use Modules\Produksi\Models\ProduksiItems;
 
 use function PHPUnit\Framework\isEmpty;
@@ -60,10 +65,12 @@ class Create extends Component
     ];
 
     public $dataKarat = [];
+    public $dataKaratArray = [];
     public $dataKaratBerlian = [];
     public $dataShapes = [];
     public $dataKategoriProduk = [];
     public $dataGroup = [];
+    public $dataGroupArray = [];
     public $arrayKaratBerlian = [];
     public $dataCertificateAttribute = [];
     public $dataItemProduksi = [];
@@ -117,6 +124,20 @@ class Create extends Component
                                                                     ->flatten()
                                                                     ->keyBy('id')
                                                                     ->toArray();
+        $this->dataGroupArray = $this->dataGroup->map(function($data){
+                                                    return $data;
+                                                })
+                                                ->flatten()
+                                                ->keyBy('id')
+                                                ->toArray();
+        $this->dataKaratArray = $this->dataKarat->map(function($data){
+                                                    return $data;
+                                                })
+                                                ->flatten()
+                                                ->keyBy('id')
+                                                ->toArray();
+
+                                                                    
     }
 
     protected $listeners = [
@@ -174,7 +195,7 @@ class Create extends Component
     {
         $rules = [
             'produksi_item_id' => 'required',
-            'code' => 'required',
+            'code' => 'required|unique:products,product_code',
             'model_id' => 'required',
             'karat_id' => 'required',
             'category_id' => 'required',
@@ -334,10 +355,110 @@ class Create extends Component
             'category_id' => $this->category_id,
             'harga_jual' => $this->harga_jual,
         ];
-        dd($data);
-        $request = new Request($data);
-        $controller = new ProduksisController();
-        $store = $controller->store($request);
+        
+        DB::beginTransaction();
+        try {
+            $attribute = [];
+            if(!empty($this->sertifikat) && !empty($this->sertifikat['code'] || !empty($this->sertifikat['attribute']))) {
+                $sertifikat = $this->sertifikat;
+                $attribute = !empty($sertifikat['attribute']) ? $sertifikat['attribute'] : [];
+                if(isset($sertifikat['attribute'])) {
+                    unset($sertifikat['attribute']);
+                }
+
+                $hari_ini = new DateTime();
+                $hari_ini = $hari_ini->format('Y-m-d');
+                $sertifikat['tanggal'] = !empty($sertifikat['tanggal']) ? $sertifikat['tanggal'] : $hari_ini;
+                $sertifikat['code'] = !empty($sertifikat['code']) ? $sertifikat['code'] : '-';
+                $diamond_certificate = DiamondCertifikatT::create($sertifikat);
+    
+                $dataInsertSertifikatAttribute = $attribute;
+                foreach($dataInsertSertifikatAttribute as $k => $row) {
+                    $dataInsertSertifikatAttribute[$k]['diamond_certificate_id'] = $diamond_certificate->id;
+                    $dataInsertSertifikatAttribute[$k]['diamond_certificate_attributes_id'] = $k;
+                    $dataInsertSertifikatAttribute[$k]['keterangan'] = !empty($row['keterangan']) ? $row['keterangan'] : '';
+                }
+                DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
+    
+            }
+            $model_name = !empty($this->dataGroupArray[$this->model_id]['name']) ? $this->dataGroupArray[$this->model_id]['name'] : '';
+            $karat_name = !empty($this->dataKaratArray[$this->karat_id]['name']) ? $this->dataKaratArray[$this->karat_id]['name'] : '';
+            $total_karat_berlians = 0;
+            if(!empty($this->inputs)) {
+                foreach($this->inputs as $item) {
+                    $total_karat_berlians += !empty($item['karatberlians']) ? $item['karatberlians'] : 0;
+                }
+            }
+
+            $image= '';
+            if ($this->image) {
+                $img = $this->image;
+                $folderPath = "uploads/produksi/";
+                $image_parts = explode(";base64,", $img);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName ='webcam_'. uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('public')->put($file,$image_base64);
+                $image = "$fileName";
+            }
+
+            $product = Product::create([
+                'category_id' => $this->category_id,
+                'cabang_id' => null,
+                'product_stock_alert' => 5,
+                'product_name' => $model_name .' '. $karat_name . ' Berlian',
+                'product_code' => $this->code,
+                'images' => $this->image,
+                'product_price' => $this->harga_jual,
+                'product_barcode_symbology' => 'C128',
+                'product_unit'              => 'Gram',
+                'karat_id'                  => $this->karat_id,
+                'berat_emas'                => $this->berat,
+                'total_karatberlians'       => $total_karat_berlians,
+                'diamond_certificate_id'    => !empty($diamond_certificate->id) ? $diamond_certificate->id : null,
+                'images'                    => $image,
+                'status_id'                 => 11,
+            ]);
+
+            
+            $produksi_items = $this->inputs;
+
+            if (!empty($produksi_items)) {
+                $array_produksi_items = [];
+                foreach($produksi_items as $val) {
+                    $goodsreceipt_item_id = !empty($val['id_items']) ? $val['id_items'] : null;
+                    $valItem = !empty( $dataPenerimaanBerlianArray[$goodsreceipt_item_id]) ?  $dataPenerimaanBerlianArray[$goodsreceipt_item_id] : [];
+                    $diamond_berlian_item = !empty($valItem['diamond_certificate_id']) ? $valItem['diamond_certificate_id'] : null;
+                    $valGoodReceipt = !empty($valItem['goodsreceipt']) ? $valItem['goodsreceipt'] : [];
+                    $diamond_berlian = !empty($valGoodReceipt['diamond_certificate_id']) ? $valGoodReceipt['diamond_certificate_id'] : null;
+                    $array_produksi_items[] = [
+                        'product_id' => $product->id,
+                        'goodsreceipt_item_id' => $goodsreceipt_item_id,
+                        'karatberlians' => !empty($val['karatberlians']) ? $val['karatberlians'] : 0,
+                        'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
+                        'qty' => !empty($val['qty']) ? $val['qty'] : 0,
+                        'diamond_certificate_id' => !empty($diamond_berlian_item) ? $diamond_berlian_item : $diamond_berlian,
+                        'gia_report_number' => !empty($val['gia_report_number']) ? $val['gia_report_number'] : null
+                    ];
+                }
+
+                $product_items = ProductItem::insert($array_produksi_items);
+
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            if(!empty($file)) {
+                Storage::disk('public')->delete($file);
+            }
+            return $th->getMessage();
+        }
+        DB::commit();
+        activity()->log(' '.auth()->user()->name.' input data pembuatan product ' . !empty($product->id) ? $product->id : '');
+        toast('Produk Berhasil dibuat!', 'success');
+        return redirect()->route('produksi.index');
     }
 
     public function setCurrentKey($key)
