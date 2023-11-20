@@ -101,7 +101,6 @@ class Create extends Component
         $this->karat24k = !empty($id_karat_24k['value']) ? $id_karat_24k['value'] : 0;
         $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $this->id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
-        // $this->dataKategoriProduk = KategoriProduk::all();
         $this->dataKategoriProduk = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->get();
         $this->dataCertificateAttribute = DiamondCertificateAttributes::all();
         $this->code = Product::generateCode();
@@ -137,17 +136,12 @@ class Create extends Component
                                                 ->flatten()
                                                 ->keyBy('id')
                                                 ->toArray();
-        $this->dataItemProduksiArray = $this->dataKarat->map(function($data){
+        $this->dataItemProduksiArray = $this->dataItemProduksi->map(function($data){
                                                     return $data;
                                                 })
                                                 ->flatten()
                                                 ->keyBy('id')
-                                                ->toArray();
-
-
-        $this->model_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['model_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['model_id'] : null;
-
-                                                                    
+                                                ->toArray();                                                                    
     }
 
     protected $listeners = [
@@ -181,6 +175,10 @@ class Create extends Component
 
     public function render()
     {
+
+        $this->model_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['model_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['model_id'] : null;
+        $this->karat_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['karat_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['karat_id'] : null;
+        $this->berat = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['berat']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['berat'] : null;
         $this->tanggal = $this->hari_ini;
         return view('livewire.produksi.create');
     }
@@ -278,13 +276,15 @@ class Create extends Component
               * bandingkan stok
               */
             if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['karatberlians'])) {
-                $sisa_stok_berlian = GoodsReceipt::where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->sum('total_karat');
+                // $sisa_stok_berlian = GoodsReceipt::where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->sum('total_karat');
+                $sisa_stok_berlian = 0;
                 $total_karat_dipinta = 0;
                 foreach ($this->inputs as $key => $value) {
                     $rules['inputs.' . $key . '.id_items'] = 'required';
                     $rules['inputs.' . $key . '.karatberlians'] = 'required|gt:0';
                     $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
-
+                    $sisa_stok_berlian = GoodsReceiptItem::where('id', $value['id_items'])->first();
+                    $sisa_stok_berlian = $sisa_stok_berlian->karatberlians - $sisa_stok_berlian->karatberlians_terpakai;
                     $qty = !empty($value['qty']) ? $value['qty'] : 0;
                     $karat = !empty($value['karatberlians']) ? $value['karatberlians'] : 0;
                     if(filter_var($karat, FILTER_VALIDATE_FLOAT)) {
@@ -485,7 +485,6 @@ class Create extends Component
             if(!empty($file)) {
                 Storage::disk('public')->delete($file);
             }
-            dd($th->getMessage());
             return $th->getMessage();
         }
         DB::commit();
