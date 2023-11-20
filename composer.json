@@ -28,6 +28,7 @@
         "n0izestr3am/sso-client": "dev-main",
         "nasirkhan/module-manager": "^0.4.0",
         "nwidart/laravel-modules": "8.2.*",
+        "rappasoft/laravel-livewire-tables": "^2.15",
         "realrashid/sweet-alert": "^4.0",
         "simplesoftwareio/simple-qrcode": "~4",
         "spatie/laravel-activitylog": "^3.17",
