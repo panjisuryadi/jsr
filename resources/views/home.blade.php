@@ -113,9 +113,9 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
    @include('partial.pages.office')
  @endcan
 
-{{--   @can('access_distribusi')
+  @can('access_distribusi')
   @include('partial.pages.distribusi')
-  @endcan --}}
+  @endcan 
 
   @can('access_admin_sales')
   @include('partial.pages.admin_sales')

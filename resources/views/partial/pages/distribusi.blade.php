@@ -63,7 +63,7 @@
 @endcan
 
 
-@can('dashboard_distribusi')
+@can('access_distribusi')
 
   <div class="card">
     <div class="card-body">
