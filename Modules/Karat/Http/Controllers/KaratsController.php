@@ -10,6 +10,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Modules\PenentuanHarga\Models\PenentuanHarga;
 
 
 
@@ -26,6 +27,7 @@ class KaratsController extends Controller
         $this->module_path = 'karats';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\Karat\Models\Karat";
+      
 
     }
 
@@ -266,7 +268,21 @@ public function update(Request $request, $id)
         $params['name'] = $params['name'];
         $params['type'] = $params['type'];
         $params['coef'] = $params['coef'];
-            $$module_name_singular->update($params);
+        $$module_name_singular->update($params);
+
+        $pharga = PenentuanHarga::updateOrCreate([
+            'karat_id'   => $$module_name_singular->id,
+        ],[
+            'user_id'      => auth()->user()->id,
+            'margin'       => '0',
+            'tgl_update'   => date('Y-m-d'),
+            'harga_modal'  => '0',
+            'harga_emas'   => '0',
+            'harga_jual'   => '0',
+            'lock'         => '0',
+          
+        ]);
+
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }
@@ -302,5 +318,13 @@ public function update(Request $request, $id)
             }
 
     }
+
+
+   public function getNumberVal($value) {
+        return filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+    }
+
+
+
 
 }

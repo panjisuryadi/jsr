@@ -2,7 +2,7 @@
   <div class="w-3/4">
 
 
-
+@can('dashboard_distribusi')
 
 <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
 <div class="card border-0">
@@ -60,16 +60,16 @@
 </div>
 
 
+@endcan
 
 
-
-
+@can('dashboard_distribusi')
 
   <div class="card">
     <div class="card-body">
         <div class="flex justify-between py-1 border-bottom">
             <div>
-             <span class="font-semibold text-gray-600 text-lg">{{ ucfirst($status) }}</span> 
+             <span class="font-semibold text-gray-600 text-lg">{{ ucfirst('Distribusi') }}</span> 
             </div>
             <div id="buttons">
             </div>
@@ -105,7 +105,7 @@
 </div>
 
 
-
+@endcan
 
 
   </div>

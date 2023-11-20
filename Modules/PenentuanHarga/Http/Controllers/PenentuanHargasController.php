@@ -10,6 +10,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Modules\Karat\Models\Karat;
 use Lang;
 use Image;
 
@@ -24,6 +25,7 @@ class PenentuanHargasController extends Controller
         $this->module_path = 'penentuanhargas';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\PenentuanHarga\Models\PenentuanHarga";
+        $this->karat_model = "Modules\Karat\Models\Karat";
 
     }
 
@@ -156,13 +158,131 @@ public function index_data(Request $request)
 
 
 
+public function index_setting(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+       // $$module_name = $module_model::get();
+       // $data = $$module_name;
+        $list_karat = Karat::with('list_harga')->where('parent_id', null)
+                  ->get();
+
+        return Datatables::of($list_karat)
+                        ->addColumn('action', function ($data) {
+                           $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                          ->editColumn('tgl_update', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->list_harga . '
+                                    </div>';
+                                return $tb;
+                            })
+                          //  ->editColumn('user', function ($data) {
+                          //    $tb = '<div class="items-center text-center">
+                          //            ' .$data->user->name . '
+                          //           </div>';
+                          //       return $tb;
+                          //   }) 
+
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->list_harga . '
+                                    </div>';
+                                return $tb;
+                            })  
+
+                          //    ->editColumn('harga_emas', function ($data) {
+                          //    $tb = '<div class="items-center text-center">
+                          //            ' .rupiah($data->harga_emas) . '
+                          //           </div>';
+                          //       return $tb;
+                          //   })   
+
+                          //    ->editColumn('harga_modal', function ($data) {
+                          //    $tb = '<div class="items-center text-center">
+                          //            ' .rupiah($data->harga_modal) . '
+                          //           </div>';
+                          //       return $tb;
+                          //   })   
+                          //    ->editColumn('margin', function ($data) {
+                          //    $tb = '<div class="items-center text-center">
+                          //            ' .rupiah($data->margin) . '
+                          //           </div>';
+                          //       return $tb;
+                          //   }) 
+
+                          //    ->editColumn('harga_jual', function ($data) {
+                          //    $tb = '<div class="items-center text-center">
+                          //            ' .rupiah($data->harga_jual) . '
+                          //           </div>';
+                          //       return $tb;
+                          //   })
+
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->kode . '
+                                    </div>';
+                                return $tb;
+                            })
+
+
+                           ->editColumn('updated_at', function ($data) {
+                            $module_name = $this->module_name;
+
+                            $diff = Carbon::now()->diffInHours($data->updated_at);
+                            if ($diff < 25) {
+                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                            } else {
+                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                            }
+                        })
+                        ->rawColumns(['tgl_update',
+                                        'action', 
+                                        'harga_emas',
+                                        'margin',
+                                        'harga_modal',
+                                        'karat',
+                                        'harga_jual',
+                                        'karat', 
+                                        'user'])
+                        ->make(true);
+                     }
+
 
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
-        public function create()
+        public function setting()
+        {
+           $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            $module_action = 'Setting';
+            abort_if(Gate::denies('add_'.$module_name.''), 403);
+              return view(''.$module_name.'::'.$module_path.'.setting',
+               compact('module_name',
+                'module_action',
+                'module_title',
+                'module_icon', 'module_model'));
+        }
+
+
+       public function create()
         {
            $module_title = $this->module_title;
             $module_name = $this->module_name;

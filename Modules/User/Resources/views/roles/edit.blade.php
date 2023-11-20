@@ -107,13 +107,7 @@
             value="show_logs_dashboard" {{ $role->hasPermissionTo('show_logs_dashboard') ? 'checked' : '' }}>
             <label class="custom-control-label" for="show_logs_dashboard">show logs dashboard</label>
         </div>
-           <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input"
-            id="dashboard_distribusi" name="permissions[]"
-            value="dashboard_distribusi" {{ $role->hasPermissionTo('dashboard_distribusi') ? 'checked' : '' }}>
-            <label class="custom-control-label" for="dashboard_distribusi">
-           Distribusi Dashboard</label>
-        </div>
+     
         
 
        </div>
@@ -251,7 +245,13 @@
                   {{ label_Case('access_sales') }}
                </label>
             </div>
-
+      <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input"
+            id="dashboard_distribusi" name="permissions[]"
+            value="dashboard_distribusi" {{ $role->hasPermissionTo('dashboard_distribusi') ? 'checked' : '' }}>
+            <label class="custom-control-label" for="dashboard_distribusi">
+           Dashboard Distribusi </label>
+        </div>
 
               
             

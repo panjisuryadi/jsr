@@ -105,18 +105,17 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
 
 
 
-@can('access_sales')
+ @can('access_sales')
    @include('partial.pages.sales')
  @endcan
 
-
-  @can('access_sales_office')
+ @can('access_sales_office')
    @include('partial.pages.office')
  @endcan
 
-  @can('access_distribusi')
+{{--   @can('access_distribusi')
   @include('partial.pages.distribusi')
-  @endcan
+  @endcan --}}
 
   @can('access_admin_sales')
   @include('partial.pages.admin_sales')
