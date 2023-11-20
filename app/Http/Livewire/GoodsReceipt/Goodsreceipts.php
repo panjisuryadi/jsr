@@ -104,6 +104,7 @@ namespace App\Http\Livewire\GoodsReceipt;
                         $this->validateOnly($propertyName);
                     }
                 }
+                
 
             public function store()
             {

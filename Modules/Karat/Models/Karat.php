@@ -20,6 +20,7 @@ class Karat extends Model
         'name',
         'kode',
         'type',
+        'coef',
         'description',
         'start_date',
         'end_date',
@@ -46,6 +47,10 @@ class Karat extends Model
 
     public function children(){
         return $this->hasMany(Karat::class, 'parent_id');
+    }
+
+  public function list_harga(){
+        return $this->hasMany(PenentuanHarga::class,'karat_id','id');
     }
 
     public function penentuanHarga(){

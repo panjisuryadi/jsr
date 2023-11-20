@@ -8,7 +8,7 @@ php artisan make:model SocialMedia --migration
 
 # php artisan module:make-migration add_toko_to_product_items_table Product
 
-# php artisan module:make-migration add_tgl_jatuh_tempo_to_sales_table Sale
+# php artisan module:make-migration add_coef_to_karats_table karat
 
 # php artisan module:make-migration add_migrasi_karat_kategori_to_goodsreceipt_items_table GoodsReceipt
 

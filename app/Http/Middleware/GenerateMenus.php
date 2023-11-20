@@ -935,7 +935,8 @@ class GenerateMenus
 
             // EMAS - PROSES - CUCI
             $cuci = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Cuci', [
-                'class' => 'c-sidebar-nav-dropdown',
+                'class' => 'nav-item',
+                'route' => 'products.process.cuci'
             ])
             ->data([
                 'order'         => 1,
@@ -943,40 +944,64 @@ class GenerateMenus
                 'permission' => ['access_menu_proses'],
             ]);
             $cuci->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-            // EMAS - PROSES - Rongsok
-            $rongsok = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Rongsok', [
-                'class' => 'c-sidebar-nav-dropdown',
+            // EMAS - PROSES - Masak
+            $masak = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Masak', [
+                'class' => 'nav-item',
+                'route' => 'products.process.masak'
             ])
             ->data([
                 'order'         => 2,
                 'activematches' => [],
                 'permission' => [],
             ]);
-            $rongsok->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
+            $masak->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-            // EMAS - PROSES - Olah Kembali
-            $olah_kembali = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Olah Kembali', [
-                'class' => 'c-sidebar-nav-dropdown',
+            // EMAS - PROSES - Rongsok
+            $rongsok = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Rongsok', [
+                'class' => 'nav-item',
+                'route' => 'products.process.rongsok'
             ])
             ->data([
                 'order'         => 3,
                 'activematches' => [],
                 'permission' => [],
             ]);
-            $olah_kembali->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
+            $rongsok->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-
+            // EMAS - PROSES - Reparasi
+            $reparasi = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Reparasi', [
+                'class' => 'nav-item',
+                'route' => 'products.process.reparasi'
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => [],
+                'permission' => [],
+            ]);
+            $reparasi->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
             
+            // EMAS - PROSES - Second
+            $second = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Second', [
+                'class' => 'nav-item',
+                'route' => 'products.process.second'
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => [],
+                'permission' => [],
+            ]);
+            $second->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
             
             
 

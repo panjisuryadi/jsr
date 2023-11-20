@@ -13,6 +13,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Product
       Route::post("products/save", ['as' => "products.save", 'uses' => "ProductController@save"]);
 
+      //Product
+      Route::post("products/update_status", ['as' => "products.update_status", 'uses' => "ProductController@update_status"]);
+
   //Product
       Route::post("products/saveajax", ['as' => "products.saveajax", 'uses' => "ProductController@saveAjax"]);
 
@@ -21,6 +24,31 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get("products/index_distribusi", ['as' => "products.index_distribusi", 'uses' => "ProductController@index_distribusi"]);
 
 
+  // Proses
+  // Cuci
+  Route::get("products/process/cuci", ['as' => "products.process.cuci", 'uses' => "Proses\ProductController@cuci"]);
+  Route::get("products/process/get_cuci", ['as' => "products.process.get_cuci", 'uses' => "Proses\ProductController@get_cuci"]);
+  Route::get("products/get_stock_cuci", ['as' => "products.get_stock_cuci", 'uses' => "Proses\ProductController@get_stock_cuci"]); 
+
+  //rongsok
+  Route::get("products/process/rongsok", ['as' => "products.process.rongsok", 'uses' => "Proses\ProductController@rongsok"]);
+  Route::get("products/process/get_rongsok", ['as' => "products.process.get_rongsok", 'uses' => "Proses\ProductController@get_rongsok"]);
+  Route::get("products/get_stock_rongsok", ['as' => "products.get_stock_rongsok", 'uses' => "Proses\ProductController@get_stock_rongsok"]); 
+
+  //masak
+  Route::get("products/process/masak", ['as' => "products.process.masak", 'uses' => "Proses\ProductController@masak"]);
+  Route::get("products/process/get_masak", ['as' => "products.process.get_masak", 'uses' => "Proses\ProductController@get_masak"]);
+  Route::get("products/get_stock_masak", ['as' => "products.get_stock_masak", 'uses' => "Proses\ProductController@get_stock_masak"]); 
+
+
+  Route::get("products/process/reparasi", ['as' => "products.process.reparasi", 'uses' => "Proses\ProductController@reparasi"]);
+  Route::get("products/process/get_reparasi", ['as' => "products.process.get_reparasi", 'uses' => "Proses\ProductController@get_reparasi"]);
+  Route::get("products/get_stock_reparasi", ['as' => "products.get_stock_reparasi", 'uses' => "Proses\ProductController@get_stock_reparasi"]); 
+
+
+  Route::get("products/process/second", ['as' => "products.process.second", 'uses' => "Proses\ProductController@second"]);
+  Route::get("products/process/get_second", ['as' => "products.process.get_second", 'uses' => "Proses\ProductController@get_second"]);
+  Route::get("products/get_stock_second", ['as' => "products.get_stock_second", 'uses' => "Proses\ProductController@get_stock_second"]); 
       
 
       Route::get("products/list-reparasi", ['as' => "products.reparasi", 'uses' => "ProductController@listReparasi"]);

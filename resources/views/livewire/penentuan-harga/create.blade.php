@@ -1,27 +1,15 @@
 <div>
      <form wire:submit.prevent="store">
-    <div class="flex justify-between py-1 border-bottom">
+    <div class="flex justify-between py-2 border-bottom">
         
-        <div class="form-group mb-0 w-1/4">
-            <label class="mb-0" for="karat_id">@lang('Karat') <span class="text-danger">*</span></label>
-            <select class="form-control form-control-sm select2" 
-            wire.model="karat_id" 
-            wire:change="pilihKarat($event.target.value)" 
-            name="karat_id" id="karat_id" required>
-                <option value=""> Pilih Karat</option>
+      <div>
+          
+<p class="uppercase text-lg text-gray-600 font-semibold">
+                      Setting | <span class="text-yellow-500 uppercase">Penentuan harga</span>
+                           <span class="text-gray-400 uppercase"></span>
+                  </p>
 
-                @foreach(\Modules\Karat\Models\Karat::whereNull('parent_id')->get() as $jp)
-                <option value="{{ $jp->id }}">{{ $jp->name }} | {{ $jp->kode }}</option>
-                @endforeach
-            </select>
-           @if ($errors->has('karat_id'))
-                <div class="invalid feedback"role="alert">
-                    <small class="text-danger">{{ $errors->first('karat_id') }}.</small
-                        class="text-danger">
-                </div>
-            @endif
-
-        </div>
+      </div>
         
       
 
@@ -51,156 +39,89 @@
 
 <div class="px-3">
        @if($updateMode)
-      
-<h1 class="py-3 font-semibold text-blue-600">{{$penentuan_harga->karat->name}}</h1>
-       @else
-        <h1 class="py-3 font-semibold text-gray-400">Data Kosong</h1>
-
-
+         <span>kosong</span>
        @endif
 
 </div>
 
+<div class="px-1">
+
+<table style="width: 100%;" class="table table-striped table-bordered">
+    <tbody><tr>
+        <th>{{ Label_case('No') }}</th>
+        <th style="width:8%;" class="text-center">{{ Label_case('tgl_update') }}</th>
+        <th>{{ Label_case('Karat') }}</th>
+        <th style="width:12%;" class="text-center">{{ Label_case('Harga_emas') }}</th>
+        <th style="width:12%;" class="text-center">{{ Label_case('Harga_modal') }}</th>
+        <th style="width:12%;" class="text-center">{{ Label_case('margin') }}</th>
+        <th style="width:12%;" class="text-center">{{ Label_case('harga_jual') }}</th>
+        <th style="width:10%;" class="text-center">{{ Label_case('Status') }}</th>
+        <th style="width:10%;" class="text-center">{{ Label_case('user') }}</th>
+    </tr>
+
+  @foreach ($inputs as $index => $row)
+
+    <tr>
+        <td>{{ $loop->iteration }}</td> 
+        <td class="text-center text-blue-600"> {{ shortdate($row->list_harga->first()->tgl_update ?? '') }}</td> 
+        <td class="font-semibold"> {{ $row->kode }} | {{ $row->name }}
+           <input wire:model="pharga.{{ $index }}.karat_id" type="text" class="form-control form-control-sm" name="karat_id">
+        </td> 
+        <td> 
+                @if(isset($row->list_harga->first()->harga_emas))
+            <input type="text" class="form-control form-control-sm" 
+             value=" {{ $row->list_harga->first()->harga_emas ?? ''}} " name="harga_emas">
+                @else
+                    <input type="text" class="form-control form-control-sm" name="harga_emas">
+                @endif
+        </td> 
+        <td>  
+
+            @if(isset($row->list_harga->first()->harga_modal))
+                  
+             <input type="text" class="form-control form-control-sm" 
+             value="{{ $row->list_harga->first()->harga_modal ?? ''}} " name="harga_modal">   @else
+                 <input type="text" class="form-control form-control-sm" name="harga_modal">
+              @endif
 
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-         
-            <th style="width: 10%;" class="text-left">Karat</th>
-            <th class="text-left">Harga Emas</th>
-            <th class="text-left">Harga Modal</th>
-            <th class="text-left">Margin</th>
-            <th class="text-left">Harga Jual</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
+        </td> 
+        <td>  
 
-            <td style="width: 15%;" class="text-center">
-                 <input type="hidden" 
-                       name="karat_id" 
-                       value="{{$karat_id}}" 
-                       wire.model="karat_id" 
-                       >
-                <input type="text" 
-                wire.model="karat" class="form-control text-center" 
-                name="karat" value="{{$kode_karat}}" >
-            </td>
-            <td style="width: 24%;" class="text-left">
-               
-       <div class="form-group">
-        <?php
-        $field_name = 'harga_emas';
-        $field_lable = label_case($field_name);
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <input class="form-control"
-        type="text"
-        wire:model="harga_emas"
-        wire:change="setHargaModal($event.target.value)"
-        type-currency="IDR"
-        name="{{ $field_name }}"
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
-        
-           @if($errors->has('harga_emas'))
-                <div class="invalid feedback"role="alert">
-                    <small class="text-danger">{{ $errors->first('harga_emas') }}.</small
-                        class="text-danger">
-                </div>
-            @endif
-    </div>
-    
+              @if(isset($row->list_harga->first()->margin))
+               <input type="text" wire:model="pharga.{{ $index }}.margin"  class="form-control form-control-sm" 
+               placeholder="{{ $row->list_harga->first()->margin ?? ''}}" name="margin">
+                @else
+                 <input wire:model="pharga.{{ $index }}.margin" type="text" class="form-control form-control-sm" name="margin">
+              @endif
+
+        </td> 
+        <td>  
+
+         @foreach ($row->list_harga as $list)
+         {{ $list->user->name }}
+          @endforeach
+
+        </td> 
+
+         <td class="text-center">  
+               @if(isset($row->list_harga->first()->lock))
+                <div class="rounded-md w-full bg-green-600 px-2 text-white">Locked</div>
+                @else
+                <div class="rounded-md w-full bg-red-600 px-2 text-white">Unlocked</div>
+                @endif
+
+        </td> 
 
 
-
-            </td>
-            <td  style="width: 20%;" class="text-left">
-           
-  <div class="form-group">
-        <?php
-        $field_name = 'harga_modal';
-        $field_lable = label_case($field_name);
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <input class="form-control numeric"
-        type="text"
-        type-currency="IDR"
-        name="{{ $field_name }}"
-        wire:model="harga_modal"
-        {{-- wire:change="recalculateTotal"
-        wire:keyup="recalculateTotal" --}}
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}" readonly>
-        <span class="invalid feedback" role="alert">
-            <span class="text-danger error-text {{ $field_name }}_err"></span>
-        </span>
-    </div>
-
-
-        </td>
-
-
-          <td  style="width: 20%;" class="text-left">
-       <div class="form-group">
-        <?php
-        $field_name = 'harga_margin';
-        $field_lable = label_case($field_name);
-        $field_placeholder = $field_lable;
-        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-        $required = "required";
-        ?>
-        <input class="form-control numeric"
-        type="text"
-        type-currency="IDR"
-        name="{{ $field_name }}"
-        wire:model="harga_margin"
-        wire:change="setHargaJual($event.target.value)"
-        id="{{ $field_name }}"
-        value="{{old($field_name)}}"
-        placeholder="{{ $field_placeholder }}">
-     
-           @if($errors->has('harga_margin'))
-                <div class="invalid feedback"role="alert">
-                    <small class="text-danger">{{ $errors->first('harga_margin') }}.</small
-                        class="text-danger">
-                </div>
-            @endif
-    </div>
-
-
-            </td>
-
-
-
-           <td style="width: 23%;" class="text-left">
-                <input 
-                type="text" 
-                value="{{$harga_jual}}" 
-                class="form-control" 
-                 readonly>  
-
-                 <input 
-                type="hidden" 
-                wire.model="harga_jual" 
-                value="{{$harga_jual}}" 
-                class="form-control" 
-                name="harga_jual">
-
-
-            </td>
        
-        </tr>
-      
-    </tbody>
-</table>
+    </tr>
+        
+    @endforeach
+</tbody></table> 
+
+
+</div>
 
 
 

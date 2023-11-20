@@ -1,7 +1,7 @@
 <form wire:submit.prevent="store">
     @csrf
 
-    <div class="flex flex-row grid grid-cols-5 mb-0 gap-4">
+    <div class="flex flex-row grid grid-cols-3 mb-0 gap-2">
 
         <div class="form-group">
             <?php
@@ -53,6 +53,33 @@
             ?>
             <label class="text-gray-700 mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
             <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}" wire:ignore>
+            <span class="invalid feedback" role="alert">
+                <span class="text-danger error-text {{ $field_name }}_err"></span>
+            </span>
+            @if ($errors->has($field_name))
+            <span class="invalid feedback" role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+            </span>
+            @endif
+        </div>  
+</div>
+
+ <div class="flex flex-row grid grid-cols-3 mb-0 gap-2">
+
+        <div class="form-group">
+            <?php
+            $field_name = 'coef';
+            $field_lable = label_case('coef');
+            $field_placeholder = $field_lable;
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            $required = "required";
+            ?>
+            <label class="text-gray-700 mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+            <input class="form-control" 
+            type="number" 
+            name="{{ $field_name }}" 
+            step="0.01" 
+            id="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}" wire:ignore>
             <span class="invalid feedback" role="alert">
                 <span class="text-danger error-text {{ $field_name }}_err"></span>
             </span>
