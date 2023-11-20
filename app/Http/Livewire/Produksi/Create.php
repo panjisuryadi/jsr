@@ -448,7 +448,7 @@ class Create extends Component
                     $oldkaratberlian = !empty($valItem['karatberlians']) ? $valItem['karatberlians'] : 0;
                     $karatberlianterpakai = !empty($valItem['karatberlians_terpakai']) ? $valItem['karatberlians_terpakai'] : 0;
                     
-                    $status = ($oldkaratberlian == $karatberlianterpakai + $karatberlians) ? 2 : 1;
+                    $status = ($oldkaratberlian >= $karatberlianterpakai + $karatberlians) ? 2 : 1;
                     $array_goodsreceipt_item[] = [
                         'id' => $goodsreceipt_item_id,
                         'karatberlians_terpakai' => $karatberlianterpakai + $karatberlians,
@@ -461,7 +461,7 @@ class Create extends Component
                     foreach($array_goodsreceipt_item as $item) {
                         GoodsReceiptItem::where('id', $item['id'])->update([
                             'karatberlians_terpakai' => $item['karatberlians_terpakai'],
-                            'status' => $status,
+                            'status' => $item['status'],
                         ]);
                     }
                 }
