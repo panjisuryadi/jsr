@@ -308,8 +308,11 @@ public function index_data(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = $module_model::with('category','product_item')
-        ->latest()->get();
+        $$module_name = $module_model::with('category','product_item');
+        if($request->get('status')) {
+            $$module_name = $$module_name->where('status_id', $request->get('status'));
+        }
+        $$module_name = $$module_name->latest()->get();
         $data = $$module_name;
 
         return Datatables::of($$module_name)
