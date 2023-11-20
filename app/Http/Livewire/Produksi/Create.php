@@ -101,7 +101,6 @@ class Create extends Component
         $this->karat24k = !empty($id_karat_24k['value']) ? $id_karat_24k['value'] : 0;
         $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $this->id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
-        // $this->dataKategoriProduk = KategoriProduk::all();
         $this->dataKategoriProduk = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->get();
         $this->dataCertificateAttribute = DiamondCertificateAttributes::all();
         $this->code = Product::generateCode();
@@ -137,17 +136,12 @@ class Create extends Component
                                                 ->flatten()
                                                 ->keyBy('id')
                                                 ->toArray();
-        $this->dataItemProduksiArray = $this->dataKarat->map(function($data){
+        $this->dataItemProduksiArray = $this->dataItemProduksi->map(function($data){
                                                     return $data;
                                                 })
                                                 ->flatten()
                                                 ->keyBy('id')
-                                                ->toArray();
-
-
-        $this->model_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['model_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['model_id'] : null;
-
-                                                                    
+                                                ->toArray();                                                                    
     }
 
     protected $listeners = [
@@ -181,6 +175,10 @@ class Create extends Component
 
     public function render()
     {
+
+        $this->model_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['model_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['model_id'] : null;
+        $this->karat_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['karat_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['karat_id'] : null;
+        $this->berat = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['berat']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['berat'] : null;
         $this->tanggal = $this->hari_ini;
         return view('livewire.produksi.create');
     }

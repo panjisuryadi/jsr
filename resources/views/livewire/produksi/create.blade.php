@@ -39,7 +39,7 @@
                                             <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} >
                                                 <option value="">Pilih Bahan</option>
                                                 @foreach($dataItemProduksi as $item)
-                                                <option value=" {{ $item->id }}" > {{ $item->model?->name . ' ' . $item->karat?->name . ' ' . $item->berat . ' gr'}} </option>
+                                                <option value="{{ $item->id }}" > {{ $item->model?->name . ' ' . $item->karat?->name . ' ' . $item->berat . ' gr'}} </option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has($field_name))
@@ -389,14 +389,14 @@
                                                 @endif
                                             </div>
 
-                                            <div class="form-group">
-                                                <?php
+                                            {{-- <div class="form-group">
+                                                @php
                                                     $field_name = 'model_id';
                                                     $field_lable = label_case('Model Jadi');
                                                     $field_placeholder = $field_lable;
                                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                     $required = "required";
-                                                ?>
+                                                @endphp
                                                 <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger"></span></label>
                                                 <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                                     <option value="" selected >Select Model</option>
@@ -414,16 +414,16 @@
                                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                                                 </span>
                                                 @endif
-                                            </div>
+                                            </div> --}}
                                             
-                                            <div class="form-group" id="karat_id">
-                                                <?php
+                                            {{-- <div class="form-group" id="karat_id">
+                                                @php
                                                     $field_name = 'karat_id';
                                                     $field_lable = __('Karat Hasil');
                                                     $field_placeholder = Label_case($field_lable);
                                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                     $required = '';
-                                                ?>
+                                                @endphp
                                                 <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} <span class="text-danger">*</span></label>
                                                 <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                                     <option value="" selected >Select Karat</option>
@@ -438,16 +438,16 @@
                                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                                                 </span>
                                                 @endif
-                                            </div>
+                                            </div> --}}
 
 
                                             <div class="form-group">
-                                                <?php
+                                                @php
                                                     $field_name = 'category_id';
                                                     $field_lable = __('Pilih Kategori');
                                                     $field_placeholder = Label_case($field_lable);
                                                     $required = '';
-                                                ?>
+                                                @endphp
                                                 <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                 <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }}>
                                                     <option value="" selected >Select Tipe</option>
