@@ -12,9 +12,13 @@
             <i class="bi bi-bar-chart font-2xl"></i>
         </div>
         <div>
-            <div class="text-value text-primary">{{ \Modules\DataSale\Models\DataSale::count() }}</div>
-            <div class="text-muted text-uppercase font-weight-bold">
-           Data Sales
+        
+            <div class="text-value text-primary">{{ \Modules\DistribusiToko\Models\DistribusiToko::whereIn('status_id',[2])->count() }}</div>
+          <div class="text-muted text-uppercase font-weight-bold">
+              In Progresss
+            </div>     
+           <div class="small text-green-400 text-uppercase font-weight-bold">
+           Distribusi Toko
             </div>
 
         </div>
@@ -180,23 +184,34 @@
              <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('No Retur') }}</th>
-                            <th>{{ label_case('Sales') }}</th>
-                            <th>{{ label_case('weight') }}</th>
-                            <th>{{ label_case('nominal') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
+                            <th class="text-center">{{ label_case('Cabang') }}</th>
+                            <th class="text-center">{{ label_case('Date') }}</th>
+                            <th class="text-center">{{ label_case('Invoice') }}</th>
+                            <th class="text-center">{{ label_case('Items') }}</th>
+                            <th class="text-center">{{ label_case('Status') }}</th>
+                            <th class="text-center">{{ label_case('Pic') }}</th>
+                            <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
-                      @forelse(\Modules\ReturSale\Models\ReturSale::get() as $row)
+                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::whereIn('status_id',[2])->get() as $row)
                             @if($loop->index > 4)
                                @break
                             @endif
+
+                            {{-- {{ $row }} --}}
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $row->retur_no }}</td>
-                            <td>{{ $row->sales->name }}</td>
-                            <td>{{ $row->total_weight }}</td>
-                            <td>{{ rupiah($row->total_nominal) }}</td>
+                            <td>{{ $row->cabang->name }}</td>
+                            <td>{{ shortdate($row->date) }}</td>
+                            <td>{{ $row->no_invoice }}</td>
+                            <td>{{ $row->items->count() }}</td>
                             <td>
+                            @if($row->current_status->id == 2)
+                                <button class="w-full btn uppercase btn-outline-warning px  leading-5 btn-sm">In Progress</button>
+                                @endif
+                            </td>
+                            <td>{{ $row->created_by }}</td>
+                         
+                            <td class="text-center">
                               @can('show_distribusi')
                                  <a href="{{ route("distribusitoko.show",$row->id) }}"
                                      class="btn btn-outline-info btn-sm">
