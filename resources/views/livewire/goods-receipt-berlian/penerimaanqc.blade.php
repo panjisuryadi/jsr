@@ -93,74 +93,6 @@
                                     </span>
                                     @endif
                                 </div>
-                                
-                                @if ($type == 1) 
-                                <div class="form-group">
-                                    @php
-                                        $field_name = 'inputs.' . 0 . '.karat_id';
-                                        $field_lable = __('Kadar Emas');
-                                        $field_placeholder = Label_case($field_lable);
-                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                        $required = '';
-                                    @endphp
-                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} </label>
-                                    <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
-                                        <option value="" selected >Select Karat</option>
-                                        @foreach($dataKarat as $row)
-                                            <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
-                                                {{$row->name}} | {{$row->kode}}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has($field_name))
-                                    <span class="invalid feedback" role="alert">
-                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    @php
-                                        $field_name = 'inputs.' . 0 . '.model_id';
-                                        $field_lable = __('Jenis Perhiasan');
-                                        $field_placeholder = Label_case($field_lable);
-                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                        $required = '';
-                                    @endphp
-                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} </label>
-                                    <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
-                                        <option value="" selected >Jenis Perhiasan</option>
-                                        @foreach($dataGroup as $row)
-                                            <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
-                                                {{$row->name}}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has($field_name))
-                                    <span class="invalid feedback" role="alert">
-                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                    </span>
-                                    @endif
-                                </div>
-                                @endif
-                                
-                                @if($type == 1)
-                                <div class="form-group">
-                                    <?php
-                                    $field_name = 'nama_produk';
-                                    $field_lable = __('Nama Barang');
-                                    $field_placeholder = Label_case($field_lable);
-                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                    $required = '';
-                                    ?>
-                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }} <span class="text-danger">*</span></label>
-                                    <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
-                                    @if ($errors->has($field_name))
-                                    <span class="invalid feedback" role="alert">
-                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                    </span>
-                                    @endif
-                                </div>
-                                @endif
 
                                 <div class="form-group">
                                     <?php
@@ -220,16 +152,104 @@
                                     </span>
                                     @endif
                                 </div>
+                                
+                                @if ($type == 1) 
+                                <div class="form-group">
+                                    @php
+                                        $field_name = 'karat_id';
+                                        $field_lable = __('Kadar Emas');
+                                        $field_placeholder = Label_case($field_lable);
+                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                        $required = '';
+                                    @endphp
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} </label>
+                                    <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                        <option value="" selected >Select Karat</option>
+                                        @foreach($dataKarat as $row)
+                                            <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+                                                {{$row->name}} | {{$row->kode}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    @php
+                                        $field_name = 'model_id';
+                                        $field_lable = __('Jenis Perhiasan');
+                                        $field_placeholder = Label_case($field_lable);
+                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                        $required = '';
+                                    @endphp
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} </label>
+                                    <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                        <option value="" selected >Jenis Perhiasan</option>
+                                        @foreach($dataGroup as $row)
+                                            <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+                                                {{$row->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+                                @endif
+                                
+                                @if($type == 1)
+                                <div class="form-group">
+                                    <?php
+                                    $field_name = 'nama_produk';
+                                    $field_lable = __('Nama Barang');
+                                    $field_placeholder = Label_case($field_lable);
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = '';
+                                    ?>
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }} <span class="text-danger">*</span></label>
+                                    <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <?php
+                                    $field_name = 'total_berat_real';
+                                    $field_lable = __('Berat');
+                                    $field_placeholder = Label_case($field_lable);
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = '';
+                                    ?>
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }} <span class="text-danger">*</span></label>
+                                    <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+                                @endif
+
 
                             </div>
                             
-                            @if($type == 2)
+                            {{-- @if($type == 2) --}}
                             <div class="py-2" id="berlianitem">
                                 @foreach($inputs as $key => $value)
+                                @if($type==2)
                                 <hr class="mb-2">
+                                @endif
                                 <div class="flex justify-between mt-0">
                                     <div class="add-input w-full mx-auto flex flex-row grid grid-cols-4 gap-2">
 
+                                        @if($type == 2)
                                         <div class="form-group">
                                             <?php
                                             $field_name = 'inputs.' . $key . '.code';
@@ -247,6 +267,7 @@
                                             </span>
                                             @endif
                                         </div>
+                                        @endif
 
                                         <div class="form-group">
                                             <?php
@@ -259,34 +280,8 @@
                                             {{-- @if ($key==0) --}}
                                             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                             {{-- @endif --}}
-                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" $required>
+                                            <input class="form-control" type="number" step="any" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" $required>
 
-                                            @if ($errors->has($field_name))
-                                            <span class="invalid feedback" role="alert">
-                                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                            </span>
-                                            @endif
-                                        </div>
-
-                                        <div class="form-group">
-                                            <?php
-                                            $field_name = 'inputs.' . $key . '.klasifikasi_berlian';
-                                            $field_lable = __('Size');
-                                            $field_placeholder = Label_case($field_lable);
-                                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                            $required = '';
-                                            ?>
-                                            {{-- @if ($key==0) --}}
-                                            <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                            {{-- @endif --}}
-                                            <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}">
-                                                <option value="" selected>Select Size</option>
-                                                @foreach($dataKlasifikasiBerlian as $row)
-                                                    <option value="{{$row->name}}" {{ old($field_name) == $row->id ? 'selected' : '' }}>
-                                                        {{$row->name}}
-                                                    </option>
-                                                @endforeach
-                                            </select>
                                             @if ($errors->has($field_name))
                                             <span class="invalid feedback" role="alert">
                                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -337,6 +332,34 @@
                                             </span>
                                             @endif
                                         </div>
+
+                                        @if($type == 2)
+                                        <div class="form-group">
+                                            <?php
+                                            $field_name = 'inputs.' . $key . '.klasifikasi_berlian';
+                                            $field_lable = __('Size');
+                                            $field_placeholder = Label_case($field_lable);
+                                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                            $required = '';
+                                            ?>
+                                            {{-- @if ($key==0) --}}
+                                            <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                            {{-- @endif --}}
+                                            <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}">
+                                                <option value="" selected>Select Size</option>
+                                                @foreach($dataKlasifikasiBerlian as $row)
+                                                    <option value="{{$row->name}}" {{ old($field_name) == $row->id ? 'selected' : '' }}>
+                                                        {{$row->name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has($field_name))
+                                            <span class="invalid feedback" role="alert">
+                                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                            </span>
+                                            @endif
+                                        </div>
+
                                         <div class="form-group">
                                             <?php
                                             $field_name = 'inputs.' . $key . '.colour';
@@ -400,34 +423,78 @@
                                             </span>
                                             @endif
                                         </div>
+                                        @endif
+
+                                        @if($type == 1)
+                                        <div class="px-1 mt-3">
+                                        @if (!empty($inputs[$key]['karatberlians']) )
+                                            <button type="button" class="btn text-white text-sm btn-info btn-md sertifikat-button" data-toggle="modal" data-target="#sertifikatModal" wire:click = "setCurrentKey({{ $key }})" data-key="{{ $key }}">
+                                                Sertifikat
+                                            </button>
+                                        @endif
+                                        @if ($key == 0)
+                                        {{-- <div class="px-1 mt-4">
+                                            <button class="btn text-white text-xl btn-info btn-md" wire:click.prevent="addInput()" wire:loading.attr="disabled">
+                                                <span wire:loading.remove wire:target="add"><i class="bi bi-plus"></i></span>
+                                                <span wire:loading wire:target="add" class="text-center">
+                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                </span>
+                                            </button>
+                                        </div> --}}
+                                        @else
+                                        {{-- <div class="px-1"> --}}
+                                            <button class="btn text-white text-xl btn-danger btn-md ml-4" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
+                                                <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
+                                                <span wire:loading wire:target="remove({{$key}})" class="text-center">
+                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                </span>
+                                            </button>
+                                        {{-- </div> --}}
+                                        @endif
+                                        </div>
+                                        @endif
 
                                     </div>
-                                    @if ($key == 0)
-                                    <div class="px-1 mt-4">
-                                        <button class="btn text-white text-xl btn-info btn-md" wire:click.prevent="addInput()" wire:loading.attr="disabled">
-                                            <span wire:loading.remove wire:target="add"><i class="bi bi-plus"></i></span>
-                                            <span wire:loading wire:target="add" class="text-center">
-                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                            </span>
-                                        </button>
-                                    </div>
-                                    @else
-                                    <div class="px-1">
-                                        <button class="btn text-white text-xl btn-danger btn-md" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
-                                            <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
-                                            <span wire:loading wire:target="remove({{$key}})" class="text-center">
-                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                            </span>
-                                        </button>
-                                    </div>
+
+                                    @if($type == 2)
+                                        @if ($key == 0)
+                                        {{-- <div class="px-1 mt-4">
+                                            <button class="btn text-white text-xl btn-info btn-md" wire:click.prevent="addInput()" wire:loading.attr="disabled">
+                                                <span wire:loading.remove wire:target="add"><i class="bi bi-plus"></i></span>
+                                                <span wire:loading wire:target="add" class="text-center">
+                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                </span>
+                                            </button>
+                                        </div> --}}
+                                        @else
+                                        <div class="px-1">
+                                            <button class="btn text-white text-xl btn-danger btn-md ml-4" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
+                                                <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
+                                                <span wire:loading wire:target="remove({{$key}})" class="text-center">
+                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        @endif
                                     @endif
                                 </div>
                                 @endforeach
                             </div>
-                            @endif
+
+                            <div class="grid grid-cols-3 gap-3 mb-3">
+                                <div class="px-1 mt-2">
+                                    <button class="btn text-white text-sm btn-info btn-md" wire:click.prevent="addInput()" wire:loading.attr="disabled">
+                                        <span wire:loading.remove wire:target="add"> Tambah Item<i class="bi bi-plus"></i></span>
+                                        <span wire:loading wire:target="add" class="text-center">
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            {{-- @endif --}}
 
                             @if($type == 1)
-                            <div class="grid grid-cols-4 gap-2" id="komponenberlian">
+                            {{-- <div class="grid grid-cols-4 gap-2" id="komponenberlian">
 
                                 <div class="form-group">
                                     <?php
@@ -494,7 +561,7 @@
                                     </button>
                                 </div>
 
-                            </div>
+                            </div> --}}
                             @endif
 
                         {{-- ///batas --}}
@@ -520,8 +587,8 @@
                             @if($type == 1)
                             <div class="form-group">
                                 <?php
-                                $field_name =  'inputs.' . 0 . '.harga_beli';
-                                $field_name_currency =  'inputs.' . 0 . '.currency_id';
+                                $field_name =  'harga_beli';
+                                $field_name_currency =  'currency_id';
                                 $field_lable = __('Harga Beli');
                                 $field_placeholder = Label_case($field_lable);
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -774,6 +841,128 @@
     </form>
     </div>
 </div>
+
+
+{{-- Modal Sertifikat per diamond update terbaru sudah ditakedown jadi perhiasan, tapi takut berubah jadi tidak dihapus --}}
+<div class="modal fade" id="sertifikatModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal-dialog modal-lg" role="document">
+    <form wire:submit.prevent="" enctype="multipart/form-data">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="addModalLabel">Add Sertifikat</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+                @csrf
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="flex flex-row grid grid-cols-2 gap-2">
+                                    @if (session()->has('message'))
+                                    <div class="alert alert-success">
+                                        {{ session('message') }}
+                                    </div>
+                                    @endif
+                                    <div class="col-span-3 px-2">
+                                        <div class="flex flex-row grid grid-cols-2 gap-1 mt-2">
+                                            <div class="form-group">
+                                                <?php
+                                                $field_name = "sertifikat.$currentKey.code";
+                                                $field_lable = "Code";
+                                                $field_placeholder = $field_lable;
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = '';
+                                                ?>
+                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                <input class="form-control" type="text" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                                <input id="key" type="hidden" name="key" class="form-control" value="">
+
+                                                @if ($errors->has($field_name))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                </span>
+                                                @endif
+                                            </div>
+
+                                            {{-- <div class="form-group">
+                                                @php
+                                                $field_name = "sertifikat.$currentKey.tanggal";
+                                                $field_lable = __('Tanggal');
+                                                $field_placeholder = Label_case($field_lable);
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = '';
+                                                @endphp
+                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
+                                                <input id="{{ $field_name }}" type="date" name="{{ $field_name }}" class="form-control {{ $invalid }}" wire:model="{{ $field_name }}" value="{{ $hari_ini }}" placeholder="{{ $field_placeholder }}" {{ $required }} max="{{ $hari_ini }}">
+                                                @if ($errors->has($field_name))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                </span>
+                                                @endif
+                                            </div> --}}
+
+                                            <div class="form-group">
+                                                @php
+                                                $field_name = "sertifikat.$currentKey.certificate_type";
+                                                $field_lable = __('Jenis Sertifikat');
+                                                $field_placeholder = Label_case($field_lable);
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                $required = '';
+                                                @endphp
+                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
+                                                <input id="{{ $field_name }}" type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" wire:model="{{ $field_name }}" value="{{ $hari_ini }}" placeholder="{{ $field_placeholder }}" {{ $required }} max="{{ $hari_ini }}">
+                                                @if ($errors->has($field_name))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-row grid grid-cols-2 gap-1 mt-2">
+
+                                            @foreach ($dataCertificateAttribute as $key => $item)
+                                                <div class="form-group">
+                                                    <?php
+                                                    $field_name = "sertifikat.$currentKey.attribute.$item->id.keterangan";
+                                                    $field_name_attribute_id = "sertifikat.$currentKey.attribute.$item->id.diamond_certificate_attribute_id";
+                                                    $field_lable = $item->name;
+                                                    $field_placeholder = $field_lable;
+                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                    $required = '';
+                                                    ?>
+                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                    <input type="hidden" name="{{ $field_name_attribute_id }}" wire:model = "{{ $field_name_attribute_id }}" value="{{ $item->id }}" class="form-control">
+                                                    <input class="form-control" type="text" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+
+                                                    @if ($errors->has($field_name))
+                                                    <span class="invalid feedback" role="alert">
+                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                    </span>
+                                                    @endif
+                                                </div>
+                                                
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+
 @push('page_scripts')
 
     <script type="text/javascript">

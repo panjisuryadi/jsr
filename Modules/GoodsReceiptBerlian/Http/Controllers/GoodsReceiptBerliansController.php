@@ -14,13 +14,16 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use App\Models\User;
+use DateTime;
 use Modules\GoodsReceiptBerlian\Models\QcAttribute;
 use Modules\People\Entities\Supplier;
 use Lang;
 use Image;
 use Illuminate\Support\Facades\DB;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
+use Modules\Produksi\Models\DiamondCertificateAttribute;
 use Modules\Produksi\Models\DiamondCertifikatT;
+use Modules\Produksi\Models\ProduksiItems;
 
 class GoodsReceiptBerliansController extends Controller
 {
@@ -277,13 +280,13 @@ class GoodsReceiptBerliansController extends Controller
 
             DB::beginTransaction();
 
-            if(!empty($input['sertifikat']) || !empty($input['sertifikat']['code'])) {
-                $sertifikat = $input['sertifikat'];
-                if(isset($sertifikat['attribute'])) {
-                    unset($sertifikat['attribute']);
-                }
-                $diamond_certificate = DiamondCertifikatT::create($sertifikat);
-            }
+            // if(!empty($input['sertifikat']) || !empty($input['sertifikat']['code'])) {
+            //     $sertifikat = $input['sertifikat'];
+            //     if(isset($sertifikat['attribute'])) {
+            //         unset($sertifikat['attribute']);
+            //     }
+            //     $diamond_certificate = DiamondCertifikatT::create($sertifikat);
+            // }
 
             $goodsreceipt = $this->module_model::create([
                 'code'                  => $input['code'],
@@ -303,27 +306,114 @@ class GoodsReceiptBerliansController extends Controller
                 'nama_produk'           => $input['nama_produk'],
                 'kategoriproduk_id'     => $input['kategoriproduk_id'],
                 'images'                => $input['images'],
-                'diamond_certificate_id'=> isset($diamond_certificate->id) ? $diamond_certificate->id : null,
+                'tipe_pembayaran'       => $input['tipe_pembayaran'],
+                // 'diamond_certificate_id'=> isset($diamond_certificate->id) ? $diamond_certificate->id : null,
                 'is_qc'                 => 1,
             ]);
             $goodsreceipt_id = $goodsreceipt->id;
-            $qcattribute_data = [];
+
+
+            $product_items = [];
             if(!empty($input['items'])){
                 foreach($input['items'] as $val) {
-                    $val['goodsreceipt_id'] = $goodsreceipt_id;
-                    $val['kategoriproduk_id'] = $goodsreceipt->kategoriproduk_id;
+                    $val['goodsreceipt_id'] = $goodsreceipt->id;
+                    $val['shapeberlian_id'] = !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null;
+                    $val['kategoriproduk_id'] = !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : null;
+
+                    $val['model_id'] = !empty($val['model_id']) ? $val['model_id'] : $goodsreceipt->model_id;
+                    $val['karat_id'] = !empty($val['karat_id']) ? $val['karat_id'] : $goodsreceipt->karat_id;
+                    
                     $val['berat_real'] = !empty($val['berat_real']) ? $val['berat_real'] : 0;
                     $val['berat_kotor'] = !empty($val['berat_kotor']) ? $val['berat_kotor'] : 0;
-                    $val['shapeberlian_id'] = !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null;
-                    if(!empty($val['karatberlians'])) {
-                        $qcattribute_data[] = $val;
+                    $val['diamond_certificate_id'] = null;
+
+                    if(!empty($val['karatberlians']) || (!empty($val['model_id'])) && !empty($val['berat']) ) {
+                        $product_items[] = $val;
                     }
                 }
             }
 
-            if(!empty($qcattribute_data)) {
-                GoodsReceiptItem::insert($qcattribute_data);
+            if(!empty($product_items)) {
+                $arraySertifikatAttributes = [];
+                $hari_ini = new DateTime();
+                $hari_ini = $hari_ini->format('Y-m-d');
+                $arrayProdukItems = $arrayGoodsreceiptItems = [];
+                foreach($product_items as $k => $val) {
+                    $sertifikat = !empty($val['sertifikat']) ? $val['sertifikat'] : [];
+
+                    if(!empty($sertifikat)) {
+                        $attribute = !empty($sertifikat['attribute']) ? $sertifikat['attribute'] : [];
+                        if(isset($sertifikat['attribute'])) {
+                            unset($sertifikat['attribute']);
+                        }
+                        $sertifikat['tanggal'] = !empty($sertifikat['tanggal']) ? $sertifikat['tanggal'] : $hari_ini;
+                        $sertifikat['code'] = !empty($sertifikat['code']) ? $sertifikat['code'] : '-';
+                        $diamond_certificate = DiamondCertifikatT::create($sertifikat);
+                        $arraySertifikatAttributes[$diamond_certificate->id] = $attribute;
+                        $val['diamond_certificate_id'] = $diamond_certificate->id;
+                    }
+                    if(isset($val['sertifikat'])) {
+                        unset($val['sertifikat']);
+                    }
+                    
+                    $arrayGoodsreceiptItems[$k] = $val;
+                    if(!empty($goodsreceipt->tipe_penerimaan_barang) && $goodsreceipt->tipe_penerimaan_barang == 1 && !empty($goodsreceipt->karat_id)) {
+                        $arrayGoodsreceiptItems[$k]['status'] = 2;
+                    }
+
+                    
+                }
+
+                GoodsReceiptItem::insert($arrayGoodsreceiptItems);
+                if(!empty($goodsreceipt->tipe_penerimaan_barang) && $goodsreceipt->tipe_penerimaan_barang == 1 && !empty($goodsreceipt->karat_id)) {
+                    ProduksiItems::create([
+                        'goodsreceipt_id' => $goodsreceipt_id,
+                        'model_id' => !empty($input['model_id']) ? $input['model_id'] : null,
+                        'karat_id' => !empty($input['karat_id']) ? $input['karat_id'] : null,
+                        'berat' => !empty($input['total_berat_kotor']) ? $input['total_berat_kotor'] :  0,
+                    ]);
+                }
+                
+                $dataInsertSertifikatAttribute = [];
+                if(!empty($arraySertifikatAttributes)) {
+                    foreach($arraySertifikatAttributes as $key => $val) { 
+                        foreach($val as $k => $row){
+                            $dataInsertSertifikatAttribute[] = [
+                                'diamond_certificate_id' => $key,
+                                'diamond_certificate_attributes_id' => $k,
+                                'keterangan' => !empty($row['keterangan']) ? $row['keterangan'] : '',
+                            ];
+                        }
+                    }
+                }else{
+                    $dataInsertSertifikatAttribute = !empty($input['sertifikat']['attribute']) ? $input['sertifikat']['attribute'] : [];
+                    foreach($dataInsertSertifikatAttribute as $k => $row) {
+                        $dataInsertSertifikatAttribute[$k]['diamond_certificate_id'] = $diamond_certificate->id;
+                        $dataInsertSertifikatAttribute[$k]['diamond_certificate_attributes_id'] = $k;
+                        $dataInsertSertifikatAttribute[$k]['keterangan'] = !empty($row['keterangan']) ? $row['keterangan'] : '';
+                    }
+                }
+
+                DiamondCertificateAttribute::insert($dataInsertSertifikatAttribute);
             }
+
+            // $qcattribute_data = [];
+            // if(!empty($input['items'])){
+            //     foreach($input['items'] as $val) {
+            //         $val['goodsreceipt_id'] = $goodsreceipt_id;
+            //         $val['kategoriproduk_id'] = $goodsreceipt->kategoriproduk_id;
+            //         $val['berat_real'] = !empty($val['berat_real']) ? $val['berat_real'] : 0;
+            //         $val['berat_kotor'] = !empty($val['berat_kotor']) ? $val['berat_kotor'] : 0;
+            //         $val['shapeberlian_id'] = !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null;
+            //         if(!empty($val['karatberlians'])) {
+            //             $qcattribute_data[] = $val;
+            //         }
+            //     }
+            // }
+
+            // if(!empty($qcattribute_data)) {
+            //     GoodsReceiptItem::insert($qcattribute_data);
+            // }
 
         } catch (\Throwable $th) {
             DB::rollBack();
