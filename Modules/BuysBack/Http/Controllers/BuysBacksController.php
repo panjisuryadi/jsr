@@ -609,6 +609,53 @@ public function store_ajax(Request $request)
 
     }
 
+
+ public function show_buysback_nota($id)
+    {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_buybacktoko'), 403);
+        $buyback_nota = BuyBackNota::findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.show',
+           compact('module_name',
+            'module_action',
+            'buyback_nota',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+
+
+
+
+
+  public function show_distribusi()
+    {
+        dd('dsdsdsd');
+   
+      
+
+    }
+
+
+
+
+
+
+
+
     /**
      * Show the form for editing the specified resource.
      * @param int $id

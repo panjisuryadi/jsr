@@ -659,7 +659,7 @@ public function show($id)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
-        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        abort_if(Gate::denies('show_buybacktoko'), 403);
         $detail = $module_model::findOrFail($id);
         //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.modal.show',
@@ -670,6 +670,40 @@ public function show($id)
             'module_icon', 'module_model'));
 
     }
+
+
+
+
+public function show_distribusi($id)
+    {
+
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_buybacktoko'), 403);
+        $detail = $module_model::findOrFail($id);
+        //dd($detail);
+          return view(''.$module_name.'::'.$module_path.'.modal.show',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+
+
 
 
 

@@ -27,6 +27,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/detail/{dist_toko}", ['as' => "$module_name.detail", 'uses' => "$controller_name@detail"]);
 
+        Route::get("$module_name/show_distribusi/{id}", ['as' => "$module_name.show_distribusi", 'uses' => "$controller_name@show_distribusi"]);
+
+    
+
   Route::get("$module_name/detail-distribusi/{dist_toko}", ['as' => "$module_name.detail_distribusi", 'uses' => "$controller_name@detail_distribusi"]);
 
 
