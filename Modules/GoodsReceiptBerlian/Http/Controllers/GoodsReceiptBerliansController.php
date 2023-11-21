@@ -275,6 +275,7 @@ class GoodsReceiptBerliansController extends Controller
                 $input['images'] = "$fileName";
             }
 
+            DB::beginTransaction();
 
             if(!empty($input['sertifikat']) || !empty($input['sertifikat']['code'])) {
                 $sertifikat = $input['sertifikat'];
@@ -284,7 +285,6 @@ class GoodsReceiptBerliansController extends Controller
                 $diamond_certificate = DiamondCertifikatT::create($sertifikat);
             }
 
-            DB::beginTransaction();
             $goodsreceipt = $this->module_model::create([
                 'code'                  => $input['code'],
                 'date'                  => $input['tanggal'],

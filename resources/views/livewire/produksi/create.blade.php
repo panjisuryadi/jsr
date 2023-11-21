@@ -35,9 +35,11 @@
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                 $required = "required";
                                             ?>
-                                            <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                            <label for="{{ $field_name }}">{{ $field_lable }}
+                                                {{-- <span class="text-danger">*</span> --}}
+                                            </label>
                                             <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} >
-                                                <option value="">Pilih Bahan</option>
+                                                <option value="">Pilih </option>
                                                 @foreach($dataItemProduksi as $item)
                                                 <option value="{{ $item->id }}" > {{ $item->model?->name . ' ' . $item->karat?->name . ' ' . $item->berat . ' gr'}} </option>
                                                 @endforeach
@@ -168,10 +170,10 @@
                                                     @endif
 
                                                     <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} >
-                                                        <option value="">Pilih Bahan</option>
+                                                        <option value="">Pilih </option>
                                                         @foreach($dataPenerimaanBerlian as $item)
                                                         @if($item->goodsreceiptitem->tipe_penerimaan_barang == (!empty($inputs[$key]['type']) ? $inputs[$key]['type'] : 0))
-                                                        <option value=" {{ $item->id }}" > {{ $item->code . ' (' . $item->klasifikasi_berlian . ')'}} </option>
+                                                        <option value=" {{ $item->id }}" > {{ $item->code . ' ' . $item->klasifikasi_berlian}} </option>
                                                         @endif
                                                         @endforeach
                                                     </select>
