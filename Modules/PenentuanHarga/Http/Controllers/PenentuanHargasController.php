@@ -91,12 +91,12 @@ public function index_data(Request $request)
                                 return $tb;
                             }) 
 
-                          ->editColumn('karat', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .$data->karat->name . '
-                                    </div>';
-                                return $tb;
-                            })  
+          ->editColumn('karat', function ($data) {
+             $tb = '<div class="items-center text-center font-semibold">
+                     ' .$data->karat->name . '| &nbsp;<span class="text-blue-500">' .$data->karat->coef . '</span>
+                    </div>';
+                return $tb;
+            })  
 
                              ->editColumn('harga_emas', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -124,14 +124,7 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
-                          ->editColumn('karat', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .$data->karat->kode . '
-                                    </div>';
-                                return $tb;
-                            })
-
-
+                     
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -149,7 +142,7 @@ public function index_data(Request $request)
                                         'harga_modal',
                                         'karat',
                                         'harga_jual',
-                                        'karat', 
+                                      
                                         'user'])
                         ->make(true);
                      }
@@ -443,7 +436,11 @@ public function show($id)
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+
+
+
+
+    public function update_old(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -454,27 +451,16 @@ public function show($id)
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
         $request->validate([
-            'name' => 'required|min:3|max:191',
+            'harga_emas' => 'required',
                  ]);
         $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
+        $price = $params['harga_emas'] / $$module_name_singular->karat->coef;
+        $params['harga_modal'] = $params['harga_modal'];
+        $params['margin'] = $params['margin'];
+        $params['harga_emas'] = $price;
 
-       // if ($image = $request->file('image')) {
-       //                if ($$module_name_singular->image !== 'no_foto.png') {
-       //                    @unlink(imageUrl() . $$module_name_singular->image);
-       //                  }
-       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
-       //              $constraint->aspectRatio();
-       //              })->encode();
-       //   $normalpath = 'uploads/' . $gambar;
-       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-       //   Storage::disk($storage)->put($normalpath, (string) $normal);
-       //   $params['image'] = "$gambar";
-       //  }else{
-       //      unset($params['image']);
-       //  }
+      //  dd($params);
+  
         $$module_name_singular->update($params);
          toast(''. $module_title.' Updated!', 'success');
          return redirect()->route(''.$module_name.'.index');
@@ -484,7 +470,7 @@ public function show($id)
 
 
 //update ajax version
-public function update_ajax(Request $request, $id)
+public function update(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -496,11 +482,8 @@ public function update_ajax(Request $request, $id)
         $$module_name_singular = $module_model::findOrFail($id);
         $validator = \Validator::make($request->all(),
             [
-            'code' => [
-                'required',
-                'unique:'.$module_model.',code,'.$id
-            ],
-            'name' => 'required|max:191',
+
+            'harga_emas' => 'required|max:191',
 
 
         ]);
@@ -509,12 +492,14 @@ public function update_ajax(Request $request, $id)
           return response()->json(['error'=>$validator->errors()]);
         }
 
-        $input = $request->all();
         $params = $request->except('_token');
+        $price = $params['harga_emas']*$$module_name_singular->karat->coef;
+        $params['harga_modal'] =$price;
+        $params['margin'] = $params['margin'];
+        $params['harga_emas'] = $params['harga_emas'];
+
         // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $params['code'] = $params['code'];
-        $params['name'] = $params['name'];
-        $$module_name_singular->update($params);
+          $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }

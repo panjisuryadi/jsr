@@ -93,14 +93,14 @@
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#Buysback">Buys Back</a>
         </li>
-
+{{-- 
         @can('access_buysback_nota')
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#BuysBacNota">
             Buys Back Nota</a>
         </li> 
         @endcan
-
+ --}}
 
         @can('show_distribusi')
         <li class="nav-item">
@@ -211,17 +211,17 @@
                             </td>
                             <td>{{ $row->created_by }}</td>
                          
-                            <td class="text-center">
-                              @can('show_distribusi')
-                                 <a href="{{ route("distribusitoko.show",$row->id) }}"
-                                     class="btn btn-outline-info btn-sm">
-                                        <i class="bi bi-eye"></i>
-                                        &nbsp;@lang('Approve')
-                                    </a>
-                                @endcan
+            <td class="text-center">
+              @can('show_distribusi')
+                 <a href="{{ route("distribusitoko.detail_distribusi",$row) }}"
+                     class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-eye"></i>
+                        &nbsp;@lang('Approve')
+                    </a>
+                @endcan
 
 
-                            </td>
+            </td>
                         </tr>
                         @empty
                         <p>Tidak ada Data</p>
