@@ -504,7 +504,7 @@ public function update(Request $request, $id)
         if ($params['margin']) {
             $params['harga_jual'] = $params['harga_modal']+$params['margin'];
         } else {
-           $params['harga_jual'] = $params['harga_emas'];
+           $params['harga_jual'] = $params['harga_modal'];
         }
         
         $params['lock'] = 1;
