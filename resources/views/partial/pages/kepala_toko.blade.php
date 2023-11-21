@@ -168,7 +168,10 @@
                             </td>
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                            <tr>
+                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
                         @endforelse
                         
                     </table>
@@ -220,7 +223,10 @@
             </td>
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                            <tr>
+                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
                         @endforelse
                         
                     </table>
@@ -324,7 +330,10 @@
                             </td>
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                            <tr>
+                                <td colspan="5"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
                         @endforelse
                         
                     </table>
@@ -374,7 +383,10 @@
                             </td>
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                           <tr>
+                                <td colspan="6"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
                         @endforelse
                         
                     </table>
