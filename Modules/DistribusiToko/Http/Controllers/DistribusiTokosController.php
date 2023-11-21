@@ -326,7 +326,7 @@ public function index_data(Request $request)
 
 
 //buat dashboard manager
-//buat dashboard manager
+
 public function index_data_table(Request $request)
 
     {

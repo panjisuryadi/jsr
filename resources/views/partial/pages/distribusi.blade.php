@@ -2,7 +2,7 @@
   <div class="w-3/4">
 
 
-
+@can('dashboard_distribusi')
 
 <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
 <div class="card border-0">
@@ -60,16 +60,16 @@
 </div>
 
 
+@endcan
 
 
-
-
+@can('access_distribusi')
 
   <div class="card">
     <div class="card-body">
         <div class="flex justify-between py-1 border-bottom">
             <div>
-             <span class="font-semibold text-gray-600 text-lg">{{ ucfirst($status) }}</span> 
+             <span class="font-semibold text-gray-600 text-lg">{{ ucfirst('Distribusi') }}</span> 
             </div>
             <div id="buttons">
             </div>
@@ -105,7 +105,7 @@
 </div>
 
 
-
+@endcan
 
 
   </div>
@@ -143,12 +143,6 @@
 
   </div>
 </div>
-
-
-
-
-
-
 
 
 @section('third_party_stylesheets')
@@ -191,8 +185,10 @@ div.dataTables_wrapper div.dataTables_paginate {
 
 
 
+
 <x-library.datatable />
 @push('page_scripts')
+@can('access_distribusi')
 
   <script type="text/javascript">
         $('#datatable').DataTable({
@@ -328,21 +324,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 
     </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@endcan
 
 <script type="text/javascript">
 jQuery.noConflict();
@@ -446,4 +428,6 @@ $(document).on('click', '#Tambah,#QrCode,#Show, #Edit', function(e){
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
+
 @endpush
+
