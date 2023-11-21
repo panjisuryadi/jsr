@@ -508,8 +508,7 @@ public function update(Request $request, $id)
         }
         
         $params['lock'] = 1;
-        
-          $$module_name_singular->update($params);
+        $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }

@@ -195,7 +195,7 @@
                             <th class="text-center">{{ label_case('Pic') }}</th>
                             <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
-                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::whereIn('status_id',[2])->get() as $row)
+                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::inprogress() as $row)
                             @if($loop->index > 4)
                                @break
                             @endif
