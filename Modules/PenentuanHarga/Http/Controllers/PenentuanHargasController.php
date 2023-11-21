@@ -91,12 +91,12 @@ public function index_data(Request $request)
                                 return $tb;
                             }) 
 
-          ->editColumn('karat', function ($data) {
-             $tb = '<div class="items-center text-center font-semibold">
-                     ' .$data->karat->name . '| &nbsp;<span class="text-blue-500">' .$data->karat->coef . '</span>
-                    </div>';
-                return $tb;
-            })  
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center font-semibold">
+                                     ' .$data->karat->name . '| &nbsp;<span class="text-blue-500">' .$data->karat->coef . '</span>
+                                    </div>';
+                                return $tb;
+                            })  
 
                              ->editColumn('harga_emas', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -497,8 +497,8 @@ public function update(Request $request, $id)
         $params['harga_modal'] =$price;
         $params['margin'] = $params['margin'];
         $params['harga_emas'] = $params['harga_emas'];
-
-        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+        $params['lock'] = 1;
+        //$input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
           $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

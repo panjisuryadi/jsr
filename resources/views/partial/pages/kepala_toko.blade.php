@@ -212,13 +212,9 @@
                             <td>{{ $row->created_by }}</td>
                          
             <td class="text-center">
-              @can('show_distribusi')
-                 <a href="{{ route("distribusitoko.detail_distribusi",$row) }}"
-                     class="btn btn-outline-info btn-sm">
-                        <i class="bi bi-eye"></i>
-                        &nbsp;@lang('Approve')
-                    </a>
-                @endcan
+             <a  href="{{ route('distribusitoko.detail_distribusi', $row->id) }}" class="btn btn-success px-4 btn-sm w-full">
+    <i class="bi bi-eye"></i> Approve
+</a>
 
 
             </td>
@@ -363,8 +359,8 @@
                                 <td>{{ shortdate($row->date) }}</td>
                                 <td>{{ $row->invoice }}</td>
                                 <td>{{ $row->invoice_series }}</td>
-                                <td>{{ $row->cabang->name }}</td>
-                                <td>{{ $row->pic->name }}</td>
+                                <td>{{ @$row->cabang->name }}</td>
+                                <td>{{ @$row->pic->name }}</td>
                             <td>
                                 
                                 @can('approve_distribusi')

@@ -34,6 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get("$module_name/detail-distribusi/{dist_toko}", ['as' => "$module_name.detail_distribusi", 'uses' => "$controller_name@detail_distribusi"]);
 
 
+  Route::get("$module_name/view-distribusi/{id}", ['as' => "$module_name.view_distribusi", 'uses' => "$controller_name@view_distribusi"]);
+
+
   Route::get("$module_name/tracking-distribusi/{dist_toko}", ['as' => "$module_name.tracking", 'uses' => "$controller_name@tracking"]);
 
 

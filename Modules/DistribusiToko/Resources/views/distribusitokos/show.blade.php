@@ -21,7 +21,7 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <th> Name</th>
-                                    <td>{{ @$detail->name }}</td>
+                                    <td>{{ @$detail }}</td>
                                 </tr>
 
                             </table>
