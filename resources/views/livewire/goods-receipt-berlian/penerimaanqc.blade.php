@@ -95,9 +95,9 @@
                                 </div>
                                 
                                 @if ($type == 1) 
-                                <div class="form-group" id="karat_id">
+                                <div class="form-group">
                                     @php
-                                        $field_name = 'karat_id';
+                                        $field_name = 'inputs.' . 0 . '.karat_id';
                                         $field_lable = __('Kadar Emas');
                                         $field_placeholder = Label_case($field_lable);
                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -109,6 +109,29 @@
                                         @foreach($dataKarat as $row)
                                             <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
                                                 {{$row->name}} | {{$row->kode}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    @php
+                                        $field_name = 'inputs.' . 0 . '.model_id';
+                                        $field_lable = __('Jenis Perhiasan');
+                                        $field_placeholder = Label_case($field_lable);
+                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                        $required = '';
+                                    @endphp
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} </label>
+                                    <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                        <option value="" selected >Jenis Perhiasan</option>
+                                        @foreach($dataGroup as $row)
+                                            <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+                                                {{$row->name}}
                                             </option>
                                         @endforeach
                                     </select>
