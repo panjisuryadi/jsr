@@ -493,12 +493,22 @@ public function update(Request $request, $id)
         }
 
         $params = $request->except('_token');
+        $params['harga_emas'] = preg_replace("/[^0-9]/", "", $params['harga_emas']);
+        $params['margin'] = preg_replace("/[^0-9]/", "", $params['margin']);
         $price = $params['harga_emas']*$$module_name_singular->karat->coef;
         $params['harga_modal'] =$price;
         $params['margin'] = $params['margin'];
         $params['harga_emas'] = $params['harga_emas'];
+        $params['harga_jual'] = $params['harga_modal']+$params['margin'];
+
+        if ($params['margin']) {
+            $params['harga_jual'] = $params['harga_modal']+$params['margin'];
+        } else {
+           $params['harga_jual'] = $params['harga_emas'];
+        }
+        
         $params['lock'] = 1;
-        //$input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+        
           $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

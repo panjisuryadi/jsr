@@ -146,6 +146,14 @@ $(document).on('click', '#Tambah, #Edit', function(e){
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });
+
+
+function autoRefresh(){
+      var table = $('#datatable').DataTable();
+        table.ajax.reload();
+
+         }
+
 })(jQuery);
 </script>
 @endpush
