@@ -204,8 +204,8 @@ class Create extends Component
         $rules = [
             'produksi_item_id' => 'required',
             'code' => 'required|unique:products,product_code',
-            'model_id' => 'required',
-            'karat_id' => 'required',
+            // 'model_id' => 'required',
+            // 'karat_id' => 'required',
             'category_id' => 'required',
             'harga_jual' => 'required',
             'berat' => 'required',

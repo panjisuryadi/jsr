@@ -16,6 +16,7 @@ use Livewire\WithFileUploads;
 use Modules\Currency\Entities\Currency;
 use Modules\GoodsReceipt\Models\KlasifikasiBerlian;
 use Modules\GoodsReceiptBerlian\Http\Controllers\GoodsReceiptBerliansController;
+use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\KaratBerlian\Models\KaratBerlian;
 use Modules\KaratBerlian\Models\ShapeBerlian;
@@ -74,6 +75,7 @@ class PenerimaanQc extends Component
     public $dataKaratBerlian = [];
     public $dataShapes = [];
     public $dataKategoriProduk = [];
+    public $dataGroup = [];
     public $kasir = [];
 
     public $hari_ini;
@@ -104,6 +106,7 @@ class PenerimaanQc extends Component
         $this->dataSupplier = Supplier::all();
         $this->dataKarat = Karat::whereNull('parent_id')->get();
         $this->dataKaratBerlian = KaratBerlian::all();
+        $this->dataGroup = Group::all();
         $this->dataShapes = ShapeBerlian::all();
         $this->dataKategoriProduk = KategoriProduk::all();
         $this->hari_ini = new DateTime();
