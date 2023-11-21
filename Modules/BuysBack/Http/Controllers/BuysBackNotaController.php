@@ -158,30 +158,13 @@ public function index_data(Request $request)
      * @param int $id
      * @return Renderable
      */
-   public function show($id)
-    {
-        if(AdjustmentSetting::exists()){
-            toast('Stock Opname sedang Aktif!', 'error');
-            return redirect()->back();
-        }
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-        $module_action = 'Show';
-        abort_if(Gate::denies('show_buybacktoko'), 403);
-        $detail = $module_model::with('customer','product','karat')->where('id',$id)->first();
-        //dd($detail);
-          return view(''.$module_name.'::'.$module_path.'.show',
-           compact('module_name',
-            'module_action',
-            'detail',
-            'module_title',
-            'module_icon', 'module_model'));
+ 
 
-    }
+
+
+
+
+
 
 
 private function randomPhone()

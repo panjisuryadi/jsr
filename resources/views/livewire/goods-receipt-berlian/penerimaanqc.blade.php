@@ -94,16 +94,16 @@
                                     @endif
                                 </div>
                                 
-                                @if ($type == 2) 
-                                {{-- <div class="form-group" id="karat_id">
+                                @if ($type == 1) 
+                                <div class="form-group">
                                     @php
-                                        $field_name = 'karat_id';
+                                        $field_name = 'inputs.' . 0 . '.karat_id';
                                         $field_lable = __('Kadar Emas');
                                         $field_placeholder = Label_case($field_lable);
                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                         $required = '';
                                     @endphp
-                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} <span class="text-danger">*</span></label>
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} </label>
                                     <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                         <option value="" selected >Select Karat</option>
                                         @foreach($dataKarat as $row)
@@ -117,7 +117,30 @@
                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                                     </span>
                                     @endif
-                                </div> --}}
+                                </div>
+                                <div class="form-group">
+                                    @php
+                                        $field_name = 'inputs.' . 0 . '.model_id';
+                                        $field_lable = __('Jenis Perhiasan');
+                                        $field_placeholder = Label_case($field_lable);
+                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                        $required = '';
+                                    @endphp
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} </label>
+                                    <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
+                                        <option value="" selected >Jenis Perhiasan</option>
+                                        @foreach($dataGroup as $row)
+                                            <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+                                                {{$row->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
                                 @endif
                                 
                                 @if($type == 1)
@@ -236,7 +259,7 @@
                                             {{-- @if ($key==0) --}}
                                             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                             {{-- @endif --}}
-                                            <input class="form-control numeric" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" $required>
+                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" $required>
 
                                             @if ($errors->has($field_name))
                                             <span class="invalid feedback" role="alert">
@@ -415,7 +438,7 @@
                                     $required = "required";
                                     ?>
                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                    <input class="form-control numeric" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" $required>
+                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" $required>
                                     @if ($errors->has($field_name))
                                     <span class="invalid feedback" role="alert">
                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">

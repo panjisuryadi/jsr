@@ -278,10 +278,12 @@ class GenerateMenus
                 'order'         => 3,
                 'activematches' => [
                     'penentuanhargas*',
+                    'buysback*',
 
                 ],
                 'permission'    => ['access_penentuanhargas',
                                     'access_buys_back_luar',
+                                    'access_buysback_nota',
                                     'access_buybacktoko'],
             ]);
             $penerimaan->link->attr([
@@ -303,6 +305,26 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+
+     // EMAS
+            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+                <div class="break">'.__('Buy Back Nota').'</div>', [
+                'route' => 'home.buysbacknota',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+               
+                'permission'    => ['access_buys_back_luar'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+
 
             // EMAS - TOKO - PENERIMAAN - Penerimaan Barang Luar
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
@@ -349,40 +371,42 @@ class GenerateMenus
             ]);
 
 
-        // buysbacknota
-        $buysbacknota = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i>Buys Back Nota', [
-            'class' => 'c-sidebar-nav-dropdown',
-        ])
-        ->data([
-            'order'         => 2,
-            'activematches' => [
-                'home*',
-                'buysback*',
+        // // buysbacknota
+        // $buysbacknota = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i>Buys Back Nota', [
+        //     'class' => 'c-sidebar-nav-dropdown',
+        // ])
+        // ->data([
+        //     'order'         => 2,
+        //     'activematches' => [
+        //         'home*',
+        //         'buysback*',
               
 
           
-            ],
-            'permission' => ['access_buysback_nota',
+        //     ],
+        //     'permission' => ['access_buysback_nota',
                           
-                             'create_buysback_nota'],
-        ]);
-        $buysbacknota->link->attr([
-            'class' => 'c-sidebar-nav-dropdown-toggle',
-            'href'  => '#',
-        ]);
+        //                      'create_buysback_nota'],
+        // ]);
+        // $buysbacknota->link->attr([
+        //     'class' => 'c-sidebar-nav-dropdown-toggle',
+        //     'href'  => '#',
+        // ]);
 
-        $buysbacknota->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Buysback Nota'), [
-            'route' => 'home.buysbacknota',
-            'class' => 'nav-item',
-        ])
-        ->data([
-            'order'         => 2,
-            'activematches' => ['buysback*'],
-            'permission'    => ['access_buysback_nota','access_products'],
-        ])
-        ->link->attr([
-            'class' => 'c-sidebar-nav-link py-2',
-        ]);
+        // $buysbacknota->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Buysback Nota'), [
+        //     'route' => 'home.buysbacknota',
+        //     'class' => 'nav-item',
+        // ])
+        // ->data([
+        //     'order'         => 2,
+        //     'activematches' => ['buysback*'],
+        //     'permission'    => ['access_buysback_nota','access_products'],
+        // ])
+        // ->link->attr([
+        //     'class' => 'c-sidebar-nav-link py-2',
+        // ]);
+
+
 
 
             // EMAS - TOKO - Distribusi Toko

@@ -103,7 +103,7 @@
                                         $berlian_info .= ' '.$shape . ' '. $item->qty . ': ' . (float)$item->karatberlians . ' ct ';
                                     }
                                 }
-                                $image = $data->image;
+                                $image = isset($data->image) ? $data->image : (isset($data->images) ? $data->images : '');
                                 $imagePath = '/' .imageUrl() .'produksi/' . @$image;
                                 if(!file_exists(storage_path().'/app/public/uploads/produksi/'.@$image)){
                                     $imagePath = '/' .imageUrl() .'/' . @$image;

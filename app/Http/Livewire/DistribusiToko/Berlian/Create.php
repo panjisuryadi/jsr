@@ -106,17 +106,17 @@ class Create extends Component
 
     public function render(){
         $this->exceptProduksiId = array_merge($this->exceptProduksiId, $this->produksis_id);
-        $data = Produksi::with('karatjadi', 'model', 'produksi_items.shape')->where('status',1);
+        $data = Product::with('karat', 'group',)->where('status_id',11);
         if (!empty($this->exceptProduksiId)) {
-            $data = $data->whereNotIn('id', $this->exceptProduksiId);
-        }
-        if (!empty($this->search)) {
-            $search = $this->search;
-            $data->where(function($query) use ($search) {
-                $query->where('code','like', '%'. $search . '%');
-                $query->orWhere('berat','like', '%'. $search . '%');
-            });
-        }
+                $data = $data->whereNotIn('id', $this->exceptProduksiId);
+            }
+            if (!empty($this->search)) {
+                $search = $this->search;
+                $data->where(function($query) use ($search) {
+                        $query->where('code','like', '%'. $search . '%');
+                        $query->orWhere('berat','like', '%'. $search . '%');
+                    });
+            }
         $data = $data->paginate(5);
         return view("livewire.distribusi-toko.berlian.create",[
             'products' => $data
@@ -195,8 +195,8 @@ class Create extends Component
                 ];
                 $distribusi_toko->items()->create([
                     'karat_id' => !empty($value['karat_id']) ? $value['karat_id'] : 0,
-                    'gold_weight' => !empty($value['berat']) ? $value['berat'] : 0,
-                    'produksis_id' => !empty($value['id']) ? $value['id'] : null,
+                    'gold_weight' => !empty($value['berat_emas']) ? $value['berat_emas'] : 0,
+                    'product_id' => !empty($value['id']) ? $value['id'] : null,
                     'additional_data' => json_encode($additional_data),
                 ]);
 
@@ -205,7 +205,7 @@ class Create extends Component
                 }
             }
             if(!empty($ids)) {
-                Produksi::whereIn('id', $ids)->update(['status' => 2]);
+                $product_insert = Product::whereIn('id', $ids)->update(['status_id' => 12, 'cabang_id' => $distribusi_toko->cabang_id]);
             }
             $distribusi_toko->setAsDraft();
 
@@ -250,8 +250,8 @@ class Create extends Component
         $val = json_decode($val);
         $this->exceptProduksiId[] = $val->id;
         $val = (array)$val;
-        $val['model'] = (array)$val['model'];
-        $val['karatjadi'] = (array)$val['karatjadi'];
+        $val['group'] = (array)$val['group'];
+        $val['karat'] = (array)$val['karat'];
         $this->distribusi_toko_details[] = $val;
         
     }
@@ -272,7 +272,7 @@ class Create extends Component
     {
         $this->kode_produk;
         if(!empty($this->kode_produk)){
-            $data = Produksi::with('karatjadi', 'model')->where('code',$this->kode_produk);
+            $data = Product::with('karat', 'group')->where('product_code',$this->kode_produk);
             if (!empty($this->exceptProduksiId)) {
                 $data = $data->whereNotIn('id', $this->exceptProduksiId);
             }

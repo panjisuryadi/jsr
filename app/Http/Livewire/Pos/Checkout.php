@@ -140,7 +140,6 @@ class Checkout extends Component
           $this->sub_total_hidden = $hitung_bayar;
 
         } else{
-      
          $this->sub_total = 'Rp ' . number_format($total, 0, ',', '.');
          $this->grand_total = 'Rp ' . number_format($total, 0, ',', '.');
          $this->total =$total;

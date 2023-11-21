@@ -275,6 +275,7 @@ class GoodsReceiptBerliansController extends Controller
                 $input['images'] = "$fileName";
             }
 
+            DB::beginTransaction();
 
             if(!empty($input['sertifikat']) || !empty($input['sertifikat']['code'])) {
                 $sertifikat = $input['sertifikat'];
@@ -284,7 +285,6 @@ class GoodsReceiptBerliansController extends Controller
                 $diamond_certificate = DiamondCertifikatT::create($sertifikat);
             }
 
-            DB::beginTransaction();
             $goodsreceipt = $this->module_model::create([
                 'code'                  => $input['code'],
                 'date'                  => $input['tanggal'],
@@ -311,6 +311,7 @@ class GoodsReceiptBerliansController extends Controller
             if(!empty($input['items'])){
                 foreach($input['items'] as $val) {
                     $val['goodsreceipt_id'] = $goodsreceipt_id;
+                    $val['kategoriproduk_id'] = $goodsreceipt->kategoriproduk_id;
                     $val['berat_real'] = !empty($val['berat_real']) ? $val['berat_real'] : 0;
                     $val['berat_kotor'] = !empty($val['berat_kotor']) ? $val['berat_kotor'] : 0;
                     $val['shapeberlian_id'] = !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null;

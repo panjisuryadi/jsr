@@ -167,54 +167,63 @@ class Detail extends Component
 
     private function createProductsBerlian($selected_items){
         $category_id = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->value('id');
+        $ids = [];
         foreach($this->dist_toko_items as $item){
             if(in_array($item->id, $selected_items)){
                 $item->approved();
                 $this->addStockCabang($item,$this->dist_toko->cabang_id);
-                $additional_data = !empty($item['additional_data']) ? $item['additional_data'] : [];
-                $additional_data = json_decode($additional_data,true);
-                $produk_information = !empty($additional_data['product_information']) ? $additional_data['product_information'] : [];
-                $model = !empty($produk_information['model']['name']) ? $produk_information['model']['name'] : '';
-                $karat_name = !empty($produk_information['karatjadi']['name']) ? $produk_information['karatjadi']['name'] : '';
-                $product = $item->product()->create([
-                    'category_id'               => !empty($produk_information['product_category_id']) ? $produk_information['product_category_id'] : $category_id,
-                    'cabang_id'                 => $this->dist_toko->cabang_id,
-                    'product_stock_alert'       => 5,
-                    'product_name'              => $model. ' ' . $karat_name .' Berlian' ,
-                    'product_code'              => !empty($produk_information['code']) ? $produk_information['code'] : '',
-                    'product_price'             => !empty($produk_information['harga_jual']) ? (int)$produk_information['harga_jual'] : '',
-                    'product_barcode_symbology' => 'C128',
-                    'product_unit'              => 'Gram',
-                    'karat_id'                  => !empty($produk_information['karat_id']) ? $produk_information['karat_id'] : null,
-                    'berat_emas'                => !empty($produk_information['berat']) ? $produk_information['berat'] : 0,
-                    'total_karatberlians'       => !empty($produk_information['total_karatberlians']) ? $produk_information['total_karatberlians'] : 0,
-                    'diamond_certificate_id'    => !empty($produk_information['diamond_certificate_id']) ? $produk_information['diamond_certificate_id'] : null,
-                    'images'                    => !empty($produk_information['image']) ? $produk_information['image'] : '',
-                ]);
+
+                if (!empty($item->product_id)) {
+                    $ids[] = $item->product_id;
+                }
+                // $additional_data = !empty($item['additional_data']) ? $item['additional_data'] : [];
+                // $additional_data = json_decode($additional_data,true);
+                // $produk_information = !empty($additional_data['product_information']) ? $additional_data['product_information'] : [];
+                // $model = !empty($produk_information['model']['name']) ? $produk_information['model']['name'] : '';
+                // $karat_name = !empty($produk_information['karatjadi']['name']) ? $produk_information['karatjadi']['name'] : '';
+                // $product = $item->product()->create([
+                //     'category_id'               => !empty($produk_information['product_category_id']) ? $produk_information['product_category_id'] : $category_id,
+                //     'cabang_id'                 => $this->dist_toko->cabang_id,
+                //     'product_stock_alert'       => 5,
+                //     'product_name'              => $model. ' ' . $karat_name .' Berlian' ,
+                //     'product_code'              => !empty($produk_information['code']) ? $produk_information['code'] : '',
+                //     'product_price'             => !empty($produk_information['harga_jual']) ? (int)$produk_information['harga_jual'] : '',
+                //     'product_barcode_symbology' => 'C128',
+                //     'product_unit'              => 'Gram',
+                //     'karat_id'                  => !empty($produk_information['karat_id']) ? $produk_information['karat_id'] : null,
+                //     'berat_emas'                => !empty($produk_information['berat']) ? $produk_information['berat'] : 0,
+                //     'total_karatberlians'       => !empty($produk_information['total_karatberlians']) ? $produk_information['total_karatberlians'] : 0,
+                //     'diamond_certificate_id'    => !empty($produk_information['diamond_certificate_id']) ? $produk_information['diamond_certificate_id'] : null,
+                //     'images'                    => !empty($produk_information['image']) ? $produk_information['image'] : '',
+                // ]);
                 
-                $produksi_items = !empty($produk_information['produksi_items']) ? $produk_information['produksi_items'] : [];
-                if(empty($produksi_items) && !empty($item->produksis_id)) { 
-                    $produksi_items = ProduksiItems::where('produksis_id', $item->produksis_id)->get();
-                }
+                // $produksi_items = !empty($produk_information['produksi_items']) ? $produk_information['produksi_items'] : [];
+                // if(empty($produksi_items) && !empty($item->produksis_id)) { 
+                //     $produksi_items = ProduksiItems::where('produksis_id', $item->produksis_id)->get();
+                // }
 
-                if (!empty($produksi_items)) {
-                    $array_produksi_items = [];
-                    foreach($produksi_items as $val) {
-                        $array_produksi_items[] = [
-                            'product_id' => $product->id,
-                            'karatberlians' => !empty($val['karatberlians']) ? $val['karatberlians'] : 0,
-                            'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
-                            'qty' => !empty($val['qty']) ? $val['qty'] : 0,
-                            'gia_report_number' => !empty($val['gia_report_number']) ? $val['gia_report_number'] : null
-                        ];
-                    }
+                // if (!empty($produksi_items)) {
+                //     $array_produksi_items = [];
+                //     foreach($produksi_items as $val) {
+                //         $array_produksi_items[] = [
+                //             'product_id' => $product->id,
+                //             'karatberlians' => !empty($val['karatberlians']) ? $val['karatberlians'] : 0,
+                //             'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
+                //             'qty' => !empty($val['qty']) ? $val['qty'] : 0,
+                //             'gia_report_number' => !empty($val['gia_report_number']) ? $val['gia_report_number'] : null
+                //         ];
+                //     }
 
-                    $insert = $product->product_item()->insert($array_produksi_items);
+                //     $insert = $product->product_item()->insert($array_produksi_items);
 
-                }
+                // }
             }else{
                 $item->returned();
             }
+        }
+        
+        if(!empty($ids)) {
+            Product::whereIn('id', $ids)->update(['status_id' => 1]);
         }
     }
 }

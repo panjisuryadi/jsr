@@ -13,6 +13,7 @@ use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Cabang\Models\Cabang;
 use Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Models\ProductStatus;
@@ -132,8 +133,10 @@ class Product extends Model implements HasMedia
 
     public static function generateCode()
         {
-            $dateCode = self::PRODUKCODE . '-';
-            $lastOrder = self::select([\DB::raw('MAX(products.product_code) AS last_code')])
+            $date = now()->format('dmY');
+            $produk_code = !empty(env('PRODUCT_CODE')) ? env('PRODUCT_CODE') : self::PRODUKCODE;
+            $dateCode = $produk_code . $date;
+            $lastOrder = self::select([DB::raw('MAX(products.product_code) AS last_code')])
                 ->where('product_code', 'like', $dateCode . '%')
                 ->first();
             $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
