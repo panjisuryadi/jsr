@@ -3341,6 +3341,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
+if (window.Livewire) {
+  window.Livewire.start();
+}
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! @coreui/coreui/dist/js/coreui.bundle.min */ "./node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js");

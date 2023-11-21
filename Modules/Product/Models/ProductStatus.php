@@ -26,6 +26,8 @@ class ProductStatus extends Model
     const REPARASI = 8;
     const SECOND = 9;
     const HILANG = 10;
+    const DRAFT = 11;
+    const OTW = 12;
 
 
     public function products(){

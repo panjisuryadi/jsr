@@ -1,8 +1,4 @@
 module.exports = {
-    mode: "jit",
-    purge: [
-        "./vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php",
-    ],
     content: [
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
