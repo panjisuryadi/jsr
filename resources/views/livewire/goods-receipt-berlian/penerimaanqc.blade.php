@@ -94,8 +94,8 @@
                                     @endif
                                 </div>
                                 
-                                @if ($type == 2) 
-                                {{-- <div class="form-group" id="karat_id">
+                                @if ($type == 1) 
+                                <div class="form-group" id="karat_id">
                                     @php
                                         $field_name = 'karat_id';
                                         $field_lable = __('Kadar Emas');
@@ -103,7 +103,7 @@
                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                         $required = '';
                                     @endphp
-                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} <span class="text-danger">*</span></label>
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} </label>
                                     <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                         <option value="" selected >Select Karat</option>
                                         @foreach($dataKarat as $row)
@@ -117,7 +117,7 @@
                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                                     </span>
                                     @endif
-                                </div> --}}
+                                </div>
                                 @endif
                                 
                                 @if($type == 1)
