@@ -145,12 +145,6 @@
 </div>
 
 
-
-
-
-
-
-
 @section('third_party_stylesheets')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 <style type="text/css">
@@ -191,8 +185,10 @@ div.dataTables_wrapper div.dataTables_paginate {
 
 
 
+
 <x-library.datatable />
 @push('page_scripts')
+@can('access_distribusi')
 
   <script type="text/javascript">
         $('#datatable').DataTable({
@@ -328,21 +324,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 
     </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@endcan
 
 <script type="text/javascript">
 jQuery.noConflict();
@@ -446,4 +428,6 @@ $(document).on('click', '#Tambah,#QrCode,#Show, #Edit', function(e){
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
+
 @endpush
+

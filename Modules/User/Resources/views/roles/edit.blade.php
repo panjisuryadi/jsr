@@ -252,6 +252,14 @@
             <label class="custom-control-label" for="dashboard_distribusi">
            Dashboard Distribusi </label>
         </div>
+        
+      <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input"
+            id="access_page_distribusi" name="permissions[]"
+            value="access_page_distribusi" {{ $role->hasPermissionTo('access_page_distribusi') ? 'checked' : '' }}>
+            <label class="custom-control-label" for="access_page_distribusi">
+           Akses Page Distribusi </label>
+        </div>
 
               
             

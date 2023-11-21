@@ -113,7 +113,7 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
    @include('partial.pages.office')
  @endcan
 
-  @can('access_distribusi')
+  @can('access_page_distribusi')
   @include('partial.pages.distribusi')
   @endcan 
 
