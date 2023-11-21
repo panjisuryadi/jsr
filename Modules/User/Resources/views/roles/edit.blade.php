@@ -261,6 +261,19 @@
            Akses Page Distribusi </label>
         </div>
 
+             
+          <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="dashboard_pos" name="permissions[]"
+                value="dashboard_pos" {{ $role->hasPermissionTo('dashboard_pos') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="dashboard_pos">
+                  {{ label_Case('dashboard_pos') }}
+               </label>
+            </div>
+
+
+
+
               
             
         </div>
@@ -1832,6 +1845,77 @@
 
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
+       P O S
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            
+  
+
+    
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_pos" name="permissions[]"
+                value="access_pos" {{ $role->hasPermissionTo('access_pos') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_pos">
+                  {{ label_Case('access_pos') }}
+               </label>
+            </div>
+
+
+    
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_pos" name="permissions[]"
+                value="create_pos" {{ $role->hasPermissionTo('create_pos') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_pos">
+                  {{ label_Case('create_pos') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_pos" name="permissions[]"
+                value="show_pos" {{ $role->hasPermissionTo('show_pos') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_pos">
+                  {{ label_Case('show_pos') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_pos" name="permissions[]"
+                value="edit_pos" {{ $role->hasPermissionTo('edit_pos') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_pos">
+                  {{ label_Case('edit_pos') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="print_pos" name="permissions[]"
+                value="print_pos" {{ $role->hasPermissionTo('print_pos') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="print_pos">
+                  {{ label_Case('print_pos') }}
+               </label>
+            </div>
+
+
+
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
        Settings
     </div>
     <div class="card-body">
@@ -1849,6 +1933,12 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
 
 
 <div class="card h-100 border-0 shadow">
