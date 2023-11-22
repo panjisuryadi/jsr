@@ -33,7 +33,7 @@ class DistribusiTokoItem extends Model implements HasMedia
     }
 
     public function product(){
-        return $this->hasOne(Product::class,'dist_toko_item_id','id');
+        return $this->belongsTo(Product::class);
     }
 
     public function approved(){

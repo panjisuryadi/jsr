@@ -101,6 +101,16 @@
         <div class="card">
 
             <div class="card-body">
+                @if ($errors->has('details_count'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="alert-body">
+                            <span>{{ $errors->first('details_count') }}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
                 <form wire:submit.prevent="store">
                     @csrf
                     <div class="form-row">
@@ -231,6 +241,9 @@
         $('#createModal').modal('hide');
         $('#imageprev').attr('src','');
         toastr.success('Berhasil Menambahkan Produk');
+    });
+    window.addEventListener('not:selected', event => {
+        toastr.error('Produk belum dipilih');
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>

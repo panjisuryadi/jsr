@@ -17,6 +17,7 @@ use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
+use Modules\ProdukModel\Models\ProdukModel;
 use Modules\Produksi\Models\Produksi;
 use Modules\Stok\Models\StockOffice;
 
@@ -63,7 +64,9 @@ class Create extends Component
 
     public $kode_produk;
 
-    public $product_categories = [];
+    public $product_categories;
+    public $groups;
+    public $models;
 
     public $isLogamMulia;
 
@@ -129,7 +132,7 @@ class Create extends Component
     }
 
     public function render(){
-        $data = Product::whereIn('status_id',[ProductStatus::PENDING_OFFICE,ProductStatus::CREATED]);
+        $data = Product::with('product_item')->whereIn('status_id',[ProductStatus::PENDING_OFFICE,ProductStatus::CREATED]);
         if (!empty($this->exceptProductId)) {
             $data = $data->whereNotIn('id', $this->exceptProductId);
         }
@@ -174,6 +177,8 @@ class Create extends Component
         $this->cabangs = Cabang::all();
         $kategori = KategoriProduk::where('slug','gold')->orWhere('slug','emas')->firstOrFail();
         $this->product_categories = Category::where('kategori_produk_id',$kategori->id)->get();
+        $this->groups = Group::all();
+        $this->models = ProdukModel::all();
 
         $this->dataKarat = Karat::where(function ($query) {
             $query
@@ -201,49 +206,66 @@ class Create extends Component
 
     public function store()
     {
-        $this->validate();
-        $kategoriproduk_id = LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
-
-        DB::beginTransaction();
-        try{
-            $distribusi_toko = DistribusiToko::create([
-                'cabang_id'                   => $this->distribusi_toko['cabang_id'],
-                'date'                        => $this->distribusi_toko['date'],
-                'no_invoice'                  => $this->distribusi_toko['no_distribusi_toko'],
-                'kategori_produk_id'          => $kategoriproduk_id,
-                'created_by'                  => auth()->user()->name,
-            ]);
-
-            $ids = [];
-            foreach($this->distribusi_toko_details as $key => $value) {
-                $additional_data = [
-                    "product_information" => $value
-                ];
-                $distribusi_toko->items()->create([
-                    'karat_id' => !empty($value['karat_id']) ? $value['karat_id'] : 0,
-                    'gold_weight' => !empty($value['berat']) ? $value['berat'] : 0,
-                    'produksis_id' => !empty($value['id']) ? $value['id'] : null,
-                    'additional_data' => json_encode($additional_data),
+        if(!count($this->distribusi_toko_details)){
+            $this->dispatchBrowserEvent('not:selected');
+        }else{
+            $this->validate();
+            $kategoriproduk_id = LookUp::where('kode', 'id_kategori_produk_emas')->value('value');
+            DB::beginTransaction();
+            try{
+                $distribusi_toko = DistribusiToko::create([
+                    'cabang_id'                   => $this->distribusi_toko['cabang_id'],
+                    'date'                        => $this->distribusi_toko['date'],
+                    'no_invoice'                  => $this->distribusi_toko['no_distribusi_toko'],
+                    'kategori_produk_id'        => $kategoriproduk_id,
+                    'pic_id'                  => auth()->id(),
                 ]);
-
-                if (!empty($value['id'])) {
-                    $ids[] = $value['id'];
+    
+                foreach($this->distribusi_toko_details as $key => $value) {
+                    $additional_data = [
+                        "product_information" => [
+                            "product_category" => [
+                                "id" => $this->distribusi_toko_details[$key]['category_id'],
+                                "name" => $this->product_categories->find($this->distribusi_toko_details[$key]['category_id'])->category_name
+                            ],
+                            "group" => [
+                                'id' => $this->distribusi_toko_details[$key]['group_id'],
+                                'name' => $this->groups->find($this->distribusi_toko_details[$key]['group_id'])->name
+                            ],
+                            "model" => [
+                                'id' => $this->distribusi_toko_details[$key]['model_id'],
+                                'name' => $this->models->find($this->distribusi_toko_details[$key]['model_id'])->name
+                            ],
+                            "code" => $this->distribusi_toko_details[$key]['product_code'],
+                            'certificate_id' => $this->distribusi_toko_details[$key]['product_item']['certificate_id'],
+                            'no_certificate' => $this->distribusi_toko_details[$key]['product_item']['no_series'],
+                            'accessories_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_accessories'],
+                            'tag_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_label'],
+                            'image' => $this->distribusi_toko_details[$key]['images'],
+                            'total_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_total']
+                        ]
+                    ];
+                    $dist_item = $distribusi_toko->items()->create([
+                        'karat_id' => $this->distribusi_toko_details[$key]['karat_id'],
+                        'gold_weight' => $this->distribusi_toko_details[$key]['berat_emas'],
+                        'product_id' => $this->distribusi_toko_details[$key]['id'],
+                        'additional_data' => json_encode($additional_data),
+                    ]);
+                    $dist_item->product->updateTracking(ProductStatus::DRAFT);
                 }
+                
+                $distribusi_toko->setAsDraft();
+    
+                DB::commit();
+            }catch (\Exception $e) {
+                DB::rollBack(); 
+                throw $e;
             }
-            if(!empty($ids)) {
-                Produksi::whereIn('id', $ids)->update(['status' => 2]);
-            }
-            $distribusi_toko->setAsDraft();
-
-            DB::commit();
-        }catch (\Exception $e) {
-            DB::rollBack(); 
-            throw $e;
+    
+            $this->resetInputFields();
+            toast('Saved to Draft Successfully','success');
+            return redirect(route('distribusitoko.detail', $distribusi_toko));
         }
-
-        $this->resetInputFields();
-        toast('Saved to Draft Successfully','success');
-        return redirect(route('distribusitoko.detail', $distribusi_toko));
     }
 
     public function messages(){
