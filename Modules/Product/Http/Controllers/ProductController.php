@@ -361,8 +361,11 @@ public function index_data(Request $request)
 
                    ->editColumn('karat', function ($data) {
                         $tb = '<div class="items-center gap-x-2">
-                            <div class="text-sm font-semibold text-center text-gray-500">
-                             ' . @$data->product_item->karat->name . ' </div>
+                               <div class="text-sm text-center text-gray-500">
+                                 <b>' . @$data->product_item->karat->name . ' </b><br>
+                                 Rp .' . @rupiah($data->product_item->karat->penentuanHarga->harga_emas) . ' <br>
+
+                                 </div>
                                 </div>';
                         return $tb;
                     })

@@ -76,7 +76,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                                     <th style="width: 9%!important;">{{ Label_case('image') }}</th>
                                     <th>{{ Label_case('product') }}</th>
                                    
-                                    <th style="width: 11%!important;" class="text-center">{{ Label_case('Karat') }}</th>
+                                    <th style="width: 14%!important;" class="text-center">{{ Label_case('Karat / Harga') }}</th>
 
 
                             <th style="width: 11%!important;" class="text-center">{{ Label_case('Date') }}</th>
