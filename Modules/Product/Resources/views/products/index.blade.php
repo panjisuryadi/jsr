@@ -24,7 +24,7 @@
 <div class="container-fluid">
 
 
-<div class=" px-0 py-2 grid grid-cols-2 gap-4 m-2 text-center no-underline">
+<div class=" px-0 py-2 grid grid-cols-4 gap-4 m-2 text-center no-underline">
 <?php  
 $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 ?>  
@@ -74,19 +74,19 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
                                     <th style="width: 9%!important;">{{ Label_case('image') }}</th>
-                                    <th>{{ Label_case('product_name') }}</th>
-                                    <th class="text-center">{{ Label_case('Cabang') }}</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Karat') }}</th>
+                                    <th>{{ Label_case('product') }}</th>
+                                   
+                                    <th style="width: 11%!important;" class="text-center">{{ Label_case('Karat') }}</th>
 
 
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
+                            <th style="width: 11%!important;" class="text-center">{{ Label_case('Date') }}</th>
 
                       <th style="width: 10%!important;" class="text-center">{{ Label_case('Qr Code') }}</th>
 
 
-                      <th style="width: 8%!important;" class="text-center">{{ Label_case('Status') }}</th>
+                      <th style="width: 13%!important;" class="text-center">{{ Label_case('Status') }}</th>
 
-                                    <th style="width: 11%!important;" class="text-center">
+                 <th style="width: 11%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -157,9 +157,6 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
             name: 'product_name'
         },
         {
-            data: 'cabang',
-            name: 'cabang'
-        }, {
             data: 'karat',
             name: 'karat'
         }, {

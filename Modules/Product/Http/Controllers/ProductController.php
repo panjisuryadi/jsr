@@ -322,12 +322,16 @@ public function index_data(Request $request)
                             return view('product::products.partials.actions',
                             compact('module_name', 'data', 'module_model'));
                                 })
+
               ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                             ' . $data->category->category_name . '</div>
-                            <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+
+                            <h3 class="small font-medium text-gray-600 dark:text-white "> ' . $data->product_name . '</h3>
+                             <div class="text-xs font-normal text-blue-500 font-semibold">
+                            ' . @$data->cabang->name . '</div>
                            
 
                         </div>
@@ -343,28 +347,28 @@ public function index_data(Request $request)
                        return view('product::products.partials.image', compact('data'));
                     })
 
-              ->addColumn('status', function ($data) {
+                  ->addColumn('status', function ($data) {
                        return view('product::products.partials.status', compact('data'));
                     })
 
-         ->editColumn('cabang', function ($data) {
-                $tb = '<div class="flex items-center gap-x-2">
-                    <h3 class="text-sm text-center text-gray-800">
-                     ' . @$data->cabang->code . ' |  ' . @$data->cabang->name . '</h3>
-                        </div>';
-                return $tb;
-            })
+                  ->editColumn('cabang', function ($data) {
+                        $tb = '<div class="text-center items-center gap-x-2">
+                            <div class="text-sm text-center">
+                              ' . @$data->cabang->name . '</div>
+                                </div>';
+                        return $tb;
+                    })
 
-           ->editColumn('karat', function ($data) {
-                $tb = '<div class="flex items-center gap-x-2">
-                    <h3 class="text-sm font-semibold text-center text-gray-800">
-                     ' . @$data->product_item[0]->karat->kode . ' |  ' . @$data->product_item[0]->karat->name . ' </h3>
-                        </div>';
-                return $tb;
-            })
+                   ->editColumn('karat', function ($data) {
+                        $tb = '<div class="items-center gap-x-2">
+                            <div class="text-sm font-semibold text-center text-gray-500">
+                             ' . @$data->product_item->karat->name . ' </div>
+                                </div>';
+                        return $tb;
+                    })
 
       
-         ->addColumn('tracking', function ($data) {
+                   ->addColumn('tracking', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
                             return view('product::products.partials.qrcode_button',
