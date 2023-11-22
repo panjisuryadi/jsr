@@ -38,7 +38,7 @@
                                             <label for="{{ $field_name }}">{{ $field_lable }}
                                                 {{-- <span class="text-danger">*</span> --}}
                                             </label>
-                                            <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} >
+                                            <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setItem({{ $this->produksi_item_id }})">
                                                 <option value="">Pilih </option>
                                                 @foreach($dataItemProduksi as $item)
                                                 <option value="{{ $item->id }}" > {{ $item->model?->name . ' ' . $item->karat?->name . ' ' . $item->berat . ' gr'}} </option>
@@ -148,7 +148,7 @@
                                                     @endif
                                                     <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }}>
                                                         <option value="1"> Pcs  </option>
-                                                        <option value="2" > Mata Tabur </option>
+                                                        <option value="2" {{ !empty($inputs[$key]['produksi_item_id']) ? 'disabled' : '' }}> Mata Tabur </option>
                                                     </select>
                                                     @if ($errors->has($field_name))
                                                     <span class="invalid feedback" role="alert">
@@ -169,11 +169,11 @@
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
 
-                                                    <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} >
+                                                    <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setSelectedItem()">
                                                         <option value="">Pilih </option>
                                                         @foreach($dataPenerimaanBerlian as $item)
                                                         @if($item->goodsreceiptitem->tipe_penerimaan_barang == (!empty($inputs[$key]['type']) ? $inputs[$key]['type'] : 0))
-                                                        <option value=" {{ $item->id }}" > {{ $item->code . ' ' . $item->klasifikasi_berlian}} </option>
+                                                        <option value="{{ $item->id }}" {{  in_array($item->id, $selectedItemId) ? 'disabled' : '' }}> {{ $item->code . ' ' . $item->klasifikasi_berlian}} </option>
                                                         @endif
                                                         @endforeach
                                                     </select>
@@ -185,24 +185,26 @@
                                                 </div>
 
                                                 @if(!empty($inputs[$key]['id_items']))
-                                                @php
-                                                    $id_items = (int) $inputs[$key]['id_items'];
-                                                    $colour = !empty($dataPenerimaanBerlianArray[$id_items]['colour']) ? $dataPenerimaanBerlianArray[$id_items]['colour'] : '-';
-                                                    $clarity = !empty($dataPenerimaanBerlianArray[$id_items]['clarity']) ? $dataPenerimaanBerlianArray[$id_items]['clarity'] : '-';
-                                                    $shape = !empty($dataPenerimaanBerlianArray[$id_items]['shape_berlian']['shape_name']) ? $dataPenerimaanBerlianArray[$id_items]['shape_berlian']['shape_name'] : '-';
-                                                    $klasifikasi_berlian = !empty($dataPenerimaanBerlianArray[$id_items]['klasifikasi_berlian']) ? $dataPenerimaanBerlianArray[$id_items]['klasifikasi_berlian'] : '-';
-                                                    $karatberlians = !empty($dataPenerimaanBerlianArray[$id_items]['karatberlians']) ? $dataPenerimaanBerlianArray[$id_items]['karatberlians'] : 0;
-                                                    $karatberlians_terpakai = !empty($dataPenerimaanBerlianArray[$id_items]['karatberlians_terpakai']) ? $dataPenerimaanBerlianArray[$id_items]['karatberlians_terpakai'] : 0;
-                                                    $sisa_stok = $karatberlians - $karatberlians_terpakai;
-                                                    $inputs[$key]['sisa_stok'] = $sisa_stok;
-                                                @endphp
-                                                <div class="form-group">
-                                                    Colour : {{ $colour }} <br>
-                                                    Clarity : {{ $clarity }} <br>
-                                                    Shape : {{ $shape }} <br>
-                                                    Size : {{ $klasifikasi_berlian }} <br>
-                                                    Sisa Stok : {{ $sisa_stok }}
-                                                </div>
+                                                    @php
+                                                        $id_items = (int) $inputs[$key]['id_items'];
+                                                        $colour = !empty($dataPenerimaanBerlianArray[$id_items]['colour']) ? $dataPenerimaanBerlianArray[$id_items]['colour'] : '-';
+                                                        $clarity = !empty($dataPenerimaanBerlianArray[$id_items]['clarity']) ? $dataPenerimaanBerlianArray[$id_items]['clarity'] : '-';
+                                                        $shape = !empty($dataPenerimaanBerlianArray[$id_items]['shape_berlian']['shape_name']) ? $dataPenerimaanBerlianArray[$id_items]['shape_berlian']['shape_name'] : '-';
+                                                        $klasifikasi_berlian = !empty($dataPenerimaanBerlianArray[$id_items]['klasifikasi_berlian']) ? $dataPenerimaanBerlianArray[$id_items]['klasifikasi_berlian'] : '-';
+                                                        $karatberlians = !empty($dataPenerimaanBerlianArray[$id_items]['karatberlians']) ? $dataPenerimaanBerlianArray[$id_items]['karatberlians'] : 0;
+                                                        $karatberlians_terpakai = !empty($dataPenerimaanBerlianArray[$id_items]['karatberlians_terpakai']) ? $dataPenerimaanBerlianArray[$id_items]['karatberlians_terpakai'] : 0;
+                                                        $sisa_stok = $karatberlians - $karatberlians_terpakai;
+                                                        $inputs[$key]['sisa_stok'] = $sisa_stok;
+                                                    @endphp
+                                                    @if(!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 2)
+                                                    <div class="form-group">
+                                                        Colour : {{ $colour }} <br>
+                                                        Clarity : {{ $clarity }} <br>
+                                                        Shape : {{ $shape }} <br>
+                                                        Size : {{ $klasifikasi_berlian }} <br>
+                                                        Sisa Stok : {{ $sisa_stok }}
+                                                    </div>
+                                                    @endif
                                                 @endif
 
                                                 <div class="form-group">
