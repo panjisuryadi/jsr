@@ -35,10 +35,10 @@
         </div>
         <div>
             <div class="text-value text-success">
-            {{ \Modules\ReturSale\Models\ReturSale::count() }}
+            {{ \Modules\BuysBack\Models\BuyBackNota::count() }}
            </div>
             <div class="text-muted text-uppercase font-weight-bold">
-           Retur Sales
+             BuyBack Nota
             </div>
 
         </div>
@@ -52,11 +52,11 @@
         </div>
         <div>
             <div class="text-value text-warning">
-                {{ \Modules\Stok\Models\StockSales::count() }}
+                {{ \Modules\BuysBack\Models\BuysBack::count() }}
             </div>
             <div class="text-muted text-uppercase font-weight-bold">
 
-           Stock Sales
+           Buys Back
             </div>
 
         </div>
@@ -68,7 +68,7 @@
 </div>
 @endcan
 
-
+{{-- {{ auth()->user() }} --}}
 <div class="card">
 
 
@@ -93,14 +93,14 @@
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#Buysback">Buys Back</a>
         </li>
-{{-- 
+
         @can('access_buysback_nota')
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#BuysBacNota">
             Buys Back Nota</a>
         </li> 
         @endcan
- --}}
+
 
         @can('show_distribusi')
         <li class="nav-item">
@@ -168,7 +168,10 @@
                             </td>
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                            <tr>
+                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
                         @endforelse
                         
                     </table>
@@ -192,7 +195,7 @@
                             <th class="text-center">{{ label_case('Pic') }}</th>
                             <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
-                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::whereIn('status_id',[2])->get() as $row)
+                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::progress()->get() as $row)
                             @if($loop->index > 4)
                                @break
                             @endif
@@ -212,19 +215,18 @@
                             <td>{{ $row->created_by }}</td>
                          
             <td class="text-center">
-              @can('show_distribusi')
-                 <a href="{{ route("distribusitoko.detail_distribusi",$row) }}"
-                     class="btn btn-outline-info btn-sm">
-                        <i class="bi bi-eye"></i>
-                        &nbsp;@lang('Approve')
-                    </a>
-                @endcan
+             <a  href="{{ route('distribusitoko.detail_distribusi', $row->id) }}" class="btn btn-success px-4 btn-sm w-full">
+    <i class="bi bi-eye"></i> Approve
+</a>
 
 
             </td>
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                            <tr>
+                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
                         @endforelse
                         
                     </table>
@@ -328,7 +330,10 @@
                             </td>
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                            <tr>
+                                <td colspan="5"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
                         @endforelse
                         
                     </table>
@@ -363,8 +368,8 @@
                                 <td>{{ shortdate($row->date) }}</td>
                                 <td>{{ $row->invoice }}</td>
                                 <td>{{ $row->invoice_series }}</td>
-                                <td>{{ $row->cabang->name }}</td>
-                                <td>{{ $row->pic->name }}</td>
+                                <td>{{ @$row->cabang->name }}</td>
+                                <td>{{ @$row->pic->name }}</td>
                             <td>
                                 
                                 @can('approve_distribusi')
@@ -378,7 +383,10 @@
                             </td>
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                           <tr>
+                                <td colspan="6"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
                         @endforelse
                         
                     </table>
@@ -424,7 +432,7 @@
     
    
     <div class="text-blue-400">
-        Cabang : {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }}
+        Cabang : {{ Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->name):'' }}
     </div>
 </div>
 

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use app\Models\User;
 use Modules\Cabang\Models\Cabang;
-class UserCabang extends Model
+use Illuminate\Database\Eloquent\Relations\Pivot;
+class UserCabang extends Pivot
 {
     use HasFactory;
     protected $table = 'usercabangs';

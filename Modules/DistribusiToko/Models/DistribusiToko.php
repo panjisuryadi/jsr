@@ -21,7 +21,7 @@ class DistribusiToko extends Model
 
         if(auth()->check()){
             if(auth()->user()->isUserCabang()){
-                $cabang = auth()->user()->namacabang->cabang_id;
+                $cabang = auth()->user()->namacabang()->id;
                 static::addGlobalScope('filter_by_branch', function (Builder $builder) use ($cabang) {
                     $builder->whereIn('status_id', [2,3,4])
                             ->where('cabang_id', $cabang); // Sesuaikan dengan nama kolom yang sesuai di tabel
@@ -148,9 +148,9 @@ class DistribusiToko extends Model
         return $query->where('status_id', 3);
     }
 
-   public function scopeInProgress($query)
+   public function scopeProgress($query)
     {
-        return $query->where('status_id', 2);
+        $query->where('status_id', 2);
     }
 
     public function scopeDiamond($query)
