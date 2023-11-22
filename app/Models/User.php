@@ -13,6 +13,7 @@ use Spatie\MediaLibrary\MediaCollections\File;
 use Spatie\Permission\Traits\HasRoles;
 use Modules\UserCabang\Models\UserCabang;
 use Modules\Company\Models\Company;
+use Modules\Cabang\Models\Cabang;
 use Auth;
 
 class User extends Authenticatable implements HasMedia
@@ -35,9 +36,9 @@ class User extends Authenticatable implements HasMedia
 
             if(auth()->check()){
                 if(auth()->user()->isUserCabang()){
-                    $cabang = auth()->user()->namacabang->cabang_id;
+                    $cabang = auth()->user()->namacabang()->id;
                     static::addGlobalScope('filter_by_branch', function (Builder $builder) use ($cabang) {
-                        $builder->whereHas('namacabang', function($query) use ($cabang){
+                        $builder->whereHas('namacabangs', function($query) use ($cabang){
                             $query->where('cabang_id',$cabang);
                         }); // Sesuaikan dengan nama kolom yang sesuai di tabel
                     });
@@ -82,14 +83,18 @@ class User extends Authenticatable implements HasMedia
      if ($users == 1) {
             return $query;
         }
-        return $query->whereHas('namacabang', function($query) {
-               $query->where('cabang_id', Auth::user()->namacabang->cabang()->first()->id);
+        return $query->whereHas('namacabangs', function($query) {
+               $query->where('cabang_id', Auth::user()->namacabang->id);
             });
+    }
+
+    public function namacabangs(){
+        return $this->belongsToMany(Cabang::class,'usercabangs','user_id','cabang_id')->using(UserCabang::class);
     }
 
      public function namacabang()
         {
-            return $this->hasOne(UserCabang::class);
+            return $this->namacabangs()->first();
         }
 
       public function company() {
@@ -123,6 +128,6 @@ class User extends Authenticatable implements HasMedia
     }
 
     public function isUserCabang(){
-        return !is_null($this->namacabang);
+        return !is_null($this->namacabang());
     }
 }

@@ -35,10 +35,10 @@
         </div>
         <div>
             <div class="text-value text-success">
-            {{ \Modules\ReturSale\Models\ReturSale::count() }}
+            {{ \Modules\BuysBack\Models\BuyBackNota::count() }}
            </div>
             <div class="text-muted text-uppercase font-weight-bold">
-           Retur Sales
+             BuyBack Nota
             </div>
 
         </div>
@@ -52,11 +52,11 @@
         </div>
         <div>
             <div class="text-value text-warning">
-                {{ \Modules\Stok\Models\StockSales::count() }}
+                {{ \Modules\BuysBack\Models\BuysBack::count() }}
             </div>
             <div class="text-muted text-uppercase font-weight-bold">
 
-           Stock Sales
+           Buys Back
             </div>
 
         </div>
@@ -68,7 +68,7 @@
 </div>
 @endcan
 
-
+{{-- {{ auth()->user() }} --}}
 <div class="card">
 
 
@@ -93,14 +93,14 @@
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#Buysback">Buys Back</a>
         </li>
-{{-- 
+
         @can('access_buysback_nota')
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#BuysBacNota">
             Buys Back Nota</a>
         </li> 
         @endcan
- --}}
+
 
         @can('show_distribusi')
         <li class="nav-item">
@@ -195,7 +195,7 @@
                             <th class="text-center">{{ label_case('Pic') }}</th>
                             <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
-                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::inprogress() as $row)
+                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::progress()->get() as $row)
                             @if($loop->index > 4)
                                @break
                             @endif
@@ -432,7 +432,7 @@
     
    
     <div class="text-blue-400">
-        Cabang : {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }}
+        Cabang : {{ Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->name):'' }}
     </div>
 </div>
 

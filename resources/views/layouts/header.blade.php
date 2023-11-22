@@ -11,7 +11,7 @@
                 <i class="c-icon cil-external-link relative"></i>&nbsp;
              {!! settings()->company_name !!}  |  
              {{ ucfirst(Auth::user()->roles->first()->name) }} |
-             {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }} 
+             {{ Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->name):'' }} 
 
             </a>
         </li>
