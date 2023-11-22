@@ -370,7 +370,7 @@ class GoodsReceiptBerliansController extends Controller
                         'goodsreceipt_id' => $goodsreceipt_id,
                         'model_id' => !empty($input['model_id']) ? $input['model_id'] : null,
                         'karat_id' => !empty($input['karat_id']) ? $input['karat_id'] : null,
-                        'berat' => !empty($input['total_berat_kotor']) ? $input['total_berat_kotor'] :  0,
+                        'berat' => !empty($input['total_berat_real']) ? $input['total_berat_real'] :  0,
                         'kategoriproduk_id' => !empty($input['kategoriproduk_id']) ? $input['kategoriproduk_id'] : null,
                     ]);
                 }

@@ -60,6 +60,7 @@ class Create extends Component
             'shapeberlian_id' => '',
             'qty' => 1,
             'gia_report_number' => '',
+            'produksi_item_id' => '',
             'keterangan' => ''
         ]
     ];
@@ -77,6 +78,8 @@ class Create extends Component
     public $dataItemProduksiArray = [];
     public $dataPenerimaanBerlian = [];
     public $dataPenerimaanBerlianArray = [];
+    public $dataItempenerimaanBerlian = [];
+    public $selectedItemId = [];
     public $sertifikat = [
         'code' => '',
         'tanggal' => '',
@@ -162,6 +165,7 @@ class Create extends Component
             'shapeberlian_id' => '',
             'qty' => 1,
             'gia_report_number' => '',
+            'produksi_item_id' => '',
             'keterangan' => ''
         ];
     }
@@ -175,10 +179,10 @@ class Create extends Component
 
     public function render()
     {
-
         $this->model_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['model_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['model_id'] : null;
         $this->karat_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['karat_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['karat_id'] : null;
         $this->berat = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['berat']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['berat'] : null;
+        
         $this->tanggal = $this->hari_ini;
         return view('livewire.produksi.create');
     }
@@ -193,6 +197,7 @@ class Create extends Component
                 'shapeberlian_id' => '',
                 'qty' => 1,
                 'gia_report_number' => '',
+                'produksi_item_id' => '',
                 'keterangan' => ''
             ]
         ];
@@ -451,7 +456,7 @@ class Create extends Component
                     $karatberlians = !empty($val['karatberlians']) ? $val['karatberlians'] : 0;
                     $array_produksi_items[] = [
                         'product_id' => $product->id,
-                        'goodsreceipt_item_id' => $goodsreceipt_item_id,
+                        'produksi_item_id' => $goodsreceipt_item_id,
                         'karatberlians' => $karatberlians,
                         'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
                         'qty' => !empty($val['qty']) ? $val['qty'] : 0,
@@ -498,6 +503,56 @@ class Create extends Component
     public function setCurrentKey($key)
     {
         $this->currentKey = $key;
+    }
+
+    public function setItem($old_produksi_item_id = 0) {
+        if(empty($this->produksi_item_id)) {
+            $this->resetInputFields();
+        }
+
+        if((!empty($this->inputs))) {
+            foreach($this->inputs as $k => $row) {
+                if(!empty($row['produksi_item_id'])){
+                    unset($this->inputs[$k]);
+                }
+            }
+
+            if(isset($this->inputs[0]) && empty($this->inputs[0]['id_items'])){
+                unset($this->inputs[0]);
+            }
+            
+        }
+
+        if(!empty($this->dataItemProduksiArray[$this->produksi_item_id]['goodsreceipt_id'])){
+            
+            $goodsreceipt_id = $this->dataItemProduksiArray[$this->produksi_item_id]['goodsreceipt_id'];
+            $items = GoodsReceiptItem::where('goodsreceipt_id', $goodsreceipt_id)->get();
+            $this->dataPenerimaanBerlian = GoodsReceiptItem::with('shape_berlian', 'goodsreceiptitem')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->orWhere('goodsreceipt_id', $goodsreceipt_id)->get();
+            foreach($items as $row) {
+                $this->inputs[] = [
+                    'id_items' => $row->id,
+                    'type' => '1',
+                    'karatberlians' => $row->karatberlians,
+                    'shapeberlian_id' => $row->shapeberlian_id,
+                    'qty' => $row->qty,
+                    'gia_report_number' => '',
+                    'produksi_item_id' => $this->produksi_item_id,
+                    'keterangan' => ''
+                ];
+            }
+        }
+        if(empty($this->inputs)) {
+            $this->resetInputFields();
+        }
+        $this->setSelectedItem();
+    }
+
+    public function setSelectedItem() {
+        if(!empty($this->inputs)){
+            foreach($this->inputs as $row) {
+                $this->selectedItemId[] = !empty($row['id_items']) ? $row['id_items'] : '';
+            }
+        }
     }
     
 }
