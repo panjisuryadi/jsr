@@ -492,7 +492,6 @@ class Create extends Component
             if(!empty($file)) {
                 Storage::disk('public')->delete($file);
             }
-            dd($th->getMessage());
             return $th->getMessage();
         }
         DB::commit();
