@@ -456,7 +456,7 @@ class Create extends Component
                     $karatberlians = !empty($val['karatberlians']) ? $val['karatberlians'] : 0;
                     $array_produksi_items[] = [
                         'product_id' => $product->id,
-                        'produksi_item_id' => $goodsreceipt_item_id,
+                        'goodsreceipt_item_id' => $goodsreceipt_item_id,
                         'karatberlians' => $karatberlians,
                         'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
                         'qty' => !empty($val['qty']) ? $val['qty'] : 0,
@@ -492,6 +492,7 @@ class Create extends Component
             if(!empty($file)) {
                 Storage::disk('public')->delete($file);
             }
+            dd($th->getMessage());
             return $th->getMessage();
         }
         DB::commit();
