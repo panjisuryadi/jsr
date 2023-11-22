@@ -258,12 +258,13 @@
                                                     $field_lable = "Qty";
                                                     $field_placeholder = $field_lable;
                                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                    $readonly = !empty($inputs[$key]['produksi_item_id']) ? 'readonly' : '';
                                                     $required = '';
                                                     @endphp
                                                     @if ($key==0)
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
-                                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" {{ $readonly }}>
 
                                                     @if ($errors->has($field_name))
                                                     <span class="invalid feedback" role="alert">
