@@ -91,12 +91,12 @@ public function index_data(Request $request)
                                 return $tb;
                             }) 
 
-          ->editColumn('karat', function ($data) {
-             $tb = '<div class="items-center text-center font-semibold">
-                     ' .$data->karat->name . '| &nbsp;<span class="text-blue-500">' .$data->karat->coef . '</span>
-                    </div>';
-                return $tb;
-            })  
+                          ->editColumn('karat', function ($data) {
+                             $tb = '<div class="items-center text-center font-semibold">
+                                     ' .$data->karat->name . '| &nbsp;<span class="text-blue-500">' .$data->karat->coef . '</span>
+                                    </div>';
+                                return $tb;
+                            })  
 
                              ->editColumn('harga_emas', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -493,13 +493,22 @@ public function update(Request $request, $id)
         }
 
         $params = $request->except('_token');
+        $params['harga_emas'] = preg_replace("/[^0-9]/", "", $params['harga_emas']);
+        $params['margin'] = preg_replace("/[^0-9]/", "", $params['margin']);
         $price = $params['harga_emas']*$$module_name_singular->karat->coef;
         $params['harga_modal'] =$price;
         $params['margin'] = $params['margin'];
         $params['harga_emas'] = $params['harga_emas'];
+        $params['harga_jual'] = $params['harga_modal']+$params['margin'];
 
-        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-          $$module_name_singular->update($params);
+        if ($params['margin']) {
+            $params['harga_jual'] = $params['harga_modal']+$params['margin'];
+        } else {
+           $params['harga_jual'] = $params['harga_modal'];
+        }
+        
+        $params['lock'] = 1;
+        $$module_name_singular->update($params);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }

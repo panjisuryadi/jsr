@@ -16,10 +16,12 @@
                                 $required = "required";
                                 ?>
                     <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
+                        <input class="form-control" 
+                        type="text"
                         name="{{ $field_name }}"
                         id="{{ $field_name }}"
-                        value="{{$detail->harga_emas }}">
+                        type-currency="IDR"
+                                    value="{{$detail->harga_emas }}">
                                 <span class="invalid feedback" role="alert">
                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                 </span>
@@ -38,6 +40,7 @@
                         <input class="form-control" type="text"
                         name="{{ $field_name }}"
                         id="{{ $field_name }}"
+                        type-currency="IDR"
                         value="{{$detail->margin }}">
                                 <span class="invalid feedback" role="alert">
                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
@@ -52,15 +55,39 @@
 
 </div>
 {{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
+<script type="text/javascript">
+    
+
+document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+        element.addEventListener('keyup', function(e) {
+            let cursorPostion = this.selectionStart;
+            let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+            let originalLenght = this.value.length;
+            if (isNaN(value)) {
+                this.value = "";
+            } else {
+                this.value = value.toLocaleString('id-ID', {
+                    currency: 'IDR',
+                    style: 'currency',
+                    minimumFractionDigits: 0
+                });
+                cursorPostion = this.value.length - originalLenght + cursorPostion;
+                this.setSelectionRange(cursorPostion, cursorPostion);
+            }
+        });
+    });
+
+
+</script>
+
+
+
 <script>
 jQuery.noConflict();
 (function( $ ) {
 
- function autoRefresh(){
-      var table = $('#datatable').DataTable();
-        table.ajax.reload();
 
-}
+ 
     function Update()
     {
         $.ajax({

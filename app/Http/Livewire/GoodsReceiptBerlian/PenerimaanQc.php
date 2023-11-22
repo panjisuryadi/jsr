@@ -46,6 +46,8 @@ class PenerimaanQc extends Component
         $pic_id = '',
         $nama_produk = '',
         $karat_id,
+        $model_id,
+        $berat_real,
         $image,
         $kategoriproduk_id,
         $harga_beli,
@@ -86,11 +88,9 @@ class PenerimaanQc extends Component
     public $dataCertificateAttribute = [];
     public $dataCurrency = [];
     public $dataKlasifikasiBerlian = [];
+    public $currentKey;
     
-    public $sertifikat = [
-        'code' => '',
-        'tanggal' => '',
-    ];
+    public $sertifikat = [];
 
     protected $listeners = [
         'webcamCaptured' => 'handleWebcamCaptured',
@@ -120,8 +120,6 @@ class PenerimaanQc extends Component
         $this->dataCertificateAttribute = DiamondCertificateAttributes::where('status', 1)->get();
 
         $this->inputs[0]['code'] = $this->generateCodeItems(0);
-
-        $this->sertifikat['tanggal'] = $this->hari_ini;
 
     }
 
@@ -240,8 +238,9 @@ class PenerimaanQc extends Component
         $total_karat = 0;
         if(!empty($this->inputs)) {
 
-            foreach ($this->inputs as $item) {
+            foreach ($this->inputs as $k => $item) {
                 $total_karat += !empty($item['karatberlians']) ? $item['karatberlians'] : 0;
+                $this->inputs[$k]['sertifikat'] = !empty($this->sertifikat[$k]) ? $this->sertifikat[$k] : [];
             }
 
         }
@@ -253,6 +252,7 @@ class PenerimaanQc extends Component
             'pengirim' => $this->pengirim,
             'supplier_id' => $this->supplier_id,
             'karat_id' => $this->karat_id,
+            'model_id' => $this->model_id,
             'tipe_pembayaran'=>$this->tipe_pembayaran,
             'tanggal' => $this->tanggal,
             'cicil' => $this->tipe_pembayaran == 'cicil'? $this->cicil : 0,
@@ -272,7 +272,7 @@ class PenerimaanQc extends Component
             'sertifikat' => !empty($this->sertifikat['code']) ? $this->sertifikat : [],
             'tipe_penerimaan_barang' => $this->type,
             'currency_id' => $this->currency_id,
-            'detail_cicilan' => $this->detail_cicilan
+            'detail_cicilan' => $this->detail_cicilan,
         ];
         
         $request = new Request($data);
@@ -365,6 +365,13 @@ class PenerimaanQc extends Component
         if ($lastGrCode) {
         }
 
+    }
+
+
+    public function setCurrentKey($key)
+    {
+        $this->sertifikat[$key]['tanggal'] = $this->hari_ini;
+        $this->currentKey = $key;
     }
     
 }

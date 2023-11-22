@@ -689,9 +689,35 @@ public function show_distribusi($id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
         abort_if(Gate::denies('show_buybacktoko'), 403);
+
         $detail = $module_model::findOrFail($id);
         //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.modal.show',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+public function view_distribusi($id)
+    {
+        dd($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+       // abort_if(Gate::denies('show_buybacktoko'), 403);
+          $detail = $module_model::findOrFail($id);
+         $detail = DistribusiToko::where('id', $id)->first();
+       
+          return view(''.$module_name.'::'.$module_path.'.show',
            compact('module_name',
             'module_action',
             'detail',
