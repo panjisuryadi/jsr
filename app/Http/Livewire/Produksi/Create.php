@@ -207,7 +207,7 @@ class Create extends Component
     public function rules()
     {
         $rules = [
-            'produksi_item_id' => 'required',
+            // 'produksi_item_id' => 'required',
             'code' => 'required|unique:products,product_code',
             // 'model_id' => 'required',
             // 'karat_id' => 'required',
@@ -547,10 +547,20 @@ class Create extends Component
         $this->setSelectedItem();
     }
 
-    public function setSelectedItem() {
+    public function setSelectedItem($key = null) {
+
+        if(!is_null($key)) {
+            $id = !empty($this->inputs[$key]['id_items']) ? $this->inputs[$key]['id_items'] : '';
+            if($id) {
+                $karatberlians = !empty($this->dataPenerimaanBerlianArray[$id]['karatberlians']) ? $this->dataPenerimaanBerlianArray[$id]['karatberlians'] : 0;
+                $karatberlians_terpakai = !empty($this->dataPenerimaanBerlianArray[$id]['karatberlians_terpakai']) ? $this->dataPenerimaanBerlianArray[$id]['karatberlians_terpakai'] : 0;
+                $this->inputs[$key]['karatberlians'] = floatval($karatberlians-$karatberlians_terpakai);
+            } 
+        }
+
         if(!empty($this->inputs)){
-            foreach($this->inputs as $row) {
-                $this->selectedItemId[] = !empty($row['id_items']) ? $row['id_items'] : '';
+            foreach($this->inputs as $key => $row) {
+                $this->selectedItemId[$key] = !empty($row['id_items']) ? $row['id_items'] : '';
             }
         }
     }

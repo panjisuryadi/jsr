@@ -41,7 +41,7 @@
                                             <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setItem({{ $this->produksi_item_id }})">
                                                 <option value="">Pilih </option>
                                                 @foreach($dataItemProduksi as $item)
-                                                <option value="{{ $item->id }}" > {{ $item->model?->name . ' ' . $item->karat?->name . ' ' . $item->berat . ' gr'}} </option>
+                                                <option value="{{ $item->id }}" > {{ $item->model?->name . ' ' . $item->karat?->name . ' ' . floatval($item->berat) . ' gr'}} </option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has($field_name))
@@ -169,7 +169,7 @@
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
 
-                                                    <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setSelectedItem()">
+                                                    <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setSelectedItem({{ $key }})">
                                                         <option value="">Pilih </option>
                                                         @foreach($dataPenerimaanBerlian as $item)
                                                         @if($item->goodsreceiptitem->tipe_penerimaan_barang == (!empty($inputs[$key]['type']) ? $inputs[$key]['type'] : 0))
