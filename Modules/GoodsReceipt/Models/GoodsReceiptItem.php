@@ -16,6 +16,8 @@ class GoodsReceiptItem extends Model
     protected $table = 'goodsreceipt_items';
     protected $guarded = [];
 
+    protected $with = ['karat'];
+
 
     public function goodsreceiptitem() {
         return $this->belongsTo(GoodsReceipt::class, 'goodsreceipt_id', 'id');
