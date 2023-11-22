@@ -257,6 +257,9 @@ public function index_data(Request $request)
                                     </div>';
                                   $tb .= '<div class="text-xs text-left">
                                     Total Emas :' .$data->total_emas . '
+                                    </div>'; 
+                                    $tb .= '<div class="text-xs text-left">
+                                    Karat :' .$data->goodsreceiptitem->pluck('karat.label')->implode(', ') . '
                                     </div>';   
                                 return $tb;
                             }) 
