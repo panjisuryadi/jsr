@@ -89,7 +89,7 @@ class User extends Authenticatable implements HasMedia
 
      public function namacabang()
         {
-            return $this->hasOne(UserCabang::class);
+            return $this->hasOne(UserCabang::class,'user_id','id');
         }
 
       public function company() {

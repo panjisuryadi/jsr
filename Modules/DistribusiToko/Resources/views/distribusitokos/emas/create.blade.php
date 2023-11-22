@@ -11,8 +11,8 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mb-1">
-        @livewire('distribusi-toko.emas.create',['cabang' => $cabang, 'produksis_id' => $produksis_id])
+    <div class="container-fluid mb-1 relative">
+        @livewire('distribusi-toko.emas.create')
     </div>
 
 @endsection

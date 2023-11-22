@@ -1107,20 +1107,7 @@ public function approve_distribusi(Request $request, $id)
 
     public function create_emas()
     {
-        $cabang = [];
-        if(auth()->user()->isUserCabang()){
-            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
-        }else{
-            $cabang = Cabang::all();
-        }
-        $produksis_id = DistribusiTokoItem::whereNotNull('produksis_id')->pluck('produksis_id')->toArray();
-
-        return view(''.$this->module_name.'::'.$this->module_path.'.emas.create',
-            compact(
-                'cabang',
-                'produksis_id'
-            )
-        );
+        return view(''.$this->module_name.'::'.$this->module_path.'.emas.create');
     }
 
     public function index_berlian()

@@ -33,11 +33,14 @@
                     background-color: #333;">
                 <div class="col-md-12 mt-2">
                     <!-- Search box -->
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="text" wire:model="search" class="form-control" placeholder="Cari Produk" style="width: 100%;" >
-                            </div>
+                    <div class="grid grid-cols-2 gap-3 justify-between">
+                        <div class="form-group">
+                            <input type="text" wire:model="search" class="form-control" placeholder="Cari Produk" style="width: 100%;" >
+                        </div>
+                        <div class="form-group justify-self-end">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#createModal" wire:click="$set('showModal', true)">
+                                Tambah Produk
+                            </button>
                         </div>
                     </div>
 
@@ -98,7 +101,6 @@
         <div class="card">
 
             <div class="card-body">
-                @include('utils.alerts')
                 <form wire:submit.prevent="store">
                     @csrf
                     <div class="form-row">
@@ -152,7 +154,7 @@
                                     <label for="{{ $field_name }}">Cabang</label>
                                     <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
                                         <option value="" selected>Pilih Cabang</option>
-                                        @foreach($cabang as $sup)
+                                        @foreach($cabangs as $sup)
                                         <option value="{{$sup->id}}">
                                             {{$sup->name}}
                                         </option>
@@ -218,15 +220,18 @@
             </div>
         </div>
     </div>
+    @include('distribusitoko::distribusitokos.emas.modal.add-product')
 </div>
 
 @push('page_scripts')
 <script>
-    document.addEventListener('livewire:load', function () {
-        Livewire.on('alreadySelected', function () {
-            toastr.error('Item sudah dipilih!');
-        });
+    window.addEventListener('create-modal:close', event => {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $('#createModal').modal('hide');
+        $('#imageprev').attr('src','');
+        toastr.success('Berhasil Menambahkan Produk');
     });
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 @endpush

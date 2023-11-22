@@ -28,6 +28,7 @@ class ProductStatus extends Model
     const HILANG = 10;
     const DRAFT = 11;
     const OTW = 12;
+    const CREATED = 13;
 
 
     public function products(){
