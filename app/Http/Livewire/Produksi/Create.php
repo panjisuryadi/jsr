@@ -181,7 +181,7 @@ class Create extends Component
     {
         $this->model_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['model_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['model_id'] : null;
         $this->karat_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['karat_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['karat_id'] : null;
-        $this->berat = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['berat']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['berat'] : null;
+        $this->berat = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['berat']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['berat'] : $this->berat;
         
         $this->tanggal = $this->hari_ini;
         return view('livewire.produksi.create');
@@ -532,7 +532,7 @@ class Create extends Component
                 $this->inputs[] = [
                     'id_items' => $row->id,
                     'type' => '1',
-                    'karatberlians' => $row->karatberlians,
+                    'karatberlians' => floatval($row->karatberlians),
                     'shapeberlian_id' => $row->shapeberlian_id,
                     'qty' => $row->qty,
                     'gia_report_number' => '',

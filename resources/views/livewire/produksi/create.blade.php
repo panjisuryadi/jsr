@@ -258,7 +258,7 @@
                                                     $field_lable = "Qty";
                                                     $field_placeholder = $field_lable;
                                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $readonly = !empty($inputs[$key]['produksi_item_id']) ? 'readonly' : '';
+                                                    $readonly = !empty($inputs[$key]['produksi_item_id']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
                                                     $required = '';
                                                     @endphp
                                                     @if ($key==0)
