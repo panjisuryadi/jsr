@@ -295,7 +295,7 @@
 
                                             </div>
 
-                                            @if ($key != 0)
+                                            @if ($key != 0 && empty($inputs[$key]['produksi_item_id']))
                                             <div class="px-1">
                                                 <button class="btn text-white text-xl btn-danger btn-md" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
                                                     <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
