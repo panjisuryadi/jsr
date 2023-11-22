@@ -207,7 +207,7 @@ class Create extends Component
     public function rules()
     {
         $rules = [
-            'produksi_item_id' => 'required',
+            // 'produksi_item_id' => 'required',
             'code' => 'required|unique:products,product_code',
             // 'model_id' => 'required',
             // 'karat_id' => 'required',
@@ -549,8 +549,8 @@ class Create extends Component
 
     public function setSelectedItem() {
         if(!empty($this->inputs)){
-            foreach($this->inputs as $row) {
-                $this->selectedItemId[] = !empty($row['id_items']) ? $row['id_items'] : '';
+            foreach($this->inputs as $key => $row) {
+                $this->selectedItemId[$key] = !empty($row['id_items']) ? $row['id_items'] : '';
             }
         }
     }
