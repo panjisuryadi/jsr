@@ -1,7 +1,4 @@
 <div>
-
-
-
         <div class="mt-2">
            
                 @if (session()->has('message'))
@@ -123,7 +120,6 @@
   </div>
    <div class="font-semibold text-gray-500">
    {{ format_currency($cart_items->first()->options->manual_price) }}
-
   </div>
 
 </div>

@@ -257,8 +257,8 @@ class Checkout extends Component
         });
 
 
-        if (!isset($product['product_item'][0]['karat']['penentuan_harga']['harga_emas'])) {
-            session()->flash('message', 'Penentuan Harga '.$product['product_item'][0]['karat']['name'].' Belum di setting!');
+        if (!isset($product['karat']['penentuan_harga']['harga_emas'])) {
+            session()->flash('message', 'Penentuan Harga '.$product['karat']['name'].' Belum di setting!');
             return;
         } 
  
@@ -271,7 +271,7 @@ class Checkout extends Component
         'id'      => $product['id'],
         'name'    => $product['product_name'],
         'qty'     => 1,
-        'price'   => $product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
+        'price'   => $product['karat']['penentuan_harga']['harga_emas'],
         'weight'  => 1,
             'options' => [
                 'product_discount'      => 0.00,
@@ -280,9 +280,9 @@ class Checkout extends Component
                 'code'                  => $product['product_code'],
                 'stock'                 => 1,
                 'unit'                  =>$product['product_unit'],
-                'karat_id'              =>$product['product_item'][0]['karat']['id'],
-                'karat'                 =>$product['product_item'][0]['karat']['name'],
-                'harga_karat'           =>$product['product_item'][0]['karat']['penentuan_harga']['harga_emas'],
+                'karat_id'              =>$product['karat']['id'],
+                'karat'                 =>$product['karat']['name'],
+                'harga_karat'           =>$product['karat']['penentuan_harga']['harga_emas'],
 
                 'product_tax'           => 1,
                 'manual'                 => 0,

@@ -66,7 +66,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::isactive()->get();
 
         $data = $$module_name;
 
@@ -124,6 +124,13 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
+
+                             ->editColumn('lock', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                     ' .$data->lock. '
+                                    </div>';
+                                return $tb;
+                            })
                      
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
@@ -134,13 +141,14 @@ public function index_data(Request $request)
                             } else {
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
-                        })
+                           })
                         ->rawColumns(['tgl_update',
                                         'action', 
                                         'harga_emas',
                                         'margin',
                                         'harga_modal',
                                         'karat',
+                                        'lock',
                                         'harga_jual',
                                       
                                         'user'])

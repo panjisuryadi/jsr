@@ -25,6 +25,11 @@ class PenentuanHarga extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function scopeIsActive($query) {
+        return $query->where('lock', 1);
+    }
+
+
     protected static function newFactory()
     {
         return \Modules\PenentuanHarga\database\factories\PenentuanHargaFactory::new();

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Pos;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Product\Entities\Product;
+use Modules\Product\Models\ProductStatus;
 
 class ProductList extends Component
 {
@@ -29,11 +30,10 @@ class ProductList extends Component
     public function render() {
         return view('livewire.pos.product-list', [
 
-            'products' => Product::akses()->with('product_item.karat.penentuanHarga')
-
+            'products' => Product::akses()->with('karat.penentuanHarga')
             ->when($this->category_id, function ($query) {
                 return $query->where('category_id', $this->category_id);
-            })->where('status', 0)
+            })->where('status', ProductStatus::READY)
             ->paginate($this->limit)
         ]);
     }
