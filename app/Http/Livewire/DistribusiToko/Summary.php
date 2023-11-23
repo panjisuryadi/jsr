@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Modules\Product\Entities\Product;
+use Modules\Product\Models\ProductStatus;
 use Modules\Stok\Models\StockOffice;
 
 class Summary extends Component
 {
     public $dist_toko;
+    public $dist_toko_items;
 
     public $total_weight_per_karat = [];
     
@@ -22,6 +24,7 @@ class Summary extends Component
     }
 
     public function mount(){
+        $this->dist_toko_items = $this->dist_toko->items;
         $this->id_kategoriproduk_berlian = LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
         foreach($this->dist_toko->items->groupBy('karat_id') as $karat_id => $items){
             $this->total_weight_per_karat[$karat_id] = $items->sum('gold_weight');
@@ -55,18 +58,12 @@ class Summary extends Component
     }
 
     public function send(){
-        $this->validate();
         abort_if(Gate::denies('edit_distribusitoko'), 403);
         DB::beginTransaction();
         try{
             $this->dist_toko->setInProgress();
-
-            /** Validasi stok emas
-             * penambahan kondisi jika kategorinya bukan berlian maka akan mengabaikan pengurangan stok emas gudang office
-             * karena stok emas yang ada di berlian berasal dari stok produksi
-             */
-            if ($this->dist_toko->kategori_produk_id != $this->id_kategoriproduk_berlian) {
-                $this->reduceStockOffice($this->dist_toko->items);
+            foreach($this->dist_toko_items as $item){
+                $item->product->updateTracking(ProductStatus::OTW);
             }
             DB::commit();
         }catch (\Exception $e) {
