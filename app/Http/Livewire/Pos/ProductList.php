@@ -33,7 +33,7 @@ class ProductList extends Component
             'products' => Product::akses()->with('karat.penentuanHarga')
             ->when($this->category_id, function ($query) {
                 return $query->where('category_id', $this->category_id);
-            })->where('status', ProductStatus::READY)
+            })->where('status_id', ProductStatus::READY)
             ->paginate($this->limit)
         ]);
     }

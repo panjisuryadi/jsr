@@ -44,8 +44,11 @@
                                     {{ $product->product_name }}
                                     </h3>
 
+                                
+
                                 <div class="lg:text-sm md:small text-red-400">
-                                    <small>Rp .</small>{{@rupiah($product->product_item->karat->penentuanHarga->harga_emas)}}
+                                    <small>Rp .</small>
+            {{@rupiah($product->product_item->karat->penentuanHarga->harga_jual*$product->berat_emas)}}
                                  </div>
 
     
