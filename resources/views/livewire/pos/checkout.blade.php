@@ -1,7 +1,4 @@
 <div>
-
-
-
         <div class="mt-2">
            
                 @if (session()->has('message'))
@@ -52,7 +49,6 @@
                                <div class="text-lg relative">{{ $cart_item->name }}
                                 @include('livewire.includes.product-detail-modal') 
                                </div>
-                           
                      <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} | 
                         <span class="text-yellow-500">{{ $cart_item->options->karat }}</span>
                       
@@ -123,7 +119,6 @@
   </div>
    <div class="font-semibold text-gray-500">
    {{ format_currency($cart_items->first()->options->manual_price) }}
-
   </div>
 
 </div>

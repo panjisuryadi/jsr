@@ -317,7 +317,7 @@ public function update(Request $request, $id)
                 return redirect()->back();
             }
 
-    }
+         }
 
 
    public function getNumberVal($value) {

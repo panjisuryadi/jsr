@@ -10,12 +10,13 @@
                     </div>
                     @forelse($products as $product)
 
-                    {{-- {{$product->product_item[0]->karat->penentuanHarga->harga_emas}} --}}
+                    
+
 
 
                     <div wire:click.prevent="selectProduct({{ $product }})" class="md:px-1 py-1" style="cursor: pointer;">
 
-            
+                      
 
                         <div
                             class="h-40 lg:h-32 md:h-32 relative overflow-hidden rounded-md  hover:shadow-md"
@@ -24,10 +25,11 @@
                             src="{{ $product->getFirstMediaUrl('images') }}"
                             class="absolute inset-0 h-full w-full object-cover"
                             />
+
                             <span style="font-size:0.7rem;" 
                                 class="absolute top-2 leading-5 left-1 inline-flex items-center justify-center rounded-lg bg-red-400 px-1 py-0.2 text-red-200"
                                 >
-                                {{ @$product->product_item[0]->karat->name }}
+                               {{@$product->karat->name}}
                             </span>
                             <div
                                 class="absolute md:bottom-1 bottom-3 md:leading-4 left-2"
@@ -42,10 +44,19 @@
                                     {{ $product->product_name }}
                                     </h3>
 
+                                
+
                                 <div class="lg:text-sm md:small text-red-400">
-                              {{@number_format($product->product_item[0]->karat->penentuanHarga->harga_emas)}}
+                                    <small>Rp .</small>
+
+                                   @if(empty($product->product_price)) 
+                                    {{@rupiah($product->karat->penentuanHarga->harga_jual*$product->berat_emas)}}dsds
+                                    @else
+                                    {{ @rupiah($product->product_price) }}
+                                   @endif        
+
+
                                  </div>
-                                     
 
     
                                 </div>

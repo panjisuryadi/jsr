@@ -28,10 +28,12 @@ use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
+use Modules\Produksi\Models\Accessories;
 use Modules\Produksi\Models\DiamondCertificateAttribute;
 use Modules\Produksi\Models\DiamondCertificateAttributes;
 use Modules\Produksi\Models\DiamondCertifikatT;
 use Modules\Produksi\Models\ProduksiItems;
+use Modules\Produksi\Models\Satuans;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -91,6 +93,17 @@ class Create extends Component
     public $hari_ini;
     public $category_id;
     public $produksi_item_id;
+    public $accessories = [
+        [
+            'id' => '',
+            'amount' => '',
+            'satuan_id' => '',
+        ]
+    ];
+
+    public $dataAccessories = [];
+
+    public $dataSatuans = [];
 
     public function mount()
     {
@@ -144,7 +157,11 @@ class Create extends Component
                                                 })
                                                 ->flatten()
                                                 ->keyBy('id')
-                                                ->toArray();                                                                    
+                                                ->toArray();
+        $this->dataAccessories = Accessories::all();
+
+        $this->dataSatuans = Satuans::all();
+                                                                      
     }
 
     protected $listeners = [
@@ -170,6 +187,15 @@ class Create extends Component
         ];
     }
 
+    public function addInputAccessories()
+    {
+        $this->accessories[] = [
+            'id' => '',
+            'amount' => '',
+            'satuan_id' => '',
+        ];
+    }
+
     public function remove($i)
     {
         $this->resetErrorBag();
@@ -177,11 +203,18 @@ class Create extends Component
         $this->inputs = array_values($this->inputs);
     }
 
+    public function removeAccessories($i)
+    {
+        $this->resetErrorBag();
+        unset($this->accessories[$i]);
+        $this->inputs = array_values($this->inputs);
+    }
+
     public function render()
     {
         $this->model_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['model_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['model_id'] : null;
         $this->karat_id = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['karat_id']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['karat_id'] : null;
-        $this->berat = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['berat']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['berat'] : null;
+        $this->berat = !empty($this->dataItemProduksiArray[$this->produksi_item_id]['berat']) ? $this->dataItemProduksiArray[$this->produksi_item_id]['berat'] : $this->berat;
         
         $this->tanggal = $this->hari_ini;
         return view('livewire.produksi.create');
@@ -207,7 +240,7 @@ class Create extends Component
     public function rules()
     {
         $rules = [
-            'produksi_item_id' => 'required',
+            // 'produksi_item_id' => 'required',
             'code' => 'required|unique:products,product_code',
             // 'model_id' => 'required',
             // 'karat_id' => 'required',
@@ -474,6 +507,28 @@ class Create extends Component
                     ];
                 }
 
+                // if (!empty($this->accessories) && !empty($this->accessories[0]['id'])) {
+                //     $arrayAccesories = [];
+                //     foreach($this->accessories as $item) {
+                //         $data_accesories = Accessories::find($item['id']);
+                //         $amount_used = !empty($item['amount_used']) ? $item['amount_used'] : 0;
+                //         $amount_used = $data_accesories->amount - $amount_used;
+                //         $status = ($data_accesories->amount >= $amount_used) ? 1 : 2;
+                //         $data_accesories->amount_used = $amount_used;
+                //         $data_accesories->status = $status;
+                //         $data_accesories->save();
+                        
+                //         $array_produksi_items[] = [
+                //             'product_id' => $product->id,
+                //             // 'karatberlians' => $karatberlians,
+                //             // 'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
+                //             // 'qty' => !empty($val['qty']) ? $val['qty'] : 0,
+                //             // 'diamond_certificate_id' => !empty($diamond_berlian_item) ? $diamond_berlian_item : $diamond_berlian,
+                //             // 'gia_report_number' => !empty($val['gia_report_number']) ? $val['gia_report_number'] : null
+                //         ];
+                //     }
+                // }
+
                 ProductItem::insert($array_produksi_items);
                 if(!empty($array_goodsreceipt_item)) { 
                     foreach($array_goodsreceipt_item as $item) {
@@ -492,7 +547,6 @@ class Create extends Component
             if(!empty($file)) {
                 Storage::disk('public')->delete($file);
             }
-            dd($th->getMessage());
             return $th->getMessage();
         }
         DB::commit();
@@ -533,7 +587,7 @@ class Create extends Component
                 $this->inputs[] = [
                     'id_items' => $row->id,
                     'type' => '1',
-                    'karatberlians' => $row->karatberlians,
+                    'karatberlians' => floatval($row->karatberlians),
                     'shapeberlian_id' => $row->shapeberlian_id,
                     'qty' => $row->qty,
                     'gia_report_number' => '',
@@ -548,10 +602,20 @@ class Create extends Component
         $this->setSelectedItem();
     }
 
-    public function setSelectedItem() {
+    public function setSelectedItem($key = null) {
+
+        if(!is_null($key)) {
+            $id = !empty($this->inputs[$key]['id_items']) ? $this->inputs[$key]['id_items'] : '';
+            if($id) {
+                $karatberlians = !empty($this->dataPenerimaanBerlianArray[$id]['karatberlians']) ? $this->dataPenerimaanBerlianArray[$id]['karatberlians'] : 0;
+                $karatberlians_terpakai = !empty($this->dataPenerimaanBerlianArray[$id]['karatberlians_terpakai']) ? $this->dataPenerimaanBerlianArray[$id]['karatberlians_terpakai'] : 0;
+                $this->inputs[$key]['karatberlians'] = floatval($karatberlians-$karatberlians_terpakai);
+            } 
+        }
+
         if(!empty($this->inputs)){
-            foreach($this->inputs as $row) {
-                $this->selectedItemId[] = !empty($row['id_items']) ? $row['id_items'] : '';
+            foreach($this->inputs as $key => $row) {
+                $this->selectedItemId[$key] = !empty($row['id_items']) ? $row['id_items'] : '';
             }
         }
     }
