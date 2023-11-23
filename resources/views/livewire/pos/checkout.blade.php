@@ -49,7 +49,6 @@
                                <div class="text-lg relative">{{ $cart_item->name }}
                                 @include('livewire.includes.product-detail-modal') 
                                </div>
-                           
                      <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} | 
                         <span class="text-yellow-500">{{ $cart_item->options->karat }}</span>
                       

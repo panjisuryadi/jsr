@@ -32,17 +32,38 @@
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                    {{ $cart_item->options->karat }}
+                   {{ $cart_item->options->berat_emas }}
+                </dd>
+            </div>
+     <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">
+                   Berat Emas
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {{ $cart_item->options->berat_emas }} <small>Gram</small>
+                </dd>
+            </div>
+
+
+
+      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">
+                   Harga Jual
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                   {{ number_format($cart_item->options->harga_jual) }}
                 </dd>
             </div>
 
              <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">
-                   Harga
+                   Harga Total
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                   {{ number_format($cart_item->options->harga_karat) }}
+                   {{ number_format($cart_item->options->harga_jual*$cart_item->options->berat_emas) }}
                 </dd>
             </div>
+
 
 
 

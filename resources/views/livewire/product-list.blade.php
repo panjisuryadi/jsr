@@ -10,7 +10,6 @@
                 </div>
                 @forelse($products as $product)
 
-     
                     <div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-3 col-md-6 lg:col-lg-2 col-md-6" style="cursor: pointer;">
                         <div class="card border-0 shadow h-100">
                             <div class="position-relative">
@@ -24,7 +23,11 @@
                                     {{ $product->product_code }}
                                 </span>
                                 </div>
-                                <p class="card-text font-weight-bold">{{ format_currency($product->product_price) }}</p>
+
+
+              
+     <p class="card-text font-weight-bold">{{ rupiah($product->product_price) }}</p>
+      
                             </div>
                         </div>
                     </div>
