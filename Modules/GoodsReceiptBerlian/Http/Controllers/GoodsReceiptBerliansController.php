@@ -21,6 +21,8 @@ use Lang;
 use Image;
 use Illuminate\Support\Facades\DB;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
+use Modules\Produksi\Models\Accessories;
+use Modules\Produksi\Models\AccessoriesBerlianDetail;
 use Modules\Produksi\Models\DiamondCertificateAttribute;
 use Modules\Produksi\Models\DiamondCertifikatT;
 use Modules\Produksi\Models\ProduksiItems;
@@ -311,7 +313,7 @@ class GoodsReceiptBerliansController extends Controller
                 'is_qc'                 => 1,
             ]);
             $goodsreceipt_id = $goodsreceipt->id;
-
+            $tipe_penerimaan_barang = !empty($input['tipe_penerimaan_barang']) ? $input['tipe_penerimaan_barang'] :  null;
 
             $product_items = [];
             if(!empty($input['items'])){
@@ -361,12 +363,33 @@ class GoodsReceiptBerliansController extends Controller
                         $arrayGoodsreceiptItems[$k]['status'] = 2;
                     }
 
-                    
+
+                }
+                foreach($arrayGoodsreceiptItems as $key => $item) {
+                    $type = $tipe_penerimaan_barang;
+                    $karatberlians = !empty($item['karatberlians']) ? $item['karatberlians'] : 0;
+                    $accessories = Accessories::create([
+                        'code' => Accessories::generateCodeBerlian(),
+                        'name' => 'Berlian ' . ($type == 2 ? 'Mata Tabur' : ''),
+                        'amount' => $karatberlians,
+                        'type' => 1, // tipe 1 berlian 2 non berlian default value = 2
+                        'satuan_id' => 2, //satuan Carat (ct) =>table satuans_m
+                    ]);
+                    $accessories_berlian_detail = AccessoriesBerlianDetail::create([
+                        'accessories_id' => $accessories->id,
+                        'type' => $tipe_penerimaan_barang,
+                        'shapeberlian_id' => !empty($item['karatberlians']) ? $item['karatberlians'] : null,
+                        'colour' => !empty($item['colour']) ? $item['colour'] : null,
+                        'clarity' => !empty($item['clarity']) ? $item['clarity'] : null,
+                        'klasifikasi_berlian' => !empty($item['clarity']) ? $item['clarity'] : null,
+                        'diamond_certificate_id' => null,
+                    ]);
+                    $arrayGoodsreceiptItems[$key]['accessories_id'] = $accessories->id;
                 }
 
                 GoodsReceiptItem::insert($arrayGoodsreceiptItems);
                 if(!empty($goodsreceipt->tipe_penerimaan_barang) && $goodsreceipt->tipe_penerimaan_barang == 1 && !empty($goodsreceipt->karat_id)) {
-                    ProduksiItems::create([
+                    $produksi_items = ProduksiItems::create([
                         'goodsreceipt_id' => $goodsreceipt_id,
                         'model_id' => !empty($input['model_id']) ? $input['model_id'] : null,
                         'karat_id' => !empty($input['karat_id']) ? $input['karat_id'] : null,

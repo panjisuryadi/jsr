@@ -325,7 +325,7 @@
                                             {{-- @if ($key==0) --}}
                                             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                             {{-- @endif --}}
-                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" readonly>
                                             @if ($errors->has($field_name))
                                             <span class="invalid feedback" role="alert">
                                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
