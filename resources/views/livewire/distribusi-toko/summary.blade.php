@@ -40,7 +40,7 @@
                     @if ($dist_toko->kategori_produk_id != $id_kategoriproduk_berlian)
                         
                     <div class="row flex justify-end items-center mr-auto mb-3">
-                        <a class="btn btn-md btn-primary" href="#" onclick="showCreateModal()">Tambah Item</a>
+                        <a class="btn btn-md btn-primary" href="{{ route('distribusitoko.emas.edit',$dist_toko) }}">Edit</a>
                     </div>
                     @endif
                     <div class="card">
@@ -62,7 +62,6 @@
                                             <th class="text-center">No</th>
                                             <th class="text-center">Berat Emas</th>
                                             <th class="text-justify">Informasi Produk</th>
-                                            <th class="text-justify">Aksi</th>
                                         </tr>
                                     </thead>
 
@@ -93,13 +92,6 @@
                                                 <div>
                                                     Code : <strong>{{ !empty($data->code) ? $data->code : (!empty($data->product_code) ? $data->product_code : '-')  }}</strong>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                @if ($dist_toko->kategori_produk_id != $id_kategoriproduk_berlian)
-                                                    <a class="btn btn-sm btn-primary" href="#" onclick="showEditModal({{$row}})">Edit</a>
-                                                @endif
-                                                <a class="btn btn-sm btn-danger" href="#">Hapus</a>
-
                                             </td>
                                         </tr>
                                         @empty

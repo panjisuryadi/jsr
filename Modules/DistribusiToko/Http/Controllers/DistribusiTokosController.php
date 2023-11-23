@@ -1136,6 +1136,10 @@ public function approve_distribusi(Request $request, $id)
         return view(''.$this->module_name.'::'.$this->module_path.'.emas.create');
     }
 
+    public function edit_emas(DistribusiToko $dist_toko){
+        return view(''.$this->module_name.'::'.$this->module_path.'.emas.edit', compact('dist_toko'));
+    }
+
     public function index_berlian()
     {
         
@@ -1248,5 +1252,4 @@ public function approve_distribusi(Request $request, $id)
                         'no_invoice'])
             ->make(true);
     }
-
 }

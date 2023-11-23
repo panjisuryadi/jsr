@@ -93,7 +93,7 @@ $mp3 = asset('js/webcamjs/shutter.mp3');
 <script type="text/javascript" src="{{ asset('js/webcamjs/webcam.min.js') }}"></script>
 <script language="JavaScript">
     function configure() {
-        Livewire.emitTo('distribusi-toko.emas.create', 'webcamReset')
+        Livewire.emit('webcamReset')
         document.getElementById('results').innerHTML ='';
         Webcam.set({
             width: 1280,
@@ -119,7 +119,7 @@ $mp3 = asset('js/webcamjs/shutter.mp3');
             $('#results').removeClass('hidden');
             document.getElementById('results').innerHTML =
                 '<img id="imageprev" src="' + data_uri + '"/>';
-            Livewire.emitTo('distribusi-toko.emas.create', 'webcamCaptured', data_uri)
+            Livewire.emit('webcamCaptured', data_uri)
         });
         Webcam.reset();
     }
@@ -135,7 +135,7 @@ $mp3 = asset('js/webcamjs/shutter.mp3');
         $('#camera').removeClass('hidden');
         $('#results').addClass('hidden');
         $('#imageprev').addClass('hidden');
-        Livewire.emitTo('distribusi-toko.emas.create', 'webcamReset')
+        Livewire.emit('webcamReset')
         Webcam.reset();
     }
 </script>

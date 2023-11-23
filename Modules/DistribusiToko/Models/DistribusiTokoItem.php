@@ -17,7 +17,6 @@ class DistribusiTokoItem extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'dist_toko_items';
-    
     protected static function newFactory()
     {
         return \Modules\DistribusiToko\Database\factories\DistribusiTokoItemFactory::new();

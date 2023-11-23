@@ -3,7 +3,6 @@
 
     <div class="col-md-5 bg-white">
         <div class="pt-3">
-            {{-- <livewire:distribusi-toko.berlian.table /> --}}
             <div>
 
                 <p class="uppercase text-lg text-gray-600 font-semibold">Input Barcode</p>
@@ -18,7 +17,7 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-6">
                             <div class="form-group">
-                                <input id = "barcodeForm" type="text" class="form-control rounded rounded-lg sortir text-center" placeholder="Kode Produk" style="width: 100%;" wire:model='kode_produk' wire:keydown.enter="submitBarcode()" autofocus>
+                                <input id = "barcodeForm" type="text" class="form-control rounded rounded-lg sortir text-center" placeholder="Kode Produk" style="width: 100%;" wire:model="kode_produk" wire:keydown.enter="submitBarcode()" autofocus>
                             </div>
                         </div>
                     </div>
@@ -117,7 +116,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                     <?php
-                                        $field_name = 'distribusi_toko.no_distribusi_toko';
+                                        $field_name = 'dist_toko.no_invoice';
                                         $field_lable = label_case('No Surat Jalan');
                                         $field_placeholder = $field_lable;
                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -136,7 +135,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                     <?php
-                                        $field_name = 'distribusi_toko.date';
+                                        $field_name = 'dist_toko.date';
                                         $field_lable = label_case('Date');
                                         $field_placeholder = $field_lable;
                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -155,7 +154,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                     <?php
-                                        $field_name = 'distribusi_toko.cabang_id';
+                                        $field_name = 'dist_toko.cabang_id';
                                         $field_lable = label_case('cabang');
                                         $field_placeholder = $field_lable;
                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -191,9 +190,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($distribusi_toko_details as $index => $product )
+                                @forelse ($dist_toko->items as $index => $item )
                                 @php
-                                    $image = $product['images'];
+                                    $image = $item->product?->images;
                                     $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                 @endphp
                                 <tr>
@@ -203,9 +202,9 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <span class="block">Nama : <span class="font-bold">{{ $product['product_name'] }}</span></span>
-                                        <span class="block">Karat : <span class="font-bold">{{ $product['karat']['name'] }} | {{ $product['karat']['kode'] }}</span></span>
-                                        <span class="block">Berat : <span class="font-bold">{{ $product['berat_emas'] }} gr</span></span>
+                                        <span class="block">Nama : <span class="font-bold">{{ $item->product?->product_name }}</span></span>
+                                        <span class="block">Karat : <span class="font-bold">{{ $item->product?->karat->label }}</span></span>
+                                        <span class="block">Berat : <span class="font-bold">{{ $item->product?->berat_emas }} gr</span></span>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $index }})">
@@ -244,6 +243,9 @@
     });
     window.addEventListener('not:selected', event => {
         toastr.error('Produk belum dipilih');
+    });
+    window.addEventListener('group:not-selected', event => {
+        toastr.error('Group belum dipilih');
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>

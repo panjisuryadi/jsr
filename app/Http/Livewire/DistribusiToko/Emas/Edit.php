@@ -2,53 +2,34 @@
 
 namespace App\Http\Livewire\DistribusiToko\Emas;
 
-use App\Models\LookUp;
-use DateTime;
-use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Modules\Cabang\Models\Cabang;
 use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
-use Modules\Cabang\Models\Cabang;
-use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\KategoriProduk\Models\KategoriProduk;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
 use Modules\ProdukModel\Models\ProdukModel;
-use Modules\Produksi\Models\Produksi;
 use Modules\Stok\Models\StockOffice;
 
-use function PHPSTORM_META\type;
-use function PHPUnit\Framework\isEmpty;
-
-class Create extends Component
+class Edit extends Component
 {
-
-    public $categories;
-    public $product_category;
+    public DistribusiToko $dist_toko;
 
     public $cabangs;
-
-    public $kategori;
-
-    public $logam_mulia_id;
-
-    public $karat_logam_mulia;
-
-    public $distribusi_toko = [
-        'no_distribusi_toko' =>'',
-        'date' => '',
-        'cabang_id' => ''
-    ];
-
+    public $product_categories;
+    public $groups;
+    public $models;
     public $dataKarat = [];
 
-    public $distribusi_toko_details = [];
+    public $logam_mulia_id;
+    public $karat_logam_mulia;
 
-    public $used_stock = [];
+    public $kode_produk;
 
     protected $listeners = [
         'webcamCaptured' => 'handleWebcamCaptured',
@@ -56,17 +37,7 @@ class Create extends Component
         'setAdditionalAttribute'
     ];
 
-    public $exceptProductId = [];
-
-    public $produksis_id;
-
     public $search;
-
-    public $kode_produk;
-
-    public $product_categories;
-    public $groups;
-    public $models;
 
     public $isLogamMulia;
 
@@ -93,47 +64,10 @@ class Create extends Component
         $this->new_product['webcam_image'] = '';
     }
 
-    public function setAdditionalAttribute($key,$name,$selectedText){
-        $this->distribusi_toko_details[$key][$name] = $selectedText;
-    }
-
-    private function resetDistribusiToko()
+    public function render()
     {
-        $this->distribusi_toko = [
-            'date' => '',
-            'cabang_id' => ''
-        ];
-    }
-    private function resetDistribusiTokoDetails()
-    {
-        $this->distribusi_toko_details = [
-            [
-                'product_category' => '',
-                'group' => '',
-                'model' => '',
-                'gold_category' => '',
-                'karat' => '',
-                'accessoris_weight' => 0,
-                'label_weight' => 0,
-                'gold_weight' => 0,
-                'total_weight' => 0,
-                'code' => '',
-                'file' => '',
-                'certificate_id' => '',
-                'no_certificate' => '',
-                'webcam_image' => '',
-                'product_category_name' => '',
-                'group_name' => '',
-                'model_name' => '',
-            ]
-        ];
-    }
-
-    public function render(){
         $data = Product::with('product_item')->whereIn('status_id',[ProductStatus::PENDING_OFFICE,ProductStatus::CREATED]);
-        if (!empty($this->exceptProductId)) {
-            $data = $data->whereNotIn('id', $this->exceptProductId);
-        }
+        
         if (!empty($this->search)) {
             $search = $this->search;
             $data->where(function($query) use ($search) {
@@ -142,34 +76,11 @@ class Create extends Component
             });
         }
         $data = $data->paginate(5);
-        return view("livewire.distribusi-toko.emas.create",[
-            'products' => $data
+        return view('livewire.distribusi-toko.emas.edit',[
+            'products' => $data,
         ]);
     }
-
-    private function resetInputFields()
-    {
-        $this->resetDistribusiToko();
-        $this->resetDistribusiTokoDetails();
-    }
-
-
-    public function rules()
-    {
-        $rules = [
-            'distribusi_toko.cabang_id' => 'required',
-            'distribusi_toko.date' => 'required',
-            'distribusi_toko.no_distribusi_toko' => 'required|string|max:70'
-        ];
-        return $rules;
-    }
-
-    public function updated($propertyName)
-    {
-        $this->resetErrorBag();
-        $this->validateOnly($propertyName);
-    }
-
+    
     public function mount()
     {
         $this->cabangs = Cabang::all();
@@ -185,116 +96,31 @@ class Create extends Component
                     $query->where('berat_real', '>', 0);
                 });
         })->get();
-        $this->distribusi_toko['no_distribusi_toko'] = $this->generateInvoice();
-        $this->distribusi_toko['date'] = (new DateTime())->format('Y-m-d');
-
         $this->logam_mulia_id = Category::where('category_name','LIKE','%logam mulia%')->firstOrFail()->id;
         $this->karat_logam_mulia = Karat::logam_mulia()->id;
     }
 
-    private function generateInvoice(){
-        $lastString = DistribusiToko::orderBy('id', 'desc')->value('no_invoice');
-
-        $numericPart = (int) substr($lastString, 10);
-        $incrementedNumericPart = $numericPart + 1;
-        $nextNumericPart = str_pad($incrementedNumericPart, 5, "0", STR_PAD_LEFT);
-        $nextString = "DIST-TOKO-" . $nextNumericPart;
-        return $nextString;
-    }
-
-    public function store()
+    public function updated($propertyName)
     {
-        if(!count($this->distribusi_toko_details)){
-            $this->dispatchBrowserEvent('not:selected');
-        }else{
-            $this->validate();
-            $kategoriproduk_id = LookUp::where('kode', 'id_kategori_produk_emas')->value('value');
-            DB::beginTransaction();
-            try{
-                $distribusi_toko = DistribusiToko::create([
-                    'cabang_id'                   => $this->distribusi_toko['cabang_id'],
-                    'date'                        => $this->distribusi_toko['date'],
-                    'no_invoice'                  => $this->distribusi_toko['no_distribusi_toko'],
-                    'kategori_produk_id'        => $kategoriproduk_id,
-                    'pic_id'                  => auth()->id(),
-                ]);
-    
-                foreach($this->distribusi_toko_details as $key => $value) {
-                    $additional_data = [
-                        "product_information" => [
-                            "product_category" => [
-                                "id" => $this->distribusi_toko_details[$key]['category_id'],
-                                "name" => $this->product_categories->find($this->distribusi_toko_details[$key]['category_id'])->category_name
-                            ],
-                            "group" => [
-                                'id' => $this->distribusi_toko_details[$key]['group_id'],
-                                'name' => $this->groups->find($this->distribusi_toko_details[$key]['group_id'])->name
-                            ],
-                            "model" => [
-                                'id' => $this->distribusi_toko_details[$key]['model_id'],
-                                'name' => $this->models->find($this->distribusi_toko_details[$key]['model_id'])?->name
-                            ],
-                            "code" => $this->distribusi_toko_details[$key]['product_code'],
-                            'certificate_id' => $this->distribusi_toko_details[$key]['product_item']['certificate_id'],
-                            'no_certificate' => $this->distribusi_toko_details[$key]['product_item']['no_series'],
-                            'accessories_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_accessories'],
-                            'tag_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_label'],
-                            'image' => $this->distribusi_toko_details[$key]['images'],
-                            'total_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_total']
-                        ]
-                    ];
-                    $dist_item = $distribusi_toko->items()->create([
-                        'karat_id' => $this->distribusi_toko_details[$key]['karat_id'],
-                        'gold_weight' => $this->distribusi_toko_details[$key]['berat_emas'],
-                        'product_id' => $this->distribusi_toko_details[$key]['id'],
-                        'additional_data' => json_encode($additional_data),
-                    ]);
-                    $dist_item->product->updateTracking(ProductStatus::DRAFT);
-                }
-                
-                $distribusi_toko->setAsDraft();
-    
-                DB::commit();
-            }catch (\Exception $e) {
-                DB::rollBack(); 
-                throw $e;
-            }
-    
-            $this->resetInputFields();
-            toast('Saved to Draft Successfully','success');
-            return redirect(route('distribusitoko.detail', $distribusi_toko));
-        }
+        $this->resetErrorBag();
+        $this->validateOnly($propertyName);
     }
 
-    public function messages(){
-        return [];
-    }
 
-    public function selectProduct($product) {
-        $this->exceptProductId[] = $product['id'];
-        $this->distribusi_toko_details[] = $product;
-    }
-
-    public function remove($index)
+    public function rules()
     {
-        $data = $this->distribusi_toko_details[$index];
-        unset($this->distribusi_toko_details[$index]);
-        $product_id = !empty($data['id']) ? $data['id'] : '';
-        if (!empty($product_id)) {
-            $key = array_search($product_id, $this->exceptProductId);
-            if(!is_bool($key)){
-                unset($this->exceptProductId[$key]);
-            }
-        }
+        $rules = [
+            'dist_toko.cabang_id' => 'required',
+            'dist_toko.date' => 'required',
+            'dist_toko.no_invoice' => 'required|string|max:70'
+        ];
+        return $rules;
     }
 
     public function submitBarcode()
     {
         if(!empty($this->kode_produk)){
             $data = Product::where('product_code',$this->kode_produk)->whereIn('status_id',[ProductStatus::PENDING_OFFICE,ProductStatus::CREATED]);
-            if (!empty($this->exceptProductId)) {
-                $data = $data->whereNotIn('id', $this->exceptProductId);
-            }
             $data = $data->first();
             if ($data) {
                 $this->selectProduct($data);
@@ -305,12 +131,6 @@ class Create extends Component
 
     }
 
-
-
-    private function isLogamMulia(){
-        $this->isLogamMulia = $this->new_product['product_category_id'] == $this->logam_mulia_id;
-    }
-    
     public function productCategoryChanged(){
         $this->clearKaratAndTotal();
         $this->isLogamMulia();
@@ -329,6 +149,10 @@ class Create extends Component
         $this->new_product['no_certificate'] = '';
     }
 
+    private function isLogamMulia(){
+        $this->isLogamMulia = $this->new_product['product_category_id'] == $this->logam_mulia_id;
+    }
+
     public function generateCode(){
         if(!empty($this->new_product['group_id'])){
             $namagroup = Group::where('id', $this->new_product['group_id'])->first()->code;
@@ -336,23 +160,15 @@ class Create extends Component
             $codeNumber = '';
             $cabang = 'JSR';
             while ($existingCode) {
-                $date = now()->format('dmY');
-                $randomNumber = mt_rand(100, 999);
-                $codeNumber = $cabang .'-'. $namagroup .'-'. $randomNumber .'-'. $date;
-                $existingCode = Product::where('product_code', $codeNumber)->exists();
+                   $date = now()->format('dmY');
+                   $randomNumber = mt_rand(100, 999);
+                   $codeNumber = $cabang .'-'. $namagroup .'-'. $randomNumber .'-'. $date;
+                   $existingCode = Product::where('product_code', $codeNumber)->exists();
             }
             $this->new_product["code"] = $codeNumber;
         }else{
             $this->dispatchBrowserEvent('group:not-selected');
         }
-    }
-
-    public function calculateTotalWeight(){
-        $this->new_product['total_weight'] = 0;
-        $this->new_product['total_weight'] += doubleval($this->new_product['gold_weight']);
-        $this->new_product['total_weight'] += doubleval($this->new_product['accessories_weight']);
-        $this->new_product['total_weight'] += doubleval($this->new_product['tag_weight']);
-        $this->new_product['total_weight'] = round($this->new_product['total_weight'], 3);
     }
 
     private function product_rules(){
@@ -404,8 +220,6 @@ class Create extends Component
 
     public function add_new_product(){
         $this->validate($this->product_rules());
-
-
         DB::beginTransaction();
         try{
             // Create product first
@@ -443,7 +257,13 @@ class Create extends Component
             DB::rollBack(); 
             throw $e;
         }
+    }
 
-
+    public function calculateTotalWeight(){
+        $this->new_product['total_weight'] = 0;
+        $this->new_product['total_weight'] += doubleval($this->new_product['gold_weight']);
+        $this->new_product['total_weight'] += doubleval($this->new_product['accessories_weight']);
+        $this->new_product['total_weight'] += doubleval($this->new_product['tag_weight']);
+        $this->new_product['total_weight'] = round($this->new_product['total_weight'], 3);
     }
 }

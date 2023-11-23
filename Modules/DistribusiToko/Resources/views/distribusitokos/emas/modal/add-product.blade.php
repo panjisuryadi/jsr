@@ -1,9 +1,9 @@
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static" wire:ignore.self>
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title text-lg font-bold" id="addModalLabel">Tambah Produk</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" wire:click="$set('showModal',false)">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -359,7 +359,7 @@
                     </div>
                     
                     <div class="float-right mt-5">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="$set('showModal',false)">Batal</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary" wire:click.prevent="add_new_product">Tambah</button>
                     </div>
                 </form>
