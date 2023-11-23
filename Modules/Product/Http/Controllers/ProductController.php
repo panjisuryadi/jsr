@@ -170,7 +170,7 @@ public function __construct()
            return response()->json(['code' => '0']);
          }
          $namagroup = Group::where('id', $group)->first()->code;
-         $cb = Auth::user()->namacabang->cabang()->first()->code;
+         $cb = Auth::user()->namacabang()->code;
          $existingCode = true;
          $codeNumber = '';
          $cabang = $cb ?? 'JSR';

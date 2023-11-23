@@ -11,7 +11,7 @@
                         <div>
                             <div class="text-value text-primary">{{ auth()->user()->name }}</div>
                             <div class="text-muted text-uppercase font-weight-bold small">
-                             {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }} 
+                             {{ Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->name):'' }} 
                         </div>
                         </div>
                     </div>

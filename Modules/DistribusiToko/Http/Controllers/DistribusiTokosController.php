@@ -818,7 +818,7 @@ public function kategori($slug)
         $categories = \Modules\Product\Entities\Category::where('kategori_produk_id',$kategori->id)->get();
         $cabang = null;
         if(auth()->user()->isUserCabang()){
-            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+            $cabang = Cabang::where('id',Auth::user()->namacabang()->id)->get();
         }else{
             $cabang = Cabang::all();
         }
@@ -1166,7 +1166,7 @@ public function approve_distribusi(Request $request, $id)
     {
         $cabang = [];
         if(auth()->user()->isUserCabang()){
-            $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+            $cabang = Cabang::where('id',Auth::user()->namacabang()->id)->get();
         }else{
             $cabang = Cabang::all();
         }

@@ -40,7 +40,6 @@
 
     <div class="form-group">
         <label for="is_active">Cabang <span class="text-danger">*</span></label>
-{{-- {{$user->namacabang->user_id}} --}}
 <select class="form-control" name="cabang_id" id="cabang_id" required>
  <option value="" selected disabled>Select Cabang</option>
          @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)

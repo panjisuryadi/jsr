@@ -68,7 +68,7 @@ class Create extends Component
 
     public function mount()
     {
-        $this->cabang = auth()->user()->namacabang->cabang;
+        $this->cabang = auth()->user()->namacabang();
         $this->invoice_series = $this->cabang->code;
         $this->generateInvoice();
         $this->today = (new DateTime())->format('Y-m-d');

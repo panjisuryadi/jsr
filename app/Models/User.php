@@ -84,7 +84,7 @@ class User extends Authenticatable implements HasMedia
             return $query;
         }
         return $query->whereHas('namacabangs', function($query) {
-               $query->where('cabang_id', Auth::user()->namacabang->id);
+               $query->where('cabang_id', Auth::user()->namacabang()->id);
             });
     }
 
@@ -94,7 +94,7 @@ class User extends Authenticatable implements HasMedia
 
      public function namacabang()
         {
-            return $this->namacabangs()->first();
+            return $this->namacabangs()->latest()->first();
         }
 
       public function company() {

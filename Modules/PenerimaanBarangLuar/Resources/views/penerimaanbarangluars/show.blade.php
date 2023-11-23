@@ -34,7 +34,7 @@
         <h5 class="mb-2 border-bottom pb-2">Company Info:</h5>
         <div><strong>{{ settings()->company_name }}</strong></div>
         <div>{{ settings()->company_address }}</div>
-        <div>Cabang: <strong>{{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }} </strong></div>
+        <div>Cabang: <strong>{{ Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->name):'' }} </strong></div>
         {{-- <div>Email: {{ settings()->company_email }}</div> --}}
         <div>Phone: {{ settings()->company_phone }}</div>
     </div>

@@ -102,7 +102,7 @@ class Create extends Component
 
         $this->today = (new DateTime())->format('Y-m-d');
         $this->date = $this->today;
-        $this->cabang = auth()->user()->namacabang->cabang;
+        $this->cabang = auth()->user()->namacabang();
     }
 
     public function setAdditionalAttribute($name,$selectedText){
