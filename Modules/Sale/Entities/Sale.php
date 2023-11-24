@@ -31,6 +31,7 @@ class Sale extends Model
              if ($users == 1) {
                 return $query;
             }
+          //  Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->id):''
 
     return $query->where('cabang_id', Auth::user()->namacabang()->id);
         }
