@@ -888,6 +888,9 @@
                   {{ label_Case('edit') }}
                </label>
             </div>
+
+
+
                 <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
                 id="delete_penerimaanbarangluars" name="permissions[]"
@@ -896,6 +899,17 @@
                   {{ label_Case('delete') }}
                </label>
             </div>
+            
+     <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_insentif" name="permissions[]"
+                value="access_insentif" {{ $role->hasPermissionTo('access_insentif') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_insentif">
+                  {{ label_Case('access_insentif') }}
+               </label>
+            </div>
+
+
             
         </div>
     </div>

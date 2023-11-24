@@ -284,6 +284,7 @@ class GenerateMenus
                 'permission'    => ['access_penentuanhargas',
                                     'access_buys_back_luar',
                                     'access_buysback_nota',
+                                    'access_insentif',
                                     'access_buybacktoko'],
             ]);
             $penerimaan->link->attr([
@@ -364,7 +365,7 @@ class GenerateMenus
             ->data([
                 'order'         => 3,
                 'activematches' => ['penerimaanbarangluar*'],
-                'permission'    => ['access_penerimaanbarangluars'],
+                'permission'    => ['access_insentif'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
