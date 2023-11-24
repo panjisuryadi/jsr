@@ -94,8 +94,13 @@
     
     <ul class="nav nav-tabs py-1" role="tablist">
 
+
+       <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Pos">Penjualan</a>
+        </li>   
+
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#Buysback">Buys Back</a>
+            <a class="nav-link" data-toggle="tab" href="#Buysback">Buys Back</a>
         </li>
 
         @can('access_buysback_nota')
@@ -116,10 +121,7 @@
             <a class="nav-link" data-toggle="tab" href="#Penjualan">Penjualan Sales</a>
         </li>  
 
-         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#StockPending">Penjualan</a>
-        </li>   
-
+  
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#barangLuar">Barang Luar</a>
@@ -136,7 +138,67 @@
     </ul>
 
     <div class="tab-content py-3 mb-2">
- <div id="Buysback" class="container px-0 tab-pane active">
+
+
+  <div id="Pos" class="container px-0 tab-pane active">
+            <div class="pt-3">
+
+                   <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{ label_case('No') }}</th>
+                            <th class="text-center">{{ label_case('Invoice') }}</th>
+                            <th class="text-center">{{ label_case('Cabang') }}</th>
+                            <th class="text-center">{{ label_case('Customer') }}</th>
+                            <th class="text-center">{{ label_case('total_amount') }}</th>
+                            <th class="text-center">{{ label_case('Aksi') }}</th>
+                        </tr>
+                    @forelse(\Modules\Sale\Entities\Sale::akses()->get() as $row)
+                            @if($loop->index > 4)
+                                                @break
+                                            @endif
+                                {{-- {{ $row }} --}}
+
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $row->reference }}</td>
+                            <td class="text-center">{{ $row->cabang->name }}</td>
+                            <td class="text-center">{{ $row->customer->customer_name }}</td>
+                            <td class="text-center font-semibold"><small>Rp .</small>{{ rupiah($row->total_amount) }}</td>
+                            <td class="text-center">
+                                
+                     
+                  <a target="_blank" class="btn btn-sm btn-success mfe-1 d-print-none" href="{{ route('sales.show', $row->id) }}">
+                            <i class="bi bi-eye"></i> Show
+                        </a>   
+
+                         <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('sales.cetak', $row->id) }}">
+                            <i class="bi bi-save"></i> Cetak Nota
+                        </a>   
+
+                        <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('sales.pdf', $row->id) }}">
+                            <i class="bi bi-save"></i> Print PDF
+                        </a>
+
+
+                                @can('show_sales')
+                                @endcan
+
+
+                            </td>
+                        </tr>
+                        @empty
+                        <p>Tidak ada Data</p>
+                        @endforelse
+                        
+                    </table>
+         
+            </div>
+        </div>
+
+
+
+
+ <div id="Buysback" class="container px-0 tab-pane">
             <div class="pt-3">
 
 
@@ -253,61 +315,6 @@
         </div>
 
 
-
-  <div id="StockPending" class="container px-0 tab-pane">
-            <div class="pt-3">
-
-                   <table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                            <th class="text-center">{{ label_case('Invoice') }}</th>
-                            <th class="text-center">{{ label_case('Cabang') }}</th>
-                            <th class="text-center">{{ label_case('Customer') }}</th>
-                            <th class="text-center">{{ label_case('total_amount') }}</th>
-                            <th class="text-center">{{ label_case('Aksi') }}</th>
-                        </tr>
-                    @forelse(\Modules\Sale\Entities\Sale::akses()->get() as $row)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
-                                {{-- {{ $row }} --}}
-
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $row->reference }}</td>
-                            <td class="text-center">{{ $row->cabang->name }}</td>
-                            <td class="text-center">{{ $row->customer->customer_name }}</td>
-                            <td class="text-center font-semibold"><small>Rp .</small>{{ rupiah($row->total_amount) }}</td>
-                            <td class="text-center">
-                                
-                     
-                  <a target="_blank" class="btn btn-sm btn-success mfe-1 d-print-none" href="{{ route('sales.show', $row->id) }}">
-                            <i class="bi bi-eye"></i> Show
-                        </a>   
-
-                         <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('sales.cetak', $row->id) }}">
-                            <i class="bi bi-save"></i> Cetak Nota
-                        </a>   
-
-                        <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('sales.pdf', $row->id) }}">
-                            <i class="bi bi-save"></i> Print PDF
-                        </a>
-
-
-                                @can('show_sales')
-                                @endcan
-
-
-                            </td>
-                        </tr>
-                        @empty
-                        <p>Tidak ada Data</p>
-                        @endforelse
-                        
-                    </table>
-         
-            </div>
-        </div>
 
 
 
