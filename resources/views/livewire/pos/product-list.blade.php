@@ -1,16 +1,18 @@
-<div>
+<div >
     <div class="card border-0 py-0">
         <div class="card-body px-3 py-1">
-            <livewire:pos.filter :categories="$categories"/>
-                <div class="grid grid-cols-4 md:gap-0 lg:gap-1 gap-2 md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 relative">
+<livewire:pos.filter :categories="$categories"/>
+
+                <div class="mt-2 grid grid-cols-4 md:gap-0 lg:gap-1 gap-2 md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 relative">
                     <div wire:loading.flex class="position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                         <div class="spinner-border text-primary" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
-                    @forelse($products as $product)
 
-                    
+
+                    @forelse($products as $product)
+                          {{-- {{ $product }} --}}
 
 
 
@@ -36,16 +38,13 @@
                                 >
 
                                 <div class="px-1 sm:p-4 md:mt-4 lg:p-2">
-                                    <span  class="md:text-xs md:leading-4 block text-gray-600"> {{ @$product->category->category_name }} 
-
+                                    <span  class="md:text-xs md:leading-4 block text-gray-600">
+                                     {{ @$product->category->category_name }} 
                                     </span>
                                     
                                     <h3 class="leading-5 font-semibold hover:text-red-400 mt-0.5 lg:text-sm sm:small md:text-sm md:leading-3 md:leading-4 text-lg text-gray-800">
                                     {{ $product->product_name }}
                                     </h3>
-
-                                
-
                                 <div class="lg:text-sm md:small text-red-400">
                                     <small>Rp .</small>
 

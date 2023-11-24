@@ -30,11 +30,11 @@
 @section('content')
 <div class="container-fluid">
 <div class="card max-h-screen">
-<div class="flex flex-row lg:max-h-screen">
+<div class="flex flex-row lg:max-h-screen mt-3">
  <div class="w-3/5 px-2">
- <livewire:search-product/>
-  <livewire:pos.product-list :categories="$product_categories"/>
 
+  <livewire:pos.product-list :categories="$product_categories"/>
+   
  </div>
  <div class="w-2/5 mt-2 border-l">
     <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>

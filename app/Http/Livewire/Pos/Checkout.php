@@ -71,6 +71,7 @@ class Checkout extends Component
    public function mount($cartInstance, $customers) {
         $this->cart_instance = $cartInstance;
         $this->customers = $customers;
+        $this->customer_id =   \Modules\People\Entities\Customer::limit(1)->first()->id;
         $this->global_discount = 0;
         $this->global_tax = 0;
         $this->shipping = 0.00;
@@ -89,7 +90,6 @@ class Checkout extends Component
 
 
     }
-
 
 
  public function PaymentType($type)
@@ -189,10 +189,6 @@ class Checkout extends Component
         $this->loading = false;
     }
 
-
-
-
-
             public function hydrate() {
                 //$this->total_amount = $this->calculateTotal();
                 //$this->updatedCustomerId();
@@ -216,6 +212,8 @@ class Checkout extends Component
 
 
     public function proceed() {
+          
+
         if ($this->customer_id != null) {
            //  $cart = $this->total_amount;
              $cart = [
@@ -232,7 +230,7 @@ class Checkout extends Component
           
           
         } else {
-            session()->flash('message', 'Please Select Customer!');
+            session()->flash('message', 'Kustomer Belum dipilih!');
         }
     }
 
@@ -284,14 +282,13 @@ $cart->add([
         'karat'                 =>$product['karat']['name'],
         'harga_jual'            =>$product['karat']['penentuan_harga']['harga_jual'],
         'berat_emas'            =>$product['berat_emas'],
-
         'product_tax'           => 1,
-        'manual'                 => 0,
+        'manual'                => 0,
         'manual_item'           => 0,
         'manual_price'          => 0,
         'unit_price'            =>1
-    ]
-    ]);
+                ]
+         ]);
 
         $this->check_quantity[$product['id']] = 1;
         $this->quantity[$product['id']] = 1;

@@ -49,8 +49,9 @@
     </div>
 </div>
 
-<div class="card border-0">
-    <div class="card-body cursor pointer p-0 d-flex align-items-center shadow-sm">
+
+<div class="card border-0 transform hover:scale-110 transition-transform duration-300 cursor-pointer" onclick="window.location.href='{{ route('app.pos.index') }}'">
+    <div class="card-body hover:bg-gray-100 cursor cursor-pointer p-0 d-flex align-items-center shadow-sm">
         <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
             <i class="bi bi-cart font-2xl"></i>
         </div>
@@ -61,10 +62,10 @@
             <div class="tracking-wider text-muted text-uppercase font-weight-bold">
                 POS
             </div>
-
         </div>
     </div>
 </div>
+
 
 
 

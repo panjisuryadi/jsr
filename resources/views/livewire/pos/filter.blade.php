@@ -1,7 +1,9 @@
-<div>
+<div class="flex flex-row grid grid-cols-3 gap-1 py-2 border-bottom">
+  <div>
+    
+      <livewire:search-product/>
+  </div>
 
-<div class="flex gap-2">
-  <div class="w-3/4">
   <div class="form-group">
                 <label class="mb-0">Kategori</label>
                 <select wire:model="category" class="form-control">
@@ -12,10 +14,7 @@
                 </select>
             </div>
 
-</div>
-  <div class="w-1/4">
-
-  <div class="form-group">
+ <div class="form-group">
                 <label class="mb-0">Jumlah Produk</label>
                 <select wire:model="showCount" class="form-control">
                     <option value="9">9 Products</option>
@@ -25,10 +24,5 @@
                     <option value="">All Products</option>
                 </select>
             </div>
-
-
-</div>
-</div>
-
 
 </div>

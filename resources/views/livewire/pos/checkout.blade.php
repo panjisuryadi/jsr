@@ -15,7 +15,12 @@
                 @endif
 
                 <div class="px-3">
-                <div class="form-group">
+
+            <input id="customer_id" wire:model="customer_id" type="hidden" name="customer_id">
+
+
+
+              {{--   <div class="form-group">
                     <label for="customer_id">Customer <span class="text-danger">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -26,11 +31,12 @@
                         <select wire:model="customer_id" id="customer_id" class="select2 form-control">
                             <option value="" selected>Select Customer</option>
                             @foreach($customers as $customer)
-                                <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
+                                <option value="{{ $customer->id }}">
+                                    {{ $customer->customer_name }}</option>
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="overflow-y-auto h-64 max-h-full md:max-h-screen">
               
@@ -50,7 +56,13 @@
                                 @include('livewire.includes.product-detail-modal') 
                                </div>
                      <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $cart_item->options->code }} | 
-                        <span class="text-yellow-500">{{ $cart_item->options->karat }}</span>
+                        <span class="text-yellow-500">
+                            {{ $cart_item->options->karat }}
+                        
+                        </span>|
+                        <span class="text-blue-400">
+                            {{ rupiah($cart_item->options->harga_jual*$cart_item->options->berat_emas) }}
+                        </span>
                       
                        </div>
                              </div>
@@ -73,7 +85,7 @@
                             @endforeach
                           @else
                           
-                        <span class="text-danger">
+                        <span class="flex text-center text-danger py-2">
                            Produk Belum di pilih
                         </span>
                             
@@ -87,7 +99,6 @@
   @endphp
 
 <div class="flex flex-row grid grid-cols-3 gap-1 py-2">
-    
 
 <div class="px-1 text-center justify-items-center">
    <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
