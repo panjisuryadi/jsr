@@ -111,7 +111,7 @@ class UsersController extends Controller
         }
 
         $cabangs = UserCabang::where('user_id',$user->id)->first();
-        if (is_null($cabangs)) {
+        if (empty($cabangs)) {
               UserCabang::create([
                 'user_id'         => $user->id,
                 'cabang_id'       => $request->cabang_id
