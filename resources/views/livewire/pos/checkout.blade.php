@@ -86,6 +86,9 @@
     $qty = Cart::instance($cart_instance);
   @endphp
 
+<div class="flex flex-row grid grid-cols-3 gap-1 py-2">
+    
+
 <div class="px-1 text-center justify-items-center">
    <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
    <i class="hover:text-red-400 text-2xl text-gray-500 bi bi-trash"></i>
@@ -93,9 +96,16 @@
 </button>
 </div>
 
+
+
+
 <div class="px-1 text-center justify-items-center">
        @include('livewire.pos.includes.manual-modal')
 </div>
+
+
+
+
 
 <div class="px-1 text-center justify-items-center">
    <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
@@ -103,6 +113,12 @@
   <div class="mb-1 ml-1 lg:text-sm md:text-sm text-xl py-0 font-semibold">Simpan</div>
 </button>
 </div>
+
+
+
+</div>
+
+
 
 
 </div>
@@ -152,11 +168,11 @@
 
 
 </div>
-{{--     livewire
-    @include('livewire.pos.includes.payment-modal') --}}
+
+    @include('livewire.pos.includes.payment-modal')
 
     {{--Checkout Modal--}}
 
-    @include('livewire.pos.includes.checkout-modal')
+    {{-- @include('livewire.pos.includes.checkout-modal') --}}
 </div>
 

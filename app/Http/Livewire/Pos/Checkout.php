@@ -282,7 +282,7 @@ $cart->add([
         'unit'                  =>$product['product_unit'],
         'karat_id'              =>$product['karat']['id'],
         'karat'                 =>$product['karat']['name'],
-        'harga_jual'           =>$product['karat']['penentuan_harga']['harga_jual'],
+        'harga_jual'            =>$product['karat']['penentuan_harga']['harga_jual'],
         'berat_emas'            =>$product['berat_emas'],
 
         'product_tax'           => 1,

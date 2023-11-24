@@ -50,7 +50,7 @@
                                     <small>Rp .</small>
 
                                    @if(empty($product->product_price)) 
-                                    {{@rupiah($product->karat->penentuanHarga->harga_jual*$product->berat_emas)}}dsds
+                                    {{@rupiah($product->karat->penentuanHarga->harga_jual*$product->berat_emas)}}
                                     @else
                                     {{ @rupiah($product->product_price) }}
                                    @endif        
@@ -64,9 +64,9 @@
                         </div>
                     </div>
                     @empty
-                    <div class="col-12">
-                        <div class="alert alert-warning mb-0">
-                            Produk tidak ada...
+                    <div class="mt-1 flex flex-row col-span-4">
+                        <div class="w-full px-3 py-2  alert alert-warning mb-0">
+                            Produk Tidak Ditemukan ...!!
                         </div>
                     </div>
                     @endforelse

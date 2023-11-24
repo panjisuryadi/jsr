@@ -141,17 +141,10 @@ class UsersController extends Controller
         }
 
 
-
-
-
-
     public function destroy(User $user) {
         abort_if(Gate::denies('access_user_management'), 403);
-
         $user->delete();
-
         toast('User Deleted!', 'warning');
-
         return redirect()->route('users.index');
     }
 }

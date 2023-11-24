@@ -27,7 +27,7 @@
 </ul>
 
 <ul class="c-header-nav ml-auto mr-4">
-    @can('create_pos_sales')
+    @can('create_pos')
     <li class="c-header-nav-item mr-0">
         <a class="c-header-nav-link {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}"
           data-toggle="tooltip" data-placement="bottom" title="@lang('Hokkie POS')"
