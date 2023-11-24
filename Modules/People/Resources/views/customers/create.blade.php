@@ -32,6 +32,10 @@
                                     <label for="customer_email">Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control" name="customer_email" required>
                                 </div>
+                                <div class="form-group">
+                                    <label for="country">@lang('Country') <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="country" required>
+                                </div>
                             </div>
                             
                             <div class="px-2">
