@@ -3,6 +3,7 @@
 namespace Modules\DistribusiToko\Models;
 
 use App\Models\LookUp;
+use App\Models\TrackingStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,6 +30,18 @@ class DistribusiToko extends Model
             }
         }
     }
+
+    public function updateTracking($status_id, $note = null){
+        $this->status_id = $status_id;
+        if($this->save()){
+            $this->statuses()->attach($this->status_id,[
+                'pic_id'=> auth()->id(),
+                'note' => $note,
+                'date' => now(),
+            ]);
+        }
+    }
+
 
     public function cabang() {
         return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
@@ -148,7 +161,7 @@ class DistribusiToko extends Model
         return $query->where('status_id', 3);
     }
 
-   public function scopeProgress($query)
+   public function scopeInprogress($query)
     {
         $query->where('status_id', 2);
     }

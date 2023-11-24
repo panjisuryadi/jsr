@@ -27,24 +27,19 @@ class Product extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected $with = ['media'];
-
-
-    protected static function booted()
-    {
-        if(auth()->check() && auth()->user()->isUserCabang()){
-            $user = auth()->user();
-            $cabang_id = $user->namacabang()->id;
-            static::addGlobalScope('filter_by_cabang', function (Builder $builder) use ($cabang_id) {
-                $builder->where('cabang_id', $cabang_id);
-            });
-        }
-    }
+    protected $with = ['media','karat'];
 
    public const PRODUKCODE = 'P';
    public const URL = 'P';
 
 
+   public function scopeCabang(){
+        $user = auth()->user();
+        $cabang_id = $user->namacabang()->id;
+        static::addGlobalScope('filter_by_cabang', function (Builder $builder) use ($cabang_id) {
+            $builder->where('cabang_id', $cabang_id);
+        });
+   }
   public function product_item() {
         return $this->hasOne(ProductItem::class, 'product_id', 'id');
     }
@@ -57,7 +52,7 @@ class Product extends Model implements HasMedia
             return $query;
 
         }
-      return $query->where('cabang_id', '=', Auth::user()->namacabang->cabang()->first()->id);
+      return $query->where('cabang_id', '=', Auth::user()->namacabang()->id);
     }
 
 

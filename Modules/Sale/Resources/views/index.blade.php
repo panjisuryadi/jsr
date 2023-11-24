@@ -37,7 +37,7 @@
                   </div>
                   @else
                    <p class="uppercase text-lg text-gray-600 font-semibold">
-                     &nbsp;| {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }} 
+                     &nbsp;| {{ Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->name):'' }} 
                   </p>
                  
                   @endif
