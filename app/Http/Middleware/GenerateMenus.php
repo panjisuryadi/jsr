@@ -445,8 +445,21 @@ class GenerateMenus
             ]);
 
             // EMAS - TOKO - Distribusi Toko - LIST DISTRIBUSI TOKO
+            // $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
+            //     'route' => 'distribusitoko.index',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 1,
+            //     'activematches' => ['distribusitokos*'],
+            //     'permission'    => ['access_distribusitoko'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2',
+            // ]);
+
             $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
-                'route' => 'distribusitoko.index',
+                'route' => 'distribusitoko.emas',
                 'class' => 'nav-item',
             ])
             ->data([

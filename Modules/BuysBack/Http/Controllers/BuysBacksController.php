@@ -336,7 +336,7 @@ public function index_data(Request $request)
             $module_action = 'Create';
             $cabang = null;
             if(auth()->user()->isUserCabang()){
-                $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+                $cabang = Cabang::where('id',Auth::user()->namacabang()->id)->get();
             }else{
                 $cabang = Cabang::all();
             }
@@ -366,7 +366,7 @@ public function index_data(Request $request)
             $module_action = 'Create';
             $cabang = null;
             if(auth()->user()->isUserCabang()){
-                $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+                $cabang = Cabang::where('id',Auth::user()->namacabang()->id)->get();
             }else{
                 $cabang = Cabang::all();
             }

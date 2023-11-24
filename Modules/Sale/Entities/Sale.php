@@ -32,7 +32,7 @@ class Sale extends Model
                 return $query;
             }
 
-    return $query->where('cabang_id', Auth::user()->namacabang->cabang()->first()->id);
+    return $query->where('cabang_id', Auth::user()->namacabang()->id);
         }
 
 

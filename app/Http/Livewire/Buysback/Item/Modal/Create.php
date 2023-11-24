@@ -77,7 +77,7 @@ class Create extends Component
         try{
             $data = [
                 'product_id' => $this->product->id,
-                'cabang_id' => auth()->user()->namacabang->cabang_id,
+                'cabang_id' => auth()->user()->namacabang()->id,
                 'customer_id' => $this->customer_id,
                 'status_id' => ProsesStatus::STATUS['PENDING'],
                 'karat_id' => $this->product->karat_id,

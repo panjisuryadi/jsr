@@ -335,7 +335,7 @@ public function index_data_insentif(Request $request)
             $cabang = null;
             $code = $module_model::generateCode();
             if(auth()->user()->isUserCabang()){
-                $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+                $cabang = Cabang::where('id',Auth::user()->namacabang()->id)->get();
             }else{
                 $cabang = Cabang::all();
             }
