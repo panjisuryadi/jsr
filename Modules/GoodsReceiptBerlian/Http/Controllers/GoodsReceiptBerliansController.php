@@ -381,7 +381,7 @@ class GoodsReceiptBerliansController extends Controller
                         'shapeberlian_id' => !empty($item['karatberlians']) ? $item['karatberlians'] : null,
                         'colour' => !empty($item['colour']) ? $item['colour'] : null,
                         'clarity' => !empty($item['clarity']) ? $item['clarity'] : null,
-                        'klasifikasi_berlian' => !empty($item['clarity']) ? $item['clarity'] : null,
+                        'klasifikasi_berlian' => !empty($item['klasifikasi_berlian']) ? $item['klasifikasi_berlian'] : null,
                         'diamond_certificate_id' => null,
                     ]);
                     $arrayGoodsreceiptItems[$key]['accessories_id'] = $accessories->id;
