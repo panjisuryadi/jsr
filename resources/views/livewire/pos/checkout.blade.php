@@ -1,6 +1,9 @@
 <div>
-        <div class="mt-2">
+        <div class="mt-1">
            
+
+
+
                 @if (session()->has('message'))
                 <div class="px-3">
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
