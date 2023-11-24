@@ -10,7 +10,7 @@
   @can('dashboard_pos')
 
 <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
-    <div class="card border-0">
+   <div class="card border-0 transform hover:scale-110 transition-transform duration-300 cursor-pointer" onclick="window.location.href='{{ route('goodsreceipt.toko.buyback-barangluar.index') }}'"> 
         <div class="card-body p-0 d-flex align-items-center shadow-sm">
             <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
                 <i class="bi bi-bar-chart font-2xl"></i>
@@ -32,7 +32,7 @@
 
 
 
-<div class="card border-0">
+<div class="card border-0 transform hover:scale-110 transition-transform duration-300 cursor-pointer" onclick="window.location.href='{{ route('penjualansale.index') }}'">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">
         <div class="bg-gradient-success p-4 mfe-3 rounded-left">
             <i class="bi bi-bar-chart font-2xl"></i>
@@ -145,12 +145,12 @@
 
                    <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                            <th class="text-center">{{ label_case('Invoice') }}</th>
-                            <th class="text-center">{{ label_case('Cabang') }}</th>
-                            <th class="text-center">{{ label_case('Customer') }}</th>
-                            <th class="text-center">{{ label_case('total_amount') }}</th>
-                            <th class="text-center">{{ label_case('Aksi') }}</th>
+                            <th style="width:2%;" class="text-center">{{ label_case('No') }}</th>
+                            <th style="width:5%;" class="text-center">{{ label_case('Invoice') }}</th>
+                            <th style="width:6%;" class="text-center">{{ label_case('Cabang') }}</th>
+                            <th style="width:11%;" class="text-center">{{ label_case('Customer') }}</th>
+                            <th style="width:6%;" class="text-center">{{ label_case('total') }}</th>
+                            <th class="text-center" style="width:28%;">{{ label_case('Aksi') }}</th>
                         </tr>
                     @forelse(\Modules\Sale\Entities\Sale::akses()->get() as $row)
                             @if($loop->index > 4)
@@ -476,7 +476,17 @@
 
 
 @section('third_party_stylesheets')
+<style type="text/css">
+    
+.table th, .table td {
+    padding: 0.45rem !important;
+    vertical-align: top;
+    border-top: 1px solid;
+    border-top-color: #d8dbe0;
+}
 
+
+</style>
 @endsection
 
 
