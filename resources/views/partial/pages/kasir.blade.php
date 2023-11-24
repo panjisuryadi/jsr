@@ -118,7 +118,21 @@
 
          <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#StockPending">Penjualan</a>
+        </li>   
+
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#barangLuar">Barang Luar</a>
         </li>
+  <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#barangBuysBack">Barang Buys Back</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#barangDP">Barang DP</a>
+        </li>
+
+
     </ul>
 
     <div class="tab-content py-3 mb-2">
@@ -349,6 +363,31 @@
          
             </div>
         </div>
+
+
+  <div id="barangDP" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                  <h1>BARANG DP</h1>
+
+            </div>
+            </div>
+
+  <div id="barangLuar" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                  <h1>BARANG LUAR</h1>
+
+            </div>
+            </div>
+
+  <div id="barangBuysBack" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                  <h1>BARANG BuysBack</h1>
+
+            </div>
+            </div>
 
 
 

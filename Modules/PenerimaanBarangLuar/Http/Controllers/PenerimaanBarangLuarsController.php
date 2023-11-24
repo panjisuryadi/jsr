@@ -56,7 +56,7 @@ class PenerimaanBarangLuarsController extends Controller
         $total_nilai_angkat = $this->module_model::sum('nilai_angkat');
         $total_berat = $this->module_model::sum('weight');
         $proses_statuses = ProsesStatus::all();
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_penerimaanbarangluars'), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',
