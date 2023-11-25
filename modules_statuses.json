@@ -76,5 +76,6 @@
     "StoreEmployee": true,
     "Test": true,
     "GoodsReceiptBerlian": true,
-    "Produksi": true
+    "Produksi": true,
+    "Accessory": true
 }

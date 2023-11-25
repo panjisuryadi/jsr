@@ -9,26 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Accessory extends Model
 {
     use HasFactory;
-    protected $table = 'accessories';
-    // protected $fillable = [
-    //     'name',
-    //    // 'image',
-    //    // 'code',
-    //     'description',
-    //     'start_date',
-    //     'end_date',
-
-    //  ];
+    protected $table = 'accessories_m';
     protected $guarded = [];
-
-  // public function products() {
-  //       return $this->hasMany(Product::class, 'category_id', 'id');
-  //   }
-
-  //   public function kategoriProduk() {
-  //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
-  //   }
-
+    
     protected static function newFactory()
     {
         return \Modules\Accessory\database\factories\AccessoryFactory::new();
