@@ -28,6 +28,7 @@ use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
+use Modules\Product\Models\ProductAccessories;
 use Modules\Produksi\Models\Accessories;
 use Modules\Produksi\Models\DiamondCertificateAttribute;
 use Modules\Produksi\Models\DiamondCertificateAttributes;
@@ -57,8 +58,9 @@ class Create extends Component
     public $inputs = [
         [
             'id_items' => '',
+            'accessories_id' => '',
             'type' => '2',
-            'karatberlians' => '',
+            'amount' => '',
             'shapeberlian_id' => '',
             'qty' => 1,
             'gia_report_number' => '',
@@ -82,6 +84,7 @@ class Create extends Component
     public $dataPenerimaanBerlianArray = [];
     public $dataItempenerimaanBerlian = [];
     public $selectedItemId = [];
+    public $selectedAccItemId = [];
     public $sertifikat = [
         'code' => '',
         'tanggal' => '',
@@ -95,13 +98,13 @@ class Create extends Component
     public $produksi_item_id;
     public $accessories = [
         [
-            'id' => '',
+            'accessories_id' => '',
             'amount' => '',
-            'satuan_id' => '',
         ]
     ];
 
     public $dataAccessories = [];
+    public $dataAccessoriesArray = [];
 
     public $dataSatuans = [];
 
@@ -131,9 +134,9 @@ class Create extends Component
 
         $this->karatasal_id = $this->karat24k;
         $this->kategoriproduk_id = $this->id_kategoriproduk_berlian;
-        $this->category_id = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->first()->value('id');
+        // $this->category_id = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->first()->value('id');
         $this->dataItemProduksi = ProduksiItems::with('model', 'karat')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
-        $this->dataPenerimaanBerlian = GoodsReceiptItem::with('shape_berlian', 'goodsreceiptitem')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
+        $this->dataPenerimaanBerlian = GoodsReceiptItem::with('goodsreceiptitem', 'accessories.accessories_berlian.shape')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
         $this->dataPenerimaanBerlianArray = $this->dataPenerimaanBerlian->map(function($data){
                                                                         return $data;
                                                                     })
@@ -158,7 +161,14 @@ class Create extends Component
                                                 ->flatten()
                                                 ->keyBy('id')
                                                 ->toArray();
-        $this->dataAccessories = Accessories::all();
+        $this->dataAccessories = Accessories::where('status',1)->get();
+        
+        $this->dataAccessoriesArray = $this->dataAccessories->map(function($data){
+                                                    return $data;
+                                                })
+                                                ->flatten()
+                                                ->keyBy('id')
+                                                ->toArray();
 
         $this->dataSatuans = Satuans::all();
                                                                       
@@ -177,8 +187,9 @@ class Create extends Component
     {
         $this->inputs[] = [
             'id_items' => '',
+            'accessories_id' => '',
             'type' => '2',
-            'karatberlians' => '',
+            'amount' => '',
             'shapeberlian_id' => '',
             'qty' => 1,
             'gia_report_number' => '',
@@ -225,6 +236,7 @@ class Create extends Component
         $this->inputs = [
             [
                 'id_items' => '',
+                'accessories_id' => '',
                 'type' => '2',
                 'karatberlians' => '',
                 'shapeberlian_id' => '',
@@ -249,106 +261,45 @@ class Create extends Component
             'berat' => 'required',
         ];
 
-        /** rules cek stok lantakan */
-        // if($this->source_kode == "lantakan") {
-        //     $rules['berat_asal'] = [
-        //         'required',
-        //         function ($attribute, $value, $fail) {
-        //             $stok_lantakan = StockKroom::sum('weight');
-        //             $stok_lantakan_terpakai = Produksi::where('source_kode', $this->source_kode)->sum('berat_asal');
-        //             $sisa_stok_lantakan = $stok_lantakan - $stok_lantakan_terpakai;
-        //             if ($value > $sisa_stok_lantakan) {
-        //                 $fail('Sisa stok tidak mencukupi, berat asal harus kurang dari sama dengan '. $sisa_stok_lantakan);
-        //             }
-        //         }
-
-        //     ];
-
-        //     /** validasi stok berlian
-        //      * cek dulu apakah ini produksi berlian
-        //      * collect data stok per jenis karat
-        //      * bandingkan stok
-        //      */
-        //     if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['karatberlians'])) {
-        //         $sisa_stok_berlian = GoodsReceipt::where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->sum('total_karat');
-        //         $total_karat_dipinta = 0;
-        //         foreach ($this->inputs as $key => $value) {
-        //             $rules['inputs.' . $key . '.karatberlians'] = 'required|gt:0';
-        //             $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
-
-        //             $qty = !empty($value['qty']) ? $value['qty'] : 0;
-        //             $karat = !empty($value['karatberlians']) ? $value['karatberlians'] : 0;
-        //             if(filter_var($karat, FILTER_VALIDATE_FLOAT)) {
-        //                 $stok_berlian_terpakai = $karat * $qty;
-        //                 $total_karat_dipinta += $stok_berlian_terpakai;
-    
-        //                 if($sisa_stok_berlian < $total_karat_dipinta) {
-        //                     $rules['inputs.' . $key . '.karatberlians'] = [
-        //                         function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
-        //                             $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
-        //                         }
-        //                     ];
-
-        //                     $rules['inputs.' . $key . '.qty'] = [
-        //                         function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
-        //                             $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
-        //                         }
-        //                     ];
-    
-        //                 }
-        //             }else{
-        //                 $rules['inputs.' . $key . '.karatberlians'] = [
-        //                     function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
-        //                         $fail('input karat berlians harus berupa decimal');
-        //                     }
-        //                 ];
-        //             }
-                    
-        //         }
-
-        //     }
-        // }
             /** validasi stok berlian
               * cek dulu apakah ini produksi berlian
               * collect data stok per jenis karat
               * bandingkan stok
               */
-            if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['karatberlians'])) {
-                // $sisa_stok_berlian = GoodsReceipt::where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->sum('total_karat');
-                $sisa_stok_berlian = 0;
-                $total_karat_dipinta = 0;
+              if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['amount'])) {
                 foreach ($this->inputs as $key => $value) {
                     $rules['inputs.' . $key . '.id_items'] = 'required';
-                    $rules['inputs.' . $key . '.karatberlians'] = 'required|gt:0';
+                    $rules['inputs.' . $key . '.accessories_id'] = 'required';
+                    $rules['inputs.' . $key . '.amount'] = 'required|gt:0';
                     $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
-                    $stokitemberlian = GoodsReceiptItem::where('id', $value['id_items'])->first();
-                    if($stokitemberlian) {
-                        $sisa_stok_berlian = (int) $stokitemberlian->karatberlians - (int) $stokitemberlian->karatberlians_terpakai;
-                    }
                     $qty = !empty($value['qty']) ? $value['qty'] : 0;
-                    $karat = !empty($value['karatberlians']) ? $value['karatberlians'] : 0;
-                    if(filter_var($karat, FILTER_VALIDATE_FLOAT)) {
-                        $stok_berlian_terpakai = $karat * $qty;
-                        $total_karat_dipinta += $stok_berlian_terpakai;
-    
-                        if($sisa_stok_berlian < $total_karat_dipinta) {
-                            $rules['inputs.' . $key . '.karatberlians'] = [
-                                function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
-                                    $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
-                                }
-                            ];
+                    $amount_used = !empty($value['amount']) ? $value['amount'] : 0;
 
-                            $rules['inputs.' . $key . '.qty'] = [
-                                function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
-                                    $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $sisa_stok_berlian . ' ct');
-                                }
-                            ];
+                    if(filter_var($amount_used, FILTER_VALIDATE_FLOAT)) {
+                        
+                        if(!empty($value['accessories_id'])) {
+                            $accessories = Accessories::where('id', $value['accessories_id'])->first();
+                            if ($accessories->amount < ($accessories->amount_used+($amount_used*$qty))){
+                                $stok_remains = $accessories->amount - $accessories->amount_used;
+
+                                $rules['inputs.' . $key . '.amount'] = [
+                                    function ($attribute, $value, $fail) use ($stok_remains) {
+                                        $fail('Sisa stok tidak mencukupi, sisa stok saat ini ' . $stok_remains . ' ct');
+                                    }
+                                ];
     
+                                $rules['inputs.' . $key . '.qty'] = [
+                                    function ($attribute, $value, $fail) use ($stok_remains) {
+                                        $fail('Sisa stok tidak mencukupi, sisa stok berlian saat ini ' . $stok_remains . ' ct');
+                                    }
+                                ];
+                            }
+
                         }
                     }else{
-                        $rules['inputs.' . $key . '.karatberlians'] = [
-                            function ($attribute, $value, $fail) use ($sisa_stok_berlian) {
-                                $fail('input karat berlians harus berupa decimal');
+                        $rules['inputs.' . $key . '.amount'] = [
+                            function ($attribute, $value, $fail) {
+                                $fail('input amount harus berupa decimal');
                             }
                         ];
                     }
@@ -356,6 +307,37 @@ class Create extends Component
                 }
 
             }
+
+            if(!empty($this->accessories[0]['amount'])) {
+              foreach ($this->accessories as $key => $value) {
+                $rules['accessories.' . $key . '.amount'] = 'required|gt:0';
+                $amount_used = !empty($value['amount']) ? $value['amount'] : 0;
+                if(filter_var($amount_used, FILTER_VALIDATE_FLOAT)) {
+                    
+                    if(!empty($value['accessories_id'])) {
+                        $accessories = Accessories::with('satuan')->where('id', $value['accessories_id'])->first();
+                        if ($accessories->amount < ($accessories->amount_used+($amount_used))){
+                            
+                            $rules['accessories.' . $key . '.amount'] = [
+                                function ($attribute, $value, $fail) use ($accessories) {
+                                    $stok_remains = $accessories->amount - $accessories->amount_used;
+                                    $fail('Sisa stok tidak mencukupi, sisa stok saat ini ' . $stok_remains . ' ' . $accessories->satuan->code);
+                                }
+                            ];
+                        }
+
+                    }
+                }else{
+                    $rules['accessories.' . $key . '.amount'] = [
+                        function ($attribute, $value, $fail) {
+                            $fail('input amount harus berupa decimal');
+                        }
+                    ];
+                }
+                  
+              }
+
+          }
 
         return $rules;
     }
@@ -365,6 +347,7 @@ class Create extends Component
         return [
             'karatasal_id.required' => 'Karat asal harus diisi!',
             'karat_id.required' => 'Karat jadi harus diisi!',
+            'category_id.required' => 'Category belum dipilih',
             'berat.required' => 'Berat jadi harus diisi!',
         ];
     }
@@ -377,34 +360,8 @@ class Create extends Component
 
     public function submit(Request $request)
     {
-        /** Blok untuk ngeset sertifikat ke item diamond 
-         * Blok ini dicomment dlu, awalnya ini untuk sertifikat per item diamond
-        */
-        // if(!empty($this->inputs)) {
-        //     foreach($this->inputs as $k => $item) {
-        //         $this->inputs[$k]['sertifikat'] = !empty($this->sertifikat[$k]) ? $this->sertifikat[$k] : [];
-        //     }
-        // }
-
         $this->validate();
-
-        $data = [
-            'produksi_item_id' => $this->produksi_item_id,
-            'code' => $this->code,
-            'image' => $this->image,
-            'karatasal_id' => $this->karatasal_id,
-            'karat_id' => $this->karat_id,
-            'model_id' => !empty($this->model_id) ? $this->model_id : null,
-            'source_kode' => $this->source_kode,
-            'berat_asal' => $this->berat_asal,
-            'berat' => $this->berat,
-            'tanggal' => $this->tanggal,
-            'created_by' => auth()->user()->id,
-            'items' => $this->inputs,
-            'kategoriproduk_id' => $this->kategoriproduk_id,
-            'category_id' => $this->category_id,
-            'harga_jual' => $this->harga_jual,
-        ];
+        $this->accessories = array_merge($this->inputs, $this->accessories);
         
         DB::beginTransaction();
         try {
@@ -436,7 +393,7 @@ class Create extends Component
             $total_karat_berlians = 0;
             if(!empty($this->inputs)) {
                 foreach($this->inputs as $item) {
-                    $total_karat_berlians += !empty($item['karatberlians']) ? $item['karatberlians'] : 0;
+                    $total_karat_berlians += !empty($item['amount']) ? $item['amount'] : 0;
                 }
             }
 
@@ -475,70 +432,29 @@ class Create extends Component
             ]);
 
             
-            $produksi_items = $this->inputs;
+            $product_accessories = $this->accessories;
 
-            if (!empty($produksi_items)) {
-                $array_produksi_items = [];
-                $array_goodsreceipt_item = [];
-                foreach($produksi_items as $val) {
-                    $goodsreceipt_item_id = !empty($val['id_items']) ? $val['id_items'] : null;
-                    $valItem = !empty( $dataPenerimaanBerlianArray[$goodsreceipt_item_id]) ?  $dataPenerimaanBerlianArray[$goodsreceipt_item_id] : [];
-                    $diamond_berlian_item = !empty($valItem['diamond_certificate_id']) ? $valItem['diamond_certificate_id'] : null;
-                    $valGoodReceipt = !empty($valItem['goodsreceipt']) ? $valItem['goodsreceipt'] : [];
-                    $diamond_berlian = !empty($valGoodReceipt['diamond_certificate_id']) ? $valGoodReceipt['diamond_certificate_id'] : null;
-                    $karatberlians = !empty($val['karatberlians']) ? $val['karatberlians'] : 0;
-                    $array_produksi_items[] = [
-                        'product_id' => $product->id,
-                        'goodsreceipt_item_id' => $goodsreceipt_item_id,
-                        'karatberlians' => $karatberlians,
-                        'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
-                        'qty' => !empty($val['qty']) ? $val['qty'] : 0,
-                        'diamond_certificate_id' => !empty($diamond_berlian_item) ? $diamond_berlian_item : $diamond_berlian,
-                        'gia_report_number' => !empty($val['gia_report_number']) ? $val['gia_report_number'] : null
-                    ];
-                    $oldkaratberlian = !empty($valItem['karatberlians']) ? $valItem['karatberlians'] : 0;
-                    $karatberlianterpakai = !empty($valItem['karatberlians_terpakai']) ? $valItem['karatberlians_terpakai'] : 0;
+            if (!empty($product_accessories)) {
+                $array_product_accessories = [];
+                foreach($product_accessories as $val) {
                     
-                    $status = ($oldkaratberlian >= $karatberlianterpakai + $karatberlians) ? 2 : 1;
-                    $array_goodsreceipt_item[] = [
-                        'id' => $goodsreceipt_item_id,
-                        'karatberlians_terpakai' => $karatberlianterpakai + $karatberlians,
-                        'status' => $status,
+                    $amount_used = !empty($val['amount']) ? $val['amount'] : 0;
+                    $accessories_id = !empty($val['accessories_id']) ? $val['accessories_id'] : null;
+                    if(!empty($val['accessories_id'])) {
+                        $accessories = Accessories::where('id', $val['accessories_id'])->first();
+                        $status = ($accessories->amount > ($accessories->amount_used+$amount_used)) ? 1 : 2; // jika sudah terpakai semua maka set statusnya jadi 2
+                        $accessories->amount_used = $amount_used;
+                        $accessories->status = $status;
+                        $accessories->save();
+                    }
+                    $array_product_accessories = [
+                        'product_id' => $product->id,
+                        'accessories_id' => $accessories_id,
+                        'amount' => $amount_used,
                     ];
                 }
-
-                // if (!empty($this->accessories) && !empty($this->accessories[0]['id'])) {
-                //     $arrayAccesories = [];
-                //     foreach($this->accessories as $item) {
-                //         $data_accesories = Accessories::find($item['id']);
-                //         $amount_used = !empty($item['amount_used']) ? $item['amount_used'] : 0;
-                //         $amount_used = $data_accesories->amount - $amount_used;
-                //         $status = ($data_accesories->amount >= $amount_used) ? 1 : 2;
-                //         $data_accesories->amount_used = $amount_used;
-                //         $data_accesories->status = $status;
-                //         $data_accesories->save();
-                        
-                //         $array_produksi_items[] = [
-                //             'product_id' => $product->id,
-                //             // 'karatberlians' => $karatberlians,
-                //             // 'shapeberlians_id' => !empty($val['shapeberlian_id']) ? $val['shapeberlian_id'] : null,
-                //             // 'qty' => !empty($val['qty']) ? $val['qty'] : 0,
-                //             // 'diamond_certificate_id' => !empty($diamond_berlian_item) ? $diamond_berlian_item : $diamond_berlian,
-                //             // 'gia_report_number' => !empty($val['gia_report_number']) ? $val['gia_report_number'] : null
-                //         ];
-                //     }
-                // }
-
-                ProductItem::insert($array_produksi_items);
-                if(!empty($array_goodsreceipt_item)) { 
-                    foreach($array_goodsreceipt_item as $item) {
-                        GoodsReceiptItem::where('id', $item['id'])->update([
-                            'karatberlians_terpakai' => $item['karatberlians_terpakai'],
-                            'status' => $item['status'],
-                        ]);
-                    }
-                }
-                ProduksiItems::where('id', $this->produksi_item_id)->update(['status'=>2]);
+                ProductAccessories::insert($array_product_accessories);
+                ProduksiItems::where('id', $this->produksi_item_id)->update(['status'=>2]); //update stok produksi agar tidak bisa dipilih kembali
 
             }
 
@@ -547,6 +463,7 @@ class Create extends Component
             if(!empty($file)) {
                 Storage::disk('public')->delete($file);
             }
+            dd($th->getMessage());
             return $th->getMessage();
         }
         DB::commit();
@@ -581,13 +498,14 @@ class Create extends Component
         if(!empty($this->dataItemProduksiArray[$this->produksi_item_id]['goodsreceipt_id'])){
             
             $goodsreceipt_id = $this->dataItemProduksiArray[$this->produksi_item_id]['goodsreceipt_id'];
-            $items = GoodsReceiptItem::where('goodsreceipt_id', $goodsreceipt_id)->get();
-            $this->dataPenerimaanBerlian = GoodsReceiptItem::with('shape_berlian', 'goodsreceiptitem')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->orWhere('goodsreceipt_id', $goodsreceipt_id)->get();
+            $items = GoodsReceiptItem::with('accessories')->where('goodsreceipt_id', $goodsreceipt_id)->get(); //Notes : urang ge poho naha ieu kudu ngequery dua kali/ only god knows it!
+            $this->dataPenerimaanBerlian = GoodsReceiptItem::with('goodsreceiptitem', 'accessories.accessories_berlian.shape')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->orWhere('goodsreceipt_id', $goodsreceipt_id)->get();
             foreach($items as $row) {
                 $this->inputs[] = [
                     'id_items' => $row->id,
+                    'accessories_id' => $row->accessories?->id,
                     'type' => '1',
-                    'karatberlians' => floatval($row->karatberlians),
+                    'amount' => floatval($row->accessories->amount),
                     'shapeberlian_id' => $row->shapeberlian_id,
                     'qty' => $row->qty,
                     'gia_report_number' => '',
@@ -595,6 +513,9 @@ class Create extends Component
                     'keterangan' => ''
                 ];
             }
+        }else{
+            $this->dataPenerimaanBerlian = GoodsReceiptItem::with('goodsreceiptitem', 'accessories.accessories_berlian.shape')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
+
         }
         if(empty($this->inputs)) {
             $this->resetInputFields();
@@ -605,17 +526,38 @@ class Create extends Component
     public function setSelectedItem($key = null) {
 
         if(!is_null($key)) {
+
             $id = !empty($this->inputs[$key]['id_items']) ? $this->inputs[$key]['id_items'] : '';
             if($id) {
-                $karatberlians = !empty($this->dataPenerimaanBerlianArray[$id]['karatberlians']) ? $this->dataPenerimaanBerlianArray[$id]['karatberlians'] : 0;
-                $karatberlians_terpakai = !empty($this->dataPenerimaanBerlianArray[$id]['karatberlians_terpakai']) ? $this->dataPenerimaanBerlianArray[$id]['karatberlians_terpakai'] : 0;
-                $this->inputs[$key]['karatberlians'] = floatval($karatberlians-$karatberlians_terpakai);
+                $amount = !empty($this->dataPenerimaanBerlianArray[$id]['accessories']['amount']) ? $this->dataPenerimaanBerlianArray[$id]['accessories']['amount'] : 0;
+                $amount_used = !empty($this->dataPenerimaanBerlianArray[$id]['accessories']['amount_used']) ? $this->dataPenerimaanBerlianArray[$id]['accessories']['amount_used'] : 0;
+                $this->inputs[$key]['amount'] = floatval($amount-$amount_used);
+
             } 
         }
 
         if(!empty($this->inputs)){
             foreach($this->inputs as $key => $row) {
                 $this->selectedItemId[$key] = !empty($row['id_items']) ? $row['id_items'] : '';
+                $this->setSelectedAccItem($key);
+            }
+        }
+    }
+
+    public function setSelectedAccItem($key = null) {
+
+        if(!is_null($key)) {
+            $id = !empty($this->inputs[$key]['accessories_id']) ? $this->inputs[$key]['accessories_id'] : '';
+            if($id) {
+                $amount = !empty($this->dataAccessoriesArray[$id]['amount']) ? $this->dataAccessoriesArray[$id]['amount'] : 0;
+                $amount_used = !empty($this->dataAccessoriesArray[$id]['amount_used']) ? $this->dataAccessoriesArray[$id]['amount_used'] : 0;
+                $this->inputs[$key]['amount'] = floatval($amount-$amount_used);
+            } 
+        }
+
+        if(!empty($this->inputs)){
+            foreach($this->inputs as $key => $row) {
+                $this->selectedAccItemId[$key] = !empty($row['accessories_id']) ? $row['accessories_id'] : '';
             }
         }
     }

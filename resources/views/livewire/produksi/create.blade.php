@@ -133,6 +133,9 @@
                                             border: none;
                                             color: #333;
                                             background-color: #333;" class="mb-2">
+                                        @php
+                                            $lowest_key = min(array_keys($inputs))
+                                        @endphp
                                         @foreach($inputs as $key => $value)
                                         <div class="flex justify-between mt-0">
                                             <div class="add-input w-full mx-auto flex flex-row grid grid-cols-5 gap-2">
@@ -143,7 +146,7 @@
                                                         $field_placeholder = Label_case($field_lable);
                                                         $required = '';
                                                     ?>
-                                                    @if ($key==0)
+                                                    @if ($key==$lowest_key)
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
                                                     <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }}>
@@ -157,42 +160,73 @@
                                                     @endif
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <?php
-                                                    $field_name = 'inputs.' . $key . '.id_items';
-                                                    $field_lable = "Kode Items";
-                                                    $field_placeholder = $field_lable;
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $required = '';
-                                                    ?>
-                                                    @if ($key==0)
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    @endif
-
-                                                    <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setSelectedItem({{ $key }})">
-                                                        <option value="">Pilih </option>
-                                                        @foreach($dataPenerimaanBerlian as $item)
-                                                        @if($item->goodsreceiptitem->tipe_penerimaan_barang == (!empty($inputs[$key]['type']) ? $inputs[$key]['type'] : 0))
-                                                        <option value="{{ $item->id }}" {{  in_array($item->id, $selectedItemId) ? 'disabled' : '' }}> {{ $item->code . ' ' . $item->klasifikasi_berlian}} </option>
+                                                @if($inputs[$key]['type'] == 1)
+                                                    <div class="form-group">
+                                                        <?php
+                                                        $field_name = 'inputs.' . $key . '.id_items';
+                                                        $field_lable = "Kode Items";
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = '';
+                                                        ?>
+                                                        @if ($key==$lowest_key)
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                         @endif
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has($field_name))
-                                                    <span class="invalid feedback" role="alert">
-                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                                    </span>
-                                                    @endif
-                                                </div>
+
+                                                        <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setSelectedItem({{ $key }})">
+                                                            <option value="">Pilih </option>
+                                                            @foreach($dataPenerimaanBerlian as $item)
+                                                            @if($item->goodsreceiptitem->tipe_penerimaan_barang == (!empty($inputs[$key]['type']) ? $inputs[$key]['type'] : 0))
+                                                            <option value="{{ $item->id }}" {{  in_array($item->id, $selectedItemId) ? 'disabled' : '' }}> {{ $item->code . ' ' . $item->klasifikasi_berlian}} </option>
+                                                            @endif
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has($field_name))
+                                                        <span class="invalid feedback" role="alert">
+                                                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                        </span>
+                                                        @endif
+                                                    </div>
+                                                @endif
+
+                                                @if($inputs[$key]['type'] == 2)
+                                                    <div class="form-group">
+                                                        <?php
+                                                        $field_name = 'inputs.' . $key . '.accessories_id';
+                                                        $field_lable = "Kode Items";
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = '';
+                                                        ?>
+                                                        @if ($key==$lowest_key)
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        @endif
+
+                                                        <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setSelectedItem({{ $key }})">
+                                                            <option value="">Pilih </option>
+                                                            @foreach($dataAccessories as $item)
+                                                            @if($item->type ==1)
+                                                                <option value="{{ $item->id }}" {{  in_array($item->id, $selectedAccItemId) ? 'disabled' : '' }}> {{ $item->code . ' ' . $item->amount . 'ct ' . $item->accessories_berlian?->shape?->shape_name }} </option>
+                                                            @endif
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has($field_name))
+                                                        <span class="invalid feedback" role="alert">
+                                                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                        </span>
+                                                        @endif
+                                                    </div>
+                                                @endif
 
                                                 @if(!empty($inputs[$key]['id_items']))
                                                     @php
                                                         $id_items = (int) $inputs[$key]['id_items'];
-                                                        $colour = !empty($dataPenerimaanBerlianArray[$id_items]['colour']) ? $dataPenerimaanBerlianArray[$id_items]['colour'] : '-';
-                                                        $clarity = !empty($dataPenerimaanBerlianArray[$id_items]['clarity']) ? $dataPenerimaanBerlianArray[$id_items]['clarity'] : '-';
-                                                        $shape = !empty($dataPenerimaanBerlianArray[$id_items]['shape_berlian']['shape_name']) ? $dataPenerimaanBerlianArray[$id_items]['shape_berlian']['shape_name'] : '-';
-                                                        $klasifikasi_berlian = !empty($dataPenerimaanBerlianArray[$id_items]['klasifikasi_berlian']) ? $dataPenerimaanBerlianArray[$id_items]['klasifikasi_berlian'] : '-';
-                                                        $karatberlians = !empty($dataPenerimaanBerlianArray[$id_items]['karatberlians']) ? $dataPenerimaanBerlianArray[$id_items]['karatberlians'] : 0;
-                                                        $karatberlians_terpakai = !empty($dataPenerimaanBerlianArray[$id_items]['karatberlians_terpakai']) ? $dataPenerimaanBerlianArray[$id_items]['karatberlians_terpakai'] : 0;
+                                                        $colour = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['colour']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['colour'] : '-';
+                                                        $clarity = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['clarity']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['clarity'] : '-';
+                                                        $shape = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['shape']['shape_name']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['shape']['shape_name'] : '-';
+                                                        $klasifikasi_berlian = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['klasifikasi_berlian']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['klasifikasi_berlian'] : '-';
+                                                        $karatberlians = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['amount']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['amount'] : 0;
+                                                        $karatberlians_terpakai = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['amount_used']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['amount_used'] : 0;
                                                         $sisa_stok = $karatberlians - $karatberlians_terpakai;
                                                         $inputs[$key]['sisa_stok'] = $sisa_stok;
                                                     @endphp
@@ -209,19 +243,20 @@
 
                                                 <div class="form-group">
                                                     <?php
-                                                    $field_name = 'inputs.' . $key . '.karatberlians';
+                                                    $field_name = 'inputs.' . $key . '.amount';
                                                     $field_lable = "Karat Berlian";
                                                     $field_placeholder = $field_lable;
                                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                    $readonly = !empty($inputs[$key]['produksi_item_id']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
                                                     $required = '';
                                                     $field_name_shape = 'inputs.' . $key . '.shapeberlian_id';
                                                     // $field_name_qty = 'inputs.' . $key . '.qty';
 
                                                     ?>
-                                                    @if ($key==0)
+                                                    @if ($key==$lowest_key)
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
-                                                    <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                                    <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" {{ $readonly }}>
                                                     <input class="form-control" type="hidden" name="{{ $field_name_shape }}" id="{{ $field_name_shape }}" wire:model="{{ $field_name_shape }}">
                                                     {{-- <input class="form-control" type="hidden" name="{{ $field_name_qty }}" id="{{ $field_name_qty }}" wire:model="{{ $field_name_qty }}"> --}}
 
@@ -240,7 +275,7 @@
                                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                     $required = '';
                                                     @endphp
-                                                    @if ($key==0)
+                                                    @if ($key==$lowest_key)
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
                                                     <input class="form-control" type="hidden" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
@@ -261,7 +296,7 @@
                                                     $readonly = !empty($inputs[$key]['produksi_item_id']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
                                                     $required = '';
                                                     @endphp
-                                                    @if ($key==0)
+                                                    @if ($key==$lowest_key)
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
                                                     <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" {{ $readonly }}>
@@ -281,7 +316,7 @@
                                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                     $required = '';
                                                     @endphp
-                                                    @if ($key==0)
+                                                    @if ($key==$lowest_key)
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
                                                     <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
@@ -331,23 +366,26 @@
                                             border: none;
                                             color: #333;
                                             background-color: #333;" class="mb-2">
+                                        @php $lowest_key = min(array_keys($accessories)) @endphp
                                         @foreach($accessories as $key => $value)
                                         <div class="flex justify-between mt-0">
                                             <div class="add-input w-full mx-auto flex flex-row grid grid-cols-5 gap-2">
                                                 <div class="form-group">
                                                     <?php
-                                                        $field_name = 'accessories.' . $key . '.id';
+                                                        $field_name = 'accessories.' . $key . '.accessories_id';
                                                         $field_lable = __('Pilih Aksesoris');
                                                         $field_placeholder = Label_case($field_lable);
                                                         $required = '';
                                                     ?>
-                                                    @if ($key==0)
+                                                    @if ($key==$lowest_key)
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
                                                     <select class="form-control" name="{{ $field_name }}" wire:model = "{{ $field_name }}">
                                                         <option value="">Pilih </option>
                                                         @foreach($dataAccessories as $item)
+                                                        @if($item->type !=1 )
                                                         <option value="{{ $item->id }}" > {{ $item->name }} </option>
+                                                        @endif
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has($field_name))
@@ -366,34 +404,11 @@
                                                     $required = '';
 
                                                     ?>
-                                                    @if ($key==0)
+                                                    @if ($key==$lowest_key)
                                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                     @endif
                                                     <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
 
-                                                    @if ($errors->has($field_name))
-                                                    <span class="invalid feedback" role="alert">
-                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                                    </span>
-                                                    @endif
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <?php
-                                                        $field_name = 'accessories.' . $key . '.name';
-                                                        $field_lable = __('Pilih Tipe');
-                                                        $field_placeholder = Label_case($field_lable);
-                                                        $required = '';
-                                                    ?>
-                                                    @if ($key==0)
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    @endif
-                                                    <select class="form-control" name="{{ $field_name }}" wire:model = "{{ $field_name }}">
-                                                        <option value="">Pilih Satuan</option>
-                                                        @foreach($dataSatuans as $item)
-                                                        <option value="{{ $item->id }}" > {{ $item->code}} </option>
-                                                        @endforeach
-                                                    </select>
                                                     @if ($errors->has($field_name))
                                                     <span class="invalid feedback" role="alert">
                                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -558,7 +573,7 @@
                                                     $field_placeholder = Label_case($field_lable);
                                                     $required = '';
                                                 @endphp
-                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }} <span class="text-danger">*</span></label>
                                                 <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }}>
                                                     <option value="" selected >Select Tipe</option>
                                                     @foreach($dataKategoriProduk as $row)
