@@ -20,7 +20,9 @@ use Modules\People\Entities\Supplier;
 use Lang;
 use Image;
 use Illuminate\Support\Facades\DB;
+use Modules\GoodsReceipt\Models\GoodsReceiptInstallment;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
+use Modules\GoodsReceipt\Models\TipePembelian;
 use Modules\Produksi\Models\Accessories;
 use Modules\Produksi\Models\AccessoriesBerlianDetail;
 use Modules\Produksi\Models\DiamondCertificateAttribute;
@@ -315,6 +317,9 @@ class GoodsReceiptBerliansController extends Controller
             $goodsreceipt_id = $goodsreceipt->id;
             $tipe_penerimaan_barang = !empty($input['tipe_penerimaan_barang']) ? $input['tipe_penerimaan_barang'] :  null;
 
+            $goodsreceipt_id = $goodsreceipt->id;
+            $this->_saveTipePembelian($input ,$goodsreceipt_id);
+
             $product_items = [];
             if(!empty($input['items'])){
                 foreach($input['items'] as $val) {
@@ -381,7 +386,7 @@ class GoodsReceiptBerliansController extends Controller
                         'shapeberlian_id' => !empty($item['karatberlians']) ? $item['karatberlians'] : null,
                         'colour' => !empty($item['colour']) ? $item['colour'] : null,
                         'clarity' => !empty($item['clarity']) ? $item['clarity'] : null,
-                        'klasifikasi_berlian' => !empty($item['clarity']) ? $item['clarity'] : null,
+                        'klasifikasi_berlian' => !empty($item['klasifikasi_berlian']) ? $item['klasifikasi_berlian'] : null,
                         'diamond_certificate_id' => null,
                     ]);
                     $arrayGoodsreceiptItems[$key]['accessories_id'] = $accessories->id;
@@ -716,4 +721,28 @@ class GoodsReceiptBerliansController extends Controller
 
     }
 
+
+    private function _saveTipePembelian($input ,$goodsreceipt)
+    {
+        $tipe_pembayaran = TipePembelian::create([
+        'goodsreceipt_id'             => $goodsreceipt,
+        'tipe_pembayaran'             => $input['tipe_pembayaran'] ?? null,
+        'jatuh_tempo'                 => $input['tgl_jatuh_tempo'] ?? null,
+        'cicil'                       => $input['cicil'] ?? 0,
+        'lunas'                       => $input['lunas'] ?? null,
+        ]);
+
+        if($tipe_pembayaran->isCicil()){
+            foreach($input['detail_cicilan'] as $key => $value){
+                GoodsReceiptInstallment::create([
+                    'payment_id' => $tipe_pembayaran->id,
+                    'nomor_cicilan' => $key,
+                    'tanggal_cicilan' => $input['detail_cicilan'][$key]
+                ]);
+            }
+        }
+    
+
     }
+
+}

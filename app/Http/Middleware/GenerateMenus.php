@@ -284,6 +284,7 @@ class GenerateMenus
                 'permission'    => ['access_penentuanhargas',
                                     'access_buys_back_luar',
                                     'access_buysback_nota',
+                                    'access_insentif',
                                     'access_buybacktoko'],
             ]);
             $penerimaan->link->attr([
@@ -364,7 +365,7 @@ class GenerateMenus
             ->data([
                 'order'         => 3,
                 'activematches' => ['penerimaanbarangluar*'],
-                'permission'    => ['access_penerimaanbarangluars'],
+                'permission'    => ['access_insentif'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
@@ -1111,18 +1112,18 @@ class GenerateMenus
 
 
     // JenisPerhiasans
-            $Categories->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Jenis Perhiasan'), [
-                'route' => 'jenisperhiasan.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['jenisperhiasans*'],
-                'permission'    => ['access_jenisperhiasans'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+            // $Categories->add('<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Jenis Perhiasan'), [
+            //     'route' => 'jenisperhiasan.index',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 3,
+            //     'activematches' => ['jenisperhiasans*'],
+            //     'permission'    => ['access_jenisperhiasans'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2',
+            // ]);
 
 
 

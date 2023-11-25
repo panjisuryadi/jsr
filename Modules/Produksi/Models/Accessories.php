@@ -41,4 +41,14 @@ class Accessories extends Model
 
         return $orderCode;
     }
+
+    public function accessories_berlian()
+    {
+        return $this->belongsTo(AccessoriesBerlianDetail::class, 'id', 'accessories_id');
+    }
+
+    public function satuan()
+    {
+        return $this->hasone(Satuans::class, 'id', 'satuan_id');
+    }
 }

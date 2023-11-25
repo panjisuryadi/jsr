@@ -4,64 +4,68 @@
 
   <div class="w-3/4">
 
-  @can('dashboard_kepala_toko')
-  <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
-<div class="card border-0">
-    <div class="card-body p-0 d-flex align-items-center shadow-sm">
-        <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
-            <i class="bi bi-bar-chart font-2xl"></i>
-        </div>
-        <div>
-        
-            <div class="text-value text-primary">{{ \Modules\DistribusiToko\Models\DistribusiToko::whereIn('status_id',[2])->count() }}</div>
-          <div class="text-muted text-uppercase font-weight-bold">
-              In Progresss
-            </div>     
-           <div class="small text-green-400 text-uppercase font-weight-bold">
-           Distribusi Toko
-            </div>
 
+
+
+  @can('dashboard_pos')
+
+<div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
+   <div class="card border-0 transform hover:scale-110 transition-transform duration-300 cursor-pointer" onclick="window.location.href='{{ route('goodsreceipt.toko.buyback-barangluar.index') }}'"> 
+        <div class="card-body p-0 d-flex align-items-center shadow-sm">
+            <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
+                <i class="bi bi-bar-chart font-2xl"></i>
+            </div>
+            <div>
+            
+                <div class="text-value text-primary font-2xl">
+ {{ \Modules\BuysBack\Models\BuysBack::count() }}
+                </div>
+              <div class="text-muted text-uppercase font-weight-bold">
+                  Buys Back
+                </div>     
+               
+
+            </div>
         </div>
     </div>
-</div>
 
 
 
 
-<div class="card border-0">
+<div class="card border-0 transform hover:scale-110 transition-transform duration-300 cursor-pointer" onclick="window.location.href='{{ route('penjualansale.index') }}'">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">
         <div class="bg-gradient-success p-4 mfe-3 rounded-left">
             <i class="bi bi-bar-chart font-2xl"></i>
         </div>
         <div>
-            <div class="text-value text-success">
-            {{ \Modules\BuysBack\Models\BuyBackNota::count() }}
+            <div class="text-value font-2xl text-success">
+            {{ \Modules\PenjualanSale\Models\PenjualanSale::count() }}
            </div>
             <div class="text-muted text-uppercase font-weight-bold">
-             BuyBack Nota
+            Penjualan Sales
             </div>
 
         </div>
     </div>
 </div>
 
-<div class="card border-0">
-    <div class="card-body p-0 d-flex align-items-center shadow-sm">
+
+<div class="card border-0 transform hover:scale-110 transition-transform duration-300 cursor-pointer" onclick="window.location.href='{{ route('app.pos.index') }}'">
+    <div class="card-body hover:bg-gray-100 cursor cursor-pointer p-0 d-flex align-items-center shadow-sm">
         <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
-            <i class="bi bi-bar-chart font-2xl"></i>
+            <i class="bi bi-cart font-2xl"></i>
         </div>
         <div>
-            <div class="text-value text-warning">
-                {{ \Modules\BuysBack\Models\BuysBack::count() }}
+            <div class="text-value text-warning font-2xl">
+                {{ \Modules\Sale\Entities\Sale::count() }}
             </div>
-            <div class="text-muted text-uppercase font-weight-bold">
-
-           Buys Back
+            <div class="tracking-wider text-muted text-uppercase font-weight-bold">
+                POS
             </div>
-
         </div>
     </div>
 </div>
+
 
 
 
@@ -90,8 +94,13 @@
     
     <ul class="nav nav-tabs py-1" role="tablist">
 
+
+       <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Pos">Penjualan</a>
+        </li>   
+
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#Buysback">Buys Back</a>
+            <a class="nav-link" data-toggle="tab" href="#Buysback">Buys Back</a>
         </li>
 
         @can('access_buysback_nota')
@@ -109,16 +118,87 @@
         @endcan
 
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Penjualan">Penjualan</a>
+            <a class="nav-link" data-toggle="tab" href="#Penjualan">Penjualan Sales</a>
         </li>  
 
-         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#StockPending">Stok Pending</a>
+  
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#barangLuar">Barang Luar</a>
         </li>
+  <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#barangBuysBack">Barang Buys Back</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#barangDP">Barang DP</a>
+        </li>
+
+
     </ul>
 
     <div class="tab-content py-3 mb-2">
- <div id="Buysback" class="container px-0 tab-pane active">
+
+
+  <div id="Pos" class="container px-0 tab-pane active">
+            <div class="pt-3">
+
+                   <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th style="width:2%;" class="text-center">{{ label_case('No') }}</th>
+                            <th style="width:5%;" class="text-center">{{ label_case('Invoice') }}</th>
+                            <th style="width:6%;" class="text-center">{{ label_case('Cabang') }}</th>
+                            <th style="width:11%;" class="text-center">{{ label_case('Customer') }}</th>
+                            <th style="width:6%;" class="text-center">{{ label_case('total') }}</th>
+                            <th class="text-center" style="width:28%;">{{ label_case('Aksi') }}</th>
+                        </tr>
+                    @forelse(\Modules\Sale\Entities\Sale::akses()->get() as $row)
+                            @if($loop->index > 4)
+                                                @break
+                                            @endif
+                                {{-- {{ $row }} --}}
+
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $row->reference }}</td>
+                            <td class="text-center">{{ $row->cabang->name }}</td>
+                            <td class="text-center">{{ $row->customer->customer_name }}</td>
+                            <td class="text-center font-semibold"><small>Rp .</small>{{ rupiah($row->total_amount) }}</td>
+                            <td class="text-center">
+                                
+                     
+                  <a target="_blank" class="btn btn-sm btn-success mfe-1 d-print-none" href="{{ route('sales.show', $row->id) }}">
+                            <i class="bi bi-eye"></i> Show
+                        </a>   
+
+                         <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('sales.cetak', $row->id) }}">
+                            <i class="bi bi-save"></i> Cetak Nota
+                        </a>   
+
+                        <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('sales.pdf', $row->id) }}">
+                            <i class="bi bi-save"></i> Print PDF
+                        </a>
+
+
+                                @can('show_sales')
+                                @endcan
+
+
+                            </td>
+                        </tr>
+                        @empty
+                        <p>Tidak ada Data</p>
+                        @endforelse
+                        
+                    </table>
+         
+            </div>
+        </div>
+
+
+
+
+ <div id="Buysback" class="container px-0 tab-pane">
             <div class="pt-3">
 
 
@@ -195,7 +275,7 @@
                             <th class="text-center">{{ label_case('Pic') }}</th>
                             <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
-                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::progress()->get() as $row)
+                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::inprogress()->get() as $row)
                             @if($loop->index > 4)
                                @break
                             @endif
@@ -235,49 +315,6 @@
         </div>
 
 
-
-  <div id="StockPending" class="container px-0 tab-pane">
-            <div class="pt-3">
-
-                   <table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('Sales') }}</th>
-                            <th>{{ label_case('karat') }}</th>
-                            <th>{{ label_case('Berat') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
-                        </tr>
-                    @forelse(\Modules\Stok\Models\StockPending::get() as $row)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
-                                {{-- {{ $row }} --}}
-
-                  <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $row->karat->kode }} | {{ $row->karat->name }}</td>
-                            <td>{{ $row->cabang->name }}</td>
-                            <td>{{ $row->weight ?? ' - ' }}</td>
-                            <td>
-                                
-                                    <a href="{{ route("sales.show",$row->id) }}"
-                                     class="btn btn-outline-success btn-sm">
-                                        <i class="bi bi-eye"></i>&nbsp;@lang('Detail')
-                                    </a>
-                                @can('show_sales')
-                                @endcan
-
-
-                            </td>
-                        </tr>
-                        @empty
-                        <p>Tidak ada Data</p>
-                        @endforelse
-                        
-                    </table>
-         
-            </div>
-        </div>
 
 
 
@@ -333,6 +370,31 @@
          
             </div>
         </div>
+
+
+  <div id="barangDP" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                  <h1>BARANG DP</h1>
+
+            </div>
+            </div>
+
+  <div id="barangLuar" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                  <h1>BARANG LUAR</h1>
+
+            </div>
+            </div>
+
+  <div id="barangBuysBack" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                  <h1>BARANG BuysBack</h1>
+
+            </div>
+            </div>
 
 
 
@@ -414,7 +476,17 @@
 
 
 @section('third_party_stylesheets')
+<style type="text/css">
+    
+.table th, .table td {
+    padding: 0.45rem !important;
+    vertical-align: top;
+    border-top: 1px solid;
+    border-top-color: #d8dbe0;
+}
 
+
+</style>
 @endsection
 
 

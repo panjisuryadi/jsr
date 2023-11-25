@@ -60,7 +60,7 @@
                    Harga Total
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                   {{ number_format($cart_item->options->harga_jual*$cart_item->options->berat_emas) }}
+                   {{ number_format($cart_item->price) }}
                 </dd>
             </div>
 

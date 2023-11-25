@@ -8,6 +8,7 @@ use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Karat\Models\Karat;
 use Modules\KaratBerlian\Models\ShapeBerlian;
 use Modules\KategoriProduk\Models\KategoriProduk;
+use Modules\Produksi\Models\Accessories;
 use Modules\Stok\Models\StockOffice;
 
 class GoodsReceiptItem extends Model
@@ -39,6 +40,11 @@ class GoodsReceiptItem extends Model
     public function shape_berlian()
     {
         return $this->hasOne(ShapeBerlian::class, 'id', 'shapeberlian_id');
+    }
+
+    public function accessories()
+    {
+        return $this->hasOne(Accessories::class, 'id', 'accessories_id');
     }
 
 
