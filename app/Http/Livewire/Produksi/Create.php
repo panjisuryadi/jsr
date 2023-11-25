@@ -447,7 +447,7 @@ class Create extends Component
                         $accessories->status = $status;
                         $accessories->save();
                     }
-                    $array_product_accessories = [
+                    $array_product_accessories[] = [
                         'product_id' => $product->id,
                         'accessories_id' => $accessories_id,
                         'amount' => $amount_used,
