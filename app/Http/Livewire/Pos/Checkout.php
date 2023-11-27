@@ -30,7 +30,7 @@ class Checkout extends Component
     public $total_amount;
 
     public $discount;
-    public $paid_amount = 0;
+    public $paid_amount = '';
     public $diskon = 0;
     public $bayar = 0;
     public $kembali = 0;
@@ -71,7 +71,7 @@ class Checkout extends Component
    public function mount($cartInstance, $customers) {
         $this->cart_instance = $cartInstance;
         $this->customers = $customers;
-        $this->customer_id =   \Modules\People\Entities\Customer::limit(1)->first()->id;
+        $this->customer_id = \Modules\People\Entities\Customer::limit(1)->first()->id;
         $this->global_discount = 0;
         $this->global_tax = 0;
         $this->shipping = 0.00;
@@ -86,6 +86,7 @@ class Checkout extends Component
         $this->manual;
         $this->row_id;
         $this->showPaymentType;
+        $this->paid_amount;
 
 
 
@@ -144,8 +145,6 @@ class Checkout extends Component
          $this->grand_total = 'Rp ' . number_format($total, 0, ',', '.');
          $this->total =$total;
          $this->sub_total_hidden = $total;
-        
-
         }
        // dd($hitung_bayar);
         
@@ -195,9 +194,14 @@ class Checkout extends Component
             }
 
 
-        public function convertRupiah()
+         public function convertRupiah()
             {
             $this->paid_amount = 'Rp ' . number_format($this->paid_amount, 0, ',', '.');
+            }
+
+      public function grandtotal()
+            {
+            return Cart::instance($this->cart_instance)->total();
             }
 
 

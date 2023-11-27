@@ -39,12 +39,10 @@
 
 
 
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="px-5 btn btn-success">Save Changes</button>
+                    <button type="submit" class="px-5 btn btn-success">Simpan</button>
                 </div>
             </form>
         </div>

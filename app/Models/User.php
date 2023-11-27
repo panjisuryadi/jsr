@@ -130,4 +130,10 @@ class User extends Authenticatable implements HasMedia
     public function isUserCabang(){
         return !is_null($this->namacabang());
     }
+    public function isAdmin(){
+         $users = Auth::user()->id;
+          return $users;
+    }
+
+
 }
