@@ -53,7 +53,7 @@ class UploadController extends Controller
 
         $filename = now()->timestamp . '.' . trim($file->getClientOriginalExtension());
 
-        Storage::putFileAs('temp/dropzone/', $file, $filename);
+        Storage::disk('public')->put('temp/dropzone/'. $filename,file_get_contents($file));
 
         return response()->json([
             'name'          => $filename,
@@ -62,7 +62,7 @@ class UploadController extends Controller
     }
 
     public function dropzoneDelete(Request $request) {
-        Storage::delete('temp/dropzone/' . $request->file_name);
+        Storage::disk('public')->delete('temp/dropzone/' . $request->file_name);
 
         return response()->json($request->file_name, 200);
     }

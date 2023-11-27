@@ -210,11 +210,27 @@
                     <h3 class="font-bold text-md uppercase">Detail Pembayaran</h3>
                 </div>
                 <div class="card-body">
-                    <div class="grid grid-cols-2">
+                    <div class="grid grid-cols-3 gap-3">
                         <div class="form-group">
                             <?php
-                            $field_name = 'nominal';
+                            $field_name = 'barang_dp.nominal';
                             $field_lable = label_case('nominal');
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                            $required = "required";
+                            ?>
+                            <label class="text-left text-md mb-0" for="{{ $field_name }}">{{ $field_lable }}<small class="text-danger">*</small></label>
+                            <input wire:model="{{ $field_name }}" type="number" name="{{$field_name}}" class="form-control text-md {{ $invalid }}" placeholder="{{$field_placeholder}}">
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <?php
+                            $field_name = 'barang_dp.box_fee';
+                            $field_lable = label_case('biaya sewa box');
                             $field_placeholder = $field_lable;
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             $required = "required";
@@ -244,7 +260,6 @@
                                 <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                 <option value="cicil">Cicil</option>
                                 <option value="jatuh_tempo">Jatuh Tempo</option>
-                                <option value="lunas">Lunas</option>
                             </select>
                             @if ($errors->has($field_name))
                             <span class="invalid feedback" role="alert">
@@ -277,7 +292,7 @@
                         @elseif ($this->tipe_pembayaran == 'jatuh_tempo')
                         <div id="jatuh_tempo" class="form-group">
                             <?php
-                            $field_name = 'tgl_jatuh_tempo';
+                            $field_name = 'detail_cicilan.0';
                             $field_lable = __('Tanggal Jatuh Tempo');
                             $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -335,13 +350,13 @@
     <div class="grid grid-cols-2 gap-4 m-2 mt-0 mb-2">
 
         <div class="form-group">
-            <label class="mb-0" for="keterangan">Keterangan <span class="text-danger">*</span></label>
+            <label class="mb-0" for="barang_dp.note">Keterangan <span class="text-danger">*</span></label>
             <div class="input-group">
-                <textarea name="keterangan" id="keterangan" class="form-control" cols="30" rows="6"></textarea>
+                <textarea wire:model="barang_dp.note" name="barang_dp.note" id="barang_dp.note" class="form-control" cols="30" rows="6"></textarea>
             </div>
-            @if ($errors->has('keterangan'))
+            @if ($errors->has('barang_dp.note'))
             <span class="invalid feedback" role="alert">
-                <small class="text-danger">{{ $errors->first('keterangan') }}.</small class="text-danger">
+                <small class="text-danger">{{ $errors->first('barang_dp.note') }}.</small class="text-danger">
             </span>
             @endif
         </div>

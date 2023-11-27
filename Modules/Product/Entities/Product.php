@@ -29,8 +29,17 @@ class Product extends Model implements HasMedia
 
     protected $with = ['media','karat'];
 
-   public const PRODUKCODE = 'P';
+   public const PRODUKCODE = 'JSR';
    public const URL = 'P';
+
+   protected static function booted(){
+    parent::booted();
+    static::creating(function(Product $product){
+        if(empty($product->product_code)){
+            $product->product_code = self::generateCode();
+        }
+    });
+   }
 
 
    public function scopeCabang(){
@@ -128,21 +137,15 @@ class Product extends Model implements HasMedia
 
     public static function generateCode()
         {
-            $date = now()->format('dmY');
-            $produk_code = !empty(env('PRODUCT_CODE')) ? env('PRODUCT_CODE') : self::PRODUKCODE;
-            $dateCode = $produk_code . $date;
-            $lastOrder = self::select([DB::raw('MAX(products.product_code) AS last_code')])
-                ->where('product_code', 'like', $dateCode . '%')
-                ->first();
-            $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
-            $orderCode = $dateCode . '00001';
-            if ($lastOrderCode) {
-                $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
-                $nextOrderNumber = sprintf('%05d', (int)$lastOrderNumber + 1);
-                $orderCode = $dateCode . $nextOrderNumber;
+            $existingCode = true;
+            $codeNumber = '';
+            while ($existingCode) {
+                $date = now()->format('dmY');
+                $randomNumber = mt_rand(100, 999);
+                $codeNumber = self::PRODUKCODE .'-'. $randomNumber .'-'. $date;
+                $existingCode = self::where('product_code', $codeNumber)->exists();
             }
-
-            return $orderCode;
+            return $codeNumber;
         }
 
 
