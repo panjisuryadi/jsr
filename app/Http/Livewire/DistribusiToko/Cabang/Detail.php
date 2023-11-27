@@ -235,7 +235,7 @@ class Detail extends Component
         }
         
         if(!empty($ids)) {
-            Product::whereIn('id', $ids)->update(['status_id' => 1]);
+            Product::whereIn('id', $ids)->update(['status_id' => 1, 'cabang_id' => $this->dist_toko->cabang_id]);
         }
     }
 }
