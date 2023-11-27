@@ -45,7 +45,7 @@
                                     </select>
                                                                     </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Payment Method</label>
                                     <select wire:model.defer="payment_method" class="form-control" name="payment_method">
@@ -57,7 +57,7 @@
                                         <option value="Other">Other</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="form-group mb-0">
                             <button type="submit" class="btn btn-primary">

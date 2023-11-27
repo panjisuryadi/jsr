@@ -1,12 +1,13 @@
-<div wire:ignore.self class="modal fade"  class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div wire:ignore.self class="modal fade " id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 
 
-    <div class="modal-lg modal-dialog modal-md" role="document">
+    <div class="modal-xl modal-dialog" role="document">
         <div class="modal-content">
+
             <div class="modal-header">
                 <h5 class="modal-title font-semibold text-lg" id="checkoutModalLabel">
                 <i class="bi bi-cart-check text-primary"></i>
-                Konfirmasi Pembayaran
+                Konfirmasi Pembayaran 
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -22,48 +23,37 @@
                 );
                ?>
 {{-- <livewire:pos.payment> --}}
-
-
-<div class="flex w-full  tabs px-5 py-3">
-
-<ul class="flex w-full justify-content-center text-center items-center">
-  <li class="mr-6">
-    <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
-    wire:click.prevent="PaymentType('tunai')" href="#">TUNAI</a>
-  </li>
-   <li class="mr-6">
-    <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
-    wire:click.prevent="PaymentType('edc')" href="#">EDC</a>
-  </li>
- <li class="mr-6">
-    <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
-    wire:click.prevent="PaymentType('transfer')" href="#">TRANSFER</a>
-  </li>
- <li class="mr-6">
-    <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
-    wire:click.prevent="PaymentType('qr')" href="#">QR</a>
-  </li>
-
-</ul>
-
-
-
+{{-- <div class="flex w-full  tabs px-5 py-3">
+    <ul class="flex w-full justify-content-center text-center items-center">
+        <li class="mr-6">
+            <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
+            wire:click.prevent="PaymentType('tunai')" href="#">TUNAI</a>
+        </li>
+        <li class="mr-6">
+            <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
+            wire:click.prevent="PaymentType('edc')" href="#">EDC</a>
+        </li>
+        <li class="mr-6">
+            <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
+            wire:click.prevent="PaymentType('transfer')" href="#">TRANSFER</a>
+        </li>
+        <li class="mr-6">
+            <a class="text-lg font-semibold text-blue-500 hover:text-blue-800" class="tab"
+            wire:click.prevent="PaymentType('qr')" href="#">QR</a>
+        </li>
+    </ul>
 </div>
-
-
-
+ --}}
 
 
 
  <form id="checkout-form" action="{{ route('app.pos.store') }}" method="POST">
 
                 @csrf
-
-
                 <div class="modal-body py-0 px-3 ">
 
 
-    <div class="tab-pane px-2 tab-content">
+{{--     <div class="tab-pane px-2 tab-content">
         @if($showPaymentType === 'tunai')
             <div class="text-lg text-primary">Tunai</div>
              <input type="hidden" value="tunai" name="payment_method">
@@ -80,7 +70,7 @@
             <div class="text-lg text-warning">{{ $showPaymentType }}</div>
 
         @endif
-    </div>
+    </div> --}}
 
 
 @if($cart_items->isNotEmpty())
@@ -88,13 +78,12 @@
  <input type="text" value="{{ $cart_items->first()->options->manual }}" name="manual">
  <input type="hidden" value="{{ $cart_items->first()->options->manual_item }}" name="manual_item">
  <input type="hidden" value="{{ $cart_items->first()->options->manual_price }}" name="manual_price">
-
    @endif
 @endif
 
 
 
-                    <div class="tab-content" id="myTabContent">
+ <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
 <div class="px-0 py-2 grid grid-cols-2 gap-4 m-2">
@@ -105,15 +94,14 @@
     <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
     <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
 
-
-
-
 <div class="px-1">
 <div class="form-group mt-0">
     <label for="total_amount">Total <span class="text-danger">*</span></label>
     <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" disabled required>
     <input type="hidden" id="harga" name="harga_awal" value="{{ $total_amount }}">
 </div>
+
+
 
 
 <div class="form-group">
@@ -124,7 +112,7 @@
 
 
 <div class="form-group">
-    <label for="discount">Discount  <span class="small text-danger">(Nominal)</span></label>
+ <label for="discount">Discount  <span class="small text-danger">(Nominal)</span></label>
     <input  id="discount" type="text" class="form-control" name="discount">
     <input type="hidden" id="diskon2">
 </div>
@@ -136,6 +124,24 @@
 
 
 <div class="px-1">
+
+
+@if(Auth::user()->id == 1)
+<div class="form-group py-2">
+    <label for="is_active">Cabang <span class="text-danger">*</span></label>
+    <select class="form-control" name="cabang_id" id="cabang_id" required>
+        <option value="" selected disabled>Select Cabang</option>
+        @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
+        <option value="{{ $cabang->id }}">
+            {{ $cabang->code }} | {{ $cabang->name }}
+        </option> 
+        @endforeach
+    </select>
+</div>
+@else
+ <input type="hidden" value="{{ Auth::user()->namacabang()->id }}" name="cabang_id">
+@endif
+
 
 <label for="tunaiRadio">Tunai</label>
 <input type="radio" name="tipebayar" id="tunaiRadio" value="tunai" checked required>
@@ -153,9 +159,8 @@
 
 <div id="cicilan" style="display: none;">
  <div class="form-group">
-    <label for="ciclan">Jatuh Tempo<span class="text-danger">*</span></label>
-    <input id="tgl_jatuh_tempo" type="date" class="form-control" name="tgl_jatuh_tempo">
-
+<label for="ciclan">Jatuh Tempo<span class="text-danger">*</span></label>
+ <input id="tgl_jatuh_tempo" type="date" class="form-control" name="tgl_jatuh_tempo">
 </div>
 
 </div>
@@ -165,8 +170,6 @@
     {{-- <span id="final" class="text-black text-4xl"></span> --}}
     <input id="final" type="text" class="form-control text-black text-2xl" name="final" value="{{ $total_amount }}" disabled>
     <input value="{{ $total_amount }}" id="final_unmask" type="hidden" class="form-control" name="final_unmask">
-
-
 </div>
 
 
@@ -219,9 +222,7 @@
                                     </div>
                                     <div class="py-2 justify-center text-center items-center font-semibold uppercase text-gray-600 no-underline text-lg hover:text-red-600 leading-tight">
                                         {{ $customer_id }}
-                                    </div>
-                                    
-                                    
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>

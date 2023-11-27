@@ -1168,10 +1168,6 @@ public function view_by_kategori(Request $request ,$slug) {
 
 //=============================end tambah produk tanpa modal
 
-
-
-
-
    //view main kategori modal
 
 public function view_group_kategori_pages(Request $request ,$id) {

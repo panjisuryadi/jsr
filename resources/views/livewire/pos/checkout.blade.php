@@ -64,7 +64,7 @@
                         
                         </span>|
                         <span class="text-blue-400">
-                            {{ rupiah($cart_item->options->harga_jual*$cart_item->options->berat_emas) }}
+                            {{ rupiah($cart_item->price) }}
                         </span>
                       
                        </div>
@@ -183,10 +183,10 @@
 
 </div>
 
-    @include('livewire.pos.includes.payment-modal')
+    {{-- @include('livewire.pos.includes.payment-modal') --}}
 
     {{--Checkout Modal--}}
 
-    {{-- @include('livewire.pos.includes.checkout-modal') --}}
+    @include('livewire.pos.includes.checkout-modal')
 </div>
 

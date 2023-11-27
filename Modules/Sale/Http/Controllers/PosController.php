@@ -64,8 +64,8 @@ class PosController extends Controller
             $total_amount = $input['final_unmask'];
         }
 
-    //  dd($input);
-     // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+          //dd($input);
+          //$input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
          $sale = Sale::create([
                 'date' => date('Y-m-d'),
                 'reference' => 'jsr',
@@ -87,11 +87,11 @@ class PosController extends Controller
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' =>  $input['diskon2'] ?? '0',
                 'user_id' => Auth::user()->id,
-                'cabang_id' => Auth::user()->namacabang()->id,
-            ]);
+                'cabang_id' =>$input['cabang_id'] ?? '1',
+                ]);
 
   
-       foreach (Cart::instance('sale')->content() as $cart_item) {
+             foreach (Cart::instance('sale')->content() as $cart_item) {
                 SaleDetails::create([
                     'sale_id' => $sale->id,
                     'product_id' => $cart_item->id,

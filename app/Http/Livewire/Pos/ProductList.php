@@ -35,7 +35,9 @@ class ProductList extends Component
                 return $query->where('category_id', $this->category_id);
             })->where('status_id', ProductStatus::READY)
             ->paginate($this->limit);
-       
+
+
+
         return view('livewire.pos.product-list', [
 
             'products' => $products
