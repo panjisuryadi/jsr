@@ -269,7 +269,8 @@ $cart->add([
 'id'      => $product['id'],
 'name'    => $product['product_name'],
 'qty'     => 1,
-'price'   => $product['karat']['penentuan_harga']['harga_jual']*$product['berat_emas'],
+//'price'   => $product['karat']['penentuan_harga']['harga_jual']*$product['berat_emas'],
+'price'   => $this->HitungHarga($product),
 'weight'  => 1,
     'options' => [
         'product_discount'      => 0.00,
@@ -280,13 +281,13 @@ $cart->add([
         'unit'                  =>$product['product_unit'],
         'karat_id'              =>$product['karat']['id'],
         'karat'                 =>$product['karat']['name'],
-        'harga_jual'            =>$product['karat']['penentuan_harga']['harga_jual'],
+        'harga_jual'            => $this->HitungHarga($product),
         'berat_emas'            =>$product['berat_emas'],
         'product_tax'           => 1,
         'manual'                => 0,
         'manual_item'           => 0,
         'manual_price'          => 0,
-        'unit_price'            =>1
+        'unit_price'            => 1
                 ]
          ]);
 
@@ -353,9 +354,28 @@ $cart->add([
         ]);
     }
 
+
+
+public function HitungHarga($product) {
+        $totalPrice = 0;
+        if (empty($product['product_price'])) {
+            $totalPrice = $product['karat']['penentuanHarga']['harga_jual'] * $product['berat_emas'];
+        }else{
+            $totalPrice = $product['product_price'];
+        }      
+
+        return $totalPrice;
+    }
+
+
+
     public function updatedDiscountType($value, $name) {
         $this->item_discount[$name] = 0;
     }
+
+
+
+
 
     public function discountModalRefresh($product_id, $row_id) {
         $this->updateQuantity($row_id, $product_id);
@@ -426,6 +446,8 @@ $cart->add([
 
 
 
+
+
     public function updateCartOptions($row_id, $product_id, $cart_item, $discount_amount) {
         Cart::instance($this->cart_instance)->update($row_id, ['options' => [
             'sub_total'             => $cart_item->price * $cart_item->qty,
@@ -460,7 +482,7 @@ $cart->add([
         $input['diskon'] = preg_replace("/[^0-9]/", "", $this->diskon);
         $input['paid_amount'] = preg_replace("/[^0-9]/", "", $this->paid_amount);
         $input['kembali'] = preg_replace("/[^0-9]/", "", $this->kembali);
-           dd($input);
+        dd($input);
 
 
 

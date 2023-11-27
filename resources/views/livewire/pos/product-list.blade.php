@@ -12,7 +12,7 @@
 
 
                     @forelse($products as $product)
-                          {{-- {{ $product }} --}}
+                          {{-- {{ $product->product_price }} --}}
 
 
 
@@ -48,10 +48,10 @@
                                 <div class="lg:text-sm md:small text-red-400">
                                     <small>Rp .</small>
 
-                                   @if(empty($product->product_price)) 
-                                    {{@rupiah($product->karat->penentuanHarga->harga_jual*$product->berat_emas)}}
-                                    @else
+                                   @if($product->product_price) 
                                     {{ @rupiah($product->product_price) }}
+                                    @else
+                                    {{@rupiah($product->karat->penentuanHarga->harga_jual*$product->berat_emas)}}
                                    @endif        
 
 

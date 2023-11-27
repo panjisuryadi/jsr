@@ -64,7 +64,7 @@
                         
                         </span>|
                         <span class="text-blue-400">
-                            {{ rupiah($cart_item->options->harga_jual*$cart_item->options->berat_emas) }}
+                            {{ rupiah($cart_item->price) }}
                         </span>
                       
                        </div>

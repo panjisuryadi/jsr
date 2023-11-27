@@ -86,7 +86,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 
                       <th style="width: 13%!important;" class="text-center">{{ Label_case('Status') }}</th>
 
-                 <th style="width: 11%!important;" class="text-center">
+                 <th style="width: 18%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
