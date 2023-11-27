@@ -85,17 +85,7 @@ margin-bottom: 0.5rem !important;
                       Distribusi <span class="text-yellow-500">{{ $kategori->name }}</span></p>
                         </div>
                         <div id="buttons">
-                            <div class="dropdown show">
-                                <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Pilih Kategori
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $category)
-                                    <a href="{{ route(''.$module_name.'.kategori',$category->slug) }}"
-                                    class="dropdown-item" >{{ $category->name }}</a>
-                                    @endforeach
-                                </div>
-                            </div>
+                            
                         </div>
 
 

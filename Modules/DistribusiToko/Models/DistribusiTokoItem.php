@@ -17,7 +17,6 @@ class DistribusiTokoItem extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'dist_toko_items';
-    
     protected static function newFactory()
     {
         return \Modules\DistribusiToko\Database\factories\DistribusiTokoItemFactory::new();
@@ -33,7 +32,7 @@ class DistribusiTokoItem extends Model implements HasMedia
     }
 
     public function product(){
-        return $this->hasOne(Product::class,'dist_toko_item_id','id');
+        return $this->belongsTo(Product::class);
     }
 
     public function approved(){

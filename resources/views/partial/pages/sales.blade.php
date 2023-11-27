@@ -270,7 +270,7 @@
     
    
     <div class="text-blue-400">
-        Cabang : {{ Auth::user()->namacabang?ucfirst(Auth::user()->namacabang->cabang()->first()->name):'' }}
+        Cabang : {{ Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->name):'' }}
     </div>
 </div>
 

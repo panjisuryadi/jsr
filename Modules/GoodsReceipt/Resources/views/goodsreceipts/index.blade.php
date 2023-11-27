@@ -46,7 +46,7 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                                     <th style="width: 3%!important;">No</th>
                                     <th style="width: 22%!important;"  class="text-left">{{ __('Date') }}</th>
                                  
-                                    <th style="width: 18%!important;"  class="text-left">{{ __('Berat') }}</th>
+                                    <th style="width: 18%!important;"  class="text-left">{{ __('Berat') }} / {{ __('Karat') }}</th>
                                     <th style="width: 19%!important;" class="text-left">{{ __('Supplier') }}</th>
                                     <th class="text-center">{{ __('Pembayaran') }}
                                     </th>

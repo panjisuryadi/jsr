@@ -888,6 +888,9 @@
                   {{ label_Case('edit') }}
                </label>
             </div>
+
+
+
                 <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
                 id="delete_penerimaanbarangluars" name="permissions[]"
@@ -896,6 +899,17 @@
                   {{ label_Case('delete') }}
                </label>
             </div>
+
+     <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_insentif" name="permissions[]"
+                value="access_insentif" {{ $role->hasPermissionTo('access_insentif') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_insentif">
+                  {{ label_Case('access_insentif') }}
+               </label>
+            </div>
+
+
             
         </div>
     </div>
@@ -2050,6 +2064,90 @@
 
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
+       Pengeluaran (Expenses)
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_expenses" name="permissions[]"
+                value="access_expenses" {{ $role->hasPermissionTo('access_expenses') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_expenses">
+                  {{ label_Case('access_expenses') }}
+               </label>
+            </div>
+
+
+      
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_expenses" name="permissions[]"
+                value="create_expenses" {{ $role->hasPermissionTo('create_expenses') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_expenses">
+                  {{ label_Case('create_expenses') }}
+               </label>
+            </div>
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_expenses" name="permissions[]"
+                value="edit_expenses" {{ $role->hasPermissionTo('edit_expenses') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_expenses">
+                  {{ label_Case('edit_expenses') }}
+               </label>
+            </div>
+
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="delete_expenses" name="permissions[]"
+                value="delete_expenses" {{ $role->hasPermissionTo('delete_expenses') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="delete_expenses">
+                  {{ label_Case('delete_expenses') }}
+               </label>
+            </div>
+
+
+    <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_expense_categories" name="permissions[]"
+                value="access_expense_categories" {{ $role->hasPermissionTo('access_expense_categories') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_expense_categories">
+                  {{ label_Case('access_expense_categories') }}
+               </label>
+            </div>
+
+
+
+
+
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
        Products Transfer
     </div>
     <div class="card-body">
@@ -2301,58 +2399,7 @@
 
                                         
                                 <!-- Expenses Permission -->
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <div class="card h-100 border-0 shadow">
-                                        <div class="card-header">
-                                            Expenses
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="access_expenses" name="permissions[]"
-                                                               value="access_expenses" {{ $role->hasPermissionTo('access_expenses') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="access_expenses">Access</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="create_expenses" name="permissions[]"
-                                                               value="create_expenses" {{ $role->hasPermissionTo('create_expenses') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="create_expenses">Create</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="edit_expenses" name="permissions[]"
-                                                               value="edit_expenses" {{ $role->hasPermissionTo('edit_expenses') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="edit_expenses">Edit</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="delete_expenses" name="permissions[]"
-                                                               value="delete_expenses" {{ $role->hasPermissionTo('delete_expenses') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="delete_expenses">Delete</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                               id="access_expense_categories" name="permissions[]"
-                                                               value="access_expense_categories" {{ $role->hasPermissionTo('access_expense_categories') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="access_expense_categories">Category</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                   
                       
 
                          

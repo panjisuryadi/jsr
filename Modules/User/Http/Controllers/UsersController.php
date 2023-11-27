@@ -111,7 +111,7 @@ class UsersController extends Controller
         }
 
         $cabangs = UserCabang::where('user_id',$user->id)->first();
-        if (is_null($cabangs)) {
+        if (empty($cabangs)) {
               UserCabang::create([
                 'user_id'         => $user->id,
                 'cabang_id'       => $request->cabang_id
@@ -141,17 +141,10 @@ class UsersController extends Controller
         }
 
 
-
-
-
-
     public function destroy(User $user) {
         abort_if(Gate::denies('access_user_management'), 403);
-
         $user->delete();
-
         toast('User Deleted!', 'warning');
-
         return redirect()->route('users.index');
     }
 }

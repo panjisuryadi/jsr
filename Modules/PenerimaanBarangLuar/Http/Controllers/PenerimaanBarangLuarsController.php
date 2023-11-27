@@ -56,7 +56,7 @@ class PenerimaanBarangLuarsController extends Controller
         $total_nilai_angkat = $this->module_model::sum('nilai_angkat');
         $total_berat = $this->module_model::sum('weight');
         $proses_statuses = ProsesStatus::all();
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_penerimaanbarangluars'), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',
@@ -335,7 +335,7 @@ public function index_data_insentif(Request $request)
             $cabang = null;
             $code = $module_model::generateCode();
             if(auth()->user()->isUserCabang()){
-                $cabang = Cabang::where('id',Auth::user()->namacabang->cabang->id)->get();
+                $cabang = Cabang::where('id',Auth::user()->namacabang()->id)->get();
             }else{
                 $cabang = Cabang::all();
             }
@@ -360,7 +360,7 @@ public function index_data_insentif(Request $request)
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $module_action = 'List';
-            abort_if(Gate::denies('access_'.$module_name.''), 403);
+            abort_if(Gate::denies('access_insentif'), 403);
              return view(''.$module_name.'::'.$module_path.'.index_insentif',
                compact('module_name',
                 'module_action',

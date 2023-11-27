@@ -277,5 +277,7 @@ button:focus {
             hyphens: auto;
 }
 
+[x-cloak] { display: none !important; }
+
 
 </style>

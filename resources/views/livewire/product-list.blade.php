@@ -9,6 +9,7 @@
                     </div>
                 </div>
                 @forelse($products as $product)
+
                     <div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-3 col-md-6 lg:col-lg-2 col-md-6" style="cursor: pointer;">
                         <div class="card border-0 shadow h-100">
                             <div class="position-relative">
@@ -22,19 +23,22 @@
                                     {{ $product->product_code }}
                                 </span>
                                 </div>
-                                <p class="card-text font-weight-bold">{{ format_currency($product->product_price) }}</p>
+
+
+              
+     <p class="card-text font-weight-bold">{{ rupiah($product->product_price) }}</p>
+      
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="col-12">
-                        <div class="alert alert-warning mb-0">
+                        <div class="alert flex items-center alert-warning mb-0">
                             @lang('No Product Found')
                         </div>
                     </div>
                 @endforelse
             </div>
-            <div @class(['mt-3' => $products->hasPages()])>
+            <div @class(['mt-3 flex items-center' => $products->hasPages()])>
                 {{ $products->links() }}
             </div>
         </div>

@@ -108,6 +108,20 @@
                         <input type="hidden" wire:model="sub_total_hidden">
 
                     </div>
+
+
+                   <div class="form-group">
+                        <label for="grand_total">Grand Total <span class="text-danger">*</span></label>
+                        <span class="text-red-800 text-3xl" 
+                        id="gt"></span>
+                       <input wire:model="grand_total" id="grand_total" type="text" class="form-control text-black text-2xl"
+                        value="{{$grand_total}}" name="grand_total" disabled>
+                    </div>
+
+
+
+
+
                     <div class="form-group">
                         <label for="kembali">Kembali <span class="text-danger">*</span></label>
                         <span class="text-red-800 text-3xl" 
@@ -120,14 +134,7 @@
                           readonly>
                     </div>
 
-                  <div class="form-group">
-                        <label for="grand_total">Grand Total <span class="text-danger">*</span></label>
-                        <span class="text-red-800 text-3xl" 
-                        id="gt"></span>
-                       <input wire:model="grand_total" id="grand_total" type="text" class="form-control text-black text-2xl"
-                        value="{{$grand_total}}" name="grand_total" disabled>
-                    </div>
-
+               
 
                    
                 </div>

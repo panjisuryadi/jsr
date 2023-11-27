@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
+use Modules\Product\Models\ProductStatus;
 use Modules\Produksi\Models\ProduksiItems;
 use Modules\Stok\Models\StockCabang;
 
@@ -91,7 +92,7 @@ class Detail extends Component
                 if(!empty($this->dist_toko->kategori_produk_id) && $this->dist_toko->kategori_produk_id == $id_kategoriproduk_berlian) {
                     $this->createProductsBerlian($this->selectedItems);
                 }else{
-                    $this->createProducts($this->selectedItems);
+                    $this->updateProducts($this->selectedItems);
                 }
                 DB::commit();
             }catch (\Exception $e) {
@@ -105,7 +106,7 @@ class Detail extends Component
                 if(!empty($this->dist_toko->kategori_produk_id) && $this->dist_toko->kategori_produk_id == $id_kategoriproduk_berlian) {
                     $this->createProductsBerlian($this->selectedItems);
                 }else{
-                    $this->createProducts($this->selectedItems);
+                    $this->updateProducts($this->selectedItems);
                 }
                 DB::commit();
             }catch (\Exception $e) {
@@ -115,6 +116,17 @@ class Detail extends Component
         }
         toast('Penerimaan Distribusi Berhasil dilakukan','success');
         return redirect(route('home'));
+    }
+
+    private function updateProducts($selected_items){
+        foreach($this->dist_toko_items as $item){
+            if(in_array($item->id, $selected_items)){
+                $item->approved();
+                $item->product->updateTracking(ProductStatus::READY,$this->dist_toko->cabang_id);
+            }else{
+                $item->returned();
+            }
+        }
     }
 
     private function createProducts($selected_items){

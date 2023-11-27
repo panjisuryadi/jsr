@@ -39,7 +39,7 @@ class UsersDataTable extends DataTable
 
           ->addColumn('cabang', function ($data) {
 
-                return @$data->namacabang->cabang->name ?? '-';
+                return @$data->namacabang()->name ?? '-';
             })
 
 

@@ -87,7 +87,7 @@ class PosController extends Controller
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' =>  $input['diskon2'] ?? '0',
                 'user_id' => Auth::user()->id,
-                'cabang_id' => Auth::user()->namacabang->cabang()->first()->id,
+                'cabang_id' => Auth::user()->namacabang()->id,
             ]);
 
   
@@ -159,7 +159,7 @@ class PosController extends Controller
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' => Cart::instance('sale')->discount() * 100,
                 'user_id' => Auth::user()->id,
-                'cabang_id' => Auth::user()->namacabang->cabang()->first()->id,
+                'cabang_id' => Auth::user()->namacabang()->id,
             ]);
 
             foreach (Cart::instance('sale')->content() as $cart_item) {
