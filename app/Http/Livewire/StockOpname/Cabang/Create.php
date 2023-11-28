@@ -93,7 +93,7 @@ class Create extends Component
                     });
             }
         $this->countProduct = $data->count();
-        $this->dynamic_note .= "\r\n tersisa " . $this->countProduct . "pcs"; 
+        $this->dynamic_note .= "\r\n failed " . $this->countProduct . "pcs"; 
         $data = $data->paginate(5);
         return view("livewire.stock-opname.cabang.create",[
             'products' => $data
