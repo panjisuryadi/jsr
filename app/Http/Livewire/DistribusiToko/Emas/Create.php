@@ -330,21 +330,7 @@ class Create extends Component
     }
 
     public function generateCode(){
-        if(!empty($this->new_product['group_id'])){
-            $namagroup = Group::where('id', $this->new_product['group_id'])->first()->code;
-            $existingCode = true;
-            $codeNumber = '';
-            $cabang = 'JSR';
-            while ($existingCode) {
-                $date = now()->format('dmY');
-                $randomNumber = mt_rand(100, 999);
-                $codeNumber = $cabang .'-'. $namagroup .'-'. $randomNumber .'-'. $date;
-                $existingCode = Product::where('product_code', $codeNumber)->exists();
-            }
-            $this->new_product["code"] = $codeNumber;
-        }else{
-            $this->dispatchBrowserEvent('group:not-selected');
-        }
+        $this->new_product["code"] = Product::generateCode();
     }
 
     public function calculateTotalWeight(){

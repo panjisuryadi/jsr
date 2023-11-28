@@ -72,7 +72,7 @@ class Summary extends Component
         }
 
         toast('Distribusi In Progress!', 'success');
-        return redirect()->route('distribusitoko.index');
+        return redirect()->route('distribusitoko.emas');
     }
 
     private function reduceStockOffice($items){
