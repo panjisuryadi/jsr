@@ -104,11 +104,17 @@
         <tr>
 
             <td>{{ $no++ }}</td>
-                <td style="text-align:center;vertical-align:bottom">{{ $saleDetail->quantity }}</td>
-                <td style="text-align:center;vertical-align:bottom"> {{ $saleDetail->product->product_name }} </td>
-                <td style="text-align:center;vertical-align:bottom">{{ $saleDetail->product_code }}</td>
-                <td style="text-align:center;vertical-align:bottom">{{ $saleDetail->unit_price }}</td>
-                <td style="text-align:center;vertical-align:bottom">{{ format_currency($saleDetail->price) }}</td>
+                <td style="text-align:center;vertical-align:bottom">
+                    {{ $saleDetail->quantity }}</td>
+                <td style="text-align:center;vertical-align:bottom">
+                    {{ $saleDetail->product->product_name }} </td>
+                <td style="text-align:center;vertical-align:bottom">
+                    {{ $saleDetail->product_code }}</td>
+                <td style="text-align:center;vertical-align:bottom">
+                    {{ $saleDetail->unit_price }}</td>
+                <td style="text-align:center;vertical-align:bottom">
+                    {{ format_currency($saleDetail->price) }}
+                </td>
 
         </tr>
         ​
