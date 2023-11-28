@@ -1,19 +1,9 @@
 <div class="text-center">
-@can('show_buybacktoko')
-    <a href="{{ route(''.$module_name.'.show', $data->id) }}"
-    id="Show"
-    data-toggle="tooltip"
-     class="btn btn-outline-info btn-sm">
-        <i class="bi bi-eye"></i> &nbsp;@lang('Show')
-    </a>
-@endcan
 
-@can('show_buybacktoko')
     <a href="{{ route(''.$module_name.'.toko.buyback-barangluar.print', $data->id) }}"
      class="btn btn-outline-info btn-sm">
         <i class="bi bi-printer"></i> &nbsp;@lang('Print')
     </a>
-@endcan
 
     @can('delete_buybacktoko')
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
