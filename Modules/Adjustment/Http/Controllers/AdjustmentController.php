@@ -369,7 +369,7 @@ class AdjustmentController extends Controller
     }
 
     public function getdata(Request $request){
-        $get_data = Adjustment::withCount('products')->whereNotNull('id');
+        $get_data = Adjustment::withCount('products', 'adjustedProducts')->with('cabang', 'adjustedProducts')->whereNotNull('id');
 
         $get_data = $get_data->orderBy('created_at','desc')->get();
 
@@ -378,24 +378,44 @@ class AdjustmentController extends Controller
                 return view('adjustment::partials.actions', compact('data'));
             })
             ->addColumn('locations', function ($data) {
-                return $data->location?->descriptive_location_type;
+                $location = $data->location?->descriptive_location_type;
+                if(!empty($data->cabang->name)) {
+                    $location = $data->cabang->name;
+                }
+                return $location;
             })
             ->addColumn('product', function ($data) {
-                return $data->products_count.' Product';
+                $product_count = $data->products_count;
+                if(!empty($data->adjusted_products_count)) {
+                    $product_count = $data->adjusted_products_count;
+                }
+                return $product_count.' Products';
             })
             ->addColumn('summary', function ($data) {
                 $lebih = 0;
                 $kurang = 0;
+                $berhasil = 0;
                 $products = $data->products;
-                foreach ($products as $product) {
-                    if($product->weight_before > $product->weight_after){
-                        $kurang += ($product->weight_before - $product->weight_after);
+                if(empty($data->adjustedProducts) && !empty($data->products)){
+                    foreach ($data->products as $product) {
+                        if($product->weight_before > $product->weight_after){
+                            $kurang += ($product->weight_before - $product->weight_after);
+                        }
+                        if($product->weight_before < $product->weight_after){
+                            $lebih += ($product->weight_after - $product->weight_before);
+                        }
                     }
-                    if($product->weight_before < $product->weight_after){
-                        $lebih += ($product->weight_after - $product->weight_before);
+                    return '<span class="text-success">Barang Lebih '.$lebih.' gram </span><br><span class="text-danger">Barang Kurang '.$kurang.' gram</span>';
+                }elseif(!empty($data->adjustedProducts)){
+                    foreach ($data->adjustedProducts as $product) {
+                        if($product->status == 2) {
+                            $kurang += 1;
+                        }else{
+                            $berhasil += 1;
+                        }
                     }
+                    return '<span class="text-success">Barang berhasil distokopname ' . $berhasil . ' pcs  </span><br><span class="text-danger">Barang Kurang '.$kurang.' pcs</span>';
                 }
-                return '<span class="text-success">Barang Lebih '.$lebih.' gram </span><br><span class="text-danger">Barang Kurang '.$kurang.' gram</span>';
             })
             ->rawColumns(['action','summary','product','locations'])
             ->make(true);
