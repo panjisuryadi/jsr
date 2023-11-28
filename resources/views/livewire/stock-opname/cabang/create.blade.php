@@ -68,11 +68,11 @@
                         <table id="produksisTable" class="table table-sm table-striped" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th class="no-sort text-center">No</th>
-                                    <th class="no-sort">Image</th>
-                                    <th class="no-sort">Kode Produk</th>
-                                    <th class="no-sort">Produk Informasi</th>
-                                    <th class="no-sort text-center">Aksi</th>
+                                    <th class="no-sort text-center">@lang('No')</th>
+                                    <th class="no-sort">@lang('Image')</th>
+                                    <th class="no-sort">@lang('Kode Produk')</th>
+                                    <th class="no-sort">@lang('Produk Informasi')</th>
+                                    <th class="align-middle">@lang('Action')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -139,18 +139,27 @@
                         <table class="table table-sm table-bordered" id="tablelist">
                             <thead>
                                 <tr class="align-middle">
-                                    <th class="align-middle">@lang('Product Name')</th>
-                                    <th class="align-middle">@lang('Location')</th>
-                                    <th class="align-middle">Stock Data</th>
-                                    <th class="align-middle">@lang('Stock Rill')</th>
+
+                                    <th class="no-sort text-center">@lang('No')</th>
+                                    <th class="no-sort">@lang('Image')</th>
+                                    <th class="no-sort">@lang('Kode Produk')</th>
+                                    <th class="no-sort">@lang('Produk Informasi')</th>
                                     <th class="align-middle">@lang('Action')</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($so_details as $index => $item )
+                                @foreach ($so_details as $index => $val )
+                                @php
+                                    $image = !empty($val['images']) ? $val['images'] : '';
+                                @endphp
                                 <tr>
-                                    <td>{{ $item['product_name'] }}</td>
-                                    <td>{{ $active_location['label'] }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td> <a href="/{{ imageUrl() .'produksi/' . @$image }}" data-lightbox="{{ $image }} " b class="single_image">
+                                            <img src="/{{ imageUrl() .'produksi/' . @$image }}" order="0" width="100" class="img-thumbnail" align="center"/>
+                                        </a>
+                                    </td>
+                                    <td> {{ !empty($val['product_code']) ? $val['product_code'] : ''  }} </td>
+                                    <td> {{ $val['group']['name'] }} {{ $val['karat']['name']  }} | {{ $val['berat_emas'] }} gr </td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $index }})">
                                             <i class="bi bi-trash"></i>
@@ -166,7 +175,7 @@
 
                     <div class="form-group">
                         <label for="notes">Note <span class="small text-danger">( @lang('If Needed'))</span></label>
-                        <textarea wire:model="note" name="notes" id="notes" rows="3" class="form-control"></textarea>
+                        <textarea wire:model="note" name="notes" id="notes" rows="3" class="form-control"> </textarea>
                     </div>
 
 

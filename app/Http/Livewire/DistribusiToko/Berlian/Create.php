@@ -15,6 +15,7 @@ use Modules\Cabang\Models\Cabang;
 use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
+use Modules\Product\Models\ProductStatus;
 use Modules\Produksi\Models\Produksi;
 use Modules\Stok\Models\StockOffice;
 
@@ -106,7 +107,7 @@ class Create extends Component
 
     public function render(){
         $this->exceptProduksiId = array_merge($this->exceptProduksiId, $this->produksis_id);
-        $data = Product::with('karat', 'group',)->where('status_id',11);
+        $data = Product::with('karat', 'group',)->where('status_id',ProductStatus::NEW);
         if (!empty($this->exceptProduksiId)) {
                 $data = $data->whereNotIn('id', $this->exceptProduksiId);
             }
@@ -205,7 +206,8 @@ class Create extends Component
                 }
             }
             if(!empty($ids)) {
-                $product_insert = Product::whereIn('id', $ids)->update(['status_id' => 12, 'cabang_id' => $distribusi_toko->cabang_id]);
+                $product_insert = Product::whereIn('id', $ids)->update(['status_id' => ProductStatus::OTW, 'cabang_id' => $distribusi_toko->cabang_id]);
+
             }
             $distribusi_toko->setAsDraft();
 

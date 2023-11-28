@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Modules\Cabang\Models\Cabang;
 use Modules\Locations\Entities\AdjustedLocations;
 use Modules\Locations\Entities\Locations;
 use Modules\Stok\Models\StockKroom;
@@ -79,6 +80,11 @@ class Adjustment extends Model
         }
 
         return $orderCode;
+    }
+
+    public function cabang()
+    {
+        return $this->belongsTo(Cabang::class);
     }
 
 
