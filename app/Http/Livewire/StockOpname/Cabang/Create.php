@@ -7,7 +7,9 @@ use DateTime;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Modules\Adjustment\Entities\AdjustedProduct;
 use Modules\Adjustment\Entities\Adjustment;
+use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
@@ -19,29 +21,14 @@ use Modules\Product\Models\ProductStatus;
 class Create extends Component
 {
 
-    public $categories;
-
-    public $product_category;
-
     public $cabang;
 
     public $kategori;
-
-    public $logam_mulia_id;
-
-    public $karat_logam_mulia;
-
-    public $distribusi_toko = [
-        'no_distribusi_toko' =>'',
-        'date' => '',
-        'cabang_id' => ''
-    ];
 
     public $dataKarat = [];
 
     public $so_details = [];
 
-    public $used_stock = [];
 
     protected $listeners = [
         'webcamCaptured' => 'handleWebcamCaptured',
@@ -51,7 +38,7 @@ class Create extends Component
 
     public $exceptProductId = [];
 
-    public $produksis_id = [];
+    public $product_id = [];
 
     public $adjustment_items = [];
 
@@ -63,38 +50,20 @@ class Create extends Component
 
     public $active_location;
 
+    public $note;
+    public $date;
+    public $reference;
+    public $countProduct;
+    public $dynamic_note;
 
 
     private function resetDistribusiToko()
     {
-        $this->distribusi_toko = [
-            'date' => '',
-            'cabang_id' => ''
-        ];
+        
     }
     private function resetDistribusiTokoDetails()
     {
-        $this->so_details = [
-            [
-                'product_category' => '',
-                'group' => '',
-                'model' => '',
-                'gold_category' => '',
-                'karat' => '',
-                'accessoris_weight' => 0,
-                'label_weight' => 0,
-                'gold_weight' => 0,
-                'total_weight' => 0,
-                'code' => '',
-                'file' => '',
-                'certificate_id' => '',
-                'no_certificate' => '',
-                'webcam_image' => '',
-                'product_category_name' => '',
-                'group_name' => '',
-                'model_name' => '',
-            ]
-        ];
+        $this->so_details = [];
     }
 
     public function mount()
@@ -110,8 +79,9 @@ class Create extends Component
     }
 
     public function render(){
-        $this->exceptProductId = array_merge($this->exceptProductId, $this->produksis_id);
+        $this->exceptProductId = array_merge($this->exceptProductId, $this->product_id);
         $data = Product::where('status_id', ProductStatus::READY)->where('cabang_id', $this->cabang_id);
+
         if (!empty($this->exceptProductId)) {
                 $data = $data->whereNotIn('id', $this->exceptProductId);
             }
@@ -122,6 +92,8 @@ class Create extends Component
                         $query->orWhere('berat','like', '%'. $search . '%');
                     });
             }
+        $this->countProduct = $data->count();
+        $this->dynamic_note .= "\r\n failed " . $this->countProduct . "pcs"; 
         $data = $data->paginate(5);
         return view("livewire.stock-opname.cabang.create",[
             'products' => $data
@@ -138,9 +110,7 @@ class Create extends Component
     public function rules()
     {
         $rules = [
-            // 'distribusi_toko.cabang_id' => 'required',
-            // 'distribusi_toko.date' => 'required',
-            // 'distribusi_toko.no_distribusi_toko' => 'required|string|max:70'
+            'date' => 'required',
         ];
 
         return $rules;
@@ -149,48 +119,51 @@ class Create extends Component
     public function store()
     {
         $this->validate();
-        $kategoriproduk_id = LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
 
         DB::beginTransaction();
         try{
-            $distribusi_toko = DistribusiToko::create([
-                'cabang_id'                   => $this->distribusi_toko['cabang_id'],
-                'date'                        => $this->distribusi_toko['date'],
-                'no_invoice'                  => $this->distribusi_toko['no_distribusi_toko'],
-                'kategori_produk_id'          => $kategoriproduk_id,
-                'created_by'                  => auth()->user()->name,
+            
+            $adjustment = Adjustment::create([
+                'date' => $this->date,
+                'reference' =>  Adjustment::generateCode(),
+                'note' => $this->note .' | Additional Note : ' . $this->dynamic_note,
+                'cabang_id' => $this->cabang_id,
+                'created_by' => auth()->user()->id,
             ]);
 
-            $ids = [];
+            $arr_adjusted_product = [];
             foreach($this->so_details as $key => $value) {
-                $additional_data = [
-                    "product_information" => $value
+                $product_id = !empty($value['id']) ? $value['id'] : null;
+                $arr_adjusted_product[] = [
+                    'adjustment_id' => $adjustment->id,
+                    'product_id' => $product_id,
+                    'quantity' => 1,
+                    'status' => 1,
                 ];
-                $distribusi_toko->items()->create([
-                    'karat_id' => !empty($value['karat_id']) ? $value['karat_id'] : 0,
-                    'gold_weight' => !empty($value['berat_emas']) ? $value['berat_emas'] : 0,
-                    'product_id' => !empty($value['id']) ? $value['id'] : null,
-                    'additional_data' => json_encode($additional_data),
-                ]);
-
-                if (!empty($value['id'])) {
-                    $ids[] = $value['id'];
+            }
+            $product_list = Product::whereNotIn('id', $this->exceptProductId)->where('cabang_id', $this->cabang_id)->get();
+            if(!empty($product_list)) {
+                foreach($product_list as $row){
+                    Product::find($row->id)->updateTracking(ProductStatus::HILANG, $this->cabang_id);
+                    $arr_adjusted_product[] = [
+                        'adjustment_id' => $adjustment->id,
+                        'product_id' => $row->id,
+                        'quantity' => 1,
+                        'status' => 2, // set as failed
+                    ];
                 }
             }
-            if(!empty($ids)) {
-                $product_insert = Product::whereIn('id', $ids)->update(['status_id' => 12, 'cabang_id' => $distribusi_toko->cabang_id]);
-            }
-            $distribusi_toko->setAsDraft();
+            AdjustedProduct::insert($arr_adjusted_product);
 
-            DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 
             throw $e;
         }
+        DB::commit();
 
-        $this->resetInputFields();
-        toast('Saved to Draft Successfully','success');
-        return redirect(route('distribusitoko.detail', $distribusi_toko));
+        AdjustmentSetting::stop();
+        session()->flash('Stock Opname berhasil');
+        return redirect()->route('adjustments.index');
     }
 
     public function messages(){
@@ -200,7 +173,11 @@ class Create extends Component
     public function selectProduct($val) {
         $val = json_decode($val);
         $this->exceptProductId[] = $val->id;
+        $strnote = count($this->exceptProductId) ." produk sudah diidentifikasi.";
+        $this->dynamic_note = $strnote;
         $val = (array)$val;
+        $val['group'] = (array)$val['group'];
+        $val['karat'] = (array)$val['karat'];
         $this->so_details[] = $val;
         
     }
@@ -209,11 +186,17 @@ class Create extends Component
     {
         $data = $this->so_details[$index];
         unset($this->so_details[$index]);
-        $produksis_id = !empty($data['id']) ? $data['id'] : '';
-        if (!empty($produksis_id)) {
-            $key = array_search($produksis_id, $this->exceptProductId);
+        $product_id = !empty($data['id']) ? $data['id'] : '';
+        if (!empty($product_id)) {
+            $key = array_search($product_id, $this->exceptProductId);
             if(isset($this->exceptProductId[$key])) {
                 unset($this->exceptProductId[$key]);
+                if(!empty($this->exceptProductId)) {
+                    $strnote = count($this->exceptProductId) ." produk sudah diidentifikasi.";
+                }else{
+                    $strnote = "Belum ada produk yang diidentifikasi";
+                }
+                $this->dynamic_note = $strnote;
             }
         }
     }
@@ -222,7 +205,8 @@ class Create extends Component
     {
         $this->kode_produk;
         if(!empty($this->kode_produk)){
-            $data = Product::with('karat', 'group')->where('product_code',$this->kode_produk);
+            $data = Product::with('karat', 'group')->where('product_code',$this->kode_produk)
+                            ->where('status_id', ProductStatus::READY)->where('cabang_id', $this->cabang_id);
             if (!empty($this->exceptProductId)) {
                 $data = $data->whereNotIn('id', $this->exceptProductId);
             }
