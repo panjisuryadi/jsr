@@ -3,10 +3,8 @@
     <form  wire:submit.prevent="store">
         @php
         $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
- $gtotal = Cart::instance($cart_instance)->total();
-
-
-        $cart = Cart::instance($cart_instance);
+         $gtotal = Cart::instance($cart_instance)->total();
+         $cart = Cart::instance($cart_instance);
         
         @endphp
 
@@ -176,18 +174,18 @@
 <script>
 document.getElementById('rupiah').addEventListener('keyup', function() {
 // Get the input value
-let inputValue = this.value;
-inputValue = inputValue.replace(/[^0-9.]/g, '');
-inputValue = parseFloat(inputValue).toLocaleString('en-ID');
-this.value = inputValue;
+    let inputValue = this.value;
+    inputValue = inputValue.replace(/[^0-9.]/g, '');
+    inputValue = parseFloat(inputValue).toLocaleString('en-ID');
+    this.value = inputValue;
 
 });
 document.getElementById('diskon').addEventListener('keyup', function() {
 // Get the input value
-let inputValue = this.value;
-inputValue = inputValue.replace(/[^0-9.]/g, '');
-inputValue = parseFloat(inputValue).toLocaleString('en-ID');
-this.value = inputValue;
+    let inputValue = this.value;
+    inputValue = inputValue.replace(/[^0-9.]/g, '');
+    inputValue = parseFloat(inputValue).toLocaleString('en-ID');
+    this.value = inputValue;
 
 });
 </script>
@@ -195,11 +193,11 @@ this.value = inputValue;
 @push('page_css')
 <style type="text/css">
 .form-group {
-margin-bottom: 0.2rem;
+   margin-bottom: 0.2rem;
 }
 label {
-display: inline-block;
-margin-bottom: 0.1rem;
+    display: inline-block;
+    margin-bottom: 0.1rem;
 }
 </style>
 @endpush

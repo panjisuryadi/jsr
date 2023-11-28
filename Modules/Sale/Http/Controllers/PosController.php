@@ -57,11 +57,11 @@ class PosController extends Controller
             $total_amount = $input['harga_awal'];
 
         } else {
-            $tipebayar = 'tunai';
-            $bayar = preg_replace("/[^0-9]/", "", $input['tunai'] ?? $input['harga_awal']);
-            $payment_status = 'Paid';
-            $jatuh_tempo = null;
-            $total_amount = $input['final_unmask'];
+        $tipebayar = 'tunai';
+        $bayar = preg_replace("/[^0-9]/", "", $input['tunai'] ?? $input['harga_awal']);
+        $payment_status = 'Paid';
+        $jatuh_tempo = null;
+        $total_amount = $input['final_unmask'];
         }
 
           //dd($input);
@@ -98,18 +98,16 @@ class PosController extends Controller
                     'product_name' => $cart_item->name,
                     'product_code' => $cart_item->options->code,
                     'quantity' => $cart_item->qty,
-                    'price' => $cart_item->price,
+                    'price' => $total_amount,
                     'unit_price' => 1,
                     'product_discount_amount' => 0,
                     'product_tax_amount' => 0,
-                   
                 
                 ]);
 
             }
 
           Cart::instance('sale')->destroy();
-             //return response()->json(['success'=>'Sales Sukses disimpan.']);
            if ($request->manual > 0) {
                 SaleManual::create([
                     'date' => now()->format('Y-m-d'),
@@ -123,7 +121,7 @@ class PosController extends Controller
              session()->forget('nominal_manual');
              session()->forget('manual');
              toast('POS Sale Created!', 'success');
-              return redirect()->route('sales.index');
+             return redirect()->route('sales.index');
 
 
 

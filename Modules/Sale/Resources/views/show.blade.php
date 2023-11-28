@@ -19,10 +19,10 @@
                         <div>
                             Invoice: <strong>{{ $sale->reference }}</strong>
                         </div>
-                        <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('sales.cetak', $sale->id) }}"><i class="bi bi-printer"></i> Print
+                        <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('sales.cetak', $sale->id) }}"><i class="bi bi-printer"></i> Cetak Nota
                         </a>
                         <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('sales.pdf', $sale->id) }}">
-                            <i class="bi bi-save"></i> Save
+                            <i class="bi bi-save"></i> Print PDF
                         </a>
                     </div>
                     <div class="card-body">
@@ -59,9 +59,10 @@
                         </div>
 
                         <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
-                            <table style="width: 100% !important;" class="table table-sm table-striped">
+                            <table style="width: 100% !important;" class="table table-sm table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th style="width:5%;" class="align-middle">No</th>
                                     <th class="align-middle">Product</th>
                                     <th class="align-middle">Karat / Harga</th>
                                   
@@ -72,6 +73,10 @@
                                 @foreach($sale->saleDetails as $item)
                                     <tr>
                                         <td class="align-middle">
+                                          {{ $loop->iteration }}
+                                        </td>  
+
+                                         <td class="align-middle">
                                             <span class="font-semibold text-gray-600 text-md"> 
                                              {{ $item->product_name }}
                                             </span>
@@ -82,10 +87,10 @@
                                         </td>
 
                                         <td class="align-middle">
-                                            {{ @$item->karat->name }}
+                                       {{ @rupiah($item->price) }}    
                                         </td>
                                         <td class="align-middle">
-                                       {{ format_currency( @$item->price) }}
+                                       {{ rupiah( @$item->price) }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -99,8 +104,9 @@
                                     <tbody>
                                  
                                     <tr>
-                                        <td class="left"><strong>Grand Total</strong></td>
-                                        <td class="right"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
+                                        <td class="left text-gray-600">
+                                            <div class="mt-1">Grand Total</div></td>
+                                        <td class="right text-xl text-blue-500"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
                                     </tr>
                                     </tbody>
                                 </table>
