@@ -350,6 +350,7 @@ $cart->add([
                 'code'                  => $cart_item->options->code,
                 'stock'                 => $cart_item->options->stock,
                 'unit'                  => $cart_item->options->unit,
+                'harga_jual'           => $cart_item->options->harga_jual,
                 'product_tax'           => $cart_item->options->product_tax,
                 'unit_price'            => $cart_item->options->unit_price,
                 'product_discount'      => $cart_item->options->product_discount,
@@ -460,6 +461,7 @@ public function HitungHarga($product) {
             'unit'                  => $cart_item->options->unit,
             'product_tax'           => $cart_item->options->product_tax,
             'unit_price'            => $cart_item->options->unit_price,
+            'harga_jual'            => $cart_item->options->harga_jual,
             'product_discount'      => $discount_amount,
             'product_discount_type' => $this->discount_type[$product_id],
         ]]);

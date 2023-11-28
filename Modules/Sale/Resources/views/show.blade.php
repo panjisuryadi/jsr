@@ -64,7 +64,8 @@
                                 <tr>
                                     <th style="width:5%;" class="align-middle">No</th>
                                     <th class="align-middle">Product</th>
-                                    <th class="align-middle">Karat / Harga</th>
+                                    <th class="align-middle">Karat</th>
+                                    <th class="align-middle"> Harga</th>
                                   
                                     <th class="align-middle">Sub Total</th>
                                 </tr>
@@ -75,7 +76,6 @@
                                         <td class="align-middle">
                                           {{ $loop->iteration }}
                                         </td>  
-
                                          <td class="align-middle">
                                             <span class="font-semibold text-gray-600 text-md"> 
                                              {{ $item->product_name }}
@@ -85,10 +85,14 @@
                                                 {{ $item->product_code }}
                                             </span>
                                         </td>
+                                          <td class="align-middle">
+                                       {{ @$item->product->karat->name }}    
+                                        </td>
 
                                         <td class="align-middle">
                                        {{ @rupiah($item->price) }}    
                                         </td>
+                                        
                                         <td class="align-middle">
                                        {{ rupiah( @$item->price) }}
                                         </td>

@@ -64,7 +64,7 @@ class PosController extends Controller
         $total_amount = $input['final_unmask'];
         }
 
-          //dd($input);
+         // dd($input);
           //$input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
          $sale = Sale::create([
                 'date' => date('Y-m-d'),
@@ -98,7 +98,7 @@ class PosController extends Controller
                     'product_name' => $cart_item->name,
                     'product_code' => $cart_item->options->code,
                     'quantity' => $cart_item->qty,
-                    'price' => $total_amount,
+                    'price' => $cart_item->options->harga_jual,
                     'unit_price' => 1,
                     'product_discount_amount' => 0,
                     'product_tax_amount' => 0,
