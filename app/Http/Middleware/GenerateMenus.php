@@ -1167,32 +1167,32 @@ class GenerateMenus
 
 
          // JenisBuyBacks
-        $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Buy Backs'), [
-                'route' => 'jenisbuyback.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['jenisbuybacks*'],
-                'permission'    => ['access_jenisbuybacks'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+        // $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Jenis Buy Backs'), [
+        //         'route' => 'jenisbuyback.index',
+        //         'class' => 'nav-item',
+        //     ])
+        //     ->data([
+        //         'order'         => 3,
+        //         'activematches' => ['jenisbuybacks*'],
+        //         'permission'    => ['access_jenisbuybacks'],
+        //     ])
+        //     ->link->attr([
+        //         'class' => 'c-sidebar-nav-link py-2',
+        //     ]);
 
-            // Cabangs
-            $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Cabang'), [
-                'route' => 'cabang.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'activematches' => ['cabangs*'],
-                'permission'    => ['access_cabangs'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+        //     // Cabangs
+        //     $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Cabang'), [
+        //         'route' => 'cabang.index',
+        //         'class' => 'nav-item',
+        //     ])
+        //     ->data([
+        //         'order'         => 3,
+        //         'activematches' => ['cabangs*'],
+        //         'permission'    => ['access_cabangs'],
+        //     ])
+        //     ->link->attr([
+        //         'class' => 'c-sidebar-nav-link py-2',
+        //     ]);
 
 
 
