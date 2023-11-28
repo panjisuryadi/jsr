@@ -1,4 +1,4 @@
-@can('delete_'.$module_name.'')
+@can('delete_'.$module_name.'s')
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
         if (confirm('Are you sure? It will delete the data permanently!')) {

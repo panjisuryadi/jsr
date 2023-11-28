@@ -46,7 +46,7 @@ class PenerimaanBarangDPsController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_'.$module_name.'s'), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',
@@ -138,7 +138,7 @@ public function index_data(Request $request)
                          $info =  'Jatuh Tempo';
                          $pembayaran =  tgljam(@$data->payment->detail->first()->due_date);
                          
-                     }else if ($data->pembelian->tipe_pembayaran == 'cicil') 
+                     }else if ($data->payment->type == 2) 
                      {
                          $info =  'Cicilan';
                          $pembayaran =  @$data->payment->cicil .' kali';
@@ -179,7 +179,7 @@ public function index_data(Request $request)
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
             $no_barang_dp = $this->generateInvoice();
-            abort_if(Gate::denies('add_'.$module_name.''), 403);
+            abort_if(Gate::denies('create_'.$module_name.'s'), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
