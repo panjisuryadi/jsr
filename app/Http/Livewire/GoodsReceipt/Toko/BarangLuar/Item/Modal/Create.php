@@ -141,18 +141,7 @@ class Create extends Component
     }
 
     public function generateCode(){
-        $this->checkGroup();
-        $namagroup = Group::where('id', $this->data["additional_data"]["group"]["id"])->first()->code;
-        $existingCode = true;
-        $codeNumber = '';
-        $cabang_code = $this->cabang->code;
-        while ($existingCode) {
-               $date = now()->format('dmY');
-               $randomNumber = mt_rand(100, 999);
-               $codeNumber = $cabang_code .'-'. $namagroup .'-'. $randomNumber .'-'. $date;
-               $existingCode = Product::where('product_code', $codeNumber)->exists();
-        }
-        $this->data["additional_data"]["code"] = $codeNumber;
+        $this->data["additional_data"]["code"] = Product::generateCode();
     }
 
     private function checkGroup(){
