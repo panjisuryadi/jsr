@@ -44,35 +44,19 @@
                                         {{ $adjustment->reference }}
                                     </td>
                                     <td colspan="2">
-                                        {{ $adjustment->location->descriptive_location_type }}
+                                        {{ $adjustment->cabang->name }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>@lang('Product Name')</th>
                                     <th>@lang('Stock Data')</th>
                                     <th>@lang('Stock Rill')</th>
-                                    <th>@lang('Summary')</th>
                                 </tr>
-                                @foreach($adjustment->stockOffice as $item)
-                                    @php
-                                        $lost = 0;
-                                        $new = 0;
-                                    @endphp
-                                    
-                                    @if($item->pivot->weight_before > $item->pivot->weight_after)
-                                    @php
-                                        $lost = $lost + ($item->pivot->weight_before - $item->pivot->weight_after);
-                                    @endphp
-                                    @elseif ($item->pivot->weight_before < $item->pivot->weight_after)
-                                    @php
-                                        $new = $new + ($item->pivot->weight_after - $item->pivot->weight_before);
-                                    @endphp
-                                    @endif
+                                @foreach($adjustment->adjustedProducts as $item)
                                     <tr>
-                                        <td>{{ $item->karat->name }}</td>
-                                        <td>{{ $item->pivot->weight_before }}</td>
-                                        <td>{{ $item->pivot->weight_after }}</td>
-                                        <td colspan="2"><span class="text-success">Barang Lebih {{$new}}</span> | <span class="text-danger">Barang Kurang {{$lost}}</span></td>
+                                        <td>{{ $item->product->product_name }}</td>
+                                        <td>{{ $item->status == 1 ? '1' : 0}}</td>
+                                        <td>{{ $item->status == 2 ? '0' : 1}}</td>
                                     </tr>
                                 @endforeach
                             </table>

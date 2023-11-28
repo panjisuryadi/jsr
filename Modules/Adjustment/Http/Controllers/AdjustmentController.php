@@ -208,13 +208,19 @@ class AdjustmentController extends Controller
 
     public function show(Adjustment $adjustment) {
         abort_if(Gate::denies('show_adjustments'), 403);
-        $view = match($adjustment->location->location_type){
-            "Modules\Stok\Models\StockOffice" => 'adjustment::gudang-office.show',
-            "Modules\Stok\Models\StockSales" => 'adjustment::sales.show',
-            "Modules\Stok\Models\StockPendingOffice" => 'adjustment::pending-office.show',
-            "Modules\Stok\Models\StockKroom" => 'adjustment::kroom.show',
-            "Modules\Stok\Models\StokDp" => 'adjustment::dp.show'
-        };
+        $adjustment->load('cabang', 'adjustedProducts.product');
+        if(!empty($adjustment->cabang_id)){
+            $view = 'adjustment::cabang.show';
+        }else{
+            $view = match($adjustment->location->location_type){
+                "Modules\Stok\Models\StockOffice" => 'adjustment::gudang-office.show',
+                "Modules\Stok\Models\StockSales" => 'adjustment::sales.show',
+                "Modules\Stok\Models\StockPendingOffice" => 'adjustment::pending-office.show',
+                "Modules\Stok\Models\StockKroom" => 'adjustment::kroom.show',
+                "Modules\Stok\Models\StokDp" => 'adjustment::dp.show'
+            };
+
+        }
         return view($view, compact('adjustment'));
     }
 
