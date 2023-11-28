@@ -80,7 +80,7 @@
                                 id="Tambah"
                                 data-toggle="tooltip"
                                  class="btn btn-outline-secondary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;Penerimaan Barang DP
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;Barang DP
                                 </a>
 
                         </div>

@@ -77,70 +77,71 @@ public function index_data(Request $request)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            $module_path = $this->module_path;
+                            return view($module_name.'::'.$module_path.'.includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
                           ->editColumn('invoice', function ($data) {
                             $tb = '<div class="text-xs font-semibold">
-                            ' .$data->no_barang_dp . '
+                            ' . $data->no_barang_dp . '
                            </div>';
                          $tb .= '<div class="text-xs text-left">
-                            ' .tanggal($data->date) . '
+                            ' . tanggal($data->date) . '
                            </div>'; 
+                           return $tb;
                             })
                             ->editColumn('konsumen', function ($data) {
-                                $tb = '<div class="items-center text-center">
-                                       <h3 class="text-sm font-medium text-gray-800">Nama : 
+                                $tb = '<div class="">
+                                       <h3 class="text-xs font-medium text-gray-800">Nama : 
                                         ' .$data->owner_name . '</h3>
-                                        <p class="text-sm font-medium text-gray-800">Nama : 
+                                        <p class="text-xs font-medium text-gray-800">Kontak : 
                                         ' .$data->contact_number . '</p>
-                                        <p class="text-sm font-medium text-gray-800">Nama : 
+                                        <p class="text-xs font-medium text-gray-800">Alamat : 
                                         ' .$data->address . '</p>
                                        </div>';
                                    return $tb;
                                })
                             ->editColumn('cabang', function ($data) {
                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
+                                    <h3 class="text-xs font-medium text-gray-800">
                                     ' .$data->cabang->name . '</h3>
                                     </div>';
                                 return $tb;
                             })
                             ->editColumn('barang', function ($data) {
-                                $tb = '<div class="items-center text-center">
-                                        <h3 class="text-sm font-medium text-gray-800">Karat : 
-                                        ' .$data->karat->label . '</h3>
-                                        <p class="text-sm font-medium text-gray-800">Berat : 
-                                        ' .$data->weight . ' gr</p>
+                                $label = '';
+                                if(!empty($data->product->karat->parent_id)){
+                                    $label = $data->product->karat->parent->label . ' ' . $data->product->karat->name;
+                                }else{
+                                    $label = $data->product->karat->label;
+                                }
+                                $tb = '<div>
+                                        <h3 class="text-xs font-medium text-gray-800">Karat : 
+                                        ' .$label . '</h3>
+                                        <p class="text-xs font-medium text-gray-800">Berat : 
+                                        ' .$data->product->berat_emas . ' gr</p>
                                         </div>';
                                     return $tb;
                             })
                             ->editColumn('nominal', function ($data) {
-                                $tb = '<div class="items-center text-center">
-                                        <h3 class="text-sm font-medium text-gray-800">
+                                $tb = '<div>
+                                        <h3 class="text-xs font-medium text-gray-800">Nominal :
                                         ' .format_uang($data->nominal) . '</h3>
+                                        <h3 class="text-xs font-medium text-gray-800">Biaya Box :
+                                        ' .format_uang($data->box_fee) . '</h3>
                                         </div>';
                                     return $tb;
                             })
                             ->editColumn('pembayaran', function ($data) {
-                                if ($data->pembelian->tipe_pembayaran == 'jatuh_tempo') 
+                                if ($data->payment->type == 1) 
                      {
                          $info =  'Jatuh Tempo';
-                         $pembayaran =  tgljam(@$data->pembelian->jatuh_tempo);
-                         if(!empty(@$data->pembelian->lunas) && @$data->pembelian->lunas == 'lunas') {
-                            $info .=' (Lunas) ';
-                         }
+                         $pembayaran =  tgljam(@$data->payment->detail->first()->due_date);
+                         
                      }else if ($data->pembelian->tipe_pembayaran == 'cicil') 
                      {
                          $info =  'Cicilan';
-                         $pembayaran =  @$data->pembelian->cicil .' kali';
-                         if(!empty(@$data->pembelian->lunas) && @$data->pembelian->lunas == 'lunas') {
-                            $pembayaran .=' (Lunas) ';
-                         }
-                     }
-                     else{
-                         $info =  '';
-                         $pembayaran =  'Lunas';
+                         $pembayaran =  @$data->payment->cicil .' kali';
                      }
                         $tb ='<div class="items-left text-left">
                               <div class="small text-gray-800">'.$info.'</div>
@@ -150,7 +151,7 @@ public function index_data(Request $request)
                              
                             })
                            
-                        ->rawColumns(['updated_at', 'action', 'no_barang_dp','nama_pemilik','kadar','berat','nominal_dp','keterangan','cabang'])
+                        ->rawColumns(['updated_at', 'action', 'invoice','konsumen','kadar','cabang','barang','nominal','pembayaran'])
                         ->make(true);
                      }
 
