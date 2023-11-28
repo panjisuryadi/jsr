@@ -108,16 +108,12 @@
                             <thead>
                                 <tr>
                                   <th style="width: 4%!important;">No</th>
-<th class="text-center">{{ Label_Case('No Barang') }}</th>
-<th class="text-center">{{ Label_Case('Tanggal') }}</th>
-<th class="text-center">{{ Label_Case('Nama Konsumen') }}</th>
-<th class="text-center">{{ Label_Case('cabang') }}</th>
-<th class="text-center">{{ Label_Case('nama produk') }}</th>
-<th class="text-center">{{ Label_Case('kadar') }}</th>
-<th class="text-center">{{ Label_Case('berat') }}</th>
-<th class="text-center">{{ Label_Case('nominal') }}</th>
-<th class="text-center">{{ Label_Case('pengambilan jatuh tempo') }}</th>
-<th class="text-center">{{ Label_Case('status') }}</th>
+<th class="text-center">{{ Label_Case('Invoice') }}</th>
+<th class="text-center">{{ Label_Case('Konsumen') }}</th>
+<th class="text-center">{{ Label_Case('Cabang') }}</th>
+<th class="text-center">{{ Label_Case('Barang') }}</th>
+<th class="text-center">{{ Label_Case('Nominal') }}</th>
+<th class="text-center">{{ Label_Case('Pembayaran') }}</th>
 <th style="width: 10%!important;" class="text-center">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
@@ -179,18 +175,12 @@
                     }
                 },
 
-                {data: 'no_barang_dp', name: 'no_barang_dp'},
+                {data: 'invoice', name: 'invoice'},
+                {data: 'konsumen', name: 'konsumen'},
                 {data: 'cabang', name: 'cabang'},
-                {data: 'nama_pemilik', name: 'nama_pemilik'},
-                {data: 'kadar', name: 'kadar'},
-                {data: 'berat', name: 'berat'},
-                {data: 'berat', name: 'berat'},
-                {data: 'berat', name: 'berat'},
-                {data: 'berat', name: 'berat'},
-                {data: 'berat', name: 'berat'},
-                {data: 'nominal_dp', name: 'nominal_dp'},
-           
-
+                {data: 'barang', name: 'barang'},
+                {data: 'nominal', name: 'nominal'},
+                {data: 'pembayaran', name: 'pembayaran'},
                 {
                     data: 'action',
                     name: 'action',
@@ -199,7 +189,7 @@
                 }
             ]
         })
-        .buttons()
+        .buttons().remove()
         .container()
         .appendTo("#buttons");
 

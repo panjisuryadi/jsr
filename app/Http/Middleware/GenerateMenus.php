@@ -309,38 +309,6 @@ class GenerateMenus
 
 
      // EMAS
-            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                <div class="break">'.__('Buy Back Nota').'</div>', [
-                'route' => 'home.buysbacknota',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 1,
-               
-                'permission'    => ['access_buys_back_luar'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
-
-
-
-
-            // EMAS - TOKO - PENERIMAAN - Penerimaan Barang Luar
-            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
-                '.__('Barang Luar'), [
-                'route' => 'penerimaanbarangluar.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => ['penerimaanbarangluars*'],
-                'permission'    => ['access_penerimaanbarangluars'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
 
             // EMAS - TOKO - PENERIMAAN - Penerimaan Barang DP
             $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Barang DP'), [

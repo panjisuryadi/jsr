@@ -34,6 +34,15 @@ class PenerimaanBarangDP extends Model implements HasMedia
   //       return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id', 'id');
   //   }
 
+    protected static function booted(){
+      parent::booted();
+      static::creating(function(PenerimaanBarangDP $penerimaanBarangDP){
+        $penerimaanBarangDP->no_barang_dp = self::generateInvoice();
+        if(auth()->check() && auth()->user()->isUserCabang() && empty($penerimaanBarangDP->cabang_id)){
+          $penerimaanBarangDP->cabang_id = auth()->user()->namacabang()->id;
+        }
+      });
+    }
     protected static function newFactory()
     {
         return \Modules\PenerimaanBarangDP\database\factories\PenerimaanBarangDPFactory::new();
@@ -50,5 +59,15 @@ class PenerimaanBarangDP extends Model implements HasMedia
     public function cabang(){
       return $this->belongsTo(Cabang::class);
     }
+
+    private static function generateInvoice(){
+      $lastString = self::orderBy('id', 'desc')->value('no_barang_dp');
+
+      $numericPart = (int) substr($lastString, 3);
+      $incrementedNumericPart = $numericPart + 1;
+      $nextNumericPart = str_pad($incrementedNumericPart, 5, "0", STR_PAD_LEFT);
+      $nextString = "DP-" . $nextNumericPart;
+      return $nextString;
+  }
 
 }

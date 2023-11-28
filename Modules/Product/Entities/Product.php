@@ -29,8 +29,17 @@ class Product extends Model implements HasMedia
 
     protected $with = ['media','karat'];
 
-   public const PRODUKCODE = 'P';
+   public const PRODUKCODE = 'JSR';
    public const URL = 'P';
+
+   protected static function booted(){
+    parent::booted();
+    static::creating(function(Product $product){
+        if(empty($product->product_code)){
+            $product->product_code = self::generateCode();
+        }
+    });
+   }
 
 
    public function scopeCabang(){
@@ -141,7 +150,6 @@ class Product extends Model implements HasMedia
                 $nextOrderNumber = sprintf('%05d', (int)$lastOrderNumber + 1);
                 $orderCode = $dateCode . $nextOrderNumber;
             }
-
             return $orderCode;
         }
 

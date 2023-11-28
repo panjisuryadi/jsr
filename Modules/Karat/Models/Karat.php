@@ -68,4 +68,8 @@ class Karat extends Model
     public function getLabelAttribute(){
         return $this->name . ' | ' . $this->kode;
     }
+
+    public function scopeKarat($query){
+        $query->where('parent_id',null);
+    }
 }

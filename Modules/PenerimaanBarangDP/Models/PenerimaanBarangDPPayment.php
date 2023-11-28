@@ -10,12 +10,7 @@ class PenerimaanBarangDPPayment extends Model
 {
     use HasFactory;
     protected $table = 'penerimaan_barang_dp_payment';
-    protected $fillable = [
-        'tipe_pembayaran',
-        'lunas',
-        'cicil',
-        'jatuh_tempo'
-    ];
+    protected $guarded = [];
 
   
 
@@ -26,6 +21,10 @@ class PenerimaanBarangDPPayment extends Model
 
     public function penerimaan_barang_dp(){
       return $this->belongsTo(PenerimaanBarangDP::class,'penerimaan_barang_dp_id','id');
+    }
+
+    public function detail(){
+        return $this->hasMany(PaymentDetail::class,'payment_id','id');
     }
 
 }
