@@ -3,6 +3,7 @@
 namespace Modules\PenerimaanBarangDP\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -156,6 +157,117 @@ public function index_data(Request $request)
                         ->rawColumns(['updated_at', 'action', 'invoice','konsumen','kadar','cabang','barang','nominal','pembayaran'])
                         ->make(true);
                      }
+
+    public function index_data_payment(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::query()
+                    ->whereRelation('payment','is_lunas', false)
+                    ->whereHas('payment.detail', function(Builder $query){
+                        $query->whereNull('paid_date')
+                                ->whereDate('due_date','<=',now());
+                    })
+                    ->get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                        $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view($module_name.'::'.$module_path.'.includes.action',
+                            compact('module_name', 'data', 'module_model','module_path'));
+                                })
+                        ->editColumn('invoice', function ($data) {
+                            $tb = '<div class="text-xs font-semibold">
+                            ' . $data->no_barang_dp . '
+                        </div>';
+                        $tb .= '<div class="text-xs text-left">
+                            ' . tanggal($data->date) . '
+                        </div>'; 
+                        return $tb;
+                            })
+                            ->editColumn('konsumen', function ($data) {
+                                $tb = '<div class="">
+                                    <h3 class="text-xs font-medium text-gray-800">Nama : 
+                                        ' .$data->owner_name . '</h3>
+                                        <p class="text-xs font-medium text-gray-800">Kontak : 
+                                        ' .$data->contact_number . '</p>
+                                        <p class="text-xs font-medium text-gray-800">Alamat : 
+                                        ' .$data->address . '</p>
+                                    </div>';
+                                return $tb;
+                            })
+                            ->editColumn('cabang', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <h3 class="text-xs font-medium text-gray-800">
+                                    ' .$data->cabang->name . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                            ->editColumn('barang', function ($data) {
+                                $label = '';
+                                if(!empty($data->product->karat->parent_id)){
+                                    $label = $data->product->karat->parent->label . ' ' . $data->product->karat->name;
+                                }else{
+                                    $label = $data->product->karat->label;
+                                }
+                                $tb = '<div>
+                                        <h3 class="text-xs font-medium text-gray-800">Karat : 
+                                        ' .$label . '</h3>
+                                        <p class="text-xs font-medium text-gray-800">Berat : 
+                                        ' .$data->product->berat_emas . ' gr</p>
+                                        </div>';
+                                    return $tb;
+                            })
+                            ->editColumn('nominal', function ($data) {
+                                $tb = '<div>
+                                        <h3 class="text-xs font-medium text-gray-800">Nominal :
+                                        ' .format_uang($data->nominal) . '</h3>
+                                        <h3 class="text-xs font-medium text-gray-800">Biaya Box :
+                                        ' .format_uang($data->box_fee) . '</h3>
+                                        </div>';
+                                    return $tb;
+                            })
+                            ->editColumn('pembayaran', function ($data) {
+                                if ($data->payment->type == 1) 
+                    {
+                        $info =  'Jatuh Tempo';
+                        $pembayaran =  tgljam(@$data->payment->detail->first()->due_date);
+                        
+                    }else if ($data->payment->type == 2) 
+                    {
+                        $next_payment = $data->payment->detail()->whereNull('paid_date')->orderBy('order_number','asc')->first();
+                        $info =  '';
+                        $pembayaran =  '(Cicilan ke - '. $next_payment->order_number .')';
+                        if(!empty($next_payment)){
+                            $info = '
+                            <p>Jatuh tempo'. tgljam($next_payment->due_date) .'</p>
+                            
+                            ';
+                        }
+                    }
+                        $tb ='<div class="items-left text-left">
+                            <div class="text-xs font-bold">'.$info.'</div>
+                            <div class="text-xs font-bold">' .$pembayaran. '</div>
+                            </div>';
+                            return $tb;
+                            
+                            })
+                        
+                        ->rawColumns(['updated_at', 'action', 'invoice','konsumen','kadar','cabang','barang','nominal','pembayaran'])
+                        ->make(true);
+                    }
 
 
 
@@ -524,6 +636,22 @@ public function update(Request $request, $id)
         $filename = "Penerimaan Barang DP " . ucwords($item->invoice) . " " . $item->cabang->name . " " . ucwords($item->owner_name);
         $pdf = PDF::loadView('penerimaanbarangdp::penerimaanbarangdps.includes.print',compact('item','filename','datetime'));
         return $pdf->stream($filename.'.pdf');
+    }
+
+    public function payment(){
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.'s'), 403);
+         return view(''.$module_name.'::'.$module_path.'.payment',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 'module_model'));
     }
     
 
