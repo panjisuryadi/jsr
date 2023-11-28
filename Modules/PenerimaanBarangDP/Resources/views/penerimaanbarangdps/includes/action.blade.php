@@ -9,20 +9,21 @@
      <a href="{{ route($module_name.'.print', $data->id) }}" class="dropdown-item" target="_blank">
         <i class="bi bi-printer"></i> &nbsp;@lang('Print')
     </a>
-      @can('delete_'.$module_name.'s')
-        <button id="delete" class="dropdown-item px-2 ml-2 hover:no-underline" onclick="
-                event.preventDefault();
-                if (confirm('Are you sure? It will delete the data permanently!')) {
-                document.getElementById('destroy{{ $data->id }}').submit()
-                }
-                ">
-            <i class="bi bi-trash"></i>&nbsp;@lang('Delete')
-            <form id="destroy{{ $data->id }}" class="d-none" action="{{ route(''.$module_name.'.destroy', $data->id) }}" method="POST">
-                @csrf
-                @method('delete')
-            </form>
-        </button>
-        @endcan
+    <a class="dropdown-item" href="{{ route($module_name.'.show', $data->id) }}"><i class="bi bi-eye"></i> &nbsp;@lang('Detail')</a>
+    @can('delete_'.$module_name.'s')
+    <button id="delete" class="dropdown-item px-2 ml-2 hover:no-underline" onclick="
+            event.preventDefault();
+            if (confirm('Are you sure? It will delete the data permanently!')) {
+            document.getElementById('destroy{{ $data->id }}').submit()
+            }
+            ">
+        <i class="bi bi-trash"></i>&nbsp;@lang('Delete')
+        <form id="destroy{{ $data->id }}" class="d-none" action="{{ route(''.$module_name.'.destroy', $data->id) }}" method="POST">
+            @csrf
+            @method('delete')
+        </form>
+    </button>
+    @endcan
   </div>
 </div>
 </div>

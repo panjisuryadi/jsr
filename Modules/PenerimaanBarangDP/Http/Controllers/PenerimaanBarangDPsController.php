@@ -359,7 +359,7 @@ public function show($id)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
-        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_'.$module_name.'s'), 403);
         $detail = $module_model::findOrFail($id);
         //dd($detail);
           return view(''.$module_name.'::'.$module_path.'.show',
@@ -525,5 +525,6 @@ public function update(Request $request, $id)
         $pdf = PDF::loadView('penerimaanbarangdp::penerimaanbarangdps.includes.print',compact('item','filename','datetime'));
         return $pdf->stream($filename.'.pdf');
     }
+    
 
 }

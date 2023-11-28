@@ -27,4 +27,8 @@ class PenerimaanBarangDPPayment extends Model
         return $this->hasMany(PaymentDetail::class,'payment_id','id');
     }
 
+    public function getLabelTypeAttribute(){
+        return ($this->type === 1)?'Jatuh Tempo':'Cicil';
+    }
+
 }
