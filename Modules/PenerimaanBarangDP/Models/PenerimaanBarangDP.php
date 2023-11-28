@@ -2,6 +2,7 @@
 
 namespace Modules\PenerimaanBarangDP\Models;
 
+use App\Models\User;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
@@ -81,5 +82,10 @@ class PenerimaanBarangDP extends Model implements HasMedia
   public function product(): BelongsTo
   {
     return $this->belongsTo(Product::class);
+  }
+
+  public function pic(): BelongsTo
+  {
+    return $this->belongsTo(User::class,'pic_id','id')->withoutGlobalScopes();
   }
 }

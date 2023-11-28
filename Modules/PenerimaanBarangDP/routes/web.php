@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
     $module_name = 'penerimaanbarangdp';
     $controller_name = 'PenerimaanBarangDPsController';
     Route::get("$module_name/index_data", ['as' => "$module_name.index_data", 'uses' => "$controller_name@index_data"]);
+    Route::get("$module_name/{item}/print/", ['as' => "$module_name.print", 'uses' => "PenerimaanBarangDPsController@print"]);  
     Route::resource("$module_name", "$controller_name");
 
 });

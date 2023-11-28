@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\PenerimaanBarangDP\Models\PenerimaanBarangDP;
+use PDF;
 
 class PenerimaanBarangDPsController extends Controller
 {
@@ -79,7 +81,7 @@ public function index_data(Request $request)
                             $module_model = $this->module_model;
                             $module_path = $this->module_path;
                             return view($module_name.'::'.$module_path.'.includes.action',
-                            compact('module_name', 'data', 'module_model'));
+                            compact('module_name', 'data', 'module_model','module_path'));
                                 })
                           ->editColumn('invoice', function ($data) {
                             $tb = '<div class="text-xs font-semibold">
@@ -515,6 +517,13 @@ public function update(Request $request, $id)
                 return redirect()->back();
             }
 
+    }
+
+    public function print(PenerimaanBarangDP $item){
+        $datetime = Carbon::parse($item->created_at);
+        $filename = "Penerimaan Barang DP " . ucwords($item->invoice) . " " . $item->cabang->name . " " . ucwords($item->owner_name);
+        $pdf = PDF::loadView('penerimaanbarangdp::penerimaanbarangdps.includes.print',compact('item','filename','datetime'));
+        return $pdf->stream($filename.'.pdf');
     }
 
 }

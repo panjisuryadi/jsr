@@ -66,6 +66,9 @@ class Karat extends Model
     }
 
     public function getLabelAttribute(){
+        if(!empty($this->parent_id)){
+            return $this->parent->label . ' ' . $this->name;
+        }
         return $this->name . ' | ' . $this->kode;
     }
 

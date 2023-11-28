@@ -1,14 +1,17 @@
+<a href="{{ route($module_name.'.print', $data->id) }}" class="btn btn-outline-info btn-sm">
+    <i class="bi bi-printer"></i> &nbsp;@lang('Print')
+</a>
 @can('delete_'.$module_name.'s')
-    <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
+<button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
         if (confirm('Are you sure? It will delete the data permanently!')) {
         document.getElementById('destroy{{ $data->id }}').submit()
         }
         ">
-        <i class="bi bi-trash"></i>&nbsp;@lang('Delete')
-        <form id="destroy{{ $data->id }}" class="d-none" action="{{ route(''.$module_name.'.destroy', $data->id) }}" method="POST">
-            @csrf
-            @method('delete')
-        </form>
-    </button>
+    <i class="bi bi-trash"></i>&nbsp;@lang('Delete')
+    <form id="destroy{{ $data->id }}" class="d-none" action="{{ route(''.$module_name.'.destroy', $data->id) }}" method="POST">
+        @csrf
+        @method('delete')
+    </form>
+</button>
 @endcan

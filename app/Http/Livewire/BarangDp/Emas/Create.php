@@ -141,6 +141,7 @@ class Create extends Component
             $this->product->save();
             // create penerimaan barang luar
             $this->barang_dp->product_id = $this->product->id;
+            $this->barang_dp->pic_id = auth()->id();
             $this->barang_dp->save();
             $this->product->updateTracking(ProductStatus::DP, $this->barang_dp->cabang_id);
             // create payment
