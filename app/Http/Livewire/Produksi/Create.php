@@ -268,8 +268,8 @@ class Create extends Component
               */
               if($this->kategoriproduk_id == $this->id_kategoriproduk_berlian && !empty($this->inputs[0]['amount'])) {
                 foreach ($this->inputs as $key => $value) {
-                    $rules['inputs.' . $key . '.id_items'] = 'required';
-                    $rules['inputs.' . $key . '.accessories_id'] = 'required';
+                    // $rules['inputs.' . $key . '.id_items'] = 'required';
+                    // $rules['inputs.' . $key . '.accessories_id'] = 'required';
                     $rules['inputs.' . $key . '.amount'] = 'required|gt:0';
                     $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
                     $qty = !empty($value['qty']) ? $value['qty'] : 0;

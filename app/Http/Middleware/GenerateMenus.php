@@ -1099,7 +1099,8 @@ class GenerateMenus
 
     // DiamondCertificates
             $Categories->add(
-                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.diamond_certificate'), [
+                // '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.diamond_certificate'), [
+                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('Sertifikat Logam'), [
                 'route' => 'diamondcertificate.index',
                 'class' => 'nav-item',
             ])
