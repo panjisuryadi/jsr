@@ -29,6 +29,7 @@ use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
 use Modules\Product\Models\ProductAccessories;
+use Modules\Product\Models\ProductStatus;
 use Modules\Produksi\Models\Accessories;
 use Modules\Produksi\Models\DiamondCertificateAttribute;
 use Modules\Produksi\Models\DiamondCertificateAttributes;
@@ -430,6 +431,8 @@ class Create extends Component
                 'status_id'                 => 11,
                 'produksi_item_id'          => $this->produksi_item_id,
             ]);
+            $product->updateTracking(ProductStatus::NEW);
+
 
             
             $product_accessories = $this->accessories;
