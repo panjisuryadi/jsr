@@ -17,6 +17,7 @@ use Modules\Adjustment\Http\Controllers\PendingOffice;
 use Modules\Adjustment\Http\Controllers\Kroom;
 use Modules\Adjustment\Http\Controllers\DP;
 use Modules\Adjustment\Http\Controllers\PendingCabang;
+use Modules\Adjustment\Http\Controllers\Cabang;
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -55,6 +56,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('adjustments/pending-cabang', [PendingCabang\AdjustmentController::class,'index'])->name('adjustment.pending.cabang.index');
     Route::get('adjustments/pending-cabang/create', [PendingCabang\AdjustmentController::class,'create'])->name('adjustment.pending.cabang.create');
     Route::get('adjustments/pending-cabang/getdata', [PendingCabang\AdjustmentController::class,'getdata'])->name('adjustment.pending.cabang.getdata');
+
+    // Cabang
+    Route::get('adjustments/cabang', [Cabang\AdjustmentController::class,'index'])->name('adjustment.cabang.index');
+    Route::get('adjustments/cabang/create', [Cabang\AdjustmentController::class,'create'])->name('adjustment.cabang.create');
+    Route::get('adjustments/cabang/getdata', [Cabang\AdjustmentController::class,'getdata'])->name('adjustment.cabang.getdata');
 
     Route::resource('adjustments', 'AdjustmentController');
     

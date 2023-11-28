@@ -363,7 +363,8 @@ class AdjustmentController extends Controller
             '3' => 'adjustment.pending.office.index',
             '4' => 'adjustment.kroom.index',
             '5' => 'adjustment.dp.index',
-            '6' => 'adjustment.pending.cabang.index'
+            '6' => 'adjustment.pending.cabang.index',
+            '7' => 'adjustment.cabang.index',
         };
     }
 

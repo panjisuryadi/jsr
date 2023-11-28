@@ -17,7 +17,8 @@ class AdjustmentSetting extends Model
         "3" => "Stok Pending (Office)",
         "4" => "Stok Kroom (Office)",
         "5" => "Stok DP (Cabang)",
-        "6" => "Stok Pending (Cabang)"
+        "6" => "Stok Pending (Cabang)",
+        "7" => "Stok (Cabang)",
     ];
     
     protected static function newFactory()

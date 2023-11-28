@@ -257,7 +257,7 @@ class Create extends Component
             // 'model_id' => 'required',
             // 'karat_id' => 'required',
             'category_id' => 'required',
-            'harga_jual' => 'required',
+            'harga_jual' => 'required|gt:0',
             'berat' => 'required',
         ];
 
@@ -321,7 +321,7 @@ class Create extends Component
                             $rules['accessories.' . $key . '.amount'] = [
                                 function ($attribute, $value, $fail) use ($accessories) {
                                     $stok_remains = $accessories->amount - $accessories->amount_used;
-                                    $fail('Sisa stok tidak mencukupi, sisa stok saat ini ' . $stok_remains . ' ' . $accessories->satuan->code);
+                                    $fail('Sisa stok tidak mencukupi, sisa stok saat ini ' . $stok_remains . ' ' . $accessories->satuan?->code);
                                 }
                             ];
                         }
@@ -453,7 +453,9 @@ class Create extends Component
                         'amount' => $amount_used,
                     ];
                 }
-                ProductAccessories::insert($array_product_accessories);
+                if(!empty($array_product_accessories) && !empty($array_product_accessories[0]['accessories_id'])) {
+                    ProductAccessories::insert($array_product_accessories);
+                }
                 ProduksiItems::where('id', $this->produksi_item_id)->update(['status'=>2]); //update stok produksi agar tidak bisa dipilih kembali
 
             }

@@ -5,6 +5,7 @@ namespace Modules\Adjustment\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Modules\Locations\Entities\AdjustedLocations;
 use Modules\Locations\Entities\Locations;
 use Modules\Stok\Models\StockKroom;
@@ -59,6 +60,25 @@ class Adjustment extends Model
 
     public function stockDP(){
         return $this->morphedByMany(StokDp::class, 'location', 'adjustment_location','adjustment_id','location_id','id','id')->withTimestamps()->withPivot('weight_before', 'weight_after');
+    }
+
+    public static function generateCode()
+    {
+        $date = now()->format('dmY');
+        $code = 'ADJ';
+        $dateCode = $code . $date;
+        $lastOrder = self::select([DB::raw('MAX(adjustments.reference) AS last_code')])
+            ->where('reference', 'like', $dateCode . '%')
+            ->first();
+        $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
+        $orderCode = $dateCode . '00001';
+        if ($lastOrderCode) {
+            $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
+            $nextOrderNumber = sprintf('%05d', (int)$lastOrderNumber + 1);
+            $orderCode = $dateCode . $nextOrderNumber;
+        }
+
+        return $orderCode;
     }
 
 
