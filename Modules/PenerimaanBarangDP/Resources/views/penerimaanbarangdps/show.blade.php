@@ -40,30 +40,36 @@
                         </div>
                         <div class="col-sm-3 mb-3 mb-md-0">
                             <h5 class="mb-2 border-bottom pb-2">Info Pemilik Barang :</h5>
-                            <div><strong>Nama : {{ $detail->owner_name }}</strong></div>
-                            <div>Alamat : {{ $detail->address }}</div>
-                            <div>Phone : {{ $detail->contact_number }}</div>
+                            <div>Nama : <strong>{{ $detail->owner_name }}</strong></div>
+                            <div>Alamat : <strong>{{ $detail->address }}</strong></div>
+                            <div>Phone : <strong>{{ $detail->contact_number }}</strong></div>
+                            <div>No KTP : <strong>{{ $detail->no_ktp }}</strong></div>
                         </div>
                         <div class="col-sm-3 mb-3 mb-md-0">
                             <h5 class="mb-2 border-bottom pb-2">Info Invoice :</h5>
                             <div>Invoice: <strong>{{ $detail->no_barang_dp }}</strong></div>
-                              <div>Tanggal: {{ \Carbon\Carbon::parse($detail->date)->format('d M, Y') }}</div>
+                              <div>Tanggal: <strong>{{ \Carbon\Carbon::parse($detail->date)->format('d M, Y') }}</strong></div>
                             <div>
                                 PIC / Penerima: <strong>{{ $detail->pic->name }}</strong>
                             </div>
                             <div>
                                 {{ Label_case('tipe_pembayaran') }}: <label class="bg-green-400 rounded-md py-0 px-3">{{ $detail->payment->label_type }}</label>
                                 @if($detail->payment->type == 1)
-                                <div class="text-gray-800 text-sm">
-                                    <label class="small text-blue-500">Jatuh Tempo</label>
-                                    {!! tanggal2(@$detail->payment->detail->first()->due_date)!!}
-                                </div>
+                                <p class="text-sm">
+                                    Jatuh Tempo: <strong>{!! tanggal2(@$detail->payment->detail->first()->due_date)!!}</strong>
+                                </p>
                                 @elseif($detail->payment->type == 2)
-                                <p class="text-gray-600">Cicilan : {{ $detail->payment->cicil }} Kali</p>
+                                <p class="text-sm">Cicilan : <strong> {{ $detail->payment->cicil }} Kali</strong></p>
                                 @endif
                             </div>
-
-                         {{--    {{ $detail }} --}}
+                            <div>
+                                <p class="text-sm">
+                                    Nominal : <strong>{{ format_uang($detail->nominal) }}</strong>
+                                </p>
+                                <p class="text-sm">
+                                    Biaya Box : <strong>{{ format_uang($detail->box_fee) }}</strong>
+                                </p>
+                            </div>
 
                         </div>
 
@@ -115,18 +121,29 @@
                                         <th class="text-center">Tanggal Pembayaran</th>
                                         <th class="text-center">Nominal</th>
                                         <th class="text-center">Biaya Box</th>
+                                        <th class="text-center">Total Nominal</th>
                                         <th class="text-center">PIC</th>
+                                        <th class="text-center">Cetak Struk</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($detail->payment->detail as $row)
                                     <tr>
                                         <th class="text-center">{{@$row->order_number}}</th>
-                                        <td class="text-center"> {{@$row->due_date}}</td>
-                                        <td class="text-center"> {{@$row->paid_date??'Belum dibayar'}}</td>
+                                        <td class="text-center"> {{tanggal(@$row->due_date)}}</td>
+                                        <td class="text-center"> {{@$row->paid_date?tanggal(@$row->paid_date):'-'}}</td>
                                         <td class="text-center"> {{ @$row->nominal?format_uang($row->nominal):'-' }} </td>
                                         <td class="text-center"> {{@$row->box_fee?format_uang($row->box_fee):'-' }} </td>
+                                        <td class="text-center"> {{@$row->total_fee?format_uang(@$row->total_fee):'-' }} </td>
                                         <td class="text-center"> {{@$row->pic_id?$row->pic->name:'-' }} </td>
+                                        <td class="text-center">
+                                             @if (!empty(@$row->paid_date))
+                                                 <a target="_blank" href="{{ route('penerimaanbarangdp.payment_detail.print',$row) }}"><i class="bi bi-printer"></i> Cetak</a>
+                                             @else
+                                                -
+                                             @endif
+                                            
+                                        </td>
                                     </tr>
                                     @empty
                                     <tr>

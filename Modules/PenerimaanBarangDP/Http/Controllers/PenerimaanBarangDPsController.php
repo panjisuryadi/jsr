@@ -734,4 +734,12 @@ public function update(Request $request, $id)
     
         return response()->json(['success'=>' Sukses update pembayaran.']);
     }
+
+    public function payment_detail_print(PaymentDetail $detail){
+        $date = Carbon::parse($detail->paid_date);
+        $filename = "Struk Pembayaran Barang DP #" . ucwords($detail->payment->penerimaan_barang_dp->no_barang_dp) . " ke - " . $detail->order_number;
+        $dp = $detail->payment->penerimaan_barang_dp;
+        $pdf = PDF::loadView('penerimaanbarangdp::penerimaanbarangdps.includes.payment_detail_print',compact('detail','filename','date','dp'));
+        return $pdf->stream($filename.'.pdf');
+    }
 }
