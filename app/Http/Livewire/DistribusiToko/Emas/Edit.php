@@ -66,7 +66,7 @@ class Edit extends Component
 
     public function render()
     {
-        $data = Product::with('product_item')->whereIn('status_id',[ProductStatus::PENDING_OFFICE,ProductStatus::NEW]);
+        $data = Product::with('product_item')->whereIn('status_id',[ProductStatus::READY_OFFICE]);
         
         if (!empty($this->search)) {
             $search = $this->search;
@@ -120,7 +120,7 @@ class Edit extends Component
     public function submitBarcode()
     {
         if(!empty($this->kode_produk)){
-            $data = Product::where('product_code',$this->kode_produk)->whereIn('status_id',[ProductStatus::PENDING_OFFICE,ProductStatus::NEW]);
+            $data = Product::where('product_code',$this->kode_produk)->whereIn('status_id',[ProductStatus::READY_OFFICE]);
             $data = $data->first();
             if ($data) {
                 $this->selectProduct($data);
@@ -216,7 +216,7 @@ class Edit extends Component
                 'model_id' => empty($this->new_product['model_id'])?null:$this->new_product['model_id'],
                 'karat_id' => $this->new_product['karat_id'],
                 'berat_emas' => $this->new_product['gold_weight'],
-                'status_id' => ProductStatus::NEW,
+                'status_id' => ProductStatus::READY_OFFICE,
                 'product_code'               => $this->new_product['code'],
                 'product_barcode_symbology'  => 'C128',
                 'product_unit'               => 'Gram',

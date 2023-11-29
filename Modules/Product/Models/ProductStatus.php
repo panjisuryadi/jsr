@@ -30,6 +30,7 @@ class ProductStatus extends Model
     const OTW = 12;
     const NEW = 13;
     const DP = 14;
+    const READY_OFFICE = 13;
 
 
     public function products(){

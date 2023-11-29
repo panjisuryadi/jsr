@@ -1021,6 +1021,20 @@ class GenerateMenus
             $second->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+             // EMAS - PROSES - Second
+             $ready_office = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Ready Office', [
+                'class' => 'nav-item',
+                'route' => 'products.process.ready_office'
+            ])
+            ->data([
+                'order'         => 5,
+                'activematches' => [],
+                'permission' => [],
+            ]);
+            $ready_office->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
             
             
 

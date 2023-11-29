@@ -107,7 +107,7 @@ class Create extends Component
 
     public function render(){
         $this->exceptProduksiId = array_merge($this->exceptProduksiId, $this->produksis_id);
-        $data = Product::with('karat', 'group',)->where('status_id',ProductStatus::NEW);
+        $data = Product::with('karat', 'group',)->where('status_id',ProductStatus::READY_OFFICE);
         if (!empty($this->exceptProduksiId)) {
                 $data = $data->whereNotIn('id', $this->exceptProduksiId);
             }

@@ -49,6 +49,10 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get("products/process/second", ['as' => "products.process.second", 'uses' => "Proses\ProductController@second"]);
   Route::get("products/process/get_second", ['as' => "products.process.get_second", 'uses' => "Proses\ProductController@get_second"]);
   Route::get("products/get_stock_second", ['as' => "products.get_stock_second", 'uses' => "Proses\ProductController@get_stock_second"]); 
+
+  Route::get("products/process/ready_office", ['as' => "products.process.ready_office", 'uses' => "Proses\ProductController@ready_office"]);
+  Route::get("products/process/get_ready_office", ['as' => "products.process.get_ready_office", 'uses' => "Proses\ProductController@get_ready_office"]);
+  Route::get("products/get_stock_ready_office", ['as' => "products.get_stock_ready_office", 'uses' => "Proses\ProductController@get_stock_ready_office"]); 
       
 
       Route::get("products/list-reparasi", ['as' => "products.reparasi", 'uses' => "ProductController@listReparasi"]);

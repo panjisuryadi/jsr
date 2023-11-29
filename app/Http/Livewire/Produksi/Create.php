@@ -431,7 +431,7 @@ class Create extends Component
                 'status_id'                 => 11,
                 'produksi_item_id'          => $this->produksi_item_id,
             ]);
-            $product->updateTracking(ProductStatus::NEW);
+            $product->updateTracking(ProductStatus::READY_OFFICE);
 
 
             
