@@ -427,12 +427,16 @@ class AdjustmentController extends Controller
             ->make(true);
    }
 
-   public function print($id){
-       $adjustment = Adjustment::find($id);
-       $category = Category::all();
-    //    return $category;
-        $pdf = PDF::loadview('adjustment::print',compact('adjustment','category'))
-            ->setPaper('a4');
+    public function print($id){
+
+        $adjustment = Adjustment::with('adjustedProducts.product', 'cabang')->find($id);
+        $category = Category::all();
+        $view = 'adjustment::print';
+        if(!empty($adjustment->cabang_id)) {
+            $view = 'adjustment::print-product';
+        }
+        $pdf = PDF::loadview($view,compact('adjustment','category'))
+                ->setPaper('a4');
         return $pdf->stream();
    }
 
