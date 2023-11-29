@@ -293,30 +293,70 @@
 
   <div id="Penjualan" class="container px-0 tab-pane">
             <div class="pt-3">
-
                    <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
                             <th>{{ label_case('invoice_no') }}</th>
-                            <th>{{ label_case('Sales') }}</th>
-                            <th>{{ label_case('store_name') }}</th>
-                            <th>{{ label_case('Berat') }}</th>
-                            <th>{{ label_case('nominal') }}</th>
+                            <th>{{ label_case('Cabang') }}</th>
+                            <th>{{ label_case('Customer') }}</th>
+                            <th>{{ label_case('Total') }}</th>
+                            <th>{{ label_case('Status') }}</th>
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
-                    @forelse(\Modules\PenjualanSale\Models\PenjualanSale::get() as $row)
+                    @forelse(\Modules\Sale\Entities\Sale::akses()->get() as $row)
                             @if($loop->index > 4)
                                                 @break
                                             @endif
+                                {{-- {{ $row }} --}}
 
-                        <tr>
+
+                          <tr>
                             <td>{{ $loop->iteration }}</td>
-                        
-                            <td>{{ $row->invoice_no }}</td>
-                            <td>{{ $row->sales->name }}</td>
-                            <td>{{ $row->store_name }}</td>
-                            <td>{{ number_format($row->total_weight)}}</td>
-                            <td>{{ rupiah($row->detail->sum('nominal'))}}</td>
+                            <td>{{ $row->reference }}</td>
+                            <td>{{ $row->cabang->name }}</td>
+                            <td>{{ $row->customer->customer_name }}</td>
+                            <td>
+
+                                {{-- Rp .<strong>{{ rupiah($row->total_amount)}}</strong> --}}
+                                <div class="items-center justify-items-center text-center">
+                                @if ($row->tipe_bayar == 'cicilan')
+                                    <span class="text-center text-dark">
+                                       {{ rupiah($row->total_amount) }}
+                                       <div>  {{ shortdate($row->tgl_jatuh_tempo) }} </div>
+                                    </span>
+                                @elseif ($row->status == 'total')
+                                    <span class="badge badge-primary">
+                                        {{ $row->status }}
+                                    </span>
+                                @else
+                                    <span class="text-center text-dark">
+                                        {{ rupiah($row->total_amount) }}
+                                    </span>
+                                @endif
+                                </div>
+
+
+                            </td>
+                            <td>
+                             <div class="items-center justify-items-center text-center">
+                                    @if ($row->tipe_bayar == 'cicilan')
+                                    <a 
+                                    class="btn btn-sm btn-info" 
+                                    id="Show" 
+                                    href="{{ route('sales.show_cicilan', $row->id) }}">
+                                    &nbsp;@lang('Cicilan')
+                                    </a>
+                                    @elseif ($row->status == 'total')
+                                        <span class="badge badge-primary">
+                                            {{ $row->status }}
+                                        </span>
+                                    @else
+                                        <span class="badge badge-success">
+                                            Tunai
+                                        </span>
+                                    @endif
+                                    </div>
+                            </td>
                             <td>
                                 
                                 @can('show_sales')
@@ -325,10 +365,13 @@
                                         <i class="bi bi-eye"></i> &nbsp;@lang('Detail')
                                     </a>
                                 @endcan
+                                    <a class="btn btn-outline-warning btn-sm" target="_blank" href="{{ route('sales.invoice', $row->id) }}"> <i class="bi bi-printer"></i>&nbsp;@lang('Print')</a>
+                                  @can('print_sales')
+                                     @endcan
 
 
                             </td>
-                        </tr>
+                        </tr> 
                         @empty
                             <tr>
                                 <td colspan="5"> <p class="uppercase">Tidak ada Data</p></td>

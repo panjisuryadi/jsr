@@ -1,8 +1,8 @@
 <div class="p-0 object-center">
 <?php
 
-      if ($data->images) {
-            $logo = asset("storage/uploads/" .$data->images);
+      if ($data->getFirstMediaUrl('images')) {
+            $logo = $data->getFirstMediaUrl('images');
         }else{
             $logo = asset('images/fallback_product_image.png');
         }
