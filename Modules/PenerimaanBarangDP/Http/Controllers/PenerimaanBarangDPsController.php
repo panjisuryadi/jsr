@@ -74,7 +74,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::orderBy('date','desc')->get();
 
         $data = $$module_name;
 

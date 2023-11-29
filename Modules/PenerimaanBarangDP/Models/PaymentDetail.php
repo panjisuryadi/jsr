@@ -32,6 +32,8 @@ class PaymentDetail extends Model
                 $payment->is_lunas = true;
                 $payment->save();
             }
+            $dp->box_fee = $payment->detail->sum('box_fee');
+            $dp->save();
         });
     }
 

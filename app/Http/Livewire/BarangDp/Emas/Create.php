@@ -78,7 +78,6 @@ class Create extends Component
             'product.karat_id' => ['required'],
             'product.berat_emas' => ['required'],
             'barang_dp.nominal' => ['required','gt:0'],
-            'barang_dp.box_fee' => ['required'],
             'barang_dp.note' => [''],
             'tipe_pembayaran' => ['required'],
             'cicil' => 'required_if:tipe_pembayaran,cicil',

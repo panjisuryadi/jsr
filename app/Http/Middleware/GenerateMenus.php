@@ -324,7 +324,7 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Pembayaran'), [
+            $penerimaan->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Barang DP Jatuh Tempo'), [
                 'route' => 'penerimaanbarangdp.payment',
                 'class' => 'nav-item',
             ])

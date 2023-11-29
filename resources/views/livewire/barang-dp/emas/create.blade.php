@@ -245,22 +245,6 @@
                             </span>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <?php
-                            $field_name = 'barang_dp.box_fee';
-                            $field_lable = label_case('biaya sewa box');
-                            $field_placeholder = $field_lable;
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = "required";
-                            ?>
-                            <label class="text-left text-md mb-0" for="{{ $field_name }}">{{ $field_lable }}<small class="text-danger">*</small></label>
-                            <input wire:model="{{ $field_name }}" type="number" name="{{$field_name}}" class="form-control text-md {{ $invalid }}" placeholder="{{$field_placeholder}}">
-                            @if ($errors->has($field_name))
-                            <span class="invalid feedback" role="alert">
-                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                            </span>
-                            @endif
-                        </div>
                         <div class="flex justify-center items-center">
                             <span class="text-2xl font-extrabold">{{ $this->nominal_text }}</span>
                         </div>
