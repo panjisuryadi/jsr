@@ -178,8 +178,12 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(ProdukModel::class,'model_id');
        }
 
-       public function getProductNameAttribute(){
-        return $this->group?->name . ' ' . $this->model?->name;
+       public function getProductNameAttribute($value){
+        $product_name = $value;
+        if(empty($value)){
+            $product_name = $this->group?->name . ' ' . $this->model?->name;
+        }
+        return $product_name;
        }
 
 
