@@ -76,6 +76,8 @@ class SaleController extends Controller
 
 
 
+
+
    public function show_cicilan($id)
     {
         $module_title = $this->module_title;

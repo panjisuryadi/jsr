@@ -287,6 +287,7 @@ $cart->add([
         'karat'                 =>$product['karat']['name'],
         'harga_jual'            => $this->HitungHarga($product),
         'berat_emas'            =>$product['berat_emas'],
+        'images'                =>$product['images'],
         'product_tax'           => 1,
         'manual'                => 0,
         'manual_item'           => 0,

@@ -342,6 +342,7 @@ public function index_data(Request $request)
         //     $url = $data->getFirstMediaUrl('images', 'thumb');
         //     return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
         // })
+              
 
               ->addColumn('product_image', function ($data) {
                        return view('product::products.partials.image', compact('data'));
