@@ -66,10 +66,6 @@
 
 
 
-
-
-
-
            </div>
            <div class="modal-footer" id="ModalFooterDetail">
                
