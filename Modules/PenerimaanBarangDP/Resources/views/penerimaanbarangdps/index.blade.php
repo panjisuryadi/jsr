@@ -198,6 +198,19 @@
     </script>
 
 <script type="text/javascript">
+var table = jQuery('#datatable').DataTable();
+jQuery.noConflict();
+(function( $ ) {
+//group modal kategori
+    $(document).on('click', '#edit_payment', function(e){
+         e.preventDefault();
+        $('.modal-dialog').addClass('modal-md');
+        $('.modal-dialog').removeClass('modal-sm');
+        $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp; Edit Pembayaran');
 
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
 </script>
 @endpush

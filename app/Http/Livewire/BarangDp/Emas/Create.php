@@ -48,6 +48,7 @@ class Create extends Component
     public function mount(){
         $this->karats = Karat::karat()->get();
         $this->hari_ini = (new DateTime())->format('Y-m-d');
+        $this->barang_dp->date = $this->hari_ini;
         $this->pic_id = auth()->user()->id;
     }
 
@@ -73,6 +74,7 @@ class Create extends Component
             'barang_dp.owner_name' => ['required'],
             'barang_dp.contact_number' => ['required'],
             'barang_dp.address' => ['required'],
+            'barang_dp.no_ktp' => ['required'],
             'product.karat_id' => ['required'],
             'product.berat_emas' => ['required'],
             'barang_dp.nominal' => ['required','gt:0'],

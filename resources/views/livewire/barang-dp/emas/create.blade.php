@@ -77,6 +77,24 @@
                                 </div>
                                 <div class="form-group">
                                     <?php
+                                    $field_name = 'barang_dp.no_ktp';
+                                    $field_lable = __('No KTP');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = 'required';
+                                    ?>
+                                    <label for="{{ $field_name}}">{{ $field_lable }} <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" id="{{ $field_name}}" class="form-control {{ $invalid }}" name="{{ $field_name}}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}">
+                                    </div>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <?php
                                     $field_name = 'barang_dp.contact_number';
                                     $field_lable = __('no hp');
                                     $field_placeholder = Label_case($field_lable);

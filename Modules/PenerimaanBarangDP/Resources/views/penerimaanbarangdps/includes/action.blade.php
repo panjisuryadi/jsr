@@ -10,7 +10,7 @@
         <a href="{{ route(''.$module_name.'.edit_payment', $data->id) }}"
         id="edit_payment"
         data-toggle="tooltip"
-        class="dropdown-item {{ $data->payment->is_lunas ? 'disabled' : '' }}">
+        class="dropdown-item {{ $data->payment->is_lunas ? 'hidden' : '' }}">
         <i class="bi bi-cash"></i>
             &nbsp;@lang('Bayar')
         </a>
