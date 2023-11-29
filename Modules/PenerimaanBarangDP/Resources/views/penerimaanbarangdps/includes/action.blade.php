@@ -6,6 +6,15 @@
     Aksi
   </button>
   <div class="dropdown-menu">
+    @can('edit_'.$module_name.'')
+        <a href="{{ route(''.$module_name.'.edit_payment', $data->id) }}"
+        id="edit_payment"
+        data-toggle="tooltip"
+        class="dropdown-item {{ $data->payment->is_lunas ? 'disabled' : '' }}">
+        <i class="bi bi-cash"></i>
+            &nbsp;@lang('Bayar')
+        </a>
+    @endcan
      <a href="{{ route($module_name.'.print', $data->id) }}" class="dropdown-item" target="_blank">
         <i class="bi bi-printer"></i> &nbsp;@lang('Print')
     </a>

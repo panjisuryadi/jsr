@@ -15,7 +15,9 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\PenerimaanBarangDP\Models\PaymentDetail;
 use Modules\PenerimaanBarangDP\Models\PenerimaanBarangDP;
+use Modules\PenerimaanBarangDP\Models\PenerimaanBarangDPPayment;
 use PDF;
 
 class PenerimaanBarangDPsController extends Controller
@@ -653,6 +655,83 @@ public function update(Request $request, $id)
             'module_title',
             'module_icon', 'module_model'));
     }
-    
 
+    public function edit_payment($id)
+    {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update Status';
+        abort_if(Gate::denies('edit_'.$module_name.'s'), 403);
+        $dp = PenerimaanBarangDP::find($id);
+        $dp->load('payment.detail');
+        $payment = $dp->payment;
+        $remainder = $dp->nominal - $payment->detail->sum('nominal');
+        $type = $payment->type;
+        $datas = $payment->detail()->whereNull('paid_date')->orderBy('order_number','asc');
+        $is_last = count($datas->get()) === 1;
+        $data = $datas->first();
+        return view(''.$module_name.'::'.$module_path.'.modal.edit_payment',
+            compact('module_name',
+            'module_action',
+            'data',
+            'module_title',
+            'remainder',
+            'type',
+            'is_last',
+            'module_icon', 'module_model'));
+    }
+
+    public function update_payment (Request $request){
+        $payment_id = $request->post('payment_id');
+        $remainder = $request->post('remainder');
+        $is_last = $request->post('is_last');
+        $nominal = $request->post('nominal');
+        $box_fee = $request->post('box_fee');
+        try {
+                $validator = \Validator::make($request->all(),[
+                    'nominal' => [
+                        'required',
+                        'numeric',
+                        function ($attribute, $value, $fail) use ($is_last,$remainder) {
+                            if($is_last){
+                                if($value != $remainder){
+                                    $fail("Nominal lebih kecil dari sisa yang harus dibayarkan");
+                                }
+                            }
+                            if ($value > $remainder) {
+                                $fail("Nominal lebih besar dari sisa yang harus dibayarkan");
+                            }
+                        },
+                    ],
+                    'box_fee' => 'required|numeric',
+                ]);
+                
+                if (!$validator->passes()) {
+                    return response()->json(['error'=>$validator->errors()]);
+                }
+                        
+                DB::beginTransaction();
+                $detail = PaymentDetail::findOrFail($payment_id);
+                $detail->paid_date = now();
+                $detail->nominal = $nominal;
+                $detail->pic_id = auth()->id();
+                $detail->box_fee = $box_fee;
+                $detail->save();
+                DB::commit();
+        
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json(['failed'=> $e->getMessage()]);
+        }
+    
+        return response()->json(['success'=>' Sukses update pembayaran.']);
+    }
 }
