@@ -28,9 +28,9 @@ class ProductStatus extends Model
     const HILANG = 10;
     const DRAFT = 11;
     const OTW = 12;
+    const READY_OFFICE = 13; // use this instead of new
     const NEW = 13;
     const DP = 14;
-    const READY_OFFICE = 13;
 
 
     public function products(){

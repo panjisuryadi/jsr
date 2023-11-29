@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('title', 'READY OFFICE')
+@section('title', $module_title)
 @section('third_party_stylesheets')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 @endsection
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">READY OFFICE</li>
+    <li class="breadcrumb-item active">{{$module_title}} {{ $module_action }}</li>
 </ol>
 @endsection
 @section('content')
@@ -18,8 +18,8 @@
                     <div class="flex justify-between py-1 border-bottom">
                      <div>
                        <p class="uppercase text-lg text-gray-600 font-semibold">
-                       
-                      <span class="text-yellow-500 uppercase">READY OFFICE</span>
+                      Stok 
+                      <span class="text-yellow-500 uppercase">{{$module_action}}</span>
                   </p>
                         </div>
                         <div id="buttons">
@@ -107,7 +107,7 @@
                     }
                 ],
                 "sPaginationType": "simple_numbers",
-                ajax: '{{ route("products.process.get_ready_office") }}?karat='+$('#karat_filter').val(),
+                ajax: '{{ route("$module_name.index_data_ready_office") }}?karat='+$('#karat_filter').val(),
                 dom: 'Blfrtip',
                 buttons: [
                     'excel',
@@ -141,7 +141,7 @@
         function getStockInfo(){
             $.ajax({
                 type: "get",
-                url: '{{ route("products.get_stock_ready_office") }}?karat='+$('#karat_filter').val(),
+                url: '{{ route("$module_name.get_stock_ready_office") }}?karat='+$('#karat_filter').val(),
                 dataType:'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),

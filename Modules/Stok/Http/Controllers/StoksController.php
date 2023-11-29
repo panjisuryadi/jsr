@@ -118,6 +118,7 @@ public function pending_office() {
         ProductStatus::RONGSOK,
         ProductStatus::REPARASI,
         ProductStatus::SECOND,
+        ProductStatus::READY_OFFICE
     ]);
     $module_action = 'Pending Gudang';
     abort_if(Gate::denies('access_'.$module_name.''), 403);
@@ -129,6 +130,108 @@ public function pending_office() {
         'product_status',
         'module_icon', 'module_model'));
 }
+
+public function ready_office() {
+    $module_title = $this->module_title;
+    $module_name = $this->module_name;
+    $module_path = $this->module_path;
+    $module_icon = $this->module_icon;
+    $module_model = $this->module_model;
+    $module_name_singular = Str::singular($module_name);
+    $karat_ids = Product::readyOffice()->get()->groupBy('karat_id')->keys()->toArray();
+    $datakarat = Karat::find($karat_ids);
+    $product_status = ProductStatus::find([
+        ProductStatus::PENDING_OFFICE,
+        ProductStatus::CUCI,
+        ProductStatus::MASAK,
+        ProductStatus::RONGSOK,
+        ProductStatus::REPARASI,
+        ProductStatus::SECOND,
+    ]);
+    $module_action = 'Ready Office';
+    abort_if(Gate::denies('access_'.$module_name.''), 403);
+        return view(''.$module_name.'::'.$module_path.'.page.index_ready_office',
+        compact('module_name',
+        'module_action',
+        'module_title',
+        'datakarat',
+        'product_status',
+        'module_icon', 'module_model'));
+}
+
+public function index_data_ready_office(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_pending = $this->module_pending;
+        $module_pending_office = $this->module_pending_office;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $datas = Product::readyOffice();
+        if(isset($request->karat)){
+            $datas = $datas->where('karat_id',$request->karat);
+        }
+        
+        $datas = $datas->get();
+
+        return Datatables::of($datas)
+                        ->addColumn('action', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_name.'::'.$module_path.'.ready-office.aksi',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                            ->editColumn('karat', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                        <h3 class="text-sm font-medium text-gray-800">
+                                    ' . $data->karat->label  . '</h3>
+                                        </div>';
+                                    return $tb;
+                                })  
+
+                        ->editColumn('product', function ($data) {
+                            $tb = '<div class="flex items-center gap-x-2">
+                            <div>
+                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+                                ' . $data->category->category_name . '</div>
+                                <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                            
+
+                            </div>
+                                </div>';
+                            return $tb;
+                            }) 
+                        
+                            ->editColumn('weight', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                    ' .$data->berat_emas . ' gr</h3>
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                            ->editColumn('image', function ($data) {
+                            $tb = '<div class="flex justify-center"><a href="'.$data->image_url_path.'" data-lightbox="{{ @$image }} " class="single_image">
+                            <img src="'.$data->image_url_path.'" order="0" width="100" class="img-thumbnail"/>
+                            </a></div>';
+                                return $tb;
+                            })
+                        
+                        ->rawColumns([
+                                'image', 
+                                'karat',
+                                'action', 
+                                'product', 
+                                'weight'])
+                            ->make(true);
+                     }
 
 
  public function sales() {
@@ -538,6 +641,19 @@ public function get_stock_pending(Request $request){
 
 public function get_stock_pending_office(Request $request){
     $data = Product::pendingOffice();
+    if(isset($request->karat)){
+        $data = $data->where('karat_id',$request->karat);
+    }
+    
+    $data = $data->get();
+    return response()->json([
+        'sisa_stok' => $data->sum('berat_emas'),
+        'karat' => $data->first()->karat->label,
+    ]);
+}
+
+public function get_stock_ready_office(Request $request){
+    $data = Product::readyOffice();
     if(isset($request->karat)){
         $data = $data->where('karat_id',$request->karat);
     }

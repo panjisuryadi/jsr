@@ -720,6 +720,20 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+            // EMAS - STOK CABANG - STOK READY OFFICE
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Ready'), [
+                'route' => 'stok.ready_office',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
           // EMAS - STOK - DAFTAR STOK - STOK OFFICE
             $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Gudang'), [
                 'route' => 'stok.office',
@@ -1022,25 +1036,6 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-             // EMAS - PROSES - Second
-             $ready_office = $proses->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Ready Office', [
-                'class' => 'nav-item',
-                'route' => 'products.process.ready_office'
-            ])
-            ->data([
-                'order'         => 5,
-                'activematches' => [],
-                'permission' => [],
-            ]);
-            $ready_office->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-            
-            
-
-            
-
-            
 
 
  //==== Access Control Dropdown Categories

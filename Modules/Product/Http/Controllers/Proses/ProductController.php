@@ -416,76 +416,6 @@ public function __construct()
                         ->make(true);
     }
 
-    public function ready_office(){
-        $karat_ids = Product::readyOffice()->get()->groupBy('karat_id')->keys()->toArray();
-        $datakarat = Karat::find($karat_ids);
-        $product_status = ProductStatus::find([
-            ProductStatus::PENDING_OFFICE,
-            ProductStatus::CUCI,
-            ProductStatus::MASAK,
-            ProductStatus::RONGSOK,
-            ProductStatus::REPARASI,
-            ProductStatus::SECOND
-        ]);
-        abort_if(Gate::denies('show_proses_ready_office'), 403);
-            return view('product::products.page.process.ready_office',
-            compact(
-            'datakarat',
-            'product_status'));
-    }
-
-    public function get_ready_office(Request $request)
-    {
-        $data = Product::readyOffice();
-        if(isset($request->karat)){
-            $data = $data->where('karat_id',$request->karat);
-        }
-        $data = $data->get();
-        return Datatables::of($data)
-                        ->addColumn('action', function ($data) {
-                            return view('product::products.process.action',
-                            compact('data'));
-                        })
-                        ->editColumn('karat', function ($data) {
-                            $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                ' . $data->karat->label  . '</h3>
-                                    </div>';
-                                return $tb;
-                        })  
-
-                        ->editColumn('product', function ($data) {
-                            $tb = '<div class="flex items-center gap-x-2">
-                            <div>
-                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
-                                ' . $data->category->category_name . '</div>
-                                <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                            </div>
-                                </div>';
-                            return $tb;
-                        }) 
-                        ->editColumn('weight', function ($data) {
-                        $tb = '<div class="items-center text-center">
-                                <h3 class="text-sm font-medium text-gray-800">
-                                ' .$data->berat_emas . ' gr</h3>
-                                </div>';
-                            return $tb;
-                        }) 
-                        ->editColumn('image', function ($data) {
-                        $tb = '<div class="flex justify-center"><a href="'.$data->image_url_path.'" data-lightbox="{{ @$image }} " class="single_image">
-                        <img src="'.$data->image_url_path.'" order="0" width="100" class="img-thumbnail"/>
-                        </a></div>';
-                            return $tb;
-                        })
-                        ->rawColumns([
-                                'image', 
-                                'karat',
-                                'action', 
-                                'product', 
-                                'weight'])
-                        ->make(true);
-    }
-
 
 
     public function update_status(Request $request)
@@ -547,19 +477,6 @@ public function __construct()
 
     public function get_stock_second(Request $request){
         $data = Product::second();
-        if(isset($request->karat)){
-            $data = $data->where('karat_id',$request->karat);
-        }
-        
-        $data = $data->get();
-        return response()->json([
-            'sisa_stok' => $data->sum('berat_emas'),
-            'karat' => $data->first()->karat->label,
-        ]);
-    }
-
-    public function get_stock_ready_office(Request $request){
-        $data = Product::readyOffice();
         if(isset($request->karat)){
             $data = $data->where('karat_id',$request->karat);
         }
