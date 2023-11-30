@@ -17,7 +17,7 @@
 
 
         <table class="table table-striped table-bordered w-full">
-            
+            @if($history)
             <tr>
                 <td>Terakhir Update</td>
                 <td>
@@ -45,6 +45,9 @@
                     {{ rupiah($detail->harga_modal) }}
                 </td>
             </tr>
+            @else
+            <div>Data belum ada</div>
+            @endif
         </table>
         
     </div>
