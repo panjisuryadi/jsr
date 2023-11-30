@@ -54,7 +54,10 @@ class Karat extends Model
     }
 
     public function penentuanHarga(){
-        return $this->hasOne(PenentuanHarga::class,'karat_id','id');
+        if(empty($this->parent_id)){
+            return $this->hasOne(PenentuanHarga::class,'karat_id','id');
+        }
+        return $this->parent->penentuanHarga();
     }
 
     public function stockSales(){
@@ -74,5 +77,13 @@ class Karat extends Model
 
     public function scopeKarat($query){
         $query->where('parent_id',null);
+    }
+
+    public function getCoefAttribute($value){
+        if(empty($this->parent_id)){
+            return $value;
+        }else{
+            return $this->parent->coef;
+        }
     }
 }

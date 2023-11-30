@@ -56,7 +56,7 @@
                                         Ph
                                     </th> 
 
-                                    <th style="width: 19%!important;" class="text-center">
+                                    <th style="width: 10%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -154,7 +154,6 @@ $(document).on('click', '#Tambah, #Edit', function(e){
         }
         if($(this).attr('id') == 'Edit')
         {
-            $('.modal-dialog').addClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }
