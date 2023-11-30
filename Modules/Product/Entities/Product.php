@@ -19,6 +19,7 @@ use Modules\Karat\Models\Karat;
 use Modules\Product\Models\ProductStatus;
 use Modules\Product\Models\ProductTrackingHistory;
 use Modules\ProdukModel\Models\ProdukModel;
+use Modules\Stok\Models\StockOffice;
 
 class Product extends Model implements HasMedia
 {
@@ -238,6 +239,10 @@ class Product extends Model implements HasMedia
        }
 
 
+    public function stock_office()
+    {
+        return $this->morphToMany(StockOffice::class, 'transaction','stock_office_history','transaction_id','stock_office_id','id','id')->withTimestamps();
+    }
 
 
 

@@ -409,6 +409,7 @@ class Create extends Component
                 'images' => $this->uploadImage($this->new_product['webcam_image']),
             ];
             $product = Product::create($product_data);
+            $this->reduceStockOffice($product);
 
             $product_item = $product->product_item()->create([
                 'certificate_id'              => empty($this->new_product['certificate_id'])?null:$this->new_product['certificate_id'],
@@ -431,5 +432,18 @@ class Create extends Component
         }
 
 
+    }
+
+    private function reduceStockOffice($product){
+        $stock_office = StockOffice::where('karat_id', $product->karat_id)->first();
+        $product->stock_office()->attach($stock_office->id,[
+                'karat_id'=>$product->karat_id,
+                'in' => false,
+                'berat_real' => -1 * $product->berat_emas,
+                'berat_kotor' => -1 * $product->berat_emas
+        ]);
+        $berat_real = $stock_office->history->sum('berat_real');
+        $berat_kotor = $stock_office->history->sum('berat_kotor');
+        $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
     }
 }
