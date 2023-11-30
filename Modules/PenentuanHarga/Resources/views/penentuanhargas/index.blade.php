@@ -17,12 +17,20 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route('karat.index') }}"
-                                id="333"
-                                data-toggle="tooltip"
-                                 class="btn btn-success px-3">
-                                 <i class="bi bi-plus"></i>@lang('List Karat')
-                                </a>
+            
+    <div class="btn-group">
+            <a  href="{{ route('karat.index') }}" class="px-3 btn btn-warning">
+                List Karat<i class="bi bi-plus"></i>
+            </a>
+            <a href="{{ route('penentuanharga.index') }}" class="px-3 btn btn-success">
+               History Penentuan Harga <i class="bi bi-plus"></i>
+            </a>
+            
+        </div>
+
+
+
+
 
                         </div>
                         <div id="buttons">
@@ -33,20 +41,21 @@
     <thead>
         <tr>
             <th style="width: 6%!important;">No</th>
-            <th style="width: 12%!important;" class="text-left">{{ Label_Case('tgl_update') }}</th>
- <th style="width: 12%!important;" class="text-left">{{ Label_Case('karat') }}</th>
- <th style="width: 11%!important;" class="text-left">{{ Label_Case('harga_emas') }}</th>
-            <th style="width: 11%!important;" class="text-center">
-            {{ Label_Case('harga_modal') }}</th>
-            <th style="width: 10%!important;" class="text-center">
+ <th style="width: 15%!important;" class="text-left">
+ {{ Label_Case('tgl_update') }}
+</th>
+ <th style="width: 15%!important;" class="text-left">{{ Label_Case('karat') }}</th>
+ <th style="width: 16%!important;" class="text-left">{{ Label_Case('harga') }}</th>
+  
+            <th style="width: 8%!important;" class="text-center">
             {{ Label_Case('margin') }}</th>
-            <th style="width: 10%!important;" class="text-center">
+            <th style="width: 8%!important;" class="text-center">
             {{ Label_Case('harga_jual') }}</th>
             
-            <th style="width: 5%!important;" class="text-center">
+            <th style="width: 3%!important;" class="text-center">
                 {{ __('Lock') }}
             </th> 
-            <th style="width: 17%!important;" class="text-center">
+            <th style="width: 15%!important;" class="text-center">
                 {{ __('Action') }}
             </th>
         </tr>
@@ -61,6 +70,22 @@
 @endsection
 
 <x-library.datatable />
+
+
+
+
+@push('page_css')
+<style type="text/css">
+    table.dataTable {
+    clear: both;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+    max-width: none !important;
+    border-collapse: separate !important;
+    border-spacing: 0;
+}
+</style>
+@endpush
 @push('page_scripts')
    <script type="text/javascript">
         $('#datatable').DataTable({
@@ -110,8 +135,7 @@
                 {data: 'tgl_update', name: 'tgl_update'},
                 {data: 'karat', name: 'karat'},
                 {data: 'harga_emas', name: 'harga_emas'},
-                {data: 'harga_modal', name: 'harga_modal'},
-                {data: 'margin', name: 'margin'},
+                   {data: 'margin', name: 'margin'},
                 {data: 'harga_jual', name: 'harga_jual'},
                 {data: 'lock', name: 'lock'},
 
@@ -160,4 +184,37 @@ function autoRefresh(){
 
 })(jQuery);
 </script>
+
+
+<script type="text/javascript">
+   
+document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+        element.addEventListener('keyup', function(e) {
+            let cursorPostion = this.selectionStart;
+            let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+            let originalLenght = this.value.length;
+            if (isNaN(value)) {
+                this.value = "";
+            } else {
+                this.value = value.toLocaleString('id-ID', {
+                    currency: 'IDR',
+                    style: 'currency',
+                    minimumFractionDigits: 0
+                });
+                cursorPostion = this.value.length - originalLenght + cursorPostion;
+                this.setSelectionRange(cursorPostion, cursorPostion);
+            }
+        });
+    });
+
+
+</script>
+
+
+
+
+
+
+
+
 @endpush

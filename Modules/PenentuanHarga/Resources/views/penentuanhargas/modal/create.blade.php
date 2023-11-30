@@ -143,16 +143,6 @@ $(document).ready(function(){
         Tambah();
     });
 
- // $('#potongan_harga').maskMoney({
- //            prefix: 'Rp ',
- //            thousands: '.',
- //            decimal: ',',
- //            precision: 0
- //          });
-
-
-
-
 });
 })(jQuery);
 </script>

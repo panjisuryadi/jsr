@@ -55,31 +55,6 @@
 
 </div>
 {{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
-<script type="text/javascript">
-    
-
-document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
-        element.addEventListener('keyup', function(e) {
-            let cursorPostion = this.selectionStart;
-            let value = parseInt(this.value.replace(/[^,\d]/g, ''));
-            let originalLenght = this.value.length;
-            if (isNaN(value)) {
-                this.value = "";
-            } else {
-                this.value = value.toLocaleString('id-ID', {
-                    currency: 'IDR',
-                    style: 'currency',
-                    minimumFractionDigits: 0
-                });
-                cursorPostion = this.value.length - originalLenght + cursorPostion;
-                this.setSelectionRange(cursorPostion, cursorPostion);
-            }
-        });
-    });
-
-
-</script>
-
 
 
 <script>
@@ -87,7 +62,11 @@ jQuery.noConflict();
 (function( $ ) {
 
 
- 
+  function reloadTable(){
+      var table = $('#datatable').DataTable();
+        table.ajax.reload();
+}
+
     function Update()
     {
         $.ajax({
@@ -102,7 +81,7 @@ jQuery.noConflict();
                       $('#ResponseInput').html(data.success);
                       $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                       $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
-                      setTimeout(function(){ autoRefresh(); }, 1000);
+                      setTimeout(function(){ reloadTable(); }, 1000);
                       setTimeout(function () {
                               $('#ModalGue').modal('hide');
                             }, 3000);
@@ -124,6 +103,30 @@ jQuery.noConflict();
             });
         }
 
+
+   
+document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+        element.addEventListener('keyup', function(e) {
+            let cursorPostion = this.selectionStart;
+            let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+            let originalLenght = this.value.length;
+            if (isNaN(value)) {
+                this.value = "";
+            } else {
+                this.value = value.toLocaleString('id-ID', {
+                    currency: 'IDR',
+                    style: 'currency',
+                    minimumFractionDigits: 0
+                });
+                cursorPostion = this.value.length - originalLenght + cursorPostion;
+                this.setSelectionRange(cursorPostion, cursorPostion);
+            }
+        });
+    });
+
+
+
+
 $(document).ready(function(){
 
     var Tombol = "<button type='button' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
@@ -141,13 +144,6 @@ $(document).ready(function(){
         e.preventDefault();
         Update();
     });
-     // $('#potongan_harga').maskMoney({
-     //            prefix: 'Rp ',
-     //            thousands: '.',
-     //            decimal: ',',
-     //            precision: 0
-     //          });
-
 });
 })(jQuery);
 </script>

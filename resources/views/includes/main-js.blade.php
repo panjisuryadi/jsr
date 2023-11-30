@@ -37,10 +37,13 @@ function showTime(){
 
 @livewireScripts
 
-@stack('page_scripts')
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.js" integrity="sha512-MBa5biLyZuJEdQR7TkouL0i1HAqpq8lh8suPgA//wpxGx4fU1SGz1hGSlZhYmm+b7HkoncCWpfVKN3NDcowZgQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+@stack('page_scripts')
 <script src="{{  asset('js/jquery.min.js') }}"></script>
+
 <!-- batass================================Create Modal============================= -->
 <div class="modal fade" id="ModalGue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
