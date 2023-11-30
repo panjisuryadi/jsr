@@ -41,20 +41,21 @@
     <thead>
         <tr>
             <th style="width: 6%!important;">No</th>
-            <th style="width: 12%!important;" class="text-left">{{ Label_Case('tgl_update') }}</th>
- <th style="width: 12%!important;" class="text-left">{{ Label_Case('karat') }}</th>
- <th style="width: 11%!important;" class="text-left">{{ Label_Case('harga_emas') }}</th>
-            <th style="width: 11%!important;" class="text-center">
-            {{ Label_Case('harga_modal') }}</th>
-            <th style="width: 10%!important;" class="text-center">
+ <th style="width: 15%!important;" class="text-left">
+ {{ Label_Case('tgl_update') }}
+</th>
+ <th style="width: 15%!important;" class="text-left">{{ Label_Case('karat') }}</th>
+ <th style="width: 16%!important;" class="text-left">{{ Label_Case('harga') }}</th>
+  
+            <th style="width: 8%!important;" class="text-center">
             {{ Label_Case('margin') }}</th>
-            <th style="width: 10%!important;" class="text-center">
+            <th style="width: 8%!important;" class="text-center">
             {{ Label_Case('harga_jual') }}</th>
             
-            <th style="width: 5%!important;" class="text-center">
+            <th style="width: 3%!important;" class="text-center">
                 {{ __('Lock') }}
             </th> 
-            <th style="width: 17%!important;" class="text-center">
+            <th style="width: 15%!important;" class="text-center">
                 {{ __('Action') }}
             </th>
         </tr>
@@ -69,6 +70,22 @@
 @endsection
 
 <x-library.datatable />
+
+
+
+
+@push('page_css')
+<style type="text/css">
+    table.dataTable {
+    clear: both;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+    max-width: none !important;
+    border-collapse: separate !important;
+    border-spacing: 0;
+}
+</style>
+@endpush
 @push('page_scripts')
    <script type="text/javascript">
         $('#datatable').DataTable({
@@ -118,8 +135,7 @@
                 {data: 'tgl_update', name: 'tgl_update'},
                 {data: 'karat', name: 'karat'},
                 {data: 'harga_emas', name: 'harga_emas'},
-                {data: 'harga_modal', name: 'harga_modal'},
-                {data: 'margin', name: 'margin'},
+                   {data: 'margin', name: 'margin'},
                 {data: 'harga_jual', name: 'harga_jual'},
                 {data: 'lock', name: 'lock'},
 

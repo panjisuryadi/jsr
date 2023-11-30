@@ -79,8 +79,8 @@ public function index_data(Request $request)
                                 })
 
                           ->editColumn('tgl_update', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .tanggal2($data->updated_at) . '
+                             $tb = '<div class="text-left">
+                                     ' .tgl($data->updated_at) . '
                                     </div>';
                                 return $tb;
                             })
@@ -98,10 +98,15 @@ public function index_data(Request $request)
                 return $tb;
             })  
 
-                             ->editColumn('harga_emas', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .rupiah($data->harga_emas) . '
-                                    </div>';
+            ->editColumn('harga_emas', function ($data) {
+                    $tb = '<div class="items-center text-center">
+                    Harga Emas : ' .rupiah($data->harga_emas) . '
+                            </div>';  
+                    $tb .= '<div class="items-center text-center">
+                    Harga Modal :' .rupiah($data->harga_modal) . '
+                        </div>';
+
+
                                 return $tb;
                             })   
 
