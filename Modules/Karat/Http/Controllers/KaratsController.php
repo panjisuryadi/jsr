@@ -10,6 +10,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Modules\Karat\Models\Karat;
 use Modules\PenentuanHarga\Models\PenentuanHarga;
 
 
@@ -74,7 +75,8 @@ public function index_data()
                     ->addColumn('action', function ($data) {
                        $module_name = $this->module_name;
                         $module_model = $this->module_model;
-                        return view('includes.action',
+                        $module_path = $this->module_path;
+                        return view($module_name.'::'.$module_path.'.includes.action',
                         compact('module_name', 'data', 'module_model'));
                             })
                          
@@ -291,6 +293,20 @@ public function update(Request $request, $id)
 
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
+ }
+
+ public function update_coef(Request $request, Karat $data)
+    {
+        $validator = \Validator::make($request->all(),[
+            'coef' => 'required|numeric',
+        ]);
+        if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+        $coef = $request->input('coef');
+        $data->coef = $coef;
+        $data->save();
+        return response()->json(['success'=>'Coef Sukses diupdate.']);
  }
 
     /**
