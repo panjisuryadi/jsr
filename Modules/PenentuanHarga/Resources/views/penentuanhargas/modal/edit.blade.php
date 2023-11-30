@@ -49,45 +49,54 @@
 
 
     <div class="px-0 flex justify-between py-2 border-bottom">
+    
 
-
-
+<table style="width: 100%;" class="table table-striped table-bordered">
+    <tr>
+        <th style="width:5%;" class="text-center">{{ label_case('No') }}</th>
         
+        <th class="text-center">{{ label_case('Tanggal') }}</th>
+        <th class="text-center">{{ label_case('Harga Jual') }}</th>
+        <th class="text-center">{{ label_case('Harga Modal') }}</th>
+        <th class="text-center">{{ label_case('Harga Emas') }}</th>
+        <th class="text-center">{{ label_case('margin') }}</th>
+        <th class="text-center">{{ label_case('Admin') }}</th>
+        <th class="text-center">{{ label_case('Status') }}</th>
+    </tr>
+    @forelse(\Modules\PenentuanHarga\Models\HistoryPenentuanHarga::where('penentuan_harga_id',$detail->id)->latest()->get() as $sale)
+    @if($loop->index > 4)
+    @break
+    @endif
+    
+    <tr>
+        <td class="text-center">{{ $loop->iteration }}</td>
+        <td class="text-center text-blue-400">{{ tgl($sale->tanggal) }}</td>
+        <td class="text-center"> {{ rupiah($sale->harga_jual) }}</td>
+        <td class="text-center"> {{ rupiah($sale->harga_modal) }}</td>
+        <td class="text-center"> {{ rupiah($sale->harga_emas) }}</td>
+        <td class="text-center"> {{ rupiah($sale->margin) }}</td>
+        <td class="text-center">{{ $sale->created_by }}</td>
+        <td class="text-center">
+@if($sale->updated == 1)
+<span class="rounded text-white bg-red-500 px-3"><i class="bi bi-lock-fill"></i> Locked</span>
+@else
+<span class="rounded text-white  bg-blue-400 px-3"><i class="bi bi-unlock"></i> Unlocked</span>
+@endif
 
- <table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                         
-                            <th class="text-center">{{ label_case('Tanggal') }}</th>
-                            <th class="text-center">{{ label_case('Harga Jual') }}</th>
-                            <th class="text-center">{{ label_case('Admin') }}</th>
-                          
-                        </tr>
-                        @forelse(\Modules\PenentuanHarga\Models\HistoryPenentuanHarga::where('penentuan_harga_id',$detail->id)->get() as $sale)
-                            @if($loop->index > 4)
-                               @break
-                            @endif
-                          
-
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center text-blue-400">{{ shortdate($sale->date) }}</td>
-                            <td class="text-center">
-                                {{ rupiah($sale->harga_emas) }}</td>
-                            <td class="text-center">{{ $sale->created_by }}</td>
-                        
-                          
-                          
-                         
-                        </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
-                            
-                            </tr>
-                        @endforelse
-                        
-                    </table>
+        </td>
+        
+        
+        
+        
+    </tr>
+    @empty
+    <tr>
+        <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
+        
+    </tr>
+    @endforelse
+    
+</table>
 
 
 

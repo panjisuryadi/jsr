@@ -546,21 +546,19 @@ public function update(Request $request, $id)
     private function _saveHistoryPenentuanHarga($params ,$idph)
     {
 
-        $data = HistoryPenentuanHarga::where('penentuan_harga_id',$idph)->first();
-            if ($data) {
-                 $hit = $data->updated + 1;
-            } else {
-                 $hit = 1;
-            }
-       HistoryPenentuanHarga::create([
+       $insert =  HistoryPenentuanHarga::create([
             'penentuan_harga_id' => $idph,
             'tanggal'            => date('Y-m-d H:i:s'),
             'harga_emas'         => $params['harga_emas'],
-            'updated'            => $hit,
+            'harga_modal'        => $params['harga_modal'],
+            'harga_jual'         => $params['harga_jual'],
+            'margin'             => $params['margin'],
+            'updated'            => 1,
             'user_id'            => auth()->user()->id,
             'created_by'         => auth()->user()->name
          ]);
- 
+          HistoryPenentuanHarga::whereNotIn('id', [$insert->id])
+              ->update(['updated' => '0']);      
         // dd($input);
       }
 
