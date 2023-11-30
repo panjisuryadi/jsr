@@ -70,6 +70,7 @@
                                     </td>
                                     <td>
                                         <span class="block">Nama : <span class="font-bold">{{ $product->product_name }}</span></span>
+                                        <span class="block">Kode : <span class="font-bold">{{ $product->product_code }}</span></span>
                                         <span class="block">Karat : <span class="font-bold">{{ $product->karat->label }}</span></span>
                                         <span class="block">Berat : <span class="font-bold">{{ $product->berat_emas }} gr</span></span>
                                     </td>
@@ -204,6 +205,7 @@
                                     </td>
                                     <td>
                                         <span class="block">Nama : <span class="font-bold">{{ $product['product_name'] }}</span></span>
+                                        <span class="block">Kode : <span class="font-bold">{{ $product['product_code'] }}</span></span>
                                         <span class="block">Karat : <span class="font-bold">{{ $product['karat']['name'] }} | {{ $product['karat']['kode'] }}</span></span>
                                         <span class="block">Berat : <span class="font-bold">{{ $product['berat_emas'] }} gr</span></span>
                                     </td>
