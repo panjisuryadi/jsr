@@ -144,6 +144,7 @@ class Penerimaan extends Component
             'total_berat_real' => 'required|numeric',
             'total_berat_kotor' => 'required|numeric',
             'tipe_pembayaran' => 'required',
+            'harga_beli' => 'required_if:tipe_pembayaran,lunas',
             'cicil' => 'required_if:tipe_pembayaran,cicil',
             'tgl_jatuh_tempo' => [
                 'required_if:tipe_pembayaran,jatuh_tempo',

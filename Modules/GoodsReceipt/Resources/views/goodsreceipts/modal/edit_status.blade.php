@@ -23,7 +23,7 @@
             <input class="form-control" type="hidden" name="pembelian_id" id="" value="{{ $data->id }}">
         </div>
         @if($isCicil)
-            <div class="flex flex-row grid grid-cols-2 gap-4">
+            <div class="flex flex-row grid grid-cols-1 gap-2">
                 <div class="form-group">
                     <label for="cicilan_id">@lang('Pilih Cicilan') <span class="text-danger">*</span></label>
                     <select class="form-control" name="cicilan_id" id="cicilan_id" required>
@@ -37,8 +37,22 @@
                 </div>
                 <div class="form-group">
                     <?php
+                        $field_name = 'nominal';
+                        $field_lable = label_case('Berat');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = "required";
+                    ?>
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <?php
                         $field_name = 'jumlah_cicilan';
-                        $field_lable = label_case('Jumlah Cicilan');
+                        $field_lable = label_case('Nominal Cicilan');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         $required = "required";
@@ -115,7 +129,7 @@ function printErrorMsg (msg) {
 $(document).ready(function(){
 
     var Tombol = "<button type='button' id='tombol_close' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
-    Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanUpdate'>{{ __('Update') }}</button>";
+    Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanUpdate'>{{ __('Simpan') }}</button>";
     $('#ModalFooter').html(Tombol);
 
     $("#FormEdit").find('input[type=text],textarea,select').filter(':visible:first').focus();

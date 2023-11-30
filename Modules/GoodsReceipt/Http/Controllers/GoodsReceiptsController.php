@@ -369,10 +369,11 @@ public function update_status_pembelian (Request $request){
         if ( $is_cicilan ) {
             $validator = \Validator::make($request->all(),[
                 'cicilan_id' => 'required',
-                'jumlah_cicilan' => 'required|numeric|between:1,' . floatval($request->post('total_harus_bayar')),
+                'jumlah_cicilan' => 'required|lte:' . floatval($request->post('total_harus_bayar')),
+                'nominal' => 'required|numeric|gt:0',
             ], 
             [
-                'jumlah_cicilan.max' => 'Jumlah cicilan tidak boleh lebih dari harus dibayar',
+                'jumlah_cicilan.lte' => 'Jumlah cicilan tidak boleh lebih besar dari harus dibayar',
             ]);
             
             if (!$validator->passes()) {
@@ -381,10 +382,12 @@ public function update_status_pembelian (Request $request){
                     
             $penerimaan_barang_cicilan_id = $request->post('cicilan_id');
             $jumlah_cicilan = $request->post('jumlah_cicilan');
+            $nominal = $request->post('nominal');
 
             DB::beginTransaction();
-            $penerimaan_barang_cicilan = GoodsReceiptInstallment::findOrFail($penerimaan_barang_cicilan_id);
+            $penerimaan_barang_cicilan = GoodsReceiptInstallment::find($penerimaan_barang_cicilan_id);
             $penerimaan_barang_cicilan->jumlah_cicilan = $jumlah_cicilan;
+            $penerimaan_barang_cicilan->nominal = $nominal;
             $penerimaan_barang_cicilan->save();
 
             $tipe_pembelian = TipePembelian::with('goodreceipt')->findOrFail($pembelian_id);
@@ -410,12 +413,7 @@ public function update_status_pembelian (Request $request){
 
 /** Fungsi ini digunakan untuk mengecek apakah masih ada cicilan atau tidak */
 private function cicilanExist($payment_id) {
-    return GoodsReceiptInstallment::where('payment_id', $payment_id)
-    // ->where(function($q) {
-    //     $q->whereNull('jumlah_cicilan')
-    //     ->orWhere('jumlah_cicilan', 0);
-    // })
-    ->sum('jumlah_cicilan');
+    return GoodsReceiptInstallment::where('payment_id', $payment_id)->sum('jumlah_cicilan');
 }
 
 
