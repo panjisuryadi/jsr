@@ -17,11 +17,11 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
+                           <a href="{{ route('karat.index') }}"
                                 id="333"
                                 data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                 class="btn btn-success px-3">
+                                 <i class="bi bi-plus"></i>@lang('List Karat')
                                 </a>
 
                         </div>
