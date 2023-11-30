@@ -29,6 +29,10 @@ class PenentuanHarga extends Model
         return $query->where('lock', 1);
     }
 
+    public function scopeNol($query) {
+        return $query->where('harga_emas', '0');
+    }
+
 
     protected static function newFactory()
     {
