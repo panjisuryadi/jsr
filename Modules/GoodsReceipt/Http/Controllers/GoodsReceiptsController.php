@@ -596,6 +596,7 @@ public function store(Request $request)
             'selisih'                    => $input['selisih'] ?? null,
             'total_emas'                 => $input['total_berat_real'],
             'note'                       => $input['catatan'],
+            'harga_beli'                 => !empty($input['harga_beli']) ? $input['harga_beli'] : 0,
             'count'                      => 0,
             'qty'                        => '8',
             'kategoriproduk_id'          => $kategori_produk_id,
