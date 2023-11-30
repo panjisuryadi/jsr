@@ -1,39 +1,61 @@
 <form wire:submit.prevent="store">
     @csrf
 
-    <div class="flex flex-row grid grid-cols-3 mb-0 gap-2">
-
+    <div class="grid grid-cols-3 gap-2">
         <div class="form-group">
             <?php
-            $field_name = 'parent_karat_id';
+            $field_name = 'jenis';
+            $field_lable = __('jenis');
+            $field_placeholder = Label_case($field_lable);
+            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+            ?>
+            <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                Pilih Data yang ingin dibuat</label>
+            <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}">
+                <option value="" selected>Pilih Karat / Kategori Karat</option>
+                <option value="1">Karat</option>
+                <option value="2">Kategori Karat</option>
+            </select>
+        </div>
+        <div class="form-group col-span-2 flex items-center justify-center">
+            <h2 class="text-3xl font-bold text-black">{{ $this->karat_label }}</h1>
+        </div>
+    </div>
+    <div class="flex flex-row grid grid-cols-3 mb-0 gap-2">
+
+        <div class="form-group @if ($jenis != 2) hidden @endif">
+            <?php
+            $field_name = 'karat.parent_id';
             $field_lable = __('Karat');
             $field_placeholder = Label_case($field_lable);
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
             ?>
             <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                 {{ $field_lable }}</label>
-            <select class="form-control" name="{{ $field_name }}" wire:change="parentSelected" wire:model="{{ $field_name }}">
+            <select class="form-control" name="{{ $field_name }}" wire:model="{{ $field_name }}">
                 <option value="" selected>Pilih Karat</option>
                 @foreach($dataKarat as $karat)
                 <option value="{{$karat->id}}">
-                    {{$karat->name}}
+                    {{$karat->label}}
                 </option>
                 @endforeach
             </select>
+            @if ($errors->has($field_name))
+            <span class="invalid feedback" role="alert">
+                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+            </span>
+            @endif
         </div>
 
-        <div class="form-group">
+        <div class="form-group @if ($jenis == '') hidden @endif">
             <?php
-            $field_name = 'name';
-            $field_lable = __('Nama Karat');
+            $field_name = 'karat.name';
+            $field_lable = __('Nama');
             $field_placeholder = Label_case($field_lable);
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
             ?>
             <label class="text-gray-700 mb-0" for="{{ $field_name }}">
-                {{ $field_lable }}
-                @if ($parent_karat_id == '')
-                <span class="text-danger">*</span>
-                @endif
+                {{ $field_lable }}<span class="text-danger">*</span>
             </label>
             <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}" wire:ignore>
             @if ($errors->has($field_name))
@@ -43,16 +65,16 @@
             @endif
         </div>
 
-        <div class="form-group">
+        <div class="form-group @if ($jenis != 1) hidden @endif">
             <?php
-            $field_name = 'kode';
-            $field_lable = label_case('Kode / Kadar');
+            $field_name = 'karat.kode';
+            $field_lable = label_case('Kode');
             $field_placeholder = $field_lable;
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
             $required = "required";
             ?>
             <label class="text-gray-700 mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-            <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}" wire:ignore>
+            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}" wire:ignore>
             <span class="invalid feedback" role="alert">
                 <span class="text-danger error-text {{ $field_name }}_err"></span>
             </span>
@@ -66,9 +88,9 @@
 
  <div class="flex flex-row grid grid-cols-3 mb-0 gap-2">
 
-        <div class="form-group">
+        <div class="form-group @if ($jenis != 1) hidden @endif">
             <?php
-            $field_name = 'coef';
+            $field_name = 'karat.coef';
             $field_lable = label_case('coef');
             $field_placeholder = $field_lable;
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -90,33 +112,9 @@
             @endif
         </div>
 
-        <div class="form-group">
-            <?php
-            $field_name = 'model';
-            $field_lable = label_case($field_name);
-            $field_placeholder = $field_lable;
-            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-            $required = "required";
-            ?>
-            <label class="text-gray-700 mb-0" for="{{ $field_name }}">{{ $field_lable }}
-                @if ($parent_karat_id != '')
-                <span class="text-danger">*</span>
-                @endif
-            </label>
-            <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}" readonly wire:ignore>
-            <span class="invalid feedback" role="alert">
-                <span class="text-danger error-text {{ $field_name }}_err"></span>
-            </span>
-            @if ($errors->has($field_name))
-            <span class="invalid feedback" role="alert">
-                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-            </span>
-            @endif
-        </div>
-
-        <div class="form-group">
+        <div class="form-group @if ($jenis != 1) hidden @endif">
            <?php
-            $field_name = 'type';
+            $field_name = 'karat.type';
             $field_lable = label_case('Tipe');
             $field_placeholder = $field_lable;
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -161,23 +159,7 @@
 </form>
 @push('page_scripts')
 <script type="text/javascript">
-    let kode = document.getElementById('kode');
-    let type = document.getElementById('type');
-    let name = document.getElementById('name');
-    let model = document.getElementById('model');
-    window.addEventListener('parentChange', (e) => {
-        if (e.detail.isParentSelected) {
-            kode.setAttribute('readonly', true);
-            type.setAttribute('readonly',true);
-            name.setAttribute('readonly',true);
-            model.removeAttribute('readonly');
-        } else {
-            kode.removeAttribute('readonly');
-            type.removeAttribute('readonly');
-            name.removeAttribute('readonly');
-            model.setAttribute('readonly',true);
-        }
-    });
+    
 </script>
 
 

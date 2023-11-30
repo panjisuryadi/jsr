@@ -16,9 +16,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
-                        <div>
+                        <div class="flex gap-3">
                             <a href="{{ route('penentuanharga.index') }}" class="btn btn-success">
                                 Penentuan Harga <i class="bi bi-plus"></i>
+                            </a>
+                            <a href="{{ route('karat.create') }}" class="btn btn-success">
+                                Tambah Karat <i class="bi bi-plus"></i>
                             </a>
                         </div>
                         <div id="buttons"></div>

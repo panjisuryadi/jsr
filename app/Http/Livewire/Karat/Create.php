@@ -7,25 +7,21 @@ use Livewire\Component;
 use App\Models\User;
 use Modules\Karat\Models\Karat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Modules\Karat\Http\Controllers\KaratsController;
 
 class Create extends Component
 {
+    public Karat $karat;
+    public $jenis = '';
     public $dataKarat = [];
 
-    public $parent_karat_id = '';
-
-    public $name = '';
-
-    public $model = '';
-
-    public $kode = '';
-
-    public $type = '';
-    public $coef = '';
-    public $isParentSelected = false;
+    public function __construct()
+    {
+        $this->karat = new Karat();
+    }
 
     public function mount(){
         $this->dataKarat = Karat::where(function ($query) {
@@ -37,81 +33,73 @@ class Create extends Component
     public function render(){
         return view('livewire.karat.create');
     }
-    public function parentSelected(){
-        if($this->parent_karat_id != ''){
-            $karat = Karat::find($this->parent_karat_id);
-            $this->kode = $karat->kode;
-            $this->type = $karat->type;
-            $this->isParentSelected = true;
-            $this->name = '';
-        }else{
-            $this->isParentSelected = false;
-            $this->kode = '';
-            $this->type = '';
-            $this->model = '';
-        }
-        $this->dispatchBrowserEvent('parentChange', ['isParentSelected' => $this->isParentSelected]);
+    
+    public function updatedJenis(){
+        $this->resetExcept(['jenis','dataKarat']);
     }
 
     public function rules()
     {
         $rules = [
-            'kode' => 'required',
-            'type' => 'required',
-            'model' => [
-                Rule::requiredIf(function () {
-                    return $this->parent_karat_id !== '';
-                }),
-                function ($attribute, $value, $fail) {
-                    if($this->parent_karat_id != ''){
-                        $exist = Karat::where('parent_id',$this->parent_karat_id)->where(DB::raw('lower(name)'), strtolower($value))->exists();
-                        if ($exist) {
-                            $fail('Model sudah ada untuk karat yang sama');
-                        }
-                    }else{
-                        $exist = Karat::where(DB::raw('lower(name)'), strtolower($value))->exists();
-                        if ($exist) {
-                            $fail('Nama Karat sudah digunakan');
-                        }
-                    }
-                },
+            'karat.kode' => [
+                'requiredIf:jenis,1'
             ],
-            'name' => [
-                "requiredIf:parent_karat_id,",
+            'karat.name' => [
+                "required",
                 function ($attribute, $value, $fail) {
-                    $exist = Karat::where(DB::raw('lower(name)'), strtolower($value))->exists();
+                    $exist = Karat::where(DB::raw('lower(name)'), strtolower($value))->where('parent_id',$this->karat->parent_id)->exists();
                     if ($exist) {
                         $fail('Nama Karat sudah digunakan');
                     }
                 },
-            ]
+            ],
+            'karat.parent_id' => [
+                'requiredIf:jenis,2'
+            ],
+            'karat.coef' => ['requiredIf:jenis,1'],
+            'karat.type' => ['requiredIf:jenis,1']
         ];
         return $rules;
     }
 
+    public function messages(){
+        return [
+            '*.*.required_if' => 'Wajib diisi',
+            '*.*.required' => 'Wajib diisi'
+        ];
+    }
+
     public function store(){
         $this->validate();
-
-        $data = [
-            'parent_id' => $this->parent_karat_id?$this->parent_karat_id:null,
-            'name' => $this->parent_karat_id?$this->model:$this->name,
-            'type' => $this->type,
-            'kode' => $this->kode,
-            'coef' => $this->coef,
-        ];
-
-
-        $request = new Request($data);
-
-        $controller = new KaratsController();
-
-        $controller->store($request);
-
-        session()->flash('message', 'Created Successfully.');
+        DB::beginTransaction();
+        try{
+            $this->karat->save();
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
+        $this->reset();
+        return redirect(route('karat.index'));
     }
 
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
     }
+
+    public function getKaratLabelProperty(){
+        if($this->jenis == '1' && !empty($this->karat->name) && !empty($this->karat->kode)){
+            return $this->karat->name . ' | ' . $this->karat->kode;
+        }elseif($this->jenis == '2'){
+            if(!empty($this->karat->parent_id)){
+                return $this->dataKarat->find($this->karat->parent_id)->label . ' ' . $this->karat->name;
+            }else{
+                return '';
+            }
+        }else{
+            return '';
+        }
+    }
+
 }
