@@ -66,7 +66,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::isactive()->get();
+        $$module_name = $module_model::get();
 
         $data = $$module_name;
 
@@ -80,7 +80,7 @@ public function index_data(Request $request)
 
                           ->editColumn('tgl_update', function ($data) {
                              $tb = '<div class="items-center text-center">
-                                     ' .tanggal2($data->tgl_update) . '
+                                     ' .tanggal2($data->updated_at) . '
                                     </div>';
                                 return $tb;
                             })
@@ -125,12 +125,15 @@ public function index_data(Request $request)
                                 return $tb;
                             })
 
-                             ->editColumn('lock', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                     ' .$data->lock. '
-                                    </div>';
-                                return $tb;
-                            })
+               
+                           ->addColumn('lock', function ($data) {
+                            $module_path = $this->module_path;
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view(''.$module_name.'::'.$module_path.'.status',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+
                      
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
@@ -142,6 +145,8 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                            })
+
+                           
                         ->rawColumns(['tgl_update',
                                         'action', 
                                         'harga_emas',

@@ -17,8 +17,8 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                            <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
-                                Tambah {{$module_title}}<i class="bi bi-plus"></i>
+                            <a href="{{ route('penentuanharga.index') }}" class="btn btn-success">
+                                Penentuan Harga <i class="bi bi-plus"></i>
                             </a>
                         </div>
                         <div id="buttons"></div>
@@ -33,12 +33,15 @@
                                     <th>
                                         Karat
                                     </th>
-                                    <th>
+                                     <th style="width: 13%!important;" class="text-center">
                                         Tipe
                                     </th>  
 
-                                     <th>
+                                     <th style="width: 9%!important;" class="text-center">
                                         Coef
+                                    </th>  
+                                     <th style="width: 7%!important;" class="text-center">
+                                        Ph
                                     </th> 
 
                                     <th style="width: 19%!important;" class="text-center">
@@ -109,6 +112,9 @@
                 },{
                     data: 'coef',
                     name: 'coef'
+                },{
+                    data: 'ph',
+                    name: 'ph'
                 },
                 {
                     data: 'action',
