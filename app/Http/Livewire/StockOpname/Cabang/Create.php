@@ -141,7 +141,7 @@ class Create extends Component
                     'status' => 1,
                 ];
             }
-            $product_list = Product::whereNotIn('id', $this->exceptProductId)->where('cabang_id', $this->cabang_id)->get();
+            $product_list = Product::where('status_id', ProductStatus::READY)->whereNotIn('id', $this->exceptProductId)->where('cabang_id', $this->cabang_id)->get();
             if(!empty($product_list)) {
                 foreach($product_list as $row){
                     Product::find($row->id)->updateTracking(ProductStatus::HILANG, $this->cabang_id);

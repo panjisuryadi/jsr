@@ -35,6 +35,7 @@ class Penerimaan extends Component
         $berat_timbangan,
         $selisih,
         $catatan,
+        $harga_beli,
         $pic_id = '',
         $document = [],
         $image = '';
@@ -199,6 +200,7 @@ class Penerimaan extends Component
             'selisih' => $this->selisih,
             'catatan' => $this->catatan,
             'pic_id' => $this->pic_id,
+            'harga_beli' => $this->harga_beli,
             'document' => $this->document,
             'total_berat_real' => $this->total_berat_real,
             'total_berat_kotor' => $this->total_berat_kotor,

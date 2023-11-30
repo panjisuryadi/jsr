@@ -557,7 +557,7 @@ public function update(Request $request, $id)
             'user_id'            => auth()->user()->id,
             'created_by'         => auth()->user()->name
          ]);
-          HistoryPenentuanHarga::whereNotIn('id', [$insert->id])
+          HistoryPenentuanHarga::whereNotIn('penentuan_harga_id', [$idph])
               ->update(['updated' => '0']);      
         // dd($input);
       }

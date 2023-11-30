@@ -355,6 +355,21 @@
                             <div class="grid grid-cols-3 gap-3">
                                 <div class="form-group">
                                     <?php
+                                    $field_name = 'harga_beli';
+                                    $field_lable = label_case('harga_beli');
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = "required";
+                                    ?>
+                                    <label class="mb-0" for="{{ $field_name }}"> {{ $field_lable }} <span class="text-danger"></span></label>
+                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="0">
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <?php
                                     $field_name = 'tipe_pembayaran';
                                     $field_lable = label_case('tipe_pembayaran');
                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';

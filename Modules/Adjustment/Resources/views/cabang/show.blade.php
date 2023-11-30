@@ -55,8 +55,8 @@
                                 @foreach($adjustment->adjustedProducts as $item)
                                     <tr>
                                         <td>{{ $item->product->product_name }}</td>
+                                        <td> 1 </td>
                                         <td>{{ $item->status == 1 ? '1' : 0}}</td>
-                                        <td>{{ $item->status == 2 ? '0' : 1}}</td>
                                     </tr>
                                 @endforeach
                             </table>
