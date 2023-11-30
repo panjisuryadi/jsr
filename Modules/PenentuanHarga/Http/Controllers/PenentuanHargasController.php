@@ -78,11 +78,9 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                  
-
                           ->editColumn('tgl_update', function ($data) {
                              $tb = '<div class="items-center text-center">
-                                     ' .tanggal2($data->tgl_update) . '
+                                     ' .tanggal2($data->updated_at) . '
                                     </div>';
                                 return $tb;
                             })
@@ -147,6 +145,8 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                            })
+
+                           
                         ->rawColumns(['tgl_update',
                                         'action', 
                                         'harga_emas',

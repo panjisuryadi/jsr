@@ -69,7 +69,7 @@ class Karat extends Model
         if(!empty($this->parent_id)){
             return $this->parent->label . ' ' . $this->name;
         }
-        return $this->name . ' | ' . $this->kode;
+        return '<span class="text-danger">' .$this->name . ' </span> | ' . $this->kode;
     }
 
     public function scopeKarat($query){

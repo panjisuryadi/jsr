@@ -79,14 +79,14 @@ public function index_data()
                             })
                          
                         ->editColumn('karat', function($data){
-                            $output = '';
-                            if(is_null($data->parent_id)){
-                                $output = "{$data->name} {$data->kode}";
-                            }else{
-                                $output = "{$data->parent->name} {$data->parent->kode} - {$data->name}";
-                            }
+                            // $output = '';
+                            // if(is_null($data->parent_id)){
+                            //     $output = "{$data->name} {$data->kode}";
+                            // }else{
+                            //     $output = "{$data->parent->name} {$data->parent->kode} - {$data->name}";
+                            // }
                             return '<div class="items-center text-center">
-                                            <h3 class="text-sm font-bold text-gray-800"> ' .$output . '</h3>
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .$data->label . '</h3>
                                     </div>';
                              })  
 
