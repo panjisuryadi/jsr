@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
 use Modules\Karat\Models\Karat;
+use Modules\PenentuanHarga\Models\HistoryPenentuanHarga;
 
 class PenentuanHarga extends Model
 {
@@ -17,7 +18,9 @@ class PenentuanHarga extends Model
   // public function products() {
   //       return $this->hasMany(Product::class, 'category_id', 'id');
   //   }
-
+  public function history() {
+        return $this->hasMany(HistoryPenentuanHarga::class, 'penentuan_harga_id');
+    }
     public function karat() {
         return $this->belongsTo(Karat::class, 'karat_id', 'id');
     } 

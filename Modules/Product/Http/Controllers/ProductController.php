@@ -823,8 +823,6 @@ public function index_data_reparasi(Request $request)
                                   return view('product::products.partials.show_hapus',
                             compact('module_name', 'data', 'module_model'));
                                 })
-
-
            ->editColumn('product_name', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
@@ -833,8 +831,6 @@ public function index_data_reparasi(Request $request)
                             <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
                              <div style="font-size:0.7rem !important;" class="text-xs font-normal text-blue-600 dark:text-gray-400">
                             ' . $data->rfid . '</div>
-
-
                         </div>
                     </div>';
                 return $tb;

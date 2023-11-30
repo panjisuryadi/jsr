@@ -162,13 +162,16 @@ $(document).on('click', '#Tambah, #Edit', function(e){
         if($(this).attr('id') == 'Tambah')
         {
             $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-xl');
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
         }
         if($(this).attr('id') == 'Edit')
         {
-            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').addClass('modal-xl');
+            $('.modal-dialog').removeClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
+            $('.modal-dialog').removeClass('modal-md');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }
         $('#ModalContent').load($(this).attr('href'));

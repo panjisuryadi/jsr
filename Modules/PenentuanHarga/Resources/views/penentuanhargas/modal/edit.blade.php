@@ -1,12 +1,118 @@
   <div class="px-3">
   <x-library.alert />
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
+<div class="flex relative py-1 pb-3">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-b border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-left">
+                            <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">
+                                <span class="text-blue-400"> History Penentuan Harga
+                                </span>
 
-        <div class="px-0 text-2xl font-semibold">COEF : {{ $detail->karat->coef }} </div>
+                        </span></div>
+                    </div>
+
+<table class="w-full mb-2">
+            @if($history)
+            <tr>
+                <td>Terakhir Update</td>
+                <td>
+                    {{ tgl($history->tanggal) }}
+                </td>
+            </tr>
+            <tr>
+                <td>Jumlah di Update</td>
+                <td>
+                    {{ $detail->history->count() }} kali
+                </td>
+            </tr>  
+
+             <tr>
+                <td>Harga Jual</td>
+                <td>
+                    {{ rupiah($detail->harga_jual) }}
+                </td>
+            </tr>
+
+
+             <tr>
+                <td>Harga Modal</td>
+                <td>
+                    {{ rupiah($detail->harga_modal) }}
+                </td>
+            </tr>
+            @else
+            <div>Data belum ada</div>
+            @endif
+        </table>
+
+
+    <div class="px-0 flex justify-between py-2 border-bottom">
+    
+
+<table style="width: 100%;" class="table table-striped table-bordered">
+    <tr>
+        <th style="width:5%;" class="text-center">{{ label_case('No') }}</th>
+        
+        <th class="text-center">{{ label_case('Tanggal') }}</th>
+        <th class="text-center">{{ label_case('Harga Jual') }}</th>
+        <th class="text-center">{{ label_case('Harga Modal') }}</th>
+        <th class="text-center">{{ label_case('Harga Emas') }}</th>
+        <th class="text-center">{{ label_case('margin') }}</th>
+        <th class="text-center">{{ label_case('Admin') }}</th>
+        <th class="text-center">{{ label_case('Status') }}</th>
+    </tr>
+    @forelse(\Modules\PenentuanHarga\Models\HistoryPenentuanHarga::where('penentuan_harga_id',$detail->id)->latest()->get() as $sale)
+    @if($loop->index > 4)
+    @break
+    @endif
+    
+    <tr>
+        <td class="text-center">{{ $loop->iteration }}</td>
+        <td class="text-center text-blue-400">{{ tgl($sale->tanggal) }}</td>
+        <td class="text-center"> {{ rupiah($sale->harga_jual) }}</td>
+        <td class="text-center"> {{ rupiah($sale->harga_modal) }}</td>
+        <td class="text-center"> {{ rupiah($sale->harga_emas) }}</td>
+        <td class="text-center"> {{ rupiah($sale->margin) }}</td>
+        <td class="text-center">{{ $sale->created_by }}</td>
+        <td class="text-center">
+@if($sale->updated == 1)
+<span class="rounded text-white bg-red-500 px-3"><i class="bi bi-lock-fill"></i> Locked</span>
+@else
+<span class="rounded text-white  bg-blue-400 px-3"><i class="bi bi-unlock"></i> Unlocked</span>
+@endif
+
+        </td>
+        
+        
+        
+        
+    </tr>
+    @empty
+    <tr>
+        <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
+        
+    </tr>
+    @endforelse
+    
+</table>
+
+
+
+
+
+
+        
+    </div>
+
+
+
+
   
                             @csrf
                             @method('patch')
-             <div class="flex flex-row grid grid-cols-2 gap-4">
+             <div class="flex flex-row grid grid-cols-2 gap-4 mt-3">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'harga_emas';
@@ -56,6 +162,16 @@
 </div>
 {{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
 
+
+<style type="text/css">
+.table th, .table td {
+    padding: 0.45rem !important;
+    vertical-align: top;
+    border-top: 1px solid;
+    border-top-color: #d8dbe0;
+}
+
+</style>
 
 <script>
 jQuery.noConflict();
