@@ -229,6 +229,13 @@ class Product extends Model implements HasMedia
             $query->where('status_id', ProductStatus::READY_OFFICE);
         }
 
+        public function scopeReady($query){
+            $query->where('status_id', ProductStatus::READY);
+            if(auth()->user()->isUserCabang()){
+                $query->where('cabang_id',auth()->user()->namacabang()->id);
+            }
+        }
+
        public function getImageUrlPathAttribute(){
             $image = $this->images;
             if(empty($image)){

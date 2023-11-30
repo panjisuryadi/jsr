@@ -781,6 +781,19 @@ class GenerateMenus
                 'href'  => '#',
             ]);
             
+            // EMAS - STOK CABANG - STOK PENDING
+            $stock_cabang->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Ready'), [
+                'route' => 'stok.ready',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stok_cabang'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
             // EMAS - STOK CABANG - STOK PENDING
             $stock_cabang->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Pending'), [
@@ -788,7 +801,7 @@ class GenerateMenus
                 'class' => 'nav-item',
             ])
             ->data([
-                'order'         => 1,
+                'order'         => 2,
                 'activematches' => ['stoks*'],
                 'permission'    => ['access_stok_pending'],
             ])
@@ -802,7 +815,7 @@ class GenerateMenus
                 'class' => 'nav-item',
             ])
             ->data([
-                'order'         => 2,
+                'order'         => 3,
                 'activematches' => ['stoks*'],
                 'permission'    => ['access_stok_dp'],
             ])

@@ -18,6 +18,7 @@ use Modules\Stok\Models\StockOffice;
 use Modules\Karat\Models\Karat;
 use App\Models\LookUp;
 use Illuminate\Support\Facades\DB;
+use Modules\Cabang\Models\Cabang;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
 use Modules\Stok\Models\PenerimaanLantakan;
@@ -1157,5 +1158,128 @@ public function update_ajax(Request $request, $id)
         }
         DB::commit();
         return response()->json($response);
+    }
+
+
+    public function ready() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $karat_ids = Product::ready()->get()->groupBy('karat_id')->keys()->toArray();
+        $datakarat = Karat::find($karat_ids);
+        $dataCabang = Cabang::all();
+        $product_status = ProductStatus::find([
+            ProductStatus::PENDING_OFFICE,
+            ProductStatus::CUCI,
+            ProductStatus::MASAK,
+            ProductStatus::RONGSOK,
+            ProductStatus::REPARASI,
+            ProductStatus::SECOND,
+        ]);
+        $module_action = 'Ready Cabang';
+        abort_if(Gate::denies('access_stoks'), 403);
+            return view(''.$module_name.'::'.$module_path.'.page.index_ready',
+            compact('module_name',
+            'module_action',
+            'module_title',
+            'datakarat',
+            'product_status',
+            'dataCabang',
+            'module_icon', 'module_model'));
+    }
+    
+    public function index_data_ready(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_pending = $this->module_pending;
+        $module_pending_office = $this->module_pending_office;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $datas = Product::ready();
+        if(isset($request->karat)){
+            $datas = $datas->where('karat_id',$request->karat);
+        }
+        if(isset($request->cabang) && $request->cabang !== 'undefined'){
+            $datas = $datas->where('cabang_id',$request->cabang);
+        }
+        
+        $datas = $datas->get();
+        return Datatables::of($datas)
+                            ->editColumn('karat', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                        <h3 class="text-sm font-medium text-gray-800">
+                                    ' . $data->karat->label  . '</h3>
+                                        </div>';
+                                    return $tb;
+                                })  
+
+                        ->editColumn('product', function ($data) {
+                            $tb = '<div class="flex items-center gap-x-2">
+                            <div>
+                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+                                ' . $data->category->category_name . '</div>
+                                <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                                <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_code . '</h3>
+                            
+
+                            </div>
+                                </div>';
+                            return $tb;
+                            }) 
+                        
+                            ->editColumn('weight', function ($data) {
+                            $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                    ' .$data->berat_emas . ' gr</h3>
+                                    </div>';
+                                return $tb;
+                            }) 
+                            ->editColumn('cabang', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                        <h3 class="text-sm font-medium text-gray-800">
+                                        ' .$data->cabang->name . '</h3>
+                                        </div>';
+                                    return $tb;
+                            }) 
+
+                            ->editColumn('image', function ($data) {
+                            $tb = '<div class="flex justify-center"><a href="'.$data->image_url_path.'" data-lightbox="{{ @$image }} " class="single_image">
+                            <img src="'.$data->image_url_path.'" order="0" width="100" class="img-thumbnail"/>
+                            </a></div>';
+                                return $tb;
+                            })
+                        
+                        ->rawColumns([
+                                'image', 
+                                'karat',
+                                'cabang',
+                                'product', 
+                                'weight'])
+                            ->make(true);
+                        }
+    
+    public function get_stock_ready(Request $request){
+        $data = Product::ready();
+        if(isset($request->karat)){
+            $data = $data->where('karat_id',$request->karat);
+        }
+        if(isset($request->cabang) && $request->cabang !== 'undefined'){
+            $data = $data->where('cabang_id',$request->cabang);
+        }
+        
+        $data = $data->get();
+        return response()->json([
+            'sisa_stok' => $data->sum('berat_emas'),
+            'karat' => Karat::find($request->karat)->label,
+        ]);
     }
 }

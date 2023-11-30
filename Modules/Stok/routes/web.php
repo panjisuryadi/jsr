@@ -47,6 +47,11 @@ Route::get("$module_name/ready-office", ['as' => "$module_name.ready_office", 'u
 Route::get("$module_name/index_data_ready_office", ['as' => "$module_name.index_data_ready_office", 'uses' => "$controller_name@index_data_ready_office"]);
 Route::get("$module_name/get_stock_ready_office", ['as' => "$module_name.get_stock_ready_office", 'uses' => "$controller_name@get_stock_ready_office"]); 
 
+// READY OFFICE
+Route::get("$module_name/ready", ['as' => "$module_name.ready", 'uses' => "$controller_name@ready"]);
+Route::get("$module_name/index_data_ready", ['as' => "$module_name.index_data_ready", 'uses' => "$controller_name@index_data_ready"]);
+Route::get("$module_name/get_stock_ready", ['as' => "$module_name.get_stock_ready", 'uses' => "$controller_name@get_stock_ready"]); 
+
 
  Route::get("$module_name/sales", ['as' => "$module_name.sales", 'uses' => "$controller_name@sales"]);
 
