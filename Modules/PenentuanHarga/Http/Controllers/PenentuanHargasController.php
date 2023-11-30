@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Modules\Karat\Models\Karat;
+use Modules\PenentuanHarga\Models\PenentuanHarga;
+use Modules\PenentuanHarga\Models\HistoryPenentuanHarga;
 use Lang;
 use Image;
 
@@ -439,11 +441,14 @@ public function show($id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
-        $detail = $module_model::with('karat')->findOrFail($id);
+        $detail = $module_model::with('karat','history')->findOrFail($id);
+        $history = HistoryPenentuanHarga::where('penentuan_harga_id',$id)->first();
+        
           return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
             'detail',
+            'history',
             'module_title',
             'module_icon', 'module_model'));
     }
@@ -527,11 +532,39 @@ public function update(Request $request, $id)
         
         $params['lock'] = 1;
         $$module_name_singular->update($params);
+        $idph = $$module_name_singular->id;
+        $this->_saveHistoryPenentuanHarga($params ,$idph);
+
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
- }
+        }
 
 
+
+
+    private function _saveHistoryPenentuanHarga($params ,$idph)
+    {
+
+        $data = HistoryPenentuanHarga::where('penentuan_harga_id',$idph)->first();
+            if ($data) {
+                 $hit = $data->updated + 1;
+            } else {
+                 $hit = 1;
+            }
+
+
+         $pharga = HistoryPenentuanHarga::updateOrCreate([
+            'penentuan_harga_id'   => $idph,
+         ],[
+            'tanggal'          => date('Y-m-d H:i:s'),
+            'harga_emas'      => $params['harga_emas'],
+            'updated'         => $hit,
+            'user_id'         => auth()->user()->id,
+            'created_by'      => auth()->user()->name
+             ]);
+ 
+        // dd($input);
+      }
 
     /**
      * Remove the specified resource from storage.

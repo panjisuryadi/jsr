@@ -1,12 +1,61 @@
   <div class="px-3">
   <x-library.alert />
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
+<div class="flex relative py-1 pb-3">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-b border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-left">
+                            <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">
+                                <span class="text-blue-400"> History Penentuan Harga
+                                </span>
 
-        <div class="px-0 text-2xl font-semibold">COEF : {{ $detail->karat->coef }} </div>
+                        </span></div>
+                    </div>
+    <div class="px-0 flex justify-between py-2 border-bottom">
+
+
+
+        <table class="table table-striped table-bordered w-full">
+            
+            <tr>
+                <td>Terakhir Update</td>
+                <td>
+                    {{ tgl($history->tanggal) }}
+                </td>
+            </tr>
+            <tr>
+                <td>Jumlah di Update</td>
+                <td>
+                    {{ $history->updated }} kali
+                </td>
+            </tr>  
+
+             <tr>
+                <td>Harga Jual</td>
+                <td>
+                    {{ rupiah($detail->harga_jual) }}
+                </td>
+            </tr>
+
+
+             <tr>
+                <td>Harga Modal</td>
+                <td>
+                    {{ rupiah($detail->harga_modal) }}
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+
+
+
+
   
                             @csrf
                             @method('patch')
-             <div class="flex flex-row grid grid-cols-2 gap-4">
+             <div class="flex flex-row grid grid-cols-2 gap-4 mt-3">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'harga_emas';
