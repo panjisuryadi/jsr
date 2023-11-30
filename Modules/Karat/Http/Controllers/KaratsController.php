@@ -71,12 +71,12 @@ public function index_data()
         $data = $$module_name;
 
         return Datatables::of($$module_name)
-                        ->addColumn('action', function ($data) {
-                           $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            return view('includes.action',
-                            compact('module_name', 'data', 'module_model'));
-                                })
+                    ->addColumn('action', function ($data) {
+                       $module_name = $this->module_name;
+                        $module_model = $this->module_model;
+                        return view('includes.action',
+                        compact('module_name', 'data', 'module_model'));
+                            })
                          
                         ->editColumn('karat', function($data){
                             $output = '';
@@ -87,28 +87,35 @@ public function index_data()
                             }
                             return '<div class="items-center text-center">
                                             <h3 class="text-sm font-bold text-gray-800"> ' .$output . '</h3>
-
                                     </div>';
-                        })  
+                             })  
 
-                        ->editColumn('type', function($data){
+                ->editColumn('type', function($data){
                             $output = '';
                             if(is_null($data->type)){
-               $output = ($data->parent?->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
+                 $output = ($data->parent?->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
                             }else{
-          $output = ($data->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
+                 $output = ($data->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
                             }
-                            return '<div class="items-center text-center">' .$output . '</div>';
+                       return '<div class="items-center text-center">' .$output . '</div>';
                         }) 
-                          ->editColumn('coef', function($data){
+                      ->editColumn('coef', function($data){
                             $output = '';
                           
-                            return '<div class="items-center text-center">
+                        return '<div class="items-center text-center">
                                             <span class="text-sm font-medium text-gray-800"> ' .$data->coef . '</span>
-
                                     </div>';
+
+                        })   
+                      ->editColumn('ph', function($data){
+                            $output = '';
+                          
+                            return '<div class="items-center font-semibold text-center">
+                             ' .rupiah(@$data->penentuanharga->harga_emas) . '
+                             </div>';
+
                         })
-                        ->rawColumns(['karat', 'action','coef','type'])
+                        ->rawColumns(['karat', 'action','coef','type','ph'])
                         ->make(true);
     }
 
@@ -270,9 +277,9 @@ public function update(Request $request, $id)
         $params['coef'] = $params['coef'];
         $$module_name_singular->update($params);
 
-        $pharga = PenentuanHarga::updateOrCreate([
+         $pharga = PenentuanHarga::updateOrCreate([
             'karat_id'   => $$module_name_singular->id,
-        ],[
+         ],[
             'user_id'      => auth()->user()->id,
             'margin'       => '0',
             'tgl_update'   => date('Y-m-d'),
@@ -280,8 +287,7 @@ public function update(Request $request, $id)
             'harga_emas'   => '0',
             'harga_jual'   => '0',
             'lock'         => '0',
-          
-        ]);
+             ]);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
