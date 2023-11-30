@@ -12,11 +12,8 @@
 
                         </span></div>
                     </div>
-    <div class="px-0 flex justify-between py-2 border-bottom">
 
-
-
-        <table class="table table-striped table-bordered w-full">
+<table class="w-full mb-2">
             @if($history)
             <tr>
                 <td>Terakhir Update</td>
@@ -27,7 +24,7 @@
             <tr>
                 <td>Jumlah di Update</td>
                 <td>
-                    {{ $history->updated }} kali
+                    {{ $detail->history->count() }} kali
                 </td>
             </tr>  
 
@@ -49,6 +46,54 @@
             <div>Data belum ada</div>
             @endif
         </table>
+
+
+    <div class="px-0 flex justify-between py-2 border-bottom">
+
+
+
+        
+
+ <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{ label_case('No') }}</th>
+                         
+                            <th class="text-center">{{ label_case('Tanggal') }}</th>
+                            <th class="text-center">{{ label_case('Harga Jual') }}</th>
+                            <th class="text-center">{{ label_case('Admin') }}</th>
+                          
+                        </tr>
+                        @forelse(\Modules\PenentuanHarga\Models\HistoryPenentuanHarga::where('penentuan_harga_id',$detail->id)->get() as $sale)
+                            @if($loop->index > 4)
+                               @break
+                            @endif
+                          
+
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center text-blue-400">{{ shortdate($sale->date) }}</td>
+                            <td class="text-center">
+                                {{ rupiah($sale->harga_emas) }}</td>
+                            <td class="text-center">{{ $sale->created_by }}</td>
+                        
+                          
+                          
+                         
+                        </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
+                        @endforelse
+                        
+                    </table>
+
+
+
+
+
+
         
     </div>
 
@@ -108,6 +153,16 @@
 </div>
 {{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
 
+
+<style type="text/css">
+.table th, .table td {
+    padding: 0.45rem !important;
+    vertical-align: top;
+    border-top: 1px solid;
+    border-top-color: #d8dbe0;
+}
+
+</style>
 
 <script>
 jQuery.noConflict();

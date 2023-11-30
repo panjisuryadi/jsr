@@ -451,7 +451,8 @@ public function show($id)
             'history',
             'module_title',
             'module_icon', 'module_model'));
-    }
+
+          }
 
     /**
      * Update the specified resource in storage.
@@ -551,17 +552,14 @@ public function update(Request $request, $id)
             } else {
                  $hit = 1;
             }
-
-
-         $pharga = HistoryPenentuanHarga::updateOrCreate([
-            'penentuan_harga_id'   => $idph,
-         ],[
-            'tanggal'          => date('Y-m-d H:i:s'),
-            'harga_emas'      => $params['harga_emas'],
-            'updated'         => $hit,
-            'user_id'         => auth()->user()->id,
-            'created_by'      => auth()->user()->name
-             ]);
+       HistoryPenentuanHarga::create([
+            'penentuan_harga_id' => $idph,
+            'tanggal'            => date('Y-m-d H:i:s'),
+            'harga_emas'         => $params['harga_emas'],
+            'updated'            => $hit,
+            'user_id'            => auth()->user()->id,
+            'created_by'         => auth()->user()->name
+         ]);
  
         // dd($input);
       }
