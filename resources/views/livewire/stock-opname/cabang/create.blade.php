@@ -159,7 +159,7 @@
                                         </a>
                                     </td>
                                     <td> {{ !empty($val['product_code']) ? $val['product_code'] : ''  }} </td>
-                                    <td> {{ $val['group']['name'] }} {{ $val['karat']['name']  }} | {{ $val['berat_emas'] }} gr </td>
+                                    <td> {{ @$val['group']['name'] }} {{ @$val['karat']['name']  }} | {{ @$val['berat_emas'] }} gr </td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $index }})">
                                             <i class="bi bi-trash"></i>
