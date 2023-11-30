@@ -17,12 +17,20 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route('karat.index') }}"
-                                id="333"
-                                data-toggle="tooltip"
-                                 class="btn btn-success px-3">
-                                 <i class="bi bi-plus"></i>@lang('List Karat')
-                                </a>
+            
+    <div class="btn-group">
+            <a  href="{{ route('karat.index') }}" class="px-3 btn btn-warning">
+                List Karat<i class="bi bi-plus"></i>
+            </a>
+            <a href="{{ route('penentuanharga.index') }}" class="px-3 btn btn-success">
+               History Penentuan Harga <i class="bi bi-plus"></i>
+            </a>
+            
+        </div>
+
+
+
+
 
                         </div>
                         <div id="buttons">
@@ -160,4 +168,37 @@ function autoRefresh(){
 
 })(jQuery);
 </script>
+
+
+<script type="text/javascript">
+   
+document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+        element.addEventListener('keyup', function(e) {
+            let cursorPostion = this.selectionStart;
+            let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+            let originalLenght = this.value.length;
+            if (isNaN(value)) {
+                this.value = "";
+            } else {
+                this.value = value.toLocaleString('id-ID', {
+                    currency: 'IDR',
+                    style: 'currency',
+                    minimumFractionDigits: 0
+                });
+                cursorPostion = this.value.length - originalLenght + cursorPostion;
+                this.setSelectionRange(cursorPostion, cursorPostion);
+            }
+        });
+    });
+
+
+</script>
+
+
+
+
+
+
+
+
 @endpush
