@@ -9,6 +9,8 @@ use Modules\Adjustment\Entities\Adjustment;
 use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Karat\Models\Karat;
+use Modules\Product\Entities\Product;
+
 class StockOffice extends Model
 {
 
@@ -38,6 +40,11 @@ class StockOffice extends Model
     public function distribusi_toko_item()
     {
         return $this->morphedByMany(DistribusiTokoItem::class, 'transaction', 'stock_office_history','stock_office_id','transaction_id','id','id')->withTimestamps();
+    }
+
+    public function product()
+    {
+        return $this->morphedByMany(Product::class, 'transaction', 'stock_office_history','stock_office_id','transaction_id','id','id')->withTimestamps();
     }
 
     public function history(){
