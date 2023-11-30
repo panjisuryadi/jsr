@@ -91,12 +91,12 @@ public function index_data(Request $request)
                                 return $tb;
                             }) 
 
-                          ->editColumn('karat', function ($data) {
-                             $tb = '<div class="items-center text-center font-semibold">
-                                     ' .$data->karat->name . '| &nbsp;<span class="text-blue-500">' .$data->karat->coef . '</span>
-                                    </div>';
-                                return $tb;
-                            })  
+          ->editColumn('karat', function ($data) {
+             $tb = '<div class="items-center text-center font-semibold">
+                     ' .$data->karat->name . '&nbsp; | &nbsp;<span class="text-blue-500">' .$data->karat->kode . '</span>
+                    </div>';
+                return $tb;
+            })  
 
                              ->editColumn('harga_emas', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -146,7 +146,7 @@ public function index_data(Request $request)
                             }
                            })
 
-                           
+
                         ->rawColumns(['tgl_update',
                                         'action', 
                                         'harga_emas',
