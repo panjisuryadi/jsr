@@ -533,8 +533,9 @@ public function update(Request $request, $id)
         
         $params['lock'] = 1;
         $$module_name_singular->update($params);
-        $idph = $$module_name_singular->id;
-        $this->_saveHistoryPenentuanHarga($params ,$idph);
+        $idph       = $$module_name_singular->id;
+        $karat   = $$module_name_singular->karat_id;
+        $this->_saveHistoryPenentuanHarga($params ,$idph,$karat);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
@@ -543,11 +544,12 @@ public function update(Request $request, $id)
 
 
 
-    private function _saveHistoryPenentuanHarga($params ,$idph)
+    private function _saveHistoryPenentuanHarga($params ,$idph,$karat)
     {
 
        $insert =  HistoryPenentuanHarga::create([
             'penentuan_harga_id' => $idph,
+            'karat_id'           => $karat,
             'tanggal'            => date('Y-m-d H:i:s'),
             'harga_emas'         => $params['harga_emas'],
             'harga_modal'        => $params['harga_modal'],
@@ -557,7 +559,7 @@ public function update(Request $request, $id)
             'user_id'            => auth()->user()->id,
             'created_by'         => auth()->user()->name
          ]);
-          HistoryPenentuanHarga::whereNotIn('penentuan_harga_id', [$idph])
+          HistoryPenentuanHarga::whereNotIn('karat_id', [$karat])
               ->update(['updated' => '0']);      
         // dd($input);
       }

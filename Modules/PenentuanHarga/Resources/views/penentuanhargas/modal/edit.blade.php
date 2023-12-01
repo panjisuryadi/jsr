@@ -16,6 +16,14 @@
 <table class="w-full mb-2">
             @if($history)
             <tr>
+                <td>Karat</td>
+                <td>
+                    <span class="text-lg font-semibold">
+                        {{@$detail->karat->name }} |  <span class="text-blue-400">{{@$detail->karat->kode }}</span></span>
+                </td>
+            </tr> 
+
+            <tr>
                 <td>Terakhir Update</td>
                 <td>
                     {{ tgl($history->tanggal) }}

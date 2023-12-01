@@ -34,13 +34,10 @@
 
 
 @if (count($datakarat))
-
 <div class="py-2 px-2 font-semibold flex flex-col justify-center">
     <p class="text-gray-400 text-lg">Karat : <span class="text-gray-800" id="karat"></span></p>
     <p class="text-gray-400 text-lg">Jumlah Stok : <span class="text-gray-800" id="sisa-stok"></span></p>
 </div>
-
-
 <div>
 @if (!auth()->user()->isUserCabang())
 <div class="form-group">
