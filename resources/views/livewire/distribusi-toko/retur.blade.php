@@ -67,13 +67,11 @@
                             <tr>
 
                                 <th class="text-center">No</th>
+                                <th class="text-center">Produk</th>
+                                <th class="text-center">Kode</th>
                                 <th class="text-center">Karat</th>
                                 <th class="text-center">Berat Emas</th>
-                                <th class="text-center">Produk</th>
-                                <th class="text-center">Group</th>
-                                <th class="text-center">Model</th>
-                                <th class="text-center">Code</th>
-                                <th class="text-center">Aksi</th>
+                                <th class="text-center">Gambar Produk</th>
 
                             </tr>
                         </thead>
@@ -82,28 +80,32 @@
                             $total_weight = 0;
                             @endphp
                             @forelse($dist_toko->items()->returned()->get() as $row)
-                            @php
-                            $data = json_decode($row->additional_data)->product_information;
-                            $total_weight = $total_weight + $row->gold_weight;
-                            @endphp
+                                @php
+                                $row->load('product');
+                                $total_weight = $total_weight + $row->product->berat_emas;
+                                $image = $row->product?->images;
+                                $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
+                                @endphp
                             <tr>
 
                                 <td class="text-center">{{$loop->iteration}}</td>
-                                <td class="text-center font-semibold"> {{@$row->karat->name}} {{@$row->karat->kode}}</td>
-                                <td class="text-center font-semibold"> {{@$row->gold_weight}} gr</td>
-                                <td class="text-center font-semibold">{{ $data->product_category->name }}</td>
-                                <td class="text-center font-semibold">{{ $data->group->name }}</td>
-                                <td class="text-center font-semibold">{{ $data->model->name }}</td>
-                                <td class="text-center font-semibold">{{ $data->code }}</td>
-                                <td class="text-center font-semibold">
-                                    <a href="#" class="hover:text-blue-400 btn btn-sm btn-info px-4" onclick="showDetailModal({{ $row }})">View</a>
-
+                                <td class="font-semibold">
+                                    <p>Nama : {{ $row->product->product_name }}</p>
+                                    <p>Kategori : {{ $row->product->category->category_name }}</p>
                                 </td>
-
+                                <td class="font-semibold text-center">
+                                    <p>{{ $row->product->product_code }}</p>
+                                </td>
+                                <td class="text-center font-semibold"> {{@$row->product->karat->label}}</td>
+                                <td class="text-center font-semibold"> {{@$row->product->berat_emas}} gr</td>
+                                <td class="text-center"> <a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " class="single_image flex justify-center">
+                                        <img src="{{ $imagePath }}" order="0" width="70" class="img-thumbnail"/>
+                                    </a>
+                                </td>
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="4" class="text-center">Tidak ada data</th>
+                                <th colspan="8" class="text-center">Tidak ada data</th>
                             </tr>
                             @endforelse
                             <tr>
