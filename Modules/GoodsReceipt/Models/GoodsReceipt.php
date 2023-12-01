@@ -114,5 +114,10 @@ class GoodsReceipt extends Model implements HasMedia
         return \Modules\GoodsReceipt\database\factories\GoodsReceiptFactory::new();
     }
 
+    public function scopeDebts($query)
+    {
+        $query->whereRelation('pembelian','lunas', null);
+    }
+
 
 }

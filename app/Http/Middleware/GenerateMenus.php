@@ -193,6 +193,20 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+            // EMAS - PEMBELIAN - Hutang
+            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Goods Receipt Debts'), [
+                'route' => 'goodsreceipt.debts',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => ['goodsreceipts*'],
+                'permission'    => ['access_goodsreceipts'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
 
 
 
@@ -203,7 +217,7 @@ class GenerateMenus
                 'class' => 'nav-item',
             ])
             ->data([
-                'order'         => 2,
+                'order'         => 3,
                 'permission'    => ['create_purchase'],
             ])
             ->link->attr([

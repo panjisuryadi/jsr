@@ -63,6 +63,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("$module_name/{id}/edit_status", ['as' => "$module_name.edit_status", 'uses' => "$controller_name@edit_status"]);
     Route::post("$module_name/update_status_pembelian/", ['as' => "$module_name.update_status_pembelian", 'uses' => "$controller_name@update_status_pembelian"]);
 
+  // Debts
+  Route::get("$module_name/debts", ['as' => "$module_name.debts", 'uses' => "$controller_name@debts"]);
+  Route::get("$module_name/debts-data", ['as' => "$module_name.debts_data", 'uses' => "$controller_name@debts_data"]);
+
 
     Route::resource("$module_name", "$controller_name");
 
