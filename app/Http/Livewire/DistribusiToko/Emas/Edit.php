@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Modules\Cabang\Models\Cabang;
 use Modules\DistribusiToko\Models\DistribusiToko;
+use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\KategoriProduk\Models\KategoriProduk;
@@ -18,7 +19,7 @@ use Modules\Stok\Models\StockOffice;
 
 class Edit extends Component
 {
-    public DistribusiToko $dist_toko;
+    public $dist_toko;
 
     public $cabangs;
     public $product_categories;
@@ -81,8 +82,9 @@ class Edit extends Component
         ]);
     }
     
-    public function mount()
+    public function mount(DistribusiToko $dist_toko)
     {
+        $this->dist_toko = $dist_toko;
         $this->cabangs = Cabang::all();
         $kategori = KategoriProduk::where('slug','gold')->orWhere('slug','emas')->firstOrFail();
         $this->product_categories = Category::where('kategori_produk_id',$kategori->id)->get();
@@ -223,6 +225,7 @@ class Edit extends Component
                 'images' => $this->uploadImage($this->new_product['webcam_image']),
             ];
             $product = Product::create($product_data);
+            $this->reduceStockOffice($product);
 
             $product_item = $product->product_item()->create([
                 'certificate_id'              => empty($this->new_product['certificate_id'])?null:$this->new_product['certificate_id'],
@@ -245,11 +248,100 @@ class Edit extends Component
         }
     }
 
+    private function reduceStockOffice($product){
+        $stock_office = StockOffice::where('karat_id', $product->karat_id)->first();
+        $product->stock_office()->attach($stock_office->id,[
+                'karat_id'=>$product->karat_id,
+                'in' => false,
+                'berat_real' => -1 * $product->berat_emas,
+                'berat_kotor' => -1 * $product->berat_emas
+        ]);
+        $berat_real = $stock_office->history->sum('berat_real');
+        $berat_kotor = $stock_office->history->sum('berat_kotor');
+        $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
+    }
+
     public function calculateTotalWeight(){
         $this->new_product['total_weight'] = 0;
         $this->new_product['total_weight'] += doubleval($this->new_product['gold_weight']);
         $this->new_product['total_weight'] += doubleval($this->new_product['accessories_weight']);
         $this->new_product['total_weight'] += doubleval($this->new_product['tag_weight']);
         $this->new_product['total_weight'] = round($this->new_product['total_weight'], 3);
+    }
+
+    public function remove(DistribusiTokoItem $item)
+    {
+        DB::beginTransaction();
+        try{
+            $item->product->updateTracking(ProductStatus::READY_OFFICE);
+            $item->delete();
+            $this->dist_toko->refresh();
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
+    }
+
+    public function selectProduct(Product $product) {
+        DB::beginTransaction();
+        try{
+            $additional_data = [
+                "product_information" => [
+                    "product_category" => [
+                        "id" => $product->category_id,
+                        "name" => $product->category->category_name
+                    ],
+                    "group" => [
+                        'id' => $product->group_id,
+                        'name' => $product->group->name
+                    ],
+                    "model" => [
+                        'id' => $product->model_id,
+                        'name' => $product->model?->name
+                    ],
+                    "code" => $product->product_code,
+                    'certificate_id' => $product->product_item?->certificate_id,
+                    'no_certificate' => $product->product_item?->no_certificate,
+                    'accessories_weight' => $product->product_item?->berat_accessories,
+                    'tag_weight' => $product->product_item?->berat_label,
+                    'image' => $product->images,
+                    'total_weight' => $product->product_item?->berat_total
+                ]
+            ];
+            $item = $this->dist_toko->items()->create([
+                'karat_id' => $product->karat_id,
+                'gold_weight' => $product->berat_emas,
+                'product_id' => $product->id,
+                'additional_data' => json_encode($additional_data),
+            ]);
+            $product->updateTracking(ProductStatus::DRAFT);
+            $this->dist_toko->refresh();
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
+    }
+
+
+    public function store()
+    {
+        if(!count($this->dist_toko->items)){
+            $this->dispatchBrowserEvent('not:selected');
+        }else{
+            $this->validate();
+            DB::beginTransaction();
+            try{
+                $this->dist_toko->save();
+                DB::commit();
+            }catch (\Exception $e) {
+                DB::rollBack(); 
+                throw $e;
+            }
+            $this->resetExcept('dist_toko');
+            toast('Saved to Draft Successfully','success');
+            return redirect(route('distribusitoko.detail', $this->dist_toko));
+        }
     }
 }

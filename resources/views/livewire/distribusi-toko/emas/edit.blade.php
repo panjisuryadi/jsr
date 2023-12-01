@@ -58,6 +58,7 @@
 
                                 @forelse ($products as $key => $product)
                                 @php
+                                    $product->load('karat');
                                     $image = $product->images;
                                     $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                 @endphp
@@ -69,6 +70,7 @@
                                     </td>
                                     <td>
                                         <span class="block">Nama : <span class="font-bold">{{ $product->product_name }}</span></span>
+                                        <span class="block">Kode : <span class="font-bold">{{ $product->product_code }}</span></span>
                                         <span class="block">Karat : <span class="font-bold">{{ $product->karat->label }}</span></span>
                                         <span class="block">Berat : <span class="font-bold">{{ $product->berat_emas }} gr</span></span>
                                     </td>
@@ -192,6 +194,7 @@
                             <tbody>
                                 @forelse ($dist_toko->items as $index => $item )
                                 @php
+                                    $item->load('product');
                                     $image = $item->product?->images;
                                     $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                 @endphp
@@ -203,11 +206,12 @@
                                     </td>
                                     <td>
                                         <span class="block">Nama : <span class="font-bold">{{ $item->product?->product_name }}</span></span>
+                                        <span class="block">Kode : <span class="font-bold">{{ $item->product->product_code }}</span></span>
                                         <span class="block">Karat : <span class="font-bold">{{ $item->product?->karat->label }}</span></span>
                                         <span class="block">Berat : <span class="font-bold">{{ $item->product?->berat_emas }} gr</span></span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $index }})">
+                                        <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $item }})">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </td>
