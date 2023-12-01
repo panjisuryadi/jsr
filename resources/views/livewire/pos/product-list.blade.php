@@ -18,15 +18,15 @@
 
                     <div wire:click.prevent="selectProduct({{ $product }})" class="md:px-1 py-1" style="cursor: pointer;">
 
-                      
+                        @php
+                        $image = $product->images;
+                        $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
+                        @endphp
 
                         <div
                             class="h-40 lg:h-32 md:h-32 relative overflow-hidden rounded-md  hover:shadow-md"
                             >
-                            <img
-                            src="{{ $product->getFirstMediaUrl('images') }}"
-                            class="absolute inset-0 h-full w-full object-cover"
-                            />
+                            <img src="{{ $imagePath }}" class="absolute inset-0 h-full w-full object-cover"/>
 
                             <span style="font-size:0.7rem;" 
                                 class="absolute top-2 leading-5 left-1 inline-flex items-center justify-center rounded-lg bg-red-400 px-1 py-0.2 text-red-200"
