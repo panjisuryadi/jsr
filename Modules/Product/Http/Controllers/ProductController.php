@@ -327,7 +327,7 @@ public function index_data(Request $request)
                 $tb = '<div class="flex items-center gap-x-2">
                         <div>
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
-                            ' . $data->category->category_name . '</div>
+                            ' . $data->category?->category_name . '</div>
 
                             <h3 class="small font-medium text-gray-600 dark:text-white "> ' . $data->product_name . '</h3>
                              <div class="text-xs font-normal text-blue-500 font-semibold">
@@ -363,8 +363,8 @@ public function index_data(Request $request)
                    ->editColumn('karat', function ($data) {
                         $tb = '<div class="items-center gap-x-2">
                                <div class="text-sm text-center text-gray-500">
-                                 <b>' . @$data->product_item->karat->name . ' </b><br>
-                                 Rp .' . @rupiah($data->product_item->karat->penentuanHarga->harga_emas) . ' <br>
+                                 <b>' . @$data->karat->label . ' </b><br>
+                                 Rp .' . @rupiah($data->karat->penentuanHarga->harga_emas) . ' <br>
 
                                  </div>
                                 </div>';
