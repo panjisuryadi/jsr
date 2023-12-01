@@ -36,12 +36,15 @@
 @if (count($datakarat))
 
 <div class="py-2 px-2 font-semibold flex flex-col justify-center">
-    <p>Karat : <span id="karat"></span></p>
-    <p>Jumlah Stok : <span id="sisa-stok"></span></p>
+    <p class="text-gray-400 text-lg">Karat : <span class="text-gray-800" id="karat"></span></p>
+    <p class="text-gray-400 text-lg">Jumlah Stok : <span class="text-gray-800" id="sisa-stok"></span></p>
 </div>
+
+
+<div>
 @if (!auth()->user()->isUserCabang())
 <div class="form-group">
-    <label for="cabang_filter" class="font-bold">Cabang</label>
+    <label for="cabang_filter" class="font-bold mb-0">Cabang</label>
     <select name="cabang_filter" id="cabang_filter" class="form-control">
         <option value="" selected>Pilih Cabang</option>
         @foreach ($dataCabang as $cabang )
@@ -56,11 +59,11 @@
             @foreach ($datakarat as $karat )
             <option value="{{$karat->id}}">{{ $karat->name }} | {{$karat->kode}}</option>
             @endforeach
-        </select>
-    </div>
+</select>
+</div>
 
 @endif
-
+</div>
 
 
 
