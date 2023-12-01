@@ -1180,7 +1180,7 @@ public function update_ajax(Request $request, $id)
             ProductStatus::SECOND,
         ]);
         $module_action = 'Ready Cabang';
-        abort_if(Gate::denies('access_stoks'), 403);
+        abort_if(Gate::denies('show_stock_ready_cabang'), 403);
             return view(''.$module_name.'::'.$module_path.'.page.index_ready',
             compact('module_name',
             'module_action',
