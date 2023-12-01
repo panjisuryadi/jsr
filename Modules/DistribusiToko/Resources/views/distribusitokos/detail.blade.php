@@ -15,6 +15,8 @@
         @livewire('distribusi-toko.modal.create',['dist_toko' => $dist_toko])
     @elseif ($dist_toko->isRetur())
         @livewire('distribusi-toko.retur',['dist_toko' => $dist_toko])
+    @elseif ($dist_toko->isInProgress())
+        @livewire('distribusi-toko.progress',['dist_toko' => $dist_toko])
     @elseif ($dist_toko->isCompleted())
         @livewire('distribusi-toko.completed',['dist_toko' => $dist_toko])
     @endif
