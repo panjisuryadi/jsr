@@ -49,6 +49,7 @@ class DistribusiTokosController extends Controller
      */
 
   public function index(Request $request) {
+        abort(404);
         if(AdjustmentSetting::exists()){
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
