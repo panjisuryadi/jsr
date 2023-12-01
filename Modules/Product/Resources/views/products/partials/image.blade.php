@@ -1,13 +1,11 @@
 <div class="p-0 object-center">
 <?php
 
-      if ($data->getFirstMediaUrl('images')) {
-            $logo = $data->getFirstMediaUrl('images');
-        }else{
-            $logo = asset('images/fallback_product_image.png');
-        }
+    $image = $data->images;
+    $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
 
 ?>
- <img src="{{ $logo }}" alt="background"
-                class="rounded-xl h-12 bg-cover mx-auto">
+<a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " class="single_image">
+    <img src="{{ $imagePath }}" order="0" width="70" class="img-thumbnail"/>
+</a>
  </div>
