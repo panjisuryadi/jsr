@@ -17,22 +17,17 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           
 
-        <div class="btn-group">
-            <a  href="{{ route('karat.create') }}" class="px-3 btn btn-warning">
-                Tambah Karat <i class="bi bi-plus"></i>
-            </a>
-            <a href="{{ route('penentuanharga.index') }}" class="px-3 btn btn-success">
-                Penentuan Harga <i class="bi bi-plus"></i>
-            </a>
-            
-        </div>
+                <div class="btn-group">
+                    <a  href="{{ route('karat.create') }}" class="px-3 btn btn-warning">
+                        Tambah Karat <i class="bi bi-plus"></i>
+                    </a>
+                    <a href="{{ route('penentuanharga.index') }}" class="px-3 btn btn-success">
+                        Penentuan Harga <i class="bi bi-plus"></i>
+                    </a>
+                </div>
 
-
-
-
-                        </div>
+                    </div>
                         <div id="buttons"></div>
                     </div>
                     <div class="table-responsive mt-1">
