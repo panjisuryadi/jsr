@@ -1137,6 +1137,7 @@ public function approve_distribusi(Request $request, $id)
     }
 
     public function edit_emas(DistribusiToko $dist_toko){
+        abort_if(!$dist_toko->isDraft(),403);
         return view(''.$this->module_name.'::'.$this->module_path.'.emas.edit', compact('dist_toko'));
     }
 
