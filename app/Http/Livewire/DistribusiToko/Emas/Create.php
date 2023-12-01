@@ -236,7 +236,7 @@ class Create extends Component
                             ],
                             "code" => $this->distribusi_toko_details[$key]['product_code'],
                             'certificate_id' => $this->distribusi_toko_details[$key]['product_item']['certificate_id'],
-                            'no_certificate' => $this->distribusi_toko_details[$key]['product_item']['no_series'],
+                            'no_certificate' => $this->distribusi_toko_details[$key]['product_item']['no_certificate'],
                             'accessories_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_accessories'],
                             'tag_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_label'],
                             'image' => $this->distribusi_toko_details[$key]['images'],
@@ -413,6 +413,7 @@ class Create extends Component
 
             $product_item = $product->product_item()->create([
                 'certificate_id'              => empty($this->new_product['certificate_id'])?null:$this->new_product['certificate_id'],
+                'no_certificate'              => empty($this->new_product['no_certificate'])?null:$this->new_product['no_certificate'],
                 'berat_label'                 => $this->new_product['tag_weight'],
                 'berat_accessories'           => $this->new_product['accessories_weight'],
                 'berat_total'                 => $this->new_product['total_weight'],

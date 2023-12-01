@@ -229,6 +229,7 @@ class Edit extends Component
 
             $product_item = $product->product_item()->create([
                 'certificate_id'              => empty($this->new_product['certificate_id'])?null:$this->new_product['certificate_id'],
+                'no_certificate'              => empty($this->new_product['no_certificate'])?null:$this->new_product['no_certificate'],
                 'berat_label'                 => $this->new_product['tag_weight'],
                 'berat_accessories'           => $this->new_product['accessories_weight'],
                 'berat_total'                 => $this->new_product['total_weight'],
