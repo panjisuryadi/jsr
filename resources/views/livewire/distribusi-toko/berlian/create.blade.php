@@ -58,8 +58,8 @@
                                 @foreach ($products as $key => $value)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td> <a href="/{{ imageUrl() .'produksi/' . @$value->images }}" data-lightbox="{{ $value->images }} " b class="single_image">
-                                            <img src="/{{ imageUrl() .'produksi/' . @$value->images }}" order="0" width="100" class="img-thumbnail" align="center"/>
+                                    <td> <a href="/{{ imageUrl(). @$value->images }}" data-lightbox="{{ $value->images }} " b class="single_image">
+                                            <img src="/{{ imageUrl(). @$value->images }}" order="0" width="100" class="img-thumbnail" align="center"/>
                                         </a>
                                     </td>
                                     <td> {{ $value->product_code }} </td>
@@ -180,8 +180,8 @@
                                 @endphp
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td> <a href="/{{ imageUrl() .'produksi/' . @$image }}" data-lightbox="{{ $image }} " b class="single_image">
-                                            <img src="/{{ imageUrl() .'produksi/' . @$image }}" order="0" width="100" class="img-thumbnail" align="center"/>
+                                    <td> <a href="/{{ imageUrl(). @$image }}" data-lightbox="{{ $image }} " b class="single_image">
+                                            <img src="/{{ imageUrl(). @$image }}" order="0" width="100" class="img-thumbnail" align="center"/>
                                         </a>
                                     </td>
                                     <td> {{ !empty($val['product_code']) ? $val['product_code'] : ''  }} </td>
