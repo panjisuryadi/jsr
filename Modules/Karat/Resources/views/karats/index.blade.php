@@ -56,7 +56,7 @@
                                         Ph
                                     </th> 
 
-                                    <th style="width: 10%!important;" class="text-center">
+                                    <th style="width: 13%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
