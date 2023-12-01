@@ -26,7 +26,7 @@
                         <div>Tanggal: <strong> {{ \Carbon\Carbon::parse($dist_toko->date)->format('d M, Y') }}</strong></div>
                         <div>Cabang: <strong>{{ $dist_toko->cabang->name }}</strong></div>
                         <div>
-                            Dibuat oleh: <strong>{{ $dist_toko->created_by }}</strong>
+                            Dibuat oleh: <strong>{{ $dist_toko->current_status_pic()->name }}</strong>
                         </div>
 
                     </div>
@@ -73,14 +73,9 @@
 
                                     </th>
                                     <th class="text-center">No</th>
-                                    {{-- <th class="text-center">Karat</th>
-                                    <th class="text-center">Berat Emas</th>
-                                    <th class="text-center">Produk</th>
-                                    <th class="text-center">Group</th>
-                                    <th class="text-center">Model</th> --}}
                                     <th class="text-center">Image</th>
                                     <th class="text-center">Informasi Produk</th>
-                                    <th class="text-center">Aksi</th>
+                                    <th class="text-center">Kode Produk</th>
 
                                 </tr>
                             </thead>
@@ -103,11 +98,8 @@
                                         $berlian_info .= ' '.$shape . ' '. $item->qty . ': ' . (float)$item->karatberlians . ' ct ';
                                     }
                                 }
-                                $image = isset($data->image) ? $data->image : (isset($data->images) ? $data->images : '');
-                                $imagePath = '/' .imageUrl() .'produksi/' . @$image;
-                                if(!file_exists(storage_path().'/app/public/uploads/produksi/'.@$image)){
-                                    $imagePath = '/' .imageUrl() .'/' . @$image;
-                                }
+                                $image = $row->product->images;
+                                $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                 @endphp
                                 <tr>
                                     <td class="text-center">
@@ -118,19 +110,24 @@
                                             <img src="{{ $imagePath }}" order="0" width="100" class="img-thumbnail" align="center"/>
                                         </a>
                                     </td>
-                                    <td class="text-center font-semibold">  
-                                        {{ $model .' '. @$row->karat->name . ' ' . @$row->gold_weight }} gr 
-                                        @if(!empty($berlian_info))
-                                        <br>
-                                        Berlian : {{ $berlian_info }}
-                                        @endif
-                                    
+                                    <td class="text-left font-semibold">
+                                        <div class="p-3">
+                                            <p>Nama Produk : {{ $row->product->product_name }}</p>
+                                            <p>Kategori : {{ $row->product->category->category_name }}</p>
+                                            <p>Karat Emas : {{ $row->product->karat->label }}</p>
+                                            <p>Berat Emas : {{ $row->product->berat_emas }}</p>
+    
+                                            @if(!empty($berlian_info))
+                                            <br>
+                                            Berlian : {{ $berlian_info }}
+                                            @endif
+                                        </div>  
                                     </td>
-                                    <td class="text-center font-semibold">
-                                        <a href="#" class="hover:text-blue-400 btn btn-sm btn-danger px-4">Preview</a>
-
+                                    <td class="text-left font-semibold">
+                                        <div class="p-3">
+                                            <p>{{ $row->product->product_code }}</p>
+                                        </div>  
                                     </td>
-
                                 </tr>
                                 @empty
                                 <tr>
