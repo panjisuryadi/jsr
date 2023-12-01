@@ -15,6 +15,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+
+
                     <div class="flex justify-between py-1 border-bottom">
                      <div>
                        <p class="uppercase text-lg text-gray-600 font-semibold">
@@ -25,38 +27,52 @@
                         <div id="buttons">
                         </div>
                     </div>
-                    <div class="flex justify-between">
-                            @if (count($datakarat))
-                            <div class="card">
-                                <div class="card-body font-semibold flex flex-col justify-center">
-                                    <p>Karat : <span id="karat"></span></p>
-                                    <p>Jumlah Stok : <span id="sisa-stok"></span></p>
-                                </div>
-                            </div>
-                            <div class="w-1/4">
-                                @if (!auth()->user()->isUserCabang())
-                                <div class="form-group mt-3">
-                                    <label for="cabang_filter" class="font-bold">Cabang</label>
-                                    <select name="cabang_filter" id="cabang_filter" class="form-control">
-                                        <option value="" selected>Pilih Cabang</option>
-                                        @foreach ($dataCabang as $cabang )
-                                        <option value="{{$cabang->id}}">{{ $cabang->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                @endif
-                                <div class="form-group mt-3">
-                                    <label for="karat_filter" class="font-bold">Karat</label>
-                                    <select name="karat_filter" id="karat_filter" class="form-control">
-                                        @foreach ($datakarat as $karat )
-                                        <option value="{{$karat->id}}">{{ $karat->name }} | {{$karat->kode}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            @endif
 
-                    </div>
+
+<div class="grid grid-cols-2 gap-2 mb-3 px-3 py-2 mt-2 rounded-md border border-gray-300">
+
+
+
+@if (count($datakarat))
+
+<div class="py-2 px-2 font-semibold flex flex-col justify-center">
+    <p>Karat : <span id="karat"></span></p>
+    <p>Jumlah Stok : <span id="sisa-stok"></span></p>
+</div>
+@if (!auth()->user()->isUserCabang())
+<div class="form-group">
+    <label for="cabang_filter" class="font-bold">Cabang</label>
+    <select name="cabang_filter" id="cabang_filter" class="form-control">
+        <option value="" selected>Pilih Cabang</option>
+        @foreach ($dataCabang as $cabang )
+        <option value="{{$cabang->id}}">{{ $cabang->name }}</option>
+        @endforeach
+    </select>
+</div>
+@endif
+<div class="form-group">
+        <label for="karat_filter" class="mb-0 font-semibold">Karat</label>
+        <select name="karat_filter" id="karat_filter" class="form-control">
+            @foreach ($datakarat as $karat )
+            <option value="{{$karat->id}}">{{ $karat->name }} | {{$karat->kode}}</option>
+            @endforeach
+        </select>
+    </div>
+
+@endif
+
+
+
+
+
+</div>
+                    
+
+
+
+
+
+
                     <div class="table-responsive mt-1">
 
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">

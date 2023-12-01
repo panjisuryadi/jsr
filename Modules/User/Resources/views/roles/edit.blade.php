@@ -1717,6 +1717,8 @@
                </label>
             </div>
 
+            
+
 
 
 
@@ -1744,6 +1746,17 @@
                   {{ label_Case('access_stok_cabang') }}
                </label>
             </div>
+
+            
+         <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_stock_ready_cabang" name="permissions[]"
+                value="show_stock_ready_cabang" {{ $role->hasPermissionTo('show_stock_ready_cabang') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_stock_ready_cabang">
+                  {{ label_Case('show_stock_ready_cabang') }}
+               </label>
+            </div>
+
 
           <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"

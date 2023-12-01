@@ -59,8 +59,6 @@ class GenerateMenus
 
 
 
-
-
             // Pelanggan And Supplier
             $customers_suppliers = $masterData->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-people-fill"></i>
@@ -774,6 +772,7 @@ class GenerateMenus
                 'activematches' => ['stokcabangs*'],
                 'permission'    => ['access_stok_cabang',
                                      'access_stok_dp',
+                                     'show_stock_ready_cabang',
                                      'access_stok_pending'],
             ]);
             $stock_cabang->link->attr([
@@ -789,7 +788,7 @@ class GenerateMenus
             ->data([
                 'order'         => 1,
                 'activematches' => ['stoks*'],
-                'permission'    => ['access_stok_cabang'],
+                'permission'    => ['show_stock_ready_cabang'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
