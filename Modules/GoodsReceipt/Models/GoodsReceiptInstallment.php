@@ -15,7 +15,8 @@ class GoodsReceiptInstallment extends Model
         'payment_id',
         'nomor_cicilan',
         'tanggal_cicilan',
-        'jumlah_cicilan'
+        'jumlah_cicilan',
+        'nominal',
     ];
     
     protected static function newFactory()
