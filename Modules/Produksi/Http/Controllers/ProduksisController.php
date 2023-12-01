@@ -34,7 +34,7 @@ class ProduksisController extends Controller
     public $module_icon;
     public $module_model;
 
-    const IMG_PATH_PRD ='produksi/';
+    const IMG_PATH_PRD ='/';
 
 
     public function __construct()

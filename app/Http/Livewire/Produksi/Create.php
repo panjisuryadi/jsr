@@ -401,7 +401,7 @@ class Create extends Component
             $image= '';
             if ($this->image) {
                 $img = $this->image;
-                $folderPath = "uploads/produksi/";
+                $folderPath = "uploads/";
                 $image_parts = explode(";base64,", $img);
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1];
