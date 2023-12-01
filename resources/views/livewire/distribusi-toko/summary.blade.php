@@ -62,6 +62,7 @@
                                             <th class="text-center">No</th>
                                             <th class="text-center">Berat Emas</th>
                                             <th class="text-justify">Informasi Produk</th>
+                                            <th class="text-justify">Gambar Produk</th>
                                         </tr>
                                     </thead>
 
@@ -75,6 +76,8 @@
                                             $row->gold_weight = !empty($row->gold_weight) ? $row->gold_weight : $row->berat_emas;
 
                                             $total_weight = $total_weight + $row->gold_weight;
+                                            $image = $row->product->images;
+                                            $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                         @endphp
                                         <tr>
                                             <th class="text-center">{{$loop->iteration}}</th>
@@ -93,6 +96,10 @@
                                                     Code : <strong>{{ !empty($data->code) ? $data->code : (!empty($data->product_code) ? $data->product_code : '-')  }}</strong>
                                                 </div>
                                             </td>
+                                            <td> <a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " class="single_image">
+                                            <img src="{{ $imagePath }}" order="0" width="70" class="img-thumbnail"/>
+                                        </a>
+                                    </td>
                                         </tr>
                                         @empty
                                         <tr>
