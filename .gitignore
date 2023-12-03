@@ -19,3 +19,4 @@ yarn-error.log
 /push.sh
 .DS_Store
 .phpunit.database.checkum
+.zed
