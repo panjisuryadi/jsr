@@ -42,10 +42,10 @@
                                      {{ @$product->category->category_name }} 
                                     </span>
                                     
-                                    <h3 class="leading-5 font-semibold hover:text-red-400 mt-0.5 lg:text-sm sm:small md:text-sm md:leading-3 md:leading-4 text-lg text-gray-800">
+            <h3 style="font-size:0.8rem !important;line-height: 110%;" class="text-stroke-white font-semibold hover:text-red-400 mt-0.5 lg:text-sm sm:small md:text-sm md:leading-3 md:leading-5 text-lg text-gray-800">
                                     {{ $product->product_name }}
                                     </h3>
-                                <div class="lg:text-sm md:small text-red-400">
+                                <div class="font-semibold lg:text-sm md:small text-yellow-500">
                                     <small>Rp .</small>
 
                                    @if($product->product_price) 
@@ -76,3 +76,17 @@
             </div>
         </div>
     </div>
+
+
+    @push('page_css')
+      <style type="text/css">
+            .text-stroke-white {
+                text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+            }  
+
+              .text-stroke-gray {
+                text-shadow: -1px -1px 0 gray, 1px -1px 0 gray, -1px 1px 0 gray, 1px 1px 0 gray;
+            } 
+
+      </style>
+    @endpush
