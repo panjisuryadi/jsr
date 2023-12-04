@@ -71,7 +71,7 @@ class Product extends Model implements HasMedia
     }
     public function pembelian() {
         return $this->belongsTo(GoodsReceipt::class, 'goodsreceipt_id', 'id');
-    } 
+    }
 
     public function cabang() {
         return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
@@ -132,7 +132,7 @@ class Product extends Model implements HasMedia
    public function scopeApprove($query)
     {
         $query->where('status', 3);
-    }  
+    }
 
 
 
@@ -251,7 +251,7 @@ class Product extends Model implements HasMedia
         return $this->morphToMany(StockOffice::class, 'transaction','stock_office_history','transaction_id','stock_office_id','id','id')->withTimestamps();
     }
 
-
-
-
+    public function product_status(){
+        return $this->belongsTo(ProductStatus::class,'status_id','id');
+    }
 }
