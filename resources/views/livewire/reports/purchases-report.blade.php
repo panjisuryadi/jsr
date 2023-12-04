@@ -78,7 +78,7 @@
                                         <b>No. Surat Jalan / Invoice</b> : {{ $data->no_invoice }}
                                     </div>
                                     <div class="text-xs">
-                                        <b>Tgl Bayar </b> : {{ $data->pembelian->updated_at }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
+                                        <b>Tgl Bayar </b> : {{ $data->pembelian?->updated_at }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
                                     </div>
                                     <div class="text-xs">
                                         <b>Karat </b>: {{ $data->goodsreceiptitem->pluck('karat.label')->implode(', ')  }}
