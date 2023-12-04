@@ -147,8 +147,6 @@
         </div>
     </div>
 </div>
-
-@push('page_scripts')
 <script>
     document.addEventListener('livewire:load', function () {
         Livewire.on('openInNewTab', function (dataUri) {
@@ -157,4 +155,3 @@
         });
     });
 </script>
-@endpush
