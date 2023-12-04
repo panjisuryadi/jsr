@@ -38,7 +38,7 @@ class SalesReport extends Component
         $sales = Sale::whereDate('date', '>=', $this->start_date)
             ->whereDate('date', '<=', $this->end_date)
             ->when($this->customer_id, function ($query) {
-                return $query->where('customer_id', $this->customer_id);
+                return $query->where('customer_id', null);
             })
             ->when($this->sale_status, function ($query) {
                 return $query->where('status', $this->sale_status);
