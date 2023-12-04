@@ -377,7 +377,7 @@ class AdjustmentController extends Controller
     public function getdata(Request $request){
         $get_data = Adjustment::withCount('products', 'adjustedProducts')->with('cabang', 'adjustedProducts')->whereNotNull('id');
 
-        $get_data = $get_data->orderBy('created_at','desc')->get();
+        $get_data = $get_data->orderBy('date','desc')->get();
 
         return Datatables::of($get_data)
             ->addColumn('action', function ($data) {

@@ -126,7 +126,7 @@ class Create extends Component
             $adjustment = Adjustment::create([
                 'date' => $this->date,
                 'reference' =>  Adjustment::generateCode(),
-                'note' => $this->note .' | Additional Note : ' . $this->dynamic_note,
+                'note' => $this->note ." Additional Note : " . $this->dynamic_note,
                 'cabang_id' => $this->cabang_id,
                 'created_by' => auth()->user()->id,
             ]);
