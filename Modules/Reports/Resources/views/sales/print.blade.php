@@ -117,7 +117,7 @@
                 </span>
                     @endif
                 </td>
-                <td>{{ format_currency($sale->total_amount) }}</td>
+                <td>{{ format_uang($sale->total_amount) }}</td>
                 <td>
                     @if ($sale->payment_status == 'Partial')
                         <span class="badge badge-warning">

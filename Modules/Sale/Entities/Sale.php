@@ -61,16 +61,15 @@ class Sale extends Model
     }
 
     public function getPaidAmountAttribute($value) {
-        return $value / 100;
+        return $value;
     }
 
     public function getTotalAmountAttribute($value) {
         return $value;
-        //return $value / 100;
     }
 
-    public function getDueAmountAttribute($value) {
-        return $value / 100;
+    public function getDueAmountAttribute() {
+        return $this->attributes['paid_amount'] - $this->attributes['total_amount'];
     }
 
     public function getTaxAmountAttribute($value) {
