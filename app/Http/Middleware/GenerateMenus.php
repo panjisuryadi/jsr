@@ -1814,7 +1814,7 @@ class GenerateMenus
 
 
  // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-check mb-2"></i> '.__('Sales Report').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-check mb-2"></i> '.__('Laporan Penjualan').'', [
                 'route' => 'sales-report.index',
                 'class' => 'nav-item',
             ])

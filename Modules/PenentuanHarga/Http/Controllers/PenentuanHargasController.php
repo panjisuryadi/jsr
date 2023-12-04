@@ -531,7 +531,6 @@ public function update(Request $request, $id)
            $params['harga_jual'] = $params['harga_modal'];
         }
 
-        $params['lock'] = 1;
         $$module_name_singular->update($params);
         $idph       = $$module_name_singular->id;
         $karat   = $$module_name_singular->karat_id;

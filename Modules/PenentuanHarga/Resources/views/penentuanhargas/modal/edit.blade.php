@@ -72,9 +72,6 @@
         <th class="text-center">{{ label_case('Status') }}</th>
     </tr>
     @forelse(\Modules\PenentuanHarga\Models\HistoryPenentuanHarga::where('penentuan_harga_id',$detail->id)->latest()->get() as $sale)
-    @if($loop->index > 4)
-    @break
-    @endif
     
     <tr>
         <td class="text-center">{{ $loop->iteration }}</td>
