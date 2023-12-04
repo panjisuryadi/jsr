@@ -155,7 +155,7 @@ public function index_data(Request $request)
 
                             ->editColumn('customer', function ($data) {
                              $tb = '<div class="text-center text-green-800"> 
-                                     ' .@$data->customer->customer_name . '</div>';
+                                     ' . @$data->customer_name . '</div>';
                                 return $tb;
                             })
 

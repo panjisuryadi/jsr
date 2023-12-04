@@ -71,7 +71,7 @@ class Checkout extends Component
    public function mount($cartInstance, $customers) {
         $this->cart_instance = $cartInstance;
         $this->customers = $customers;
-        $this->customer_id = \Modules\People\Entities\Customer::limit(1)->first()->id;
+        $this->customer_id = null;
         $this->global_discount = 0;
         $this->global_tax = 0;
         $this->shipping = 0.00;
@@ -218,7 +218,6 @@ class Checkout extends Component
     public function proceed() {
 
 
-        if ($this->customer_id != null) {
            //  $cart = $this->total_amount;
              $cart = [
                    "customer_id" => $this->customer_id,
@@ -232,10 +231,6 @@ class Checkout extends Component
 
                  ]);
 
-
-        } else {
-            session()->flash('message', 'Kustomer Belum dipilih!');
-        }
     }
 
      public function selectcartModal() {

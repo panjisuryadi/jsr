@@ -80,4 +80,12 @@ class Sale extends Model
     public function getDiscountAmountAttribute($value) {
         return $value / 100;
     }
+
+    public function getCustomerNameAttribute(){
+        if(empty($this->attributes['customer_id'])){
+            return "Non Member";
+        }else{
+            return $this->customer->customer_name;
+        }
+    }
 }

@@ -47,7 +47,7 @@ class PosController extends Controller
 
       $input = $request->all();
       $input = $request->except('_token');
-    
+
         if ($input['tipebayar'] == 'cicil') {
             $tipebayar = 'cicilan';
             $payment_status = 'partial';
@@ -70,7 +70,7 @@ class PosController extends Controller
                 'date' => date('Y-m-d'),
                 'reference' => 'jsr',
                 'customer_id' =>$input['customer_id'],
-                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
+                'customer_name' => Customer::find($request->customer_id)?->customer_name,
                 'tax_percentage' => $request->tax_percentage,
                 'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
@@ -143,7 +143,7 @@ class PosController extends Controller
                 'date' => now()->format('Y-m-d'),
                 'reference' => 'PSL',
                 'customer_id' => $request->customer_id,
-                'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
+                'customer_name' => Customer::find($request->customer_id)?->customer_name,
                 'tax_percentage' => $request->tax_percentage,
                 'discount_percentage' => $request->discount_percentage,
                 'shipping_amount' => $request->shipping_amount * 100,
