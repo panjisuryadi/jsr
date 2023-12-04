@@ -114,6 +114,10 @@
 
          <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#StockPending">Stok Pending</a>
+        </li>  
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#StockReady">Stok Ready</a>
         </li>
     </ul>
 
@@ -122,7 +126,7 @@
             <div class="pt-3">
 
 
-  <table style="width: 100%;" class="table table-striped table-bordered">
+<table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
                             <th>{{ label_case('no_buys_back') }}</th>
@@ -436,6 +440,57 @@
          
             </div>
         </div>
+
+  <div id="StockReady" class="container px-0 tab-pane">
+            <div class="pt-3">
+
+                   <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{ label_case('No') }}</th>
+                            <th class="text-center">{{ label_case('Date') }}</th>
+                            <th>{{ label_case('Produk') }}</th>
+                            <th>{{ label_case('Karat') }}</th>
+                            <th>{{ label_case('Status') }}</th>
+                         
+                        </tr>
+                    @forelse(\Modules\Product\Entities\Product::ready()->get() as $row)
+                        @if($loop->index > 4)
+                             @break
+                         @endif
+                           {{-- {{ $row }} --}}
+
+                           <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ tgl($row->created_at) }}</td>
+                                <td>{{ $row->product_name }}</td>
+                                <td>{{ $row->karat->name }}</td>
+                                <td>{{ @$row->statuses[0]->name }}</td>
+                           
+                        </tr>
+                        @empty
+                           <tr>
+                                <td colspan="6"> <p class="uppercase">Tidak ada Data</p></td>
+                            
+                            </tr>
+                        @endforelse
+                        
+                    </table>
+         
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
     </div>
