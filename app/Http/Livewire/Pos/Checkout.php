@@ -62,7 +62,7 @@ class Checkout extends Component
                      'total_amount' => 'required|max:191',
                      'keterangan' => 'required|max:191',
                      'grand_total' => 'required|max:191',
-                 
+
 
                 ];
              }
@@ -115,16 +115,16 @@ class Checkout extends Component
 
        $this->grand_total = 'Rp ' . number_format($this->total_amount, 0, ',', '.');
 
-        
+
 
     }
 
 
-   
+
 
  public function recalculateTotal()
        {
-        if ($this->total_amount == 0 
+        if ($this->total_amount == 0
             && $this->diskon == 0) {
             $this->total = 0;
         }
@@ -132,8 +132,8 @@ class Checkout extends Component
        $hitung_bayar = preg_replace("/[^0-9]/", "", $this->total_amount);
        $hitung_diskon =preg_replace("/[^0-9]/", "", $this->diskon);
        $total = (int)$hitung_bayar - (int)$hitung_diskon;
-      
-     
+
+
       if ($hitung_diskon > $hitung_bayar) {
           session()->flash('pesan', 'Diskon melebihi jumlah yang dibayar.');
           $this->diskon = 0;
@@ -147,7 +147,7 @@ class Checkout extends Component
          $this->sub_total_hidden = $total;
         }
        // dd($hitung_bayar);
-        
+
 
     }
 
@@ -173,10 +173,10 @@ class Checkout extends Component
         $this->showTunai = false;
         $this->loading = true;
         sleep(1);
-      
+
         $this->showTransfer = !$this->showTransfer;
         $this->loading = false;
-    }  
+    }
 
     public function btnEdc()
     {
@@ -216,7 +216,7 @@ class Checkout extends Component
 
 
     public function proceed() {
-          
+
 
         if ($this->customer_id != null) {
            //  $cart = $this->total_amount;
@@ -226,13 +226,13 @@ class Checkout extends Component
                    "paid" => $this->total_amount];
            // dd($cart);
              $this->emit('cartAdded', $cart);
-             $this->dispatchBrowserEvent('showCheckoutModal', 
-                [  
+             $this->dispatchBrowserEvent('showCheckoutModal',
+                [
                     'customer_id' => $this->customer_id
 
                  ]);
-          
-          
+
+
         } else {
             session()->flash('message', 'Kustomer Belum dipilih!');
         }
@@ -262,8 +262,8 @@ class Checkout extends Component
         if (!isset($product['karat']['penentuan_harga']['harga_jual'])) {
             session()->flash('message', 'Penentuan Harga '.$product['karat']['name'].' Belum di setting!');
             return;
-        } 
- 
+        }
+
         if ($exists->isNotEmpty()) {
             session()->flash('message', 'Product exists in the cart!');
             return;
@@ -365,10 +365,10 @@ $cart->add([
 public function HitungHarga($product) {
         $totalPrice = 0;
         if (empty($product['product_price'])) {
-            $totalPrice = $product['karat']['penentuanHarga']['harga_jual'] * $product['berat_emas'];
+            $totalPrice = $product['karat']['penentuan_harga']['harga_jual'] * $product['berat_emas'];
         }else{
             $totalPrice = $product['product_price'];
-        }      
+        }
 
         return $totalPrice;
     }
@@ -433,7 +433,7 @@ public function HitungHarga($product) {
         //     $unit_price = 1000;
         //     $product_tax = 100;
         //     $sub_total = 1000;
-        // } 
+        // }
 
         // elseif ($product['product_tax_type'] == 2) {
         //     $price = $product['product_price'];
@@ -493,7 +493,7 @@ public function HitungHarga($product) {
 
 
 
-      
+
        }
 
 
