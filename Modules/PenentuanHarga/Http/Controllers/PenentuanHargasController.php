@@ -68,7 +68,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::whereRelation('karat','parent_id',null)->get();
 
         $data = $$module_name;
 
@@ -91,39 +91,39 @@ public function index_data(Request $request)
                                      ' .$data->user->name . '
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
 
           ->editColumn('karat', function ($data) {
              $tb = '<div class="items-center text-center font-semibold">
                      ' .$data->karat->name . '&nbsp; | &nbsp;<span class="text-blue-500">' .$data->karat->kode . '</span>
                     </div>';
                 return $tb;
-            })  
+            })
 
             ->editColumn('harga_emas', function ($data) {
                     $tb = '<div class="items-center text-center">
                     Harga Emas : ' .rupiah($data->harga_emas) . '
-                            </div>';  
+                            </div>';
                     $tb .= '<div class="items-center text-center">
                     Harga Modal :' .rupiah($data->harga_modal) . '
                         </div>';
 
 
                                 return $tb;
-                            })   
+                            })
 
                              ->editColumn('harga_modal', function ($data) {
                              $tb = '<div class="items-center text-center">
                                      ' .rupiah($data->harga_modal) . '
                                     </div>';
                                 return $tb;
-                            })   
+                            })
                              ->editColumn('margin', function ($data) {
                              $tb = '<div class="items-center text-center">
                                      ' .rupiah($data->margin) . '
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
 
                              ->editColumn('harga_jual', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -132,7 +132,7 @@ public function index_data(Request $request)
                                 return $tb;
                             })
 
-               
+
                            ->addColumn('lock', function ($data) {
                             $module_path = $this->module_path;
                             $module_name = $this->module_name;
@@ -141,7 +141,7 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
 
-                     
+
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -155,14 +155,14 @@ public function index_data(Request $request)
 
 
                         ->rawColumns(['tgl_update',
-                                        'action', 
+                                        'action',
                                         'harga_emas',
                                         'margin',
                                         'harga_modal',
                                         'karat',
                                         'lock',
                                         'harga_jual',
-                                      
+
                                         'user'])
                         ->make(true);
                      }
@@ -205,34 +205,34 @@ public function index_setting(Request $request)
                           //            ' .$data->user->name . '
                           //           </div>';
                           //       return $tb;
-                          //   }) 
+                          //   })
 
                           ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center text-center">
                                      ' .$data->list_harga . '
                                     </div>';
                                 return $tb;
-                            })  
+                            })
 
                           //    ->editColumn('harga_emas', function ($data) {
                           //    $tb = '<div class="items-center text-center">
                           //            ' .rupiah($data->harga_emas) . '
                           //           </div>';
                           //       return $tb;
-                          //   })   
+                          //   })
 
                           //    ->editColumn('harga_modal', function ($data) {
                           //    $tb = '<div class="items-center text-center">
                           //            ' .rupiah($data->harga_modal) . '
                           //           </div>';
                           //       return $tb;
-                          //   })   
+                          //   })
                           //    ->editColumn('margin', function ($data) {
                           //    $tb = '<div class="items-center text-center">
                           //            ' .rupiah($data->margin) . '
                           //           </div>';
                           //       return $tb;
-                          //   }) 
+                          //   })
 
                           //    ->editColumn('harga_jual', function ($data) {
                           //    $tb = '<div class="items-center text-center">
@@ -260,13 +260,13 @@ public function index_setting(Request $request)
                             }
                         })
                         ->rawColumns(['tgl_update',
-                                        'action', 
+                                        'action',
                                         'harga_emas',
                                         'margin',
                                         'harga_modal',
                                         'karat',
                                         'harga_jual',
-                                        'karat', 
+                                        'karat',
                                         'user'])
                         ->make(true);
                      }
@@ -443,7 +443,7 @@ public function show($id)
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::with('karat','history')->findOrFail($id);
         $history = HistoryPenentuanHarga::where('penentuan_harga_id',$id)->first();
-        
+
           return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
@@ -484,7 +484,7 @@ public function show($id)
         $params['harga_emas'] = $price;
 
       //  dd($params);
-  
+
         $$module_name_singular->update($params);
          toast(''. $module_title.' Updated!', 'success');
          return redirect()->route(''.$module_name.'.index');
@@ -530,7 +530,7 @@ public function update(Request $request, $id)
         } else {
            $params['harga_jual'] = $params['harga_modal'];
         }
-        
+
         $params['lock'] = 1;
         $$module_name_singular->update($params);
         $idph       = $$module_name_singular->id;
@@ -560,7 +560,7 @@ public function update(Request $request, $id)
             'created_by'         => auth()->user()->name
          ]);
           HistoryPenentuanHarga::whereNotIn('karat_id', [$karat])
-              ->update(['updated' => '0']);      
+              ->update(['updated' => '0']);
         // dd($input);
       }
 
