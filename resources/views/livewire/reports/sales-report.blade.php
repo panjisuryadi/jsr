@@ -3,7 +3,6 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <form wire:submit.prevent="generateReport">
                         <div class="form-row">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -48,14 +47,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary">
-                                <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                Filter Report
-                            </button>
+                        <div class="form-row gap-3">
+                            <div class="form-group mb-0">
+                                <button wire:click.prevent="filterReport" class="btn btn-primary">
+                                    <span wire:target="filterReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <i wire:target="filterReport" wire:loading.remove class="bi bi-shuffle"></i>
+                                    Filter
+                                </button>
+                            </div>
+                            <div class="form-group mb-0">
+                                <a href="#" wire:click.prevent="pdf" class="btn btn-success">
+                                    <i class="bi bi-save"></i>
+                                    PDF
+                                </a>
+                            </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -141,3 +147,12 @@
         </div>
     </div>
 </div>
+
+@push('page_scripts')
+<script>
+    window.livewire.on('openInNewTab', (dataUri) => {
+        const newTab = window.open();
+        newTab.document.write('<html><head></head><body style="margin:0;"><iframe width="100%" height="100%" src="' + dataUri + '"></iframe></body></html>');
+    });
+</script>
+@endpush

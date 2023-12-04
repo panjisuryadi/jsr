@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Reports;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Sale\Entities\Sale;
+use PDF;
+
 
 class SalesReport extends Component
 {
@@ -19,6 +22,7 @@ class SalesReport extends Component
     public $customer_id;
     public $sale_status;
     public $payment_status;
+    public $sales_data;
 
     protected $rules = [
         'start_date' => 'required|date|before:end_date',
@@ -44,15 +48,28 @@ class SalesReport extends Component
             ->when($this->payment_status, function ($query) {
                 return $query->where('payment_status', $this->payment_status);
             })
-            ->orderBy('date', 'desc')->paginate(10);
+            ->orderBy('date', 'desc');
+        
+        $this->sales_data = $sales->clone()->get();
 
         return view('livewire.reports.sales-report', [
-            'sales' => $sales
+            'sales' => $sales->paginate(10)
         ]);
     }
 
-    public function generateReport() {
+    public function filterReport() {
         $this->validate();
         $this->render();
+    }
+
+    public function pdf(){
+        $start_date = Carbon::parse($this->start_date);
+        $end_date = Carbon::parse($this->end_date);
+        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
+        $sales = $this->sales_data;
+        $pdf = PDF::loadView('reports::sales.print',compact('start_date','filename','end_date','sales'))->output();
+        $base64Pdf = base64_encode($pdf);
+        $dataUri = 'data:application/pdf;base64,' . $base64Pdf;
+        $this->emit('openInNewTab', $dataUri);
     }
 }
