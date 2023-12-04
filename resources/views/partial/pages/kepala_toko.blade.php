@@ -464,7 +464,10 @@
                                 <td>{{ tgl($row->created_at) }}</td>
                                 <td>{{ $row->product_name }}</td>
                                 <td>{{ $row->karat->name }}</td>
-                                <td>{{ @$row->product_status->name }}</td>
+                                <td>
+                                    <span class="bg-green-500 px-2 py-1 text-center text-white uppercase rounded-md">  {{ @$row->product_status->name }}</span>
+                                  
+                                </td>
 
                         </tr>
                         @empty
