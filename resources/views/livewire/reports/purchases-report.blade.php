@@ -35,30 +35,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select wire:model.defer="purchase_status" class="form-control" name="purchase_status">
-                                        <option value="">Select Status</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="Ordered">Ordered</option>
-                                        <option value="Completed">Completed</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Payment Status</label>
-                                    <select wire:model.defer="payment_status" class="form-control" name="payment_status">
-                                        <option value="">Select Payment Status</option>
-                                        <option value="Paid">Paid</option>
-                                        <option value="Unpaid">Unpaid</option>
-                                        <option value="Partial">Partial</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group mb-0">
                             <button type="submit" class="btn btn-primary">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -84,56 +60,42 @@
                         </div>
                         <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Reference</th>
-                            <th>Supplier</th>
-                            <th>Status</th>
-                            <th>Total</th>
-                            <th>Paid</th>
-                            <th>Due</th>
-                            <th>Payment Status</th>
+                            <th>@lang('Transaction Date')</th>
+                            <th>@lang('Transaction No')</th>
+                            <th>@lang('Supplier')</th>
+                            <th >@lang('Detail')</th>
+                            <th>@lang('Total')</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($purchases as $purchase)
+                        @forelse($datas as $data)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($purchase->date)->format('d M, Y') }}</td>
-                                <td>{{ $purchase->reference }}</td>
-                                <td>{{ $purchase->supplier_name }}</td>
-                                <td>
-                                    @if ($purchase->status == 'Pending')
-                                        <span class="badge badge-info">
-                                    {{ $purchase->status }}
-                                </span>
-                                    @elseif ($purchase->status == 'Ordered')
-                                        <span class="badge badge-primary">
-                                    {{ $purchase->status }}
-                                </span>
+                                <td>{{ \Carbon\Carbon::parse($data->date)->format('d M, Y') }}</td>
+                                <td>{{ $data->code }}</td>
+                                <td>{{ $data->supplier->supplier_name }}</td>
+                                <td  class="text-left">
+                                    <div class="text-xs">
+                                        <b>No. Surat Jalan / Invoice</b> : {{ $data->no_invoice }}
+                                    </div>
+                                    @if($data->tipe_pembayaran == "cicil" && !empty ($data->pembelian->detailCicilan))
+                                        @foreach ($data->pembelian->detailCicilan as $cicilan )
+                                        <div class="text-xs">
+                                            <b> Tanggal Cicilan ke {{ $cicilan->nomor_cicilan }}</b> : {{ \Carbon\Carbon::parse($cicilan->tanggal_cicilan)->format('d M, Y') }}
+                                        @endforeach
+                                        </div>
                                     @else
-                                        <span class="badge badge-success">
-                                    {{ $purchase->status }}
-                                </span>
+                                        <div class="text-xs">
+                                            <b>Tgl Bayar </b> : {{ $data->pembelian?->updated_at }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
+                                        </div>
                                     @endif
+                                    <div class="text-xs">
+                                        <b>Karat </b>: {{ $data->goodsreceiptitem->pluck('karat.label')->implode(', ')  }}
+                                    </div>
+                                    <div class="text-xs">
+                                        <b>Berat yang dibayar</b> : {{ $data->total_berat }} gr
+                                    </div>
                                 </td>
-                                <td>{{ format_currency($purchase->total_amount) }}</td>
-                                <td>{{ format_currency($purchase->paid_amount) }}</td>
-                                <td>{{ format_currency($purchase->due_amount) }}</td>
-                                <td>
-                                    @if ($purchase->payment_status == 'Partial')
-                                        <span class="badge badge-warning">
-                                    {{ $purchase->payment_status }}
-                                </span>
-                                    @elseif ($purchase->payment_status == 'Paid')
-                                        <span class="badge badge-success">
-                                    {{ $purchase->payment_status }}
-                                </span>
-                                    @else
-                                        <span class="badge badge-danger">
-                                    {{ $purchase->payment_status }}
-                                </span>
-                                    @endif
-
-                                </td>
+                                <td>Rp. {{ number_format($data->harga_beli) }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -144,8 +106,8 @@
                         @endforelse
                         </tbody>
                     </table>
-                    <div @class(['mt-3' => $purchases->hasPages()])>
-                        {{ $purchases->links() }}
+                    <div @class(['mt-3' => $datas->hasPages()])>
+                        {{ $datas->links() }}
                     </div>
                 </div>
             </div>

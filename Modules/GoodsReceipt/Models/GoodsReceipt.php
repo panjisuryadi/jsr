@@ -119,5 +119,11 @@ class GoodsReceipt extends Model implements HasMedia
         $query->whereRelation('pembelian','lunas', null);
     }
 
+    public function scopeLunas($query)
+    {
+        $query->whereRelation('pembelian','lunas', 'lunas');
+        $query->orWhere('tipe_pembayaran', 'lunas');
+    }
+
 
 }
