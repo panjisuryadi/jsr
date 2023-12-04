@@ -77,9 +77,17 @@
                                     <div class="text-xs">
                                         <b>No. Surat Jalan / Invoice</b> : {{ $data->no_invoice }}
                                     </div>
-                                    <div class="text-xs">
-                                        <b>Tgl Bayar </b> : {{ $data->pembelian?->updated_at }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
-                                    </div>
+                                    @if($data->tipe_pembayaran == "cicil" && !empty ($data->pembelian->detailCicilan))
+                                        @foreach ($data->pembelian->detailCicilan as $cicilan )
+                                        <div class="text-xs">
+                                            <b> Tanggal Cicilan ke {{ $cicilan->nomor_cicilan }}</b> : {{ \Carbon\Carbon::parse($cicilan->tanggal_cicilan)->format('d M, Y') }}
+                                        @endforeach
+                                        </div>
+                                    @else
+                                        <div class="text-xs">
+                                            <b>Tgl Bayar </b> : {{ $data->pembelian?->updated_at }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
+                                        </div>
+                                    @endif
                                     <div class="text-xs">
                                         <b>Karat </b>: {{ $data->goodsreceiptitem->pluck('karat.label')->implode(', ')  }}
                                     </div>
