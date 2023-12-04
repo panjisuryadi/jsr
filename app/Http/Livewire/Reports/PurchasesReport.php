@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Purchase\Entities\Purchase;
 
 class PurchasesReport extends Component
@@ -35,21 +36,17 @@ class PurchasesReport extends Component
     }
 
     public function render() {
-        $purchases = Purchase::whereDate('date', '>=', $this->start_date)
-            ->whereDate('date', '<=', $this->end_date)
+        $data = GoodsReceipt::with('supplier', 'pembelian.detailCicilan')
+                ->withSum('goodsreceiptitem as total_berat', 'berat_real')
+                ->whereDate('date', '>=', $this->start_date)
+                ->whereDate('date', '<=', $this->end_date)
             ->when($this->supplier_id, function ($query) {
                 return $query->where('supplier_id', $this->supplier_id);
-            })
-            ->when($this->purchase_status, function ($query) {
-                return $query->where('status', $this->purchase_status);
-            })
-            ->when($this->payment_status, function ($query) {
-                return $query->where('payment_status', $this->payment_status);
             })
             ->orderBy('date', 'desc')->paginate(10);
 
         return view('livewire.reports.purchases-report', [
-            'purchases' => $purchases
+            'datas' => $data
         ]);
     }
 

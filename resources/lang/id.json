@@ -168,12 +168,20 @@
     "Logs by Date": "Logs by Date",
     "Log Viewer Dashboard": "Log Viewer Dashboard",
     "Delete Log File": "Delete Log File",
-    "Details": "Details",
+    "Details": "Detail",
     "Levels": "Levels",
     "Log Info": "Log Info",
     "Select an option": "-- pilih --",
     "Draft": "Draft",
     "Published": "dipublish",
+
+
+    "Transaction Date": "Tanggal Transaksi",
+    "Transaction No": "Nomor Transaksi",
+    "Supplier": "Supplier",
+    "Payment Date": "Tanggal Pembayaran",
+    "Notes": "Catatan",
+    
 
 
 
