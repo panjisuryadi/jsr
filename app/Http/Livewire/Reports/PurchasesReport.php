@@ -38,6 +38,7 @@ class PurchasesReport extends Component
     public function render() {
         $data = GoodsReceipt::with('supplier', 'pembelian.detailCicilan')
                 ->withSum('goodsreceiptitem as total_berat', 'berat_real')
+                ->lunas()
                 ->whereDate('date', '>=', $this->start_date)
                 ->whereDate('date', '<=', $this->end_date)
             ->when($this->supplier_id, function ($query) {
