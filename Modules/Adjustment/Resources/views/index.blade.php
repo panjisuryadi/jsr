@@ -86,6 +86,7 @@
                                     <th>Reference</th>
                                     <th>Total Product</th>
                                     <th>Location</th>
+                                    <th>Catatan</th>
                                     <th>Summary</th>
                                     <th>Action</th>
                                 </thead>
@@ -175,6 +176,7 @@
                     { data: 'reference', name: 'reference' },
                     { data: 'product', name: 'product' },
                     { data: 'locations', name: 'locations' },
+                    { data: 'note', name: 'note' },
                     { data: 'summary', name: 'summary' },
                     { data: 'action', name: 'action' },
                 ], 
