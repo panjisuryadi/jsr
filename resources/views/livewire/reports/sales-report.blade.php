@@ -147,11 +147,3 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('livewire:load', function () {
-        Livewire.on('openInNewTab', function (dataUri) {
-            const newTab = window.open();
-            newTab.document.write('<html><head></head><body style="margin:0;"><iframe width="100%" height="100%" src="' + dataUri + '"></iframe></body></html>');
-        });
-    });
-</script>
