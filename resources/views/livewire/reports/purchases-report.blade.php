@@ -42,6 +42,18 @@
                                 Filter Report
                             </button>
                         </div>
+                        <div class="form-group mb-0">
+                            <a href="#" wire:click.prevent="pdf" class="btn btn-success">
+                                <i class="bi bi-save"></i>
+                                PDF
+                            </a>
+                        </div>
+                        <div class="form-group mb-0">
+                            <a href="#" wire:click.prevent="export('xlsx')" class="btn btn-success">
+                                <i class="bi bi-save"></i>
+                                Excel
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -77,25 +89,12 @@
                                     <div class="text-xs">
                                         <b>No. Surat Jalan / Invoice</b> : {{ $data->no_invoice }}
                                     </div>
-                                    {{-- @if($data->tipe_pembayaran == "cicil" && !empty ($data->pembelian->detailCicilan))
-                                        @foreach ($data->pembelian->detailCicilan as $cicilan )
-                                        @if(!empty($cicilan->jumlah_cicilan))
-                                            <div class="text-xs">
-                                                <b> Tanggal Cicilan ke {{ $cicilan->nomor_cicilan }}</b> : {{ \Carbon\Carbon::parse($cicilan->tanggal_cicilan)->format('d M, Y') }}
-                                            </div>
-                                        @endif
-                                        @endforeach
-                                    @else
-                                        <div class="text-xs">
-                                            <b>Tgl Bayar </b> : {{ $data->pembelian?->updated_at }}
-                                        </div>
-                                    @endif --}}
 
                                     <div class="text-xs">
                                         @php
                                             $tgl_bayar = !empty($data->tgl_bayar) ?  $data->tgl_bayar : $data->date;
                                         @endphp
-                                        <b>Tgl Bayar {{ !empty($data->nomor_cicilan) && $data->tipe_pembayaran == 'cicil'  ? '( Cicilan ke -' . $data->nomor_cicilan . ')' : ''  }}</b> : {{ \Carbon\Carbon::parse($tgl_bayar)->format('d M, Y') }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
+                                        <b>Tgl Bayar {{ !empty($data->nomor_cicilan) && $data->tipe_pembayaran == 'cicil'  ? '( Cicilan ke -' . $data->nomor_cicilan . ')' : ''  }}</b> : {{ \Carbon\Carbon::parse($tgl_bayar)->format('d M, Y H:i:s') }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
                                     </div>
                                     {{-- <div class="text-xs">
                                         <b>Karat </b>: {{ $data->goodsreceiptitem->pluck('karat.label')->implode(', ')  }}
