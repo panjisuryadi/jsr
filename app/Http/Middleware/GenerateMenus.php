@@ -635,7 +635,6 @@ class GenerateMenus
 
           // EMAS - SALES - LAPORAN SALES - Laporan Hutang
             $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Hutang Sales').'', [
-                'route' => 'hutang-report.index',
                 'class' => 'nav-item',
             ])
             ->data([
@@ -648,7 +647,6 @@ class GenerateMenus
 
              // EMAS - SALES - LAPORAN SALES - Laporan Piutang
              $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Piutang Sales').'', [
-                'route' => 'piutang-report.index',
                 'class' => 'nav-item',
             ])
             ->data([
@@ -1787,7 +1785,7 @@ class GenerateMenus
             ]);
 
           // Submenu: laporan Piutang
-            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('laporan Piutang').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Piutang').'', [
                 'route' => 'piutang-report.index',
                 'class' => 'nav-item',
             ])
@@ -1800,7 +1798,7 @@ class GenerateMenus
             ]);
 
           // Submenu: laporan hutang
-            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Hutang').'', [
+            $report->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Hutang').'', [
                 'route' => 'hutang-report.index',
                 'class' => 'nav-item',
             ])

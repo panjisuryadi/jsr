@@ -26,4 +26,8 @@ class TipePembelian extends Model
         return $this->hasMany(GoodsReceiptInstallment::class,'payment_id','id');
     }
 
+    public function getTotalPaidAttribute(){
+        return $this->detailCicilan->sum('jumlah_cicilan');
+    }
+
 }
