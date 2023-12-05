@@ -80,9 +80,14 @@ class PurchasesReport extends Component
                 })
                 ->orderBy('tgl_bayar', 'desc');
         $this->purchase_data = $data->clone()->get();
+        $total_harga = 0;
+        foreach ($this->purchase_data as $row){
+            $total_harga += !empty( $row->nominal) ? $row->nominal : $row->harga_beli;
+        }
 
         return view('livewire.reports.purchases-report', [
-            'datas' => $data->paginate(10)
+            'datas' => $data->paginate(10),
+            'total_harga' => $total_harga
         ]);
     }
 
@@ -109,5 +114,11 @@ class PurchasesReport extends Component
         $end_date = Carbon::parse($this->end_date);
         $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
         return Excel::download(new SaleExport($this->sales_data), $filename. '.' . $format);
+    }
+
+    public function resetFilter(){
+        $this->start_date = today()->subDays(30)->format('Y-m-d');
+        $this->end_date = today()->format('Y-m-d');
+        $this->supplier_id = '';
     }
 }
