@@ -61,6 +61,12 @@
                                     PDF
                                 </a>
                             </div>
+                            <div class="form-group mb-0">
+                                <a href="#" wire:click.prevent="export('xlsx')" class="btn btn-success">
+                                    <i class="bi bi-save"></i>
+                                    Excel
+                                </a>
+                            </div>
                         </div>
                 </div>
             </div>

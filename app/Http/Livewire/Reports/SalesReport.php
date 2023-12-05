@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Reports;
 
+use App\Exports\Sale\SaleExport;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Sale\Entities\Sale;
 use PDF;
-
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class SalesReport extends Component
 {
@@ -71,5 +74,14 @@ class SalesReport extends Component
         $base64Pdf = base64_encode($pdf);
         $dataUri = 'data:application/pdf;base64,' . $base64Pdf;
         $this->emit('openInNewTab', $dataUri);
+    }
+
+    public function export($format): BinaryFileResponse
+    {
+        abort_if(! in_array($format,['csv','xlsx','pdf']), Response::HTTP_NOT_FOUND);
+        $start_date = Carbon::parse($this->start_date);
+        $end_date = Carbon::parse($this->end_date);
+        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
+        return Excel::download(new SaleExport($this->sales_data), $filename. '.' . $format);
     }
 }
