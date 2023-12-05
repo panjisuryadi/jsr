@@ -193,7 +193,7 @@
                                             @if ($key==0)
                                             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                             @endif
-                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" wire:change="calculateTotalBeratReal()">
+                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
                                             @if ($errors->has($field_name))
                                             <span class="invalid feedback" role="alert">
                                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -265,7 +265,7 @@
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}
                                             <span class="text-danger small"> (yg harus dibayar)</span></label>
-                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" readonly>
+                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}">
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">

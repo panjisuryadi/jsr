@@ -219,14 +219,14 @@ class Penerimaan extends Component
     }
 
 
-    public function calculateTotalBeratReal()
-    {
-        $this->total_berat_real = 0;
-        foreach ($this->inputs as $key => $value) {
-            $this->total_berat_real += doubleval($this->inputs[$key]['berat_real']);
-            $this->total_berat_real = round($this->total_berat_real, 3);
-        }
-    }
+    // public function calculateTotalBeratReal()
+    // {
+    //     $this->total_berat_real = 0;
+    //     foreach ($this->inputs as $key => $value) {
+    //         $this->total_berat_real += doubleval($this->inputs[$key]['berat_real']);
+    //         $this->total_berat_real = round($this->total_berat_real, 3);
+    //     }
+    // }
 
     public function calculateTotalBeratKotor()
     {
