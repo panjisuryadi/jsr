@@ -23,4 +23,8 @@ class GoodsReceiptInstallment extends Model
     {
         return \Modules\GoodsReceipt\Database\factories\GoodsReceiptInstallmentFactory::new();
     }
+
+    public function pembelian(){
+        return $this->belongsTo(TipePembelian::class, 'payment_id');
+    }
 }
