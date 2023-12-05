@@ -125,5 +125,16 @@ class GoodsReceipt extends Model implements HasMedia
         $query->orWhere('tipe_pembayaran', 'lunas');
     }
 
+    public function scopeLunasAtauCicil($query)
+    {
+        $query->orWhere('tipe_pembayaran', 'lunas');
+        $query->orWhere(function($query){
+            $query->where('tipe_pembayaran', 'cicil');
+            $query->whereRelation('pembelian.detailCicilan', function($q) {
+                $q->where('jumlah_cicilan', '!=', null);
+            });
+        });
+    }
+
 
 }

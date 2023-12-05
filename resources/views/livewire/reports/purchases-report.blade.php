@@ -72,30 +72,62 @@
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($data->date)->format('d M, Y') }}</td>
                                 <td>{{ $data->code }}</td>
-                                <td>{{ $data->supplier->supplier_name }}</td>
+                                <td>{{ $data->supplier_name }}</td>
                                 <td  class="text-left">
                                     <div class="text-xs">
                                         <b>No. Surat Jalan / Invoice</b> : {{ $data->no_invoice }}
                                     </div>
-                                    @if($data->tipe_pembayaran == "cicil" && !empty ($data->pembelian->detailCicilan))
+                                    {{-- @if($data->tipe_pembayaran == "cicil" && !empty ($data->pembelian->detailCicilan))
                                         @foreach ($data->pembelian->detailCicilan as $cicilan )
-                                        <div class="text-xs">
-                                            <b> Tanggal Cicilan ke {{ $cicilan->nomor_cicilan }}</b> : {{ \Carbon\Carbon::parse($cicilan->tanggal_cicilan)->format('d M, Y') }}
+                                        @if(!empty($cicilan->jumlah_cicilan))
+                                            <div class="text-xs">
+                                                <b> Tanggal Cicilan ke {{ $cicilan->nomor_cicilan }}</b> : {{ \Carbon\Carbon::parse($cicilan->tanggal_cicilan)->format('d M, Y') }}
+                                            </div>
+                                        @endif
                                         @endforeach
-                                        </div>
                                     @else
                                         <div class="text-xs">
-                                            <b>Tgl Bayar </b> : {{ $data->pembelian?->updated_at }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
+                                            <b>Tgl Bayar </b> : {{ $data->pembelian?->updated_at }}
                                         </div>
+                                    @endif --}}
+
+                                    <div class="text-xs">
+                                        @php
+                                            $tgl_bayar = !empty($data->tgl_bayar) ?  $data->tgl_bayar : $data->date;
+                                        @endphp
+                                        <b>Tgl Bayar {{ !empty($data->nomor_cicilan) && $data->tipe_pembayaran == 'cicil'  ? '( Cicilan ke -' . $data->nomor_cicilan . ')' : ''  }}</b> : {{ \Carbon\Carbon::parse($tgl_bayar)->format('d M, Y') }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
+                                    </div>
+                                    {{-- <div class="text-xs">
+                                        <b>Karat </b>: {{ $data->goodsreceiptitem->pluck('karat.label')->implode(', ')  }}
+                                    </div> --}}
+                                    @if($data->tipe_pembayaran != 'lunas')
+                                    <div class="text-xs">
+                                        <b>Tipe Pembayaran </b>: {{ label_case($data->tipe_pembayaran)  }}
+                                    </div>
                                     @endif
                                     <div class="text-xs">
-                                        <b>Karat </b>: {{ $data->goodsreceiptitem->pluck('karat.label')->implode(', ')  }}
+                                        <b>Status Pembayaran </b>: {{ !empty($data->lunas) ? label_case($data->lunas) : ($data->tipe_pembayaran =='lunas' ? 'Lunas' : 'Belum Lunas' )  }}
+                                    </div>
+                                    @if(!empty($data->total_emas) && empty($data->total_karat))
+                                    <div class="text-xs">
+                                        <b>Berat yang dibayar</b> : {{ floatval(!empty($data->jumlah_cicilan) ? $data->jumlah_cicilan :$data->total_emas)}} gr
+                                    </div>
+                                    @elseif(empty($data->total_emas) && !empty($data->total_karat))
+                                    <div class="text-xs">
+                                        <b>Karat yang dibayar</b> : {{ $data->total_karat }} ct
+                                    </div>
+                                    @else
+                                    <div class="text-xs">
+                                        <b>Berat yang dibayar</b> : {{ floatval(!empty($data->jumlah_cicilan) ? $data->jumlah_cicilan :$data->total_emas) }} gr
                                     </div>
                                     <div class="text-xs">
-                                        <b>Berat yang dibayar</b> : {{ $data->total_berat }} gr
+                                        <b>Karat yang dibayar</b> : {{ $data->total_karat }} ct
                                     </div>
+
+                                    @endif
+                                    
                                 </td>
-                                <td>Rp. {{ number_format($data->harga_beli) }}</td>
+                                <td>Rp. {{ number_format(!empty( $data->nominal) ? $data->nominal : $data->harga_beli) }}</td>
                             </tr>
                         @empty
                             <tr>
