@@ -35,12 +35,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary">
-                                <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                Filter Report
-                            </button>
+
+                        <div class="form-row gap-3">
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-primary">
+                                    <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
+                                    Filter Report
+                                </button>
+                            </div>
+                            <div class="form-group mb-0">
+                                <a href="#" wire:click.prevent="resetFilter" class="btn btn-warning">
+                                    <i class="bi bi-arrow-repeat"></i>
+                                    Reset Filter
+                                </a>
+                            </div>
+                            <div class="form-group mb-0">
+                                <a href="#" wire:click.prevent="pdf" class="btn btn-success">
+                                    <i class="bi bi-save"></i>
+                                    PDF
+                                </a>
+                            </div>
+                            <div class="form-group mb-0">
+                                <a href="#" wire:click.prevent="export('xlsx')" class="btn btn-success">
+                                    <i class="bi bi-save"></i>
+                                    Excel
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -52,6 +73,24 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card border-0">
+                                <div class="card-body p-0 d-flex align-items-center shadow-sm">
+                                    <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
+                                        <i class="bi bi-bar-chart font-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-value text-primary">{{ format_currency($total_harga) }}</div>
+                                        <div class="text-muted text-uppercase font-weight-bold small">
+                                    @lang('Purchases')
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <table class="table table-bordered table-striped text-center mb-0">
                         <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                             <div class="spinner-border text-primary" role="status">
@@ -59,17 +98,17 @@
                             </div>
                         </div>
                         <thead>
-                        <tr>
+                        <tr class="text-sm">
                             <th>@lang('Transaction Date')</th>
                             <th>@lang('Transaction No')</th>
                             <th>@lang('Supplier')</th>
-                            <th >@lang('Detail')</th>
+                            <th>@lang('Detail')</th>
                             <th>@lang('Total')</th>
                         </tr>
                         </thead>
                         <tbody>
                         @forelse($datas as $data)
-                            <tr>
+                            <tr class="text-sm">
                                 <td>{{ \Carbon\Carbon::parse($data->date)->format('d M, Y') }}</td>
                                 <td>{{ $data->code }}</td>
                                 <td>{{ $data->supplier_name }}</td>
@@ -77,25 +116,12 @@
                                     <div class="text-xs">
                                         <b>No. Surat Jalan / Invoice</b> : {{ $data->no_invoice }}
                                     </div>
-                                    {{-- @if($data->tipe_pembayaran == "cicil" && !empty ($data->pembelian->detailCicilan))
-                                        @foreach ($data->pembelian->detailCicilan as $cicilan )
-                                        @if(!empty($cicilan->jumlah_cicilan))
-                                            <div class="text-xs">
-                                                <b> Tanggal Cicilan ke {{ $cicilan->nomor_cicilan }}</b> : {{ \Carbon\Carbon::parse($cicilan->tanggal_cicilan)->format('d M, Y') }}
-                                            </div>
-                                        @endif
-                                        @endforeach
-                                    @else
-                                        <div class="text-xs">
-                                            <b>Tgl Bayar </b> : {{ $data->pembelian?->updated_at }}
-                                        </div>
-                                    @endif --}}
 
                                     <div class="text-xs">
                                         @php
                                             $tgl_bayar = !empty($data->tgl_bayar) ?  $data->tgl_bayar : $data->date;
                                         @endphp
-                                        <b>Tgl Bayar {{ !empty($data->nomor_cicilan) && $data->tipe_pembayaran == 'cicil'  ? '( Cicilan ke -' . $data->nomor_cicilan . ')' : ''  }}</b> : {{ \Carbon\Carbon::parse($tgl_bayar)->format('d M, Y') }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
+                                        <b>Tgl Bayar {{ !empty($data->nomor_cicilan) && $data->tipe_pembayaran == 'cicil'  ? '( Cicilan ke -' . $data->nomor_cicilan . ')' : ''  }}</b> : {{ \Carbon\Carbon::parse($tgl_bayar)->format('d M, Y H:i:s') }} {{-- tgl pembayarn diambil dari updated at untuk akomodir semua case pembayaran, ketika cicilan, jatuh tempo, dan lunas maka dia akan update ke table tipe pembelian--}}
                                     </div>
                                     {{-- <div class="text-xs">
                                         <b>Karat </b>: {{ $data->goodsreceiptitem->pluck('karat.label')->implode(', ')  }}

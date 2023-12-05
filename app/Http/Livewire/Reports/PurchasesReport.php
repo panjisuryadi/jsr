@@ -2,12 +2,18 @@
 
 namespace App\Http\Livewire\Reports;
 
+use App\Exports\Sale\SaleExport;
+use PDF;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\GoodsReceipt\Models\GoodsReceiptInstallment;
 use Modules\Purchase\Entities\Purchase;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PurchasesReport extends Component
 {
@@ -20,8 +26,7 @@ class PurchasesReport extends Component
     public $start_date;
     public $end_date;
     public $supplier_id;
-    public $purchase_status;
-    public $payment_status;
+    public $purchase_data;
 
     protected $rules = [
         'start_date' => 'required|date|before:end_date',
@@ -33,32 +38,9 @@ class PurchasesReport extends Component
         $this->start_date = today()->subDays(30)->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
         $this->supplier_id = '';
-        $this->purchase_status = '';
-        $this->payment_status = '';
     }
 
     public function render() {
-        // $data = GoodsReceipt::with('supplier', 'pembelian.detailCicilan')
-        //         ->withSum('goodsreceiptitem as total_berat', 'berat_reals')
-        //         ->lunasAtauCicil()
-        //         ->whereDate('date', '>=', $this->start_date)
-        //         ->whereDate('date', '<=', $this->end_date)
-        //     ->when($this->supplier_id, function ($query) {
-        //         return $query->where('supplier_id', $this->supplier_id);
-        //     })
-        //     ->orderBy('date', 'desc')->paginate(10);
-        // $data = GoodsReceiptInstallment::with('pembelian.goodreceipt.goodsreceiptitem')
-        //         ->whereHas('pembelian.goodreceipt', function($q) {
-        //             $q->withSum('goodsreceiptitem as total_berat', 'berat_real');
-        //             $q->whereDate('date', '>=', $this->start_date);
-        //             $q->whereDate('date', '<=', $this->end_date);
-        //             $q->when($this->supplier_id, function ($query) {
-        //                 return $query->where('supplier_id', $this->supplier_id);
-        //             });
-        //             $q->orderBy('date', 'desc');
-        //         })->orderBy('pembelian.goodreceipt.date', 'desc')->paginate(10);
-        // $data = GoodsReceiptInstallment::leftJoin('tipe_pembelian', 'payment_id', 'tipe_pembelian.id')
-        //                                 ->leftJoin('goodsreceipt', 'goodsreceipt_id', 'goodsreceipt.id')
 
         $data = DB::table('goodsreceipts as gr')
                 ->select(
@@ -96,15 +78,47 @@ class PurchasesReport extends Component
                     $q->orWhere('nominal', '>', '0');
                     $q->orWhere('jumlah_cicilan', '>', '0');
                 })
-                ->orderBy('date', 'desc')->paginate(10);
+                ->orderBy('tgl_bayar', 'desc');
+        $this->purchase_data = $data->clone()->get();
+        $total_harga = 0;
+        foreach ($this->purchase_data as $row){
+            $total_harga += !empty( $row->nominal) ? $row->nominal : $row->harga_beli;
+        }
 
         return view('livewire.reports.purchases-report', [
-            'datas' => $data
+            'datas' => $data->paginate(10),
+            'total_harga' => $total_harga
         ]);
     }
 
     public function generateReport() {
         $this->validate();
         $this->render();
+    }
+
+    public function pdf(){
+        $start_date = Carbon::parse($this->start_date);
+        $end_date = Carbon::parse($this->end_date);
+        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
+        $datas = $this->purchase_data;
+        $pdf = PDF::loadView('reports::purchases.print',compact('start_date','filename','end_date','datas'))->setPaper('a4', 'landscape')->output();
+        $base64Pdf = base64_encode($pdf);
+        $dataUri = 'data:application/pdf;base64,' . $base64Pdf;
+        $this->emit('openInNewTab', $dataUri);
+    }
+
+    public function export($format): BinaryFileResponse
+    {
+        abort_if(! in_array($format,['csv','xlsx','pdf']), Response::HTTP_NOT_FOUND);
+        $start_date = Carbon::parse($this->start_date);
+        $end_date = Carbon::parse($this->end_date);
+        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
+        return Excel::download(new SaleExport($this->sales_data), $filename. '.' . $format);
+    }
+
+    public function resetFilter(){
+        $this->start_date = today()->subDays(30)->format('Y-m-d');
+        $this->end_date = today()->format('Y-m-d');
+        $this->supplier_id = '';
     }
 }
