@@ -37,11 +37,11 @@
     <label for="name">Name <span class="text-danger">*</span></label>
     <input class="form-control" type="text" name="name" required>
 </div>
-<div></div>
-    <!-- <div class="form-group">
-        <label for="is_active">Cabang <span class="text-danger">*</span></label>
-<select class="form-control" name="cabang_id" id="cabang_id" required>
- <option value="" selected disabled>Select Cabang</option>
+
+    <div class="form-group">
+        <label for="is_active">Cabang</label>
+<select class="form-control" name="cabang_id" id="cabang_id">
+ <option value="" selected disabled>Pilih Cabang</option>
          @foreach(\Modules\Cabang\Models\Cabang::all() as $cabang)
             <option value="{{ $cabang->id }}">
                {{ $cabang->code }} | {{ $cabang->name }}
@@ -49,7 +49,7 @@
         @endforeach
     </select>
 
-    </div> -->
+    </div>
 
 </div>
 <div class="flex flex-row grid grid-cols-2 gap-2">
