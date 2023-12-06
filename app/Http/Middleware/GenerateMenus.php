@@ -236,6 +236,7 @@ class GenerateMenus
                     'datasales*',
                     'products*',
                     'distribusitokos*',
+                    'storeemployees*',
                     'distribusisales*',
                     'penjualansales*',
                 ],
@@ -244,6 +245,7 @@ class GenerateMenus
                                      'access_sales',
                                      'access_products',
                                      'access_sales',
+                                     'access_storeemployees',
                                      'access_buys_back_luar',
                                      'access_penjualansales',
                                      'access_buybacktoko'],
@@ -365,45 +367,7 @@ class GenerateMenus
             ]);
 
 
-        // // buysbacknota
-        // $buysbacknota = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i>Buys Back Nota', [
-        //     'class' => 'c-sidebar-nav-dropdown',
-        // ])
-        // ->data([
-        //     'order'         => 2,
-        //     'activematches' => [
-        //         'home*',
-        //         'buysback*',
-              
-
-          
-        //     ],
-        //     'permission' => ['access_buysback_nota',
-                          
-        //                      'create_buysback_nota'],
-        // ]);
-        // $buysbacknota->link->attr([
-        //     'class' => 'c-sidebar-nav-dropdown-toggle',
-        //     'href'  => '#',
-        // ]);
-
-        // $buysbacknota->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Buysback Nota'), [
-        //     'route' => 'home.buysbacknota',
-        //     'class' => 'nav-item',
-        // ])
-        // ->data([
-        //     'order'         => 2,
-        //     'activematches' => ['buysback*'],
-        //     'permission'    => ['access_buysback_nota','access_products'],
-        // ])
-        // ->link->attr([
-        //     'class' => 'c-sidebar-nav-link py-2',
-        // ]);
-
-
-
-
-            // EMAS - TOKO - Distribusi Toko
+             // EMAS - TOKO - Distribusi Toko
          $distribusiToko = $toko->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
                 '.__('Distribusi Toko').'', [
@@ -413,18 +377,17 @@ class GenerateMenus
                 'order'         => 4,
                 'activematches' => [
                     
+                    'products*',
                     'distribusitokos*',
-              
-
                 ],
-                'permission'  => ['access_distribusitoko'],
+                'permission'  => ['access_distribusitoko','access_products'],
             ]);
             $distribusiToko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',
             ]);
 
-            // EMAS - TOKO - Distribusi Toko - PRODUK
+      
             $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Produk'), [
                 'route' => 'products.index',
                 'class' => 'nav-item',
