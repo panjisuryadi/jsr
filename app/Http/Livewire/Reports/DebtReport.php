@@ -40,10 +40,10 @@ class DebtReport extends Component
 
     protected $rules = [
         'period_type' => 'required',
-        'start_date' => 'requiredIf:period_type,custom|date|before:end_date',
-        'end_date'   => 'requiredIf:period_type,custom|date|after:start_date',
-        'month' => 'requiredIf:period_type,month',
-        'year' => 'requiredIf:period_type,year'
+        'start_date' => 'required_if:period_type,custom|date|before:end_date',
+        'end_date'   => 'required_if:period_type,custom|date|after:start_date',
+        'month' => 'required_if:period_type,month',
+        'year' => 'required_if:period_type,year'
     ];
 
     public function mount() {
@@ -120,11 +120,6 @@ class DebtReport extends Component
             'month',
             'year'
         ]);
-    }
-
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
     }
 
     public function getPeriodTextProperty(){
