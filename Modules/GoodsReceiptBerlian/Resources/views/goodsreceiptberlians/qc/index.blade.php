@@ -34,9 +34,8 @@
                                     <th style="width: 15%!important;" class="text-center">{{ __('No Penerimaan') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ __('Tanggal') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ __('Supplier') }}</th>
-                                    <th class="text-lef">{{ __('Nama Produk') }}</th>
+                                    <th class="text-lef">{{ __('Pembayaran') }}</th>
                                     <th class="text-lef">{{ __('Keterangan') }}</th>
-                                    <th class="text-lef">{{ __('Komen') }}</th>
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
@@ -106,9 +105,8 @@
                 {data: 'code', name: 'code'},
                 {data: 'date', name: 'date'},
                 {data: 'supplier', name: 'supplier'},
-                {data: 'nama_produk', name: 'nama_produk'},
+                {data: 'pembayaran', name: 'pembayaran'},
                 {data: 'keterangan', name: 'keterangan'},
-                {data: 'note', name: 'note'},
 
                 {
                     data: 'action',
@@ -143,6 +141,17 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+
+
+    $(document).on('click', '#edit_status', function(e){
+         e.preventDefault();
+        $('.modal-dialog').addClass('modal-md');
+        $('.modal-dialog').removeClass('modal-sm');
+        $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp; Edit Status Pembelian');
+
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });

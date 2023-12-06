@@ -108,12 +108,10 @@ class GoodsReceiptBerliansController extends Controller
         return Datatables::of($module_name)
 
             ->addColumn('action', function ($data) {
-                $datas = [
-                    'module_name' => $this->module_name,
-                    'module_model' => $this->module_model,
-                    'data' => $data,
-                ];
-                    return view(''.$this->module_name.'::'.$this->module_path.'.action', $datas);
+                $module_name = 'goodsreceipt';
+                $module_model = "Modules\GoodsReceipt\Models\GoodsReceipt";
+                return view('goodsreceipt::goodsreceipts.action',
+                    compact('module_name', 'data', 'module_model'));
                 })
 
             ->editColumn('image', function ($data) {
