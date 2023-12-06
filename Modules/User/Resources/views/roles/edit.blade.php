@@ -759,15 +759,6 @@
                </label>
             </div>
 
-   <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input"
-                id="show_suppliers" name="permissions[]"
-                value="show_suppliers" {{ $role->hasPermissionTo('show_suppliers') ? 'checked' : '' }}>
-                <label class="custom-control-label" for="show_suppliers">
-                  {{ label_Case('show_suppliers') }}
-               </label>
-            </div>
-
 
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
@@ -1952,6 +1943,59 @@
                   {{ label_Case('access_settings') }}
                </label>
             </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Distribusi Toko
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
+            
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_distribusitoko" name="permissions[]"
+                value="access_distribusitoko" {{ $role->hasPermissionTo('access_distribusitoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_distribusitoko">
+                  {{ label_Case('access_distribusi_toko') }}
+               </label>
+            </div>
+
+     <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="create_distribusitoko" name="permissions[]"
+                value="create_distribusitoko" {{ $role->hasPermissionTo('create_distribusitoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="create_distribusitoko">
+                  {{ label_Case('create_distribusi_toko') }}
+               </label>
+            </div>
+
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="edit_distribusitoko" name="permissions[]"
+                value="edit_distribusitoko" {{ $role->hasPermissionTo('edit_distribusitoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="edit_distribusitoko">
+                  {{ label_Case('edit_distribusi_toko') }}
+               </label>
+            </div>
+
+
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="delete_distribusitoko" name="permissions[]"
+                value="delete_distribusitoko" {{ $role->hasPermissionTo('delete_distribusitoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="delete_distribusitoko">
+                  {{ label_Case('delete_distribusi_toko') }}
+               </label>
+            </div>
+
+
+
             
         </div>
     </div>
