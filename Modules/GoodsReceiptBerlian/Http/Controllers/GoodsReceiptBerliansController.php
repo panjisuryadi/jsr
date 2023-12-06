@@ -749,8 +749,157 @@ class GoodsReceiptBerliansController extends Controller
                 ]);
             }
         }
-    
 
     }
 
+
+    /** DEBTS */
+
+    public function debts()
+    {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_goodsreceipts'), 403);
+        return view(''.$module_name.'::'.$module_path.'.debts.index',
+        compact('module_name',
+            'module_action',
+            'module_title',
+            'module_icon', 
+            'module_model'));
+    }
+
+    public function debts_data(Request $request)
+    {
+        $module_name = $this->module_name;
+        $module_model = $this->module_model;
+        $data = $module_model::debts()
+                        ->where('tipe_pembayaran', '!=', 'lunas')
+                        ->where(function($query) {
+                            $query->whereNull('kategoriproduk_id');
+                            $query->orWhere('kategoriproduk_id', 1);
+                        })
+                        ->latest()->get();
+
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                
+                $module_name = 'goodsreceipt';
+                $module_model = "Modules\GoodsReceipt\Models\GoodsReceipt";
+                return view('goodsreceipt::goodsreceipts.debts.action',
+                compact('module_name', 'data', 'module_model'));
+            })
+
+            ->editColumn('image', function ($data) {
+                if ($data->images) {
+                    $url = asset(imageUrl(). @$data->images);
+                } else {
+                    $url = $data->getFirstMediaUrl('pembelian', 'thumb');
+                }
+                return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+            })
+
+            ->editColumn('date', function ($data) {
+                $tb = '<div class="text-xs font-semibold">
+                    ' .$data->code . '
+                    </div>';
+                $tb .= '<div class="text-xs text-left">
+                    ' .tanggal($data->date) . '
+                    </div>';   
+                
+                return $tb;
+            }) 
+            ->editColumn('code', function ($data) {
+                $tb = '<div class="text-xs text-blue-500 font-semibold items-center text-center">
+                        ' .$data->code . '
+                    </div>';
+                return $tb;
+            }) 
+
+            ->editColumn('berat', function ($data) {
+                $tb = '<div class="text-xs">
+                        Berat Kotor :' .$data->total_berat_kotor . '
+                    </div>';
+                $tb .= '<div class="text-xs text-left">
+                    Total Emas :' .$data->total_emas . '
+                    </div>'; 
+                $tb .= '<div class="text-xs text-left">
+                    Karat :' .$data->goodsreceiptitem->pluck('karat.label')->implode(', ') . '
+                    </div>';   
+                return $tb;
+            }) 
+
+            ->editColumn('harga', function ($data) {
+                $tb = '<div class="text-xs">
+                    Gram : <span class="font-semibold">' .$data->selisih . '</span>
+                    </div>';
+                    $tb .= '<div class="text-xs text-left">
+                        Nominal :<span class="font-semibold">' .number_format($data->selisih) . '</span>
+                    </div>';   
+                return $tb;
+            }) 
+
+            ->editColumn('pembayaran', function ($data) {
+                if ($data->pembelian->tipe_pembayaran == 'jatuh_tempo') 
+                    {
+                        $info =  'Jatuh Tempo';
+                        $pembayaran =  tgljam(@$data->pembelian->jatuh_tempo);
+                        if(!empty(@$data->pembelian->lunas) && @$data->pembelian->lunas == 'lunas') {
+                            $info .=' (Lunas) ';
+                        }
+                    }else if ($data->pembelian->tipe_pembayaran == 'cicil') 
+                    {
+                        $info =  'Cicilan';
+                        $pembayaran =  @$data->pembelian->cicil .' kali';
+                        if(!empty(@$data->pembelian->lunas) && @$data->pembelian->lunas == 'lunas') {
+                            $pembayaran .=' (Lunas) ';
+                        }
+                    }else{
+                        $info =  '';
+                        $pembayaran =  'Lunas';
+                }
+                $tb ='<div class="items-left text-left">
+                    <div class="small text-gray-800">'.$info.'</div>
+                    <div class="text-gray-800">' .$pembayaran. '</div>
+                    </div>';
+                return $tb;
+            })
+
+            ->editColumn('supplier', function ($data) {
+                $tb = '<div class="items-left text-left">
+                    <div>'.$data->supplier->supplier_name . '</div>
+                    </div>';
+                return $tb;
+            })
+        
+            ->editColumn('updated_at', function ($data) {
+
+                $diff = Carbon::now()->diffInHours($data->updated_at);
+                if ($diff < 25) {
+                    return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                } else {
+                    return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                }
+            })
+            ->rawColumns(['updated_at',
+                'date',
+                'action',
+                'code',
+                'berat',
+                'harga',
+                'image', 
+                'pembayaran', 
+                'supplier', 
+                'detail', 
+                'name'])
+            ->make(true);
+    }
 }

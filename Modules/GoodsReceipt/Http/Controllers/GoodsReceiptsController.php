@@ -1259,8 +1259,6 @@ public function cetak($id) {
 
     /** DEBTS */
 
-
-
     public function debts()
     {
         if(AdjustmentSetting::exists()){
