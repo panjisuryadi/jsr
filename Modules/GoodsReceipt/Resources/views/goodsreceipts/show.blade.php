@@ -84,18 +84,16 @@
                            <div class="flex align-items-center justify-center">
 
                               @php
-                                  if ($detail->images) {
-                                   $url = asset(imageUrl(). @$detail->images);
-                                } else {
-                                   $url = $detail->getFirstMediaUrl('pembelian', 'thumb');
-                                }
+                                $image = $detail->images;
+                                $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                               @endphp
 
 
                                <div class="text-center align-items-center items-center">
 
-                                 <img src="{{ $url  }}" width="40%" border="0" width="50" class="img-thumbnail" align="center"/>
-
+                                 <a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " class="single_image">
+                                    <img src="{{ $imagePath }}" order="0" width="40%" class="img-thumbnail"/>
+                                </a>
 
                                </div>
                     {{--        {{ $detail }} --}}
