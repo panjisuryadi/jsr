@@ -77,7 +77,7 @@ public function __construct()
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_products'), 403);
+       // abort_if(Gate::denies('access_products'), 403);
          return view('product::products.index',
            compact('module_name',
             'module_action',
