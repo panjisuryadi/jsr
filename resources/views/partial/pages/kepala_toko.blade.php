@@ -318,7 +318,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->reference }}</td>
                             <td>{{ $row->cabang->name }}</td>
-                            <td>{{ $row->customer->customer_name }}</td>
+                            <td>{{ $row->customer?->customer_name }}</td>
                             <td>
 
                                 {{-- Rp .<strong>{{ rupiah($row->total_amount)}}</strong> --}}
