@@ -52,7 +52,7 @@
         url: "{{ route('dropzone.upload') }}",
         maxFilesize: 1,
         acceptedFiles: '.jpg, .jpeg, .png',
-        maxFiles: 3,
+        maxFiles: 1,
         addRemoveLinks: true,
         dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
         headers: {
@@ -97,6 +97,13 @@
             @endif
         }
     }
+
+    window.addEventListener('webcam-image:remove', event => {
+        $('#imageprev0').attr('src','');
+    });
+    window.addEventListener('uploaded-image:remove', event => {
+        Dropzone.forElement("div#document-dropzone").removeAllFiles(true);
+    });
 </script>
 
 @endpush

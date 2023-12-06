@@ -674,39 +674,34 @@ public function store(Request $request)
             'qty'                        => '8',
             'kategoriproduk_id'          => $kategori_produk_id,
             'pengirim'                   => $input['pengirim'],
+            'images' => $this->getUploadedImage($input['image'],$input['uploaded_image'])
         ]);
             $goodsreceipt_id = $goodsreceipt->id;
             $this->_saveTipePembelian($input ,$goodsreceipt_id);
             $this->_saveGoodsReceiptItem($input['items'] ,$goodsreceipt,$kategori_produk_id);
             // $this->_saveStockOffice($input['items']);
-
-
-             if ($request->has('document')) {
-                foreach ($request->input('document', []) as $file) {
-                    $goodsreceipt->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('pembelian');
-                }
-            }
-
-
-            if ($request->filled('image')) {
-            $img = $request->image;
-            $folderPath = "uploads/";
-            $image_parts = explode(";base64,", $img);
-            $image_type_aux = explode("image/", $image_parts[0]);
-            $image_type = $image_type_aux[1];
-            $image_base64 = base64_decode($image_parts[1]);
-            $fileName ='webcam_'. uniqid() . '.jpg';
-            $file = $folderPath . $fileName;
-            Storage::disk('local')->put($file,$image_base64);
-            $goodsreceipt->addMedia(Storage::path('uploads/' . $fileName))->toMediaCollection('pembelian');
-            }
-
-             activity()->log(' '.auth()->user()->name.' input data pembelian');
          
-             toast(''. $module_title.' Created!', 'success');
+             toast(''. $module_title.' Berhasil dibuat!', 'success');
            return redirect()->route(''.$module_name.'.index');
   
          }
+
+
+         private function getUploadedImage($image, $uploaded_image){
+            $folderPath = "uploads/";
+            if(!empty($uploaded_image)){
+                Storage::disk('public')->move("temp/dropzone/{$uploaded_image}","{$folderPath}{$uploaded_image}");
+                return $uploaded_image;  
+            }
+            elseif(!empty($image)){
+                $image_parts = explode(";base64,", $image);
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName ='webcam_'. uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('public')->put($file,$image_base64);
+                return $fileName;
+            }
+        }
 
 
 

@@ -38,7 +38,8 @@ class Penerimaan extends Component
         $harga_beli,
         $pic_id = '',
         $document = [],
-        $image = '';
+        $image = '',
+        $uploaded_image = '';
 
     public $updateMode = false;
     public $total_berat = 0;
@@ -59,8 +60,8 @@ class Penerimaan extends Component
     public $hari_ini;
 
     protected $listeners = [
-        'imageUploaded',
-        'imageRemoved',
+        'imageUploaded' => 'handleUploadedImage',
+        'imageRemoved' => 'handleRemoveUploadedImage',
         'webcamCaptured' => 'handleWebcamCaptured',
         'webcamReset' => 'handleWebcamReset'
 
@@ -68,10 +69,22 @@ class Penerimaan extends Component
 
     public function handleWebcamCaptured($key,$data_uri){
         $this->image = $data_uri;
+        $this->handleRemoveUploadedImage();
     }
 
-    public function handleWebcamReset($key){
+    public function handleWebcamReset($key = null){
         $this->image = '';
+        $this->dispatchBrowserEvent('webcam-image:remove');
+    }
+
+    public function handleUploadedImage($fileName){
+        $this->uploaded_image = $fileName;
+        $this->handleWebcamReset();
+    }
+
+    public function handleRemoveUploadedImage(){
+        $this->uploaded_image = '';
+        $this->dispatchBrowserEvent('uploaded-image:remove');
     }
 
     public function mount()
@@ -160,6 +173,7 @@ class Penerimaan extends Component
             'selisih' => 'numeric',
             'pengirim' => 'required',
             'pic_id' => 'required',
+            'image' => ['required_if:uploaded_image,']
         ];
 
         foreach ($this->inputs as $key => $value) {
@@ -207,7 +221,8 @@ class Penerimaan extends Component
             'total_berat_kotor' => $this->total_berat_kotor,
             'items' => $this->inputs,
             'detail_cicilan' => $this->detail_cicilan,
-            'image' => $this->image
+            'image' => $this->image,
+            'uploaded_image' => $this->uploaded_image
         ];
 
         $request = new Request($data);
