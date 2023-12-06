@@ -1259,8 +1259,6 @@ public function cetak($id) {
 
     /** DEBTS */
 
-
-
     public function debts()
     {
         if(AdjustmentSetting::exists()){
@@ -1287,11 +1285,13 @@ public function cetak($id) {
     {
         $module_name = $this->module_name;
         $module_model = $this->module_model;
+        $kategoriproduk_id = LookUp::where('kode', 'id_kategori_produk_emas')->value('value');
+
         $data = $module_model::debts()
                         ->where('tipe_pembayaran', '!=', 'lunas')
-                        ->where(function($query) {
+                        ->where(function($query) use ($kategoriproduk_id) {
                             $query->whereNull('kategoriproduk_id');
-                            $query->orWhere('kategoriproduk_id', 1);
+                            $query->orWhere('kategoriproduk_id', $kategoriproduk_id);
                         })
                         ->latest()->get();
 

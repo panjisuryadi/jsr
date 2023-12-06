@@ -17,7 +17,7 @@
 <div class="px-3">
     <x-library.alert />
     @if(!empty($total_harus_bayar) && $isCicil )
-        <span class="text-dark"> Total emas yang harus dibayarkan </span> <span class="ml-1 text-danger"> {{  $total_harus_bayar }} </span>
+        <span class="text-dark"> Total emas yang harus dibayarkan </span> <span class="ml-1 text-danger"> {{  $total_harus_bayar }}</span>
     @endif
 
     @if(!empty($harga_beli) && $isCicil && $isBerlian )
