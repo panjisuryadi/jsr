@@ -111,8 +111,9 @@ class GoodsReceiptBerliansController extends Controller
             ->addColumn('action', function ($data) {
                 $module_name = 'goodsreceipt';
                 $module_model = "Modules\GoodsReceipt\Models\GoodsReceipt";
+                $is_berlian = true;
                 return view('goodsreceipt::goodsreceipts.action',
-                    compact('module_name', 'data', 'module_model'));
+                    compact('module_name', 'data', 'is_berlian', 'module_model'));
                 })
 
             ->editColumn('image', function ($data) {

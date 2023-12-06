@@ -126,6 +126,7 @@
 
 <script type="text/javascript">
 jQuery.noConflict();
+var table = jQuery('#datatable').DataTable();
 (function( $ ) {
 $(document).on('click', '#Tambah, #Edit', function(e){
          e.preventDefault();

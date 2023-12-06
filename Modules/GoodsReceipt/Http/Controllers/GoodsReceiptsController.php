@@ -1,6 +1,8 @@
 <?php
 
 namespace Modules\GoodsReceipt\Http\Controllers;
+
+use App\Models\LookUp;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
@@ -354,17 +356,26 @@ public function edit_status($id)
     $module_model = $this->module_model;
     $module_name_singular = Str::singular($module_name);
     $module_action = 'Update Status';
+    $kategoriproduk_id = LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
+
     abort_if(Gate::denies('edit_'.$module_name.''), 403);
     $data = TipePembelian::where('goodsreceipt_id',$id)->with('detailCicilan', 'goodreceipt')
             ->withCount(['detailCicilan as sisa_cicilan' => function (Builder $query) {
-                $query->whereNull('jumlah_cicilan');
-                $query->orWhere('jumlah_cicilan', 0);
+                $query->where(function($q){
+                    $q->whereNull('jumlah_cicilan');
+                    $q->orWhere('jumlah_cicilan', 0);
+                });
+                $query->where(function($q){
+                    $q->WhereNull('nominal');
+                    $q->orWhere('nominal', 0);
+                });
             }])->first();
     return view(''.$module_name.'::'.$module_path.'.modal.edit_status',
         compact('module_name',
         'module_action',
         'data',
         'module_title',
+        'kategoriproduk_id',
         'module_icon', 'module_model'));
 }
 
@@ -374,14 +385,17 @@ public function update_status_pembelian (Request $request){
     $tgl_jatuh_tempo = $request->post('tgl_jatuh_tempo');
     $nominal = $request->post('nominal');
     $sisa_cicilan = $request->post('sisa_cicilan');
+    $total_harus_bayar_nominal = $request->post('total_harus_bayar_nominal');
+    $is_berlian = $request->post('is_berlian');
     DB::beginTransaction();
+    // dd($is_berlian && $sisa_cicilan == 1 && $request->post('nominal') != $request->post('total_harus_bayar_nominal'), $is_berlian, $request, $sisa_cicilan);
 
     try {
         if ( $is_cicilan ) {
             $validator = \Validator::make($request->all(),[
                 'cicilan_id' => 'required',
                 'jumlah_cicilan' => [
-                    'required',
+                    'required_if:is_berlian, true',
                     'lte:' . floatval($request->post('total_harus_bayar')),
                     function ($attribute, $value, $fail) use ($request, $sisa_cicilan) {
                         if ($sisa_cicilan == 1 && $value != floatval($request->post('total_harus_bayar'))) {
@@ -389,7 +403,17 @@ public function update_status_pembelian (Request $request){
                         }
                     },
                 ],
-                'nominal' => 'required|numeric|gt:0',
+                'nominal' => [
+                    'required',
+                    'numeric',
+                    'gt:0',
+                    function($attribute, $value, $fail) use($request, $is_berlian, $sisa_cicilan) {
+                        if ($is_berlian && $sisa_cicilan == 1 && $value != $request->post('total_harus_bayar_nominal')) {
+                            $fail('Nominal untuk cicilan terakhir harus sama dengan sisa cicilan.');
+                        }
+                        
+                    }
+                ],
             ], 
             [
                 'jumlah_cicilan.lte' => 'Jumlah cicilan tidak boleh lebih besar dari harus dibayar',
@@ -409,7 +433,14 @@ public function update_status_pembelian (Request $request){
             $penerimaan_barang_cicilan->save();
 
             $tipe_pembelian = TipePembelian::with('goodreceipt')->findOrFail($pembelian_id);
-            if ($this->cicilanExist($pembelian_id) == $tipe_pembelian->goodreceipt->total_emas) {
+            if (!$is_berlian && $this->cicilanExist($pembelian_id) == $tipe_pembelian->goodreceipt->total_emas) {
+                $tipe_pembelian->lunas = 'lunas';
+                $tipe_pembelian->save();
+                $goodsreceipt = GoodsReceipt::find($tipe_pembelian->goodsreceipt_id);
+                $goodsreceipt->harga_beli = GoodsReceiptInstallment::where('payment_id', $pembelian_id)->sum('nominal');
+                $goodsreceipt->save();
+            }
+            if ($is_berlian && $this->cicilanBerlianExist($pembelian_id) == $tipe_pembelian->goodreceipt->harga_beli) {
                 $tipe_pembelian->lunas = 'lunas';
                 $tipe_pembelian->save();
                 $goodsreceipt = GoodsReceipt::find($tipe_pembelian->goodsreceipt_id);
@@ -441,7 +472,6 @@ public function update_status_pembelian (Request $request){
             $goodsreceipt->harga_beli = $nominal;
             $goodsreceipt->save();
         }
-    
     } catch (\Throwable $e) {
         DB::rollBack();
         return response()->json(['failed'=> $e->getMessage()]);
@@ -454,6 +484,11 @@ public function update_status_pembelian (Request $request){
 /** Fungsi ini digunakan untuk mengecek apakah masih ada cicilan atau tidak */
 private function cicilanExist($payment_id) {
     return GoodsReceiptInstallment::where('payment_id', $payment_id)->sum('jumlah_cicilan');
+}
+
+/** Fungsi ini digunakan untuk mengecek apakah masih ada cicilan atau tidak */
+private function cicilanBerlianExist($payment_id) {
+    return GoodsReceiptInstallment::where('payment_id', $payment_id)->sum('nominal');
 }
 
 
