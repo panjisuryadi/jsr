@@ -259,7 +259,7 @@
           <div class="pt-2 border-t flex justify-between">
               <div></div>
               <div class="form-group">
-                  <a class="px-5 btn btn-outline-danger" href="{{ route("goodsreceipt.index") }}">
+                  <a class="px-5 btn btn-outline-danger" href="{{ route("distribusisale.index") }}">
                       @lang('Cancel')</a>
                   <button class="px-5 btn  btn-submit btn-outline-success" wire:click.prevent="store" wire:target="store" wire:loading.attr="disabled">
                       <span wire:loading.remove wire:target="store">
