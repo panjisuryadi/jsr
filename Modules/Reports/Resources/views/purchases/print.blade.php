@@ -147,11 +147,19 @@
             </tr>
         @empty
             <tr>
-                <td colspan="8">
+                <td colspan="5">
                     <span class="text-danger">No Purchases Data Available!</span>
                 </td>
             </tr>
         @endforelse
+            @if(!empty($data))
+            <tr>
+                <td colspan="4" class="text-right">
+                    <span class="">Total: </span>
+                </td>
+                <td> Rp. {{ number_format($total_harga) }}</td>
+            </tr>
+            @endif
         </tbody>
     </table>
 

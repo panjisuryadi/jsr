@@ -8,7 +8,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>Start Date <span class="text-danger">*</span></label>
-                                    <input wire:model.defer="start_date" type="date" class="form-control" name="start_date">
+                                    <input wire:model="start_date" type="date" class="form-control" name="start_date">
                                     @error('start_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
@@ -17,7 +17,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>End Date <span class="text-danger">*</span></label>
-                                    <input wire:model.defer="end_date" type="date" class="form-control" name="end_date">
+                                    <input wire:model="end_date" type="date" class="form-control" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
@@ -26,7 +26,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>Supplier</label>
-                                    <select wire:model.defer="supplier_id" class="form-control" name="supplier_id">
+                                    <select wire:model="supplier_id" class="form-control" name="supplier_id">
                                         <option value="">Select Supplier</option>
                                         @foreach($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>

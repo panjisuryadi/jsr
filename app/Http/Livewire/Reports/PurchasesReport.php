@@ -2,16 +2,13 @@
 
 namespace App\Http\Livewire\Reports;
 
-use App\Exports\Sale\SaleExport;
+use App\Exports\Purchases\PurchasesExport;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
-use Modules\GoodsReceipt\Models\GoodsReceipt;
-use Modules\GoodsReceipt\Models\GoodsReceiptInstallment;
-use Modules\Purchase\Entities\Purchase;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -27,6 +24,7 @@ class PurchasesReport extends Component
     public $end_date;
     public $supplier_id;
     public $purchase_data;
+    public $total_harga;
 
     protected $rules = [
         'start_date' => 'required|date|before:end_date',
@@ -84,6 +82,7 @@ class PurchasesReport extends Component
         foreach ($this->purchase_data as $row){
             $total_harga += !empty( $row->nominal) ? $row->nominal : $row->harga_beli;
         }
+        $this->total_harga = $total_harga;
 
         return view('livewire.reports.purchases-report', [
             'datas' => $data->paginate(10),
@@ -101,7 +100,8 @@ class PurchasesReport extends Component
         $end_date = Carbon::parse($this->end_date);
         $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
         $datas = $this->purchase_data;
-        $pdf = PDF::loadView('reports::purchases.print',compact('start_date','filename','end_date','datas'))->setPaper('a4', 'landscape')->output();
+        $total_harga = $this->total_harga;
+        $pdf = PDF::loadView('reports::purchases.print',compact('start_date','filename','end_date','datas', 'total_harga'))->setPaper('a4', 'landscape')->output();
         $base64Pdf = base64_encode($pdf);
         $dataUri = 'data:application/pdf;base64,' . $base64Pdf;
         $this->emit('openInNewTab', $dataUri);
@@ -112,8 +112,8 @@ class PurchasesReport extends Component
         abort_if(! in_array($format,['csv','xlsx','pdf']), Response::HTTP_NOT_FOUND);
         $start_date = Carbon::parse($this->start_date);
         $end_date = Carbon::parse($this->end_date);
-        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
-        return Excel::download(new SaleExport($this->sales_data), $filename. '.' . $format);
+        $filename = "Laporan Pembelian Periode " . $start_date . " - " . $end_date;
+        return Excel::download(new PurchasesExport($this->purchase_data), $filename. '.' . $format);
     }
 
     public function resetFilter(){
