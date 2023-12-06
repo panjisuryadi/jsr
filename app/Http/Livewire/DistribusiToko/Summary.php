@@ -58,7 +58,7 @@ class Summary extends Component
     }
 
     public function send(){
-        abort_if(Gate::denies('edit_distribusitoko'), 403);
+       // abort_if(Gate::denies('create_distribusitoko'), 403);
         DB::beginTransaction();
         try{
             $this->dist_toko->setInProgress();

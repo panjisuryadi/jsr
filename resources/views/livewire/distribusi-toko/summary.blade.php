@@ -124,7 +124,12 @@
                                 @if ($dist_toko->isDraft())
                                 <div class="float-right mt-5">
                                     <a href="{{ ($dist_toko->kategori_produk_id != $id_kategoriproduk_berlian)?route('distribusitoko.emas'):route('distribusitoko.berlian')}}" class="btn btn-secondary">Kembali</a>
+
+                                    @can('create_distribusitoko')
                                     <button type="submit" class="btn btn-primary">Kirimkan</a>
+                                    @endcan
+
+
                                 </div>
                                 @endif
                                 </form>
