@@ -18,6 +18,8 @@
     </style>
 @endpush
 
+
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -1974,6 +1976,14 @@
                   {{ label_Case('create_distribusi_toko') }}
                </label>
             </div>
+   <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_distribusitoko" name="permissions[]"
+                value="show_distribusitoko" {{ $role->hasPermissionTo('show_distribusitoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_distribusitoko">
+                  {{ label_Case('show_distribusi_toko') }}
+               </label>
+            </div>
 
    <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
@@ -1981,6 +1991,31 @@
                 value="edit_distribusitoko" {{ $role->hasPermissionTo('edit_distribusitoko') ? 'checked' : '' }}>
                 <label class="custom-control-label" for="edit_distribusitoko">
                   {{ label_Case('edit_distribusi_toko') }}
+               </label>
+            </div>
+
+  <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="print_distribusitoko" name="permissions[]"
+                value="print_distribusitoko" {{ $role->hasPermissionTo('print_distribusitoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="print_distribusitoko">
+                  {{ label_Case('print_distribusi_toko') }}
+               </label>
+            </div>
+ <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="reject_distribusitoko" name="permissions[]"
+                value="reject_distribusitoko" {{ $role->hasPermissionTo('reject_distribusitoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="reject_distribusitoko">
+                  {{ label_Case('reject_distribusi_toko') }}
+               </label>
+            </div>
+ <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="approve_distribusitoko" name="permissions[]"
+                value="approve_distribusitoko" {{ $role->hasPermissionTo('approve_distribusitoko') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="approve_distribusitoko">
+                  {{ label_Case('approve_distribusitoko') }}
                </label>
             </div>
 

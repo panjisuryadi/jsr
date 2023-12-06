@@ -1,15 +1,12 @@
 <div class="text-center">
-@can('edit_'.$module_name.'')
+@can('show_distribusitoko')
 <a href="{{ route(''.$module_name.'.detail', $data->id) }}"
     class="btn btn-outline-success btn-sm">
     <i class="bi bi-eye"></i> &nbsp;@lang('View')
 </a>
-
-
-
 @endcan
 
-@can('delete_'.$module_name.'')
+@can('delete_distribusitoko')
 @if ($data->isDraft())
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
