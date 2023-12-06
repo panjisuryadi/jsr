@@ -178,16 +178,55 @@ button:focus {
 }
 
 
+.w-1p {
+     width: 1% !important;
+}
+.w-2p {
+     width: 2% !important;
+}.w-3p {
+     width: 3% !important;
+}.w-4p {
+     width: 4% !important;
+}
+.w-5p {
+     width: 5% !important;
+}.w-10p {
+     width: 10% !important;
+}
+.w-15p {
+     width: 15% !important;
+}
+.w-20p {
+     width: 20% !important;
+}
+
+.w-25p {
+     width: 25% !important;
+}
+.w-30p {
+     width: 30% !important;
+}.w-35p {
+     width: 35% !important;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: {{settings()->btn_color}} !important;
+    background-color: {{settings()->btn_color}} !important;
+}
+
 .btn-danger {
     color: #fff;
     background-color: {{settings()->btn_cancel}} !important;
     border-color: {{settings()->btn_cancel}} !important;
 }
+
 .btn-primary {
     color: #fff;
     background-color: {{settings()->btn_color}} !important;
     border-color: {{settings()->btn_color}} !important;
 }
+
 .btn-success {
     color: #fff;
     background-color: #4caf50 !important;
@@ -197,18 +236,6 @@ button:focus {
 .btn-outline-secondary {
     color: #858688 !important;
     border-color: #929599 !important;
-}
-
-
-
-
-
-
-/*//chekbox*/
-.custom-control-input:checked ~ .custom-control-label::before {
-    color: #fff;
-    border-color: #7e6423 !important;
-    background-color: #8d5c16 !important;
 }
 
 .small {

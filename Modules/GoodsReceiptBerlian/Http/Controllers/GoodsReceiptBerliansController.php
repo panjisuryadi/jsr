@@ -20,6 +20,7 @@ use Modules\People\Entities\Supplier;
 use Lang;
 use Image;
 use Illuminate\Support\Facades\DB;
+use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\GoodsReceipt\Models\GoodsReceiptInstallment;
 use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\GoodsReceipt\Models\TipePembelian;
@@ -108,12 +109,10 @@ class GoodsReceiptBerliansController extends Controller
         return Datatables::of($module_name)
 
             ->addColumn('action', function ($data) {
-                $datas = [
-                    'module_name' => $this->module_name,
-                    'module_model' => $this->module_model,
-                    'data' => $data,
-                ];
-                    return view(''.$this->module_name.'::'.$this->module_path.'.action', $datas);
+                $module_name = 'goodsreceipt';
+                $module_model = "Modules\GoodsReceipt\Models\GoodsReceipt";
+                return view('goodsreceipt::goodsreceipts.action',
+                    compact('module_name', 'data', 'module_model'));
                 })
 
             ->editColumn('image', function ($data) {
@@ -370,9 +369,12 @@ class GoodsReceiptBerliansController extends Controller
 
 
                 }
+                $total_harga_beli = 0;
                 foreach($arrayGoodsreceiptItems as $key => $item) {
                     $type = $tipe_penerimaan_barang;
                     $karatberlians = !empty($item['karatberlians']) ? $item['karatberlians'] : 0;
+                    $harga_beli = !empty($item['harga_beli']) ? $item['harga_beli'] : 0;
+                    $total_harga_beli += $harga_beli;
                     $accessories = Accessories::create([
                         'code' => Accessories::generateCodeBerlian(),
                         'name' => 'Berlian ' . ($type == 2 ? 'Mata Tabur' : ''),
@@ -393,6 +395,11 @@ class GoodsReceiptBerliansController extends Controller
                 }
 
                 GoodsReceiptItem::insert($arrayGoodsreceiptItems);
+                GoodsReceipt::find($goodsreceipt->id)
+                                ->where('harga_beli', '!=', null)
+                                ->where('harga_beli', '=', 0)
+                                ->update(['harga_beli' => $total_harga_beli]);
+
                 if(!empty($goodsreceipt->tipe_penerimaan_barang) && $goodsreceipt->tipe_penerimaan_barang == 1 && !empty($goodsreceipt->karat_id)) {
                     $produksi_items = ProduksiItems::create([
                         'goodsreceipt_id' => $goodsreceipt_id,
