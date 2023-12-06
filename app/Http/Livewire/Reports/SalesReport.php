@@ -126,7 +126,9 @@ class SalesReport extends Component
             'end_date',
             'month',
             'year',
-            'selected_cabang',
         ]);
+        if(!auth()->user()->isUserCabang()){
+            $this->reset(['selected_cabang']);
+        }
     }
 }
