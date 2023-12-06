@@ -270,11 +270,7 @@
                   {{ label_Case('dashboard_pos') }}
                </label>
             </div>
-
-
-
-
-              
+          
             
         </div>
     </div>

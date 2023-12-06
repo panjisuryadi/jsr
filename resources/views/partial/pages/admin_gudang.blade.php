@@ -217,19 +217,22 @@
                             <th>{{ label_case('kategori') }}</th>
                           
                         </tr>
-                        @forelse(\Modules\Product\Entities\Product::get() as $sale)
+                        @forelse(\Modules\Product\Entities\Product::akses()->get() as $sale)
                             @if($loop->index > 4)
                                                 @break
                                             @endif
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $sale->product_code }}</td>
-                            <td>{{ $sale->cabang->name }}</td>
+                            <td>{{ $sale->cabang->name ?? ' - ' }}</td>
                             <td>{{ $sale->category->category_name }}</td>
                             
                         </tr>
                         @empty
-                        <p>Tidak ada Data</p>
+                         <tr>
+                                <td colspan="3"> <p class="uppercase">Tidak ada Data</p></td>
+
+                            </tr>
                         @endforelse
                     </table>
      
@@ -241,16 +244,23 @@
 
                 <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('Code') }}</th>                          
+                            <th class="w-1p text-center">{{ label_case('No') }}</th>
+         <th class="w-2p text-center">{{ label_case('tanggal') }}</th>                          
+         <th class="w-3p text-center">{{ label_case('Cabang') }}</th>                          
+         <th class="w-3p text-center">{{ label_case('PIC') }}</th>                          
+         <th class="w-4p text-center">{{ label_case('Status') }}</th>                          
                         </tr>
                         @forelse(\Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptNota::get() as $sale)
                             @if($loop->index > 4)
                                                 @break
                                             @endif
+                                            {{ $sale }}
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $sale->product_code }}</td>
+                            <td>{{ shortdate($sale->date) }}</td>
+                            <td>{{ $sale->cabang->name }}</td>
+                            <td>{{ Ucfirst($sale->pic->name) }}</td>
+                            <td>{{ $sale->pic->name }}</td>
                         </tr>
                         @empty
                         <tr>
@@ -275,65 +285,6 @@
 {{-- batas --}}
 
 
-
-
-
-<div class="px-1 py-1 border-t-black">
-    
-<div class="flex relative py-2">
-  <div class="absolute inset-0 flex items-center">
-    <div class="w-full border-b border-gray-300"></div>
-  </div>
-  <div class="relative flex justify-left">
-    <span class="bg-white pl-0 pr-3  text-sm uppercase  font-semibold text-dark">
-    Stock Pending
-   </span>
-  </div>
-</div>
-<table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">
-                            {{ label_case('No') }}
-                           </th>
-                          
-                            <th>{{ label_case('Cabang') }}</th>
-                            <th>{{ label_case('Karat') }}</th>
-                            <th>{{ label_case('Weight') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
-                          
-                        </tr>
-                        @forelse(\Modules\Stok\Models\StockPending::get() as $stok)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
-
-
-
-                            {{-- {{ $stok }} --}}
-
-                           <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $stok->karat->name }}</td>
-                            <td>{{ $stok->cabang->name }}</td>
-                            <td>{{ $stok->weight }}</td>
-                            <td>
-                            @can('show_stock_pending_office')
-                                <a id="Detail" href="{{ route('stok.view_pending', $stok) }}"
-                                 class="btn btn-outline-success btn-sm">
-                                    <i class="bi bi-eye"></i> &nbsp;@lang('Detail')
-                                </a>
-                             @endcan
-                            </td>
-                            
-                        </tr> 
-                        @empty
-                        <p>Tidak ada Data</p>
-                        @endforelse
-                        
-                    </table>
-
-
-</div>
 
 
 
