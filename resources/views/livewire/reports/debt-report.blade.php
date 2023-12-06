@@ -191,7 +191,7 @@
                                     if ($item->pembelian->tipe_pembayaran == 'jatuh_tempo') 
                                     {
                                         $info =  'Jatuh Tempo';
-                                        $pembayaran =  tanggal(@$item->pembelian->detailCicilan()->value('tanggal_cicilan'));
+                                        $pembayaran =  tanggal(@$item->pembelian->jatuh_tempo);
                                         if(!empty(@$item->pembelian->lunas) && @$item->pembelian->lunas == 'lunas') {
                                             $info .=' (Lunas) ';
                                         }
