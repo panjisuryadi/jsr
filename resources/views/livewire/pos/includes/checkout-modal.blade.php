@@ -107,22 +107,23 @@
                                     </div>
                                 </div>
                                 <div class="px-1">
-                                    <label for="tunaiRadio">Tunai</label>
+                                    <input type="hidden" name="tipebayar" id="tunaiRadio" value="tunai" required>
+                                    <!-- <label for="tunaiRadio">Tunai</label>
                                     <input type="radio" name="tipebayar" id="tunaiRadio" value="tunai" checked required>
                                     <label for="cicilRadio">Cicilan</label>
-                                    <input type="radio" name="tipebayar" id="cicilRadio" value="cicil">
+                                    <input type="radio" name="tipebayar" id="cicilRadio" value="cicil"> -->
                                     <div id="Tunai" class="px-0">
                                         <div class="form-group">
                                             <label for="tunai">Bayar Tunai<span class="text-danger">*</span></label>
                                             <input id="input_tunai" type="text" class="form-control" name="tunai">
                                         </div>
                                     </div>
-                                    <div id="cicilan" style="display: none;">
+                                    <!-- <div id="cicilan" style="display: none;">
                                         <div class="form-group">
                                             <label for="ciclan">Jatuh Tempo<span class="text-danger">*</span></label>
                                             <input id="tgl_jatuh_tempo" type="date" class="form-control" name="tgl_jatuh_tempo">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="note">Grand Total</label> <span class="text-danger small" id="message"></span>
                                         {{-- <span id="final" class="text-black text-4xl"></span> --}}

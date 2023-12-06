@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Modules\Sale\Entities\Sale;
 use PDF;
 use Illuminate\Http\Response;
+use Modules\Cabang\Models\Cabang;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class SalesReport extends Component
@@ -27,6 +28,13 @@ class SalesReport extends Component
     public $payment_status;
     public $sales_data;
 
+    public $month;
+    public $year;
+    public $period_type;
+
+    public $cabangs;
+    public $selected_cabang;
+
     protected $rules = [
         'start_date' => 'required|date|before:end_date',
         'end_date'   => 'required|date|after:start_date',
@@ -37,26 +45,34 @@ class SalesReport extends Component
         $this->start_date = today()->subDays(30)->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
         $this->customer_id = '';
-        $this->sale_status = '';
-        $this->payment_status = '';
+        $this->cabangs = Cabang::all();
+        $this->selected_cabang = auth()->user()->isUserCabang()?auth()->user()->namacabang()->id:'';
     }
 
     public function render() {
-        $sales = Sale::whereDate('date', '>=', $this->start_date)
-            ->whereDate('date', '<=', $this->end_date)
-            ->where('customer_id',null)
-            ->when($this->sale_status, function ($query) {
-                return $query->where('status', $this->sale_status);
-            })
-            ->when($this->payment_status, function ($query) {
-                return $query->where('payment_status', $this->payment_status);
-            })
-            ->orderBy('date', 'desc');
+        $sales = Sale::query()
+                ->when($this->month, function ($query) {
+                    return $query->whereRaw('MONTH(date) = ? AND YEAR(date) = ?', [date('m', strtotime($this->month)), date('Y', strtotime($this->month))]);
+                })
+                ->when($this->year, function ($query) {
+                    return $query->whereYear('date',$this->year);
+                })
+                ->when($this->start_date, function ($query) {
+                    return $query->whereDate('date', '>=', $this->start_date);
+                })
+                ->when($this->end_date, function ($query) {
+                    return $query->whereDate('date', '<=', $this->end_date);
+                })
+                ->when($this->selected_cabang, function ($query) {
+                    return $query->where('cabang_id', $this->selected_cabang);
+                })
+                ->orderBy('date', 'desc');
         
         $this->sales_data = $sales->clone()->get();
-
+        $total_nominal = $this->sales_data->sum('total_amount');
         return view('livewire.reports.sales-report', [
-            'sales' => $sales->paginate(10)
+            'sales' => $sales->paginate(10),
+            'total_nominal' => $total_nominal
         ]);
     }
 
@@ -83,5 +99,24 @@ class SalesReport extends Component
         $end_date = Carbon::parse($this->end_date);
         $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
         return Excel::download(new SaleExport($this->sales_data), $filename. '.' . $format);
+    }
+
+    public function updatedPeriodType(){
+        $this->reset([
+            'start_date',
+            'end_date',
+            'month',
+            'year'
+        ]);
+    }
+
+    public function getPeriodTextProperty(){
+        if($this->period_type === 'month' && !empty($this->month)){
+            return "Periode Bulan " . Carbon::parse($this->month)->locale('id_ID')->isoFormat('MMMM YYYY');
+        }elseif($this->period_type === 'year' && !empty($this->year)){
+            return "Periode Tahun " . $this->year;
+        }elseif($this->period_type === 'custom' && !empty($this->start_date) && !empty($this->end_date)){
+            return "Periode " . tanggal($this->start_date) . ' - ' . tanggal($this->end_date);
+        }
     }
 }
