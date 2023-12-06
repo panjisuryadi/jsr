@@ -119,4 +119,14 @@ class SalesReport extends Component
             return "Periode " . tanggal($this->start_date) . ' - ' . tanggal($this->end_date);
         }
     }
+
+    public function resetFilter(){
+        $this->reset([
+            'start_date',
+            'end_date',
+            'month',
+            'year',
+            'selected_cabang',
+        ]);
+    }
 }
