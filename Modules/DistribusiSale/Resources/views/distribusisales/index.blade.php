@@ -17,10 +17,7 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route('iventory.type',[
-                                 'kategori'=>encode_id(1),
-                                 'type'=>'sales']
-                                 ) }}"
+                           <a href="{{ route('distribusisale.create') }}"
                                  class="btn btn-primary px-3">
                                  <i class="bi bi-plus"></i>@lang('Add')&nbsp;
                                 </a>
