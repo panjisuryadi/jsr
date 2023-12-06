@@ -777,15 +777,15 @@ class GoodsReceiptBerliansController extends Controller
             'module_model'));
     }
 
-    public function debts_data(Request $request)
+    public function debts_data(Request $request) 
     {
         $module_name = $this->module_name;
         $module_model = $this->module_model;
+        $kategoriproduk_id = LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
         $data = $module_model::debts()
                         ->where('tipe_pembayaran', '!=', 'lunas')
-                        ->where(function($query) {
-                            $query->whereNull('kategoriproduk_id');
-                            $query->orWhere('kategoriproduk_id', 1);
+                        ->where(function($query) use ($kategoriproduk_id) {
+                            $query->orWhere('kategoriproduk_id', $kategoriproduk_id);
                         })
                         ->latest()->get();
 
@@ -794,8 +794,9 @@ class GoodsReceiptBerliansController extends Controller
                 
                 $module_name = 'goodsreceipt';
                 $module_model = "Modules\GoodsReceipt\Models\GoodsReceipt";
+                $is_berlian = true;
                 return view('goodsreceipt::goodsreceipts.debts.action',
-                compact('module_name', 'data', 'module_model'));
+                compact('module_name', 'data', 'is_berlian', 'module_model'));
             })
 
             ->editColumn('image', function ($data) {
