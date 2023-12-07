@@ -481,11 +481,15 @@ class GenerateMenus
                 'activematches' => [
                     'datasales*',
                     'distribusitokos*',
+                    'penerimaanbarangluarsale*',
                     'penjualansales*',
                     'retursales*',
 
                 ],
-                'permission'    => ['access_penjualansales','access_retursale'],
+                'permission'    => [
+                                     'access_penjualansales',
+                                     'access_penerimaanbarangluarsales',
+                                     'access_retursale'],
             ]);
             $distribusisales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
