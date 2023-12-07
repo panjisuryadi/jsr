@@ -13,6 +13,8 @@ class Accessories extends Model
     protected $guarded = [];
     
     protected $table = 'accessories_m';
+
+    const BERLIAN_TYPE = 1;
     
     protected static function newFactory()
     {

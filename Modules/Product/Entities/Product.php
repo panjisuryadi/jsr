@@ -16,9 +16,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
+use Modules\Product\Models\ProductAccessories;
 use Modules\Product\Models\ProductStatus;
 use Modules\Product\Models\ProductTrackingHistory;
 use Modules\ProdukModel\Models\ProdukModel;
+use Modules\Produksi\Models\Accessories;
 use Modules\Stok\Models\StockOffice;
 
 class Product extends Model implements HasMedia
@@ -251,4 +253,16 @@ class Product extends Model implements HasMedia
     public function product_status(){
         return $this->belongsTo(ProductStatus::class,'status_id','id');
     }
+
+    public function product_accessories(){
+        return $this->hasMany(ProductAccessories::class,'product_id');
+    }
+
+    public function getBerlianShortLabelAttribute(){
+        $query = $this->product_accessories()->whereRelation('accessories','type',Accessories::BERLIAN_TYPE);
+        if($query->count()){
+            return 'Berlian ' . $query->sum('amount') . ' ' . $query->first()->accessories->satuan->code;
+        }
+    }
+
 }
