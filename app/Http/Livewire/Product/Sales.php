@@ -10,6 +10,8 @@ use Modules\DataSale\Models\DataSale;
 use Modules\DistribusiSale\Events\DistribusiSaleDetailCreated;
 use Modules\DistribusiSale\Models\DistribusiSale;
 use Modules\Karat\Models\Karat;
+use Modules\Stok\Models\StockOffice;
+use Modules\Stok\Models\StockSales;
 
 class Sales extends Component
 {
@@ -106,14 +108,12 @@ class Sales extends Component
         foreach ($this->distribusi_sales_details as $key => $value) {
 
             $rules['distribusi_sales_details.'.$key.'.karat_id'] = 'required';
-            $rules['distribusi_sales_details.'.$key.'.sub_karat_id'] = 'required';
+            $rules['distribusi_sales_details.'.$key.'.sub_karat_id'] = 'required_if:'.'distribusi_sales_details.'.$key.'.karat_id,';
             $rules['distribusi_sales_details.'.$key.'.berat_bersih'] = [
                 'required',
                 'gt:0',
                 function ($attribute, $value, $fail) use ($key) {
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_office berdasarkan nilai parent id nya
-                    $isSubKaratFilled = $this->distribusi_sales_details[$key]['sub_karat_id'] != '';
-                    if($isSubKaratFilled){
                         $maxWeight = DB::table('stock_office')
                             ->where('karat_id', $this->distribusi_sales_details[$key]['karat_id'])
                             ->max('berat_real');
@@ -126,7 +126,6 @@ class Sales extends Component
                         }else{
                             $fail("Stok telah habis digunakan");
                         }
-                    }
     
                 },
 
@@ -150,7 +149,6 @@ class Sales extends Component
 
     public function updated($propertyName)
     {
-        $this->resetErrorBag();
         $this->validateOnly($propertyName);
     }
 
@@ -199,14 +197,12 @@ class Sales extends Component
     
             foreach($this->distribusi_sales_details as $key => $value) {
                 $dist_sale_detail = $dist_sale->detail()->create([
-                    'karat_id' => $this->distribusi_sales_details[$key]['sub_karat_id'],
+                    'karat_id' => !empty($this->distribusi_sales_details[$key]['sub_karat_id'])?$this->distribusi_sales_details[$key]['sub_karat_id']:$this->distribusi_sales_details[$key]['karat_id'],
                     'berat_bersih' => $this->distribusi_sales_details[$key]['berat_bersih'],
                     'harga' => floatval($this->distribusi_sales_details[$key]['harga'])??0,
                 ]);
-
-                $karat = Karat::findOrFail($this->distribusi_sales_details[$key]['sub_karat_id']);
-                $karat->update(['harga'=>floatval($this->distribusi_sales_details[$key]['harga'])??0]);
-                event(new DistribusiSaleDetailCreated($dist_sale, $dist_sale_detail));
+                $this->reduceStockOffice($dist_sale_detail);
+                $this->addStockSales($dist_sale_detail);
             }
             DB::commit();
         }catch (\Exception $e) {
@@ -218,6 +214,38 @@ class Sales extends Component
         $this->resetTotal();
         toast('Created Successfully','success');
         return redirect(route('distribusisale.index'));
+    }
+
+    private function reduceStockOffice($dist_sale_detail){
+        $karat = Karat::findOrFail($dist_sale_detail->karat_id);
+        $karat_id = (!empty($karat->parent_id))?$karat->parent_id:$dist_sale_detail->karat_id;
+        $stock_office = StockOffice::firstOrCreate(['karat_id' => $karat_id]);
+        $dist_sale_detail->stock_office()->attach($stock_office->id,[
+            'karat_id'=>$karat_id,
+            'in' => false,
+            'berat_real' => -1 * $dist_sale_detail->berat_bersih,
+            'berat_kotor' => -1 * $dist_sale_detail->berat_bersih
+        ]);
+        $berat_real = $stock_office->history->sum('berat_real');
+        $berat_kotor = $stock_office->history->sum('berat_kotor');
+        $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
+    }
+
+    private function addStockSales($dist_sale_detail){
+        $sales_id = $dist_sale_detail->distribusi_sales->sales_id;
+        $stock_sales = StockSales::firstOrCreate([
+            'karat_id' => $dist_sale_detail->karat_id,
+            'sales_id' => $sales_id
+        ]);
+        $dist_sale_detail->stock_sales()->attach($stock_sales->id,[
+            'karat_id'=>$dist_sale_detail->karat_id,
+            'sales_id' => $sales_id,
+            'in' => true,
+            'berat_real' => $dist_sale_detail->berat_bersih,
+            'berat_kotor' => $dist_sale_detail->berat_bersih
+        ]);
+        $berat_real = $stock_sales->history->sum('berat_real');
+        $stock_sales->update(['weight'=> $berat_real]);
     }
 
 

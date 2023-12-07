@@ -51,5 +51,10 @@ class StockOffice extends Model
         return $this->hasMany(StockOfficeHistory::class,'stock_office_id');
     }
 
+    public function distribusi_sales_item()
+    {
+        return $this->morphedByMany(DistribusiSaleDetail::class, 'transaction', 'stock_office_history','stock_office_id','transaction_id','id','id')->withTimestamps();
+    }
+
 
 }

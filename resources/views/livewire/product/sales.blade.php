@@ -33,11 +33,11 @@
                       <span class="mr-4 inline-block hidden md:block">:</span>
                       <div class="flex-1">
                           <input wire:model="distribusi_sales.date" type="date" name="invoice" id="date" class="form-control @error('distribusi_sales.date') is-invalid @enderror">
-                          @error('distribusi_sales.date')
-                          <div class="invalid-feedback">
-                              {{ $message }}
-                          </div>
-                          @enderror
+                            @if ($errors->has('distribusi_sales.date'))
+                                <span class="invalid feedback" role="alert">
+                                    <small class="text-danger">{{ $errors->first('distribusi_sales.date') }}.</small class="text-danger">
+                                </span>
+                            @endif
                       </div>
                   </div>
 
@@ -53,11 +53,11 @@
                               </option>
                               @endforeach
                           </select>
-                          @error('distribusi_sales.sales_id')
-                          <div class="invalid-feedback">
-                              {{ $message }}
-                          </div>
-                          @enderror
+                        @if ($errors->has('distribusi_sales.sales_id'))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first('distribusi_sales.sales_id') }}.</small class="text-danger">
+                            </span>
+                        @endif
                       </div>
                   </div>
               </div>
@@ -77,7 +77,7 @@
                       <?php
 
                         $field_name = 'distribusi_sales_details.' . $key . '.karat_id';
-                        $field_lable = __('Parameter Karat');
+                        $field_lable = __('Karat');
                         $field_placeholder = Label_case($field_lable);
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         $required = 'wire:model="' . $field_name . '"';
@@ -87,7 +87,7 @@
                             {{ $field_lable }}<span class="text-danger">*</span></label>
                         @endif
                       <select class="form-control form-control-sm" wire:change="changeParentKarat('{{ $key }}')" wire:model="{{ $field_name }}" name="{{ $field_name }}">
-                          <option value="" selected disabled>Select Karat</option>
+                          <option value="" selected disabled>Pilih Karat</option>
                           @foreach($dataKarat as $karat)
                           <option value="{{$karat->id}}">
                               {{$karat->name}} | {{$karat->kode}}
@@ -112,13 +112,13 @@
                         ?>
                         @if ($key == 0)
                         <label class="text-gray-700" for="{{ $field_name }}">
-                            {{ $field_lable }}<span class="text-danger">*</span></label>
+                            {{ $field_lable }}</label>
                         @endif
-                      <select class="form-control form-control-sm" wire:change="updateCodeHarga($event.target.value,'{{ $key }}')" wire:model="{{ $field_name }}">
-                          <option value="" selected disabled>Select Kategori</option>
+                      <select class="form-control form-control-sm" wire:model="{{ $field_name }}">
+                          <option value="" selected>Pilih Kategori Karat</option>
                           @foreach($distribusi_sales_details[$key]['sub_karat_choice'] as $karat)
                           <option value="{{$karat['id']}}">
-                              {{$karat['name']}} | {{$karat['kode']}}
+                              {{$karat['name']}}
                           </option>
                           @endforeach
                       </select>
@@ -130,26 +130,7 @@
                   </div>
 
 
-                  <div class="form-group">
-                      <?php
-
-                        $field_name = 'distribusi_sales_details.' . $key . '.code';
-                        $field_lable = label_case('code');
-                        $field_placeholder = $field_lable;
-                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                        $required = 'wire:model="' . $field_name . '"';
-                        ?>
-                        @if ($key == 0)
-                        <label class="text-gray-700" for="{{ $field_name }}">
-                            {{ $field_lable }}<span class="text-danger">*</span></label>
-                        @endif
-                    <input wire:model="{{ $field_name }}" type="text" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm" readonly>
-                      @if ($errors->has($field_name))
-                      <span class="invalid feedback" role="alert">
-                          <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                      </span>
-                      @endif
-                  </div>
+                  
 
 
 

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Adjustment\Entities\Adjustment;
 use Modules\Karat\Models\Karat;
 use Modules\DataSale\Models\DataSale;
+use Modules\DistribusiSale\Models\DistribusiSaleDetail;
+
 class StockSales extends Model
 {
 
@@ -24,6 +26,15 @@ class StockSales extends Model
     public function adjustments()
     {
         return $this->morphToMany(Adjustment::class, 'location','adjustment_location','location_id','adjustment_id','id','id');
+    }
+
+    public function history(){
+        return $this->hasMany(StockSalesHistory::class,'stock_sales_id');
+    }
+
+    public function distribusi_sales_item()
+    {
+        return $this->morphedByMany(DistribusiSaleDetail::class, 'transaction', 'stock_sales_history','stock_sales_id','transaction_id','id','id')->withTimestamps();
     }
 
 
