@@ -790,16 +790,6 @@ public function cetak($id) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 public function kategori($slug)
     {
         if(AdjustmentSetting::exists()){
