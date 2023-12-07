@@ -7,6 +7,7 @@
                 {{ ucfirst(auth()->user()->name) }}
             </div>
         </div>
+        
         <div class="flex items-center justify-center">
             <div class="text-gray-500">
                 Roles : {{ ucfirst(Auth::user()->roles->first()->name) }}
