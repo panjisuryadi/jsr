@@ -252,8 +252,8 @@
                         </tr>
                         @forelse(\Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptNota::get() as $row)
                             @if($loop->index > 4)
-                                                @break
-                                            @endif
+                                    @break
+                               @endif
                                             {{-- {{ $row }} --}}
                         <tr>
                             <td>{{ $loop->iteration }}</td>

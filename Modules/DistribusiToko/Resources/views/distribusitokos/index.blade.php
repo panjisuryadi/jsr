@@ -45,7 +45,7 @@
                                    <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
                                     <th>{{ __('Karat') }}</th>
 
-                                    <th style="width: 10%!important;" class="text-center">
+                                    <th style="width: 11%!important;" class="text-center">
                                          {{ __('Status') }}
                                     </th>
                                   
