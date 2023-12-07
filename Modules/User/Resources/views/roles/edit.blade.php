@@ -910,7 +910,7 @@
        Penerimaan Barang Luar Sales
     </div>
     <div class="card-body">
-        <div class="flex flex-row grid grid-cols-2 gap-1">
+        <div class="flex flex-row grid grid-cols-1 gap-1">
             
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"

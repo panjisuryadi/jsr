@@ -17,12 +17,14 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
+                            @can('create_penerimaanbarangluarsales')
                            <a href="{{ route(''.$module_name.'.create') }}"
                                 id="Tambah"
                                 data-toggle="tooltip"
                                  class="btn btn-outline-secondary px-3">
                                  <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
                                 </a>
+                                @endcan
                           <a href="{{ route(''.$module_name.'.insentif') }}"
                                 data-toggle="tooltip"
                                  class="btn btn-outline-secondary px-3">

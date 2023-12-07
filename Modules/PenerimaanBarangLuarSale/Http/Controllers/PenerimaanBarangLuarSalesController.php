@@ -274,7 +274,7 @@ public function print_incentive(PenerimaanBarangLuarIncentive $incentive){
             $module_model = $this->module_model;
             $module_name_singular = Str::singular($module_name);
             $module_action = 'Create';
-            abort_if(Gate::denies('add_'.$module_name.''), 403);
+            //abort_if(Gate::denies('add_'.$module_name.''), 403);
               return view(''.$module_name.'::'.$module_path.'.create',
                compact('module_name',
                 'module_action',
