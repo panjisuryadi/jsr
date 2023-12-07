@@ -76,7 +76,7 @@
                                             $row->gold_weight = !empty($row->gold_weight) ? $row->gold_weight : $row->berat_emas;
 
                                             $total_weight = $total_weight + $row->gold_weight;
-                                            $image = $row->product->images;
+                                            $image = $row->product?->images;
                                             $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                         @endphp
                                         <tr>
