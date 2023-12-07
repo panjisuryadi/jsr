@@ -1320,16 +1320,14 @@ class GenerateMenus
                     'order'         => 3,
                     'activematches' => [
                         'products*',
-                        'kategoriproduk*',
+                        'goodsreceipt*',
                         'product-categories*',
                         'diamondcertificates*',
                         'itemrounds*',
                         'itemshapes*',
 
                     ],
-                    'permission' => ['access_masterdata',
-                                        'access_kategoriproduks',
-                                        'access_diamondcertificates'],
+                    'permission' => [],
                 ]);
             $berlian->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -1399,11 +1397,8 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 2,
-                'activematches' => [
-                    'penentuanhargas*',
-
-                ],
-                'permission'    => ['access_penentuanhargas'],
+                'activematches' => [],
+                'permission'    => [],
             ]);
             $berlianToko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -1457,6 +1452,55 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
+
+            // Berlian - STOK
+            $stok_berlian = $berlian->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 4,
+                'activematches' => [
+                           'stoks*',
+                           'stokcabangs*',
+                    ],
+                  'permission' => ['access_stoks',
+                                      'access_stok_cabang',
+                                      'access_stok_dp',
+                                      'access_stok_pending',
+                                      'access_menu_stok'],
+            ]);
+            $stok_berlian->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+            // EMAS - Stok Cabang
+            $stock_cabang_berlian = $stok_berlian->add('<i class="c-sidebar-nav-icon  bi-card-checklist"></i> '.__('Stok Cabang'), [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [],
+                'permission'    => ['access_stok_cabang'],
+            ]);
+            $stock_cabang_berlian->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+            
+            // EMAS - STOK CABANG - STOK PENDING
+            $stock_cabang_berlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Ready'), [
+                'route' => 'stok.berlian.ready',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 1,
+                'activematches' => ['stoks*'],
+                'permission'    => ['show_stock_ready_cabang'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
 // ================ End of Berlian =================
 
 
