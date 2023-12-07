@@ -910,14 +910,14 @@
        Penerimaan Barang Luar Sales
     </div>
     <div class="card-body">
-        <div class="flex flex-row grid grid-cols-2 gap-1">
+        <div class="flex flex-row grid grid-cols-1 gap-1">
             
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
                 id="access_penerimaanbarangluarsales" name="permissions[]"
                 value="access_penerimaanbarangluarsales" {{ $role->hasPermissionTo('access_penerimaanbarangluarsales') ? 'checked' : '' }}>
                 <label class="custom-control-label" for="access_penerimaanbarangluarsales">
-                  {{ label_Case('access') }}
+                  {{ label_Case('access_penerimaanbarang_luar_sales') }}
                </label>
             </div>
                 <div class="custom-control custom-switch">
@@ -2144,6 +2144,39 @@
                   {{ label_Case('access_reports') }}
                </label>
             </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Penerimaan Berlian
+    </div>
+    <div class="card-body">
+        <div class="flex flex-row grid grid-cols-1 gap-1">
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_penerimaan_qc_berlian" name="permissions[]"
+                value="access_penerimaan_qc_berlian" {{ $role->hasPermissionTo('access_penerimaan_qc_berlian') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_penerimaan_qc_berlian">
+                  {{ label_Case('access_penerimaan_qc_berlian') }}
+               </label>
+            </div>
+
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_hutang_pembelian_berlian" name="permissions[]"
+                value="access_hutang_pembelian_berlian" {{ $role->hasPermissionTo('access_hutang_pembelian_berlian') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_hutang_pembelian_berlian">
+                  {{ label_Case('access_hutang_pembelian_berlian') }}
+               </label>
+            </div>
+
+
             
         </div>
     </div>

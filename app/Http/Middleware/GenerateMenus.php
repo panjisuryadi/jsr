@@ -127,7 +127,8 @@ class GenerateMenus
 
 
             //menuemas
-            $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Emas', [
+            $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> 
+                Emas', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -142,6 +143,7 @@ class GenerateMenus
                     'retursales*',
                     'itemshapes*',
                     'stokcabangs*',
+                    'penerimaanbarangluarsales*',
                     'goodsreceipts*',
 
                 ],
@@ -151,6 +153,7 @@ class GenerateMenus
                                       'access_retursale',
                                       'access_buybacktoko',
                                       'access_goodsreceipts',
+                                      'access_penerimaanbarangluarsales',
                                       'access_stok_cabang',
                                       'access_stok_dp',
                                       'access_stok_pending',
@@ -481,11 +484,15 @@ class GenerateMenus
                 'activematches' => [
                     'datasales*',
                     'distribusitokos*',
+                    'penerimaanbarangluarsale*',
                     'penjualansales*',
                     'retursales*',
 
                 ],
-                'permission'    => ['access_penjualansales','access_retursale'],
+                'permission'    => [
+                                     'access_penjualansales',
+                                     'access_penerimaanbarangluarsales',
+                                     'access_retursale'],
             ]);
             $distribusisales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -1343,7 +1350,11 @@ class GenerateMenus
                         'purchase-payments*',
 
                     ],
-                    'permission'    => ['access_purchases'],
+                    'permission'    => [
+                                    'access_purchases',
+                                    'access_penerimaan_qc_berlian',
+                                    'access_hutang_pembelian_berlian'
+                                     ],
                 ]);
             $purchase_berlian->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -1357,7 +1368,7 @@ class GenerateMenus
                 ])->data([
                     'order'         => 1,
                     'activematches' => ['goodsreceiptsberlian*'],
-                    'permission'    => ['access_goodsreceipts'],
+                    'permission'    => ['access_penerimaan_qc_berlian'],
                 ])->link->attr([
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
@@ -1370,7 +1381,7 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['goodsreceipts*'],
-                'permission'    => ['access_goodsreceipts'],
+                'permission'    => ['access_hutang_pembelian_berlian'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
