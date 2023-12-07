@@ -185,7 +185,7 @@ top: 55% !important;
    <tr>
       <th class="text-center">{{$loop->iteration}}</th>
       <td class="text-center"> {{$row->karat->label}}</td>
-      <td class="text-center"> {{$row->berat_bersih}}</td>
+      <td class="text-center"> {{floatval($row->berat_bersih)}} gr</td>
     
     </tr>
 @endforeach
