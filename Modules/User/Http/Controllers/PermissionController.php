@@ -155,7 +155,7 @@ public function store(Request $request)
         $module_name_singular = Str::singular($module_name);
         abort_if(Gate::denies('access_user_management'), 403);
          $validator = \Validator::make($request->all(),[
-             'name' => 'required|string|max:20|unique:permissions,name',
+             'name' => 'required|string|max:100|unique:permissions,name',
 
         ]);
         if (!$validator->passes()) {
@@ -191,7 +191,7 @@ public function single(Request $request)
         $module_name_singular = Str::singular($module_name);
         abort_if(Gate::denies('access_user_management'), 403);
          $validator = \Validator::make($request->all(),[
-             'name' => 'required|string|max:20|unique:permissions,name',
+             'name' => 'required|string|max:100|unique:permissions,name',
 
         ]);
         if (!$validator->passes()) {

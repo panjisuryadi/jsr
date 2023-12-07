@@ -161,7 +161,7 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td class="text-center">{{ $row->reference }}</td>
-                            <td class="text-center">{{ $row->cabang->name }}</td>
+                            <td class="text-center">{{ @$row->cabang->name }}</td>
                             <td class="text-center">{{ $row->customer->customer_name }}</td>
                             <td class="text-center font-semibold"><small>Rp .</small>{{ rupiah($row->total_amount) }}</td>
                             <td class="text-center">

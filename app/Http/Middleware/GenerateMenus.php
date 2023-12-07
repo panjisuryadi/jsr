@@ -1343,7 +1343,11 @@ class GenerateMenus
                         'purchase-payments*',
 
                     ],
-                    'permission'    => ['access_purchases'],
+                    'permission'    => [
+                                    'access_purchases',
+                                    'access_penerimaan_qc_berlian',
+                                    'access_hutang_pembelian_berlian'
+                                     ],
                 ]);
             $purchase_berlian->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -1357,7 +1361,7 @@ class GenerateMenus
                 ])->data([
                     'order'         => 1,
                     'activematches' => ['goodsreceiptsberlian*'],
-                    'permission'    => ['access_goodsreceipts'],
+                    'permission'    => ['access_penerimaan_qc_berlian'],
                 ])->link->attr([
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
@@ -1370,7 +1374,7 @@ class GenerateMenus
             ->data([
                 'order'         => 2,
                 'activematches' => ['goodsreceipts*'],
-                'permission'    => ['access_goodsreceipts'],
+                'permission'    => ['access_hutang_pembelian_berlian'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
