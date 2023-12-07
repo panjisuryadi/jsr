@@ -1244,9 +1244,8 @@ public function update_ajax(Request $request, $id)
             $categories = json_decode($request->get('catagories'));
         }
 
-
         $datas = Product::ready();
-        if(isset($request->karat)){
+        if(!empty($request->karat) && $request->cabang !== 'undefined'){
             $datas = $datas->where('karat_id',$request->karat);
         }
         if(isset($request->cabang) && $request->cabang !== 'undefined'){

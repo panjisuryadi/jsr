@@ -36,14 +36,15 @@ class SalesReport extends Component
     public $selected_cabang;
 
     protected $rules = [
-        'start_date' => 'required|date|before:end_date',
-        'end_date'   => 'required|date|after:start_date',
+        'period_type' => 'required',
+        'start_date' => 'required_if:period_type,custom|date|before:end_date',
+        'end_date'   => 'required_if:period_type,custom|date|after:start_date',
+        'month' => 'required_if:period_type,month',
+        'year' => 'required_if:period_type,year'
     ];
 
     public function mount($customers) {
         $this->customers = $customers;
-        $this->start_date = today()->subDays(30)->format('Y-m-d');
-        $this->end_date = today()->format('Y-m-d');
         $this->customer_id = '';
         $this->cabangs = Cabang::all();
         $this->selected_cabang = auth()->user()->isUserCabang()?auth()->user()->namacabang()->id:'';
@@ -82,9 +83,10 @@ class SalesReport extends Component
     }
 
     public function pdf(){
+        // $this->validate();
         $start_date = Carbon::parse($this->start_date);
         $end_date = Carbon::parse($this->end_date);
-        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
+        $filename = "Laporan Penjualan " . $this->period_text;
         $sales = $this->sales_data;
         $pdf = PDF::loadView('reports::sales.print',compact('start_date','filename','end_date','sales'))->output();
         $base64Pdf = base64_encode($pdf);
@@ -94,10 +96,11 @@ class SalesReport extends Component
 
     public function export($format): BinaryFileResponse
     {
+        $this->validate();
         abort_if(! in_array($format,['csv','xlsx','pdf']), Response::HTTP_NOT_FOUND);
         $start_date = Carbon::parse($this->start_date);
         $end_date = Carbon::parse($this->end_date);
-        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
+        $filename = "Laporan Penjualan " . $this->period_text;
         return Excel::download(new SaleExport($this->sales_data), $filename. '.' . $format);
     }
 

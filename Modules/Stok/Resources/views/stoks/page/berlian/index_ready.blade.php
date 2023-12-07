@@ -44,7 +44,7 @@
                                     </select>
                                 </div>
                             @endif
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="karat_filter" class="mb-0 font-semibold">Karat</label>
                                 <select name="karat_filter" id="karat_filter" class="form-control">
                                     <option value="" selected>Pilih Karat</option>
@@ -52,7 +52,7 @@
                                         <option value="{{$karat->id}}">{{ $karat->name }} | {{$karat->kode}}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                         @endif
                     </div>
 
@@ -73,7 +73,6 @@
                         </thead>
                     </table>
                 </div>
-            </div>
             </div>
         </div>
     </div>

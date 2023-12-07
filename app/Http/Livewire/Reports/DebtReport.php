@@ -47,8 +47,6 @@ class DebtReport extends Component
     ];
 
     public function mount() {
-        $this->start_date = today()->subDays(30)->format('Y-m-d');
-        $this->end_date = today()->format('Y-m-d');
         $this->payment_type = '';
         $this->suppliers = Supplier::all();
     }

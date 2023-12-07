@@ -17,8 +17,6 @@ class SaleExport implements FromCollection, WithHeadings, WithMapping
             'Invoice',
             'Cabang',
             'Nominal',
-            'Nominal Pembayaran',
-            'Nominal Kembalian'
         ];
     }
 
@@ -29,8 +27,6 @@ class SaleExport implements FromCollection, WithHeadings, WithMapping
             $sale->reference,
             $sale->cabang->name,
             $sale->total_amount,
-            $sale->paid_amount,
-            $sale->due_amount
         ];
     }
     /**
