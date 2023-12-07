@@ -49,7 +49,7 @@ class PenerimaanBarangLuarSalesController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_penerimaanbarangluarsale'), 403);
+        //abort_if(Gate::denies('access_penerimaanbarangluarsales'), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',

@@ -127,7 +127,8 @@ class GenerateMenus
 
 
             //menuemas
-            $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Emas', [
+            $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> 
+                Emas', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -142,6 +143,7 @@ class GenerateMenus
                     'retursales*',
                     'itemshapes*',
                     'stokcabangs*',
+                    'penerimaanbarangluarsales*',
                     'goodsreceipts*',
 
                 ],
@@ -151,6 +153,7 @@ class GenerateMenus
                                       'access_retursale',
                                       'access_buybacktoko',
                                       'access_goodsreceipts',
+                                      'access_penerimaanbarangluarsales',
                                       'access_stok_cabang',
                                       'access_stok_dp',
                                       'access_stok_pending',

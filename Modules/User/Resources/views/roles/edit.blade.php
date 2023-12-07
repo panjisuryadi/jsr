@@ -917,7 +917,7 @@
                 id="access_penerimaanbarangluarsales" name="permissions[]"
                 value="access_penerimaanbarangluarsales" {{ $role->hasPermissionTo('access_penerimaanbarangluarsales') ? 'checked' : '' }}>
                 <label class="custom-control-label" for="access_penerimaanbarangluarsales">
-                  {{ label_Case('access') }}
+                  {{ label_Case('access_penerimaanbarang_luar_sales') }}
                </label>
             </div>
                 <div class="custom-control custom-switch">
