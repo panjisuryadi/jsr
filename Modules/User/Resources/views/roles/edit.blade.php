@@ -159,10 +159,10 @@
 
 <div class="card h-100 border-0 shadow">
     <div class="card-header font-semibold">
-       Akses Roles
+       Akses Roles | Pages per Roles
     </div>
     <div class="card-body">
-        <div class="flex flex-row grid grid-cols-3 gap-1">
+        <div class="flex flex-row grid grid-cols-2 gap-1">
             
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
