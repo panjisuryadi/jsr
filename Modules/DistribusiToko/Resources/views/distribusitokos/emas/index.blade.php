@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                            <a class="btn btn-info mb-2" href="{{ route('distribusitoko.emas.create') }}">
+                            <a class="btn btn-primary px-5 uppercase tracking-widest mb-2" href="{{ route('distribusitoko.emas.create') }}">
                                 Input Distribusi <i class="bi bi-plus"></i>
                             </a>
                         </div>
@@ -33,12 +33,12 @@
                                    <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
                                     <th>{{ __('Karat') }}</th>
 
-                                    <th style="width: 10%!important;" class="text-center">
+                                    <th style="width: 13%!important;" class="text-center">
                                          {{ __('Status') }}
                                     </th>
                                   
                                    
-                                    <th style="width: 18%!important;" class="text-center">
+                                    <th style="width: 14%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>

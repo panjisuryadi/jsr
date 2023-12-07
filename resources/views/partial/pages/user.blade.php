@@ -7,15 +7,24 @@
                 {{ ucfirst(auth()->user()->name) }}
             </div>
         </div>
+        
         <div class="flex items-center justify-center">
             <div class="text-gray-500">
                 Roles : {{ ucfirst(Auth::user()->roles->first()->name) }}
             </div>
         </div>
-        <div class="flex items-center justify-center">
-            <div class="text-blue-400">
-                Cabang : {{ Auth::user()->isUserCabang()?ucfirst(Auth::user()->namacabang()->name):'' }}
-            </div>
+        <div class="flex items-center justify-center font-semibold tracking-wide">
+           
+              @if(Auth::user()->isUserCabang())
+               <div class="text-blue-400">
+                 Cabang : {{ ucfirst(Auth::user()->namacabang()->name) }}
+                </div>
+              @else
+              <div class="text-green-500 font-semibold tracking-widest">
+               OFFICE
+              </div>
+              @endif 
+               
         </div>
     </div>
 </div>

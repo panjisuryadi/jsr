@@ -790,16 +790,6 @@ public function cetak($id) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 public function kategori($slug)
     {
         if(AdjustmentSetting::exists()){
@@ -1058,6 +1048,9 @@ public function approve_distribusi(Request $request, $id)
             'module_icon', 'module_model'));
     }
 
+
+    
+
     public function index_data_emas(Request $request)
     {
         $module_name = $this->module_model::gold()->get();
@@ -1073,8 +1066,8 @@ public function approve_distribusi(Request $request, $id)
                     })
             ->editColumn('date', function ($data) {
                 $tb = '<div class="items-center text-center">
-                        <span class="text-gray-600">
-                        ' .  Carbon::parse($data->date)->format('d M, Y') . '</span>
+                        <span class="text-blue-600">
+                        ' .  shortdate($data->date) . '</span>
                         </div>';
                     return $tb;
                 })
@@ -1093,12 +1086,22 @@ public function approve_distribusi(Request $request, $id)
                     return $tb;
                 })  
 
-                    ->editColumn('status', function ($data) {
-                    $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
-                            ' . $data->current_status->name . '
-                        </div>';
-                    return $tb;
-                })
+              // ->editColumn('status', function ($data) {
+              //       $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
+              //               ' . $data->current_status->name . '
+              //           </div>';
+              //       return $tb;
+              //   })
+
+                 ->addColumn('status', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view(''.$module_name.'::'.$module_path.
+                '.includes.status_distribusi',
+                compact('module_name', 'data', 'module_model'));
+                    })
+
                 ->editColumn('karat', function ($data) {
                     $tb = '<div class="items-center">
                         <h3 class="text-sm text-gray-600">

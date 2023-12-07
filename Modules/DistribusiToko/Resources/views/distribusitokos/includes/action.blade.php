@@ -7,6 +7,7 @@
 @endcan
 
 @can('delete_distribusitoko')
+
 @if ($data->isDraft())
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();

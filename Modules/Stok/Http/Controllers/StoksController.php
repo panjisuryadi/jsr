@@ -19,6 +19,7 @@ use Modules\Karat\Models\Karat;
 use App\Models\LookUp;
 use Illuminate\Support\Facades\DB;
 use Modules\Cabang\Models\Cabang;
+use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
 use Modules\Stok\Models\PenerimaanLantakan;
@@ -1190,6 +1191,39 @@ public function update_ajax(Request $request, $id)
             'dataCabang',
             'module_icon', 'module_model'));
     }
+
+    public function berlian_ready() {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $karat_ids = Product::ready()->get()->groupBy('karat_id')->keys()->toArray();
+        $datakarat = Karat::find($karat_ids);
+        $kategori_produk_berlian =  LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
+        $berlian_kategori = Category::select('id')->where('kategori_produk_id', $kategori_produk_berlian)->get()->groupBy('id')->keys()->toArray();
+        $dataCabang = Cabang::all();
+        $product_status = ProductStatus::find([
+            ProductStatus::PENDING_OFFICE,
+            ProductStatus::CUCI,
+            ProductStatus::MASAK,
+            ProductStatus::RONGSOK,
+            ProductStatus::REPARASI,
+            ProductStatus::SECOND,
+        ]);
+        $module_action = 'Ready Cabang';
+        abort_if(Gate::denies('show_stock_ready_cabang'), 403);
+            return view(''.$module_name.'::'.$module_path.'.page.berlian.index_ready',
+            compact('module_name',
+            'module_action',
+            'module_title',
+            'datakarat',
+            'berlian_kategori',
+            'product_status',
+            'dataCabang',
+            'module_icon', 'module_model'));
+    }
     
     public function index_data_ready(Request $request)
     {
@@ -1204,12 +1238,21 @@ public function update_ajax(Request $request, $id)
 
         $module_action = 'List';
 
+        /** untuk keperluan nampilkan berlian */
+        $categories = [];
+        if(!empty(json_decode($request->get('catagories')))) {
+            $categories = json_decode($request->get('catagories'));
+        }
+
         $datas = Product::ready();
-        if(isset($request->karat)){
+        if(!empty($request->karat) && $request->cabang !== 'undefined'){
             $datas = $datas->where('karat_id',$request->karat);
         }
         if(isset($request->cabang) && $request->cabang !== 'undefined'){
             $datas = $datas->where('cabang_id',$request->cabang);
+        }
+        if(!empty($categories)) {
+            $datas = $datas->whereIn('category_id', $categories);
         }
         
         $datas = $datas->get();
