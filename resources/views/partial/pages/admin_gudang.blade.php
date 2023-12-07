@@ -246,21 +246,32 @@
                         <tr>
                             <th class="w-1p text-center">{{ label_case('No') }}</th>
          <th class="w-2p text-center">{{ label_case('tanggal') }}</th>                          
-         <th class="w-3p text-center">{{ label_case('Cabang') }}</th>                          
-         <th class="w-3p text-center">{{ label_case('PIC') }}</th>                          
-         <th class="w-4p text-center">{{ label_case('Status') }}</th>                          
+         <th class="w-3p text-center">{{ label_case('invoice') }}</th>                          
+         <th class="w-3p uppercase text-center tracking-widest">{{ label_case('PIC') }}</th>                          
+         <th class="w-1p text-center">{{ label_case('Status') }}</th>                          
                         </tr>
-                        @forelse(\Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptNota::get() as $sale)
+                        @forelse(\Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptNota::get() as $row)
                             @if($loop->index > 4)
                                                 @break
                                             @endif
-                                            {{ $sale }}
+                                            {{-- {{ $row }} --}}
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ shortdate($sale->date) }}</td>
-                            <td>{{ $sale->cabang->name }}</td>
-                            <td>{{ Ucfirst($sale->pic->name) }}</td>
-                            <td>{{ $sale->pic->name }}</td>
+                            <td>
+                                <span class="text-blue-500"> 
+                                    {{ shortdate($row->date) }}
+                                </span>
+                               
+                            </td>
+                            <td>{{ $row->invoice }}</td>
+                            <td>{{ Ucfirst($row->pic->name) }}</td>
+                            <td>
+                                <span class="bg-green-500 uppercase rounded px-3">
+                            {{ @$row->latest_status_tracking()->name }}
+                                </span>
+                               
+
+                            </td>
                         </tr>
                         @empty
                         <tr>
