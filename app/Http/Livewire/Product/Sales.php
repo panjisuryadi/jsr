@@ -31,7 +31,8 @@ class Sales extends Component
             'kode' => '',
             'berat_bersih' => '',
             'harga' => '',
-            'sub_karat_choice' => []
+            'sub_karat_choice' => [],
+            'pure_gold' => ''
         ]
     ];
 
@@ -48,7 +49,8 @@ class Sales extends Component
             'kode' => '',
             'berat_bersih' => '',
             'harga' => '',
-            'sub_karat_choice' => []
+            'sub_karat_choice' => [],
+            'pure_gold' => ''
         ];
     }
 
@@ -70,7 +72,8 @@ class Sales extends Component
                 'kode' => '',
                 'berat_bersih' => '',
                 'harga' => '',
-                'sub_karat_choice' => []
+                'sub_karat_choice' => [],
+                'pure_gold' => ''
             ]
         ];
     }
@@ -200,6 +203,7 @@ class Sales extends Component
                     'karat_id' => !empty($this->distribusi_sales_details[$key]['sub_karat_id'])?$this->distribusi_sales_details[$key]['sub_karat_id']:$this->distribusi_sales_details[$key]['karat_id'],
                     'berat_bersih' => $this->distribusi_sales_details[$key]['berat_bersih'],
                     'harga' => floatval($this->distribusi_sales_details[$key]['harga'])??0,
+                    'pure_gold' => !empty($this->distribusi_sales_details[$key]['pure_gold'])?$this->distribusi_sales_details[$key]['pure_gold']:null,
                 ]);
                 $this->reduceStockOffice($dist_sale_detail);
                 $this->addStockSales($dist_sale_detail);
@@ -300,5 +304,20 @@ class Sales extends Component
             }
         }
         return $total;
+    }
+
+    public function weightUpdated($key){
+        $this->calculateTotalBerat();
+        $this->updateConverted($key);
+    }
+
+    public function hargaUpdated($key){
+        $this->updateConverted($key);
+    }
+
+    public function updateConverted($key){
+        if(!empty($this->distribusi_sales_details[$key]['berat_bersih']) && !empty($this->distribusi_sales_details[$key]['harga'])){
+            $this->distribusi_sales_details[$key]['pure_gold'] = formatBerat($this->distribusi_sales_details[$key]['berat_bersih'] * ($this->distribusi_sales_details[$key]['harga'] / 100));
+        }
     }
 }

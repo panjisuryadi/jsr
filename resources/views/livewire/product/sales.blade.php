@@ -133,54 +133,75 @@
                   
 
 
+                  <div class="form-group">
+                      <?php
 
+                        $field_name = 'distribusi_sales_details.' . $key . '.berat_bersih';
+                        $field_lable = label_case('berat asal');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        ?>
+                    @if ($key == 0)
+                        <label class="text-gray-700" for="{{ $field_name }}">
+                            {{ $field_lable }}<span class="text-danger">*</span></label>
+                    @endif
+                    <input wire:model.lazy.1s="{{ $field_name }}" wire:change="weightUpdated({{$key}})" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm @error('{{$field_name}}') is-invalid @enderror" min="0" step="0.001">
+                      @if ($errors->has($field_name))
+                      <span class="invalid feedback" role="alert">
+                          <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                      </span>
+                      @endif
+                  </div>
                   <div class="form-group">
                       <?php
                         $field_name = 'distribusi_sales_details.' . $key . '.harga';
                         $field_lable = label_case('harga (%)');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                        $required = 'wire:model="' . $field_name . '"';
                         ?>
                     @if ($key == 0)
                         <label class="text-gray-700" for="{{ $field_name }}">
                             {{ $field_lable }}</label>
                         @endif
-                    <input wire:model="{{ $field_name }}" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm @error('{{$field_name}}') is-invalid @enderror" min="0" step="0.001">
+                    <input wire:change="hargaUpdated({{$key}})" wire:model="{{ $field_name }}" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm @error('{{$field_name}}') is-invalid @enderror" min="0" step="0.001">
                       @if ($errors->has($field_name))
                       <span class="invalid feedback" role="alert">
                           <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                       </span>
                       @endif
                   </div>
-
-
-
-
-
-
-
 
                   <div class="form-group">
-                      <?php
+                        <?php
 
-                        $field_name = 'distribusi_sales_details.' . $key . '.berat_bersih';
-                        $field_lable = label_case('berat_bersih');
+                        $field_name = 'distribusi_sales_details.' . $key . '.pure_gold';
+                        $field_lable = label_case('24K');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                        $required = 'wire:change=calculateTotalJumlah() step="0.001" wire:model="' . $field_name . '"';
+                        $required = 'wire:model.debounce.1s="' . $field_name . '"';
                         ?>
-                    @if ($key == 0)
+                        @if ($key == 0)
                         <label class="text-gray-700" for="{{ $field_name }}">
-                            {{ $field_lable }}<span class="text-danger">*</span></label>
-                    @endif
-                    <input wire:model.lazy.1s="{{ $field_name }}" wire:change=calculateTotalBerat() type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm @error('{{$field_name}}') is-invalid @enderror" min="0" step="0.001">
-                      @if ($errors->has($field_name))
-                      <span class="invalid feedback" role="alert">
-                          <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                      </span>
-                      @endif
-                  </div>
+                      {{ $field_lable }}<span class="text-danger">*</span></label>
+                        @endif
+                        {{ html()->number($field_name)->placeholder($field_placeholder)
+                        ->value(old($field_name))
+                    ->class('form-control form-control-sm '.$invalid.'')->attributes(["$required","min=0","step=0.001","readonly"]) }}
+                        @if ($errors->has($field_name))
+                        <span class="invalid feedback" role="alert">
+                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                        </span>
+                        @endif
+                    </div>
+
+
+
+
+
+
+
+
+                  
 
 
 
@@ -219,7 +240,7 @@
               </div>
               <div class="w-2/7">
                   <div class="mb-2 md:mb-1 flex items-center">
-                      <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat Bersih</label>
+                      <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat Asal</label>
                       <span class="mr-4 inline-block hidden md:block">:</span>
                       <div class="flex-1">
                           <input class="form-control form-control-sm" wire:model="distribusi_sales.total_weight" type="text" placeholder="0" readonly>
