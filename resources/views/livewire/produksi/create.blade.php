@@ -30,7 +30,7 @@
                                         <div class="form-group">
                                             <?php
                                                 $field_name = 'produksi_item_id';
-                                                $field_lable = label_case('Bahan');
+                                                $field_lable = label_case('Bahan / Penerimaan Barang Pcs');
                                                 $field_placeholder = $field_lable;
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                 $required = "required";
