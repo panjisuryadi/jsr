@@ -11,6 +11,8 @@ use Modules\Karat\Models\Karat;
 use Modules\ReturSale\Events\ReturSaleDetailCreated;
 use Modules\ReturSale\Models\ReturSale;
 use Modules\ReturSale\Models\ReturSaleDetail;
+use Modules\Stok\Models\StockOffice;
+use Modules\Stok\Models\StockSales;
 
 class Create extends Component
 {
@@ -19,7 +21,6 @@ class Create extends Component
         'sales_id' => '',
         'retur_no' => '',
         'total_weight' => 0,
-        'total_nominal' => 0
     ];
 
     public $retur_sales_detail = [
@@ -27,8 +28,7 @@ class Create extends Component
             'karat_id' => '',
             'weight' => '',
             'nominal' => 0,
-            'sub_karat_id' => '',
-            'sub_karat_choice' => []
+            'pure_gold' => ''
         ]
     ];
 
@@ -45,8 +45,7 @@ class Create extends Component
             'karat_id' => '',
             'weight' => '',
             'nominal' => 0,
-            'sub_karat_id' => '',
-            'sub_karat_choice' => []
+            'pure_gold' => ''
         ];
     }
 
@@ -56,7 +55,6 @@ class Create extends Component
             'sales_id' => '',
             'retur_no' => '',
             'total_weight' => 0,
-            'total_nominal' => 0
         ];
     }
     private function resetReturSalesDetails(){
@@ -65,42 +63,51 @@ class Create extends Component
                 'karat_id' => '',
                 'weight' => '',
                 'nominal' => 0,
-                'sub_karat_id' => '',
-                'sub_karat_choice' => []
+                'pure_gold' => ''
             ]
         ];
     }
 
-    private function resetTotal(){
-        $this->retur_sales['total_weight'] = 0;
-        $this->retur_sales['total_nominal'] = 0;
+    public function updatedReturSalesSalesId(){
+        $this->resetReturSalesDetails();
+        $this->resetTotal();
+        $this->resetErrorBag();
     }
 
-    private function resetInputFields(){
-        $this->resetReturSales();
-        $this->resetReturSalesDetails();
+    private function resetTotal(){
+        $this->retur_sales['total_weight'] = 0;
     }
 
     public function render()
     {
-        return view('livewire.retur-sale.create');
+        $karatIds = StockSales::query()
+                        ->where('sales_id',$this->retur_sales['sales_id'])
+                        ->where('weight','>',0)
+                        ->pluck('karat_id')
+                        ->toArray();
+        $this->dataKarat = Karat::find($karatIds);
+        return view('livewire.retur-sale.create',[
+            'dataKarat' => $this->dataKarat
+        ]);
     }
 
     public function mount()
     {
+        $this->retur_sales['retur_no'] = $this->generateInvoice();
         $this->dataSales = DataSale::all();
-        $this->dataKarat = Karat::where(function($query){
-            $query
-                ->where('parent_id',null)
-                ->whereHas('children', function($query){
-                    $query->whereHas('stockSales', function ($query) {
-                        $query->where('weight', '>',0);
-                    });
-                });
-        })->get();
+        $this->hari_ini = (new DateTime())->format('Y-m-d');
+        $this->retur_sales['date'] = $this->hari_ini;
+    }
 
-        $this->hari_ini = new DateTime();
-        $this->hari_ini = $this->hari_ini->format('Y-m-d');
+    private function generateInvoice()
+    {
+        $lastString = ReturSale::orderBy('id', 'desc')->value('retur_no');
+
+        $numericPart = (int) substr($lastString, 11);
+        $incrementedNumericPart = $numericPart + 1;
+        $nextNumericPart = str_pad($incrementedNumericPart, 5, "0", STR_PAD_LEFT);
+        $nextString = "RETURSALES-" . $nextNumericPart;
+        return $nextString;
     }
 
     public function remove($key)
@@ -135,30 +142,47 @@ class Create extends Component
         foreach ($this->retur_sales_detail as $key => $value) {
 
             $rules['retur_sales_detail.'.$key.'.karat_id'] = 'required';
-            $rules['retur_sales_detail.'.$key.'.sub_karat_id'] = 'required';
             $rules['retur_sales_detail.'.$key.'.weight'] = [
                 'required',
                 'gt:0',
                 function ($attribute, $value, $fail) use ($key) {
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
-                    $isKaratFilled = $this->retur_sales_detail[$key]['sub_karat_id'] != '';
                     $isSalesFilled = $this->retur_sales['sales_id'] != '';
-                    if($isKaratFilled && $isSalesFilled){
+                    if($isSalesFilled){
                         $maxWeight = DB::table('stock_sales')
-                            ->where('karat_id', $this->retur_sales_detail[$key]['sub_karat_id'])
+                            ->where('karat_id', $this->retur_sales_detail[$key]['karat_id'])
                             ->where('sales_id', $this->retur_sales['sales_id'])
                             ->max('weight');
-                        if ($value > $maxWeight) {
-                            $fail("Berat melebihi stok yang tersedia. Jumlah Stok ($maxWeight).");
+                        $total_input_weight_based_on_karat = $this->getTotalWeightBasedOnKarat($key,$this->retur_sales_detail[$key]['karat_id']);
+                        if($total_input_weight_based_on_karat<$maxWeight){
+                            $maxWeight = $maxWeight - $total_input_weight_based_on_karat;
+                            if ($value > $maxWeight) {
+                                $fail("Berat melebihi stok yang tersedia. Sisa Stok ($maxWeight).");
+                            }
+                        }else{
+                            $fail("Stok telah habis digunakan");
                         }
                     }
     
                 },
             
             ];
-            $rules['retur_sales_detail.'.$key.'.nominal'] = 'gt:-1';
+            $rules['retur_sales_detail.'.$key.'.nominal'] = 'gt:-1|max:100';
         }
         return $rules;
+    }
+
+    public function getTotalWeightBasedOnKarat($key,$karatId){
+        $total = 0;
+        foreach($this->retur_sales_detail as $index => $value){
+            if($index == $key){
+                continue;
+            }
+            if($this->retur_sales_detail[$index]['karat_id'] == $karatId){
+                $total += floatval($this->retur_sales_detail[$index]['weight'])??0;
+            }
+        }
+        return $total;
     }
 
     public function calculateTotalBerat()
@@ -169,17 +193,6 @@ class Create extends Component
             $this->retur_sales['total_weight'] = number_format(round($this->retur_sales['total_weight'], 3), 3, '.', '');
             $this->retur_sales['total_weight'] = rtrim($this->retur_sales['total_weight'], '0');
             $this->retur_sales['total_weight'] = formatWeight($this->retur_sales['total_weight']);
-        }
-    }
-
-    public function calculateTotalNominal()
-    {
-        $this->retur_sales['total_nominal'] = 0;
-        foreach ($this->retur_sales_detail as $key => $value) {
-            $this->retur_sales['total_nominal'] += floatval($this->retur_sales_detail[$key]['nominal']);
-            $this->retur_sales['total_nominal'] = number_format(round($this->retur_sales['total_nominal'], 3), 3, '.', '');
-            $this->retur_sales['total_nominal'] = rtrim($this->retur_sales['total_nominal'], '0');
-            $this->retur_sales['total_nominal'] = formatWeight($this->retur_sales['total_nominal']);
         }
     }
 
@@ -199,17 +212,18 @@ class Create extends Component
                 'date' => $this->retur_sales['date'],
                 'retur_no' => $this->retur_sales['retur_no'],
                 'total_weight' => $this->retur_sales['total_weight'],
-                'total_nominal' => $this->retur_sales['total_nominal'],
                 'created_by' => auth()->user()->name
             ]);
     
             foreach($this->retur_sales_detail as $key => $value) {
                 $retur_sale_detail = $retur_sale->detail()->create([
-                    'karat_id' => $this->retur_sales_detail[$key]['sub_karat_id'],
+                    'karat_id' => $this->retur_sales_detail[$key]['karat_id'],
                     'weight' => $this->retur_sales_detail[$key]['weight'],
-                    'nominal' => $this->retur_sales_detail[$key]['nominal']?$this->retur_sales_detail[$key]['nominal']:null,
+                    'nominal' => !empty($this->retur_sales_detail[$key]['nominal'])?$this->retur_sales_detail[$key]['nominal']:null,
+                    'pure_gold' => !empty($this->retur_sales_detail[$key]['pure_gold'])?$this->retur_sales_detail[$key]['pure_gold']:null,
                 ]);
-                event(new ReturSaleDetailCreated($retur_sale,$retur_sale_detail));
+                $this->reduceStockSales($retur_sale_detail);
+                $this->addStockOffice($retur_sale_detail);
             }
 
             DB::commit();
@@ -219,65 +233,72 @@ class Create extends Component
         }
         
 
-        $this->resetInputFields();
-        $this->resetTotal();
-        // session()->flash('message', 'Created Successfully.');
-        toast('Created Successfully','success');
+        toast('Retur Sales Berhasil dibuat','success');
         return redirect(route('retursale.index'));
     }
 
+    private function reduceStockSales($retur_sale_detail){
+        $sales_id = $retur_sale_detail->retursales->sales_id;
+        $stock_sales = StockSales::where([
+            'karat_id' => $retur_sale_detail->karat_id,
+            'sales_id' => $sales_id
+        ])->firstOrFail();
+        $retur_sale_detail->stock_sales()->attach($stock_sales->id,[
+            'karat_id'=>$retur_sale_detail->karat_id,
+            'sales_id' => $sales_id,
+            'in' => false,
+            'berat_real' => -1 * $retur_sale_detail->weight,
+            'berat_kotor' => -1 * $retur_sale_detail->weight
+        ]);
+        $berat_real = $stock_sales->history->sum('berat_real');
+        $stock_sales->update(['weight'=> $berat_real]);
+    }
 
-
-    public function updateKaratList(){
-        $this->dataKarat = Karat::where(function($query){
-            $query
-                ->where('parent_id',null)
-                ->whereHas('children', function($query){
-                    $query->whereHas('stockSales', function ($query) {
-                        $query->where('weight', '>',0);
-                        $query->where('sales_id', $this->retur_sales['sales_id']);
-                    });
-                });
-        })->get();
-        
-        $this->resetReturSalesDetails();
-        $this->resetDataSubKarat();
+    private function addStockOffice($retur_sale_detail){
+        $karat = Karat::findOrFail($retur_sale_detail->karat_id);
+        $karat_id = (!empty($karat->parent_id))?$karat->parent_id:$retur_sale_detail->karat_id;
+        $stock_office = StockOffice::firstOrCreate(['karat_id' => $karat_id]);
+        $retur_sale_detail->stock_office()->attach($stock_office->id,[
+            'karat_id'=>$karat_id,
+            'in' => true,
+            'berat_real' => $retur_sale_detail->weight,
+            'berat_kotor' => $retur_sale_detail->weight
+        ]);
+        $berat_real = $stock_office->history->sum('berat_real');
+        $berat_kotor = $stock_office->history->sum('berat_kotor');
+        $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
     }
 
     public function clearWeight($key){
         $this->retur_sales_detail[$key]['weight'] = '';
     }
 
-    public function changeParentKarat($key){
-        $this->clearWeight($key);
-        $karat = Karat::find($this->retur_sales_detail[$key]['karat_id']);
-
-        if(is_null($karat)){
-            $this->retur_sales_detail[$key]['sub_karat_choice'] = [];
-        }else{
-            $this->retur_sales_detail[$key]['sub_karat_choice'] = 
-            $karat->children()->whereHas('stockSales', fn ($query) => $query->where('weight','>',0)->where('sales_id', $this->retur_sales['sales_id']))->whereNotIn('id',$this->getUsedSubKaratIds())->get();
-        }
-    }
-
-    protected function resetDataSubKarat(){
+    protected function getUsedKaratIds(){
+        $karatIds = [];
         foreach ($this->retur_sales_detail as $detail) {
-            $detail['sub_karat_choice'] = [];
-        }
-    }
-
-    protected function getUsedSubKaratIds(){
-        $subKaratIds = [];
-        foreach ($this->retur_sales_detail as $detail) {
-            if (isset($detail['sub_karat_id'])) {
-                $subKaratIds[] = $detail['sub_karat_id'];
+            if (isset($detail['karat_id'])) {
+                $karatIds[] = $detail['karat_id'];
             }
         }
-        return $subKaratIds;
+        return $karatIds;
     }
 
     public function updateHarga(Karat $karat,$key){
         $this->retur_sales_detail[$key]['nominal'] = formatBerat($karat->harga);
-        $this->calculateTotalNominal();
+    }
+
+    public function weightUpdated($key){
+        $this->calculateTotalBerat();
+        $this->updateConverted($key);
+    }
+
+    public function hargaUpdated($key){
+        $this->updateConverted($key);
+    }
+
+    public function updateConverted($key){
+        if(!empty($this->retur_sales_detail[$key]['weight']) && !empty($this->retur_sales_detail[$key]['nominal'])){
+            $this->retur_sales_detail[$key]['pure_gold'] = formatBerat($this->retur_sales_detail[$key]['weight'] * ($this->retur_sales_detail[$key]['nominal'] / 100));
+        }
     }
 }

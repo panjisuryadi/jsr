@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Karat\Models\Karat;
 use Modules\ReturSale\Models\ReturSale;
+use Modules\Stok\Models\StockOffice;
+use Modules\Stok\Models\StockSales;
+
 class ReturSaleDetail extends Model
 {
 
@@ -19,6 +22,16 @@ class ReturSaleDetail extends Model
 
     public function karat(){
         return $this->belongsTo(Karat::class);
+    }
+
+    public function stock_sales()
+    {
+        return $this->morphToMany(StockSales::class, 'transaction','stock_sales_history','transaction_id','stock_sales_id','id','id')->withTimestamps();
+    }
+
+    public function stock_office()
+    {
+        return $this->morphToMany(StockOffice::class, 'transaction','stock_office_history','transaction_id','stock_office_id','id','id')->withTimestamps();
     }
 
    

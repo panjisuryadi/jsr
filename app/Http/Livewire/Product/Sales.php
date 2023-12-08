@@ -130,7 +130,7 @@ class Sales extends Component
                 },
 
             ];
-            $rules['distribusi_sales_details.'.$key.'.harga'] = 'gt:-1';
+            $rules['distribusi_sales_details.'.$key.'.harga'] = 'gt:-1|max:100';
 
         }
         return $rules;
@@ -219,7 +219,7 @@ class Sales extends Component
     private function reduceStockOffice($dist_sale_detail){
         $karat = Karat::findOrFail($dist_sale_detail->karat_id);
         $karat_id = (!empty($karat->parent_id))?$karat->parent_id:$dist_sale_detail->karat_id;
-        $stock_office = StockOffice::firstOrCreate(['karat_id' => $karat_id]);
+        $stock_office = StockOffice::where(['karat_id' => $karat_id])->firstOrFail();
         $dist_sale_detail->stock_office()->attach($stock_office->id,[
             'karat_id'=>$karat_id,
             'in' => false,
