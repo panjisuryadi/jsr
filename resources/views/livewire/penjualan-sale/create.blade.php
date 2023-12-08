@@ -121,13 +121,11 @@
             </div>
 
             @foreach($penjualan_sales_details as $key => $value)
-            <div class="flex justify-between mb-3">
+            <div class="flex justify-between mb-1">
                 <div class="add-input w-full mx-auto flex flex-row grid grid-cols-5 gap-2">
-
 
                     <div class="form-group">
                         <?php
-
                         $field_name = 'penjualan_sales_details.' . $key . '.karat_id';
                         $field_lable = __('Parameter Karat');
                         $field_placeholder = Label_case($field_lable);
@@ -178,66 +176,133 @@
                         @endif
                     </div>
 
-
-
                     <div class="form-group">
                         <?php
-
-                        $field_name = 'penjualan_sales_details.' . $key . '.weight';
-                        $field_lable = label_case('berat');
+                        $field_name = 'penjualan_sales_details.' . $key . '.type';
+                        $field_lable = label_case('type');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         ?>
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                             {{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input wire:change="$emit('beratChanged', {{ $key }})" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" step="0.001" wire:model.debounce.1s="{{ $field_name }}">
+
+                        <select class="form-control form-control-sm" wire:model="{{ $field_name }}" name="{{ $field_name }}">
+                            <option value="" selected >Select Type</option>
+                            <option value="1"> Setor Uang</option>
+                            <option value="2"> Setor Emas</option>
+                        </select>
                         @if ($errors->has($field_name))
                         <span class="invalid feedback" role="alert">
                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                         </span>
                         @endif
                     </div>
+                    
+                    @if(!empty($penjualan_sales_details[$key]['type']) && $penjualan_sales_details[$key]['type'] == 1)
+                        <div class="form-group">
+                            @php
+                            $field_name = 'penjualan_sales_details.' . $key . '.nominal';
+                            $field_lable = label_case('Nominal');
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : ''; 
+                            @endphp
+                            <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                                {{ $field_lable }}</label>
+                            </span>
+                            {{-- <input wire:change="$emit('hargaChanged', {{ $key }})" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model.debounce.1s="{{ $field_name }}"> --}}
+                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model="{{ $field_name }}">
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
 
-                    <div class="form-group">
-                        <?php
+                        <div class="form-group">
+                            @php
+                            $field_name = 'penjualan_sales_details.' . $key . '.gold_price';
+                            $field_lable = label_case('Harga Emas');
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : ''; 
+                            @endphp
+                            <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                                {{ $field_lable }}</label>
+                            {{-- <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:change="setJumlah({{$key}})" > --}}
+                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model = "{{ $field_name }}">
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
+                    @endif
 
-                        $field_name = 'penjualan_sales_details.' . $key . '.nominal';
-                        $field_lable = label_case('harga');
-                        $field_placeholder = $field_lable;
-                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                        ?>
-                        <label class="text-gray-700 mb-0" for="{{ $field_name }}">
-                            {{ $field_lable }}</label>
+                    @if(!empty($penjualan_sales_details[$key]['type']) && $penjualan_sales_details[$key]['type'] == 2)
+                        <div class="form-group">
+                            @php
+                            $field_name = 'penjualan_sales_details.' . $key . '.gold_type';
+                            $field_lable = label_case('Status');
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                            @endphp
+                            <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                                {{ $field_lable }}<span class="text-danger">*</span></label>
 
-                        <span class="ml-2">
-                            <input type="radio" wire:model="penjualan_sales_details.{{$key}}.harga_type" value="persen" wire:change="clearHarga({{$key}})">
-                            <label class="text-black mb-0">%</label>
-    
-                            <input type="radio" wire:model="penjualan_sales_details.{{$key}}.harga_type" value="nominal" wire:change="clearHarga({{$key}})">
-                            <label class="text-black mb-0">Rp.</label>
-                        </span>
-                        <input wire:change="$emit('hargaChanged', {{ $key }})" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model.debounce.1s="{{ $field_name }}">
-                        @if ($errors->has($field_name))
-                        <span class="invalid feedback" role="alert">
-                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                        </span>
-                        @endif
-                    </div>
+                            <select class="form-control form-control-sm" wire:model="{{ $field_name }}" name="{{ $field_name }}">
+                                <option value="" selected >Status</option>
+                                <option value="lantakan"> Setor Lantakan</option>
+                                <option value="rongsok"> Setor Rongsok</option>
+                            </select>
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
 
+                        <div class="form-group">
+                            <?php
+                            $field_name = 'penjualan_sales_details.' . $key . '.weight';
+                            $field_lable = label_case('berat');
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                            ?>
+                            <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                                {{ $field_lable }}<span class="text-danger">*</span></label>
+                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" step="0.001" wire:model ="{{ $field_name }}">
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
 
+                        <div class="form-group">
+                            <?php
+                            $field_name = 'penjualan_sales_details.' . $key . '.harga';
+                            $field_lable = label_case('Harga %');
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                            ?>
+                            <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                                {{ $field_lable }}<span class="text-danger">*</span></label>
+                            <input wire:change="setKonversiBerat({{ $key }})" wire:model = "{{ $field_name }}" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" >
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
+                    @endif
                     <div class="form-group">
                         <?php
                         $field_name = 'penjualan_sales_details.' . $key . '.jumlah';
-                        if ($penjualan_sales_details[$key]['harga_type'] == 'persen'){
-                            $field_lable = __('Konversi 24K');
-                        }else{
-                            $field_lable = __('Total Harga');
-                        }
+                        $field_lable = __('Konversi 24K');
                         $field_placeholder = Label_case($field_lable);
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         ?>
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-                        <input type="number" name="{{ $field_name }}" class="form-control form-control-sm {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" readonly>
+                        <input type="number" name="{{ $field_name }}" class="form-control form-control-sm {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" readonly wire:change="setTotal()">
                         @if ($errors->has($field_name))
                         <span class="invalid feedback" role="alert">
                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -245,22 +310,8 @@
                         @endif
                     </div>
 
-
-
-
-
-
                 </div>
-                @if ($key == 0)
-                <div class="px-1 pt-4">
-                    <button class="btn text-white text-xl btn-info btn-sm" wire:click.prevent="add" wire:loading.attr="disabled">
-                        <span wire:loading.remove wire:target="add"><i class="bi bi-plus"></i></span>
-                        <span wire:loading wire:target="add" class="text-center">
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        </span>
-                    </button>
-                </div>
-                @else
+                @if ($key != 0)
                 <div class="px-1 pt-4">
                     <button class="btn text-white text-xl btn-danger btn-sm" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
                         <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
@@ -273,8 +324,18 @@
             </div>
             @endforeach
 
+            <div class="px-1 pt-4 mb-3">
+                <button class="btn text-white text-xl btn-info btn-sm" wire:click.prevent="add" wire:loading.attr="disabled">
+                    <span wire:loading.remove wire:target="add">Tambah <i class="bi bi-plus"></i></span>
+                    <span wire:loading wire:target="add" class="text-center">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </span>
+                </button>
+            </div>
 
-            <div class="flex grid grid-cols-4 gap-2">
+            <hr>
+
+            <div class="flex grid grid-cols-4 gap-2 mt-2">
                 <div class="form-group">
                     <?php
                     $field_name = 'penjualan_sales.tipe_pembayaran';
@@ -336,31 +397,22 @@
 
             </div>
 
-
-
-
-
-
-
-
-
-<div class="flex flex-col items-end mb-8">
-    <div class="mb-2 md:mb-1 flex items-center">
-        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat</label>
-        <span class="mr-4 md:block">:</span>
-        <div class="flex-1">
-            <input class="form-control form-control-sm" wire:model.debounce.1s="penjualan_sales.total_weight" type="text" placeholder="0" readonly>
-        </div>
-    </div>
-    <div class="mb-2 md:mb-1 flex items-center">
-        <label class="w-30 text-gray-700 block text-sm tracking-wide">Jumlah</label>
-        <span class="mr-4 md:block">:</span>
-        <div class="flex-1">
-            <input class="form-control form-control-sm" type-currency="IDR" wire:model.debounce.1s="penjualan_sales.total_jumlah" type="text" placeholder="0" readonly>
-        </div>
-    </div>
-
-</div>
+            <div class="flex flex-col items-end mb-8">
+                <div class="mb-2 md:mb-1 flex items-center">
+                    <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat</label>
+                    <span class="mr-4 md:block">:</span>
+                    <div class="flex-1">
+                        <input class="form-control form-control-sm" wire:model.debounce.1s="penjualan_sales.total_jumlah" type="text" placeholder="0" readonly>
+                    </div>
+                </div>
+                <div class="mb-2 md:mb-1 flex items-center">
+                    <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Nominal Rp. </label>
+                    <span class="mr-4 md:block">:</span>
+                    <div class="flex-1">
+                        <input class="form-control form-control-sm" type-currency="IDR" wire:model.debounce.1s="penjualan_sales.total_nominal" type="text" placeholder="0" readonly>
+                    </div>
+                </div>
+            </div>
 
 
 

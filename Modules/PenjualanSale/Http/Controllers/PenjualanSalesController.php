@@ -104,7 +104,7 @@ public function index_data(Request $request)
                             return \Carbon\Carbon::parse($data->updated_at)->format('j F Y');
                         })
                         ->editColumn('total_weight', function ($data) {
-                            return $data->detail->sum('weight') . " gram";
+                            return $data->detail->sum('jumlah') . " gram";
                             })
                         ->editColumn('total_harga', function ($data) {
                             return $data->detail->sum('nominal');
