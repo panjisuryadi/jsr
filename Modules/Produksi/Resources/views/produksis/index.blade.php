@@ -105,7 +105,9 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 </div>
 
 
-
+@php
+$status = Modules\Product\Models\ProductStatus::READY_OFFICE;
+@endphp
 @endsection
 <x-library.datatable />
 @push('page_scripts')
@@ -144,7 +146,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
             'type': 'GET',
             'url': '{{ route("products.index_data") }}',
             'data': {
-                'status': '11',
+                'status': '{{ $status }}',
             },
         },
         dom: 'Blfrtip',
