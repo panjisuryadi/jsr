@@ -21,7 +21,7 @@
     @endif
 
     @if(!empty($harga_beli) && $isCicil && $isBerlian )
-        <span class="text-dark"> Total yang harus dibayarkan </span> <span class="text-danger">  Rp. {{ number_format($total_harus_bayar_nominal) }}. </span>
+        <span class="text-dark"> Total yang harus dibayarkan </span> <span class="text-danger">  Rp. / $ {{ number_format($total_harus_bayar_nominal) }}. </span>
     @endif
 
 
