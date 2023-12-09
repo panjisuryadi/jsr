@@ -23,6 +23,7 @@ jobs:
           cd /home/dev.hokkie.official-jsr.com/public_html
           git stash
           git pull
+          sudo update-alternatives --set php /usr/bin/php8.0
           composer update
           php artisan migrate
           php artisan schedule:run >> /dev/null 2>&1

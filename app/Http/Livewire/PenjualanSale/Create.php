@@ -32,8 +32,11 @@ class Create extends Component
         [
             'karat_id' => '',
             'sub_karat_id' => '',
-            'weight' => '',
+            'weight' => 0,
+            'harga' => 0,
+            'type' => '',
             'nominal' => 0,
+            'gold_price' => 0,
             'sub_karat_choice' => [],
             'harga_type' => 'persen',
             'jumlah' => 0
@@ -62,6 +65,7 @@ class Create extends Component
             'harga_type' => 'persen',
             'jumlah' => 0,
         ];
+        $this->setTotal();
     }
 
     private function resetPenjualanSales(){
@@ -119,6 +123,7 @@ class Create extends Component
         })->get();
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
+        $this->penjualan_sales['date'] = $this->hari_ini;
     }
 
     public function remove($key)
@@ -126,8 +131,9 @@ class Create extends Component
         $this->resetErrorBag();
         unset($this->penjualan_sales_details[$key]);
         $this->penjualan_sales_details = array_values($this->penjualan_sales_details);
-        $this->calculateTotalBerat();
-        $this->calculateTotalJumlah();
+        // $this->calculateTotalBerat();
+        // $this->calculateTotalJumlah();
+        $this->setTotal();
     }
 
 
@@ -160,10 +166,15 @@ class Create extends Component
 
             $rules['penjualan_sales_details.'.$key.'.karat_id'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.sub_karat_id'] = 'required';
+            $rules['penjualan_sales_details.'.$key.'.type'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.weight'] = [
-                'required',
-                'gt:0',
                 function ($attribute, $value, $fail) use ($key) {
+                    $type = !empty($this->penjualan_sales_details[$key]['type']) ? $this->penjualan_sales_details[$key]['type'] : '';
+                    if(!empty($type) && $type == 1 && empty($value)) {
+                        $fail("Berat wajib diisi ketika pilih tipe setor emas");
+                    }
+
+                    /** ini dikomen karena seharusnya yang jadi validasi adalah jumlah yang udah dikonversi jadi 24k*/
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
                     $isKaratFilled = $this->penjualan_sales_details[$key]['sub_karat_id'] != '';
                     $isSalesFilled = $this->penjualan_sales['sales_id'] != '';
@@ -176,12 +187,16 @@ class Create extends Component
                             $fail("Berat melebihi stok yang tersedia. Jumlah Stok ($maxWeight).");
                         }
                     }
-    
                 },
             ];
             $rules['penjualan_sales_details.'.$key.'.nominal'] = 'gt:-1';
+            $rules['penjualan_sales_details.'.$key.'.jumlah'] = [
+                'required',
+                'gt:0',
+            ];
 
         }
+
         return $rules;
     }
 
@@ -242,6 +257,8 @@ class Create extends Component
     {
         $this->validate();
         // create penjualan sales
+        // dd($this->penjualan_sales_details);
+
         DB::beginTransaction();
         try{
             $penjualan_sale = PenjualanSale::create([
@@ -264,10 +281,11 @@ class Create extends Component
             foreach($this->penjualan_sales_details as $key => $value) {
                 $penjualan_sale_detail = $penjualan_sale->detail()->create([
                     'karat_id' => $this->penjualan_sales_details[$key]['sub_karat_id'],
-                    'weight' => $this->penjualan_sales_details[$key]['weight'],
+                    'weight' => !empty($this->penjualan_sales_details[$key]['weight']) ? $this->penjualan_sales_details[$key]['weight'] : 0,
                     'nominal' => $this->penjualan_sales_details[$key]['nominal']??0,
                     'created_by' => auth()->user()->name,
                     'harga_type' => $this->penjualan_sales_details[$key]['harga_type'],
+                    'type' => $this->penjualan_sales_details[$key]['type'],
                     'jumlah' => $this->penjualan_sales_details[$key]['jumlah']
                 ]);
                 event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail,$penjualan_sale_payment));
@@ -355,5 +373,42 @@ class Create extends Component
     public function handleHargaChanged($key){
         $this->calculateHarga($key);
         $this->calculateTotalJumlah();
+    }
+
+    /** Kanggo ngeset konversi emas
+     * params $key => key of details
+     */
+    public function setJumlah($k) { 
+        if(!empty($this->penjualan_sales_details[$k])) {
+            $data = $this->penjualan_sales_details[$k];
+            $nominal = !empty($data['nominal']) ? $data['nominal'] : 0;
+            $gold_price = !empty($data['gold_price']) ? $data['gold_price'] : 0;
+            $type = !empty($data['type']) ? $data['type'] : 0;
+
+            if($type == 1) { 
+                $this->penjualan_sales_details[$k]['jumlah'] = $nominal / $gold_price; 
+            }
+            $this->setTotal();
+        }
+    }
+
+    public function setTotal(){
+        $total_nominal = 0;
+        $total_jumlah = 0;
+        foreach ($this->penjualan_sales_details as $index => $value) {
+            $total_nominal += !empty($value['nominal']) ? $value['nominal'] : 0;
+            $total_jumlah += !empty($value['jumlah']) ? $value['jumlah'] : 0;
+        }
+        $this->penjualan_sales['total_jumlah'] = $total_jumlah;
+        $this->penjualan_sales['total_nominal'] = $total_nominal;
+    }
+
+    public function setKonversiBerat($k) {
+        $data = !empty($this->penjualan_sales_details[$k]) ? $this->penjualan_sales_details[$k] : [];
+        if(!empty($data['weight']) && !empty($data['harga'])){
+            $jumlah = $data['weight'] * ($data['harga']/100);
+            $this->penjualan_sales_details[$k]['jumlah'] = $jumlah;
+            $this->setTotal();
+        }
     }
 }
