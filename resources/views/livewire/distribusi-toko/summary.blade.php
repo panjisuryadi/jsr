@@ -55,7 +55,7 @@
                             <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
                                 <form wire:submit.prevent="send">
                                 @foreach($dist_toko->items->groupBy('karat_id') as $karat_id => $items)
-                                <h4 class="font-bold uppercase mb-3">Karat : {{$items->first()->karat->name}} {{$items->first()->karat->kode}}</h4>
+                                <h4 class="font-bold uppercase mb-3">Karat : {{$items->first()->karat->label}}</h4>
                                 <table style="width: 100% !important;" class="table table-sm table-striped">
                                     <thead>
                                         <tr>

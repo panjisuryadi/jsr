@@ -254,7 +254,6 @@
     });
 
     function removeProduct(product){
-        console.log(product);
         Swal.fire({
             title: `Hapus produk ${product.product_name} (${product.product_code}) ?`,
             text: "Aksi ini tidak bisa dibatalkan",
