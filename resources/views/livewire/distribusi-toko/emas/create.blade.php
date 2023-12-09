@@ -76,8 +76,12 @@
                                     </td>
                                     <td>
                                         <button wire:click="selectProduct({{ $product }})"
-                                        class="w-100 btn btn-sm btn-outline-success "
+                                        class="w-100 btn btn-xs btn-outline-success "
                                         style="cursor: pointer;"> Tambah
+                                        </button>
+                                        <button onclick="removeProduct({{ $product }})"
+                                        class="w-100 btn btn-xs btn-outline-danger mt-2"
+                                        style="cursor: pointer;"> Hapus
                                         </button>
                                     </td>
                                 </tr>
@@ -236,6 +240,7 @@
 </div>
 
 @push('page_scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     window.addEventListener('create-modal:close', event => {
         $('body').removeClass('modal-open');
@@ -246,6 +251,38 @@
     });
     window.addEventListener('not:selected', event => {
         toastr.error('Produk belum dipilih');
+    });
+
+    function removeProduct(product){
+        console.log(product);
+        Swal.fire({
+            title: `Hapus produk ${product.product_name} (${product.product_code}) ?`,
+            text: "Aksi ini tidak bisa dibatalkan",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0a0",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Hapus",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emitTo('distribusi-toko.emas.create', 'removeProduct', product.id)
+            }
+        });
+    }
+    window.addEventListener('product:removed', event => {
+        Swal.fire({
+            title: "Berhasil!",
+            text: "Produk berhasil dihapus",
+            icon: "success"
+        });
+    });
+    window.addEventListener('product:remove-failed', event => {
+        Swal.fire({
+            title: "Gagal!",
+            text: "Produk gagal dihapus",
+            icon: "danger"
+        });
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>

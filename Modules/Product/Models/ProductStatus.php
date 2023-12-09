@@ -31,6 +31,7 @@ class ProductStatus extends Model
     const READY_OFFICE = 13; // use this instead of new
     const NEW = 13;
     const DP = 14;
+    const REMOVED = 15;
 
 
     public function products(){

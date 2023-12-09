@@ -219,8 +219,13 @@
                                 <label for="{{ $field_name }}">@lang('Karat') <span class="text-danger">*</span></label>
                                 <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
-                                    @foreach($dataKarat as $jp)
-                                    <option value="{{ $jp->id }}">{{ $jp->name }} {{$jp->kode}}</option>
+                                    @foreach($dataKarat as $karat)
+                                    <option value="{{ $karat->id }}">{{ $karat->label }}</option>
+                                    @if (count($karat->children))
+                                        @foreach ($karat->children as $kategori)
+                                        <option value="{{ $kategori->id }}">{{ $kategori->label }}</option>
+                                        @endforeach
+                                    @endif
                                     @endforeach
                                 </select>
                                 @if($errors->has($field_name))
