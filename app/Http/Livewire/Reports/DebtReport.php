@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reports;
 
+use App\Exports\Debt\DebtExport;
 use App\Exports\Sale\SaleExport;
 use Carbon\Carbon;
 use DateTime;
@@ -106,11 +107,11 @@ class DebtReport extends Component
     public function export($format): BinaryFileResponse
     {
         $this->validate();
-        abort_if(! in_array($format,['csv','xlsx','pdf']), Response::HTTP_NOT_FOUND);
-        $start_date = Carbon::parse($this->start_date);
-        $end_date = Carbon::parse($this->end_date);
-        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
-        return Excel::download(new SaleExport($this->sales_data), $filename. '.' . $format);
+        abort_if(! in_array($format,['xlsx']), Response::HTTP_NOT_FOUND);
+        $filename = "Laporan Penjualan " . $this->period_text . " (" . $this->supplier_text . ")";
+        $gr = $this->gr;
+        $total_debt = $gr->sum('total_emas');
+        return Excel::download(new DebtExport($gr, $total_debt, $this->supplier_text, $this->period_text, $this->payment_type_text, $filename), $filename. '.' . $format);
     }
 
     public function updatedPeriodType(){
