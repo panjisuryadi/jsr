@@ -94,7 +94,7 @@ class SalesReport extends Component
         $cabang = $this->cabang_text;
         $period = $this->period_text;
         $total_nominal = $this->sales_data->sum('total_amount');
-        $pdf = PDF::loadView('reports::sales.print',compact('filename','sales','cabang','period','total_nominal'))->setPaper('a4', 'landscape')->output();
+        $pdf = PDF::loadView('reports::sales.pdf',compact('filename','sales','cabang','period','total_nominal'))->setPaper('a4', 'landscape')->output();
         $base64Pdf = base64_encode($pdf);
         $dataUri = 'data:application/pdf;base64,' . $base64Pdf;
         $this->emit('openInNewTab', $dataUri);
@@ -103,11 +103,10 @@ class SalesReport extends Component
     public function export($format): BinaryFileResponse
     {
         $this->validate();
-        abort_if(! in_array($format,['csv','xlsx','pdf']), Response::HTTP_NOT_FOUND);
-        $start_date = Carbon::parse($this->start_date);
-        $end_date = Carbon::parse($this->end_date);
-        $filename = "Laporan Penjualan " . $this->period_text;
-        return Excel::download(new SaleExport($this->sales_data), $filename. '.' . $format);
+        abort_if(! in_array($format,['xlsx']), Response::HTTP_NOT_FOUND);
+        $filename = "Laporan Penjualan " . $this->period_text . " (" . $this->cabang_text . ")";
+        $total_nominal = $this->sales_data->sum('total_amount');
+        return Excel::download(new SaleExport($this->sales_data,$this->cabang_text,$this->period_text,$total_nominal, $filename), $filename. '.' . $format);
     }
 
     public function updatedPeriodType(){
