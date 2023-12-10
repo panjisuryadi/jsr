@@ -40,8 +40,8 @@ class DebtReport extends Component
 
     protected $rules = [
         'period_type' => 'required',
-        'start_date' => 'required_if:period_type,custom|date|before:end_date',
-        'end_date'   => 'required_if:period_type,custom|date|after:start_date',
+        'start_date' => 'required_if:period_type,custom',
+        'end_date'   => 'required_if:period_type,custom',
         'month' => 'required_if:period_type,month',
         'year' => 'required_if:period_type,year'
     ];
@@ -91,11 +91,13 @@ class DebtReport extends Component
 
     public function pdf(){
         $this->validate();
-        $start_date = Carbon::parse($this->start_date);
-        $end_date = Carbon::parse($this->end_date);
-        $filename = "Laporan Penjualan Periode " . $start_date . " - " . $end_date;
-        $sales = $this->sales_data;
-        $pdf = PDF::loadView('reports::sales.print',compact('start_date','filename','end_date','sales'))->output();
+        $filename = "Laporan Penjualan " . $this->period_text . " (" . $this->supplier_text . ")";
+        $gr = $this->gr;
+        $total_debt = $gr->sum('total_emas');
+        $supplier = $this->supplier_text;
+        $period = $this->period_text;
+        $payment = $this->payment_type_text;
+        $pdf = PDF::loadView('reports::hutang.pdf',compact('gr','filename','supplier','period','payment','total_debt'))->setPaper('a4', 'landscape')->output();
         $base64Pdf = base64_encode($pdf);
         $dataUri = 'data:application/pdf;base64,' . $base64Pdf;
         $this->emit('openInNewTab', $dataUri);
@@ -130,6 +132,22 @@ class DebtReport extends Component
         }
     }
 
+    public function getSupplierTextProperty(){
+        if(!empty($this->supplier)){
+            return ucwords($this->suppliers->find($this->supplier)->supplier_name);
+        }else{
+            return "Semua Supplier";
+        }
+    }
+
+    public function getPaymentTypeTextProperty(){
+        if(!empty($this->payment_type)){
+            return ucwords($this->payment_type);
+        }else{
+            return "Semua Tipe Pembayaran (Cicil, Jatuh Tempo)";
+        }
+    }
+
     public function resetFilter(){
         $this->reset([
             'start_date',
@@ -139,5 +157,16 @@ class DebtReport extends Component
             'payment_type',
             'supplier'
         ]);
+    }
+
+    public function getMinDate(){
+        if(!empty($this->start_date)){
+            $minDate = new DateTime($this->start_date);
+            return $minDate->modify("+1 day")->format("Y-m-d");
+        }
+    }
+
+    public function resetEndDate(){
+        $this->reset('end_date');
     }
 }
