@@ -51,7 +51,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Tanggal Mula <span class="text-danger">*</span></label>
-                                        <input wire:model="start_date" type="date" class="form-control" name="start_date">
+                                        <input wire:model="start_date" type="date" class="form-control" name="start_date" wire:change="resetEndDate">
                                         @error('start_date')
                                         <span class="text-danger mt-1">{{ $message }}</span>
                                         @enderror
@@ -60,7 +60,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Tanggal Akhir <span class="text-danger">*</span></label>
-                                        <input wire:model="end_date" type="date" class="form-control" name="end_date">
+                                        <input wire:model="end_date" type="date" class="form-control" name="end_date" min="{{ $this->getMinDate()}}">
                                         @error('end_date')
                                         <span class="text-danger mt-1">{{ $message }}</span>
                                         @enderror

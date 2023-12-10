@@ -3,17 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <title>{{ $filename }}</title>
+    <link rel="stylesheet" href="{{ public_path('b3/modern.normalize.min.css') }}">
     <link rel="stylesheet" href="{{ public_path('b3/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ public_path('b3/tailwindcss.min.css') }}">
     <style type="text/css">
-        body {
-            font-family: 'Arial', sans-serif;
-        }
-
-        h4,
-        h5 {
-            margin: 5px;
-        }
-
         .header {
             text-align: center;
             display: flex;
@@ -28,7 +21,7 @@
         .img-container {
             position: absolute;
             top: 0;
-            left: 37%;
+            left: 41%;
             align-items: center;
             max-width: 200px;
         }
@@ -40,27 +33,7 @@
         }
 
         .text {
-            margin-top: 120px;
-        }
-
-        .nota-title,
-        .nota-subtitle {
-            text-align: center;
-        }
-
-        .nota-title {
-            text-transform: uppercase;
-        }
-
-        .penerima {
-            float: right;
-            margin-top: 150px;
-            margin-right: 50px;
-            font-weight: bold;
-        }
-
-        .mb-5 {
-            margin-bottom: 5rem;
+            margin-top: 100px;
         }
     </style>
 </head>
@@ -78,72 +51,66 @@
         </div>
     </header>
     <hr>
-    <table class="table table-bordered table-striped text-center mb-0">
-
-        <thead>
-            <tr>
-                <th colspan="6">
-                    <h3 class="text-center font-bold">LAPORAN PENJUALAN</h3>
-                    <h4 class="text-center font-bold">Periode {{ $start_date->format('d F Y') }} - {{ $end_date->format('d F Y') }} </h4>
-                </th>
-            </tr>
-            <tr>
-                <th>Tanggal</th>
-                <th>Invoice</th>
-                <th>Nama Kustomer</th>
-                <th>Status</th>
-                <th>Total</th>
-                <th>Status Pembayaran</th>
-            </tr>
-        </thead>
-        <tbody>
-        @forelse($sales as $sale)
-            <tr>
-                <td>{{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</td>
-                <td>{{ $sale->reference }}</td>
-                <td>{{ $sale->customer_name }}</td>
-                <td>
-                    @if ($sale->status == 'Pending')
-                        <span class="badge badge-info">
-                    {{ $sale->status }}
-                </span>
-                    @elseif ($sale->status == 'Shipped')
-                        <span class="badge badge-primary">
-                    {{ $sale->status }}
-                </span>
-                    @else
-                        <span class="badge badge-success">
-                    {{ $sale->status }}
-                </span>
-                    @endif
-                </td>
-                <td>{{ format_uang($sale->total_amount) }}</td>
-                <td>
-                    @if ($sale->payment_status == 'Partial')
-                        <span class="badge badge-warning">
-                    {{ $sale->payment_status }}
-                </span>
-                    @elseif ($sale->payment_status == 'Paid')
-                        <span class="badge badge-success">
-                    {{ $sale->payment_status }}
-                </span>
-                    @else
-                        <span class="badge badge-danger">
-                    {{ $sale->payment_status }}
-                </span>
-                    @endif
-
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="8">
-                    <span class="text-danger">No Sales Data Available!</span>
-                </td>
-            </tr>
-        @endforelse
-        </tbody>
-    </table>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header p-4">
+                    <div class="text-center font-bold">
+                        <h2 class="uppercase mb-4">Laporan Penjualan </h2>
+                        {{ $period }}
+                    </div>
+                    <div class="text-base font-bold">
+                        Cabang : {{ $cabang }}
+                        <br>
+                        Total Nominal : {{ format_uang($total_nominal) }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped mb-0 text-sm">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Invoice</th>
+                                <th>Cabang</th>
+                                <th>Customer</th>
+                                <th>Informasi Produk</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($sales as $sale)
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
+                                <td>
+                                    <p class="font-bold">{{ $sale->reference }}</p>
+                                    <p>{{ tanggal($sale->date) }}</p>
+                                </td>
+                                <td>{{ $sale->cabang->name }}</td>
+                                <td>{{ $sale->customer_name }}</td>
+                                <td>
+                                    @php
+                                        $output = collect($sale->saleDetails)->map(function ($detail, $index) {
+                                            return "<p> - Produk " . ($index + 1) . " : {$detail->product->category->category_name} / {$detail->product->product_code} / {$detail->product->karat?->label} ({$detail->product->berat_emas} gr) <br> {$detail->product->berlian_short_label} </p>";
+                                        })->implode('');
+                                    @endphp
+                                    <p>Jumlah : {{ $sale->saleDetails->count() }} buah</p>
+                                    <p>Detail : {!! $output !!}</p>
+                                </td>
+                                <td>{{ format_uang($sale->total_amount) }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center">
+                                    <span class="text-danger">No Sales Data Available!</span>
+                                </td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 

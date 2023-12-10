@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Reports;
 
 use App\Exports\Sale\SaleExport;
 use Carbon\Carbon;
+use DateTime;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,10 +38,14 @@ class SalesReport extends Component
 
     protected $rules = [
         'period_type' => 'required',
-        'start_date' => 'required_if:period_type,custom|date|before:end_date',
-        'end_date'   => 'required_if:period_type,custom|date|after:start_date',
         'month' => 'required_if:period_type,month',
-        'year' => 'required_if:period_type,year'
+        'year' => 'required_if:period_type,year',
+        'start_date' => [
+            'required_if:period_type,custom',
+        ],
+        'end_date' => [
+            'required_if:period_type,custom',
+        ],
     ];
 
     public function mount($customers) {
@@ -83,12 +88,13 @@ class SalesReport extends Component
     }
 
     public function pdf(){
-        // $this->validate();
-        $start_date = Carbon::parse($this->start_date);
-        $end_date = Carbon::parse($this->end_date);
-        $filename = "Laporan Penjualan " . $this->period_text;
+        $this->validate();
+        $filename = "Laporan Penjualan " . $this->period_text . " (" . $this->cabang_text . ")";
         $sales = $this->sales_data;
-        $pdf = PDF::loadView('reports::sales.print',compact('start_date','filename','end_date','sales'))->output();
+        $cabang = $this->cabang_text;
+        $period = $this->period_text;
+        $total_nominal = $this->sales_data->sum('total_amount');
+        $pdf = PDF::loadView('reports::sales.print',compact('filename','sales','cabang','period','total_nominal'))->setPaper('a4', 'landscape')->output();
         $base64Pdf = base64_encode($pdf);
         $dataUri = 'data:application/pdf;base64,' . $base64Pdf;
         $this->emit('openInNewTab', $dataUri);
@@ -123,6 +129,14 @@ class SalesReport extends Component
         }
     }
 
+    public function getCabangTextProperty(){
+        if(!empty($this->selected_cabang)){
+            return ucwords($this->cabangs->find($this->selected_cabang)->name);
+        }else{
+            return "Semua Cabang";
+        }
+    }
+
     public function resetFilter(){
         $this->reset([
             'start_date',
@@ -133,5 +147,16 @@ class SalesReport extends Component
         if(!auth()->user()->isUserCabang()){
             $this->reset(['selected_cabang']);
         }
+    }
+
+    public function getMinDate(){
+        if(!empty($this->start_date)){
+            $minDate = new DateTime($this->start_date);
+            return $minDate->modify("+1 day")->format("Y-m-d");
+        }
+    }
+
+    public function resetEndDate(){
+        $this->reset('end_date');
     }
 }
