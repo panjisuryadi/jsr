@@ -24,6 +24,6 @@ class PenjualanSalesPayment extends Model
     }
 
     public function penjualanSales(){
-        return $this->belongsTo(PenjualanSale::class);
+        return $this->belongsTo(PenjualanSale::class,'penjualan_sales_id','id');
     }
 }

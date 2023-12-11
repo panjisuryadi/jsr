@@ -1,6 +1,8 @@
 <?php
 
 namespace Modules\PenjualanSale\Http\Controllers;
+
+use App\Models\LookUp;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -9,10 +11,13 @@ use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\PenjualanSale\Models\PenjualanSalesPayment;
+use Modules\Stok\Models\PenjualanSalesPaymentDetail;
 use PDF;
 
 class PenjualanSalesController extends Controller
@@ -107,7 +112,7 @@ public function index_data(Request $request)
                             return $data->detail->sum('jumlah') . " gram";
                             })
                         ->editColumn('total_harga', function ($data) {
-                            return $data->detail->sum('nominal');
+                            return "Rp . " . number_format($data->detail->sum('nominal'));
                             })
                         ->rawColumns(['updated_at', 
                              'sales', 
@@ -433,5 +438,158 @@ public function update(Request $request, $id)
 
 
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    public function edit_status($id)
+    {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Update Status';
+
+        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        $data = PenjualanSalesPayment::where('penjualan_sales_id',$id)
+                ->with('penjualanSales')
+                // ->with('detailCicilan', 'goodreceipt')
+                // ->withCount(['detailCicilan as sisa_cicilan' => function (Builder $query) {
+                //     $query->where(function($q){
+                //         $q->whereNull('jumlah_cicilan');
+                //         $q->orWhere('jumlah_cicilan', 0);
+                //     });
+                //     $query->where(function($q){
+                //         $q->WhereNull('nominal');
+                //         $q->orWhere('nominal', 0);
+                //     });
+                // }])
+                ->first();
+        return view(''.$module_name.'::'.$module_path.'.modal.edit_status',
+            compact('module_name',
+            'module_action',
+            'data',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
+
+
+    public function update_status_pembelian (Request $request){
+        $is_cicilan = $request->post('is_cicilan', false);
+        $pembelian_id = $request->post('pembelian_id');
+        $tgl_jatuh_tempo = $request->post('tgl_jatuh_tempo');
+        $nominal = $request->post('nominal');
+        $sisa_cicilan = $request->post('sisa_cicilan');
+        $total_harus_bayar_nominal = $request->post('total_harus_bayar_nominal');
+        $total_harus_bayar = $request->post('total_harus_bayar');
+        $is_berlian = $request->post('is_berlian');
+        DB::beginTransaction();
+        try {
+            if ( $is_cicilan ) {
+                $validator = \Validator::make($request->all(),[
+                    'cicilan_id' => 'required',
+                    'jumlah_cicilan' => [
+                        'required_if:is_berlian, true',
+                        'lte:' . floatval($request->post('total_harus_bayar')),
+                        function ($attribute, $value, $fail) use ($request, $sisa_cicilan) {
+                            if ($sisa_cicilan == 1 && $value != floatval($request->post('total_harus_bayar'))) {
+                                $fail('Berat untuk cicilan terakhir harus sama dengan sisa cicilan.');
+                            }
+                        },
+                    ],
+                    'nominal' => [
+                        'required',
+                        'numeric',
+                        'gt:0',
+                        function($attribute, $value, $fail) use($request, $is_berlian, $sisa_cicilan) {
+                            if ($is_berlian && $sisa_cicilan == 1 && $value != $request->post('total_harus_bayar_nominal')) {
+                                $fail('Nominal untuk cicilan terakhir harus sama dengan sisa cicilan.');
+                            }
+                            
+                        }
+                    ],
+                ], 
+                [
+                    'jumlah_cicilan.lte' => 'Jumlah cicilan tidak boleh lebih besar dari harus dibayar',
+                ]);
+                
+                if (!$validator->passes()) {
+                    return response()->json(['error'=>$validator->errors()]);
+                }
+                        
+                $penerimaan_barang_cicilan_id = $request->post('cicilan_id');
+                $jumlah_cicilan = $request->post('jumlah_cicilan');
+                $nominal = $request->post('nominal');
+
+                $penerimaan_barang_cicilan = GoodsReceiptInstallment::find($penerimaan_barang_cicilan_id);
+                $penerimaan_barang_cicilan->jumlah_cicilan = $jumlah_cicilan;
+                $penerimaan_barang_cicilan->nominal = $nominal;
+                $penerimaan_barang_cicilan->save();
+
+                $tipe_pembelian = TipePembelian::with('goodreceipt')->findOrFail($pembelian_id);
+                if (!$is_berlian && $this->cicilanExist($pembelian_id) == $tipe_pembelian->goodreceipt->total_emas) {
+                    $tipe_pembelian->lunas = 'lunas';
+                    $tipe_pembelian->save();
+                    $goodsreceipt = GoodsReceipt::find($tipe_pembelian->goodsreceipt_id);
+                    $goodsreceipt->harga_beli = GoodsReceiptInstallment::where('payment_id', $pembelian_id)->sum('nominal');
+                    $goodsreceipt->save();
+                }
+                if ($is_berlian && $this->cicilanBerlianExist($pembelian_id) == $tipe_pembelian->goodreceipt->harga_beli) {
+                    $tipe_pembelian->lunas = 'lunas';
+                    $tipe_pembelian->save();
+                    $goodsreceipt = GoodsReceipt::find($tipe_pembelian->goodsreceipt_id);
+                    $goodsreceipt->harga_beli = GoodsReceiptInstallment::where('payment_id', $pembelian_id)->sum('nominal');
+                    $goodsreceipt->save();
+                }
+
+            } else {
+                $validator = \Validator::make($request->all(),[
+                    'nominal' => 'required|numeric|gt:0', 
+                    'jumlah_cicilan' => [
+                        'required',
+                        'gt:0',
+                        function($attribute, $value, $fail) use($total_harus_bayar) {
+                            if ($value != $total_harus_bayar) {
+                                $fail('Jumlah emas yang dibayar tidak sama dengan emas yang harus dibayar (' . $total_harus_bayar . ' gr )');
+                            }
+                            
+                        }
+                    ]
+                ]);
+                
+                if (!$validator->passes()) {
+                    return response()->json(['error'=>$validator->errors()]);
+                }
+                $tipe_pembelian = PenjualanSalesPayment::findOrFail($pembelian_id);
+                $tipe_pembelian->lunas = 'lunas';
+                $tipe_pembelian->save();
+                PenjualanSalesPaymentDetail::updateOrCreate(
+                    [
+                        'payment_id' => $pembelian_id,
+                        'tanggal_cicilan' => $tgl_jatuh_tempo,
+                        'nomor_cicilan' => 1
+                    ],
+                    ['nominal' => $nominal]
+                );
+            }
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json(['failed'=> $e->getMessage()]);
+        }
+        DB::commit();
+
+        return response()->json(['success'=>' Sukses update pembelian.']);
+    }
+
 
 }

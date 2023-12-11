@@ -123,6 +123,8 @@
     </script>
 
 <script type="text/javascript">
+var table = jQuery('#datatable').DataTable();
+
 jQuery.noConflict();
 (function( $ ) {
 $(document).on('click', '#Tambah, #Edit', function(e){
@@ -139,6 +141,17 @@ $(document).on('click', '#Tambah, #Edit', function(e){
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
         }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+
+
+    $(document).on('click', '#edit_status', function(e){
+         e.preventDefault();
+        $('.modal-dialog').addClass('modal-md');
+        $('.modal-dialog').removeClass('modal-sm');
+        $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp; Pembayaran setoran');
+
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });

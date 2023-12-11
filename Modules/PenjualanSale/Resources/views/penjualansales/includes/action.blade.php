@@ -1,5 +1,12 @@
 <div class="text-center">
 @can('edit_'.$module_name.'')
+
+    <a href="{{ route(''.$module_name.'.edit_status', $data->id) }}"
+        id="edit_status"
+        data-toggle="tooltip"
+        class="btn btn-outline-info btn-sm {{ empty($data->payment) || (!empty($data->payment->lunas) && !empty($data->payment->tipe_pembayaran) || $data->payment->tipe_pembayaran == 'lunas') ? 'disabled' : '' }}">
+            &nbsp;@lang('Status')
+    </a>
     <a href="{{ route(''.$module_name.'.show', $data->id) }}"
      class="btn btn-outline-success btn-sm">
         <i class="bi bi-eye"></i> &nbsp;@lang('View')

@@ -268,6 +268,7 @@ class Create extends Component
                 'total_weight' => $this->penjualan_sales['total_weight'],
                 'konsumen_sales_id' => $this->penjualan_sales['konsumen_sales_id'],
                 'total_jumlah' => $this->penjualan_sales['total_jumlah'],
+                'total_nominal' => $this->penjualan_sales['total_nominal'],
                 'created_by' => auth()->user()->name
             ]);
     
