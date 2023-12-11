@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
@@ -26,6 +27,7 @@ use function PHPUnit\Framework\isEmpty;
 
 class Create extends Component
 {
+    use WithPagination;
 
     public $categories;
     public $product_category;
