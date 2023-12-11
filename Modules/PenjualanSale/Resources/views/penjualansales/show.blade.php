@@ -186,7 +186,7 @@ top: 55% !important;
    <tr>
       <th class="text-center">{{$loop->iteration}}</th>
       <td class="text-center"> {{$row->karat->kode}} | {{$row->karat->name}}</td>
-      <td class="text-center"> {{$row->weight}}</td>
+      <td class="text-center"> {{floatval($row->jumlah)}} gr</td>
       <td class="text-center"> Rp. {{rupiah($row->nominal)}}</td>
     
     </tr>
