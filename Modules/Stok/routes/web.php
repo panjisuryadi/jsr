@@ -70,6 +70,10 @@ Route::get("$module_name/get_stock_ready", ['as' => "$module_name.get_stock_read
 
  Route::get("$module_name/index_data_lantakan", ['as' => "$module_name.index_data_lantakan", 'uses' => "$controller_name@index_data_lantakan"]);
 
+ Route::get("$module_name/rongsok", ['as' => "$module_name.rongsok", 'uses' => "$controller_name@rongsok"]);
+
+ Route::get("$module_name/index_data_rongsok", ['as' => "$module_name.index_data_rongsok", 'uses' => "$controller_name@index_data_rongsok"]);
+
 
 
 

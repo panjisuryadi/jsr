@@ -81,50 +81,50 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                                ->editColumn('nama_customer', function ($data) {
-                                    $tb = '<div class="items-center text-center">
-                                           <h3 class="text-sm font-medium text-gray-800">
-                                            ' . $data->customerSale->customer_name . '</h3>
-                                           </div>';
-                                       return $tb;
-                                   })
-                                   ->editColumn('nama_produk', function ($data) {
-                                     $tb = '<div class="font-semibold items-center text-center">
-                                             ' . $data->product_name . '
-                                            </div>';
-                                        return $tb;
-                                    })
-                                    ->editColumn('kadar', function ($data) {
-                                        $tb = '<div class="font-semibold items-center text-center">
-                                                ' . $data->karat->name . '
-                                               </div>';
-                                           return $tb;
-                                       })
-                                    ->editColumn('berat', function ($data) {
-                                    $tb = '<div class="font-semibold items-center text-center">
-                                            ' . $data->weight . '
-                                             gram </div>';
-                                        return $tb;
+                                ->editColumn('invoice', function ($data) {
+                                    $tb = '<div class="text-xs font-semibold">
+                                        ' .$data->no_buy_back . '
+                                       </div>';
+                                     $tb .= '<div class="text-xs text-left">
+                                        ' .tanggal($data->date) . '
+                                       </div>'; 
+                                        $tb .= '<div class="font-semibold text-xs text-left">
+                                        Customer : ' . $data->customerSale->customer_name . '
+                                       </div>';   
+                                   return $tb;
+                               })
+
+                                   ->editColumn('product', function ($data) {
+                                    $tb = '<div class="text-xs">
+                                            Nama : ' .$data->product_name . '
+                                        </div>';
+                                        $tb .= '<div class="text-xs text-left">
+                                        Karat : ' .$data->karat->label . '
+                                        </div>'; 
+                                        $tb .= '<div class="text-xs text-left">
+                                        Berat : ' . formatBerat($data->weight) . ' gr
+                                        </div>';   
+                                    return $tb;
                                     })
                                     ->editColumn('nominal_beli', function ($data) {
-                                    $tb = '<div class="font-semibold items-center text-center">
-                                            ' . $data->nominal . '
+                                    $tb = '<div class="text-xs">
+                                            ' . format_uang($data->nominal) . '
                                             </div>';
                                         return $tb;
                                     })
                                     ->editColumn('keterangan', function ($data) {
-                                        $tb = '<div class="font-semibold items-center text-center">
+                                        $tb = '<div class="text-xs text-left">
                                                 ' . $data->note . '
                                                 </div>';
                                             return $tb;
                                     })
                                     ->editColumn('sales', function ($data) {
-                                        $tb = '<div class="font-semibold items-center text-center">
+                                        $tb = '<div class="text-xs">
                                                 ' . $data->sales->name . '
                                                 </div>';
                                             return $tb;
                                     })
-                        ->rawColumns(['action','nama_customer','nama_produk','kadar','berat','nominal_beli','keterangan','sales'])
+                        ->rawColumns(['action','invoice','product','nominal_beli','keterangan','sales'])
                         ->make(true);
                      }
 
@@ -238,9 +238,8 @@ public function store(Request $request)
             'nominal' => $request->input('nominal'),
         ]);
 
-        event(new BuyBackSaleCreated($buybackSale));
 
-        toast('Buy Back Sale Created!', 'success');
+        toast('Buy Back Sale Berhasil dibuat!', 'success');
         return redirect()->route('buybacksale.index');
     }
 

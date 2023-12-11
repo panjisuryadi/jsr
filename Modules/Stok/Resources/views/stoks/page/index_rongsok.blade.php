@@ -6,7 +6,8 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">{{$module_title}}</li>
+    <li class="breadcrumb-item">Stok Office</li>
+    <li class="breadcrumb-item active">{{$module_title}} {{ $module_action }}</li>
 </ol>
 @endsection
 @section('content')
@@ -16,32 +17,21 @@
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
-                        <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;
-                                </a>
-
+                     <div>
+                       <p class="uppercase text-lg text-gray-600 font-semibold">
+                      Stok <span class="text-yellow-500 uppercase">{{ $module_action }}</span></p>
                         </div>
                         <div id="buttons">
-
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 3%!important;">No</th>
-                                    <th style="width: 11%!important;">Invoice</th>
-                                    <th style="width: 9%!important;">Sales</th>
-                                    <th style="width: 10%!important;">Produk</th>
-                                    <th style="width: 7%!important;">Nominal Beli</th>
-                                    <th style="width: 8%!important;">Keterangan</th>
-                                    <th style="width: 7%!important;" class="text-center">
-                                        {{ __('Action') }}
-                                    </th>
+                                    <th style="width: 6%!important;">No</th>
+                                 
+                                    <th class="text-left">{{ __('Karat') }}</th>
+                                    <th class="text-left">{{ __('Berat') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -84,7 +74,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") }}',
+            ajax: '{{ route("$module_name.index_data_rongsok") }}',
             dom: 'Blfrtip',
             buttons: [
 
@@ -100,25 +90,38 @@
                     }
                 },
 
-                {data: 'invoice', name:  'invoice'},
-                {data: 'sales', name:  'sales'},
-                {data: 'product', name: 'product'},
-                {data: 'nominal_beli', name: 'nominal_beli'},
-                {data: 'keterangan', name: 'keterangan'},
-
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
+                {data: 'karat', name: 'karat'},
+                {data: 'weight', name: 'weight'},
             ]
         })
-        .buttons().remove()
+        .buttons()
         .container()
         .appendTo("#buttons");
 
 
 
     </script>
+
+<script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
+$(document).on('click', '#Tambah, #Edit', function(e){
+         e.preventDefault();
+        if($(this).attr('id') == 'Tambah')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
+        }
+        if($(this).attr('id') == 'Edit')
+        {
+            $('.modal-dialog').addClass('modal-lg');
+            $('.modal-dialog').removeClass('modal-sm');
+            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
+        }
+        $('#ModalContent').load($(this).attr('href'));
+        $('#ModalGue').modal('show');
+    });
+})(jQuery);
+</script>
 @endpush
