@@ -10,6 +10,7 @@ use Modules\BuyBackSale\Models\BuyBackSale;
 use Modules\CustomerSales\Entities\CustomerSales;
 use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
+use Modules\Stok\Models\StockRongsok;
 
 class Create extends Component
 {
@@ -83,7 +84,7 @@ class Create extends Component
         try{
             $this->buyback_sales->pic_id = auth()->id();
             $this->buyback_sales->save();
-            
+            $this->addStockRongsok($this->buyback_sales);
             DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 
@@ -91,7 +92,6 @@ class Create extends Component
         }
 
         $this->reset();
-
         session()->flash('message', 'Berhasil disimpan.');
         return redirect(route('buybacksale.index'));
 
@@ -102,5 +102,16 @@ class Create extends Component
         return 'Rp. ' . number_format((intval($this->buyback_sales->nominal)), 0, ',', '.');
     }
 
-
+    private function addStockRongsok($buyback_sales){
+        $karat = Karat::find($buyback_sales->karat_id);
+        $karat_id = empty($karat->parent_id)?$karat->id:$karat->parent_id;
+        $stock_rongsok = StockRongsok::firstOrCreate(['karat_id' => $karat_id]);
+        $buyback_sales->stock_rongsok()->attach($stock_rongsok->id,[
+                'karat_id'=>$karat_id,
+                'sales_id' => $buyback_sales->sales_id,
+                'weight' => $buyback_sales->weight,
+        ]);
+        $weight = $stock_rongsok->history->sum('weight');
+        $stock_rongsok->update(['weight'=> $weight]);
+    }
 }

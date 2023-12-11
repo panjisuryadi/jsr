@@ -2,6 +2,7 @@
 
 namespace Modules\BuyBackSale\Http\Controllers;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,11 +11,14 @@ use Modules\BuyBackSale\Events\BuyBackSaleCreated;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\BuyBackSale\Models\BuyBackSale;
+use Modules\Karat\Models\Karat;
+use Modules\Stok\Models\StockRongsok;
 
 class BuyBackSalesController extends Controller
 {
@@ -77,8 +81,9 @@ public function index_data(Request $request)
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
+                           $module_path = $this->module_path;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            return view($module_name.'::'.$module_path.'.includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
                                 ->editColumn('invoice', function ($data) {
@@ -406,28 +411,46 @@ public function update(Request $request, $id)
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
-        try {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
+        DB::beginTransaction();
+        try{
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'Delete';
+            $module_action = 'Delete';
 
-        $$module_name_singular = $module_model::findOrFail($id);
+            $buyback_sales = $module_model::findOrFail($id);
+            $this->reduceStockRongsok($buyback_sales);
+            $buyback_sales->delete();
+            DB::commit();
+            toast(''. $module_title.' Deleted!', 'success');
+            return redirect()->route(''.$module_name.'.index');
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            toast($e->getMessage(), 'warning');
+            return redirect()->back();
+        }
 
-        $$module_name_singular->delete();
-         toast(''. $module_title.' Deleted!', 'success');
-         return redirect()->route(''.$module_name.'.index');
+    }
 
-          } catch (\Exception $e) {
-           // dd($e);
-                toast(''. $module_title.' error!', 'warning');
-                return redirect()->back();
-            }
-
+    private function reduceStockRongsok($buyback_sales){
+        $karat = Karat::find($buyback_sales->karat_id);
+        $karat_id = empty($karat->parent_id)?$karat->id:$karat->parent_id;
+        $stock_rongsok = StockRongsok::where('karat_id', $karat_id)->first();
+        if($stock_rongsok->weight < $buyback_sales->weight){
+            throw new \Exception('Gagal menghapus data');
+        }
+        $buyback_sales->stock_rongsok()->attach($stock_rongsok->id,[
+            'karat_id'=>$karat_id,
+            'sales_id' => $buyback_sales->sales_id,
+            'weight' => -1 * $buyback_sales->weight,
+        ]);
+        $weight = $stock_rongsok->history->sum('weight');
+        $stock_rongsok->update(['weight'=> $weight]);
+        
     }
 
 }
