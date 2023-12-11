@@ -384,7 +384,6 @@ class Create extends Component
             $nominal = !empty($data['nominal']) ? $data['nominal'] : 0;
             $gold_price = !empty($data['gold_price']) ? $data['gold_price'] : 0;
             $type = !empty($data['type']) ? $data['type'] : 0;
-
             if($type == 1) { 
                 $this->penjualan_sales_details[$k]['jumlah'] = $nominal / $gold_price; 
             }
@@ -410,5 +409,11 @@ class Create extends Component
             $this->penjualan_sales_details[$k]['jumlah'] = $jumlah;
             $this->setTotal();
         }
+    }
+
+    public function clearNominal($k){
+        $this->penjualan_sales_details[$k]['gold_price'] = 0;
+        $this->penjualan_sales_details[$k]['jumlah'] = 0;
+        $this->setTotal();
     }
 }

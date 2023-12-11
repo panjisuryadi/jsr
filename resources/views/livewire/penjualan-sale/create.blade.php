@@ -209,8 +209,7 @@
                             <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                                 {{ $field_lable }}</label>
                             </span>
-                            {{-- <input wire:change="$emit('hargaChanged', {{ $key }})" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model.debounce.1s="{{ $field_name }}"> --}}
-                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model="{{ $field_name }}">
+                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model="{{ $field_name }}"  wire:change="clearNominal({{$key}})" >
                             @if ($errors->has($field_name))
                             <span class="invalid feedback" role="alert">
                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -227,8 +226,7 @@
                             @endphp
                             <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                                 {{ $field_lable }}</label>
-                            {{-- <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:change="setJumlah({{$key}})" > --}}
-                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model = "{{ $field_name }}">
+                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model = "{{ $field_name }}"  wire:change="setJumlah({{$key}})" >
                             @if ($errors->has($field_name))
                             <span class="invalid feedback" role="alert">
                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
