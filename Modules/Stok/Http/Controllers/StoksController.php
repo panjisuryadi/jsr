@@ -42,6 +42,7 @@ class StoksController extends Controller
         $this->module_sales = "Modules\Stok\Models\StockSales";
         $this->model_lantakan = "Modules\Stok\Models\StockKroom";
         $this->module_dp = "Modules\Stok\Models\StokDp";
+        $this->model_rongsok = "Modules\Stok\Models\StockRongsok";
 
     }
 
@@ -214,7 +215,7 @@ public function index_data_ready_office(Request $request)
                             ->editColumn('weight', function ($data) {
                             $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                    ' .$data->berat_emas . ' gr</h3>
+                                    ' . formatBerat($data->berat_emas) . ' gr</h3>
                                     </div>';
                                 return $tb;
                             }) 
@@ -313,7 +314,7 @@ public function index_data_lantakan(Request $request)
                           ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                   ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                   ' . $data->karat->label  . '</h3>
                                     </div>';
                                 return $tb;
                             })  
@@ -323,7 +324,7 @@ public function index_data_lantakan(Request $request)
                               ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->weight . '</h3>
+                                     ' . formatBerat($data->weight) . '</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -332,6 +333,66 @@ public function index_data_lantakan(Request $request)
                         ->make(true);
                      }
 
+public function rongsok() {
+    $module_title = $this->module_title;
+    $module_name = $this->module_name;
+    $module_path = $this->module_path;
+    $module_icon = $this->module_icon;
+    $module_model = $this->module_model;
+    $module_name_singular = Str::singular($module_name);
+    $module_action = 'Rongsok';
+    abort_if(Gate::denies('access_'.$module_name.''), 403);
+        return view(''.$module_name.'::'.$module_path.'.page.index_rongsok',
+        compact('module_name',
+        'module_action',
+        'module_title',
+        'module_icon', 'module_model'));
+}
+                
+                
+public function index_data_rongsok(Request $request)
+
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $model_rongsok = $this->model_rongsok;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+
+        $$module_name = $model_rongsok::get();
+
+        $data = $$module_name;
+
+        return Datatables::of($$module_name)
+                        ->addColumn('action', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            return view('includes.action',
+                            compact('module_name', 'data', 'module_model'));
+                                })
+                            ->editColumn('karat', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                    ' . $data->karat->label  . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+    
+                                ->editColumn('weight', function ($data) {
+                                $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-800">
+                                        ' . formatBerat($data->weight) . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
+                    
+                        ->rawColumns(['updated_at', 'karat', 'action', 'weight'])
+                        ->make(true);
+                        }
 
 
 
@@ -363,7 +424,7 @@ public function index_data_dp(Request $request)
                           ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                   ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                   ' . $data->karat->label  . '</h3>
                                     </div>';
                                 return $tb;
                             })  
@@ -388,7 +449,7 @@ public function index_data_dp(Request $request)
                               ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->weight . '</h3>
+                                     ' . formatBerat($data->weight) . '</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -430,7 +491,7 @@ public function index_data_sales(Request $request)
                           ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                   ' .$data->karat->kode  . ' | ' .$data->karat->name  . '</h3>
+                                   ' . $data->karat->label  . '</h3>
                                     </div>';
                                 return $tb;
                             })  
@@ -447,7 +508,7 @@ public function index_data_sales(Request $request)
                               ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->weight . ' Gram</h3>
+                                     ' .formatBerat($data->weight) . ' Gram</h3>
                                     </div>';
                                 return $tb;
                             })
@@ -533,7 +594,7 @@ public function index_data_pending_office(Request $request)
                             ->editColumn('weight', function ($data) {
                             $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                    ' .$data->berat_emas . ' gr</h3>
+                                    ' . formatBerat($data->berat_emas) . ' gr</h3>
                                     </div>';
                                 return $tb;
                             }) 
@@ -606,7 +667,7 @@ public function index_data_pending(Request $request)
                         ->editColumn('weight', function ($data) {
                         $tb = '<div class="items-center text-center">
                                 <h3 class="text-sm font-medium text-gray-800">
-                                ' .$data->berat_emas . ' gr</h3>
+                                ' . formatBerat($data->berat_emas) . ' gr</h3>
                                 </div>';
                             return $tb;
                         }) 
@@ -695,7 +756,7 @@ public function index_data_office(Request $request)
                           ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                   ' .$data->karat->name  . ' ' .$data->karat->kode  . '</h3>
+                                   ' . $data->karat->label . '</h3>
                                     </div>';
                                 return $tb;
                             }) 
@@ -703,14 +764,14 @@ public function index_data_office(Request $request)
                                ->editColumn('berat_real', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->berat_real . ' gram </h3>
+                                     ' . formatBerat($data->berat_real) . ' gram </h3>
                                     </div>';
                                 return $tb;
                             })  
                               ->editColumn('berat_kotor', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->berat_kotor . ' gram </h3>
+                                     ' . formatBerat($data->berat_kotor) . ' gram </h3>
                                     </div>';
                                 return $tb;
                             })
@@ -1282,7 +1343,7 @@ public function update_ajax(Request $request, $id)
                             ->editColumn('weight', function ($data) {
                             $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                    ' .$data->berat_emas . ' gr</h3>
+                                    ' . formatBerat($data->berat_emas) . ' gr</h3>
                                     </div>';
                                 return $tb;
                             }) 

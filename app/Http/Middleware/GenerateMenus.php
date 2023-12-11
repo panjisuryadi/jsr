@@ -732,6 +732,19 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
+            $stock_office->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Stok Rongsok'), [
+                'route' => 'stok.rongsok',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 5,
+                'activematches' => ['stoks*'],
+                'permission'    => ['access_stoks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
             // EMAS - Stok Cabang
             $stock_cabang = $stok->add('<i class="c-sidebar-nav-icon  bi-card-checklist"></i> '.__('Stok Cabang'), [
                 'class' => 'c-sidebar-nav-dropdown',
