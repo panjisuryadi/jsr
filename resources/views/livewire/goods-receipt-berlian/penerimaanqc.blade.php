@@ -222,7 +222,7 @@
                                 <div class="form-group">
                                     <?php
                                     $field_name = 'total_berat_real';
-                                    $field_lable = __('Berat');
+                                    $field_lable = __('Berat Emas');
                                     $field_placeholder = Label_case($field_lable);
                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                     $required = '';
