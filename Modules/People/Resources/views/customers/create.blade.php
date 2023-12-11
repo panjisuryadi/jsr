@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 @include('utils.alerts')
                 <div class="form-group">
-                    <button class="btn btn-primary">Create Customer <i class="bi bi-check"></i></button>
+                    <button class="btn btn-primary">Buat Data Customer <i class="bi bi-check"></i></button>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -25,31 +25,31 @@
                             
                             <div class="border-right px-2">
                                 <div class="form-group">
-                                    <label for="customer_name">Customer Name <span class="text-danger">*</span></label>
+                                    <label for="customer_name">Nama Customer<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="customer_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="customer_email">Email <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" name="customer_email" required>
+                                    <label for="customer_email">Email</label>
+                                    <input type="email" class="form-control" name="customer_email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="country">@lang('Country') <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="country" required>
+                                    <label for="country">Negara </label>
+                                    <input type="text" class="form-control" name="country">
                                 </div>
                             </div>
                             
                             <div class="px-2">
                                 <div class="form-group">
-                                    <label for="customer_phone">Phone <span class="text-danger">*</span></label>
+                                    <label for="customer_phone">Nomor Kontak <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="customer_phone" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="city">@lang('city') <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="city" required>
+                                    <label for="city">Kota</label>
+                                    <input type="text" class="form-control" name="city">
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Address <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="address" required>
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" name="address">
                                 </div>
                             </div>
                         </div>

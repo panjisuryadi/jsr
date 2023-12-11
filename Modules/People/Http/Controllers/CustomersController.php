@@ -32,10 +32,10 @@ class CustomersController extends Controller
         $request->validate([
             'customer_name'  => 'required|string|max:255',
             'customer_phone' => 'required|max:255',
-            'customer_email' => 'required|email|max:255',
-            'city'           => 'required|string|max:255',
-            'country'        => 'required|string|max:255',
-            'address'        => 'required|string|max:500',
+            'customer_email' => 'max:255',
+            'city'           => 'max:255',
+            'country'        => 'max:255',
+            'address'        => 'max:500',
         ]);
 
         Customer::create([
