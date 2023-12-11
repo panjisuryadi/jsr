@@ -5,6 +5,7 @@ namespace Modules\PenjualanSale\Http\Controllers;
 use App\Models\LookUp;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -16,6 +17,7 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\PenjualanSale\Models\PenjualanSale;
 use Modules\PenjualanSale\Models\PenjualanSalesPayment;
 use Modules\Stok\Models\PenjualanSalesPaymentDetail;
 use PDF;
@@ -460,18 +462,17 @@ public function update(Request $request, $id)
 
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $data = PenjualanSalesPayment::where('penjualan_sales_id',$id)
-                ->with('penjualanSales')
-                // ->with('detailCicilan', 'goodreceipt')
-                // ->withCount(['detailCicilan as sisa_cicilan' => function (Builder $query) {
-                //     $query->where(function($q){
-                //         $q->whereNull('jumlah_cicilan');
-                //         $q->orWhere('jumlah_cicilan', 0);
-                //     });
-                //     $query->where(function($q){
-                //         $q->WhereNull('nominal');
-                //         $q->orWhere('nominal', 0);
-                //     });
-                // }])
+                ->with('detailCicilan', 'penjualanSales')
+                ->withCount(['detailCicilan as sisa_cicilan' => function (Builder $query) {
+                    $query->where(function($q){
+                        $q->whereNull('jumlah_cicilan');
+                        $q->orWhere('jumlah_cicilan', 0);
+                    });
+                    $query->where(function($q){
+                        $q->WhereNull('nominal');
+                        $q->orWhere('nominal', 0);
+                    });
+                }])
                 ->first();
         return view(''.$module_name.'::'.$module_path.'.modal.edit_status',
             compact('module_name',
@@ -489,34 +490,32 @@ public function update(Request $request, $id)
         $tgl_jatuh_tempo = $request->post('tgl_jatuh_tempo');
         $nominal = $request->post('nominal');
         $sisa_cicilan = $request->post('sisa_cicilan');
-        $total_harus_bayar_nominal = $request->post('total_harus_bayar_nominal');
         $total_harus_bayar = $request->post('total_harus_bayar');
-        $is_berlian = $request->post('is_berlian');
         DB::beginTransaction();
         try {
             if ( $is_cicilan ) {
                 $validator = \Validator::make($request->all(),[
                     'cicilan_id' => 'required',
                     'jumlah_cicilan' => [
-                        'required_if:is_berlian, true',
-                        'lte:' . floatval($request->post('total_harus_bayar')),
-                        function ($attribute, $value, $fail) use ($request, $sisa_cicilan) {
-                            if ($sisa_cicilan == 1 && $value != floatval($request->post('total_harus_bayar'))) {
+                        'required',
+                        'lte:' . floatval($total_harus_bayar),
+                        function ($attribute, $value, $fail) use ($request, $sisa_cicilan, $total_harus_bayar) {
+                            if ($sisa_cicilan == 1 && $value != floatval($total_harus_bayar)) {
                                 $fail('Berat untuk cicilan terakhir harus sama dengan sisa cicilan.');
                             }
                         },
                     ],
-                    'nominal' => [
-                        'required',
-                        'numeric',
-                        'gt:0',
-                        function($attribute, $value, $fail) use($request, $is_berlian, $sisa_cicilan) {
-                            if ($is_berlian && $sisa_cicilan == 1 && $value != $request->post('total_harus_bayar_nominal')) {
-                                $fail('Nominal untuk cicilan terakhir harus sama dengan sisa cicilan.');
-                            }
+                    // 'nominal' => [
+                    //     'required',
+                    //     'numeric',
+                    //     'gt:0',
+                    //     function($attribute, $value, $fail) use($request, $sisa_cicilan) {
+                    //         if ($sisa_cicilan == 1 && $value != $request->post('total_harus_bayar_nominal')) {
+                    //             $fail('Nominal untuk cicilan terakhir harus sama dengan sisa cicilan.');
+                    //         }
                             
-                        }
-                    ],
+                    //     }
+                    // ],
                 ], 
                 [
                     'jumlah_cicilan.lte' => 'Jumlah cicilan tidak boleh lebih besar dari harus dibayar',
@@ -525,30 +524,20 @@ public function update(Request $request, $id)
                 if (!$validator->passes()) {
                     return response()->json(['error'=>$validator->errors()]);
                 }
-                        
-                $penerimaan_barang_cicilan_id = $request->post('cicilan_id');
+                    
+                $payment_detail_id = $request->post('cicilan_id');
                 $jumlah_cicilan = $request->post('jumlah_cicilan');
                 $nominal = $request->post('nominal');
 
-                $penerimaan_barang_cicilan = GoodsReceiptInstallment::find($penerimaan_barang_cicilan_id);
+                $penerimaan_barang_cicilan = PenjualanSalesPaymentDetail::find($payment_detail_id);
                 $penerimaan_barang_cicilan->jumlah_cicilan = $jumlah_cicilan;
                 $penerimaan_barang_cicilan->nominal = $nominal;
                 $penerimaan_barang_cicilan->save();
 
-                $tipe_pembelian = TipePembelian::with('goodreceipt')->findOrFail($pembelian_id);
-                if (!$is_berlian && $this->cicilanExist($pembelian_id) == $tipe_pembelian->goodreceipt->total_emas) {
+                $tipe_pembelian = PenjualanSalesPayment::with('penjualanSales')->findOrFail($pembelian_id);
+                if ($this->cicilanExist($pembelian_id) == $tipe_pembelian->penjualanSales->total_jumlah) {
                     $tipe_pembelian->lunas = 'lunas';
                     $tipe_pembelian->save();
-                    $goodsreceipt = GoodsReceipt::find($tipe_pembelian->goodsreceipt_id);
-                    $goodsreceipt->harga_beli = GoodsReceiptInstallment::where('payment_id', $pembelian_id)->sum('nominal');
-                    $goodsreceipt->save();
-                }
-                if ($is_berlian && $this->cicilanBerlianExist($pembelian_id) == $tipe_pembelian->goodreceipt->harga_beli) {
-                    $tipe_pembelian->lunas = 'lunas';
-                    $tipe_pembelian->save();
-                    $goodsreceipt = GoodsReceipt::find($tipe_pembelian->goodsreceipt_id);
-                    $goodsreceipt->harga_beli = GoodsReceiptInstallment::where('payment_id', $pembelian_id)->sum('nominal');
-                    $goodsreceipt->save();
                 }
 
             } else {
@@ -589,6 +578,11 @@ public function update(Request $request, $id)
         DB::commit();
 
         return response()->json(['success'=>' Sukses update pembelian.']);
+    }
+
+    /** Fungsi ini digunakan untuk mengecek apakah masih ada cicilan atau tidak */
+    private function cicilanExist($payment_id) {
+        return PenjualanSalesPaymentDetail::where('payment_id', $payment_id)->sum('jumlah_cicilan');
     }
 
 

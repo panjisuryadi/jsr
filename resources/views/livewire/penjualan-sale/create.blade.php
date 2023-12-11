@@ -226,7 +226,7 @@
                             @endphp
                             <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                                 {{ $field_lable }}</label>
-                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model = "{{ $field_name }}"  wire:change="setJumlah({{$key}})" >
+                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model = "{{ $field_name }}" wire:change="setJumlah({{$key}})" >
                             @if ($errors->has($field_name))
                             <span class="invalid feedback" role="alert">
                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -392,8 +392,43 @@
                     @endif
                 </div>
                 @endif
-
             </div>
+
+            @if ($this->penjualan_sales['tipe_pembayaran'] == 'cicil' && $this->penjualan_sales['cicil'] != '')
+            <div class="card p-6 bg-gray-100 rounded-lg shadow-md">
+                <div class="text-md font-bold mb-4 text-dark">Input Tanggal Cicilan</div>
+
+                @for ($i = 1; $i <= $this->penjualan_sales['cicil']; $i++)
+                    <div class="mb-4">
+                        <label for="cicilan{{ $i }}" class="text-gray-600 text-sm mb-2 block">Cicilan Ke {{ $i }}</label>
+                        <div class="relative rounded-lg">
+                            <?php
+                            $field_name = 'detail_cicilan.'.$i;
+                            $field_lable = __('Tanggal Jatuh Tempo');
+                            $field_placeholder = Label_case($field_lable);
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                            ?>
+                            <input
+                                type="date"
+                                id="{{ $field_name }}"
+                                name="{{ $field_name }}"
+                                wire:model="{{ $field_name }}"
+                                wire:change="resetDetailCicilanAfterwards({{$i}})"
+                                min="{{ $this->getMinCicilDate($i)}}"
+                                class="block w-full py-2 px-3 text-gray-800 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                            />
+
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                @endfor
+            </div>
+
+            @endif
 
             <div class="flex flex-col items-end mb-8">
                 <div class="mb-2 md:mb-1 flex items-center">
@@ -425,7 +460,7 @@
 <div class="pt-2 border-t flex justify-between">
     <div></div>
     <div class="form-group">
-        <a class="px-5 btn btn-outline-danger" href="{{ route("goodsreceipt.index") }}">
+        <a class="px-5 btn btn-outline-danger" href="{{ route("penjualansale.index") }}">
             @lang('Cancel')</a>
         <button class="px-5 btn  btn-submit btn-outline-success" wire:click.prevent="store" wire:target="store" wire:loading.attr="disabled">
             <span wire:loading.remove wire:target="store">

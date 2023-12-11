@@ -5,22 +5,15 @@
     if($data->tipe_pembayaran == 'cicil') {
         foreach ($data->detailCicilan as $key => $value) {
             $dibayar += $value->jumlah_cicilan;
-            $dibayar_nominal += $value->nominal;
         }
     }
     $total_harus_bayar = number_format($data->penjualanSales->total_jumlah, 2) - $dibayar;
-    $harga_beli = $data->goodreceipt->harga_beli ?? 0;
     $sisa_cicilan = $data->sisa_cicilan ?? 0;
-    $total_harus_bayar_nominal = $harga_beli-$dibayar_nominal;
 @endphp
 <div class="px-3">
     <x-library.alert />
     @if(!empty($total_harus_bayar) && $isCicil )
         <span class="text-dark"> Total emas yang harus dibayarkan </span> <span class="ml-1 text-danger"> {{  $total_harus_bayar }}</span>
-    @endif
-
-    @if(!empty($harga_beli) && $isCici )
-        <span class="text-dark"> Total yang harus dibayarkan </span> <span class="text-danger">  Rp. / $ {{ number_format($total_harus_bayar_nominal) }}. </span>
     @endif
 
 
@@ -30,7 +23,6 @@
         
         <div class="form-group">
             <input class="form-control" type="hidden" name="pembelian_id" id="" value="{{ $data->id }}">
-            <input class="form-control" type="hidden" name="total_harus_bayar_nominal" id="" value="{{ $total_harus_bayar_nominal }}">
         </div>
         @if($isCicil)
             <div class="flex flex-row grid grid-cols-1 gap-2">
@@ -55,6 +47,34 @@
                     ?>
                     <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                     <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <?php
+                        $field_name = 'gold_price';
+                        $field_lable = label_case('Harga Emas');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = "required";
+                    ?>
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <?php
+                        $field_name = 'jumlah_cicilan';
+                        $field_lable = label_case('Hasil Konversi emas');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = "required";
+                    ?>
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" readonly>
                     <span class="invalid feedback" role="alert">
                         <span class="text-danger error-text {{ $field_name }}_err"></span>
                     </span>
@@ -87,21 +107,21 @@
                         <span class="text-danger error-text {{ $field_name }}_err"></span>
                     </span>
                 </div>
+            <div class="form-group">
                 <div class="form-group">
-                    <div class="form-group">
-                        <?php
-                            $field_name = 'gold_price';
-                            $field_lable = label_case('Harga Emas');
-                            $field_placeholder = $field_lable;
-                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            $required = "required";
-                        ?>
-                        <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
-                        <span class="invalid feedback" role="alert">
-                            <span class="text-danger error-text {{ $field_name }}_err"></span>
-                        </span>
-                    </div>
+                    <?php
+                        $field_name = 'gold_price';
+                        $field_lable = label_case('Harga Emas');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = "required";
+                    ?>
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
+                </div>
             </div>
             <div class="form-group">
                 <div class="form-group">
@@ -118,7 +138,7 @@
                         <span class="text-danger error-text {{ $field_name }}_err"></span>
                     </span>
                 </div>
-        </div>
+            </div>
         </div>
             
         @endif
@@ -141,17 +161,16 @@ jQuery.noConflict();
 
         $('#SimpanUpdate').click(function(e){
             e.preventDefault();
-            let nominal = $("#nominal").val();
-            let harga_beli = "{{ $harga_beli }}";
-            let isCicil = "{{ $isCicil }}";
-            if(!isCicil && harga_beli != 0 && nominal != harga_beli && nominal != 0){
-                const formatter = new Intl.NumberFormat('en');
-                if(confirm(`Harga beli yang diinputkan di penerimaan Rp. (${formatter.format(harga_beli)}) , apakah akan diupdate dengan nominal sekarang Rp. (${formatter.format(nominal)})`)) {
-                    Update();
-                }
-            }else{
-                Update();
-            }
+            // let nominal = $("#nominal").val();
+            // let isCicil = "{{ $isCicil }}";
+            // if(!isCicil && nominal != 0){
+            //     const formatter = new Intl.NumberFormat('en');
+            //     if(confirm(`Harga beli yang diinputkan di penerimaan Rp. (${formatter.format(harga_beli)}) , apakah akan diupdate dengan nominal sekarang Rp. (${formatter.format(nominal)})`)) {
+            //         Update();
+            //     }
+            // }else{
+            // }
+            Update();
         });
 
         $('#FormEdit').submit(function(e){

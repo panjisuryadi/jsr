@@ -11,6 +11,7 @@ use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
 use Modules\PenjualanSale\Events\PenjualanSaleDetailCreated;
 use Modules\PenjualanSale\Models\PenjualanSale;
+use Modules\Stok\Models\PenjualanSalesPaymentDetail;
 
 class Create extends Component
 {
@@ -46,6 +47,9 @@ class Create extends Component
     public $dataSales = [];
     public $dataKarat = [];
     public $konsumenSales = [];
+    public $cicil = '';
+    public $tipe_pembayaran = '';
+    public $detail_cicilan = [];
 
     protected $listeners = [
         'beratChanged' => 'handleBeratChanged',
@@ -257,7 +261,6 @@ class Create extends Component
     {
         $this->validate();
         // create penjualan sales
-        // dd($this->penjualan_sales_details);
 
         DB::beginTransaction();
         try{
@@ -290,6 +293,17 @@ class Create extends Component
                     'jumlah' => $this->penjualan_sales_details[$key]['jumlah']
                 ]);
                 event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail,$penjualan_sale_payment));
+            }
+            if(!empty($this->detail_cicilan)){
+                if($this->penjualan_sales['tipe_pembayaran'] == 'cicil'){
+                    foreach($this->detail_cicilan as $key => $value){
+                        PenjualanSalesPaymentDetail::create([
+                            'payment_id' => $penjualan_sale_payment->id,
+                            'nomor_cicilan' => $key,
+                            'tanggal_cicilan' => $this->detail_cicilan[$key]
+                        ]);
+                    }
+                }
             }
             DB::commit();
         }catch (\Exception $e) {
@@ -416,5 +430,20 @@ class Create extends Component
         $this->penjualan_sales_details[$k]['gold_price'] = 0;
         $this->penjualan_sales_details[$k]['jumlah'] = 0;
         $this->setTotal();
+    }
+
+    public function getMinCicilDate($key){
+        if(in_array($key-1,array_keys($this->detail_cicilan))){
+            $minCicilDate = new DateTime($this->detail_cicilan[$key-1]);
+            return $minCicilDate->modify("+1 day")->format("Y-m-d");
+        }else{
+            return $this->hari_ini;
+        }
+    }
+
+    public function resetDetailCicilanAfterwards($key){
+        for ($i=$key+1; $i <= count($this->detail_cicilan) ; $i++) { 
+            $this->detail_cicilan[$i] = "";
+        }
     }
 }
