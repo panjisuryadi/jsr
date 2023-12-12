@@ -91,10 +91,11 @@
 <table class="invoice-items">
     <thead>
         <tr>
-            <th>No</th>
-            <th>Karat</th>
-            <th>Berat Bersih</th>
-            
+          <th class="text-center">No</th>
+          <th class="text-center">Karat</th>
+          <th class="text-center">Berat / Uang</th>
+          <th class="text-center">Harga</th>
+          <th class="text-center">Jumlah</th>
         </tr>
     </thead>
     <tbody>
@@ -105,13 +106,23 @@
         $total = 0;
         @endphp
         @forelse ($detail->detail as $row)
-  
-       <tr>
-
-         <td>{{ $no++ }}</td>
-          <td>{{ $row->karat->label }}</td>
-          <td>{{ formatBerat($row->weight) }} gr</td>
-
+        @php
+            $beratOrUang = 0;
+            $harga = 0;
+        if($row->type == 1){
+            $beratOrUang = rupiah($row->nominal);
+            $harga =  rupiah($row->gold_price);
+        }else{
+            $beratOrUang = formatBerat($row->weight) . 'gr';
+            $harga = $row->harga . ' %';
+        }
+        @endphp
+        <tr>
+            <th class="text-center">{{$loop->iteration}}</th>
+            <td class="text-center"> {{$row->karat->kode}} | {{$row->karat->name}}</td>
+            <td class="text-center"> {{ $beratOrUang }}</td>
+            <td class="text-center"> {{ $harga }}</td>
+            <td class="text-center"> {{formatBerat($row->jumlah)}} gr</td>
         </tr>
         @empty
         <tr>

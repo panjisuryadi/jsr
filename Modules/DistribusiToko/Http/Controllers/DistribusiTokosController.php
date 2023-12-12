@@ -97,6 +97,65 @@ class DistribusiTokosController extends Controller
 
 
 
+    public function cetak(DistribusiToko $dist_toko){
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+
+     // $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.cetak',  compact('module_name',
+     //        'module_action',
+     //        'module_title',
+     //        'dist_toko',
+     //        'module_icon', 'module_model'))
+     //  ->setPaper('A4', 'portrait');
+
+     //      return $pdf->stream('distribusitoko.pdf');
+
+         return view(''.$module_name.'::'.$module_path.'.includes.cetak',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'dist_toko',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+public function cetak_pdf($id) {
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $detail = $module_model::findOrFail($id);
+        $title = 'Print Distribusi Toko';
+        $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.print', compact('detail','title'))
+          ->setPaper('A4', 'portrait');
+
+          return $pdf->stream('distribusitoko-'. $detail->id .'.pdf');
+
+         // return view(''.$module_name.'::'.$module_path.'.includes.print',
+         //   compact('module_name',
+         //    'detail',
+         //    'module_title',
+         //    'module_icon', 'module_model'));
+
+
+
+
+    }
+
 
 
     public function detail_distribusi(DistribusiToko $dist_toko){
@@ -760,31 +819,6 @@ public function view_distribusi($id)
 
 
 
-
-public function cetak($id) {
-        $id = decode_id($id);
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $detail = $module_model::findOrFail($id);
-        $title = 'Print Distribusi Toko';
-        $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.print', compact('detail','title'))
-          ->setPaper('A4', 'portrait');
-
-          return $pdf->stream('distribusitoko-'. $detail->id .'.pdf');
-
-         // return view(''.$module_name.'::'.$module_path.'.includes.print',
-         //   compact('module_name',
-         //    'detail',
-         //    'module_title',
-         //    'module_icon', 'module_model'));
-
-
-
-
-    }
 
 
 
