@@ -1199,8 +1199,11 @@ public function update_ajax(Request $request, $id)
                         'berat_kotor' => $data['weight']
                     ]);
 
-                    $berat_real = $stok_lantakan->history->sum('berat_real');
-                    $stok_lantakan->update(['weight'=> $berat_real]);
+                    // $berat_real = $stok_lantakan->history->sum('berat_real');
+                    // $stok_lantakan->update(['weight'=> $berat_real]);
+
+                    $stok_lantakan->weight += $data['weight'];
+                    $stok_lantakan->save();
                 } else {
                     $this->model_lantakan::create($data);
                 }
