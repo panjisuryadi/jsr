@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\Stok\Models\StockSales;
 use PDF;
 
 class DistribusiSalesController extends Controller
@@ -396,28 +398,49 @@ public function update(Request $request, $id)
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
-        try {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
+        DB::beginTransaction();
+        try{
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'Delete';
+            $module_action = 'Delete';
 
-        $$module_name_singular = $module_model::findOrFail($id);
+            $distribusi_sales = $module_model::findOrFail($id);
+            $this->reduceStockSales($distribusi_sales);
+            $distribusi_sales->delete();
+            DB::commit();
+            toast(''. $module_title.' Deleted!', 'success');
+            return redirect()->route(''.$module_name.'.index');
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            toast($e->getMessage(), 'warning');
+            return redirect()->back();
+        }
 
-        $$module_name_singular->delete();
-         toast(''. $module_title.' Deleted!', 'success');
-         return redirect()->route(''.$module_name.'.index');
+    }
 
-          } catch (\Exception $e) {
-           // dd($e);
-                toast(''. $module_title.' error!', 'warning');
-                return redirect()->back();
-            }
-
+    private function reduceStockSales($distribusi_sales){
+        $dist_sum_weight = $distribusi_sales->detail->sum('berat_bersih');
+        $stock_sales_sum = StockSales::where(['sales_id' => $distribusi_sales->sales_id])->sum('weight');
+        if($stock_sales_sum < $dist_sum_weight){
+            throw new \Exception('Gagal menghapus data');
+        }
+        foreach($distribusi_sales->detail as $detail){
+            $stock_sales = StockSales::where(['karat_id' => $detail->karat_id, 'sales_id' => $distribusi_sales->sales_id])->first();
+            $detail->stock_sales()->attach($stock_sales->id,[
+                'karat_id'=>$detail->karat_id,
+                'sales_id' => $distribusi_sales->sales_id,
+                'in' => false,
+                'berat_real' => -1 * $detail->berat_bersih,
+                'berat_kotor' => -1 * $detail->berat_bersih,
+            ]);
+            $berat_real = $stock_sales->history->sum('berat_real');
+            $stock_sales->update(['weight'=> $berat_real]);
+        }
     }
 
     public function cetak($id) {

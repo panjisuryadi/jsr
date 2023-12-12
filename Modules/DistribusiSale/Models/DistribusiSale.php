@@ -5,11 +5,12 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\DataSale\Models\DataSale;
 use Modules\DistribusiSale\Models\DistribusiSaleDetail;
 class DistribusiSale extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $table = 'history_distribusi_sales';
 
     protected $guarded = [];
