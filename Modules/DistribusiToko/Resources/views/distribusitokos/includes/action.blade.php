@@ -8,7 +8,7 @@
 
 @can('delete_distribusitoko')
 
-@if ($data->isDraft())
+<!-- @if ($data->isDraft())
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
         if (confirm('Are you sure? It will delete the data permanently!')) {
@@ -21,7 +21,7 @@
             @method('delete')
         </form>
     </button>
-@endif
+@endif -->
 @endcan
 
 
