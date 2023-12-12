@@ -296,6 +296,8 @@ class Create extends Component
                     'harga_type' => $this->penjualan_sales_details[$key]['harga_type'],
                     'type' => $this->penjualan_sales_details[$key]['type'],
                     'gold_type' => !empty($this->penjualan_sales_details[$key]['gold_type']) ? $this->penjualan_sales_details[$key]['gold_type'] : null,
+                    'harga' => !empty($this->penjualan_sales_details[$key]['harga']) ? $this->penjualan_sales_details[$key]['harga'] : null,
+                    'gold_price' => !empty($this->penjualan_sales_details[$key]['gold_price']) ? $this->penjualan_sales_details[$key]['gold_price'] : null,
                     'jumlah' => $this->penjualan_sales_details[$key]['jumlah']
                 ];
                 $penjualan_sale_detail = $penjualan_sale->detail()->create($data);

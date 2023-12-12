@@ -426,8 +426,7 @@ public function update(Request $request, $id)
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
-        $detail = $module_model::findOrFail($id);
-        
+        $detail = $module_model::with('detail')->findOrFail($id);
         $title = 'Print Penjualan Sales';
         $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.print', compact('detail','title'))
           ->setPaper('A4', 'portrait');
