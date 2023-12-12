@@ -138,11 +138,14 @@
                             <th>{{ label_case('Status') }}</th>
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
-                        @forelse(\Modules\BuysBack\Models\BuysBack::get() as $sale)
-                            @if($loop->index > 4)
+                @php
+                  $buysbacks = \Modules\BuysBack\Models\BuysBack::paginate(3);
+                @endphp
+                        @forelse($buysbacks as $sale)
+                           {{--  @if($loop->index > 3)
                                @break
                             @endif
-
+ --}}
 
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -180,7 +183,11 @@
 
                     </table>
 
-
+                 @if ($buysbacks->links()->paginator->hasPages())
+                    <div class="has-text-centered">
+                        {{ $buysbacks->links() }}
+                    </div>
+                @endif
 
 
             </div>
@@ -199,11 +206,14 @@
                             <th class="text-center">{{ label_case('Pic') }}</th>
                             <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
-                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::inprogress()->get() as $row)
-                            @if($loop->index > 4)
+                  @php
+                   $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->paginate(2);
+                   @endphp
+                      @forelse($distribusitoko as $row)
+                        {{--     @if($loop->index > 4)
                                @break
                             @endif
-
+                                --}}
                             {{-- {{ $row }} --}}
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -234,6 +244,11 @@
                         @endforelse
 
                     </table>
+                 @if($distribusitoko->links()->paginator->hasPages())
+                    <div class="has-text-centered">
+                        {{ $distribusitoko->links() }}
+                    </div>
+                @endif
 
             </div>
         </div>
@@ -251,13 +266,12 @@
                             <th>{{ label_case('Berat') }}</th>
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
-                    @forelse(\Modules\Stok\Models\StockPending::get() as $row)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
-                                {{-- {{ $row }} --}}
+                      @php
+                   $StockPending = \Modules\Stok\Models\StockPending::paginate(5);
+                   @endphp
 
-                  <tr>
+                    @forelse($StockPending as $row)
+                            <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->karat->kode }} | {{ $row->karat->name }}</td>
                             <td>{{ $row->cabang->name }}</td>
@@ -279,6 +293,11 @@
                         @endforelse
 
                     </table>
+                      @if($StockPending->links()->paginator->hasPages())
+                    <div class="has-text-centered">
+                        {{ $StockPending->links() }}
+                    </div>
+                @endif
 
 
 
@@ -307,12 +326,11 @@
                             <th>{{ label_case('Status') }}</th>
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
-                    @forelse(\Modules\Sale\Entities\Sale::akses()->get() as $row)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
-                                {{-- {{ $row }} --}}
+                   @php
+                   $sales = \Modules\Sale\Entities\Sale::akses()->paginate(5);
+                   @endphp
 
+                    @forelse($sales as $row)
 
                           <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -384,6 +402,11 @@
                         @endforelse
 
                     </table>
+                       @if($sales->links()->paginator->hasPages())
+                    <div class="has-text-centered">
+                        {{ $sales->links() }}
+                    </div>
+                    @endif
 
             </div>
         </div>
@@ -404,12 +427,11 @@
                             <th>{{ label_case('Pic') }}</th>
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
-                    @forelse(\Modules\BuysBack\Models\BuyBackNota::get() as $row)
-                                    @if($loop->index > 4)
-                                         @break
-                                     @endif
-                                            {{-- {{ $row }} --}}
+        @php
+        $buybacknota =\Modules\BuysBack\Models\BuyBackNota::paginate(5);
+       @endphp
 
+                    @forelse($buybacknota as $row)
                            <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ shortdate($row->date) }}</td>
@@ -437,6 +459,12 @@
                         @endforelse
 
                     </table>
+                     @if($buybacknota->links()->paginator->hasPages())
+                    <div class="has-text-centered">
+                        {{ $buybacknota->links() }}
+                    </div>
+                    @endif
+
 
             </div>
         </div>
@@ -453,10 +481,14 @@
                             <th>{{ label_case('Status') }}</th>
 
                         </tr>
-                    @forelse(\Modules\Product\Entities\Product::ready()->get() as $row)
-                        @if($loop->index > 4)
+
+              @php
+            $product =\Modules\Product\Entities\Product::ready()->paginate(5);
+            @endphp   
+                    @forelse($product as $row)
+                       {{--  @if($loop->index > 4)
                              @break
-                         @endif
+                         @endif --}}
                            {{-- {{ $row }} --}}
 
                            <tr>
@@ -478,6 +510,12 @@
                         @endforelse
 
                     </table>
+                 @if($product->links()->paginator->hasPages())
+                    <div class="has-text-centered">
+                        {{ $product->links() }}
+                    </div>
+                    @endif
+
 
             </div>
         </div>
