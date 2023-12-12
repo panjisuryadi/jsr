@@ -110,6 +110,34 @@
         
 
 
+        <table style='width:100%!important; font-size:12pt;' cellspacing='2'>
+            <tr>
+                <td style="border: none !important;text-align: center;" align='center'>
+                    Diterima Oleh,
+                </br></br>
+                </br></br>
+                </br></br>
+                <u>(..................................................)</u>
+                </td>
+                <td style='border: none !important; padding:5px; text-align:left; width:30%'></td>
+                <td style="text-align: center; border: none !important;" align='center'>Hormat Kami,<br>
+                <span style='font-size:12pt'><b>{{ settings()->company_name }}</b></span></br>
+
+                </br>
+                </br></br>
+                </br></br>
+                <u>(...................................................)</u>
+                </td>
+            </tr>
+        </table>
+
+
+
+<div id="contentToPrint">
+        <!-- Your content goes here -->
+        <h1>Hello, World!</h1>
+        <p>This is the content you want to print.</p>
+    </div>
 
 
             </div>
