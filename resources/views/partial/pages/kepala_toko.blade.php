@@ -91,8 +91,8 @@
     <ul class="nav nav-tabs py-1" role="tablist">
 
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#Buysback">Buys Back</a>
-        </li>
+            <a class="nav-link {{ $paging == 'buysbacks' ? 'active' : '' }}" data-toggle="tab" href="#Buysback">Buys Back</a>
+        </li> 
 
         @can('access_buysback_nota')
         <li class="nav-item">
@@ -104,7 +104,7 @@
 
         @can('show_distribusi')
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#distribusitoko">Distribusi Toko</a>
+            <a class="nav-link {{ $paging == 'distribusitoko' ? 'active' : '' }}" data-toggle="tab" href="#distribusitoko">Distribusi Toko</a>
         </li>
         @endcan
 
@@ -122,7 +122,7 @@
     </ul>
 
     <div class="tab-content py-3 mb-2">
- <div id="Buysback" class="container px-0 tab-pane active">
+ <div id="Buysback" class="container px-0 tab-pane {{ $paging == 'buysbacks' ? 'active' : '' }}">
             <div class="pt-3">
 
 
@@ -199,69 +199,63 @@
             </div>
         </div>
 
-  <div id="distribusitoko" class="container px-0 tab-pane">
+  <div id="distribusitoko" class="container px-0 tab-pane  
+  {{ $paging == 'distribusitoko' ? 'active' : '' }}">
             <div class="pt-3">
-                sdsd
-             <table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                            <th class="text-center">{{ label_case('Cabang') }}</th>
-                            <th class="text-center">{{ label_case('Date') }}</th>
-                            <th class="text-center">{{ label_case('Invoice') }}</th>
-                            <th class="text-center">{{ label_case('Items') }}</th>
-                            <th class="text-center">{{ label_case('Status') }}</th>
-                            <th class="text-center">{{ label_case('Pic') }}</th>
-                            <th class="text-center">{{ label_case('Aksi') }}</th>
-                        </tr>
-                  @php
-                   $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(5, ['*'], 'distribusitoko');
-                   @endphp
-                      @forelse($distribusitoko as $row)
-                        {{--     @if($loop->index > 4)
-                               @break
-                            @endif
-                                --}}
-                            {{-- {{ $row }} --}}
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $row->cabang->name }}</td>
-                            <td>{{ shortdate($row->date) }}</td>
-                            <td>{{ $row->no_invoice }}</td>
-                            <td>{{ $row->items->count() }}</td>
-                            <td>
-                            @if($row->current_status->id == 2)
-                                <button class="w-full btn uppercase btn-outline-warning px  leading-5 btn-sm">In Progress</button>
-                                @endif
-                            </td>
-                            <td>{{ $row->created_by }}</td>
-
-            <td class="text-center">
-             <a  href="{{ route('distribusitoko.detail_distribusi', $row->id) }}" class="btn btn-success px-4 btn-sm w-full">
-    <i class="bi bi-eye"></i> Approve
-</a>
-
-
-            </td>
-                        </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
-
-                            </tr>
-                        @endforelse
-                     <tr>
-                    <td colspan="8">
-                        <div class="float-right">
-        
-    {{ $distribusitoko->links('pagination.custom', ['paginator' => $distribusitoko, 'paginationKey' => 'distribusitoko']) }}
-
-                        </div>
-                    </td>  
-                </tr>
-
-                    </table>
-                </div>
+           
+        <table style="width: 100%;" class="table table-striped table-bordered">
+            <tr>
+                <th class="text-center">{{ label_case('No') }}</th>
+                <th class="text-center">{{ label_case('Cabang') }}</th>
+                <th class="text-center">{{ label_case('Date') }}</th>
+                <th class="text-center">{{ label_case('Invoice') }}</th>
+                <th class="text-center">{{ label_case('Items') }}</th>
+                <th class="text-center">{{ label_case('Status') }}</th>
+                <th class="text-center">{{ label_case('Pic') }}</th>
+                <th class="text-center">{{ label_case('Aksi') }}</th>
+            </tr>
+            @php
+            $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(2, ['*'], 'distribusitoko');
+            @endphp
+            @forelse($distribusitoko as $row)
+            {{--     @if($loop->index > 4)
+            @break
+            @endif
+            --}}
+            {{-- {{ $row }} --}}
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $row->cabang->name }}</td>
+                <td>{{ shortdate($row->date) }}</td>
+                <td>{{ $row->no_invoice }}</td>
+                <td>{{ $row->items->count() }}</td>
+                <td>
+                    @if($row->current_status->id == 2)
+                    <button class="w-full btn uppercase btn-outline-warning px  leading-5 btn-sm">In Progress</button>
+                    @endif
+                </td>
+                <td>{{ $row->created_by }}</td>
+                <td class="text-center">
+                    <a  href="{{ route('distribusitoko.detail_distribusi', $row->id) }}" class="btn btn-success px-4 btn-sm w-full">
+                        <i class="bi bi-eye"></i> Approve
+                    </a>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
+            </tr>
+            @endforelse
+            <tr>
+                <td colspan="8">
+                    <div class="float-right">
+                        {{ $distribusitoko->links('pagination.custom', ['paginator' => $distribusitoko, 'paginationKey' => 'distribusitoko']) }}
+                    </div>
+                </td>
+            </tr>
+        </table>
         </div>
+</div>
 
 
 
@@ -579,7 +573,6 @@
 
 
 @push('page_scripts')
-
 
 
 @endpush

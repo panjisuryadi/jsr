@@ -21,7 +21,10 @@ use Modules\Adjustment\Entities\AdjustmentSetting;
 class HomeController extends Controller
 {
 
-    public function index() {
+    public function index(Request $request){
+
+         $paging = $request->get('key');
+         //dd($paging);
         activity()->log(' '.auth()->user()->name.'Masuk ke halaman Dashoard ');
 
       $lastActivity = ActivityLog::latest()->Join('users', 'activity_log.causer_id', '=', 'users.id')
@@ -61,6 +64,7 @@ class HomeController extends Controller
         $status = $request->status ?? '';
 
         return view('home', [
+            'paging'     => $paging,
             'userlogin'     => $userlogin,
             'sales'     => $sales,
             'status'     => $status,
