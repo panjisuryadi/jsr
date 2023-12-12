@@ -11,7 +11,11 @@ use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
 use Modules\PenjualanSale\Events\PenjualanSaleDetailCreated;
 use Modules\PenjualanSale\Models\PenjualanSale;
+use Modules\Stok\Models\PenerimaanLantakan;
 use Modules\Stok\Models\PenjualanSalesPaymentDetail;
+use Modules\Stok\Models\StockKroom;
+use Modules\Stok\Models\StockRongsok;
+use Modules\Stok\Models\StockSales;
 
 class Create extends Component
 {
@@ -38,6 +42,7 @@ class Create extends Component
             'type' => '',
             'nominal' => 0,
             'gold_price' => 0,
+            'gold_type' => 0,
             'sub_karat_choice' => [],
             'harga_type' => 'persen',
             'jumlah' => 0
@@ -169,7 +174,7 @@ class Create extends Component
         foreach ($this->penjualan_sales_details as $key => $value) {
 
             $rules['penjualan_sales_details.'.$key.'.karat_id'] = 'required';
-            $rules['penjualan_sales_details.'.$key.'.sub_karat_id'] = 'required';
+            // $rules['penjualan_sales_details.'.$key.'.sub_karat_id'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.type'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.weight'] = [
                 function ($attribute, $value, $fail) use ($key) {
@@ -180,11 +185,11 @@ class Create extends Component
 
                     /** ini dikomen karena seharusnya yang jadi validasi adalah jumlah yang udah dikonversi jadi 24k*/
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
-                    $isKaratFilled = $this->penjualan_sales_details[$key]['sub_karat_id'] != '';
+                    $isKaratFilled = $this->penjualan_sales_details[$key]['karat_id'] != '';
                     $isSalesFilled = $this->penjualan_sales['sales_id'] != '';
                     if($isKaratFilled && $isSalesFilled){
                         $maxWeight = DB::table('stock_sales')
-                            ->where('karat_id', $this->penjualan_sales_details[$key]['sub_karat_id'])
+                            ->where('karat_id', $this->penjualan_sales_details[$key]['karat_id'])
                             ->where('sales_id', $this->penjualan_sales['sales_id'])
                             ->max('weight');
                         if ($value > $maxWeight) {
@@ -281,18 +286,26 @@ class Create extends Component
                 'cicil'           => $this->penjualan_sales['cicil'] ? $this->penjualan_sales['cicil']:  0,
                 'lunas'           => $this->penjualan_sales['tipe_pembayaran'] == 'lunas' ? 'lunas': null,
             ]);
-    
+
             foreach($this->penjualan_sales_details as $key => $value) {
-                $penjualan_sale_detail = $penjualan_sale->detail()->create([
-                    'karat_id' => $this->penjualan_sales_details[$key]['sub_karat_id'],
+                $data = [
+                    'karat_id' => $this->penjualan_sales_details[$key]['karat_id'],
                     'weight' => !empty($this->penjualan_sales_details[$key]['weight']) ? $this->penjualan_sales_details[$key]['weight'] : 0,
                     'nominal' => $this->penjualan_sales_details[$key]['nominal']??0,
                     'created_by' => auth()->user()->name,
                     'harga_type' => $this->penjualan_sales_details[$key]['harga_type'],
                     'type' => $this->penjualan_sales_details[$key]['type'],
+                    'gold_type' => !empty($this->penjualan_sales_details[$key]['gold_type']) ? $this->penjualan_sales_details[$key]['gold_type'] : null,
                     'jumlah' => $this->penjualan_sales_details[$key]['jumlah']
-                ]);
-                event(new PenjualanSaleDetailCreated($penjualan_sale,$penjualan_sale_detail,$penjualan_sale_payment));
+                ];
+                $penjualan_sale_detail = $penjualan_sale->detail()->create($data);
+                if(!empty($this->penjualan_sales_details[$key]['gold_type']) && $this->penjualan_sales_details[$key]['gold_type'] == 'lantakan') {
+                    $this->createLantakan($penjualan_sale_detail);
+                }
+                if(!empty($this->penjualan_sales_details[$key]['gold_type']) && $this->penjualan_sales_details[$key]['gold_type'] == 'rongsok') {
+                    $this->createRongsok($penjualan_sale_detail);
+                }
+                $this->reduceStockSales($penjualan_sale_detail);
             }
             if(!empty($this->detail_cicilan)){
                 if($this->penjualan_sales['tipe_pembayaran'] == 'cicil'){
@@ -317,18 +330,75 @@ class Create extends Component
         return redirect(route('penjualansale.index'));
     }
 
+    private function createLantakan($penjualan_sale_detail) {
+        if($penjualan_sale_detail->karat_id) {
+            
+            $stok_lantakan = StockKroom::first();
+            if($stok_lantakan) {
+                $penjualan_sale_detail->stock_kroom()->attach($stok_lantakan->id,[
+                    'karat_id'=> $stok_lantakan->karat_id,
+                    'in' => true,
+                    'berat_real' => $penjualan_sale_detail->weight,
+                    'berat_kotor' => $penjualan_sale_detail->weight
+                ]);
+
+                $stok_lantakan->weight += $penjualan_sale_detail->weight;
+                $stok_lantakan->save();
+            }
+        }
+    }
+
+    private function createRongsok($penjualan_sale_detail) {
+        if(!empty($penjualan_sale_detail->karat_id)) {
+            $stock_rongsok = StockRongsok::firstOrCreate(['karat_id' => $penjualan_sale_detail->karat_id]);
+            $penjualan_sale_detail->stock_rongsok()->attach($stock_rongsok->id,[
+                    'karat_id'=>$penjualan_sale_detail->karat_id,
+                    'sales_id' => $penjualan_sale_detail->penjualanSale->sales_id,
+                    'weight' => $penjualan_sale_detail->weight,
+            ]);
+            $stok_rongsok = StockRongsok::where('karat_id', $penjualan_sale_detail->karat_id)->first();
+            $stok_rongsok->weight += $penjualan_sale_detail->weight;
+            $stok_rongsok->save();
+        }
+    }
+
+    private function reduceStockSales($penjualan_sale_detail){
+        $sales_id = $penjualan_sale_detail->penjualanSale->sales_id;
+        $stock_sales = StockSales::where([
+            'karat_id' => $penjualan_sale_detail->karat_id,
+            'sales_id' => $sales_id
+        ])->firstOrFail();
+        $penjualan_sale_detail->stock_sales()->attach($stock_sales->id,[
+            'karat_id'=>$penjualan_sale_detail->karat_id,
+            'sales_id' => $sales_id,
+            'in' => false,
+            'berat_real' => -1 * $penjualan_sale_detail->weight,
+            'berat_kotor' => -1 * $penjualan_sale_detail->weight
+        ]);
+        // $berat_real = $stock_sales->history->sum('berat_real');
+        // $stock_sales->update(['weight'=> $berat_real]);
+        $stock_sales->weight -= $penjualan_sale_detail->weight;
+        $stock_sales->save();
+    }
+
     public function updateKaratList(){
+        // $this->dataKarat = Karat::where(function($query){
+        //     $query
+        //         ->where('parent_id',null)
+        //         ->whereHas('children', function($query){
+        //             $query->whereHas('stockSales', function ($query) {
+        //                 $query->where('weight', '>',0);
+        //                 $query->where('sales_id', $this->penjualan_sales['sales_id']);
+        //             });
+        //         });
+        // })->get();
+        
         $this->dataKarat = Karat::where(function($query){
-            $query
-                ->where('parent_id',null)
-                ->whereHas('children', function($query){
-                    $query->whereHas('stockSales', function ($query) {
-                        $query->where('weight', '>',0);
-                        $query->where('sales_id', $this->penjualan_sales['sales_id']);
-                    });
+            $query->whereHas('stockSales', function ($query) {
+                    $query->where('weight', '>',0);
+                    $query->where('sales_id', $this->penjualan_sales['sales_id']);
                 });
         })->get();
-        
         $this->resetPenjualanSalesDetails();
         $this->resetTotal();
         $this->resetDataSubKarat();

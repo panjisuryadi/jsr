@@ -150,14 +150,14 @@
                     </div>
 
                     <!-- Sub Karat -->
-                    <div class="form-group">
-                        <?php
+                    {{-- <div class="form-group">
+                        @php
                         $field_name = 'penjualan_sales_details.' . $key . '.sub_karat_id';
                         $field_lable = __('Kategori Karat');
                         $field_placeholder = Label_case($field_lable);
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         $required = 'wire:model="'.$field_name.'"';
-                        ?>
+                        @endphp
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                             {{ $field_lable }}<span class="text-danger">*</span></label>
                         <select  class="form-control form-control-sm" 
@@ -174,7 +174,7 @@
                             class="text-danger">
                         </span>
                         @endif
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <?php
