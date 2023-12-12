@@ -74,7 +74,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::orderBy('date','desc')->get();
+        $$module_name = $module_model::orderBy('updated_at','desc')->get();
 
         $data = $$module_name;
 
@@ -715,7 +715,15 @@ public function update(Request $request, $id)
                             }
                         },
                     ],
-                    'box_fee' => 'required|numeric',
+                    'box_fee' => [
+                        'required',
+                        'numeric',
+                        function ($attribute, $value, $fail) {
+                            if($value < 0){
+                                $fail("Biaya box tidak boleh bernilai negatif"); 
+                            }
+                        },
+                    ],
                 ]);
                 
                 if (!$validator->passes()) {
