@@ -44,7 +44,7 @@
                     </div>
 
                     <!-- Paginated records -->
-                    <div class="table-responsive">
+                    <div class="table-responsive pb-4">
                         <table id="produksisTable" class="table table-sm table-striped" style="width: 100%;">
                             <thead>
                                 <tr>

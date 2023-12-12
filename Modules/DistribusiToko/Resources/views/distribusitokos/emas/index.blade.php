@@ -28,7 +28,6 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                    <th>Date</th>
                                     <th>No Invoice</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
                                     <th>{{ __('Karat') }}</th>
@@ -98,7 +97,6 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
-                {data: 'date', name: 'date'},
                 {data: 'no_invoice', name: 'no_invoice'},
                 {data: 'cabang', name: 'cabang'},
                 {data: 'karat', name: 'karat'},

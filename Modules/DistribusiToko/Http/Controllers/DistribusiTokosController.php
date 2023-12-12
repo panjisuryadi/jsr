@@ -1053,7 +1053,7 @@ public function approve_distribusi(Request $request, $id)
 
     public function index_data_emas(Request $request)
     {
-        $module_name = $this->module_model::gold()->get();
+        $module_name = $this->module_model::gold()->orderBy('updated_at','desc')->get();
 
         return Datatables::of($module_name)
             ->addColumn('action', function ($data) {
@@ -1064,22 +1064,19 @@ public function approve_distribusi(Request $request, $id)
                 '.includes.action',
                 compact('module_name', 'data', 'module_model'));
                     })
-            ->editColumn('date', function ($data) {
-                $tb = '<div class="items-center text-center">
-                        <span class="text-blue-600">
-                        ' .  shortdate($data->date) . '</span>
-                        </div>';
-                    return $tb;
-                })
             ->editColumn('no_invoice', function ($data) {
-                $tb = '<div class="items-center text-center">
-                        <span class="text-gray-600">
+                $tb = '<div class="items-center text-left text-xs">
+                <span class="text-blue-600">
+                ' .  tanggal($data->date) . '</span>
+                </div>
+                <div class="items-center text-left text-xs">
+                        <span class="text-gray-600 font-bold">
                         ' .$data->no_invoice . '</span>
                         </div>';
                     return $tb;
                 })
                 ->editColumn('cabang', function ($data) {
-                    $tb = '<div class="items-center text-center">
+                    $tb = '<div class="items-center text-center text-xs">
                         <span class="text-gray-600">
                             ' .$data->cabang->name . '</span>
                         </div>';
@@ -1104,11 +1101,11 @@ public function approve_distribusi(Request $request, $id)
 
                 ->editColumn('karat', function ($data) {
                     $tb = '<div class="items-center">
-                        <h3 class="text-sm text-gray-600">
-                            Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></h3>
+                        <span class="text-xs text-gray-600">
+                            Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></span>
                         </div>
                         <div class="items-center">
-                        <span class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' Gram
+                        <span class="text-xs text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' Gram
                         </strong></span>
                         </div>';
                     return $tb;
@@ -1127,7 +1124,6 @@ public function approve_distribusi(Request $request, $id)
             ->rawColumns(['updated_at',
                         'action',
                         'cabang',
-                        'date',
                         'karat',
                         'status',
                         'no_invoice'])
