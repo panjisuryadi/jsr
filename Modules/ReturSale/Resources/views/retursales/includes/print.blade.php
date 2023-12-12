@@ -1,171 +1,166 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>{{$title}}</title>
-         <link rel="stylesheet" href="{{ asset('css/backend.css') }}">
-         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-         <link rel="stylesheet" href="{{ public_path('css/backend.css') }}">
-          <link rel="stylesheet" href="{{ public_path('b3/bootstrap.min.css') }}">
-        <style>
-        @page {
-          size: 21.0cm 12.7cm;
-          margin: 0;
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-            .invoice-box {
-                max-width: 800px;
-                margin: auto;
-                padding: 30px;
-                border: 3px solid #eee;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-                font-size: 16px;
-                line-height: 24px;
-                background-color:#FFFFFF;
-                font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-                color: #555;
-            }
+        .invoice {
+            width: 100%;
+            margin: 0px auto;
 
-            .invoice-box table {
-                width: 100%;
-                line-height: inherit;
-                text-align: left;
-            }
+            padding: 12px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: red; /* Change text color to red */
+        }
+        .invoice-details {
+            display: flex;
+            justify-content: space-between;
+            color: red; /* Change text color to red */
+        }
+        .invoice-details p {
+            margin: 0;
+        }
+        .invoice-items {
+            margin-top: 0px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+.table1 table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-            .invoice-box table td {
-                padding: 5px;
-                vertical-align: top;
-            }
+  .table1 th, td {
+            border: none;
 
-            .invoice-box table tr td:nth-child(2) {
-                text-align: right;
-            }
+        }
 
-            .invoice-box table tr.top table td {
-                padding-bottom: 20px;
-            }
 
-            .invoice-box table tr.top table td.title {
-                font-size: 45px;
-                line-height: 45px;
-                color: #333;
-            }
+        th, td {
+            border: 1px solid red; /* Change border color to red */
+            padding: 8px;
+            text-align: left;
+            font-size: 11pt !important;
+            color: red; /* Change text color to red */
+        }
+        th{
+            text-transform: uppercase;
+        }
+        .total {
+            margin-top: 20px;
+            text-align: right;
+            color: red; /* Change text color to red */
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice">
 
-            .invoice-box table tr.information table td {
-                padding-bottom: 40px;
-            }
+<div class="invoice-items">
 
-            .invoice-box table tr.heading td {
-                background: #eee;
-                border-bottom: 1px solid #ddd;
-                font-weight: bold;
-            }
+<table class="table1" style='width:100%; border: none !important; font-size:14pt; font-family:calibri; border-collapse: collapse;' border="0">
+    <td class="table1" width='60%' align='left' style='border: none !important;padding-right:80px; vertical-align:top'>
+        <span style='font-size:22pt'><b>{{ settings()->company_name }}</b></span></br>
+         {{ settings()->company_email }}, {{ settings()->company_phone }}
+                <br>{{ settings()->company_address }}
+    </td>
+    <td style='border: none !important;vertical-align:top' width='40%' align='left'>
+       
+        Tanggal :{{ tanggal($detail->date)}}</br>
+        No Retur :{{ $detail->retur_no}}</br>
 
-            .invoice-box table tr.details td {
-                padding-bottom: 20px;
-            }
+        Nama Sales: <span style="font-size:16pt;font-weight: bold;">{{$detail->sales->name}}</span>
 
-            .invoice-box table tr.item td {
-                border-bottom: 1px solid #eee;
-            }
+       </br>
+      
+    </td>
+</table>
+<p></p>
 
-            .invoice-box table tr.item.last td {
-                border-bottom: none;
-            }
 
-            .invoice-box table tr.total td:nth-child(2) {
-                border-top: 2px solid #eee;
-                font-weight: bold;
-            }
+<table class="invoice-items">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Karat</th>
+            <th>Berat Bersih</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @php
+        $no = 1;
+        $totalPrice = 0;
+        $totalQty = 0;
+        $total = 0;
+        @endphp
+        @forelse ($detail->detail as $row)
+        <tr>
 
-            @media only screen and (max-width: 600px) {
-                .invoice-box table tr.top table td {
-                    width: 100%;
-                    display: block;
-                    text-align: center;
-                }
+            <td>{{ $no++ }}</td>
+          <td>{{ $row->karat->name }} | {{ $row->karat->kode }}</td>
+          <td>{{ $row->weight }} GRAM</td>
 
-                .invoice-box table tr.information table td {
-                    width: 100%;
-                    display: block;
-                    text-align: center;
-                }
-            }
+        </tr>
+        ​
+     
+        @empty
+        <tr>
+            <td colspan="5" class="text-center">Tidak ada data</td>
+        </tr>
+        @endforelse
 
-            /** RTL **/
-            .invoice-box.rtl {
-                direction: rtl;
-                font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-            }
 
-            .invoice-box.rtl table {
-                text-align: right;
-            }
+    </tbody>
+  
+</table>
+<hr style="color: red;">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-            .invoice-box.rtl table tr td:nth-child(2) {
-                text-align: left;
-            }
-              .small {
-               font-size: 11px !important;
-            }  
-              .medium {
-               font-size: 14px !important;
-            }   
-             .large {
-               font-size: 18px !important;
-            }
-        </style>
-    </head>
+        <table style='width:100%!important; font-size:12pt;' cellspacing='2'>
+            <tr>
+                <td style="border: none !important;text-align: center;" align='center'>
+                    Diterima Oleh,
+                </br></br>
+                </br></br>
+                </br></br>
+                <u>(..................................................)</u>
+                </td>
+                <td style='border: none !important; padding:5px; text-align:left; width:30%'></td>
+                <td style="text-align: center; border: none !important;" align='center'>Hormat Kami,<br>
+                <span style='font-size:12pt'><b>{{ settings()->company_name }}</b></span></br>
 
-    <body>
-        <div class="invoice-box">
-            <table cellpadding="0" cellspacing="0">
-                <tr class="top">
-                    <td colspan="2">
-                        <table>
-                            <tr>
-                                <td class="title">
-                                    <img
-                                        src="{{ asset('images/logo.png')}}"
-                                        style="width: 100%; max-width: 200px"
-                                    />
-                                </td>
+                </br>
+                </br></br>
+                </br></br>
+                <u>(...................................................)</u>
+                </td>
+            </tr>
+        </table>
 
-                                <td>
-                                    <span class="text-xs text-gray-500">Tanggal:  {{ tanggal($detail->date)}} </span><br />
 
-                                    No Retur:  <strong>{{ $detail->retur_no}}</strong><br />
-                                </td>
-                            </tr>
 
-        <tr class="information">
-                    <td colspan="2">
-                                    Nama Sales : <strong> {{$detail->sales->name}}</strong><br />
-                    </td>
-                </tr>
 
-                        </table>
-                    </td>
-                </tr>
 
-              
-                
-                <tr class="heading">
-                    <td>Retur Sales Items</td>
 
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="font-bold">Karat</td>
-
-                    <td class="font-bold">Berat Bersih</td>
-                </tr> 
-                @foreach($detail->detail as $row)
-                <tr>
-                    <td>{{ $row->karat->name }} | {{ $row->karat->kode }}</td>
-                    <td>{{ $row->weight }} gram</td>
-                </tr>
-                @endforeach
-            </table>
         </div>
-    </body>
-</html>
+
+
+
+
+

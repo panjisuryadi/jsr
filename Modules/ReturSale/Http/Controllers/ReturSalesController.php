@@ -425,9 +425,11 @@ public function update(Request $request, $id)
         $module_model = $this->module_model;
         $detail = $module_model::findOrFail($id);
         $title = 'Print Retur Sales';
+
         $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.print', compact('detail','title'))
           ->setPaper('A4', 'portrait');
           return $pdf->stream('retur_sales-'. $detail->id .'.pdf');
+          
          // return view(''.$module_name.'::'.$module_path.'.includes.print',
          //   compact('module_name',
          //    'detail',
