@@ -5,6 +5,7 @@ namespace App\Http\Livewire\DistribusiToko\Emas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Modules\Cabang\Models\Cabang;
 use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\DistribusiToko\Models\DistribusiTokoItem;
@@ -19,6 +20,7 @@ use Modules\Stok\Models\StockOffice;
 
 class Edit extends Component
 {
+    use WithPagination;
     public $dist_toko;
 
     public $cabangs;
@@ -83,7 +85,9 @@ class Edit extends Component
 
     public function render()
     {
-        $data = Product::with('product_item')->whereIn('status_id',[ProductStatus::READY_OFFICE]);
+        $data = Product::orderBy('updated_at','desc')->with('product_item')
+                ->whereIn('status_id',[ProductStatus::READY_OFFICE])
+                ->whereRelation('category.kategoriproduk',fn($q) => $q->whereIn('slug',['gold','emas']));;
         
         if (!empty($this->search)) {
             $search = $this->search;

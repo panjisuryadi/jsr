@@ -148,7 +148,7 @@ class Create extends Component
     }
 
     public function render(){
-        $data = Product::with('product_item')
+        $data = Product::orderBy('updated_at','desc')->with('product_item')
                     ->whereIn('status_id',[ProductStatus::READY_OFFICE])
                     ->whereRelation('category.kategoriproduk',fn($q) => $q->whereIn('slug',['gold','emas']));
                     
