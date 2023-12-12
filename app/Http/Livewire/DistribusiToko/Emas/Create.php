@@ -148,7 +148,10 @@ class Create extends Component
     }
 
     public function render(){
-        $data = Product::with('product_item')->whereIn('status_id',[ProductStatus::READY_OFFICE]);
+        $data = Product::with('product_item')
+                    ->whereIn('status_id',[ProductStatus::READY_OFFICE])
+                    ->whereRelation('category.kategoriproduk',fn($q) => $q->whereIn('slug',['gold','emas']));
+                    
         if (!empty($this->exceptProductId)) {
             $data = $data->whereNotIn('id', $this->exceptProductId);
         }
