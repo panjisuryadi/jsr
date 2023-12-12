@@ -124,8 +124,9 @@ public function index_data(Request $request)
         return Datatables::of($$module_name)
                         ->addColumn('action', function ($data) {
                            $module_name = $this->module_name;
+                           $module_path = $this->module_path;
                             $module_model = $this->module_model;
-                            return view('includes.action',
+                            return view($module_name.'::'.$module_path.'.includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
                                 ->editColumn('no_barang_luar', function ($data) {
@@ -559,28 +560,45 @@ public function update(Request $request, $id)
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
-        try {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
+        DB::beginTransaction();
+        try{
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'Delete';
+            $module_action = 'Delete';
 
-        $$module_name_singular = $module_model::findOrFail($id);
+            $barangluarsales = $module_model::findOrFail($id);
+            $this->reduceStockRongsok($barangluarsales);
+            $barangluarsales->delete();
+            DB::commit();
+            toast(''. $module_title.' Deleted!', 'success');
+            return redirect()->route(''.$module_name.'.index');
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            toast($e->getMessage(), 'warning');
+            return redirect()->back();
+        }
 
-        $$module_name_singular->delete();
-         toast(''. $module_title.' Deleted!', 'success');
-         return redirect()->route(''.$module_name.'.index');
+    }
 
-          } catch (\Exception $e) {
-           // dd($e);
-                toast(''. $module_title.' error!', 'warning');
-                return redirect()->back();
-            }
-
+    private function reduceStockRongsok($barangluarsales){
+        $karat = Karat::find($barangluarsales->karat_id);
+        $karat_id = empty($karat->parent_id)?$karat->id:$karat->parent_id;
+        $stock_rongsok = StockRongsok::where('karat_id', $karat_id)->first();
+        if($stock_rongsok->weight < $barangluarsales->weight){
+            throw new \Exception('Gagal menghapus data');
+        }
+        $barangluarsales->stock_rongsok()->attach($stock_rongsok->id,[
+            'karat_id'=>$karat_id,
+            'sales_id' => $barangluarsales->sales_id,
+            'weight' => -1 * $barangluarsales->weight,
+        ]);
+        $weight = $stock_rongsok->history->sum('weight');
+        $stock_rongsok->update(['weight'=> $weight]);
     }
 
     public function generate_invoice(){
