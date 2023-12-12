@@ -117,7 +117,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::orderBy('updated_at','desc')->get();
 
         $data = $$module_name;
 
@@ -130,19 +130,22 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
                                 ->editColumn('no_barang_luar', function ($data) {
-                                    $tb = '<div class="text-xs justify items-left text-left">'; 
+                                    $tb = '<div class="text-xs flex flex-col gap-y-1 text-left">'; 
                                     $tb .= '<div class="text-gray-800">
-                                            Nomor :<strong><br>' . $data->no_barang_luar . '
-                                           </strong></div>';
+                                           <strong>' . $data->no_barang_luar . '
+                                          </strong></div>';
                                     $tb .= '<div class="text-gray-800">
-                                            Nama Customer Sales :<br><strong>' . $data->customerSale->customer_name . '
+                                            ' . tanggal($data->date) . '
+                                           </div>';
+                                    $tb .= '<div class="text-gray-800">
+                                            Customer Sales : <strong>' . $data->customerSale->customer_name . '
                                            </strong></div>'; 
                                     $tb .= '</div>'; 
                                        return $tb;
                                      })
                                 ->editColumn('sales', function ($data) {
                                 $tb = '<div class="text-xs text-gray-800">
-                                        Sales :<strong><br>' . $data->sales->name . '
+                                        <strong><br>' . $data->sales->name . '
                                         </strong></div>';               
                                     return $tb;
                                     })
