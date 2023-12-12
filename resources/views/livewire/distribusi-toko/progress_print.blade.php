@@ -5,17 +5,8 @@
                 <div>
                     <span>PENGIRIMAN BARANG - DISTRIBUSI TOKO</span>
                 </div>
-                <a class="btn  mfs-auto btn-sm btn-success mfe-1" href="#"><i class="bi bi-house-door"></i> Dashboard
-                </a>
-                <a target="_blank" class="btn btn-sm btn-secondary mfe-1 d-print-none" 
-                href="{{ route('distribusitoko.cetak', $dist_toko) }}"><i class="bi bi-printer"></i> Print
-                </a>
-                <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="#" onclick="showTracking()">
-                    <i class="bi bi-save"></i> History Distribusi
-                </a>
+
             </div>
-
-
 
 
             <div class="card-body px-4">
@@ -116,8 +107,7 @@
                         </tbody>
 
                     </table>
-
-                    
+        
 
 
 
@@ -125,13 +115,14 @@
             </div>
         </div>
     </div>
-    @include('distribusitoko::distribusitokos.cabang.modal.tracking')
+  
 </div>
 @push('page_scripts')
-<script>
-    function showTracking() {
-        $('#tracking-modal').modal('show');
-    }
-</script>
+<script type="text/javascript">
 
+$(document).ready(function () {
+    window.print();
+});
+
+</script>
 @endpush
