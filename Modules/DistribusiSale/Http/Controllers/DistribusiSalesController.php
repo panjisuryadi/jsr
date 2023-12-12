@@ -89,12 +89,19 @@ public function index_data(Request $request)
                             if ($diff < 25) {
                                 return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
                             } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                                return tanggal($data->updated_at);
                             }
                         })
-                        ->editColumn('date', function ($data) {
-                            $module_name = $this->module_name;
-                            return \Carbon\Carbon::parse($data->updated_at)->format('j F Y');
+                        ->editColumn('invoice_no', function ($data) {
+                            $tb = '<div class="text-sm font-semibold">
+                                     ' .$data->invoice_no . '
+                                    </div>';
+                                  $tb .= '<div class="text-sm text-left">
+                                     ' .tanggal($data->date) . '
+                                    </div>';   
+
+                                  
+                                return $tb;
                         })
                         ->editColumn('sales', function ($data) {
                             $tb = '<div class="items-center text-center">
@@ -106,11 +113,11 @@ public function index_data(Request $request)
                         ->editColumn('jumlah_emas', function ($data) {
                         $tb = '<div class="items-center text-center">
                                 <h3 class="text-sm font-medium text-gray-800">
-                                ' .$data->detail->sum('berat_bersih') . '</h3>
+                                ' .$data->detail->sum('berat_bersih') . ' gr</h3>
                                 </div>';
                             return $tb;
                         })
-                        ->rawColumns(['updated_at', 'action','date','sales','jumlah_emas'])
+                        ->rawColumns(['updated_at', 'action','invoice_no','sales','jumlah_emas'])
                         ->make(true);
                      }
 
