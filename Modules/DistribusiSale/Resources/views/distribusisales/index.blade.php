@@ -31,9 +31,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('No Invoice') }}</th>
-                                    <th class="text-lef" style="width: 15%!important;">{{ __('Tanggal') }}</th>
-
+                                   <th style="width: 20%!important;" class="text-center">{{ __('No Invoice') }}</th>
                                     <th class="text-lef">{{ __('Nama Sales') }}</th>
 
                                     <th class="text-lef">{{ __('Jumlah Emas') }}</th>
@@ -103,7 +101,6 @@
                 },
 
                 {data: 'invoice_no', name: 'invoice_no'},
-                {data: 'date', name: 'date'},
                 {data: 'sales', name: 'sales'},
                 {data: 'jumlah_emas', name: 'jumlah_emas'},
                 {data: 'updated_at', name: 'updated_at'},

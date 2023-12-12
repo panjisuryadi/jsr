@@ -105,16 +105,14 @@
         $total = 0;
         @endphp
         @forelse ($detail->detail as $row)
-        <tr>
+  
+       <tr>
 
-            <td>{{ $no++ }}</td>
-         <td>{{ $row->karat->label</td>
-         <td>{{ formatBerat($row->weight) }} gr</td>
-          </td>
+         <td>{{ $no++ }}</td>
+          <td>{{ $row->karat->label }}</td>
+          <td>{{ formatBerat($row->weight) }} gr</td>
 
         </tr>
-        ​
-     
         @empty
         <tr>
             <td colspan="5" class="text-center">Tidak ada data</td>
