@@ -9,13 +9,16 @@ use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\Karat\Models\Karat;
 use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuarIncentive;
 use Modules\PenerimaanBarangLuarSale\Events\PenerimaanBarangLuarSaleCreated;
 use Modules\PenerimaanBarangLuarSale\Models\PenerimaanBarangLuarSale;
+use Modules\Stok\Models\StockRongsok;
 use PDF;
 
 class PenerimaanBarangLuarSalesController extends Controller
@@ -126,44 +129,47 @@ public function index_data(Request $request)
                             compact('module_name', 'data', 'module_model'));
                                 })
                                 ->editColumn('no_barang_luar', function ($data) {
-                                    $tb = '<div class="justify items-left text-left">'; 
+                                    $tb = '<div class="text-xs justify items-left text-left">'; 
                                     $tb .= '<div class="text-gray-800">
                                             Nomor :<strong><br>' . $data->no_barang_luar . '
                                            </strong></div>';
                                     $tb .= '<div class="text-gray-800">
                                             Nama Customer Sales :<br><strong>' . $data->customerSale->customer_name . '
                                            </strong></div>'; 
-                                    $tb .= '<div class="text-gray-800">
-                                            Sales :<strong><br>' . $data->sales->name . '
-                                           </strong></div>';               
                                     $tb .= '</div>'; 
                                        return $tb;
                                      })
+                                ->editColumn('sales', function ($data) {
+                                $tb = '<div class="text-xs text-gray-800">
+                                        Sales :<strong><br>' . $data->sales->name . '
+                                        </strong></div>';               
+                                    return $tb;
+                                    })
                                 ->addColumn('detail_produk', function ($data) {
-                                    $tb = '<div class="justify items-left text-left">'; 
+                                    $tb = '<div class="text-xs justify items-left text-left">'; 
                                     
                                     $tb .= '<div class="text-gray-800">
                                             Produk :<strong> ' . $data->product_name . '
                                             </strong></div>'; 
                                     $tb .= '<div class="text-gray-800">
-                                            Karat :<strong> ' . $data->karat->name . '
+                                            Karat :<strong> ' . $data->karat->label . '
                                             </strong></div>';   
 
                                     $tb .= '<div class="text-gray-800">
                                             Berat :<strong> ' . $data->weight . '
-                                            gram </strong></div>';               
+                                            gr </strong></div>';               
                                     $tb .= '</div>'; 
                                         return $tb;
                                 })
                                 
                                 ->editColumn('keterangan', function ($data) {
-                                    $tb = '<div class="font-semibold items-center text-center">
+                                    $tb = '<div class="text-xs font-semibold items-center text-center">
                                             ' . $data->note . '
                                             </div>';
                                         return $tb;
                                 })
                                 ->addColumn('nilai_produk', function ($data) {
-                                    $tb = '<div class="justify items-left text-left">'; 
+                                    $tb = '<div class="text-xs justify items-left text-left">'; 
                                   
                                     $tb .= '<div class="text-gray-800">
                                             Nilai Angkat :<strong> Rp.' . number_format($data->nilai_angkat) . '
@@ -178,7 +184,7 @@ public function index_data(Request $request)
                                     $tb .= '</div>'; 
                                        return $tb;
                                 })
-                        ->rawColumns(['action','no_barang_luar','detail_produk','keterangan','nilai_produk'])
+                        ->rawColumns(['action','no_barang_luar','detail_produk','keterangan','nilai_produk','sales'])
                         ->make(true);
                      }
 
@@ -350,25 +356,44 @@ public function store(Request $request)
             'nilai_tafsir' => 'required',
             'nilai_selisih' => 'required'
         ]);
-        
-        $penerimaanBarangLuar = PenerimaanBarangLuarSale::create([
-            'date' => $request->input('date'),
-            'customer_sales_id' => $request->input('customer_sales_id'),
-            'sales_id' => $request->input('sales_id'),
-            'note' => $request->input('note')??null,
-            'no_barang_luar' => $request->input('no_barang_luar'),
-            'product_name' => $request->input('nama_product'),
-            'karat_id' => $request->input('kadar'),
-            'weight' => $request->input('berat'),
-            'nilai_angkat' => $request->input('nilai_angkat'),
-            'nilai_tafsir' => $request->input('nilai_tafsir'),
-            'nilai_selisih' => $request->input('nilai_selisih'),
+
+        DB::beginTransaction();
+        try{
+            $penerimaanBarangLuar = PenerimaanBarangLuarSale::create([
+                'date' => $request->input('date'),
+                'customer_sales_id' => $request->input('customer_sales_id'),
+                'sales_id' => $request->input('sales_id'),
+                'note' => $request->input('note')??null,
+                'no_barang_luar' => $request->input('no_barang_luar'),
+                'product_name' => $request->input('nama_product'),
+                'karat_id' => $request->input('kadar'),
+                'weight' => $request->input('berat'),
+                'nilai_angkat' => $request->input('nilai_angkat'),
+                'nilai_tafsir' => $request->input('nilai_tafsir'),
+                'nilai_selisih' => $request->input('nilai_selisih'),
+                'pic_id' => auth()->id()
+            ]);
+            $this->addStockRongsok($penerimaanBarangLuar);
+            DB::commit();
+            toast($this->module_title, 'success');
+            return redirect()->route('penerimaanbarangluarsale.index');
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
+    }
+
+    private function addStockRongsok($penerimaanBarangLuar){
+        $karat = Karat::find($penerimaanBarangLuar->karat_id);
+        $karat_id = empty($karat->parent_id)?$karat->id:$karat->parent_id;
+        $stock_rongsok = StockRongsok::firstOrCreate(['karat_id' => $karat_id]);
+        $penerimaanBarangLuar->stock_rongsok()->attach($stock_rongsok->id,[
+                'karat_id'=>$karat_id,
+                'sales_id' => $penerimaanBarangLuar->sales_id,
+                'weight' => $penerimaanBarangLuar->weight,
         ]);
-
-        event(new PenerimaanBarangLuarSaleCreated($penerimaanBarangLuar));
-
-        toast($this->module_title, 'success');
-        return redirect()->route('penerimaanbarangluarsale.index');
+        $weight = $stock_rongsok->history->sum('weight');
+        $stock_rongsok->update(['weight'=> $weight]);
     }
 
 
@@ -556,6 +581,18 @@ public function update(Request $request, $id)
                 return redirect()->back();
             }
 
+    }
+
+    public function generate_invoice(){
+        $lastString = PenerimaanBarangLuarSale::orderBy('id', 'desc')->value('no_barang_luar');
+
+        $numericPart = (int) substr($lastString, 17);
+        $incrementedNumericPart = $numericPart + 1;
+        $nextNumericPart = str_pad($incrementedNumericPart, 5, "0", STR_PAD_LEFT);
+        $nextString = "BARANGLUAR-SALES-" . $nextNumericPart;
+        return response()->json([
+            'data' => $nextString,
+        ]);
     }
 
 }

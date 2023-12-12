@@ -39,12 +39,13 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 3%!important;">No</th>
-                                    <th style="width: 7%!important;">Detail ID</th>
-                                    <th style="width: 10%!important;">Detail Produk</th>
+                                    <th style="width: 1%!important;">No</th>
+                                    <th style="width: 7%!important;">Invoice</th>
+                                    <th style="width: 7%!important;">Sales</th>
+                                    <th style="width: 6%!important;">Detail Produk</th>
                                     <th style="width: 10%!important;">Nilai Produk</th>
-                                    <th style="width: 10%!important;">Keterangan</th>
-                                    <th style="width: 13%!important;" class="text-center">
+                                    <th style="width: 6%!important;">Keterangan</th>
+                                    <th style="width: 6%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -106,6 +107,7 @@
                 },
 
                 {data: 'no_barang_luar', name:  'no_barang_luar'},
+                {data: 'sales', name:  'sales'},
                 {data: 'detail_produk', name: 'detail_produk'},
                 {data: 'nilai_produk', name: 'nilai_produk'},
                 {data: 'keterangan', name: 'keterangan'},

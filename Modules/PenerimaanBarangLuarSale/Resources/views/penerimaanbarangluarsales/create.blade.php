@@ -39,12 +39,11 @@
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
             $required = '';
             ?>
-            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
-            <input type="text" name="{{ $field_name }}"
+            <label for="{{ $field_name }}">{{ $field_placeholder }}<span class="text-danger">*</span></label>
+            <input id="{{ $field_name }}" type="text" name="{{ $field_name }}"
             class="form-control {{ $invalid }}"
             name="{{ $field_name }}"
-            value="{{ old($field_name) }}"
-            placeholder="{{ $field_placeholder }}" {{ $required }}>
+            placeholder="{{ $field_placeholder }}" {{ $required }} readonly>
             @if ($errors->has($field_name))
             <span class="invalid feedback"role="alert">
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -61,12 +60,15 @@
             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
             $required = 'required';
             ?>
-            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
+            @php
+                $hari_ini = now()->format('Y-m-d');
+            @endphp
+            <label for="{{ $field_name }}">{{ $field_placeholder }}<span class="text-danger">*</span></label>
             <input type="date" name="{{ $field_name }}"
             class="form-control {{ $invalid }}"
             name="{{ $field_name }}"
-            value="{{ old($field_name) }}"
-            placeholder="{{ $field_placeholder }}" {{ $required }}>
+            value="{{ $hari_ini }}"
+            placeholder="{{ $field_placeholder }}" {{ $required }} max="{{$hari_ini}}">
             @if ($errors->has($field_name))
             <span class="invalid feedback"role="alert">
                 <small class="text-danger">{{ $errors->first($field_name) }}.</small
@@ -88,7 +90,7 @@
             $required = '';
             ?>
         <label for="{{ $field_name }}" style="margin-bottom: 0.2rem;">Customer Sales <span class="text-danger">*</span></label>
-        <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" >
+        <select class="form-control select2 {{ $invalid }}" name="{{ $field_name }}" id="{{ $field_name }}" >
             <option value="" selected disabled>Pilih Customer Sales</option>
             @foreach(\Modules\CustomerSales\Entities\CustomerSales::all() as $cust)
             <option value="{{ $cust->id }}" {{ old($field_name) == $cust->id ? 'selected' : '' }}>{{ $cust->customer_name }}</option>
@@ -111,7 +113,7 @@
             $required = '';
             ?>
         <label for="{{ $field_name }}" style="margin-bottom: 0.2rem;">Sales <span class="text-danger">*</span></label>
-        <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" >
+        <select class="form-control select2 {{ $invalid }}" name="{{ $field_name }}" id="{{ $field_name }}" >
             <option value="" selected disabled>Pilih Sales</option>
             @foreach(\Modules\DataSale\Models\DataSale::all() as $sale)
             <option value="{{ $sale->id }}" {{ old($field_name) == $sale->id ? 'selected' : '' }}>{{ $sale->name }}</option>
@@ -140,7 +142,7 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
+        <input class="form-control {{ $invalid }}"
         type="text"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
@@ -156,16 +158,21 @@
  <div class="form-group">
         <?php
         $field_name = 'kadar';
-        $field_lable = label_case('kadar');
+        $field_lable = label_case('karat');
         $field_placeholder = $field_lable;
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" >
+        <select class="form-control select2 {{ $invalid }}" name="{{ $field_name }}" id="{{ $field_name }}" >
             <option value="" selected disabled>Pilih Karat</option>
-            @foreach(\Modules\Karat\Models\Karat::all() as $karat)
-            <option value="{{ $karat->id }}">{{ $karat->name }}</option>
+            @foreach(\Modules\Karat\Models\Karat::karat()->get() as $karat)
+            <option value="{{ $karat->id }}">{{ $karat->label }}</option>
+            @if (count($karat->children))
+                @foreach ($karat->children as $kategori)
+                    <option value="{{ $kategori->id }}">{{ $kategori->label }}</option>
+                @endforeach
+            @endif
             @endforeach
         </select>
         @if ($errors->has($field_name))
@@ -186,7 +193,7 @@
         $required = "required";
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-        <input class="form-control"
+        <input class="form-control {{ $invalid }}"
         type="number"
         name="{{ $field_name }}"
         min="0" step="0.001"
@@ -221,11 +228,12 @@
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
         <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
-        <input class="form-control"
+        <input class="form-control {{ $invalid }}"
         type="number"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
+        min="0"
         placeholder="{{ $field_placeholder }}">
         @if ($errors->has($field_name))
         <span class="invalid feedback"role="alert">
@@ -245,11 +253,12 @@
         ?>
         <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
         <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
-        <input class="form-control"
+        <input class="form-control {{ $invalid }}"
         type="number"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
         value="{{old($field_name)}}"
+        min="0"
         placeholder="{{ $field_placeholder }}">
         @if ($errors->has($field_name))
         <span class="invalid feedback"role="alert">
@@ -266,9 +275,9 @@
         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
         $required = "required";
         ?>
-        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}</label>
+        <label class="text-xs" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
         <span class="font-bold ml-3" id="{{ $field_name }}_text"></span>
-        <input class="form-control"
+        <input class="form-control {{ $invalid }}"
         type="number"
         name="{{ $field_name }}"
         id="{{ $field_name }}"
@@ -371,6 +380,20 @@
     $('#nilai_tafsir').on('keyup', function () {
         $('#nilai_tafsir_text').html('Rp. '+Number($(this).val()).toLocaleString())
         calculateSelisih()
+    });
+
+    $(document).ready(function(){
+        $.ajax({
+            type: "GET",
+            url: "{{route('penerimaanbarangluarsale.generate-invoice')}}",
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data){
+                $('#no_barang_luar').val(data.data);
+            }
+        })
     });
 </script>
 @endpush

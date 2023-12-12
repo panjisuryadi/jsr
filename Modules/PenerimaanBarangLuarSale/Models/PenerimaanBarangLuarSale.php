@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\CustomerSales\Entities\CustomerSales;
 use Modules\DataSale\Models\DataSale;
 use Modules\Karat\Models\Karat;
+use Modules\Stok\Models\StockRongsok;
 
 //use Modules\JenisGroup\Models\JenisGroup;
 class PenerimaanBarangLuarSale extends Model
@@ -48,6 +49,11 @@ class PenerimaanBarangLuarSale extends Model
 
     public function sales(){
       return $this->belongsTo(DataSale::class,'sales_id','id');
+    }
+
+    public function stock_rongsok()
+    {
+        return $this->morphToMany(StockRongsok::class, 'transaction','stock_rongsok_history','transaction_id','stock_rongsok_id','id','id')->withTimestamps();
     }
 
 
