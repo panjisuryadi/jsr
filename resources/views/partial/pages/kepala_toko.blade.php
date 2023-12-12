@@ -139,7 +139,7 @@
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
                 @php
-                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(3);
+                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(5, ['*'], 'buysbacks');
                 @endphp
                         @forelse($buysbacks as $sale)
                            {{--  @if($loop->index > 3)
@@ -180,21 +180,28 @@
 
                             </tr>
                         @endforelse
+                <tr>
+                    <td colspan="8">
+                        <div class="float-right">
+                            
+          {{ $buysbacks->links('pagination.custom', ['paginator' => $buysbacks, 'paginationKey' => 'buysbacks']) }}
+
+                        </div>
+                    </td>  
+                </tr>
+
 
                     </table>
 
-                 @if ($buysbacks->links()->paginator->hasPages())
-                    <div class="has-text-centered">
-                        {{ $buysbacks->links() }}
-                    </div>
-                @endif
-
+      
+                      
 
             </div>
         </div>
 
   <div id="distribusitoko" class="container px-0 tab-pane">
             <div class="pt-3">
+                sdsd
              <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
@@ -207,7 +214,7 @@
                             <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
                   @php
-                   $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(2);
+                   $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(5, ['*'], 'distribusitoko');
                    @endphp
                       @forelse($distribusitoko as $row)
                         {{--     @if($loop->index > 4)
@@ -242,15 +249,18 @@
 
                             </tr>
                         @endforelse
+                     <tr>
+                    <td colspan="8">
+                        <div class="float-right">
+        
+    {{ $distribusitoko->links('pagination.custom', ['paginator' => $distribusitoko, 'paginationKey' => 'distribusitoko']) }}
+
+                        </div>
+                    </td>  
+                </tr>
 
                     </table>
-                 @if($distribusitoko->links()->paginator->hasPages())
-                    <div class="has-text-centered">
-                        {{ $distribusitoko->links() }}
-                    </div>
-                @endif
-
-            </div>
+                </div>
         </div>
 
 

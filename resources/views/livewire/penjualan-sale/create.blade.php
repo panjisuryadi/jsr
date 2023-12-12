@@ -176,17 +176,17 @@
                         @endif
                     </div> --}}
 
-                    <div class="form-group">
-                        <?php
+                    {{-- <div class="form-group">
+                        @php
                         $field_name = 'penjualan_sales_details.' . $key . '.type';
                         $field_lable = label_case('type');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                        ?>
+                        @endphp
                         <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                             {{ $field_lable }}<span class="text-danger">*</span></label>
 
-                        <select class="form-control form-control-sm" wire:model="{{ $field_name }}" name="{{ $field_name }}">
+                        <select class="form-control form-control-sm" wire:model="{{ $field_name }}" name="{{ $field_name }}" wire:change="setSetoran({{ $key }})">
                             <option value="" selected >Select Type</option>
                             <option value="1"> Setor Uang</option>
                             <option value="2"> Setor Emas</option>
@@ -196,10 +196,10 @@
                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                         </span>
                         @endif
-                    </div>
+                    </div> --}}
                     
-                    @if(!empty($penjualan_sales_details[$key]['type']) && $penjualan_sales_details[$key]['type'] == 1)
-                        <div class="form-group">
+                    {{-- @if(!empty($penjualan_sales_details[$key]['type']) && $penjualan_sales_details[$key]['type'] == 1) --}}
+                        {{-- <div class="form-group">
                             @php
                             $field_name = 'penjualan_sales_details.' . $key . '.nominal';
                             $field_lable = label_case('Nominal');
@@ -232,11 +232,11 @@
                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                             </span>
                             @endif
-                        </div>
-                    @endif
+                        </div> --}}
+                    {{-- @endif --}}
 
-                    @if(!empty($penjualan_sales_details[$key]['type']) && $penjualan_sales_details[$key]['type'] == 2)
-                        <div class="form-group">
+                    {{-- @if(!empty($penjualan_sales_details[$key]['type']) && $penjualan_sales_details[$key]['type'] == 2) --}}
+                        {{-- <div class="form-group">
                             @php
                             $field_name = 'penjualan_sales_details.' . $key . '.gold_type';
                             $field_lable = label_case('Status');
@@ -256,18 +256,18 @@
                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                             </span>
                             @endif
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <?php
                             $field_name = 'penjualan_sales_details.' . $key . '.weight';
-                            $field_lable = label_case('berat');
+                            $field_lable = label_case('Berat');
                             $field_placeholder = $field_lable;
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             ?>
                             <label class="text-gray-700 mb-0" for="{{ $field_name }}">
                                 {{ $field_lable }}<span class="text-danger">*</span></label>
-                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" step="0.001" wire:model ="{{ $field_name }}">
+                            <input type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" step="0.001" wire:model ="{{ $field_name }}"  wire:change="setKonversiBerat({{ $key }})">
                             @if ($errors->has($field_name))
                             <span class="invalid feedback" role="alert">
                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -291,11 +291,11 @@
                             </span>
                             @endif
                         </div>
-                    @endif
+                    {{-- @endif --}}
                     <div class="form-group">
                         <?php
                         $field_name = 'penjualan_sales_details.' . $key . '.jumlah';
-                        $field_lable = __('Konversi 24K');
+                        $field_lable = __('jumlah');
                         $field_placeholder = Label_case($field_lable);
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         ?>
@@ -333,16 +333,17 @@
 
             <hr>
 
-            <div class="flex grid grid-cols-4 gap-2 mt-2">
+            {{-- <div class="flex grid grid-cols-4 gap-2 mt-2">
                 <div class="form-group">
                     <?php
                     $field_name = 'penjualan_sales.tipe_pembayaran';
                     $field_lable = label_case('tipe_pembayaran');
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = "required";
+                    $disabled = '';
                     ?>
                     <label class="text-gray-700 mb-0" for="{{ $field_name }}">Tipe Pembayaran <span class="text-danger">*</span></label>
-                    <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
+                    <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" >
                         <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                         <option value="cicil">Cicil</option>
                         <option value="jatuh_tempo">Jatuh Tempo</option>
@@ -392,7 +393,7 @@
                     @endif
                 </div>
                 @endif
-            </div>
+            </div> --}}
 
             @if ($this->penjualan_sales['tipe_pembayaran'] == 'cicil' && $this->penjualan_sales['cicil'] != '')
             <div class="card p-6 bg-gray-100 rounded-lg shadow-md">
@@ -430,7 +431,7 @@
 
             @endif
 
-            <div class="flex flex-col items-end mb-8">
+            <div class="flex flex-col items-end mb-8 mt-3">
                 <div class="mb-2 md:mb-1 flex items-center">
                     <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat</label>
                     <span class="mr-4 md:block">:</span>
@@ -438,13 +439,13 @@
                         <input class="form-control form-control-sm" wire:model.debounce.1s="penjualan_sales.total_jumlah" type="text" placeholder="0" readonly>
                     </div>
                 </div>
-                <div class="mb-2 md:mb-1 flex items-center">
+                {{-- <div class="mb-2 md:mb-1 flex items-center">
                     <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Nominal Rp. </label>
                     <span class="mr-4 md:block">:</span>
                     <div class="flex-1">
                         <input class="form-control form-control-sm" type-currency="IDR" wire:model.debounce.1s="penjualan_sales.total_nominal" type="text" placeholder="0" readonly>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
 
