@@ -109,7 +109,7 @@
 
             <td>{{ $no++ }}</td>
          <td>{{ $row->karat->name }} | {{ $row->karat->kode }}</td>
-         <td>{{ $row->weight }} GRAM</td>
+         <td>{{ floatval($row->weight) }} GRAM</td>
           </td>
 
         </tr>

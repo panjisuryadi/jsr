@@ -211,18 +211,18 @@ class GenerateMenus
 
 
             // EMAS - PEMBELIAN - RETUR PEMBELIAN
-            $Purchases->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
-             '.__('Purchase Returns').'', [
-                'route' => 'purchase-returns.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 3,
-                'permission'    => ['create_purchase'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link',
-            ]);
+            // $Purchases->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
+            //  '.__('Purchase Returns').'', [
+            //     'route' => 'purchase-returns.index',
+            //     'class' => 'nav-item',
+            // ])
+            // ->data([
+            //     'order'         => 3,
+            //     'permission'    => ['create_purchase'],
+            // ])
+            // ->link->attr([
+            //     'class' => 'c-sidebar-nav-link',
+            // ]);
 
 
             // EMAS - TOKO master menu
