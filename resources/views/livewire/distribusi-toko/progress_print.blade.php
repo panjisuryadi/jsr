@@ -1,5 +1,8 @@
 <div class="row">
     <div class="col-lg-12">
+
+<div id="printArea">
+
         <div class="card">
             <div class="card-header d-flex flex-wrap align-items-center">
                 <div>
@@ -109,7 +112,6 @@
                     </table>
         
 
-
         <table style='width:100%!important; font-size:12pt;' cellspacing='2'>
             <tr>
                 <td style="border: none !important;text-align: center;" align='center'>
@@ -133,18 +135,39 @@
 
 
 
-<div id="contentToPrint">
-        <!-- Your content goes here -->
-        <h1>Hello, World!</h1>
-        <p>This is the content you want to print.</p>
-    </div>
-
-
             </div>
         </div>
+
+
+
+
     </div>
+
+
+</div>
   
 </div>
+
+@push('page_css')
+<style type="text/css">
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+
+</style>
+@endpush
 @push('page_scripts')
 <script type="text/javascript">
 
