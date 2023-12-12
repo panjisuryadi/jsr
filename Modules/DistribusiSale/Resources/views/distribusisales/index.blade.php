@@ -23,8 +23,6 @@
                                 </a>
 
                         </div>
-                        <div id="buttons">
-                        </div>
                     </div>
                     <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
@@ -113,7 +111,7 @@
                 }
             ]
         })
-        .buttons()
+        .buttons().remove()
         .container()
         .appendTo("#buttons");
 

@@ -22,7 +22,7 @@
                                 id="Tambah"
                                 data-toggle="tooltip"
                                  class="btn btn-outline-secondary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;Data
                                 </a>
                                 @endcan
                           <a href="{{ route(''.$module_name.'.insentif') }}"
@@ -118,7 +118,7 @@
                 }
             ]
         })
-        .buttons()
+        .buttons().remove()
         .container()
         .appendTo("#buttons");
 

@@ -123,7 +123,7 @@
                 }
             ]
         })
-        .buttons()
+        .buttons().remove()
         .container()
         .appendTo("#buttons");
 
