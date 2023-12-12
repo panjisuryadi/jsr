@@ -74,7 +74,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::orderBy('date','desc')->get();
+        $$module_name = $module_model::orderBy('updated_at','desc')->get();
 
         $data = $$module_name;
 
@@ -141,7 +141,7 @@ public function index_data(Request $request)
                                 if ($data->payment->type == 1) 
                      {
                          $info =  'Jatuh Tempo';
-                         $pembayaran =  tgljam(@$data->payment->detail->first()->due_date);
+                         $pembayaran =  tanggal(@$data->payment->detail->first()->due_date);
                          
                      }else if ($data->payment->type == 2) 
                      {
@@ -150,7 +150,7 @@ public function index_data(Request $request)
                      }
                         $tb ='<div class="items-left text-left">
                               <div class="small text-gray-800">'.$info.'</div>
-                              <div class="text-gray-800">' .$pembayaran. '</div>
+                              <div class="text-xs text-gray-800 font-bold">' .$pembayaran. '</div>
                               </div>';
                              return $tb;
                              
@@ -245,7 +245,7 @@ public function index_data(Request $request)
                                 if ($data->payment->type == 1) 
                     {
                         $info =  'Jatuh Tempo';
-                        $pembayaran =  tgljam(@$data->payment->detail->first()->due_date);
+                        $pembayaran =  tanggal(@$data->payment->detail->first()->due_date);
                         
                     }else if ($data->payment->type == 2) 
                     {
@@ -254,13 +254,13 @@ public function index_data(Request $request)
                         $pembayaran =  '(Cicilan ke - '. $next_payment->order_number .')';
                         if(!empty($next_payment)){
                             $info = '
-                            <p>Jatuh tempo'. tgljam($next_payment->due_date) .'</p>
+                            <p>Jatuh tempo'. tanggal($next_payment->due_date) .'</p>
                             
                             ';
                         }
                     }
                         $tb ='<div class="items-left text-left">
-                            <div class="text-xs font-bold">'.$info.'</div>
+                            <div class="text-xs">'.$info.'</div>
                             <div class="text-xs font-bold">' .$pembayaran. '</div>
                             </div>';
                             return $tb;
@@ -705,13 +705,25 @@ public function update(Request $request, $id)
                                 if($value != $remainder){
                                     $fail("Nominal lebih kecil dari sisa yang harus dibayarkan");
                                 }
+                            }else{
+                                if($value < 0){
+                                    $fail("Nominal harus lebih besar dari 0");
+                                }
                             }
                             if ($value > $remainder) {
                                 $fail("Nominal lebih besar dari sisa yang harus dibayarkan");
                             }
                         },
                     ],
-                    'box_fee' => 'required|numeric',
+                    'box_fee' => [
+                        'required',
+                        'numeric',
+                        function ($attribute, $value, $fail) {
+                            if($value < 0){
+                                $fail("Biaya box tidak boleh bernilai negatif"); 
+                            }
+                        },
+                    ],
                 ]);
                 
                 if (!$validator->passes()) {
