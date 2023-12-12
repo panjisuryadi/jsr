@@ -139,7 +139,7 @@
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
                 @php
-                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(3);
+                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(5);
                 @endphp
                         @forelse($buysbacks as $sale)
                            {{--  @if($loop->index > 3)
@@ -180,15 +180,20 @@
 
                             </tr>
                         @endforelse
+                <tr>
+                    <td colspan="8">
+                        <div class="float-right">
+                            
+                            {{ $buysbacks->links('pagination.custom', ['paginator' => $buysbacks, 'paginationKey' => 'buysbacks']) }}
+                        </div>
+                    </td>  
+                </tr>
+
 
                     </table>
 
-                 @if ($buysbacks->links()->paginator->hasPages())
-                    <div class="has-text-centered">
-                        {{ $buysbacks->links() }}
-                    </div>
-                @endif
-
+      
+                      
 
             </div>
         </div>
@@ -242,15 +247,17 @@
 
                             </tr>
                         @endforelse
+                     <tr>
+                    <td colspan="8">
+                        <div class="float-right">
+                            
+                            {{ $distribusitoko->links('pagination.custom', ['paginator' => $distribusitoko, 'paginationKey' => 'distribusitoko']) }}
+                        </div>
+                    </td>  
+                </tr>
 
                     </table>
-                 @if($distribusitoko->links()->paginator->hasPages())
-                    <div class="has-text-centered">
-                        {{ $distribusitoko->links() }}
-                    </div>
-                @endif
-
-            </div>
+                </div>
         </div>
 
 
