@@ -141,7 +141,7 @@ public function index_data(Request $request)
                                 if ($data->payment->type == 1) 
                      {
                          $info =  'Jatuh Tempo';
-                         $pembayaran =  tgljam(@$data->payment->detail->first()->due_date);
+                         $pembayaran =  tanggal(@$data->payment->detail->first()->due_date);
                          
                      }else if ($data->payment->type == 2) 
                      {
@@ -150,7 +150,7 @@ public function index_data(Request $request)
                      }
                         $tb ='<div class="items-left text-left">
                               <div class="small text-gray-800">'.$info.'</div>
-                              <div class="text-gray-800">' .$pembayaran. '</div>
+                              <div class="text-xs text-gray-800 font-bold">' .$pembayaran. '</div>
                               </div>';
                              return $tb;
                              
@@ -704,6 +704,10 @@ public function update(Request $request, $id)
                             if($is_last){
                                 if($value != $remainder){
                                     $fail("Nominal lebih kecil dari sisa yang harus dibayarkan");
+                                }
+                            }else{
+                                if($value < 0){
+                                    $fail("Nominal harus lebih besar dari 0");
                                 }
                             }
                             if ($value > $remainder) {
