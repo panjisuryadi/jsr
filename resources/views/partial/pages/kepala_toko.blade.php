@@ -303,13 +303,6 @@
                     </div>
                 @endif
 
-
-
-
-
-
-
-
             </div>
         </div>
 
@@ -429,7 +422,7 @@
                             <th>{{ label_case('Invoice Series') }}</th>
                             <th>{{ label_case('Cabang') }}</th>
                             <th>{{ label_case('Pic') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
+                         
                         </tr>
         @php
         $buybacknota =\Modules\BuysBack\Models\BuyBackNota::latest()->paginate(5);
@@ -443,17 +436,7 @@
                                 <td>{{ $row->invoice_series }}</td>
                                 <td>{{ @$row->cabang->name }}</td>
                                 <td>{{ @$row->pic->name }}</td>
-                            <td>
-
-                                @can('approve_distribusi')
-                              <a href="{{ route("sales.show",$row->id) }}"
-                                     class="btn btn-outline-success btn-sm">
-                                   {{ Label_case('approve_distribusi') }}
-                                    </a>
-                                @endcan
-
-
-                            </td>
+                          
                         </tr>
                         @empty
                            <tr>
