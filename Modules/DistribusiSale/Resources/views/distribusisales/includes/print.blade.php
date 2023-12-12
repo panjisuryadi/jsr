@@ -109,8 +109,8 @@
         <tr>
 
             <td>{{ $no++ }}</td>
-         <td>{{ $row->karat->name }} | {{ $row->karat->kode }}</td>
-         <td>{{ $row->weight }} GRAM</td>
+         <td>{{ $row->karat->label }} </td>
+         <td>{{ formatBerat($row->berat_bersih) }} gr</td>
           </td>
 
         </tr>
