@@ -1,5 +1,8 @@
 <div class="row">
     <div class="col-lg-12">
+
+<div id="printArea">
+
         <div class="card">
             <div class="card-header d-flex flex-wrap align-items-center">
                 <div>
@@ -109,14 +112,62 @@
                     </table>
         
 
+        <table style='width:100%!important; font-size:12pt;' cellspacing='2'>
+            <tr>
+                <td style="border: none !important;text-align: center;" align='center'>
+                    Diterima Oleh,
+                </br></br>
+                </br></br>
+                </br></br>
+                <u>(..................................................)</u>
+                </td>
+                <td style='border: none !important; padding:5px; text-align:left; width:30%'></td>
+                <td style="text-align: center; border: none !important;" align='center'>Hormat Kami,<br>
+                <span style='font-size:12pt'><b>{{ settings()->company_name }}</b></span></br>
+
+                </br>
+                </br></br>
+                </br></br>
+                <u>(...................................................)</u>
+                </td>
+            </tr>
+        </table>
 
 
 
             </div>
         </div>
+
+
+
+
     </div>
+
+
+</div>
   
 </div>
+
+@push('page_css')
+<style type="text/css">
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+
+</style>
+@endpush
 @push('page_scripts')
 <script type="text/javascript">
 

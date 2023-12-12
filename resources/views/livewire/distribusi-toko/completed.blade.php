@@ -11,12 +11,12 @@
                 </a>
 
                 <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="#" onclick="showHistory()">
-                    <i class="bi bi-save"></i> History Distribusi
+                    <i class="bi bi-save"></i> History Distribusi 
                 </a>
             </div>
 
 
-            <div class="card-body">
+            <div id="DivIdToPrint" class="card-body">
                 <div class="row mb-4">
                     <div class="col-sm-6 mb-3 mb-md-0">
                         <div class="font-semibold mb-2 border-bottom pb-2">Invoice Info: </div>
@@ -39,7 +39,6 @@
 
 
                 </div>
-
 
                 <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
 
@@ -201,7 +200,12 @@
             </div>
         </div>
     </div>
+
+
     @include('distribusitoko::distribusitokos.modal.history')
+
+
+
 </div>
 
 @push('page_scripts')
@@ -210,5 +214,22 @@
         $('#history-modal').modal('show');
     }
 </script>
+<script>
+function printDiv() 
+{
 
+  var divToPrint=document.getElementById('DivIdToPrint');
+
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+  newWin.document.close();
+
+  setTimeout(function(){newWin.close();},10);
+
+}
+</script>
 @endpush
