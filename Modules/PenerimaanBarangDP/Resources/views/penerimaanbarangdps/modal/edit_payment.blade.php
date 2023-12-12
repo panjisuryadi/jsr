@@ -42,7 +42,7 @@
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         $required = "required";
                     ?>
-                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <label for="{{ $field_name }}">{{ $field_lable }}</label>
                     <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="0">
                     <span class="invalid feedback" role="alert">
                         <span class="text-danger error-text {{ $field_name }}_err"></span>

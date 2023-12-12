@@ -245,7 +245,7 @@ public function index_data(Request $request)
                                 if ($data->payment->type == 1) 
                     {
                         $info =  'Jatuh Tempo';
-                        $pembayaran =  tgljam(@$data->payment->detail->first()->due_date);
+                        $pembayaran =  tanggal(@$data->payment->detail->first()->due_date);
                         
                     }else if ($data->payment->type == 2) 
                     {
@@ -254,13 +254,13 @@ public function index_data(Request $request)
                         $pembayaran =  '(Cicilan ke - '. $next_payment->order_number .')';
                         if(!empty($next_payment)){
                             $info = '
-                            <p>Jatuh tempo'. tgljam($next_payment->due_date) .'</p>
+                            <p>Jatuh tempo'. tanggal($next_payment->due_date) .'</p>
                             
                             ';
                         }
                     }
                         $tb ='<div class="items-left text-left">
-                            <div class="text-xs font-bold">'.$info.'</div>
+                            <div class="text-xs">'.$info.'</div>
                             <div class="text-xs font-bold">' .$pembayaran. '</div>
                             </div>';
                             return $tb;
