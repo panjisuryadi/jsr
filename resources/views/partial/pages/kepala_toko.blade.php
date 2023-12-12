@@ -139,7 +139,7 @@
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
                 @php
-                  $buysbacks = \Modules\BuysBack\Models\BuysBack::paginate(3);
+                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(3);
                 @endphp
                         @forelse($buysbacks as $sale)
                            {{--  @if($loop->index > 3)
@@ -207,7 +207,7 @@
                             <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
                   @php
-                   $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->paginate(2);
+                   $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(2);
                    @endphp
                       @forelse($distribusitoko as $row)
                         {{--     @if($loop->index > 4)
@@ -267,7 +267,7 @@
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
                       @php
-                   $StockPending = \Modules\Stok\Models\StockPending::paginate(5);
+                   $StockPending = \Modules\Stok\Models\StockPending::latest()->paginate(5);
                    @endphp
 
                     @forelse($StockPending as $row)
@@ -327,7 +327,7 @@
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
                    @php
-                   $sales = \Modules\Sale\Entities\Sale::akses()->paginate(5);
+                   $sales = \Modules\Sale\Entities\Sale::akses()->latest()->paginate(5);
                    @endphp
 
                     @forelse($sales as $row)
@@ -428,7 +428,7 @@
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
         @php
-        $buybacknota =\Modules\BuysBack\Models\BuyBackNota::paginate(5);
+        $buybacknota =\Modules\BuysBack\Models\BuyBackNota::latest()->paginate(5);
        @endphp
 
                     @forelse($buybacknota as $row)
@@ -483,7 +483,7 @@
                         </tr>
 
               @php
-            $product =\Modules\Product\Entities\Product::ready()->paginate(5);
+            $product =\Modules\Product\Entities\Product::ready()->latest()->paginate(5);
             @endphp   
                     @forelse($product as $row)
                        {{--  @if($loop->index > 4)
