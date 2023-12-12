@@ -55,6 +55,7 @@ class Create extends Component
     public $cicil = '';
     public $tipe_pembayaran = '';
     public $detail_cicilan = [];
+    public $tipe_setoran = '';
 
     protected $listeners = [
         'beratChanged' => 'handleBeratChanged',
@@ -70,6 +71,7 @@ class Create extends Component
             'sub_karat_id' => '',
             'weight' => '',
             'nominal' => 0,
+            'type' => '',
             'sub_karat_choice' => [],
             'harga_type' => 'persen',
             'jumlah' => 0,
@@ -133,6 +135,7 @@ class Create extends Component
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
         $this->penjualan_sales['date'] = $this->hari_ini;
+        $this->penjualan_sales['invoice_no'] = PenjualanSale::generateCode();
     }
 
     public function remove($key)
@@ -155,33 +158,35 @@ class Create extends Component
             'penjualan_sales.total_weight' => 'required',
             'penjualan_sales.sales_id' => 'required',
             'penjualan_sales.date' => 'required',
-            'penjualan_sales.tipe_pembayaran' => 'required',
-            'penjualan_sales.cicil' => 'required_if:penjualan_sales.tipe_pembayaran,cicil',
-            'penjualan_sales.tgl_jatuh_tempo' => [
-                'required_if:penjualan_sales.tipe_pembayaran,jatuh_tempo',
-                function ($attribute, $value, $fail) {
-                    $today = Carbon::today();
-                    $inputDate = Carbon::parse($value);
+            // 'penjualan_sales.tipe_pembayaran' => 'required',
+            // 'penjualan_sales.cicil' => 'required_if:penjualan_sales.tipe_pembayaran,cicil',
+            // 'penjualan_sales.tgl_jatuh_tempo' => [
+            //     'required_if:penjualan_sales.tipe_pembayaran,jatuh_tempo',
+            //     function ($attribute, $value, $fail) {
+            //         $today = Carbon::today();
+            //         $inputDate = Carbon::parse($value);
 
-                    if ($inputDate < $today) {
-                        $fail($attribute . ' harus tanggal hari ini atau setelahnya.');
-                    }
-                }
-            ],
+            //         if ($inputDate < $today) {
+            //             $fail($attribute . ' harus tanggal hari ini atau setelahnya.');
+            //         }
+            //     }
+            // ],
 
         ];
-
+        $stok_terpakai = 0;
         foreach ($this->penjualan_sales_details as $key => $value) {
 
             $rules['penjualan_sales_details.'.$key.'.karat_id'] = 'required';
+            $rules['penjualan_sales_details.'.$key.'.weight'] = 'required|gt:0';
+            $rules['penjualan_sales_details.'.$key.'.harga'] = 'required|gt:0';
             // $rules['penjualan_sales_details.'.$key.'.sub_karat_id'] = 'required';
-            $rules['penjualan_sales_details.'.$key.'.type'] = 'required';
+            // $rules['penjualan_sales_details.'.$key.'.type'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.weight'] = [
-                function ($attribute, $value, $fail) use ($key) {
-                    $type = !empty($this->penjualan_sales_details[$key]['type']) ? $this->penjualan_sales_details[$key]['type'] : '';
-                    if(!empty($type) && $type == 1 && empty($value)) {
-                        $fail("Berat wajib diisi ketika pilih tipe setor emas");
-                    }
+                function ($attribute, $value, $fail) use ($key, $stok_terpakai) {
+                    // $type = !empty($this->penjualan_sales_details[$key]['type']) ? $this->penjualan_sales_details[$key]['type'] : '';
+                    // if(!empty($type) && $type == 1 && empty($value)) {
+                    //     $fail("Berat wajib diisi ketika pilih tipe setor emas");
+                    // }
 
                     /** ini dikomen karena seharusnya yang jadi validasi adalah jumlah yang udah dikonversi jadi 24k*/
                     // Cek apakah nilai weight lebih besar dari kolom weight di tabel stock_sales
@@ -192,17 +197,20 @@ class Create extends Component
                             ->where('karat_id', $this->penjualan_sales_details[$key]['karat_id'])
                             ->where('sales_id', $this->penjualan_sales['sales_id'])
                             ->max('weight');
-                        if ($value > $maxWeight) {
-                            $fail("Berat melebihi stok yang tersedia. Jumlah Stok ($maxWeight).");
+                        if ($value > ($maxWeight-$stok_terpakai)) {
+                            $fail("Berat melebihi stok yang tersedia. Jumlah Stok (".formatBerat($maxWeight-$stok_terpakai) . ")");
                         }
+
                     }
                 },
             ];
-            $rules['penjualan_sales_details.'.$key.'.nominal'] = 'gt:-1';
+            // $rules['penjualan_sales_details.'.$key.'.nominal'] = 'gt:-1';
             $rules['penjualan_sales_details.'.$key.'.jumlah'] = [
                 'required',
                 'gt:0',
             ];
+            $stok_terpakai += !empty($this->penjualan_sales_details[$key]['weight']) ? $this->penjualan_sales_details[$key]['weight'] : 0;
+
 
         }
 
@@ -294,7 +302,7 @@ class Create extends Component
                     'nominal' => $this->penjualan_sales_details[$key]['nominal']??0,
                     'created_by' => auth()->user()->name,
                     'harga_type' => $this->penjualan_sales_details[$key]['harga_type'],
-                    'type' => $this->penjualan_sales_details[$key]['type'],
+                    // 'type' => $this->penjualan_sales_details[$key]['type'],
                     'gold_type' => !empty($this->penjualan_sales_details[$key]['gold_type']) ? $this->penjualan_sales_details[$key]['gold_type'] : null,
                     'harga' => !empty($this->penjualan_sales_details[$key]['harga']) ? $this->penjualan_sales_details[$key]['harga'] : null,
                     'gold_price' => !empty($this->penjualan_sales_details[$key]['gold_price']) ? $this->penjualan_sales_details[$key]['gold_price'] : null,
@@ -332,6 +340,9 @@ class Create extends Component
         return redirect(route('penjualansale.index'));
     }
 
+    /**
+     * This function is deprecated
+     */
     private function createLantakan($penjualan_sale_detail) {
         if($penjualan_sale_detail->karat_id) {
             
@@ -350,6 +361,10 @@ class Create extends Component
         }
     }
 
+
+    /**
+     * This function is deprecated
+     */
     private function createRongsok($penjualan_sale_detail) {
         if(!empty($penjualan_sale_detail->karat_id)) {
             $stock_rongsok = StockRongsok::firstOrCreate(['karat_id' => $penjualan_sale_detail->karat_id]);
@@ -364,6 +379,10 @@ class Create extends Component
         }
     }
 
+
+    /**
+     * This function is deprecated
+     */
     private function reduceStockSales($penjualan_sale_detail){
         $sales_id = $penjualan_sale_detail->penjualanSale->sales_id;
         $stock_sales = StockSales::where([
@@ -383,6 +402,10 @@ class Create extends Component
         $stock_sales->save();
     }
 
+
+    /**
+     * This function is deprecated
+     */
     public function updateKaratList(){
         // $this->dataKarat = Karat::where(function($query){
         //     $query
@@ -406,10 +429,17 @@ class Create extends Component
         $this->resetDataSubKarat();
     }
 
+
+    /**
+     * This function is deprecated
+     */
     public function clearWeight($key){
         $this->penjualan_sales_details[$key]['weight'] = '';
     }
 
+    /**
+     * This function is deprecated
+     */
     public function changeParentKarat($key){
         $this->clearWeight($key);
         $karat = Karat::find($this->penjualan_sales_details[$key]['karat_id']);
@@ -421,6 +451,9 @@ class Create extends Component
         }
     }
 
+    /**
+     * This function is deprecated
+     */
     protected function resetDataSubKarat(){
         foreach ($this->penjualan_sales_details as $detail) {
             $detail['sub_karat_choice'] = [];
@@ -518,4 +551,15 @@ class Create extends Component
             $this->detail_cicilan[$i] = "";
         }
     }
+
+    // public function setTipeSetoran() {
+    //     if(!empty($this->penjualan_sales_details)) {
+    //         foreach($this->penjualan_sales_details as $key => $row) {
+    //             $this->penjualan_sales_details[$key]['type'] = $this->tipe_setoran;
+    //         }
+    //     }
+    //     if($this->tipe_setoran == 2) {
+    //         $this->penjualan_sales['tipe_pembayaran'] = 'lunas';
+    //     }
+    // }
 }
