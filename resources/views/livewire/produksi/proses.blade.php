@@ -154,7 +154,7 @@
                                     
                                     @if($kategoriproduk_id == $id_kategoriproduk_berlian)
                                     <div class="py-2" id="berlianitem">
-                                        <p class="uppercase text-lg text-gray-600 font-semibold">List Item</p>
+                                        <p class="uppercase text-lg text-gray-600 font-semibold">Stok Bahan</p>
                                         <hr style="
                                             height: 1px;
                                             border: none;

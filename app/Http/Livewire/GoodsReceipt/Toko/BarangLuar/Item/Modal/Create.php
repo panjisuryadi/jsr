@@ -213,7 +213,7 @@ class Create extends Component
                 'cabang_id' => $this->cabang->id,
                 'product_stock_alert'        => 5,
                 'group_id' => $this->data['additional_data']['group']['id'],
-                'model_id' => $this->data['additional_data']['model']['id'],
+                'model_id' => !empty($this->data['additional_data']['model']['id'])?$this->data['additional_data']['model']['id']:null,
                 'karat_id' => $this->data['karat_id'],
                 'berat_emas' => $this->data['gold_weight'],
                 'status_id' => ProductStatus::PENDING_CABANG,

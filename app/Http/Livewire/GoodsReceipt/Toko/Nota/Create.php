@@ -135,7 +135,7 @@ class Create extends Component
             throw $e;
         }
         toast('Nota Pengiriman Berhasil dibuat','success');
-        return redirect(route('goodsreceipt.toko.buyback-barangluar.index'));
+        return redirect(route('stok.pending'));
     }
 
     private function attachItems($goodsreceipt_nota, $selectedItems){
@@ -144,6 +144,7 @@ class Create extends Component
                 $item->update([
                     'goodsreceipt_toko_nota_id' => $goodsreceipt_nota->id,
                 ]);
+                $item->product->updateTracking(ProductStatus::OTW);
             }
         }
     }

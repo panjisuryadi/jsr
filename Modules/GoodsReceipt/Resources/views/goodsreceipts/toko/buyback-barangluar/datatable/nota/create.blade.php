@@ -3,7 +3,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route("goodsreceipt.toko.buyback-barangluar.index") }}">Penerimaan Barang BuyBack - Barang Luar</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("stok.pending") }}">Stock Pending</a></li>
     <li class="breadcrumb-item active">Pengiriman Barang ke Office</li>
 </ol>
 @endsection
