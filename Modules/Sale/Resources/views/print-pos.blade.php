@@ -65,7 +65,7 @@
             </p>
         </div>
         <p>
-            Date: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}<br>
+            Tanggal: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}<br>
             Invoice: {{ $sale->reference }}<br>
             Customer: {{ $sale->customer_name }}
         </p>

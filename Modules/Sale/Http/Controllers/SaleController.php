@@ -380,11 +380,7 @@ public function store_ajax(StoreSaleRequest $request)
         $sale = Sale::findOrFail($id);
         $pdf = PDF::loadView('sale::nota', [
             'sale' => $sale,
-        ])->setPaper('a6')
-            ->setOption('margin-top', 8)
-            ->setOption('margin-bottom', 8)
-            ->setOption('margin-left', 2)
-            ->setOption('margin-right', 2);
+        ])->setPaper([20, 10, 300, 400], 'mm');
 
         return $pdf->stream('sale-'. $sale->reference .'.pdf');
     }
