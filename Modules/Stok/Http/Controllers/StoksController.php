@@ -1324,7 +1324,7 @@ public function update_ajax(Request $request, $id)
                             ->editColumn('karat', function ($data) {
                                 $tb = '<div class="items-center text-center">
                                         <h3 class="text-sm font-medium text-gray-800">
-                                    ' . $data->karat->label  . '</h3>
+                                    ' . $data->karat?->label  . '</h3>
                                         </div>';
                                     return $tb;
                                 })  
@@ -1333,7 +1333,7 @@ public function update_ajax(Request $request, $id)
                             $tb = '<div class="flex items-center gap-x-2">
                             <div>
                             <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
-                                ' . $data->category->category_name . '</div>
+                                ' . $data->category?->category_name . '</div>
                                 <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
                                 <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_code . '</h3>
                             
@@ -1353,7 +1353,7 @@ public function update_ajax(Request $request, $id)
                             ->editColumn('cabang', function ($data) {
                                 $tb = '<div class="items-center text-center">
                                         <h3 class="text-sm font-medium text-gray-800">
-                                        ' .$data->cabang->name . '</h3>
+                                        ' .$data->cabang?->name . '</h3>
                                         </div>';
                                     return $tb;
                             }) 
