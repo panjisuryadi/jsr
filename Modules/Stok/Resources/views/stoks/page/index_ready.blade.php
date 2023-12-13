@@ -50,7 +50,7 @@
     </select>
 </div>
 @else
-<input type="hidden" name="cabang_filter" value="{{ auth()->user()->nama_cabang()->id }}">
+<input type="hidden" name="cabang_filter" value="{{ auth()->user()->namacabang()->id }}">
 @endif
 <div class="form-group">
         <label for="karat_filter" class="mb-0 font-semibold">Karat</label>
