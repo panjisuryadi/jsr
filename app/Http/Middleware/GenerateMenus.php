@@ -245,7 +245,7 @@ class GenerateMenus
             ]);
 
 
-            $pegawai_toko = $toko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Pegawai Toko'), [
+            $pegawai_toko = $toko->add('<i class="c-sidebar-nav-icon  bi bi-person text-sm"></i> '.__('Data Pegawai Toko'), [
                 'route' => 'storeemployee.index',
                 'class' => 'nav-item',
             ])
@@ -259,7 +259,7 @@ class GenerateMenus
             ]);
 
             // EMAS - TOKO - PENENTUAN HARGA
-            $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+            $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-cash-stack text-sm"></i>
                 '.__('Penentuan Harga'), [
                 'route' => 'penentuanharga.index',
                 'class' => 'nav-item',
