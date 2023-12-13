@@ -4,9 +4,13 @@
 
   <div class="w-3/4">
 
-
-
-
+{{--  @php
+    $role = Auth::user()->roles->first()->name;
+    if ($role = 'Kasir') {
+      $paging = 'penjualan';
+    } 
+  @endphp
+ {{ $paging }} --}}
   @can('dashboard_pos')
 
 <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
@@ -72,7 +76,7 @@
 </div>
 @endcan
 
-{{-- {{ auth()->user() }} --}}
+
 <div class="card">
 
 
@@ -96,11 +100,13 @@
 
 
        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#Pos">Penjualan</a>
+            <a class="nav-link {{ $paging == 'penjualan' ? 'active' : '' }}" data-toggle="tab" href="#penjualan">Penjualan</a>
         </li>   
 
+
+
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Buysback">Buys Back</a>
+            <a class="nav-link {{ $paging == 'buysbacks' ? 'active' : '' }}" data-toggle="tab" href="#Buysback">Buys Back</a>
         </li>
 
         @can('access_buysback_nota')
@@ -113,15 +119,15 @@
 
         @can('show_distribusi')
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#distribusitoko">Distribusi Toko</a>
+            <a class="nav-link {{ $paging == 'distribusitoko' ? 'active' : '' }}" data-toggle="tab" href="#distribusitoko">Distribusi Toko</a>
         </li> 
         @endcan
 
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Penjualan">Penjualan Sales</a>
+            <a class="nav-link {{ $paging == 'penjualansales' ? 'active' : '' }}" data-toggle="tab" href="#penjualanSales">Penjualan Sales</a>
         </li>  
 
-  
+ {{--  
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#barangLuar">Barang Luar</a>
@@ -132,7 +138,7 @@
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#barangDP">Barang DP</a>
-        </li>
+        </li> --}}
 
 
     </ul>
@@ -140,245 +146,35 @@
     <div class="tab-content py-3 mb-2">
 
 
-  <div id="Pos" class="container px-0 tab-pane active">
-            <div class="pt-3">
-
-                   <table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th style="width:2%;" class="text-center">{{ label_case('No') }}</th>
-                            <th style="width:5%;" class="text-center">{{ label_case('Invoice') }}</th>
-                            <th style="width:6%;" class="text-center">{{ label_case('Cabang') }}</th>
-                            <th style="width:11%;" class="text-center">{{ label_case('Customer') }}</th>
-                            <th style="width:6%;" class="text-center">{{ label_case('total') }}</th>
-                            <th class="text-center" style="width:28%;">{{ label_case('Aksi') }}</th>
-                        </tr>
-                    @forelse(\Modules\Sale\Entities\Sale::akses()->get() as $row)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
-                                {{-- {{ $row }} --}}
-
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $row->reference }}</td>
-                            <td class="text-center">{{ @$row->cabang->name }}</td>
-                            <td class="text-center">{{ $row->customer->customer_name }}</td>
-                            <td class="text-center font-semibold"><small>Rp .</small>{{ rupiah($row->total_amount) }}</td>
-                            <td class="text-center">
-                                
-                     
-                  <a target="_blank" class="btn btn-sm btn-success mfe-1 d-print-none" href="{{ route('sales.show', $row->id) }}">
-                            <i class="bi bi-eye"></i> Show
-                        </a>   
-
-                         <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('sales.cetak', $row->id) }}">
-                            <i class="bi bi-save"></i> Cetak Nota
-                        </a>   
-
-                        <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('sales.pdf', $row->id) }}">
-                            <i class="bi bi-save"></i> Print PDF
-                        </a>
+  <div id="penjualan" class="container px-0 tab-pane {{ $paging == 'penjualan' ? 'active' : '' }}">
+        @include('partial.pages.tab.penjualan')
+  </div>
 
 
-                                @can('show_sales')
-                                @endcan
 
 
-                            </td>
-                        </tr>
-                        @empty
-                        <p>Tidak ada Data</p>
-                        @endforelse
-                        
-                    </table>
-         
-            </div>
+ <div id="Buysback" class="container px-0 tab-pane {{ $paging == 'buysbacks' ? 'active' : '' }}">
+     @include('partial.pages.tab.buysbacks')
+  </div>
+
+<div id="distribusitoko" class="container px-0 tab-pane  
+      {{ $paging == 'distribusitoko' ? 'active' : '' }}">
+        @include('partial.pages.tab.distribusitoko')
+    </div>
+
+
+  <div id="penjualanSales" class="container px-0 tab-pane {{ $paging == 'penjualansales' ? 'active' : '' }}">
+            @include('partial.pages.tab.penjualan_sales')
         </div>
 
 
-
-
- <div id="Buysback" class="container px-0 tab-pane">
-            <div class="pt-3">
-
-
-  <table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('no_buys_back') }}</th>
-                            <th>{{ label_case('Tanggal') }}</th>
-                            <th>{{ label_case('Cabang') }}</th>
-                            <th>{{ label_case('karat') }}</th>
-                            <th>{{ label_case('berat') }}</th>
-                          
-                            <th>{{ label_case('Status') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
-                        </tr>
-                        @forelse(\Modules\BuysBack\Models\BuysBack::get() as $sale)
-                            @if($loop->index > 4)
-                               @break
-                            @endif
-                          
-
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td class="text-blue-400">{{ shortdate($sale->date) }}</td>
-                            <td>{{ $sale->no_buy_back }}</td>
-                            <td>{{ $sale->cabang->name }}</td>
-                            <td>{{ $sale->karat->name }}</td>
-                            <td>{{ $sale->weight }}</td>
-                          
-                          
-                            <td>
-
-                         <a href="{{ route('buysback.status', $sale->id) }}"
-                            id="Status"
-                            data-toggle="tooltip"
-                             class="btn {{bpstts($sale->current_status?$sale->current_status->name:'PENDING')}} btn-sm uppercase">
-                               {{$sale->current_status?$sale->current_status->name:'PENDING'}}
-                            </a>
-
-                            </td>
-                            <td>
-                                
-                        <a href="{{ route('buysback.show', $sale->id) }}"
-                            data-toggle="tooltip"
-                             class="btn btn-sm btn-outline-info uppercase">Detail
-                            </a>
-                            </td>
-                        </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
-                            
-                            </tr>
-                        @endforelse
-                        
-                    </table>
-
-
-
-
-            </div>
-        </div>
-
-  <div id="distribusitoko" class="container px-0 tab-pane">
-            <div class="pt-3">
-             <table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                            <th class="text-center">{{ label_case('Cabang') }}</th>
-                            <th class="text-center">{{ label_case('Date') }}</th>
-                            <th class="text-center">{{ label_case('Invoice') }}</th>
-                            <th class="text-center">{{ label_case('Items') }}</th>
-                            <th class="text-center">{{ label_case('Status') }}</th>
-                            <th class="text-center">{{ label_case('Pic') }}</th>
-                            <th class="text-center">{{ label_case('Aksi') }}</th>
-                        </tr>
-                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::inprogress()->get() as $row)
-                            @if($loop->index > 4)
-                               @break
-                            @endif
-
-                            {{-- {{ $row }} --}}
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $row->cabang->name }}</td>
-                            <td>{{ shortdate($row->date) }}</td>
-                            <td>{{ $row->no_invoice }}</td>
-                            <td>{{ $row->items->count() }}</td>
-                            <td>
-                            @if($row->current_status->id == 2)
-                                <button class="w-full btn uppercase btn-outline-warning px  leading-5 btn-sm">In Progress</button>
-                                @endif
-                            </td>
-                            <td>{{ $row->created_by }}</td>
-                         
-            <td class="text-center">
-             <a  href="{{ route('distribusitoko.detail_distribusi', $row->id) }}" class="btn btn-success px-4 btn-sm w-full">
-    <i class="bi bi-eye"></i> Approve
-</a>
-
-
-            </td>
-                        </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8"> <p class="uppercase">Tidak ada Data</p></td>
-                            
-                            </tr>
-                        @endforelse
-                        
-                    </table>
-
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-  <div id="Penjualan" class="container px-0 tab-pane">
-            <div class="pt-3">
-
-                   <table style="width: 100%;" class="table table-striped table-bordered">
-                        <tr>
-                            <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('invoice_no') }}</th>
-                            <th>{{ label_case('Sales') }}</th>
-                            <th>{{ label_case('store_name') }}</th>
-                            <th>{{ label_case('Berat') }}</th>
-                            <th>{{ label_case('nominal') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
-                        </tr>
-                    @forelse(\Modules\PenjualanSale\Models\PenjualanSale::get() as $row)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
-
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                        
-                            <td>{{ $row->invoice_no }}</td>
-                            <td>{{ $row->sales->name }}</td>
-                            <td>{{ $row->store_name }}</td>
-                            <td>{{ number_format($row->total_weight)}}</td>
-                            <td>{{ rupiah($row->detail->sum('nominal'))}}</td>
-                            <td>
-                                
-                                @can('show_sales')
-                                    <a href="{{ route("sales.show",$row->id) }}"
-                                     class="btn btn-outline-success btn-sm">
-                                        <i class="bi bi-eye"></i> &nbsp;@lang('Detail')
-                                    </a>
-                                @endcan
-
-
-                            </td>
-                        </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5"> <p class="uppercase">Tidak ada Data</p></td>
-                            
-                            </tr>
-                        @endforelse
-                        
-                    </table>
-         
-            </div>
-        </div>
-
-
-  <div id="barangDP" class="container px-0 tab-pane">
+{{--   <div id="barangDP" class="container px-0 tab-pane">
             <div class="pt-3">
 
                   <h1>BARANG DP</h1>
 
             </div>
-            </div>
+    </div>
 
   <div id="barangLuar" class="container px-0 tab-pane">
             <div class="pt-3">
@@ -395,7 +191,7 @@
 
             </div>
             </div>
-
+ --}}
 
 
 

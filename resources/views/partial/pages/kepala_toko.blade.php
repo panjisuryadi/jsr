@@ -71,9 +71,6 @@
 {{-- {{ auth()->user() }} --}}
 <div class="card">
 
-
-
-
 <div class="card-body">
 
 <div class="flex relative py-2">
@@ -109,9 +106,7 @@
         </li>
         @endcan
 
-        <li class="nav-item">
-            <a class="nav-link {{ $paging == 'sales' ? 'active' : '' }}" data-toggle="tab" href="#Penjualan">Penjualan</a>
-        </li>
+   
 
          <li class="nav-item">
             <a class="nav-link {{ $paging == 'stockpending' ? 'active' : '' }}" data-toggle="tab" href="#StockPending">Stok Pending</a>
@@ -130,7 +125,7 @@
     <div class="tab-content py-3 mb-2">
  <div id="Buysback" class="container px-0 tab-pane {{ $paging == 'buysbacks' ? 'active' : '' }}">
      @include('partial.pages.tab.buysbacks')
-        </div>
+</div>
 
     <div id="distribusitoko" class="container px-0 tab-pane  
       {{ $paging == 'distribusitoko' ? 'active' : '' }}">
