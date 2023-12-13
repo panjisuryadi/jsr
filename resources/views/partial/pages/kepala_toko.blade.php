@@ -114,11 +114,11 @@
         </li>
 
          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#StockPending">Stok Pending</a>
+            <a class="nav-link {{ $paging == 'stockpending' ? 'active' : '' }}" data-toggle="tab" href="#StockPending">Stok Pending</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#StockReady">Stok Ready</a>
+            <a class="nav-link {{ $paging == 'stockready' ? 'active' : '' }}" data-toggle="tab" href="#StockReady">Stok Ready</a>
         </li>
     </ul>
 {{-- end nav  tab --}}
