@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\Karat\Models\Karat;
+use Modules\Stok\Models\StockOffice;
 use Modules\Stok\Models\StockSales;
 use PDF;
 
@@ -411,6 +413,7 @@ public function update(Request $request, $id)
 
             $distribusi_sales = $module_model::findOrFail($id);
             $this->reduceStockSales($distribusi_sales);
+            $this->addStockOffice($distribusi_sales);
             $distribusi_sales->delete();
             DB::commit();
             toast(''. $module_title.' Deleted!', 'success');
@@ -440,6 +443,24 @@ public function update(Request $request, $id)
             ]);
             $berat_real = $stock_sales->history->sum('berat_real');
             $stock_sales->update(['weight'=> $berat_real]);
+        }
+    }
+
+
+    private function addStockOffice($distribusi_sales){
+        foreach($distribusi_sales->detail as $detail){
+            $karat = Karat::find($detail->karat_id);
+            $karat_id = empty($karat->parent_id)?$karat->id:$karat->parent_id;
+            $stock_office = StockOffice::firstOrCreate(['karat_id' => $karat_id]);
+            $detail->stock_office()->attach($stock_office->id,[
+                    'karat_id'=>$karat_id,
+                    'in' => true,
+                    'berat_real' => $detail->berat_bersih,
+                    'berat_kotor' => $detail->berat_bersih
+            ]);
+            $berat_real = $stock_office->history->sum('berat_real');
+            $berat_kotor = $stock_office->history->sum('berat_kotor');
+            $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
         }
     }
 
