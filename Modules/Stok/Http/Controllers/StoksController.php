@@ -17,6 +17,7 @@ use GuzzleHttp\Client;
 use Modules\Stok\Models\StockOffice;
 use Modules\Karat\Models\Karat;
 use App\Models\LookUp;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Modules\Cabang\Models\Cabang;
 use Modules\Product\Entities\Category;
@@ -1308,16 +1309,18 @@ public function update_ajax(Request $request, $id)
             $categories = json_decode($request->get('catagories'));
         }
 
-        $datas = Product::ready();
-        if(!empty($request->karat) && $request->cabang !== 'undefined'){
-            $datas = $datas->where('karat_id',$request->karat);
-        }
-        if(isset($request->cabang) && $request->cabang !== 'undefined'){
-            $datas = $datas->where('cabang_id',$request->cabang);
-        }
-        if(!empty($categories)) {
-            $datas = $datas->whereIn('category_id', $categories);
-        }
+        $datas = Product::ready()
+                ->when(!empty($request->karat), function (Builder $query) use ($request){
+                    $query->where('karat_id',$request->karat);
+                })
+                ->when(!empty($request->cabang), function (Builder $query) use ($request){
+                    if($request->cabang !== 'undefined'){
+                        $query->where('cabang_id',$request->cabang);
+                    }
+                })
+                ->when(!empty($categories), function (Builder $query) use ($categories){
+                    $query->whereIn('category_id', $categories);
+                });
         
         $datas = $datas->get();
         return Datatables::of($datas)
