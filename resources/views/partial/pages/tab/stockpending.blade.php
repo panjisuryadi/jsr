@@ -10,7 +10,7 @@
                         </tr>
                       @php
 
-                  $StockPending = \Modules\Stok\Models\StockPending::latest()->paginate(2, ['*'], 'stockpending');
+                  $StockPending = \Modules\Stok\Models\StockPending::latest()->paginate(5, ['*'], 'stockpending');
               
                    @endphp
 
