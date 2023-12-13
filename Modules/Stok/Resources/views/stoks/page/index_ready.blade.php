@@ -49,12 +49,14 @@
         @endforeach
     </select>
 </div>
+@else
+<input type="hidden" name="cabang_filter" value="{{ auth()->user()->namacabang()->id }}">
 @endif
 <div class="form-group">
         <label for="karat_filter" class="mb-0 font-semibold">Karat</label>
         <select name="karat_filter" id="karat_filter" class="form-control">
             @foreach ($datakarat as $karat )
-            <option value="{{$karat->id}}">{{ $karat->name }} | {{$karat->kode}}</option>
+            <option value="{{$karat->id}}">{{ $karat->label }}</option>
             @endforeach
 </select>
 </div>

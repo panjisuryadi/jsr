@@ -245,7 +245,7 @@ class GenerateMenus
             ]);
 
 
-            $pegawai_toko = $toko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Pegawai Toko'), [
+            $pegawai_toko = $toko->add('<i class="c-sidebar-nav-icon  bi bi-person text-sm"></i> '.__('Data Pegawai Toko'), [
                 'route' => 'storeemployee.index',
                 'class' => 'nav-item',
             ])
@@ -259,7 +259,7 @@ class GenerateMenus
             ]);
 
             // EMAS - TOKO - PENENTUAN HARGA
-            $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i>
+            $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-cash-stack text-sm"></i>
                 '.__('Penentuan Harga'), [
                 'route' => 'penentuanharga.index',
                 'class' => 'nav-item',
@@ -365,63 +365,18 @@ class GenerateMenus
          $distribusiToko = $toko->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
                 '.__('Distribusi Toko').'', [
-                'class' => 'c-sidebar-nav-dropdown',
+                    'route' => 'distribusitoko.emas',
+                    'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 4,
                 'activematches' => [
-                    
-                    'products*',
                     'distribusitokos*',
                 ],
-                'permission'  => ['access_distribusitoko','access_products'],
-            ]);
-            $distribusiToko->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-      
-            $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Produk'), [
-                'route' => 'products.index',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => ['products*'],
-                'permission'    => ['access_products'],
-            ])
-            ->link->attr([
+                'permission'  => ['access_distribusitoko'],
+            ])->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
-
-            // EMAS - TOKO - Distribusi Toko - LIST DISTRIBUSI TOKO
-            // $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
-            //     'route' => 'distribusitoko.index',
-            //     'class' => 'nav-item',
-            // ])
-            // ->data([
-            //     'order'         => 1,
-            //     'activematches' => ['distribusitokos*'],
-            //     'permission'    => ['access_distribusitoko'],
-            // ])
-            // ->link->attr([
-            //     'class' => 'c-sidebar-nav-link py-2',
-            // ]);
-
-            $distribusiToko->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('List Distribusi Toko'), [
-                'route' => 'distribusitoko.emas',
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 1,
-                'activematches' => ['distribusitokos*'],
-                'permission'    => ['access_distribusitoko'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
-
 
             // EMAS - SALES master menu
             $sales = $emas->add('<i class="c-sidebar-nav-icon cil-apps"></i> Sales Office', [
