@@ -4,6 +4,7 @@ namespace Modules\PenjualanSale\Http\Controllers;
 
 use App\Models\LookUp;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -17,9 +18,12 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\Karat\Models\Karat;
 use Modules\PenjualanSale\Models\PenjualanSale;
 use Modules\PenjualanSale\Models\PenjualanSalesPayment;
 use Modules\Stok\Models\PenjualanSalesPaymentDetail;
+use Modules\Stok\Models\StockKroom;
+use Modules\Stok\Models\StockRongsok;
 use PDF;
 
 class PenjualanSalesController extends Controller
@@ -476,10 +480,12 @@ public function update(Request $request, $id)
                     });
                 }])
                 ->first();
+        $dataKarat = Karat::get()->all();
         return view(''.$module_name.'::'.$module_path.'.modal.edit_status',
             compact('module_name',
             'module_action',
             'data',
+            'dataKarat',
             'module_title',
             'module_icon', 'module_model'));
     }
@@ -487,14 +493,28 @@ public function update(Request $request, $id)
 
 
     public function update_status_pembelian (Request $request){
+
+        $hari_ini = new DateTime();
+        $hari_ini = $hari_ini->format('Y-m-d');
+
         $is_cicilan = $request->post('is_cicilan', false);
         $pembelian_id = $request->post('pembelian_id');
-        $tgl_jatuh_tempo = $request->post('tgl_jatuh_tempo');
-        $nominal = $request->post('nominal');
+        $tgl_jatuh_tempo = $request->post('tgl_jatuh_tempo',$hari_ini);
+        $nominal = $request->post('nominal', 0);
+        $jumlah_cicilan = $request->post('jumlah_cicilan',0);
         $sisa_cicilan = $request->post('sisa_cicilan');
+        $tipe = $request->post('tipe');
         $total_harus_bayar = $request->post('total_harus_bayar');
+        $karat_id = $request->post('karat_id',0);
+        $harga = $request->post('harga',0);
+        $berat = $request->post('berat',0);
+        $gold_price = $request->post('gold_price',0);
+
         DB::beginTransaction();
         try {
+            /** Kondisi cicilan ieu tos teu dipake deui 
+             * tapi moal waka dihapus kulantaran sok tiba tiba diubah deui flow na 
+            */
             if ( $is_cicilan ) {
                 $validator = \Validator::make($request->all(),[
                     'cicilan_id' => 'required',
@@ -544,33 +564,52 @@ public function update(Request $request, $id)
 
             } else {
                 $validator = \Validator::make($request->all(),[
-                    'nominal' => 'required|numeric|gt:0', 
+                    'nominal' => 'required_if:tipe,==,nominal|numeric|gt:-1', 
+                    'karat_id' => 'required_if:tipe,==,rongsok', 
+                    'berat' => 'required_if:tipe,==,rongsok|numeric|gt:-1', 
+                    'harga' => 'required_if:tipe,==,rongsok|numeric|gt:-1|lte:100', 
                     'jumlah_cicilan' => [
                         'required',
                         'gt:0',
                         function($attribute, $value, $fail) use($total_harus_bayar) {
-                            if ($value != $total_harus_bayar) {
-                                $fail('Jumlah emas yang dibayar tidak sama dengan emas yang harus dibayar (' . $total_harus_bayar . ' gr )');
+                            if ($value > $total_harus_bayar) {
+                                $fail('Jumlah emas yang dibayar tidak boleh lebih dari emas yang harus dibayar (' . $total_harus_bayar . ' gr )');
                             }
                             
                         }
                     ]
                 ]);
-                
                 if (!$validator->passes()) {
                     return response()->json(['error'=>$validator->errors()]);
                 }
-                $tipe_pembelian = PenjualanSalesPayment::findOrFail($pembelian_id);
-                $tipe_pembelian->lunas = 'lunas';
-                $tipe_pembelian->save();
-                PenjualanSalesPaymentDetail::updateOrCreate(
+                $sales = PenjualanSalesPayment::with('penjualanSales')->where('id', $pembelian_id)->first();
+                $penjualan_sale_detail = PenjualanSalesPaymentDetail::create(
                     [
                         'payment_id' => $pembelian_id,
-                        'tanggal_cicilan' => $tgl_jatuh_tempo,
-                        'nomor_cicilan' => 1
-                    ],
-                    ['nominal' => $nominal]
+                        'tanggal_cicilan' => !empty($tgl_jatuh_tempo) ? $tgl_jatuh_tempo : $hari_ini,
+                        'nomor_cicilan' => 1,
+                        'nominal' => $nominal,
+                        'jumlah_cicilan' => $jumlah_cicilan,
+                        'karat_id' => $karat_id,
+                        'berat' => $berat,
+                        'harga' => $harga,
+                        'gold_price' => $gold_price,
+                        'tipe_emas' => $tipe,
+                    ]
                 );
+
+                $total_dibayar = $total_harus_bayar + $jumlah_cicilan;
+                $tipe_pembelian = PenjualanSalesPayment::findOrFail($pembelian_id);
+                if ($total_dibayar == $tipe_pembelian->penjualanSales->total_jumlah) {
+                    $tipe_pembelian->lunas = 'lunas';
+                    $tipe_pembelian->save();
+                }
+
+                if($tipe == 'lantakan') {
+                    $this->createLantakan($penjualan_sale_detail);
+                }elseif ($tipe == 'rongsok') {
+                    $this->createRongsok($penjualan_sale_detail, $sales);
+                }
             }
 
         } catch (\Throwable $e) {
@@ -585,6 +624,39 @@ public function update(Request $request, $id)
     /** Fungsi ini digunakan untuk mengecek apakah masih ada cicilan atau tidak */
     private function cicilanExist($payment_id) {
         return PenjualanSalesPaymentDetail::where('payment_id', $payment_id)->sum('jumlah_cicilan');
+    }
+
+    /** Fungsi ini digunakan untuk mengecek apakah masih ada sisa yang harus dibayarkan atau tidak*/
+    private function checkHutang($payment_id) {
+        return PenjualanSalesPaymentDetail::where('payment_id', $payment_id)->sum('jumlah_cicilan');
+    }
+
+    private function createLantakan($penjualan_sale_detail) {
+        $stok_lantakan = StockKroom::first();
+        if($stok_lantakan) {
+            $penjualan_sale_detail->stock_kroom()->attach($stok_lantakan->id,[
+                'karat_id'=> $stok_lantakan->karat_id,
+                'in' => true,
+                'berat_real' => $penjualan_sale_detail->jumlah_cicilan,
+                'berat_kotor' => $penjualan_sale_detail->jumlah_cicilan
+            ]);
+
+            $stok_lantakan->weight += $penjualan_sale_detail->jumlah_cicilan;
+            $stok_lantakan->save();
+        }
+    }
+
+    private function createRongsok($penjualan_sale_detail, $sales) {
+        if(!empty($penjualan_sale_detail->karat_id)) {
+            $stock_rongsok = StockRongsok::firstOrCreate(['karat_id' => $penjualan_sale_detail->karat_id]);
+            $penjualan_sale_detail->stock_rongsok()->attach($stock_rongsok->id,[
+                    'karat_id'=>$penjualan_sale_detail->karat_id,
+                    'sales_id' => $sales->penjualanSales->sales_id,
+                    'weight' => $penjualan_sale_detail->berat,
+            ]);
+            $stock_rongsok->weight += $penjualan_sale_detail->berat;
+            $stock_rongsok->save();
+        }
     }
 
 

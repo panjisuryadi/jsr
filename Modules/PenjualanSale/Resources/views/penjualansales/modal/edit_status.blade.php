@@ -2,10 +2,8 @@
     $dibayar = 0;
     $dibayar_nominal = 0;
     $isCicil = ($data->tipe_pembayaran == 'cicil') ? true : false;
-    if($data->tipe_pembayaran == 'cicil') {
-        foreach ($data->detailCicilan as $key => $value) {
-            $dibayar += $value->jumlah_cicilan;
-        }
+    foreach ($data->detailCicilan as $key => $value) {
+        $dibayar += $value->jumlah_cicilan;
     }
     $total_harus_bayar = number_format($data->penjualanSales->total_jumlah, 2) - $dibayar;
     $sisa_cicilan = $data->sisa_cicilan ?? 0;
@@ -37,7 +35,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="form_nominal">
                     <?php
                         $field_name = 'nominal';
                         $field_lable = label_case('Nominal');
@@ -51,7 +49,7 @@
                         <span class="text-danger error-text {{ $field_name }}_err"></span>
                     </span>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="form_gold_price">
                     <?php
                         $field_name = 'gold_price';
                         $field_lable = label_case('Harga Emas');
@@ -65,7 +63,7 @@
                         <span class="text-danger error-text {{ $field_name }}_err"></span>
                     </span>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="form_jumlah_cicilan">
                     <?php
                         $field_name = 'jumlah_cicilan';
                         $field_lable = label_case('Hasil Konversi emas');
@@ -86,7 +84,8 @@
                 </div>
             </div>
         @else
-        <span class="text-dark mb-4"> Tanggal jatuh tempo {{ $data->jatuh_tempo }} <span class="ml-1 text-warning">23:59 .</span> <span class="text-danger"> jumlah yang harus dibayar {{ $total_harus_bayar }} gr. </span>
+        {{-- <span class="text-dark mb-4"> Tanggal jatuh tempo {{ $data->jatuh_tempo }} <span class="ml-1 text-warning">23:59 .</span>  --}}
+        <span class="text-danger"> Hutang {{ $total_harus_bayar }} gr. </span>
 
         <div class="flex flex-row grid grid-cols-2 gap-4 mt-4">
             <div class="form-group">
@@ -94,6 +93,18 @@
                 <input class="form-control" type="hidden" name="is_cicilan" id="" value="0">
                 <input class="form-control" type="hidden" name="total_harus_bayar" id="" value="{{ $total_harus_bayar }}">
                 <div class="form-group">
+
+                    <input type="radio" id="tipe_nominal" name="tipe" value="tipe_nominal" checked>
+                    <label for="tipe_nominal">Nominal</label>
+                    <input type="radio" id="rongsok" name="tipe" value="rongsok">
+                    <label for="rongsok">Rongsok</label>
+                    <input type="radio" id="lantakan" name="tipe" value="lantakan">
+                    <label for="lantakan">Lantakan</label>
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text tipe_err"></span>
+                    </span>
+                </div>
+                <div class="form-group" id="form_nominal">
                     <?php
                         $field_name = 'nominal';
                         $field_lable = label_case('Nominal');
@@ -102,32 +113,76 @@
                         $required = "required";
                     ?>
                     <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
+                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="0" >
                     <span class="invalid feedback" role="alert">
                         <span class="text-danger error-text {{ $field_name }}_err"></span>
                     </span>
                 </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <?php
-                        $field_name = 'gold_price';
-                        $field_lable = label_case('Harga Emas');
+                <div class="form-group" id="form_karat_id">
+                    @php
+                        $field_name = 'karat_id';
+                        $field_lable = label_case('Karat Rongsok');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         $required = "required";
-                    ?>
+                    @endphp
                     <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
+                    <select class="form-control form-control-sm" name="{{ $field_name }}" id="{{ $field_name }}">
+                        <option value="" selected >Select Karat</option>
+                        @foreach($dataKarat as $karat)
+                        <option value="{{$karat->id}}">
+                            {{$karat->name}} | {{$karat->kode}}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group" id="form_berat">
+                    @php
+                        $field_name = 'berat';
+                        $field_lable = label_case('Berat Rongsok');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = "required";
+                    @endphp
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="0" >
                     <span class="invalid feedback" role="alert">
                         <span class="text-danger error-text {{ $field_name }}_err"></span>
                     </span>
                 </div>
+                <div class="form-group" id="form_harga">
+                    @php
+                        $field_name = 'harga';
+                        $field_lable = label_case('Harga %');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = "required";
+                    @endphp
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="0" >
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
+                </div>
+            <div class="form-group" id="form_gold_price">
+                <?php
+                    $field_name = 'gold_price';
+                    $field_lable = label_case('Harga Emas');
+                    $field_placeholder = $field_lable;
+                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                    $required = "required";
+                ?>
+                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
+                <span class="invalid feedback" role="alert">
+                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                </span>
             </div>
             <div class="form-group">
-                <div class="form-group">
+                <div class="form-group" id="form_jumlah_cicilan">
                     <?php
                         $field_name = 'jumlah_cicilan';
-                        $field_lable = label_case('Hasil Konversi emas');
+                        $field_lable = label_case('Berat bersih');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                         $required = "required";
@@ -152,6 +207,9 @@ jQuery.noConflict();
 (function( $ ) {
 
     $(document).ready(function(){
+        // init form
+        formClear();
+        formNominal();
 
         var Tombol = "<button type='button' id='tombol_close' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
         Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanUpdate'>{{ __('Simpan') }}</button>";
@@ -177,6 +235,16 @@ jQuery.noConflict();
             e.preventDefault();
             Update();
         });
+        $('input[type=radio][name=tipe]').change(function() {
+            if (this.value == 'rongsok') {
+                formRongsok()
+            }
+            else if (this.value == 'lantakan') {
+                formLantakan()
+            }else if(this.value == 'tipe_nominal'){
+                formNominal()
+            }
+        });
 
     });
 
@@ -187,8 +255,19 @@ jQuery.noConflict();
         $('#jumlah_cicilan').val(jumlah_cicilan)
     }
 
+    function setKonveriEmasRongsok(){
+        let berat = $('#berat').val() ? $('#berat').val() : 0;
+        let harga = $('#harga').val() ? $('#harga').val() : 0;
+        let jumlah_cicilan = berat * (harga/100);
+        $('#jumlah_cicilan').val(jumlah_cicilan)
+    }
+
     $(document).on('change', '#nominal, #gold_price', function(e){
         setKonveriEmas();
+    })
+
+    $(document).on('change', '#harga, #berat', function(e){
+        setKonveriEmasRongsok();
     })
         
     function autoRefresh(){
@@ -227,6 +306,42 @@ jQuery.noConflict();
             $('.'+key+'_err').text(value);
 
         });
+    }
+
+    function formNominal(){
+        $('#form_nominal').show()
+        $('#form_gold_price').show()
+        $('#form_karat_id').hide()
+        $('#form_berat').hide()
+        $('#form_harga').hide()
+        $('#jumlah_cicilan').prop('readonly', true)
+    }
+
+    function formRongsok(){
+        $('#form_nominal').hide()
+        $('#form_gold_price').hide()
+        $('#form_karat_id').show()
+        $('#form_berat').show()
+        $('#form_harga').show()
+        $('#jumlah_cicilan').prop('readonly', true)
+    }
+
+    function formLantakan(){
+        $('#form_nominal').hide()
+        $('#form_gold_price').hide()
+        $('#form_karat_id').hide()
+        $('#form_berat').hide()
+        $('#form_harga').hide()
+        $('#jumlah_cicilan').prop('readonly', false)
+    }
+
+    function formClear(){
+        $('#form_nominal').hide()
+        $('#form_gold_price').hide()
+        $('#form_karat_id').hide()
+        $('#form_berat').hide()
+        $('#form_harga').hide()
+        $('#jumlah_cicilan').prop('readonly', true)
     }
 
 })(jQuery);

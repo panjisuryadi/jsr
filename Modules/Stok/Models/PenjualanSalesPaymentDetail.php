@@ -17,4 +17,19 @@ class PenjualanSalesPaymentDetail extends Model
     {
         return \Modules\Stok\Database\factories\PenjualanSalesPaymentDetailFactory::new();
     }
+
+    public function stock_sales()
+    {
+        return $this->morphToMany(StockSales::class, 'transaction','stock_sales_history','transaction_id','stock_sales_id','id','id')->withTimestamps();
+    }
+
+    public function stock_kroom()
+    {
+        return $this->morphToMany(StockKroom::class, 'transaction','stock_kroom_history','transaction_id','stock_kroom_id','id','id')->withTimestamps();
+    }
+
+    public function stock_rongsok()
+    {
+        return $this->morphToMany(StockRongsok::class, 'transaction','stock_rongsok_history','transaction_id','stock_rongsok_id','id','id')->withTimestamps();
+    }
 }
