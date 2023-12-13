@@ -23,7 +23,7 @@ class HomeController extends Controller
 
     public function index(Request $request){
 
-         $paging = $request->get('key');
+        $paging = $request->get('key') ?? 'buysbacks';
          //dd($paging);
         activity()->log(' '.auth()->user()->name.'Masuk ke halaman Dashoard ');
 
