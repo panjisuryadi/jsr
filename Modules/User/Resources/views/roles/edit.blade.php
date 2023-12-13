@@ -279,6 +279,8 @@
 </div>
 
 
+
+
  </div>
  <div class="flex flex-row grid grid-cols-2 gap-1 mb-2">
 
@@ -2171,24 +2173,6 @@
 </div>
 
 
-<div class="card h-100 border-0 shadow">
-    <div class="card-header font-semibold">
-       Reports
-    </div>
-    <div class="card-body">
-        <div class="flex flex-row grid grid-cols-2 gap-1">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input"
-                id="access_reports" name="permissions[]"
-                value="access_reports" {{ $role->hasPermissionTo('access_reports') ? 'checked' : '' }}>
-                <label class="custom-control-label" for="access_reports">
-                  {{ label_Case('access_reports') }}
-               </label>
-            </div>
-            
-        </div>
-    </div>
-</div>
 
 
 
@@ -2290,20 +2274,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2554,6 +2524,122 @@
 
 </div>
 {{-- batas --}}
+
+
+
+<div class="flex flex-row grid grid-cols-1 gap-1 mb-2">
+
+
+<div class="card h-100 border-0 shadow">
+    <div class="card-header font-semibold">
+       Reports
+    </div>
+    <div class="card-body">
+       
+<div class="flex flex-row grid grid-cols-2 gap-1 mb-2">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_reports" name="permissions[]"
+                value="access_reports" {{ $role->hasPermissionTo('access_reports') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_reports">
+                  {{ label_Case('access_reports') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_laporan_laba_rugi" name="permissions[]"
+                value="access_laporan_laba_rugi" {{ $role->hasPermissionTo('access_laporan_laba_rugi') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_laporan_laba_rugi">
+                  {{ label_Case('access_laporan_laba_rugi') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_laporan_pembayaran" name="permissions[]"
+                value="access_laporan_pembayaran" {{ $role->hasPermissionTo('access_laporan_pembayaran') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_laporan_pembayaran">
+                  {{ label_Case('access_laporan_pembayaran') }}
+               </label>
+            </div>
+
+      <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_laporan_piutang" name="permissions[]"
+                value="access_laporan_piutang" {{ $role->hasPermissionTo('access_laporan_piutang') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_laporan_piutang">
+                  {{ label_Case('access_laporan_piutang') }}
+               </label>
+            </div>
+
+
+        <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_laporan_hutang" name="permissions[]"
+                value="access_laporan_hutang" {{ $role->hasPermissionTo('access_laporan_hutang') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_laporan_hutang">
+                  {{ label_Case('access_laporan_hutang') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_laporan_penjualan" name="permissions[]"
+                value="access_laporan_penjualan" {{ $role->hasPermissionTo('access_laporan_penjualan') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_laporan_penjualan">
+                  {{ label_Case('access_laporan_penjualan') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_laporan_pembelian" name="permissions[]"
+                value="access_laporan_pembelian" {{ $role->hasPermissionTo('access_laporan_pembelian') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_laporan_pembelian">
+                  {{ label_Case('access_laporan_pembelian') }}
+               </label>
+            </div>
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_laporan_retur_sales" name="permissions[]"
+                value="access_laporan_retur_sales" {{ $role->hasPermissionTo('access_laporan_retur_sales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_laporan_retur_sales">
+                  {{ label_Case('access_laporan_retur_sales') }}
+               </label>
+            </div>
+
+     <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_laporan_retur_pembelian" name="permissions[]"
+                value="access_laporan_retur_pembelian" {{ $role->hasPermissionTo('access_laporan_retur_pembelian') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_laporan_retur_pembelian">
+                  {{ label_Case('access_laporan_retur_pembelian') }}
+               </label>
+            </div>
+
+</div>
+
+
+    </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
 
 
                             <div class="row">

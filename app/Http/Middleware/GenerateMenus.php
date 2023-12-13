@@ -1791,7 +1791,7 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 88,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_laporan_laba_rugi'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -1805,7 +1805,7 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 88,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_laporan_pembayaran'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -1818,7 +1818,7 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 88,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_laporan_piutang'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -1831,7 +1831,7 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 88,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_laporan_hutang'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -1845,7 +1845,7 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 88,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_laporan_penjualan'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -1859,21 +1859,21 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 88,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_laporan_pembelian'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
 
 
- // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-fill mb-2"></i> '.__('Sales Return Report').'', [
+           // Submenu: Users
+            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-fill mb-2"></i> '.__('Laporan Retur Sales').'', [
                 'route' => 'sales-return-report.index',
                 'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 88,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_laporan_retur_sales'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
@@ -1888,7 +1888,7 @@ class GenerateMenus
             ])
             ->data([
                 'order'         => 88,
-                'permission'    => ['access_reports'],
+                'permission'    => ['access_laporan_retur_pembelian'],
             ])
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
