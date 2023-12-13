@@ -309,13 +309,13 @@ class Create extends Component
                     'jumlah' => $this->penjualan_sales_details[$key]['jumlah']
                 ];
                 $penjualan_sale_detail = $penjualan_sale->detail()->create($data);
-                if(!empty($this->penjualan_sales_details[$key]['gold_type']) && $this->penjualan_sales_details[$key]['gold_type'] == 'lantakan') {
-                    $this->createLantakan($penjualan_sale_detail);
-                }
-                if(!empty($this->penjualan_sales_details[$key]['gold_type']) && $this->penjualan_sales_details[$key]['gold_type'] == 'rongsok') {
-                    $this->createRongsok($penjualan_sale_detail);
-                }
-                $this->reduceStockSales($penjualan_sale_detail);
+                // if(!empty($this->penjualan_sales_details[$key]['gold_type']) && $this->penjualan_sales_details[$key]['gold_type'] == 'lantakan') {
+                //     $this->createLantakan($penjualan_sale_detail);
+                // }
+                // if(!empty($this->penjualan_sales_details[$key]['gold_type']) && $this->penjualan_sales_details[$key]['gold_type'] == 'rongsok') {
+                //     $this->createRongsok($penjualan_sale_detail);
+                // }
+                // $this->reduceStockSales($penjualan_sale_detail);
             }
             if(!empty($this->detail_cicilan)){
                 if($this->penjualan_sales['tipe_pembayaran'] == 'cicil'){
