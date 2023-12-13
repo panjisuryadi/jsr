@@ -1324,7 +1324,7 @@ public function update_ajax(Request $request, $id)
                             ->editColumn('karat', function ($data) {
                                 $tb = '<div class="items-center text-center">
                                         <h3 class="text-sm font-medium text-gray-800">
-                                    ' . $data->karat->label  . '</h3>
+                                    ' . $data->karat?->label  . '</h3>
                                         </div>';
                                     return $tb;
                                 })  
