@@ -49,7 +49,7 @@
         @endforeach
     </select>
 </div>
-else
+@else
 <input type="hidden" name="cabang_filter" value="{{ auth()->user()->nama_cabang()->id }}">
 @endif
 <div class="form-group">
