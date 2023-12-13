@@ -681,6 +681,14 @@
             </div>
 
 
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_datasales" name="permissions[]"
+                value="access_datasales" {{ $role->hasPermissionTo('access_datasales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_datasales">{{ label_Case('access_data_sales') }}</label>
+            </div>
+
+
 
 
 

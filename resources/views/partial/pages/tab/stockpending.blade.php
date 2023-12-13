@@ -1,0 +1,52 @@
+         <div class="pt-3">
+
+                   <table style="width: 100%;" class="table table-striped table-bordered">
+                        <tr>
+                            <th class="text-center">{{ label_case('No') }}</th>
+                            <th>{{ label_case('Sales') }}</th>
+                            <th>{{ label_case('karat') }}</th>
+                            <th>{{ label_case('Berat') }}</th>
+                            <th>{{ label_case('Aksi') }}</th>
+                        </tr>
+                      @php
+
+                  $StockPending = \Modules\Stok\Models\StockPending::latest()->paginate(5, ['*'], 'stockpending');
+              
+                   @endphp
+
+                    @forelse($StockPending as $row)
+                            <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $row->karat->kode }} | {{ $row->karat->name }}</td>
+                            <td>{{ $row->cabang->name }}</td>
+                            <td>{{ $row->weight ?? ' - ' }}</td>
+                            <td>
+
+                                    <a href="{{ route("sales.show",$row->id) }}"
+                                     class="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-eye"></i>&nbsp;@lang('Detail')
+                                    </a>
+                                @can('show_sales')
+                                @endcan
+
+
+                            </td>
+                        </tr>
+                        @empty
+                        <p>Tidak ada Data</p>
+                        @endforelse
+                  @if($StockPending->links()->paginator->hasPages())
+                    <tr>
+                        <td colspan="8">
+                            <div class="float-right">
+                  {{ $StockPending->links('pagination.custom', ['paginator' => $stockpending, 'paginationKey' => 'stockpending']) }}
+                            </div>
+                        </td>  
+                    </tr>
+                    @endif 
+
+
+                    </table>
+                   
+
+            </div>

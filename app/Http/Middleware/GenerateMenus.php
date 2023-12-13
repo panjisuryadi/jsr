@@ -424,7 +424,7 @@ class GenerateMenus
 
 
             // EMAS - SALES master menu
-            $sales = $emas->add('<i class="c-sidebar-nav-icon cil-apps"></i> Sales', [
+            $sales = $emas->add('<i class="c-sidebar-nav-icon cil-apps"></i> Sales Office', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -437,11 +437,10 @@ class GenerateMenus
                     'penjualansales*',
 
                 ],
-                'permission'  => ['access_distribusitoko',
-                                     'access_sales',
-                                     'access_products',
-                                     'access_sales',
-                                     'access_penjualansales'],
+                'permission'  =>   [
+                                     'access_sales_office',
+                                     'access_datasales',
+                                   ],
             ]);
             $sales->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
