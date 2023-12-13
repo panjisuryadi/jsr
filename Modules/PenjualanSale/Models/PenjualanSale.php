@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
+use Modules\CustomerSales\Entities\CustomerSales;
 use Modules\PenjualanSale\Models\PenjualanSaleDetail;
 use Modules\DataSale\Models\DataSale;
 class PenjualanSale extends Model
@@ -26,6 +27,10 @@ class PenjualanSale extends Model
         return $this->hasOne(PenjualanSalesPayment::class,'penjualan_sales_id','id');
     }
 
+    public function customer(){
+        return $this->belongsTo(CustomerSales::class,'konsumen_sales_id', 'id');
+    }
+
 
     protected static function newFactory()
     {
@@ -35,16 +40,16 @@ class PenjualanSale extends Model
     public static function generateCode()
     {
         $date = now()->format('dmy');
-        $invoice_code = 'INV-SLS-';
+        $invoice_code = 'PSL#';
         $dateCode = $invoice_code . $date;
         $lastOrder = self::select([DB::raw('MAX(penjualan_sales.invoice_no) AS last_code')])
             ->where('invoice_no', 'like', $dateCode . '%')
             ->first();
         $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
-        $orderCode = $dateCode . '00001';
+        $orderCode = $dateCode . '001';
         if ($lastOrderCode) {
             $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
-            $nextOrderNumber = sprintf('%05d', (int)$lastOrderNumber + 1);
+            $nextOrderNumber = sprintf('%03d', (int)$lastOrderNumber + 1);
             $orderCode = $dateCode . $nextOrderNumber;
         }
         return $orderCode;

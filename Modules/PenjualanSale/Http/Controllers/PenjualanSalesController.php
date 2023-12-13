@@ -117,11 +117,43 @@ public function index_data(Request $request)
                         ->editColumn('total_weight', function ($data) {
                             return $data->detail->sum('jumlah') . " gram";
                             })
+                        ->editColumn('total_jumlah', function ($data) {
+                            return formatBerat($data->total_jumlah) ." gram";
+                            })
                         ->editColumn('total_harga', function ($data) {
                             return "Rp . " . number_format($data->detail->sum('nominal'));
                             })
+                        ->addColumn('tanggal', function($data) {
+                            return \Carbon\Carbon::parse($data->updated_at)->format('j F Y') . " / " . $data->invoice_no;
+                        })
+                        ->addColumn('konsumen', function($data) {
+                            return $data->customer?->customer_name . '/' . $data->customer?->market;
+                        })
+                        ->addColumn('detail', function($data) {
+
+                            $rows = !empty($data->payment?->detailCicilan) ? $data->payment->detailCicilan : [];
+                            $status_bayar = !empty($data->payment?->lunas) ? label_case($data->payment?->lunas) : ($data->payment?->tipe_pembayaran =='lunas' ? 'Lunas' : 'Belum Lunas' );
+                            $tb = '
+                            <div class="text-xs">
+                                <b>Status Pembayaran </b>: '. $status_bayar . '
+                            </div>';
+                            
+                            foreach($rows as $row) {
+                                $bayar = !empty($row->jumlah_cicilan) ? formatBerat($row->jumlah_cicilan) . ' gram' : rupiah($row->nominal);
+                                $tgl = \Carbon\Carbon::parse($row->created_at)->format('d M, Y H:i:s');
+                                $tb .= '
+                                    <div class="text-xs">
+                                        <b>Tgl Bayar </b> :  ' .$tgl . ' (<b> ' . $bayar . ' </b>)
+                                    </div>
+                                        ';
+                            }
+                            return $tb;
+                        })
                         ->rawColumns(['updated_at', 
+                             'tanggal', 
+                             'konsumen', 
                              'sales', 
+                             'detail',
                              'action', 
                              'name'])
                         ->make(true);
