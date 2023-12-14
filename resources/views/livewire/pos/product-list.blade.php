@@ -70,15 +70,20 @@
 
                 </div>
 
-<div class="flex justify-content-center align-items-center text-center mt-3">
+<div class="flex text-center items-center justify-content-center align-items-center text-center mt-3">
     
-    <div wire:loading wire:target="loadMore">
+    <div class="text-gray-800 flex justify-content-center text-center items-center" wire:loading wire:target="loadMore">
       Mohon tunggu !! ,Sedang mengambil data..
     </div>
-    <button class="btn btn-outline-success" wire:click="loadMore">Load More</button>
+   
     
 </div>
 
+ <div class="flex justify-content-center text-center items-center">
+      <button class="btn btn-outline-danger" wire:click="loadMore">Load More</button>   
+
+    </div>
+   
 
 {{-- 
                     <div @class(['flex justify-content-center align-items-center text-center mt-3' => $products->hasPages()])>
