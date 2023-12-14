@@ -1,5 +1,5 @@
 <div class="text-center">
-@can('edit_'.$module_name.'')
+@can('access_bayar_penjualan_sales')
 
     <a href="{{ route(''.$module_name.'.edit_status', $data->id) }}"
         id="edit_status"
@@ -7,16 +7,20 @@
         class="btn btn-outline-info btn-sm {{ empty($data->payment) || ((!empty($data->payment->lunas) || !empty($data->payment->tipe_pembayaran) || $data->payment->tipe_pembayaran == 'lunas')) ? 'disabled' : '' }}">
             &nbsp;@lang('Bayar')
     </a>
+@endcan
+
+
+@can('show_penjualansales')
     <a href="{{ route(''.$module_name.'.show', $data->id) }}"
      class="btn btn-outline-success btn-sm">
         <i class="bi bi-eye"></i> &nbsp;@lang('View')
     </a>
-
-
-
 @endcan
 
-    @can('delete_'.$module_name.'')
+
+
+
+    @can('delete_penjualansales')
     <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
         event.preventDefault();
         if (confirm('Are you sure? It will delete the data permanently!')) {

@@ -1072,6 +1072,15 @@
                </label>
             </div>
 
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="show_penjualansales" name="permissions[]"
+                value="show_penjualansales" {{ $role->hasPermissionTo('show_penjualansales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="show_penjualansales">
+                  {{ label_Case('show_penjualansales') }}
+               </label>
+            </div>
+
 
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
@@ -1087,6 +1096,17 @@
                 value="delete_penjualansales" {{ $role->hasPermissionTo('delete_penjualansales') ? 'checked' : '' }}>
                 <label class="custom-control-label" for="delete_penjualansales">
                   {{ label_Case('delete_penjualan_sales') }}
+               </label>
+            </div>
+
+
+
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_bayar_penjualan_sales" name="permissions[]"
+                value="access_bayar_penjualan_sales" {{ $role->hasPermissionTo('access_bayar_penjualan_sales') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_bayar_penjualan_sales">
+                  {{ label_Case('bayar_penjualan_sales') }}
                </label>
             </div>
 
