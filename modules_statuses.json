@@ -77,5 +77,6 @@
     "Test": true,
     "GoodsReceiptBerlian": true,
     "Produksi": true,
-    "Accessory": true
+    "Accessory": true,
+    "ReturPembelian": true
 }

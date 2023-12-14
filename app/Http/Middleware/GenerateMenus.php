@@ -207,7 +207,19 @@ class GenerateMenus
                 'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-
+        // ReturPembelians
+            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Retur Pembelian'), [
+                'route' => 'returpembelian.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 77,
+                'activematches' => ['returpembelians*'],
+                'permission'    => ['access_returpembelians'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
 
 
             // EMAS - PEMBELIAN - RETUR PEMBELIAN
