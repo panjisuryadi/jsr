@@ -1144,6 +1144,18 @@
                   {{ label_Case('delete') }}
                </label>
             </div>
+
+     <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_bayar_penerimaanbarangdps" name="permissions[]"
+                value="access_bayar_penerimaanbarangdps" {{ $role->hasPermissionTo('access_bayar_penerimaanbarangdps') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_bayar_penerimaanbarangdps">
+                  {{ label_Case('Bayar') }}
+               </label>
+            </div>
+
+
+
             
         </div>
     </div>

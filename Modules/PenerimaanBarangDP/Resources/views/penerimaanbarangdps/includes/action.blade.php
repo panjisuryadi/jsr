@@ -6,7 +6,7 @@
     Aksi
   </button>
   <div class="dropdown-menu">
-    @can('edit_'.$module_name.'')
+    @can('access_bayar_penerimaanbarangdps')
         <a href="{{ route(''.$module_name.'.edit_payment', $data->id) }}"
         id="edit_payment"
         data-toggle="tooltip"
@@ -15,6 +15,7 @@
             &nbsp;@lang('Bayar')
         </a>
     @endcan
+    
      <a href="{{ route($module_name.'.print', $data->id) }}" class="dropdown-item" target="_blank">
         <i class="bi bi-printer"></i> &nbsp;@lang('Print')
     </a>
