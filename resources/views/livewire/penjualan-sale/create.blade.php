@@ -21,7 +21,7 @@
                         <label class="w-32 text-gray-400 block font-semibold text-sm uppercase tracking-wide">Invoice No.</label>
                         <span class="mr-4 inline-block hidden md:block">:</span>
                         <div class="flex-1">
-                            <input wire:model="penjualan_sales.invoice_no" type="text" name="invoice" id="first_name" placeholder="eg. #INV-100001" class="form-control @error('penjualan_sales.invoice_no') is-invalid @enderror">
+                            <input readonly wire:model="penjualan_sales.invoice_no" type="text" name="invoice" id="first_name" placeholder="eg. #INV-100001" class="form-control @error('penjualan_sales.invoice_no') is-invalid @enderror">
                             @error('penjualan_sales.invoice_no')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -276,15 +276,31 @@
                         </div>
 
                         <div class="form-group">
-                            <?php
+                            @php
                             $field_name = 'penjualan_sales_details.' . $key . '.harga';
                             $field_lable = label_case('Harga %');
                             $field_placeholder = $field_lable;
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                            ?>
+                            $disabled = ($key != 0 ? 'disabled' : '')
+                            @endphp
+
                             <label class="text-gray-700 mb-0" for="{{ $field_name }}">
-                                {{ $field_lable }}<span class="text-danger">*</span></label>
-                            <input wire:change="setKonversiBerat({{ $key }})" wire:model = "{{ $field_name }}" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" >
+                                {{ $field_lable }}</label>
+
+                            <span class="ml-2">
+                                <input type="radio" wire:model="penjualan_sales_details.{{$key}}.harga_type" value="persen" wire:change="clearHarga({{$key}})" {{ $disabled }}>
+                                <label class="text-black mb-0">%</label>
+        
+                                <input type="radio" wire:model="penjualan_sales_details.{{$key}}.harga_type" value="nominal" wire:change="clearHarga({{$key}})" {{ $disabled }}>
+                                <label class="text-black mb-0">Rp.</label>
+                            </span>
+                            {{-- <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                                {{ $field_lable }}<span class="text-danger">*</span></label> --}}
+                            @if($penjualan_sales_details[$key]['harga_type'] == 'persen')
+                                <input wire:change="setKonversiBerat({{ $key }})" wire:model = "{{ $field_name }}" type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" >
+                            @else
+                                <input  wire:change="setNominal({{$key}})" type="number" placeholder="Harga emas" class="form-control form-control-sm {{$invalid}}" required min="0" name="penjualan_sales_details.{{$key}}.gold_price" wire:model = "penjualan_sales_details.{{$key}}.gold_price">
+                            @endif
                             @if ($errors->has($field_name))
                             <span class="invalid feedback" role="alert">
                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -292,21 +308,41 @@
                             @endif
                         </div>
                     {{-- @endif --}}
-                    <div class="form-group">
-                        <?php
-                        $field_name = 'penjualan_sales_details.' . $key . '.jumlah';
-                        $field_lable = __('jumlah');
-                        $field_placeholder = Label_case($field_lable);
-                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                        ?>
-                        <label class="text-gray-700 mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-                        <input type="number" name="{{ $field_name }}" class="form-control form-control-sm {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" readonly wire:change="setTotal()">
-                        @if ($errors->has($field_name))
-                        <span class="invalid feedback" role="alert">
-                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                        </span>
-                        @endif
-                    </div>
+                    @if($penjualan_sales_details[$key]['harga_type'] == 'persen')
+                        <div class="form-group">
+                            <?php
+                            $field_name = 'penjualan_sales_details.' . $key . '.jumlah';
+                            $field_lable = __('Konversi 24K');
+                            $field_placeholder = Label_case($field_lable);
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                            ?>
+                            <label class="text-gray-700 mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
+                            <input type="number" name="{{ $field_name }}" class="form-control form-control-sm {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" readonly wire:change="setTotal()">
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
+                    @else
+                        <div class="form-group">
+                            @php
+                            $field_name = 'penjualan_sales_details.' . $key . '.nominal';
+                            $field_lable = label_case('Total Harga');
+                            $field_placeholder = $field_lable;
+                            $invalid = $errors->has($field_name) ? ' is-invalid' : ''; 
+                            @endphp
+                            <label class="text-gray-700 mb-0" for="{{ $field_name }}">
+                                {{ $field_lable }}</label>
+                            </span>
+                            <input readonly type="number" placeholder="{{ $field_placeholder }}" class="form-control form-control-sm {{$invalid}}" required min="0" wire:model="{{ $field_name }}"  wire:change="clearNominal({{$key}})" >
+                            @if ($errors->has($field_name))
+                            <span class="invalid feedback" role="alert">
+                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                            </span>
+                            @endif
+                        </div>
+                    @endif
 
                 </div>
                 @if ($key != 0)
@@ -322,7 +358,7 @@
             </div>
             @endforeach
 
-            <div class="px-1 pt-4 mb-3">
+            <div class="px-1 mb-3">
                 <button class="btn text-white text-xl btn-info btn-sm" wire:click.prevent="add" wire:loading.attr="disabled">
                     <span wire:loading.remove wire:target="add">Tambah <i class="bi bi-plus"></i></span>
                     <span wire:loading wire:target="add" class="text-center">
@@ -432,6 +468,7 @@
             @endif
 
             <div class="flex flex-col items-end mb-8 mt-3">
+                @if($isPersen)
                 <div class="mb-2 md:mb-1 flex items-center">
                     <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat</label>
                     <span class="mr-4 md:block">:</span>
@@ -439,13 +476,15 @@
                         <input class="form-control form-control-sm" wire:model.debounce.1s="penjualan_sales.total_jumlah" type="text" placeholder="0" readonly>
                     </div>
                 </div>
-                {{-- <div class="mb-2 md:mb-1 flex items-center">
+                @else
+                <div class="mb-2 md:mb-1 flex items-center">
                     <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Nominal Rp. </label>
                     <span class="mr-4 md:block">:</span>
                     <div class="flex-1">
                         <input class="form-control form-control-sm" type-currency="IDR" wire:model.debounce.1s="penjualan_sales.total_nominal" type="text" placeholder="0" readonly>
                     </div>
-                </div> --}}
+                </div>
+                @endif
             </div>
 
 
