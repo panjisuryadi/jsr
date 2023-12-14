@@ -155,7 +155,7 @@ public function index_data(Request $request)
                             </div>';
                             
                             foreach($rows as $row) {
-                                $bayar = !empty($row->jumlah_cicilan) ? formatBerat($row->jumlah_cicilan) . ' gram' : rupiah($row->nominal);
+                                $bayar = !empty($row->jumlah_cicilan) ? formatBerat($row->jumlah_cicilan) . ' gram' : 'Rp. ' .rupiah($row->nominal);
                                 $tgl = \Carbon\Carbon::parse($row->created_at)->format('d M, Y H:i:s');
                                 $tb .= '
                                     <div class="text-xs">
@@ -529,7 +529,19 @@ public function update(Request $request, $id)
                 }])
                 ->first();
         $dataKarat = Karat::get()->all();
-        return view(''.$module_name.'::'.$module_path.'.modal.edit_status',
+
+       $isPersen = $data->penjualanSales->harga_type == 'persen' ? true : false;
+       if($data->PenjualanSales->harga_type == 'persen' && !empty($data->PenjualanSales->total_nominal) && empty($data->PenjualanSales->total_jumlah)) {
+           $isPersen = false;
+       }
+       if($data->penjualanSales->harga_type == 'persen' && empty($data->penjualanSales->total_nominal) && !empty($data->penjualanSales->total_jumlah)) {
+           $isPersen = true;
+       } 
+       $viewpath = '.modal.edit_status';
+       if(!$isPersen) {
+           $viewpath = '.modal.edit_status_nominal';
+       }
+        return view(''.$module_name.'::'.$module_path.$viewpath,
             compact('module_name',
             'module_action',
             'data',
@@ -537,8 +549,6 @@ public function update(Request $request, $id)
             'module_title',
             'module_icon', 'module_model'));
     }
-
-
 
     public function update_status_pembelian (Request $request){
 
@@ -557,57 +567,60 @@ public function update(Request $request, $id)
         $harga = $request->post('harga',0);
         $berat = $request->post('berat',0);
         $gold_price = $request->post('gold_price',0);
+        $harga_type = $request->post('harga_type', 'persen');
+        // dd($total_harus_bayar);
 
         DB::beginTransaction();
         try {
-            /** Kondisi cicilan ieu tos teu dipake deui 
-             * tapi moal waka dihapus kulantaran sok tiba tiba diubah deui flow na 
+            /** Kanggo ngabedakeun bayar setoran uang sareng bayar setoran emas
+             * @param $harga_type diambil dari penjualan_sale
+             * data lama dianggap harga type na persen
             */
-            if ( $is_cicilan ) {
+            if ( $harga_type == 'nominal' ) {
                 $validator = \Validator::make($request->all(),[
-                    'cicilan_id' => 'required',
-                    'jumlah_cicilan' => [
+                    'karat_id' => 'required_if:tipe,==,rongsok', 
+                    'berat' => 'required_if:tipe,==,rongsok|numeric|gt:-1', 
+                    'harga' => 'required_if:tipe,==,rongsok|numeric|gt:-1|lte:100', 
+                    'nominal' => [
                         'required',
-                        'lte:' . floatval($total_harus_bayar),
-                        function ($attribute, $value, $fail) use ($request, $sisa_cicilan, $total_harus_bayar) {
-                            if ($sisa_cicilan == 1 && $value != floatval($total_harus_bayar)) {
-                                $fail('Berat untuk cicilan terakhir harus sama dengan sisa cicilan.');
+                        'gt:0',
+                        function($attribute, $value, $fail) use($total_harus_bayar) {
+                            if ($value > $total_harus_bayar) {
+                                $fail('Nominal yang dibayar tidak boleh lebih dari nominal yang harus dibayar (Rp . ' . rupiah($total_harus_bayar) . ')');
                             }
-                        },
-                    ],
-                    // 'nominal' => [
-                    //     'required',
-                    //     'numeric',
-                    //     'gt:0',
-                    //     function($attribute, $value, $fail) use($request, $sisa_cicilan) {
-                    //         if ($sisa_cicilan == 1 && $value != $request->post('total_harus_bayar_nominal')) {
-                    //             $fail('Nominal untuk cicilan terakhir harus sama dengan sisa cicilan.');
-                    //         }
                             
-                    //     }
-                    // ],
-                ], 
-                [
-                    'jumlah_cicilan.lte' => 'Jumlah cicilan tidak boleh lebih besar dari harus dibayar',
+                        }
+                    ]
                 ]);
-                
                 if (!$validator->passes()) {
                     return response()->json(['error'=>$validator->errors()]);
                 }
-                    
-                $payment_detail_id = $request->post('cicilan_id');
-                $jumlah_cicilan = $request->post('jumlah_cicilan');
-                $nominal = $request->post('nominal');
+                $sales = PenjualanSalesPayment::with('penjualanSales')->where('id', $pembelian_id)->first();
+                $penjualan_sale_detail = PenjualanSalesPaymentDetail::create(
+                    [
+                        'payment_id' => $pembelian_id,
+                        'tanggal_cicilan' => !empty($tgl_jatuh_tempo) ? $tgl_jatuh_tempo : $hari_ini,
+                        'nomor_cicilan' => 1,
+                        'nominal' => $nominal,
+                        'jumlah_cicilan' => $jumlah_cicilan,
+                        'karat_id' => $karat_id,
+                        'berat' => $berat,
+                        'harga' => $harga,
+                        'gold_price' => $gold_price,
+                        'tipe_emas' => $tipe,
+                    ]
+                );
 
-                $penerimaan_barang_cicilan = PenjualanSalesPaymentDetail::find($payment_detail_id);
-                $penerimaan_barang_cicilan->jumlah_cicilan = $jumlah_cicilan;
-                $penerimaan_barang_cicilan->nominal = $nominal;
-                $penerimaan_barang_cicilan->save();
-
-                $tipe_pembelian = PenjualanSalesPayment::with('penjualanSales')->findOrFail($pembelian_id);
-                if ($this->cicilanExist($pembelian_id) == $tipe_pembelian->penjualanSales->total_jumlah) {
+                $tipe_pembelian = PenjualanSalesPayment::findOrFail($pembelian_id);
+                if ($this->checkHutangNominal($pembelian_id) == $tipe_pembelian->penjualanSales->total_nominal) {
                     $tipe_pembelian->lunas = 'lunas';
                     $tipe_pembelian->save();
+                }
+
+                if($tipe == 'lantakan') {
+                    $this->createLantakan($penjualan_sale_detail);
+                }elseif ($tipe == 'rongsok') {
+                    $this->createRongsok($penjualan_sale_detail, $sales);
                 }
 
             } else {
@@ -646,9 +659,8 @@ public function update(Request $request, $id)
                     ]
                 );
 
-                $total_dibayar = $total_harus_bayar + $jumlah_cicilan;
                 $tipe_pembelian = PenjualanSalesPayment::findOrFail($pembelian_id);
-                if ($total_dibayar == $tipe_pembelian->penjualanSales->total_jumlah) {
+                if ($this->checkHutangEmas($pembelian_id) == $tipe_pembelian->penjualanSales->total_jumlah) {
                     $tipe_pembelian->lunas = 'lunas';
                     $tipe_pembelian->save();
                 }
@@ -669,14 +681,14 @@ public function update(Request $request, $id)
         return response()->json(['success'=>' Sukses update pembelian.']);
     }
 
-    /** Fungsi ini digunakan untuk mengecek apakah masih ada cicilan atau tidak */
-    private function cicilanExist($payment_id) {
+    /** Fungsi ini digunakan untuk mengecek apakah masih ada sisa yang harus dibayarkan atau tidak*/
+    private function checkHutangEmas($payment_id) {
         return PenjualanSalesPaymentDetail::where('payment_id', $payment_id)->sum('jumlah_cicilan');
     }
 
     /** Fungsi ini digunakan untuk mengecek apakah masih ada sisa yang harus dibayarkan atau tidak*/
-    private function checkHutang($payment_id) {
-        return PenjualanSalesPaymentDetail::where('payment_id', $payment_id)->sum('jumlah_cicilan');
+    private function checkHutangNominal($payment_id) {
+        return PenjualanSalesPaymentDetail::where('payment_id', $payment_id)->sum('nominal');
     }
 
     private function createLantakan($penjualan_sale_detail) {
