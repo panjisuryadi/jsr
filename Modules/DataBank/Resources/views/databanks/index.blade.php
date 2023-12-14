@@ -33,15 +33,14 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('No Akun') }}</th>
+                                   <th style="width: 23%!important;" class="text-center">{{ __('No Akun / Rekening') }}</th>
                                     <th style="width: 10%!important;" class="text-center">
                                          {{ __('Kode Bank') }}
                                     </th>
-                                    <th class="text-lef">{{ __('Nama Bank') }}</th>
+                           <th class="text-left">{{ __('Nama Bank') }}</th>
+                           <th class="text-left">{{ __('Nama Pemilik') }}</th>
 
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
-                                    </th>
+                                 
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
@@ -106,7 +105,8 @@
                 {data: 'no_akun', name: 'no_akun'},
                 {data: 'kode_bank', name: 'kode_bank'},
                 {data: 'nama_bank', name: 'nama_bank'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'nama_pemilik', name: 'nama_pemilik'},
+            
 
                 {
                     data: 'action',

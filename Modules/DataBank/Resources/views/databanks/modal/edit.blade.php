@@ -3,11 +3,11 @@
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
-             <div class="flex flex-row grid grid-cols-3 gap-4">
+             <div class="flex flex-row grid grid-cols-2 gap-4">
                                            <div class="form-group">
                                 <?php
                                 $field_name = 'no_akun';
-                                $field_lable = label_case('no_akun');
+                                $field_lable = label_case('no_akun /Rekening');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -70,6 +70,28 @@
                             </div>
 
 
+                              <div class="form-group">
+                                <?php
+                                $field_name = 'nama_pemilik';
+                                $field_lable = label_case('nama_pemilik');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control"
+                         type="text"
+                         name="{{ $field_name }}"
+                         id="{{ $field_name }}"
+                         value="{{ $detail->nama_pemilik }}"
+                         placeholder="{{ $field_placeholder }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
+
+                            </div>
+
+
 
                     </div>
 
@@ -101,10 +123,14 @@ jQuery.noConflict();
                       $('#ResponseInput').html(data.success);
                       $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                       $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
+
                       setTimeout(function(){ autoRefresh(); }, 1000);
                       setTimeout(function () {
                               $('#ModalGue').modal('hide');
                             }, 3000);
+                        location.reload();
+
+
 
                  }else{
                         printErrorMsg(data.error);

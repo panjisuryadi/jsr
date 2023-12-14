@@ -89,6 +89,13 @@ public function index_data(Request $request)
                                     </div>';
                                 return $tb;
                             })
+                           ->editColumn('nama_pemilik', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-gray-500">
+                                     ' .$data->nama_pemilik . '</h3>
+                                    </div>';
+                                return $tb;
+                            })
 
                           ->editColumn('kode_bank', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -107,7 +114,10 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action' , 'nama_bank', 'kode_bank', 'no_akun'])
+                        ->rawColumns(['updated_at', 'action' ,
+                         'nama_bank', 
+                         'nama_pemilik', 
+                         'kode_bank', 'no_akun'])
                         ->make(true);
                      }
 
@@ -157,6 +167,7 @@ public function store(Request $request)
              'kode_bank' => 'required|max:191|unique:'.$module_model.',kode_bank',
              'no_akun' => 'required|max:191',
              'nama_bank' => 'required|max:191',
+             'nama_pemilik' => 'required|max:191',
 
         ]);
         if (!$validator->passes()) {
@@ -168,6 +179,7 @@ public function store(Request $request)
         $input['kode_bank'] = $input['kode_bank'];
         $input['nama_bank'] = $input['nama_bank'];
         $input['no_akun'] = $input['no_akun'];
+        $input['nama_pemilik'] = $input['nama_pemilik'];
         $$module_name_singular = $module_model::create($input);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
@@ -261,6 +273,7 @@ public function update(Request $request, $id)
             ],
             'nama_bank' => 'required|max:191',
             'no_akun' => 'required|max:191',
+            'nama_pemilik' => 'required|max:191',
 
 
         ]);
@@ -274,6 +287,7 @@ public function update(Request $request, $id)
         $input['kode_bank'] = $input['kode_bank'];
         $input['nama_bank'] = $input['nama_bank'];
         $input['no_akun'] = $input['no_akun'];
+        $input['nama_pemilik'] = $input['nama_pemilik'];
         $$module_name_singular->update($input);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 

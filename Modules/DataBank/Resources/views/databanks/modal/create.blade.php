@@ -2,11 +2,11 @@
   <x-library.alert />
   <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
                 @csrf
-             <div class="flex flex-row grid grid-cols-3 gap-2">
+             <div class="flex flex-row grid grid-cols-2 gap-2">
                             <div class="form-group">
                                 <?php
                                 $field_name = 'no_akun';
-                                $field_lable = label_case('no_akun');
+                                $field_lable = label_case('no_akun / Rekening');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -64,6 +64,36 @@
                                 </span>
 
                             </div>
+
+
+            <div class="form-group">
+                                <?php
+                                $field_name = 'nama_pemilik';
+                                $field_lable = label_case('nama_pemilik');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control"
+                         type="text"
+                         name="{{ $field_name }}"
+                         id="{{ $field_name }}"
+                         placeholder="{{ $field_placeholder }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
+
+                            </div>
+
+
+
+
+
+
+
+
+
 
                     </div>
 
