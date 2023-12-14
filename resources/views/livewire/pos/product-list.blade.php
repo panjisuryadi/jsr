@@ -9,13 +9,8 @@
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
-
-
                     @forelse($products as $product)
                           {{-- {{ $product->product_price }} --}}
-
-
-
                     <div wire:click.prevent="selectProduct({{ $product }})" class="md:px-1 py-1" style="cursor: pointer;">
 
                         @php
@@ -69,10 +64,27 @@
                         </div>
                     </div>
                     @endforelse
+
+               
+
                 </div>
-                <div @class(['mt-3' => $products->hasPages()])>
+
+<div class="flex justify-content-center align-items-center text-center mt-3">
+    
+    <div wire:loading wire:target="loadMore">
+      Mohon tunggu !! ,Sedang mengambil data..
+    </div>
+    {{-- <button class="btn btn-outline-success" wire:click="loadMore">Load More</button> --}}
+    
+</div>
+
+
+{{-- 
+                    <div @class(['flex justify-content-center align-items-center text-center mt-3' => $products->hasPages()])>
                     {{ $products->links() }}
                 </div>
+           --}}
+              
             </div>
         </div>
     </div>
@@ -90,3 +102,14 @@
 
       </style>
     @endpush
+
+@push('page_scripts')
+ <script>
+    window.onscroll = function(ev) {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            // User has scrolled to the bottom, trigger loadMore
+            @this.loadMore()
+        }
+    };
+</script>
+@endpush

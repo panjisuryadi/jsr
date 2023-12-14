@@ -38,3 +38,4 @@
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
 @endpush
+

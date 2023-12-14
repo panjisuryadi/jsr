@@ -1,5 +1,14 @@
-<div class="flex flex-row grid grid-cols-3 gap-1 py-2 border-bottom">
-  <div>
+<div class="flex justify-between py-2 border-bottom">
+
+ <div class="w-10 mt-4">
+    <a class="link" href="{{ route('home') }}">
+                <i class="bi bi-house-door-fill" style="font-size: 1rem;"></i>
+            </a>
+  </div>
+
+<div class="flex-row grid grid-cols-3 gap-1">
+  
+ <div>
     
       <livewire:search-product/>
   </div>
@@ -24,5 +33,10 @@
                     <option value="">All Products</option>
                 </select>
             </div>
+
+</div>
+
+ 
+
 
 </div>

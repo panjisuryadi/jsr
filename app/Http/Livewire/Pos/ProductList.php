@@ -18,23 +18,30 @@ class ProductList extends Component
         'showCount'        => 'showCountChanged'
     ];
 
+
+    public $products;
     public $categories;
     public $category_id;
 
-    public $limit = 20;
+    public $limit = 5;
+    public $perPage = 12;
 
     public function mount($categories) {
         $this->categories = $categories;
         $this->category_id = '';
+        $this->products = Product::akses()->latest()->with('karat.penentuanHarga')
+            ->when($this->category_id, function ($query) {
+                return $query->where('category_id', $this->category_id);
+            })->where('status_id', ProductStatus::READY)
+            ->take($this->perPage)->get();
     }
 
     public function render() {
-
              $products = Product::akses()->with('karat.penentuanHarga')
             ->when($this->category_id, function ($query) {
                 return $query->where('category_id', $this->category_id);
             })->where('status_id', ProductStatus::READY)
-            ->paginate($this->limit);
+            ->take($this->perPage)->get();
 
 
 
@@ -42,6 +49,21 @@ class ProductList extends Component
 
             'products' => $products
         ]);
+    }
+
+
+    public function loadMore()
+    {
+        $this->perPage += 5;
+       // $newPosts = Post::latest()->skip($this->perPage)->take(5)->get();
+
+         $products = Product::akses()->latest()->with('karat.penentuanHarga')
+            ->when($this->category_id, function ($query) {
+                return $query->where('category_id', $this->category_id);
+            })->where('status_id', ProductStatus::READY)
+            ->skip($this->perPage)->take(5)->get();
+
+        $this->products = $this->products->concat($products);
     }
 
     public function categoryChanged($category_id) {
