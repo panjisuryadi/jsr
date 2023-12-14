@@ -1703,7 +1703,17 @@
     <div class="card-body">
         <div class="flex flex-row grid grid-cols-2 gap-1">
        
-  <div class="custom-control custom-switch">
+           <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input"
+                id="access_kelola_stok" name="permissions[]"
+                value="access_kelola_stok" {{ $role->hasPermissionTo('access_kelola_stok') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="access_kelola_stok">
+                  {{ label_Case('access_kelola_stok') }}
+               </label>
+            </div>
+
+
+            <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
                 id="show_stock_opname" name="permissions[]"
                 value="show_stock_opname" {{ $role->hasPermissionTo('show_stock_opname') ? 'checked' : '' }}>

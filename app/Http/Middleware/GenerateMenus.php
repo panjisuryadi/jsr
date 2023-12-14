@@ -781,7 +781,7 @@ class GenerateMenus
                 'activematches' => [
                            'stoks*',
                     ],
-                  'permission' => ['access_stoks'],
+                  'permission' => ['access_kelola_stok'],
             ]);
             $kelola_stok->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
@@ -793,7 +793,7 @@ class GenerateMenus
 
             // EMAS - STOK - STOK Opname
             $adjustments = $kelola_stok->add('
-                <i class="mb-2 c-sidebar-nav-icon bi bi-clipboard-check"></i> '.__('Adjustments').'',
+                <i class="mb-2 c-sidebar-nav-icon bi bi-clipboard-check"></i> '.__('Stok Opname').'',
                  [
                 'class' => 'nav-item',
                 'route' => 'adjustments.index'
@@ -802,12 +802,11 @@ class GenerateMenus
                 'order'         => 1,
                 'activematches' => [
                     'adjustments*',
-
-
                 ],
-                'permission' => ['access_adjustments',
-                                     // 'print_barcodes',
-                                      'create_adjustments'],
+                'permission' => [
+                                    'show_stock_opname',
+                                    'create_adjustments'
+                                  ],
             ]);
             $adjustments->link->attr([
                 'class' => 'c-sidebar-nav-link py-2',

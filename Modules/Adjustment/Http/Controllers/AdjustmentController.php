@@ -26,7 +26,7 @@ class AdjustmentController extends Controller
 {
 
     public function index() {
-        abort_if(Gate::denies('access_adjustments'), 403);
+        //abort_if(Gate::denies('access_adjustments'), 403);
         $setting = AdjustmentSetting::first();
         $location = '';
         if(empty($setting)){
