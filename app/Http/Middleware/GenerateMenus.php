@@ -1283,6 +1283,78 @@ class GenerateMenus
 
 
     
+
+        //==== Access Control Dropdown data Parameter
+    $databank = $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Bank'), [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+            ->data([
+                'order'         => 2,
+                'activematches' => [
+                    'datarekening*',
+                    'databank*',
+
+                ],
+                'permission' => [
+                                   'access_datarekenings',
+                                   'access_databanks'
+                                  ],
+            ]);
+            $databank->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+
+     $databank->add(
+                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
+                 '.__('List Bank'), [
+                'route' => 'databank.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 3,
+                'activematches' => ['databanks*'],
+                'permission'    => ['access_databanks'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+        $databank->add(
+                    '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
+                     '.__('List Rekening'), [
+                    'route' => 'datarekening.index',
+                    'class' => 'nav-item',
+                ])
+                ->data([
+                    'order'         => 3,
+                    'activematches' => ['datarekenings*'],
+                    'permission'    => ['access_datarekenings'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 // ================ Start of Berlian =================
 
