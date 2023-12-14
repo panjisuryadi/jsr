@@ -74,7 +74,7 @@
     <div wire:loading wire:target="loadMore">
       Mohon tunggu !! ,Sedang mengambil data..
     </div>
-    {{-- <button class="btn btn-outline-success" wire:click="loadMore">Load More</button> --}}
+    <button class="btn btn-outline-success" wire:click="loadMore">Load More</button>
     
 </div>
 
