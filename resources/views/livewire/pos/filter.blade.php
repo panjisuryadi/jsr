@@ -2,7 +2,7 @@
 
  <div class="w-10 mt-4">
     <a class="link" href="{{ route('home') }}">
-                <i class="bi bi-house-door-fill" style="font-size: 1rem;"></i>
+                <i class="text-gray-800 bi bi-house-door-fill" style="font-size: 1rem;"></i>
             </a>
   </div>
 

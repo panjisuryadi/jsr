@@ -3,9 +3,7 @@
         <div class="card-body px-3 py-1">
 <livewire:pos.filter :categories="$categories"/>
 
-                <div style="height:440px;" class="overflow-y-auto mt-2 grid grid-cols-4 md:gap-0 lg:gap-1 gap-2 md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 relative ">
-
-
+                <div  class="mt-2 grid grid-cols-4 md:gap-0 lg:gap-1 gap-2 md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 relative ">
 
                     <div wire:loading.flex class="position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                         <div class="spinner-border text-primary" role="status">

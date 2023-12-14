@@ -1,3 +1,6 @@
+
+@if(!request()->routeIs('app.pos.*'))
+
 <footer class="c-footer">
     <div>{!! settings()->footer_text !!}</div>
 
@@ -15,4 +18,7 @@
 </div>
 </div>
 </footer>
+@endif
+
+
 

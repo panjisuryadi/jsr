@@ -1,8 +1,13 @@
+
+
+
 <div class="flex gap-1">
 
   <div class="w-3/4">
   @can('dashboard_gudang')
-  <div class="flex flex-row grid grid-cols-3 gap-2 mt-1">  
+  <div class="flex flex-row grid grid-cols-3 gap-2 mt-1"> 
+
+
 <div class="card border-0">
     <div class="card-body p-0 d-flex align-items-center shadow-sm">
         <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
@@ -353,7 +358,6 @@ $goodsreceiptnota = \Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsRec
 
 
   </div>
-
 
 
   <div class="w-1/4 card">

@@ -24,7 +24,7 @@ class ProductList extends Component
     public $category_id;
 
     public $limit = 5;
-    public $perPage = 12;
+    public $perPage = 10;
 
     public function mount($categories) {
         $this->categories = $categories;

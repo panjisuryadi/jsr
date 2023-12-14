@@ -29,20 +29,22 @@
 
 @section('content')
 <div class="container-fluid h-screen max-h-screen">
-<div class="card max-h-screen">
-<div class="flex flex-row lg:max-h-screen mt-1">
- <div class="w-3/5 px-2 py-2">
+
+<div class="bg-white flex flex-row lg:max-h-screen mt-0">
+ <div class="w-3/5 px-2 md:max-h-screen">
 
   <livewire:pos.product-list :categories="$product_categories"/>
    
  </div>
- <div class="w-2/5 mt-2 border-l">
-   
-    <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
- </div>
+ 
+ <div class="w-2/5 bg-white fixed bottom-0 right-3">
+<livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
+</div>
+
+
  
 </div>
-</div>
+
 
     </div>
 @endsection
