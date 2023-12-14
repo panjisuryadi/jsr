@@ -118,8 +118,24 @@ public function index_data(Request $request)
                             return $data->detail->sum('jumlah') . " gram";
                             })
                         ->editColumn('total_jumlah', function ($data) {
-                            return formatBerat($data->total_jumlah) ." gram";
-                            })
+
+                            $isPersen = $data->harga_type == 'persen' ? true : false;
+                            if($data->harga_type == 'persen' && !empty($data->total_nominal) && empty($data->total_jumlah)) {
+                                $isPersen = false;
+                            }
+                            if($data->harga_type == 'persen' && empty($data->total_nominal) && !empty($data->total_jumlah)) {
+                                $isPersen = true;
+                            }
+
+                            $result = '';
+                            if($isPersen) {
+                                $result = formatBerat($data->total_jumlah) ." gram";
+                            }else{
+                                $result = "Rp. " . rupiah($data->total_nominal);
+                            }
+                            return $result;
+
+                        })
                         ->editColumn('total_harga', function ($data) {
                             return "Rp . " . number_format($data->detail->sum('nominal'));
                             })

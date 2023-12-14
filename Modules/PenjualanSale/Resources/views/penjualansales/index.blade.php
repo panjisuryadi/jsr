@@ -35,8 +35,8 @@
 
   <th style="width: 10%!important;" class="text-center">{{ Label_Case('tanggal / NO PO') }}</th>
   <th style="width: 10%!important;" class="text-center">{{ Label_Case('sales') }}</th>
-  <th style="width: 15%!important;" class="text-center">{{ Label_Case('konsumen / nama pasar') }}</th>
- <th style="width: 5%!important;" class="text-center">{{ Label_Case('Berat Bersih') }}</th>
+  <th style="width: 10%!important;" class="text-center">{{ Label_Case('konsumen / nama pasar') }}</th>
+ <th style="width: 10%!important;" class="text-center">{{ Label_Case('Berat Bersih / Nominal') }}</th>
  <th style="width: 20%!important;" class="text-center">{{ Label_Case('Detail') }}</th>
                      
  <th style="width: 18%!important;" class="text-center"> {{ __('Action') }} </th>

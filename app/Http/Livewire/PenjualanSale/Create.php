@@ -56,6 +56,7 @@ class Create extends Component
     public $tipe_pembayaran = '';
     public $detail_cicilan = [];
     public $tipe_setoran = '';
+    public $isPersen = true;
 
     protected $listeners = [
         'beratChanged' => 'handleBeratChanged',
@@ -73,7 +74,7 @@ class Create extends Component
             'nominal' => 0,
             'type' => '',
             'sub_karat_choice' => [],
-            'harga_type' => 'persen',
+            'harga_type' => $this->isPersen ? 'persen' : 'nominal',
             'jumlah' => 0,
         ];
         $this->setTotal();
@@ -178,7 +179,8 @@ class Create extends Component
 
             $rules['penjualan_sales_details.'.$key.'.karat_id'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.weight'] = 'required|gt:0';
-            $rules['penjualan_sales_details.'.$key.'.harga'] = 'required|gt:0';
+            $rules['penjualan_sales_details.'.$key.'.harga'] = 'required_if:harga_type,==,persen|gt:0';
+            $rules['penjualan_sales_details.'.$key.'.gold_price'] = 'required_if:harga_type,==,nominal|gt:0';
             // $rules['penjualan_sales_details.'.$key.'.sub_karat_id'] = 'required';
             // $rules['penjualan_sales_details.'.$key.'.type'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.weight'] = [
@@ -204,10 +206,10 @@ class Create extends Component
                     }
                 },
             ];
-            // $rules['penjualan_sales_details.'.$key.'.nominal'] = 'gt:-1';
+            $rules['penjualan_sales_details.'.$key.'.nominal'] = 'required_if:harga_type,==nominal|gt:-1';
             $rules['penjualan_sales_details.'.$key.'.jumlah'] = [
-                'required',
-                'gt:0',
+                'required_if:harga_type,==persen',
+                'gt:-1',
             ];
             $stok_terpakai += !empty($this->penjualan_sales_details[$key]['weight']) ? $this->penjualan_sales_details[$key]['weight'] : 0;
 
@@ -285,6 +287,7 @@ class Create extends Component
                 'konsumen_sales_id' => $this->penjualan_sales['konsumen_sales_id'],
                 'total_jumlah' => $this->penjualan_sales['total_jumlah'],
                 'total_nominal' => $this->penjualan_sales['total_nominal'],
+                'harga_type' => $this->isPersen ? 'persen' : 'nominal',
                 'created_by' => auth()->user()->name
             ]);
     
@@ -315,7 +318,7 @@ class Create extends Component
                 // if(!empty($this->penjualan_sales_details[$key]['gold_type']) && $this->penjualan_sales_details[$key]['gold_type'] == 'rongsok') {
                 //     $this->createRongsok($penjualan_sale_detail);
                 // }
-                // $this->reduceStockSales($penjualan_sale_detail);
+                $this->reduceStockSales($penjualan_sale_detail);
             }
             if(!empty($this->detail_cicilan)){
                 if($this->penjualan_sales['tipe_pembayaran'] == 'cicil'){
@@ -476,8 +479,18 @@ class Create extends Component
 
     public function clearHarga($key){
         $this->penjualan_sales_details[$key]['nominal'] = 0;
-        $this->calculateHarga($key);
-        $this->calculateTotalJumlah();
+        $this->isPersen = $this->penjualan_sales_details[$key]['harga_type'] == 'persen' ? true : false;
+        foreach($this->penjualan_sales_details as $k => $row) {
+            /**
+             * reset semua fields selain field yang ngereset
+             */
+            if($k != $key) {
+                unset($this->penjualan_sales_details[$k]);
+            }
+        }
+        $this->setTotal();
+        // $this->calculateHarga($key);
+        // $this->calculateTotalJumlah();
     }
 
     public function calculateHarga($key){
@@ -550,6 +563,16 @@ class Create extends Component
         for ($i=$key+1; $i <= count($this->detail_cicilan) ; $i++) { 
             $this->detail_cicilan[$i] = "";
         }
+    }
+
+    public function setNominal($key) {
+        $berat = $this->penjualan_sales_details[$key]['weight'] ?? 0;
+        $gold_price = $this->penjualan_sales_details[$key]['gold_price'] ?? 0;
+        if(!empty($berat) && !empty($gold_price)) {
+            $nominal = $berat * $gold_price;
+            $this->penjualan_sales_details[$key]['nominal'] = $nominal;
+        }
+        $this->setTotal();
     }
 
     // public function setTipeSetoran() {
