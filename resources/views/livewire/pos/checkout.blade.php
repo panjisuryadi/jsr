@@ -41,7 +41,7 @@
                     </div>
                 </div> --}}
 
-                <div class="overflow-y-auto h-64 max-h-full md:max-h-screen">
+                <div style="height: 440px;" class="overflow-y-auto max-h-full md:max-h-screen">
               
                         @if($cart_items->isNotEmpty())
                         @php 
