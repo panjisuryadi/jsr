@@ -176,8 +176,8 @@ top: 55% !important;
     <tr>
       <th class="text-center">No</th>
       <th class="text-center">Karat</th>
-      <th class="text-center">Berat / Uang</th>
-      <th class="text-center">Harga</th>
+      <th class="text-center">Berat</th>
+      <th class="text-center">Harga % / Rp</th>
       <th class="text-center">Jumlah</th>
     </tr>
   </thead>
@@ -186,22 +186,22 @@ top: 55% !important;
 
  @foreach($detail->detail as $row)
     @php
-      $beratOrUang = 0;
+      $jumlah = 0;
       $harga = 0;
-      if($row->type == 1){
-        $beratOrUang = rupiah($row->nominal);
-        $harga =  rupiah($row->gold_price);
+      if($row->harga_type == 'nominal'){
+        $harga =  'Rp. ' .rupiah($row->gold_price);
+        $jumlah = 'Rp. '.rupiah($row->nominal);
       }else{
-        $beratOrUang = formatBerat($row->weight) . 'gr';
         $harga = $row->harga . ' %';
+        $jumlah = formatBerat($row->jumlah) . ' gr';
       }
     @endphp
    <tr>
       <th class="text-center">{{$loop->iteration}}</th>
       <td class="text-center"> {{$row->karat->kode}} | {{$row->karat->name}}</td>
-      <td class="text-center"> {{ $beratOrUang }}</td>
+      <td class="text-center"> {{ formatBerat($row->weight) . 'gr' }}</td>
       <td class="text-center"> {{ $harga }}</td>
-      <td class="text-center"> {{formatBerat($row->jumlah)}} gr</td>
+      <td class="text-center"> {{ $jumlah }} </td>
     
     </tr>
 @endforeach
