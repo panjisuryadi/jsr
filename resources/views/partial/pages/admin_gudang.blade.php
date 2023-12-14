@@ -78,30 +78,35 @@
     
     <ul class="nav nav-tabs py-1" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#home">Penerimaan</a>
+            <a class="nav-link {{ $paging == 'penerimaan' ? 'active' : '' }}" data-toggle="tab" href="#home">Penerimaan</a>
         </li>
          @can('show_distribusi')
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#sales">Distribusi Toko</a>
+            <a class="nav-link {{ $paging == 'distribusitoko' ? 'active' : '' }}" data-toggle="tab" href="#distribusitoko">Distribusi Toko</a>
         </li> 
           @endcan
        @can('show_products')
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#DataSales">Produk</a>
+            <a class="nav-link {{ $paging == 'dataproduk' ? 'active' : '' }}" data-toggle="tab" href="#dataproduk">Produk</a>
         </li>
         @endcan    
 
          @can('show_products')
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#GoodsReceiptNota">Goods Receipt Nota </a>
+            <a class="nav-link {{ $paging == 'goodsreceiptnota' ? 'active' : '' }}" data-toggle="tab" href="#goodsreceiptnota">Goods Receipt Nota </a>
         </li>
         @endcan  
 
       
     </ul>
+<?php
+if(empty($paging)) {
+   $paging = 'penerimaan';
+} 
+  ?>
 
     <div class="tab-content py-3 mb-2">
-        <div id="home" class="container px-0 tab-pane active">
+        <div id="home" class="container px-0 tab-pane {{ $paging == 'penerimaan' ? 'active' : '' }}">
 
 
             <div class="pt-3">
@@ -117,11 +122,10 @@
                             <th>{{ label_case('pengirim') }}</th>
                             <th>{{ label_case('Aksi') }}</th>
                         </tr>
-
-                          @forelse(\Modules\GoodsReceipt\Models\GoodsReceipt::get() as $row)
-                            @if($loop->index > 4)
-                                  @break
-                            @endif
+              @php
+              $penerimaan = \Modules\GoodsReceipt\Models\GoodsReceipt::latest()->paginate(5, ['*'], 'penerimaan');
+                           @endphp
+                          @forelse($penerimaan as $row)
                         
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -146,6 +150,15 @@
                         @empty
                         <p>Tidak ada Data</p>
                         @endforelse
+                        @if($penerimaan->links()->paginator->hasPages())
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="float-right">
+                              {{ $penerimaan->links('pagination.custom', ['paginator' => $penerimaan, 'paginationKey' => 'penerimaan']) }}
+                                        </div>
+                                    </td>  
+                                </tr>
+                                @endif 
                         
                     </table>
 
@@ -155,7 +168,7 @@
             </div>
         </div>
 
-  <div id="sales" class="container px-0 tab-pane">
+  <div id="distribusitoko" class="container px-0 tab-pane {{ $paging == 'distribusitoko' ? 'active' : '' }}">
             <div class="pt-3">
              <table style="width: 100%;" class="table table-striped table-bordered">
                         <tr>
@@ -166,11 +179,11 @@
                             <th>{{ label_case('Status') }}</th>
                             <th>{{ label_case('Admin') }}</th>
                         </tr>
-                      @forelse(\Modules\DistribusiToko\Models\DistribusiToko::get() as $row)
-                            @if($loop->index > 4)
-                               @break
-                            @endif
-
+                        @php
+                           $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::latest()->paginate(5, ['*'], 'distribusitoko');
+                           @endphp
+                          @forelse($distribusitoko as $row)
+                    
                         <tr>
 
                             <td>{{ $loop->iteration }}</td>
@@ -179,7 +192,7 @@
                             <td>{{ $row->cabang->name }}</td>
                             <td>
                          @if($row->current_status->id == 2)
-                        <button class="w-full btn uppercase btn-outline-warning px  leading-5 btn-sm">In Progress</button>
+                        <button class="w-full btn uppercase btn-outline-warning px leading-5 btn-sm">In Progress</button>
 
                         @elseif($row->current_status->id == 3)
                         <button class="w-full btn uppercase btn-outline-danger px  btn-sm">Retur</button>
@@ -198,13 +211,21 @@
                         @empty
                         <p>Tidak ada Data</p>
                         @endforelse
-                        
+                          @if($distribusitoko->links()->paginator->hasPages())
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="float-right">
+                              {{ $distribusitoko->links('pagination.custom', ['paginator' => $distribusitoko, 'paginationKey' => 'distribusitoko']) }}
+                                        </div>
+                                    </td>  
+                                </tr>
+                                @endif 
                     </table>
 
             </div>
         </div>
 
-  <div id="DataSales" class="container px-0 tab-pane">
+  <div id="dataproduk" class="container px-0 tab-pane  {{ $paging == 'dataproduk' ? 'active' : '' }}">
             <div class="pt-3">
 
                     <table style="width: 100%;" class="table table-striped table-bordered">
@@ -217,15 +238,16 @@
                             <th>{{ label_case('kategori') }}</th>
                           
                         </tr>
-                        @forelse(\Modules\Product\Entities\Product::akses()->get() as $sale)
-                            @if($loop->index > 4)
-                                                @break
-                                            @endif
+                         @php
+              $listproduk = \Modules\Product\Entities\Product::akses()->latest()->paginate(5, ['*'], 'dataproduk');
+                           @endphp
+                        @forelse($listproduk as $sale)
+                          
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $sale->product_code }}</td>
                             <td>{{ $sale->cabang->name ?? ' - ' }}</td>
-                            <td>{{ $sale->category->category_name }}</td>
+                            <td>{{ @$sale->category->category_name }}</td>
                             
                         </tr>
                         @empty
@@ -234,12 +256,21 @@
 
                             </tr>
                         @endforelse
+                          @if($listproduk->links()->paginator->hasPages())
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="float-right">
+                              {{ $listproduk->links('pagination.custom', ['paginator' => $listproduk, 'paginationKey' => 'dataproduk']) }}
+                                        </div>
+                                    </td>  
+                                </tr>
+                                @endif 
                     </table>
      
             </div>
         </div>
 
-<div id="GoodsReceiptNota" class="container px-0 tab-pane">
+<div id="goodsreceiptnota" class="container px-0 tab-pane {{ $paging == 'goodsreceiptnota' ? 'active' : '' }}">
             <div class="pt-3">
 
                 <table style="width: 100%;" class="table table-striped table-bordered">
@@ -250,10 +281,11 @@
          <th class="w-3p uppercase text-center tracking-widest">{{ label_case('PIC') }}</th>                          
          <th class="w-1p text-center">{{ label_case('Status') }}</th>                          
                         </tr>
-                        @forelse(\Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptNota::get() as $row)
-                            @if($loop->index > 4)
-                                    @break
-                               @endif
+@php
+$goodsreceiptnota = \Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptNota::latest()->paginate(3, ['*'], 'goodsreceiptnota');
+@endphp                       
+@forelse($goodsreceiptnota as $row)
+
                                             {{-- {{ $row }} --}}
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -278,6 +310,15 @@
                             <td colspan="2">Tidak Ada Data</td>
                         </tr>
                         @endforelse
+                         @if($goodsreceiptnota->links()->paginator->hasPages())
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="float-right">
+                              {{ $goodsreceiptnota->links('pagination.custom', ['paginator' => $goodsreceiptnota, 'paginationKey' => 'goodsreceiptnota']) }}
+                                        </div>
+                                    </td>  
+                                </tr>
+                                @endif 
                     </table>
      
             </div>

@@ -1081,7 +1081,6 @@
                </label>
             </div>
 
-
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
                 id="edit_penjualansales" name="permissions[]"
@@ -1090,6 +1089,8 @@
                   {{ label_Case('edit_penjualan_sales') }}
                </label>
             </div>
+
+
   <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
                 id="delete_penjualansales" name="permissions[]"
@@ -1100,7 +1101,6 @@
             </div>
 
 
-
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
                 id="access_bayar_penjualan_sales" name="permissions[]"
@@ -1109,10 +1109,6 @@
                   {{ label_Case('bayar_penjualan_sales') }}
                </label>
             </div>
-
-
-
-
 
 
             
@@ -1218,7 +1214,7 @@
             </div>
 
 
-    <div class="custom-control custom-switch">
+           <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input"
                 id="delete_produksis" name="permissions[]"
                 value="delete_produksis" {{ $role->hasPermissionTo('delete_produksis') ? 'checked' : '' }}>
