@@ -248,6 +248,10 @@ class Edit extends Component
                 'product_unit'               => 'Gram',
                 'images' => $this->uploadImage($this->new_product['webcam_image']),
             ];
+            $product_data['product_name'] = $this->groups->find($this->new_product['group_id'])->name;
+            if(!empty($this->new_product['model_id'])){
+                $product_data['product_name'] = $product_data['product_name'] . ' ' . $this->models->find($this->new_product['model_id'])->name;
+            }
             $product = Product::create($product_data);
             $this->reduceStockOffice($product);
 

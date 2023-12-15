@@ -81,7 +81,7 @@
                                     </label>
                                     <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute('group', this);">
                                         <option value="" selected disabled>Pilih {{ $field_lable }}</option>
-                                        @foreach(\Modules\Group\Models\Group::all() as $jp)
+                                        @foreach($groups as $jp)
                                         <option value="{{ $jp->id }}">{{ $jp->name }}</option>
                                         @endforeach
                                     </select>
@@ -104,7 +104,7 @@
                                     <label for="{{ $field_name }}">{{ $field_lable }}</label>
                                     <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" onchange="setAdditionalAttribute('model', this);">
                                         <option value="" selected disabled>Pilih Model</option>
-                                        @foreach(\Modules\ProdukModel\Models\ProdukModel::all() as $sup)
+                                        @foreach($models as $sup)
                                         <option value="{{$sup->id}}">
                                             {{$sup->name}}
                                         </option>

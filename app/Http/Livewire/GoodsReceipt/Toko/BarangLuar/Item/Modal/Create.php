@@ -17,6 +17,7 @@ use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
 use Modules\Stok\Models\StockOffice;
 use Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar;
+use Modules\ProdukModel\Models\ProdukModel;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -67,6 +68,9 @@ class Create extends Component
 
     public $cabang;
 
+    public $groups;
+    public $models;
+
     public $total_weight_per_karat = [];
 
     protected $listeners = [
@@ -103,6 +107,8 @@ class Create extends Component
         $this->today = (new DateTime())->format('Y-m-d');
         $this->date = $this->today;
         $this->cabang = auth()->user()->namacabang();
+        $this->groups = Group::all();
+        $this->models = ProdukModel::all();
     }
 
     public function setAdditionalAttribute($name,$selectedText){
@@ -222,6 +228,10 @@ class Create extends Component
                 'product_unit'               => 'Gram',
                 'images' => $this->uploadImage($this->data['additional_data']['image']),
             ];
+            $product_data['product_name'] = $this->groups->find($this->data['additional_data']['group']['id'])->name;
+            if(!empty($this->data['additional_data']['model']['id'])){
+                $product_data['product_name'] = $product_data['product_name'] . ' ' . $this->models->find($this->data['additional_data']['model']['id'])->name;
+            }
             $product = Product::create($product_data);
 
             $product_item = $product->product_item()->create([

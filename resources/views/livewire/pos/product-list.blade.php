@@ -31,7 +31,7 @@
                             <span style="font-size:0.7rem;" 
                                 class="absolute top-2 leading-5 left-1 inline-flex items-center justify-center rounded-lg bg-red-400 px-1 py-0.2 text-red-200"
                                 >
-                               {{@$product->karat->name}}
+                               {{@$product->karat->label}}
                             </span>
                             <div
                                 class="absolute md:bottom-1 bottom-3 md:leading-4 left-2"
