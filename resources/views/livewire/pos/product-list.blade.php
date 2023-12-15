@@ -3,26 +3,30 @@
         <div class="card-body px-3 py-1">
 <livewire:pos.filter :categories="$categories"/>
 
-                <div  class="mt-2 grid grid-cols-4 md:gap-0 lg:gap-1 gap-2 md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 relative ">
-
+                <div class="mt-2 grid grid-cols-4 md:gap-0 lg:gap-1 gap-2 md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 relative">
                     <div wire:loading.flex class="position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                         <div class="spinner-border text-primary" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
+
+
                     @forelse($products as $product)
                           {{-- {{ $product->product_price }} --}}
+
+
+
                     <div wire:click.prevent="selectProduct({{ $product }})" class="md:px-1 py-1" style="cursor: pointer;">
 
-                        @php
-                        $image = $product->images;
-                        $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
-                        @endphp
-                       
+                      
+
                         <div
                             class="h-40 lg:h-32 md:h-32 relative overflow-hidden rounded-md  hover:shadow-md"
                             >
-                            <img src="{{ $imagePath }}" class="absolute inset-0 h-full w-full object-cover"/>
+                            <img
+                            src="{{ $product->getFirstMediaUrl('images') }}"
+                            class="absolute inset-0 h-full w-full object-cover"
+                            />
 
                             <span style="font-size:0.7rem;" 
                                 class="absolute top-2 leading-5 left-1 inline-flex items-center justify-center rounded-lg bg-red-400 px-1 py-0.2 text-red-200"
@@ -38,10 +42,10 @@
                                      {{ @$product->category->category_name }} 
                                     </span>
                                     
-            <h3 style="font-size:0.8rem !important;line-height: 110%;" class="text-stroke-white font-semibold hover:text-red-400 mt-0.5 lg:text-sm sm:small md:text-sm md:leading-3 md:leading-5 text-lg text-gray-800">
+                                    <h3 class="leading-5 font-semibold hover:text-red-400 mt-0.5 lg:text-sm sm:small md:text-sm md:leading-3 md:leading-4 text-lg text-gray-800">
                                     {{ $product->product_name }}
                                     </h3>
-                                <div class="font-semibold lg:text-sm md:small text-yellow-500">
+                                <div class="lg:text-sm md:small text-red-400">
                                     <small>Rp .</small>
 
                                    @if($product->product_price) 
@@ -65,68 +69,10 @@
                         </div>
                     </div>
                     @endforelse
-
-               
-
                 </div>
-
-{{-- <div class="flex text-center items-center justify-content-center align-items-center text-center mt-3">
-    
-    <div class="text-gray-800 flex justify-content-center text-center items-center" wire:loading wire:target="loadMore">
-      Mohon tunggu !! ,Sedang mengambil data..
-    </div>
-   
-    
-</div>
-
- <div class="flex justify-content-center text-center items-center">
-      <button class="btn btn-outline-danger" wire:click="loadMore">Load More</button>   
-
-    </div>
-    --}}
-
-
-    <div wire:loading wire:target="loadMore">Loading...</div>
-
-    @if ($hasPages)
-        <button wire:click="loadMore" wire:loading.attr="disabled">Load More</button>
-    @else
-        <div>No more products to load.</div>
-    @endif
-
-
-{{-- 
-                    <div @class(['flex justify-content-center align-items-center text-center mt-3' => $products->hasPages()])>
+                <div @class(['mt-3' => $products->hasPages()])>
                     {{ $products->links() }}
                 </div>
-           --}}
-              
             </div>
         </div>
     </div>
-
-
-    @push('page_css')
-      <style type="text/css">
-            .text-stroke-white {
-                text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
-            }  
-
-              .text-stroke-gray {
-                text-shadow: -1px -1px 0 gray, 1px -1px 0 gray, -1px 1px 0 gray, 1px 1px 0 gray;
-            } 
-
-      </style>
-    @endpush
-
-@push('page_scripts')
- <script>
-        document.addEventListener('livewire:load', function () {
-            window.addEventListener('resize', function () {
-                @this.call('checkScroll');
-            });
-        });
-    </script>
-
-
-@endpush

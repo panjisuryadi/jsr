@@ -28,23 +28,30 @@
 @endpush
 
 @section('content')
-<div class="container-fluid h-screen max-h-screen">
-
-<div class="bg-white flex flex-row lg:max-h-screen mt-0">
- <div class="w-3/5 px-2 md:max-h-screen">
+<div class="container-fluid">
+<div class="card max-h-screen">
+<div class="flex flex-row lg:max-h-screen mt-1">
+ <div class="w-3/5 px-2 py-2">
 
   <livewire:pos.product-list :categories="$product_categories"/>
    
  </div>
+ <div class="w-2/5 mt-2 border-l">
+    <div class="px-3 flex justify-between">
+        <div></div>
+        <div>
+              <a class="link" href="{{ route('home') }}">
+                <i class="bi bi-house-door-fill" style="font-size: 1rem;"></i>
+            </a>
+        
+
+        </div>
+    </div>
+    <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
+ </div>
  
- <div class="w-2/5 bg-white fixed bottom-0 right-3">
-<livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
 </div>
-
-
- 
 </div>
-
 
     </div>
 @endsection
