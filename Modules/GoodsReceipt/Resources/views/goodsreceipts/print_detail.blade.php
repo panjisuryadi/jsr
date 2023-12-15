@@ -1,39 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.cetak')
 @section('title', ''.$module_title.' Details')
-@section('breadcrumb')
-<ol class="breadcrumb border-0 m-0">
-    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route("goodsreceipt.index") }}">{{$module_title}}</a></li>
-    <li class="breadcrumb-item active">{{$module_action}}</li>
-</ol>
-@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header d-flex flex-wrap align-items-center">
+                <div class="card-header d-flex justify-between flex-wrap align-items-center">
                     <div>
                         Invoice: <strong>{{ $detail->no_invoice }}</strong>
                     </div>
 
-
-
-                      <a  class="btn  mfs-auto btn-sm btn-success mfe-1" href="{{ route("goodsreceipt.index") }}"><i class="bi bi-house-door"></i> Home 
-                    </a>
-
-
-                    <a target="_blank" class="btn btn-sm btn-secondary mfe-1 d-print-none" href="{{ route(''.$module_name.'.print',encode_id($detail->id)) }}"><i class="bi bi-printer"></i> Print
-                    </a>
-
-                    <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route(''.$module_name.'.cetak',encode_id($detail->id)) }}">
-                        <i class="bi bi-save"></i> Save
-                    </a>
-
-
-
-
-
+                <div class="text-gray-800">
+                {{ tanggal(date('Y-m-d H:i:s')) }}
+                </div>
+                         
+            
                 </div>
                 <div class="card-body">
                     <div class="row mb-4">
@@ -79,8 +61,8 @@
                         </div>
 
 
-                   <div class="col-sm-3 mb-3 mb-md-0 ">
-                            <h5 class="mb-2 border-bottom pb-2">Gambar Nota :</h5>
+                   <div class="col-sm-3 mb-3 mb-md-0 justify-center text-center align-items-center">
+                            <h5 class="justify-center text-center align-items-centermb-2 pb-2">Gambar Nota :</h5>
                            <div class="flex align-items-center justify-center">
 
                               @php
@@ -89,10 +71,10 @@
                               @endphp
 
 
-                               <div class="text-center align-items-center items-center">
+                               <div class="flex justify-center text-center align-items-center items-center w-50">
 
                                  <a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " class="single_image">
-                                    <img src="{{ $imagePath }}" order="0" width="40%" class="img-thumbnail"/>
+                                    <img src="{{ $imagePath }}" order="0" class="img-thumbnail"/>
                                 </a>
 
                                </div>
@@ -103,12 +85,6 @@
                            </div>
 
                         </div>
-
-
-
-
-
-
 
 
                     </div>
@@ -180,7 +156,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-sm-5 ml-md-auto">
                             <table style="width: 100% !important;"
-                                class="table md:table-sm lg:table-sm">
+                                class="table md:table-sm table-bordered lg:table-sm">
                                 <tbody>
                                     <tr>
                                         <td class="left"><strong>{{ Label_case('total_berat_kotor') }}</strong></td>
@@ -219,4 +195,15 @@ padding: .2em !important;
 }
 }
 </style>
+@endpush
+
+@push('page_scripts')
+
+    <script>
+   $(document).ready(function () {
+            window.print();
+        }); 
+     
+    </script>
+
 @endpush

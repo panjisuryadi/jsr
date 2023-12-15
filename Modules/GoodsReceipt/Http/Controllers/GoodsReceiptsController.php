@@ -76,6 +76,8 @@ class GoodsReceiptsController extends Controller
             'module_icon', 'module_model'));
     }
 
+
+
  public function riwayat_penerimaan() {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -987,6 +989,43 @@ public function show($id)
             'module_icon', 'module_model'));
 
     }
+
+
+
+public function print($id)
+    {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_model = $this->module_model;
+        $module_products = $this->module_products;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_goodsreceipts'), 403);
+        $detail = $module_model::findOrFail($id);
+        // $list = $module_products::where('kode_pembelian',$detail->code)->get();
+      //  dd($detail->code);
+          return view(''.$module_name.'::'.$module_path.'.print_detail',
+           compact('module_name',
+            'module_action',
+            'detail',
+           
+            'module_title',
+            'module_icon', 'module_model'));
+
+    }
+
+
+
+
+
 
 public function view_produk($id)
     {

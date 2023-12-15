@@ -9,19 +9,21 @@
     <link rel="icon" href="{{ asset('images/favicon.png') }}">
 
     @include('includes.main-css')
+    @stack('page_css')
 </head>
 
 <body class="w-full">
 
-  <div class="c-body">
+        <div class="c-body">
             <main class="c-main">
                 @yield('content')
             </main>
         </div>
 
-      
+     
     </div>
 
-  
+    @include('includes.main-js')
+    @stack('page_scripts')
 </body>
 </html>
