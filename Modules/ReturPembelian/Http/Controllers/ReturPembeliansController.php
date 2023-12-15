@@ -1,6 +1,8 @@
 <?php
 
 namespace Modules\ReturPembelian\Http\Controllers;
+
+use PDF;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -12,6 +14,10 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Lang;
 use Image;
+use Modules\Karat\Models\Karat;
+use Modules\ReturPembelian\Models\ReturPembelian;
+use Modules\ReturPembelian\Models\ReturPembeliansDetail;
+use Modules\Stok\Models\StockOffice;
 
 class ReturPembeliansController extends Controller
 {
@@ -51,8 +57,7 @@ class ReturPembeliansController extends Controller
 
 
 
-public function index_data(Request $request)
-
+    public function index_data(Request $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -68,32 +73,50 @@ public function index_data(Request $request)
         $data = $$module_name;
 
         return Datatables::of($$module_name)
-                        ->addColumn('action', function ($data) {
-                           $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            return view('includes.action',
-                            compact('module_name', 'data', 'module_model'));
-                                })
-                          ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
-                                    </div>';
-                                return $tb;
-                            })
-                           ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
+                ->addColumn('action', function ($data) {
+                    $module_name = $this->module_name;
+                    $module_model = $this->module_model;
+                    $module_path = $this->module_path;
+                    return view(''.$module_name.'::'.$module_path. '.includes.action',
+                    compact('module_name', 'data', 'module_model'));
+                })
+                ->editColumn('date', function ($data) {
+                    return tanggal($data->date);
+                })
+                ->editColumn('supplier', function ($data) {
+                        $tb = '<div class="items-center text-center">
+                            <h3 class="text-sm font-medium text-gray-800">
+                                ' .$data->supplier?->supplier_name . '</h3>
+                            </div>';
+                        return $tb;
+                })
+                ->editColumn('updated_at', function ($data) {
+                    $module_name = $this->module_name;
 
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                            }
-                        })
-                        ->rawColumns(['updated_at', 'action', 'name'])
-                        ->make(true);
-                     }
+                    $diff = Carbon::now()->diffInHours($data->updated_at);
+                    if ($diff < 25) {
+                        return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                    } else {
+                        return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                    }
+                })
+                ->addColumn('detail', function($data) {
+                    $rows = !empty($data->detail) ? $data->detail : [];
+                    $tb = '';
+                    
+                    foreach($rows as $row) {
+                        $karat = !empty($row->karat->name) ? $row->karat->name : '';
+                        $tb .= '
+                            <div class="text-xs">
+                                <b>Karat </b> :  ' .$karat . ' (<b> ' . formatBerat($row->weight) . ' gr </b>)
+                            </div>
+                                ';
+                    }
+                    return $tb;
+                })
+                ->rawColumns(['supplier', 'action', 'detail'])
+                ->make(true);
+    }
 
 
 
@@ -363,16 +386,54 @@ public function update(Request $request, $id)
         $module_action = 'Delete';
 
         $$module_name_singular = $module_model::findOrFail($id);
+        
+        $detail = ReturPembeliansDetail::where('retur_pembelian_id', $id);
+        foreach($detail->get() as $row) {
+            $this->addStockOffice($row);
+        }
+        $detail->delete();
 
         $$module_name_singular->delete();
          toast(''. $module_title.' Deleted!', 'success');
          return redirect()->route(''.$module_name.'.index');
 
-          } catch (\Exception $e) {
-           // dd($e);
-                toast(''. $module_title.' error!', 'warning');
-                return redirect()->back();
-            }
+        } catch (\Exception $e) {
+            dd($e);
+            toast(''. $module_title.' error!', 'warning');
+            return redirect()->back();
+        }
+
+    }
+
+    private function addStockOffice($row){
+        $karat = Karat::findOrFail($row->karat_id);
+        $karat_id = (!empty($karat->parent_id))?$karat->parent_id:$row->karat_id;
+        $stock_office = StockOffice::firstOrCreate(['karat_id' => $karat_id]);
+        $row->stock_office()->attach($stock_office->id,[
+            'karat_id'=>$karat_id,
+            'in' => true,
+            'berat_real' => $row->weight,
+            'berat_kotor' => $row->weight
+        ]);
+        
+        $stock_office->berat_real += $row->weight;
+        $stock_office->berat_kotor += $row->weight;
+        $stock_office->save();
+    }
+
+    public function cetak($id) 
+    {
+        $id = decode_id($id);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $detail = $module_model::with('detail')->findOrFail($id);
+        $title = 'Print Retur Pembelian';
+        $pdf = PDF::loadView(''.$module_name.'::'.$module_path.'.includes.print', compact('detail','title'))
+          ->setPaper('A4', 'portrait');
+          return $pdf->stream('retur_pembelian-'. $detail->id .'.pdf');
 
     }
 

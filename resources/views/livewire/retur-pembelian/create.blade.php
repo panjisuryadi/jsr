@@ -51,7 +51,7 @@
                         <label class="w-32 text-gray-600 block font-semibold text-sm uppercase tracking-wide">Dari</label>
                         <span class="mr-4 inline-block hidden md:block">:</span>
                         <div class="flex-1">
-                            <select class="form-control select2 @error('retur_sales.sales_id') is-invalid @enderror" name="sales_id" wire:model="retur_sales.sales_id">
+                            <select class="form-control select2 @error('retur_sales.supplier_id') is-invalid @enderror" name="retur_sales.supplier_id" wire:model="retur_sales.supplier_id">
                                 <option value="" selected disabled>Pilih Supplier</option>
                                 @foreach($dataSupplier as $supplier)
                                 <option value="{{$supplier->id}}">
@@ -59,9 +59,9 @@
                                 </option>
                                 @endforeach
                             </select>
-                            @if ($errors->has('retur_sales.sales_id'))
+                            @if ($errors->has('retur_sales.supplier_id'))
                             <span class="invalid feedback" role="alert">
-                                <small class="text-danger">{{ $errors->first('retur_sales.sales_id') }}.</small class="text-danger">
+                                <small class="text-danger">{{ $errors->first('retur_sales.supplier_id') }}.</small class="text-danger">
                             </span>
                             @endif
                         </div>
@@ -133,7 +133,7 @@
                     <div class="form-group">
                         <?php
 
-                        $field_name = 'retur_sales_detail.' . $key . '.nominal';
+                        $field_name = 'retur_sales_detail.' . $key . '.harga';
                         $field_lable = label_case('harga (%)');
                         $field_placeholder = $field_lable;
                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -209,7 +209,7 @@
 
             <div class="flex flex-col items-end mb-8">
                     <div class="mb-2 md:mb-1 flex items-center">
-                        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat Asal</label>
+                        <label class="w-30 text-gray-700 block text-sm tracking-wide">Total Berat</label>
                         <span class="mr-4 md:block">:</span>
                         <div class="flex-1">
                             <input class="form-control form-control-sm" wire:model.debounce.1s="retur_sales.total_weight" type="text" placeholder="0" readonly>
