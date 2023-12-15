@@ -91,6 +91,12 @@
                                                     <span class="font-bold">{{ $product['berat_emas'] }} gr</span>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <span class="font-medium">Harga Beli</span>
+                                                <div class="flex-1 mt-1">
+                                                    <span class="font-bold">Rp. {{ rupiah($product->sale_detail?->price) }}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="flex justify-center">
                                             <img src="{{ asset(imageUrl() . $product['images']) }}" alt="">
