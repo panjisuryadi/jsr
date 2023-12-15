@@ -21,7 +21,7 @@ class ProductList extends Component
     public $categories;
     public $category_id;
 
-    public $limit = 20;
+    public $limit = 9;
 
     public function mount($categories) {
         $this->categories = $categories;
