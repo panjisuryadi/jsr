@@ -64,7 +64,7 @@
                         
                         </span>|
                         <span class="text-blue-400">
-                            {{ rupiah($cart_item->price) }}
+                            {{ format_uang($cart_item->price) }}
                         </span>
                       
                        </div>

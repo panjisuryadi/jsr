@@ -8,6 +8,7 @@ use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
 use Livewire\Component;
+use Modules\Product\Entities\Product;
 
 class Checkout extends Component
 {
@@ -246,15 +247,15 @@ class Checkout extends Component
         Cart::instance($this->cart_instance)->destroy();
     }
 
-    public function productSelected($product) {
+    public function productSelected(Product $product) {
         $cart = Cart::instance($this->cart_instance);
         $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
-            return $cartItem->id == $product['id'];
+            return $cartItem->id == $product->id;
         });
 
 
-        if (empty($product['product_price']) && !isset($product['karat']['penentuan_harga']['harga_jual'])) {
-            session()->flash('message', 'Penentuan Harga '.$product['karat']['name'].' Belum di setting!');
+        if (empty($product->product_price) && empty($product->karat->penentuanHarga->harga_jual)) {
+            session()->flash('message', 'Penentuan Harga '. $product->karat->label .' Belum di setting!');
             return;
         }
 
@@ -264,8 +265,8 @@ class Checkout extends Component
         }
 
 $cart->add([
-'id'      => $product['id'],
-'name'    => $product['product_name'],
+'id'      => $product->id,
+'name'    => $product->product_name,
 'qty'     => 1,
 //'price'   => $product['karat']['penentuan_harga']['harga_jual']*$product['berat_emas'],
 'price'   => $this->HitungHarga($product),
@@ -274,14 +275,14 @@ $cart->add([
         'product_discount'      => 0.00,
         'product_discount_type' => 'fixed',
         'sub_total'             => 1,
-        'code'                  => $product['product_code'],
+        'code'                  => $product->product_code,
         'stock'                 => 1,
-        'unit'                  =>$product['product_unit'],
-        'karat_id'              =>$product['karat']['id'],
-        'karat'                 =>$product['karat']['name'],
+        'unit'                  =>$product->product_unit,
+        'karat_id'              =>$product->karat_id,
+        'karat'                 =>$product->karat->label,
         'harga_jual'            => $this->HitungHarga($product),
-        'berat_emas'            =>$product['berat_emas'],
-        'images'                =>$product['images'],
+        'berat_emas'            =>$product->berat_emas,
+        'images'                =>$product->images,
         'product_tax'           => 1,
         'manual'                => 0,
         'manual_item'           => 0,
@@ -290,10 +291,10 @@ $cart->add([
                 ]
          ]);
 
-        $this->check_quantity[$product['id']] = 1;
-        $this->quantity[$product['id']] = 1;
-        $this->discount_type[$product['id']] = 'fixed';
-        $this->item_discount[$product['id']] = 0;
+        $this->check_quantity[$product->id] = 1;
+        $this->quantity[$product->id] = 1;
+        $this->discount_type[$product->id] = 'fixed';
+        $this->item_discount[$product->id] = 0;
         $this->total_amount = $this->calculateTotal();
         //$this->emit('cartModal', $product);
     }
@@ -358,12 +359,11 @@ $cart->add([
 
 public function HitungHarga($product) {
         $totalPrice = 0;
-        if (empty($product['product_price'])) {
-            $totalPrice = $product['karat']['penentuan_harga']['harga_jual'] * $product['berat_emas'];
+        if (empty($product->product_price)) {
+            $totalPrice = $product->karat->penentuanHarga->harga_jual * $product->berat_emas;
         }else{
-            $totalPrice = $product['product_price'];
+            $totalPrice = $product->product_price;
         }
-
         return $totalPrice;
     }
 
