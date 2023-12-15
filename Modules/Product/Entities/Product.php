@@ -22,6 +22,7 @@ use Modules\Product\Models\ProductStatus;
 use Modules\Product\Models\ProductTrackingHistory;
 use Modules\ProdukModel\Models\ProdukModel;
 use Modules\Produksi\Models\Accessories;
+use Modules\Sale\Entities\SaleDetails;
 use Modules\Stok\Models\StockOffice;
 
 class Product extends Model implements HasMedia
@@ -264,6 +265,10 @@ class Product extends Model implements HasMedia
         if($query->count()){
             return 'Berlian ' . $query->sum('amount') . ' ' . $query->first()->accessories->satuan->code;
         }
+    }
+
+    public function sale_detail(){
+        return $this->hasone(SaleDetails::class, 'product_id', 'id');
     }
 
 }
