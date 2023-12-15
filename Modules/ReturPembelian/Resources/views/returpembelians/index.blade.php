@@ -32,13 +32,12 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
-                                    <th class="text-lef">{{ __('Name') }}</th>
+                                    <th style="width: 6%!important;" class="text-center">No</th>
+                                    <th style="width: 15%!important;" class="text-center">{{ __('Tanggal Transaksi') }}</th>
+                                    <th class="text-lef">{{ __('No Retur') }}</th>
+                                    <th class="text-lef">{{ __('Supplier') }}</th>
+                                    <th class="text-lef">{{ __('Detail') }}</th>
 
-                                    <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
-                                    </th>
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
@@ -100,9 +99,10 @@
                     }
                 },
 
-                {data: 'code', name: 'code'},
-                {data: 'name', name: 'name'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'date', name: 'date'},
+                {data: 'retur_no', name: 'retur_no'},
+                {data: 'supplier', name: 'supplier'},
+                {data: 'detail', name: 'detail'},
 
                 {
                     data: 'action',
