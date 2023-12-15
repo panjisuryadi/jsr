@@ -416,7 +416,7 @@ class GenerateMenus
 
 
             // EMAS - SALES - DataSales
-            $sales->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> '.__('Data Sales'), [
+            $sales->add('<i class="c-sidebar-nav-icon  bi-person-lines-fill text-sm"></i> '.__('Data Sales'), [
                 'route' => 'datasale.index',
                 'class' => 'nav-item',
             ])
@@ -534,52 +534,22 @@ class GenerateMenus
             ]);
 
 
-
-            // EMAS - SALES - LAPORAN SALES
-            $laporansales = $sales->add(
-                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
-                '.__('Laporan Sales').'', [
-                'class' => 'c-sidebar-nav-dropdown',
+          // laporan Sales
+            $laporansales = $sales->add('<i class="c-sidebar-nav-icon bi bi-bar-chart text-sm"></i> '.__('Laporan Sales'), [
+                'route' => 'datasale.laporan_sales',
+                'class' => 'nav-item',
             ])
             ->data([
                 'order'         => 3,
-                'activematches' => [],
-                'permission'    => ['access_reports',
-                                    'access_piutang_sales',
-                                    'access_hutang_sales'],
-            ]);
-            $laporansales->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-
-
-           
-
-          // EMAS - SALES - LAPORAN SALES - Laporan Hutang
-            $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Hutang Sales').'', [
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 1,
-                'permission'    => ['access_hutang_sales'],
+                'activematches' => ['datasale*'],
+                'permission'    => ['access_laporan_sales'],
             ])
             ->link->attr([
-                'class' => 'c-sidebar-nav-link',
+                'class' => 'c-sidebar-nav-link py-2',
             ]);
 
-             // EMAS - SALES - LAPORAN SALES - Laporan Piutang
-             $laporansales->add('<i class="c-sidebar-nav-icon bi bi-wallet2 mb-1"></i> '.__('Laporan Piutang Sales').'', [
-                'class' => 'nav-item',
-            ])
-            ->data([
-                'order'         => 2,
-                'permission'    => ['access_piutang_sales'],
-            ])
-            ->link->attr([
-                'class' => 'c-sidebar-nav-link',
-            ]);
 
+            
 
             // EMAS - STOK
             $stok = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
