@@ -975,6 +975,7 @@ public function show($id)
         $module_model = $this->module_model;
         $module_products = $this->module_products;
         $module_name_singular = Str::singular($module_name);
+        $id_kategoriproduk_berlian = LookUp::where('kode', 'id_kategoriproduk_berlian')->value('value');
         $module_action = 'Show';
         abort_if(Gate::denies('show_goodsreceipts'), 403);
         $detail = $module_model::findOrFail($id);
@@ -984,7 +985,7 @@ public function show($id)
            compact('module_name',
             'module_action',
             'detail',
-           
+            'id_kategoriproduk_berlian',
             'module_title',
             'module_icon', 'module_model'));
 

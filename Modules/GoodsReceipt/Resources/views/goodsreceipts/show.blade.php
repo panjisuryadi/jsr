@@ -8,6 +8,9 @@
 </ol>
 @endsection
 @section('content')
+@php
+    $isBerlian = $id_kategoriproduk_berlian == $detail->kategoriproduk_id ? true : false;
+@endphp
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -116,6 +119,43 @@
                        <span class="text-gray-600 text-md font-semibold">Detail</span>
                     </div>
                     <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
+                        @if($isBerlian)
+                        <table style="width: 100% !important;" class="table table-sm table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th class="text-center">Kategori</th>
+                                    <th class="text-center">Karat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($detail->goodsreceiptitem as $row)
+                                @php
+                                    $karat = '-';
+
+                                    if(!empty($row->karatberlians)) {
+                                        $karat = $row->karatberlians . ' ct)';
+                                    }
+                                    if(!empty($row->klasifikasi_berlian)) {
+                                        $karat = $row->klasifikasi_berlian . ' (' . $row->karatberlians . ' ct)';
+                                    }
+                                    if(!empty($row->karat_id)) {
+                                        $karat = $row->karat->kode .' | '.  $row->karat->name;
+                                    }
+                                @endphp
+                                <tr>
+                                    <th class="text-center">{{$loop->iteration}}</th>
+                                    <td class="text-center"> {{@$row->mainkategori->name}} {{ $row->shape_berlian->shape_name }}</td>
+                                    <td class="text-center"> {{ $karat }} </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <th colspan="5" class="text-center">Tidak ada data</th>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        @else
                         <table style="width: 100% !important;" class="table table-sm table-striped">
                             <thead>
                                 <tr>
@@ -128,10 +168,23 @@
                             </thead>
                             <tbody>
                                 @forelse($detail->goodsreceiptitem as $row)
+                                @php
+                                    $karat = '-';
+
+                                    if(!empty($row->karatberlians)) {
+                                        $karat = $row->karatberlians . ' ct)';
+                                    }
+                                    if(!empty($row->klasifikasi_berlian)) {
+                                        $karat = $row->klasifikasi_berlian . ' (' . $row->karatberlians . ' ct)';
+                                    }
+                                    if(!empty($row->karat_id)) {
+                                        $karat = $row->karat->kode .' | '.  $row->karat->name;
+                                    }
+                                @endphp
                                 <tr>
                                     <th class="text-center">{{$loop->iteration}}</th>
                                     <td class="text-center"> {{@$row->mainkategori->name}}</td>
-                                    <td class="text-center"> {{@$row->karat->kode}} | {{@$row->karat->name}}</td>
+                                    <td class="text-center"> {{ $karat }} </td>
                                     <td class="text-center"> {{@$row->berat_real}}</td>
                                     <td class="text-center"> {{@$row->berat_kotor}}</td>
                                 </tr>
@@ -142,6 +195,7 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        @endif
                         @if ($detail->pembelian->isCicil())
                         <div class="card-header">
                             <span class="text-gray-600 text-md font-semibold">Rincian Cicilan</span>
@@ -182,6 +236,13 @@
                             <table style="width: 100% !important;"
                                 class="table md:table-sm lg:table-sm">
                                 <tbody>
+                                    @if($isBerlian)
+                                    <tr>
+                                        <td class="left"><strong>{{ Label_case('Total Karat') }}</strong></td>
+                                        <td class="right"><strong class="text-blue-600 text-md">{{ $detail->total_karat }}
+                                         <small class="text-gray-700">ct</small></strong></td>
+                                    </tr>
+                                    @else
                                     <tr>
                                         <td class="left"><strong>{{ Label_case('total_berat_kotor') }}</strong></td>
                                         <td class="right"><strong class="text-blue-600 text-md">{{ $detail->total_berat_kotor }}
@@ -198,6 +259,7 @@
                                         <td class="right"><strong class="text-blue-600 text-md">{{ $detail->total_emas }}
                                          <small class="text-gray-700">Gram</small></strong></td>
                                     </tr>
+                                    @endif
                                 </tbody>
                             </table>
 

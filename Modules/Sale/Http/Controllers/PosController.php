@@ -17,6 +17,7 @@ use Modules\Sale\Entities\SaleManual;
 use Modules\Sale\Http\Requests\StorePosSaleRequest;
 use Auth;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\Product\Models\ProductStatus;
 
 class PosController extends Controller
 {
@@ -87,12 +88,12 @@ class PosController extends Controller
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' =>  $input['diskon2'] ?? '0',
                 'user_id' => Auth::user()->id,
-                'cabang_id' =>$input['cabang_id'] ?? '1',
+                'cabang_id' =>$input['cabang_id'] ?? null,
                 ]);
 
   
              foreach (Cart::instance('sale')->content() as $cart_item) {
-                SaleDetails::create([
+                $detail = SaleDetails::create([
                     'sale_id' => $sale->id,
                     'product_id' => $cart_item->id,
                     'product_name' => $cart_item->name,
@@ -104,7 +105,7 @@ class PosController extends Controller
                     'product_tax_amount' => 0,
                 
                 ]);
-
+                $detail->product->updateTracking(ProductStatus::SOLD, $sale->cabang_id);
             }
 
           Cart::instance('sale')->destroy();

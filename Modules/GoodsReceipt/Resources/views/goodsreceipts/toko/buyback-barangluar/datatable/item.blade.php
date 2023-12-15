@@ -84,7 +84,7 @@
                 "sNext": "{{ __("labels.table.next") }}"
             }
             },
-            "aaSorting": [[ 0, "desc" ]],
+            // "aaSorting": [[ 0, "desc" ]],
             "columnDefs": [
                 {
                     "targets": 'no-sort',

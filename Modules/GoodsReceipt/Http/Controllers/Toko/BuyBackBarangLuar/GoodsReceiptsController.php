@@ -90,7 +90,7 @@ class GoodsReceiptsController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = $this->module_model_item::pending()->with(['product'])->where('goodsreceipt_toko_nota_id',null)->get();
+        $$module_name = $this->module_model_item::pending()->with(['product'])->where('goodsreceipt_toko_nota_id',null)->orderBy('id', 'DESC')->get();
         return Datatables::of($$module_name)
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
@@ -173,7 +173,7 @@ class GoodsReceiptsController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = BuyBackBarangLuar\GoodsReceiptNota::get();
+        $$module_name = BuyBackBarangLuar\GoodsReceiptNota::orderBy('id', 'DESC')->get();
         return Datatables::of($$module_name)
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
