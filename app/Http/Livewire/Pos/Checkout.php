@@ -11,6 +11,7 @@ use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
 use Livewire\Component;
 use Modules\Cabang\Models\Cabang;
+use Modules\DataBank\Models\DataBank;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
@@ -26,6 +27,8 @@ class Checkout extends Component
     public $paid_amount = 0;
     public $return_amount = 0;
     public $note = '';
+    public $banks;
+    public $bank_id = '';
     public $listeners = ['productSelected',  'discountModalRefresh'];
 
     public $cart_instance;
@@ -108,6 +111,17 @@ class Checkout extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function updatedPaymentMethod($value){
+        $this->reset([
+            'paid_amount',
+            'return_amount',
+            'bank_id'
+        ]);
+        if($value !== 'tunai'){
+            $this->paid_amount = $this->grand_total;
+        }
+    }
+
 
 
     protected function rules()
@@ -131,6 +145,7 @@ class Checkout extends Component
             ],
             'total_amount' => 'required|max:191',
             'grand_total' => 'required|max:191',
+            'bank_id' => 'required_if:payment_method,transfer'
         ];
 
         foreach ($this->other_fees as $index => $fee) {
@@ -164,6 +179,7 @@ class Checkout extends Component
         $this->paid_amount;
         $this->cabangs = Cabang::all();
         $this->cabang_id = auth()->user()->isUserCabang() ? auth()->user()->namacabang()->id : '';
+        $this->banks = DataBank::all();
     }
 
 
@@ -650,7 +666,10 @@ class Checkout extends Component
         ];
         if($this->payment_method === 'tunai'){
             $data['return_amount'] = $this->return_amount;
+        }elseif($this->payment_method === 'transfer'){
+            $data['bank_id'] = $this->bank_id;
         }
+
         $sale->salePayments()->create($data);
     }
 

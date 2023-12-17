@@ -124,6 +124,23 @@
                                                 <option value="edc">EDC</option>
                                             </select>
                                         </div>
+                                        @if ($payment_method == 'transfer')
+                                        <div class="form-group p-2">
+                                            <select class="form-control @error('bank_id') is-invalid @enderror" name="bank_id" id="bank_id" wire:model="bank_id">
+                                                <option value="" selected>Pilih Bank</option>
+                                                @foreach($banks as $bank)
+                                                <option value="{{ $bank->id }}">
+                                                    {{ $bank->kode_bank }} | {{ $bank->nama_bank }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('bank_id'))
+                                            <span class="invalid feedback" role="alert">
+                                                <small class="text-danger">{{ $errors->first('bank_id') }}.</small class="text-danger">
+                                            </span>
+                                            @endif
+                                        </div>
+                                        @endif
                                     </div>
                                     @if ($payment_method == 'tunai')
                                     <div class="p-2 grid grid-cols-1 gap-4 my-2 mt-0">
@@ -147,6 +164,26 @@
                                             <div class="form-group">
                                                 <label for="return_amount_text">Kembalian</label> <span class="text-danger small" id="message"></span>
                                                 <input id="return_amount_text" type="text" class="form-control text-black text-xl" name="return_amount_text" value="{{ $this->return_amount_text}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @elseif ($payment_method == 'transfer' && !empty($bank_id))
+                                    <div class="p-2 grid grid-cols-2 gap-4 my-2 mt-0">
+                                        @php
+                                            $selected_bank = $this->banks->find($this->bank_id);
+                                        @endphp
+                                        <div class="px-1">
+                                            <div class="mb-3">
+                                                <p class="text-medium">Kode / Nama Bank</p>
+                                                <p class="font-medium text-xl">{{ $selected_bank->kode_bank }} {{$selected_bank->nama_bank}}</p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="text-medium">Nama Pemilik</p>
+                                                <p class="font-medium text-xl">{{ $selected_bank->nama_pemilik }}</p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="text-medium">No Rekening</p>
+                                                <p class="font-medium text-xl">{{ $selected_bank->no_akun }}</p>
                                             </div>
                                         </div>
                                     </div>
