@@ -1,4 +1,4 @@
-<div wire:ignore.self class="modal fade " id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade " id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 <div class="modal-xl modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -12,7 +12,7 @@
         </div>
         <?php
         $result = array (
-        'total_with_shipping' => $total_with_shipping,
+        'total_with_shipping' => $this->total_with_shipping,
         'qty' => $jumlah ?? 0,
         'total_amount' => $total_amount ?? 0,
         );

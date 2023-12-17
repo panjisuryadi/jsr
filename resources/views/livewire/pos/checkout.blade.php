@@ -96,11 +96,6 @@
                     
                 </div>
 
-  @php
-    $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
-    $qty = Cart::instance($cart_instance);
-  @endphp
-
 <div class="flex flex-row justify-between gap-1 py-2">
 
 <div class="px-1 text-center justify-items-center">
@@ -122,7 +117,7 @@
 
 
 {{-- <div class="px-1 text-center justify-items-center">
-   <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
+   <button wire:loading.attr="disabled" wire:click.prevent="proceed" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
    <i class="hover:text-red-400 text-xl text-gray-500 bi bi-save"></i>
   <div class="mb-1 ml-1 lg:text-sm md:text-sm text-xl py-0 font-semibold">Simpan</div>
 </button>
@@ -183,7 +178,7 @@
     </div>  
 
  <div class="w-60 justify-end flex text-center items-center">
-     <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_uang($total_with_shipping) }}</span>
+     <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_uang($this->total_amount) }}</span>
        <i class="ml-3 text-2xl bi bi-chevron-right"></i>
     </div>
 
@@ -196,6 +191,6 @@
 
     {{--Checkout Modal--}}
 
-    @include('livewire.pos.includes.checkout-modal')
+    @include('sale::pos.checkout-modal')
 </div>
 

@@ -87,4 +87,8 @@ class Sale extends Model
             return $this->customer->customer_name;
         }
     }
+
+    public function manual(){
+        return $this->hasMany(SaleManual::class,'sale_id');
+    }
 }
