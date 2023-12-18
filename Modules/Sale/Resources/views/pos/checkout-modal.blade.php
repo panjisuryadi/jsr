@@ -141,6 +141,24 @@
                                             @endif
                                         </div>
                                         @endif
+
+                                        @if ($payment_method == 'edc')
+                                        <div class="form-group p-2">
+                                            <select class="form-control @error('edc_id') is-invalid @enderror" name="edc_id" id="edc_id" wire:model="edc_id">
+                                                <option value="" selected>Pilih EDC</option>
+                                                @foreach($edcs as $edc)
+                                                <option value="{{ $edc->id }}">
+                                                    {{ $edc->nama_rekening }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('edc_id'))
+                                            <span class="invalid feedback" role="alert">
+                                                <small class="text-danger">{{ $errors->first('edc_id') }}.</small class="text-danger">
+                                            </span>
+                                            @endif
+                                        </div>
+                                        @endif
                                     </div>
                                     @if ($payment_method == 'tunai')
                                     <div class="p-2 grid grid-cols-1 gap-4 my-2 mt-0">
@@ -187,10 +205,26 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @elseif ($payment_method == 'edc' && !empty($edc_id))
+                                    <div class="p-2 grid grid-cols-2 gap-4 my-2 mt-0">
+                                        @php
+                                            $selected_edc = $this->edcs->find($this->edc_id);
+                                        @endphp
+                                        <div class="px-1">
+                                            <div class="mb-3">
+                                                <p class="text-medium">Nama Bank</p>
+                                                <p class="font-medium text-xl">{{$selected_edc->nama_rekening}}</p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="text-medium">Kode EDC</p>
+                                                <p class="font-medium text-xl">{{ $selected_edc->kode_bank }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mb-5">
                                 <label for="note">Catatan
                                     <span class="small text-blue-500">(Jika diperlukan)</span>
                                 </label>
@@ -198,7 +232,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <!-- <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             {{-- batas --}}
                             <div class="px-3 py-3 sm:p-6 border border-2 mt-3 mb-3 shadow rounded rounde-xl ">
                                 <div class="flex flex-col items-start justify-between mb-6">
@@ -261,9 +295,9 @@
                                 @endforeach
 
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
-                    <ul class="nav nav-tabs text-md py-0 justify-center" id="myTab" role="tablist">
+                    <!-- <ul class="nav nav-tabs text-md py-0 justify-center" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active show" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="bi bi-wallet"></i>&nbsp;TUNAI</a>
                         </li>
@@ -278,7 +312,7 @@
                             <a class="nav-link payment" id="tunai-tab" data-toggle="tab" href="#tunai" role="tab" aria-controls="tunai" aria-selected="false"><i class="bi bi bi-credit-card"></i>&nbsp;EDC</a>
                         </li>
 
-                    </ul>
+                    </ul> -->
                 </form>
             </div>
             <div class="modal-footer">
