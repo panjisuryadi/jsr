@@ -253,6 +253,10 @@
         toastr.error('Produk belum dipilih');
     });
 
+    $("#createModal").on("show.bs.modal", function () {
+        $('.modal-backdrop').remove();
+    });
+
     function removeProduct(product){
         Swal.fire({
             title: `Hapus produk ${product.product_name} (${product.product_code}) ?`,
