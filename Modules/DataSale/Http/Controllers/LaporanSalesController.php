@@ -48,9 +48,4 @@ class LaporanSalesController extends Controller
             'module_icon', 'module_model'));
     }
 
-
-
-
-   
-
 }
