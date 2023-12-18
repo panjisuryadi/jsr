@@ -143,6 +143,7 @@ class Product extends Model implements HasMedia
             $produk_code = !empty(env('PRODUCT_CODE')) ? env('PRODUCT_CODE') : self::PRODUKCODE;
             $dateCode = $produk_code . $date;
             $lastOrder = self::select([DB::raw('MAX(products.product_code) AS last_code')])
+                ->withTrashed()
                 ->where('product_code', 'like', $dateCode . '%')
                 ->first();
             $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;

@@ -245,8 +245,8 @@
 <script>
     window.addEventListener('create-modal:close', event => {
         $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
         $('#createModal').modal('hide');
+        $('.modal-backdrop').remove();
         $('#imageprev').attr('src','');
         toastr.success('Berhasil Menambahkan Produk');
     });
