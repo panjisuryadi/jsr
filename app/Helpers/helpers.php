@@ -682,7 +682,7 @@ if (!function_exists('tanggal')) {
            $text .= $tanggal ." ". $bulan ." ". $tahun;
 
            if($tampil_jam) {
-                $text .= " " . date('h:i:s', strtotime($tgl));
+                $text .= " " . date('H:i:s', strtotime($tgl));
            }
 
            return $text;
