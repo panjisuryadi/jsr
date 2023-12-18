@@ -117,9 +117,6 @@ class Checkout extends Component
             'return_amount',
             'bank_id'
         ]);
-        if($value !== 'tunai'){
-            $this->paid_amount = $this->grand_total;
-        }
     }
 
 
@@ -340,6 +337,8 @@ class Checkout extends Component
     public function resetCart()
     {
         Cart::instance($this->cart_instance)->destroy();
+        $this->calculateTotal();
+        $this->calculateGrandTotal();
     }
 
     public function productSelected(Product $product)
@@ -661,7 +660,7 @@ class Checkout extends Component
         $data = [
             'date' => now()->format('Y-m-d'),
             'reference' => 'INV/'.$sale->reference,
-            'paid_amount' => $this->paid_amount,
+            'paid_amount' => ($this->payment_method === 'tunai')?$this->paid_amount:$this->grand_total,
             'payment_method' => $this->payment_method
         ];
         if($this->payment_method === 'tunai'){
