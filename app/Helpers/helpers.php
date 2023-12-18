@@ -662,7 +662,7 @@ if (!function_exists('keBulan')) {
 
 if (!function_exists('tanggal')) {
     date_default_timezone_set("Asia/Jakarta");
-        function tanggal($tgl, $tampil_hari=true){
+        function tanggal($tgl, $tampil_hari=true, $tampil_jam = false){
 
            $nama_hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu");
            $nama_bulan = array(1=>"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
@@ -680,6 +680,10 @@ if (!function_exists('tanggal')) {
            }
 
            $text .= $tanggal ." ". $bulan ." ". $tahun;
+
+           if($tampil_jam) {
+                $text .= " " . date('h:i:s', strtotime($tgl));
+           }
 
            return $text;
         }
