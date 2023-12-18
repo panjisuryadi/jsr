@@ -60,9 +60,8 @@ class Product extends Model implements HasMedia
 
     public function scopeAkses($query)
     {
-
         if(auth()->user()->isUserCabang()){
-            return $query->where('cabang_id', '=', Auth::user()->namacabang()->id);
+            $query->where('cabang_id', auth()->user()->namacabang()->id);
         }
     }
 
