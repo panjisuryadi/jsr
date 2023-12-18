@@ -12,6 +12,7 @@ use Modules\Sale\Entities\SalePayment;
 use Livewire\Component;
 use Modules\Cabang\Models\Cabang;
 use Modules\DataBank\Models\DataBank;
+use Modules\DataRekening\Models\DataRekening;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
@@ -28,7 +29,9 @@ class Checkout extends Component
     public $return_amount = 0;
     public $note = '';
     public $banks;
+    public $edcs;
     public $bank_id = '';
+    public $edc_id = '';
     public $listeners = ['productSelected',  'discountModalRefresh'];
 
     public $cart_instance;
@@ -115,11 +118,9 @@ class Checkout extends Component
         $this->reset([
             'paid_amount',
             'return_amount',
-            'bank_id'
+            'bank_id',
+            'edc_id'
         ]);
-        if($value !== 'tunai'){
-            $this->paid_amount = $this->grand_total;
-        }
     }
 
 
@@ -145,7 +146,8 @@ class Checkout extends Component
             ],
             'total_amount' => 'required|max:191',
             'grand_total' => 'required|max:191',
-            'bank_id' => 'required_if:payment_method,transfer'
+            'bank_id' => 'required_if:payment_method,transfer',
+            'edc_id' => 'required_if:payment_method,edc'
         ];
 
         foreach ($this->other_fees as $index => $fee) {
@@ -180,6 +182,7 @@ class Checkout extends Component
         $this->cabangs = Cabang::all();
         $this->cabang_id = auth()->user()->isUserCabang() ? auth()->user()->namacabang()->id : '';
         $this->banks = DataBank::all();
+        $this->edcs = DataRekening::all();
     }
 
 
@@ -340,6 +343,8 @@ class Checkout extends Component
     public function resetCart()
     {
         Cart::instance($this->cart_instance)->destroy();
+        $this->calculateTotal();
+        $this->calculateGrandTotal();
     }
 
     public function productSelected(Product $product)
@@ -661,13 +666,15 @@ class Checkout extends Component
         $data = [
             'date' => now()->format('Y-m-d'),
             'reference' => 'INV/'.$sale->reference,
-            'paid_amount' => $this->paid_amount,
+            'paid_amount' => ($this->payment_method === 'tunai')?$this->paid_amount:$this->grand_total,
             'payment_method' => $this->payment_method
         ];
         if($this->payment_method === 'tunai'){
             $data['return_amount'] = $this->return_amount;
         }elseif($this->payment_method === 'transfer'){
             $data['bank_id'] = $this->bank_id;
+        }elseif($this->payment_method === 'edc'){
+            $data['edc_id'] = $this->edc_id;
         }
 
         $sale->salePayments()->create($data);

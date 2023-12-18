@@ -9,6 +9,7 @@ class Filter extends Component
     public $categories;
     public $category;
     public $showCount;
+    public $scan_product;
 
     public function mount($categories) {
         $this->categories = $categories;
@@ -24,5 +25,9 @@ class Filter extends Component
 
     public function updatedShowCount() {
         $this->emitUp('showCount', $this->showCount);
+    }
+
+    public function updatedScanProduct() {
+        $this->emitUp('productScanned', $this->scan_product);
     }
 }

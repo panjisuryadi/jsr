@@ -15,7 +15,8 @@ class ProductList extends Component
 
     protected $listeners = [
         'selectedCategory' => 'categoryChanged',
-        'showCount'        => 'showCountChanged'
+        'showCount'        => 'showCountChanged',
+        'productScanned' => 'addToCart'
     ];
 
     public $categories;
@@ -52,6 +53,16 @@ class ProductList extends Component
     public function showCountChanged($value) {
         $this->limit = $value;
         $this->resetPage();
+    }
+
+    public function addToCart($value){
+        $product = Product::akses()->with('karat.penentuanHarga')
+                    ->where('status_id', ProductStatus::READY)
+                    ->where('product_code', $value)
+                    ->first();
+        if(!empty($product)){
+            $this->selectProduct($product);
+        }
     }
 
     public function selectProduct($product) {
