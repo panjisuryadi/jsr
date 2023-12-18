@@ -2,6 +2,7 @@
 
 namespace Modules\Product\Entities;
 
+use App\Models\LookUp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Product\Notifications\NotifyQuantityAlert;
