@@ -147,6 +147,7 @@
                         <th>Tanggal</th>
                         <th>Nomor</th>
                         <th>Nama</th>
+                        <th>Keterangan</th>
                         <th>Piutang JSR</th>
                         <th>Bayar</th>
                         <th>Saldo</th>
@@ -159,11 +160,23 @@
                     @forelse ($rekapan_emas as $item)
                         @php 
                             $saldo += ($item->total_jumlah - $item->jumlah_cicilan);
+                            $keterangan = 'Setoran';
+                            if($item->tipe_emas != 'setoran' && !empty($item->berat)){
+                                if($item->tipe_emas == 'tipe_nominal'){
+                                    $keterangan = 'Bayar dengan nominal Rp. ' . rupiah($item->nominal);
+                                }else if($item->tipe_emas == 'lantakan'){
+                                    $keterangan = 'Bayar dengan ' .label_case($item->tipe_emas) . ' ' . formatBerat($item->jumlah_cicilan) . ' gr';
+                                }else{
+                                    $keterangan = 'Bayar dengan ' .label_case($item->tipe_emas) . ' ' . ($item->tipe_emas == 'rongsok' ? $item->karat_name . ' ' : '') . formatBerat($item->berat) . ' gr';
+                                }
+
+                            }
                         @endphp
                         <tr>
                             <td>{{ tanggal($item->tgl_transaksi, true, true) }} </td>
                             <td>{{ $item->invoice_no }}</td>
                             <td>{{ $item->customer_name . ' / ' . $item->market }}</td>
+                            <td> {{ $keterangan }} </td>
                             <td> {{ formatBerat($item->total_jumlah) }} gr</td>
                             <td> {{ formatBerat($item->jumlah_cicilan) }} gr</td>
                             <td> {{ formatBerat($saldo) }} gr </td>
@@ -184,6 +197,7 @@
                         <th>Tanggal</th>
                         <th>Nomor</th>
                         <th>Nama</th>
+                        <th>Keterangan</th>
                         <th>Piutang JSR</th>
                         <th>Bayar</th>
                         <th>Saldo</th>
@@ -196,11 +210,23 @@
                     @forelse ($rekapan_nominal as $item)
                         @php 
                             $saldo += ($item->total_nominal - $item->nominal);
+                            $keterangan = '';
+                            $keterangan = 'Setoran';
+                            if($item->tipe_emas != 'setoran' && !empty($item->berat)){
+                                if($item->tipe_emas == 'tipe_nominal'){
+                                    $keterangan = 'Bayar dengan nominal Rp. ' . rupiah($item->nominal);
+                                }else if($item->tipe_emas == 'lantakan'){
+                                    $keterangan = 'Bayar dengan ' .label_case($item->tipe_emas) . ' ' . formatBerat($item->jumlah_cicilan) . ' gr';
+                                }else{
+                                    $keterangan = 'Bayar dengan ' .label_case($item->tipe_emas) . ' ' . ($item->tipe_emas == 'rongsok' ? $item->karat_name . ' ' : '') . formatBerat($item->berat) . ' gr';
+                                }
+                            }
                         @endphp
                         <tr>
                             <td>{{ tanggal($item->tgl_transaksi, true, true) }} </td>
                             <td>{{ $item->invoice_no }}</td>
                             <td>{{ $item->customer_name . ' / ' . $item->market }}</td>
+                            <td> {{ $keterangan }} </td>
                             <td>Rp. {{ rupiah($item->total_nominal) }}</td>
                             <td>Rp. {{ rupiah($item->nominal) }}</td>
                             <td>Rp. {{ rupiah($saldo) }}</td>

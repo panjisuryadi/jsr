@@ -57,6 +57,8 @@ class LaporanSales extends Component
                 DB::raw("'0' as jumlah_cicilan"),
                 DB::raw("'setoran' as tipe_emas"),
                 DB::raw("'0' as nominal"),
+                DB::raw("'' as karat_name"),
+                DB::raw("'0' as berat"),
                 'customer_sales.customer_name',
                 'customer_sales.market',
             )
@@ -96,6 +98,8 @@ class LaporanSales extends Component
                 'penjualan_sales_payment_detail.jumlah_cicilan',
                 'penjualan_sales_payment_detail.tipe_emas',
                 'penjualan_sales_payment_detail.nominal',
+                'karats.name as karat_name',
+                'penjualan_sales_payment_detail.berat',
                 'customer_sales.customer_name',
                 'customer_sales.market',
             )
@@ -107,6 +111,9 @@ class LaporanSales extends Component
             })
             ->rightJoin('penjualan_sales_payment_detail', function($q) {
                 $q->on('penjualan_sales_payment_detail.payment_id', 'penjualan_sales_payment.id');
+            })
+            ->leftJoin('karats', function($q) {
+                $q->on('penjualan_sales_payment_detail.karat_id', 'karats.id');
             })
             ->leftJoin('customer_sales', function($q) {
                 $q->on('customer_sales.id', 'ps.konsumen_sales_id');
