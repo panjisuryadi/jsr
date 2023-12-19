@@ -102,6 +102,11 @@
                                             <div class="form-group">
                                                 <label for="note">Grand Total</label> <span class="text-danger small" id="message"></span>
                                                 <input id="final" type="text" class="form-control text-black text-3xl" name="final" value="{{ $this->grand_total_text}}" disabled>
+                                                @if ($errors->has('grand_total'))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first('grand_total') }}.</small class="text-danger">
+                                                </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -166,6 +171,11 @@
                                             <div class="form-group">
                                                 <label>Grand Total</label> <span class="text-danger small" id="message"></span>
                                                 <input type="text" class="form-control text-black text-xl" value="{{ $this->grand_total_text}}" disabled>
+                                                @if ($errors->has('grand_total'))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first('grand_total') }}.</small class="text-danger">
+                                                </span>
+                                                @endif
                                             </div>
                                             <div class="form-group">
                                                 <?php
