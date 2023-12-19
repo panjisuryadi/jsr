@@ -5,6 +5,7 @@ namespace Modules\Adjustment\Entities;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 
 class AdjustmentSetting extends Model
 {
@@ -30,13 +31,12 @@ class AdjustmentSetting extends Model
         static::addGlobalScope('socabang', function (Builder $builder) {
         
             $cabang = null;
-            if(auth()->user()->isUserCabang()){
+            if(Auth::user()->isUserCabang()){
                 $cabang = auth()->user()->namacabang()->id;
             }
             $builder->where(
                 [
                     'cabang_id' => $cabang,
-                    'created_by' => auth()->user()->id,
                     'status' => 1
                 ]);
         });

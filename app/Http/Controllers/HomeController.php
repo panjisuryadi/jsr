@@ -20,13 +20,6 @@ use App\Models\ActivityLog;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        if(AdjustmentSetting::exists()){
-            toast('Stock Opname sedang Aktif!', 'error');
-            return redirect()->back();
-        }
-    }
 
     public function index(Request $request){
 

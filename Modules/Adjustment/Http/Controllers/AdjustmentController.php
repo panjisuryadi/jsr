@@ -497,7 +497,7 @@ class AdjustmentController extends Controller
     public function getsetting2(){
         $status = 0;
         $setting = AdjustmentSetting::first();
-        if(isset($setting)){
+        if($setting){
             $status = $setting->status;
         }
 
