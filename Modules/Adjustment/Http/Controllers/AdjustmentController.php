@@ -346,14 +346,30 @@ class AdjustmentController extends Controller
         // $id = explode(',',$request->value);
         $active_adjustment = $request->value;
         // return response()->json($id);
-        $status = AdjustmentSetting::first();
-        if(empty($status)){
-            $status = new AdjustmentSetting;
+        // $status = AdjustmentSetting::first();
+        // if(empty($status)){
+        //     $status = new AdjustmentSetting;
+        // }
+        // $status->location = json_encode([$active_adjustment]);
+        // $status->status = 1;
+        // $status->period = Carbon::now();
+        // $status->save();
+
+        $cabang = null;
+        if(auth()->user()->isUserCabang()){
+            $cabang = auth()->user()->namacabang()->id;
         }
-        $status->location = json_encode([$active_adjustment]);
-        $status->status = 1;
-        $status->period = Carbon::now();
-        $status->save();
+        AdjustmentSetting::updateOrCreate(
+            [
+                'location' => json_encode([$active_adjustment]), 
+                'cabang_id' => $cabang,
+                'created_by' => auth()->user()->id
+            ],
+            [
+                'status' => 1, 
+                'period' => Carbon::now()
+            ]
+        );
 
         return response()->json([
             'status' => 'success',
