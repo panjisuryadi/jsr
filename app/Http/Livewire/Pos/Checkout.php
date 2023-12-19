@@ -135,7 +135,7 @@ class Checkout extends Component
                 'required_if:payment_method,tunai',
                 function ($attribute, $value, $fail) {
                     if ($this->payment_method === 'tunai') {
-                        if (empty($value)) {
+                        if (empty(intval($value))) {
                             $fail('Wajib diisi');
                         }
                         if ($value < $this->grand_total) {
@@ -144,8 +144,8 @@ class Checkout extends Component
                     }
                 },
             ],
-            'total_amount' => 'required|max:191',
-            'grand_total' => 'required|max:191',
+            'total_amount' => 'required',
+            'grand_total' => 'gt:0',
             'bank_id' => 'required_if:payment_method,transfer',
             'edc_id' => 'required_if:payment_method,edc'
         ];
@@ -318,7 +318,6 @@ class Checkout extends Component
             "total_amount" => $this->total_amount,
             "paid" => $this->total_amount
         ];
-        // dd($cart);
         $this->emit('cartAdded', $cart);
         $this->dispatchBrowserEvent(
             'showCheckoutModal',
