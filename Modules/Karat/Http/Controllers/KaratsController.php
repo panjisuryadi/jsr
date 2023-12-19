@@ -317,7 +317,7 @@ public function update(Request $request, $id)
                 'harga_jual' => 0
             ];
             
-            $penentuan_harga = PenentuanHarga::where('karat_id', $data->parent_id)->first();
+            $penentuan_harga = PenentuanHarga::where('karat_id', $data->id)->first();
             if(!$penentuan_harga){
                 $penentuan_harga = $data->penentuanHarga()->create($dataKarat);
                 $dataKarat['karat_id'] = $data->id;
