@@ -202,10 +202,12 @@ jQuery.noConflict();
                       $('#ResponseInput').html(data.success);
                       $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                       $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
-                      setTimeout(function(){ reloadTable(); }, 1000);
-                      setTimeout(function () {
-                              $('#ModalGue').modal('hide');
-                            }, 3000);
+                      location.reload()
+                      //function below is deprecated
+                    //   setTimeout(function(){ reloadTable(); }, 1000);
+                    //   setTimeout(function () {
+                    //           $('#ModalGue').modal('hide');
+                    //         }, 3000);
 
                  }else{
                         printErrorMsg(data.error);

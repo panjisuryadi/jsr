@@ -306,6 +306,28 @@ public function update(Request $request, $id)
         $coef = $request->input('coef');
         $data->coef = $coef;
         $data->save();
+        if(empty($data->parent_id)){
+            $dataKarat = [
+                'karat_id' => $data->parent_id,
+                'user_id' => auth()->id(),
+                'tgl_update' => now(),
+                'harga_emas' => 0,
+                'harga_modal' => 0,
+                'margin' => 0,
+                'harga_jual' => 0
+            ];
+            
+            $penentuan_harga = PenentuanHarga::where('karat_id', $data->parent_id)->first();
+            if(!$penentuan_harga){
+                $penentuan_harga = $data->penentuanHarga()->create($dataKarat);
+                $dataKarat['karat_id'] = $data->id;
+                $dataKarat['updated'] = 1;
+                $dataKarat['created_by'] = auth()->user()->name;
+                unset($dataKarat['tgl_update']);
+                $dataKarat['tanggal'] = now();
+                $penentuan_harga->history()->create($dataKarat);
+            }
+        }
         return response()->json(['success'=>'Coef Sukses diupdate.']);
  }
 
