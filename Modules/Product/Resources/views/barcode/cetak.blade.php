@@ -43,7 +43,7 @@ div#kanan {
     {{$product->product_name}}
   </div>
   <div style="font-size: 2rem;">
-{{$product->product_item[0]->berat_total}} Gr
+{{!empty($product->product_item[0]->berat_total) ?? 0}} Gr
 </div>
 <div style="font-size: 0.9rem;">
   {{$product->product_code}}
@@ -58,7 +58,7 @@ div#kanan {
     {{$product->product_name}}
   </div>
   <div style="font-size: 2rem;">
-{{$product->product_item[0]->berat_total}} Gr
+{{$product->product_item[0]->berat_total ?? 0 }} Gr
 </div>
 <div style="font-size: 0.9rem;">
   {{$product->product_code}}
