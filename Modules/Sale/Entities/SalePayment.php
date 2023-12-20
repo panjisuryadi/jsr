@@ -5,6 +5,7 @@ namespace Modules\Sale\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
+use Modules\DataBank\Models\DataBank;
 
 class SalePayment extends Model
 {
@@ -31,5 +32,9 @@ class SalePayment extends Model
 
     public function scopeBySale($query) {
         return $query->where('sale_id', request()->route('sale_id'));
+    }
+
+    public function bank() {
+        return $this->belongsTo(DataBank::class, 'bank_id', 'id');
     }
 }
