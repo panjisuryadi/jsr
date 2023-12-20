@@ -133,6 +133,12 @@
                 //     $('#discount').val(discount);
                 // });
             });
+            window.addEventListener('cart:empty', event => {
+                toastr.error(event.detail.message);
+            });
+            window.addEventListener('total_payment_amount', event => {
+                toastr.error(event.detail.message);
+            });
         });
     </script>
 
