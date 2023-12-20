@@ -8,7 +8,7 @@
                         <div class="absolute inset-0 flex items-center">
                             <div class="w-full border-b border-gray-300"></div>
                         </div>
-
+                        
 
                         <div class="relative flex justify-left">
                             <span class="font-semibold tracking-widest bg-white pl-0 pr-3 text-sm uppercase text-dark">{{__('Goods Receipts')}} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="{{__('Goods Receipts')}}"></i>
@@ -218,7 +218,7 @@
                                             @if ($key==0)
                                             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                             @endif
-                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:change="calculateTotalBeratKotor()" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
 
                                             @if ($errors->has($field_name))
                                             <span class="invalid feedback" role="alert">
