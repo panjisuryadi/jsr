@@ -158,6 +158,11 @@ public function index_data(Request $request)
                                      ' . @$data->customer_name . '</div>';
                                 return $tb;
                             })
+                            ->editColumn('grand_total_amount', function ($data) {
+                                $tb = '<div class="text-center font-bold"> 
+                                        ' . format_uang($data->grand_total_amount) . '</div>';
+                                   return $tb;
+                               })
 
                         ->addColumn('status', function ($data) {
                             $module_name = $this->module_name;
@@ -179,7 +184,7 @@ public function index_data(Request $request)
                                      'sales', 
                                      'cabang', 
                                      'status', 
-                                     'total_amount', 
+                                     'grand_total_amount', 
                                      'action', 
                                      'name'])
                                 ->make(true);

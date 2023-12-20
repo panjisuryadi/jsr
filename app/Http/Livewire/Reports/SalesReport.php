@@ -75,7 +75,7 @@ class SalesReport extends Component
                 ->orderBy('date', 'desc');
         
         $this->sales_data = $sales->clone()->get();
-        $total_nominal = $this->sales_data->sum('total_amount');
+        $total_nominal = $this->sales_data->sum('grand_total_amount');
         return view('livewire.reports.sales-report', [
             'sales' => $sales->paginate(10),
             'total_nominal' => $total_nominal
@@ -93,7 +93,7 @@ class SalesReport extends Component
         $sales = $this->sales_data;
         $cabang = $this->cabang_text;
         $period = $this->period_text;
-        $total_nominal = $this->sales_data->sum('total_amount');
+        $total_nominal = $this->sales_data->sum('grand_total_amount');
         $pdf = PDF::loadView('reports::sales.pdf',compact('filename','sales','cabang','period','total_nominal'))->setPaper('a4', 'landscape')->output();
         $base64Pdf = base64_encode($pdf);
         $dataUri = 'data:application/pdf;base64,' . $base64Pdf;
@@ -105,7 +105,7 @@ class SalesReport extends Component
         $this->validate();
         abort_if(! in_array($format,['xlsx']), Response::HTTP_NOT_FOUND);
         $filename = "Laporan Penjualan " . $this->period_text . " (" . $this->cabang_text . ")";
-        $total_nominal = $this->sales_data->sum('total_amount');
+        $total_nominal = $this->sales_data->sum('grand_total_amount');
         return Excel::download(new SaleExport($this->sales_data,$this->cabang_text,$this->period_text,$total_nominal, $filename), $filename. '.' . $format);
     }
 
