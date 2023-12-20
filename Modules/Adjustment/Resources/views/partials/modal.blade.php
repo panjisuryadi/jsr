@@ -16,9 +16,13 @@
                     <div class="col-12 form-group">
                             <label for="">Pilih Lokasi Stock Opname</label> <br>
                         <select id="adjustment-location" class="form-control">
-                            <option value="">Pilih Lokasi</option>
+                            <option value="">Pilih Lokasi </option>
                         @foreach (\Modules\Adjustment\Entities\AdjustmentSetting::LOCATION as $key => $value)
+                            @if(auth()->user()->isUserCabang() && $key == '7')
                             <option value="{{ $key }}">{{ $value }}</option>
+                            @elseif(!auth()->user()->isUserCabang())
+                            <option value="{{ $key }}">{{ $value }}</option>
+                            @endif
                         @endforeach
                         </select>
                     </div>
