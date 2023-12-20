@@ -139,13 +139,18 @@
         </tr>
 
         <tr>
+            <td colspan = '5'><div style='text-align:right'>Total : </div></td>
+            <td style='text-align:right'>Rp {{ number_format($total) }}</td>
+        </tr>
+
+        <tr>
             <td colspan = '5'><div style='text-align:right'>Diskon : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->dicount_amount) }}</td>
         </tr>
 
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Total : </div></td>
-            <td style='text-align:right'>Rp {{ number_format($total) }}</td>
+            <td colspan = '5'><div style='text-align:right'>Grand Total : </div></td>
+            <td style='text-align:right'>Rp {{ number_format($sale->grand_total_amount) }}</td>
         </tr>
 
 
