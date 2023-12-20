@@ -114,8 +114,8 @@ class Penerimaan extends Component
         $this->resetErrorBag();
         unset($this->inputs[$i]);
         $this->inputs = array_values($this->inputs);
-        $this->calculateTotalBeratReal();
-        // $this->calculateTotalBeratKotor();
+        // $this->calculateTotalBeratReal();
+        $this->calculateTotalBeratKotor();
     }
 
     public function render()
