@@ -145,7 +145,7 @@
 
         <tr>
             <td colspan = '5'><div style='text-align:right'>Diskon : </div></td>
-            <td style='text-align:right'>Rp {{ number_format($sale->dicount_amount) }}</td>
+            <td style='text-align:right'>Rp {{ number_format($sale->discount_amount) }}</td>
         </tr>
 
         <tr>
