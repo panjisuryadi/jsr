@@ -121,7 +121,7 @@
                                     @if(!empty($sale->salePayments))
                                     @foreach($sale->salePayments as $row)
                                         @php
-                                            $bank = $row->bank->nama_pemilik ?? '';
+                                            $bank = $row->bank->nama_bank ?? '';
                                         @endphp
                                         <tr>
                                             <td class="left text-gray-600">
