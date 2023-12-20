@@ -85,12 +85,12 @@
 <table class="invoice-items">
     <thead>
         <tr>
-            <th>#</th>
-            <th style="width:5%;">banyaknya</th>
-            <th>nama barang</th>
-            <th>kode</th>
-            <th>berat (gr)</th>
-            <th>Harga</th>
+            <th style="width:5%;" class ="text-center">#</th>
+            <th style="width:5%;" class ="text-center">banyak nya</th>
+            <th class ="text-center">nama barang</th>
+            <th class ="text-center">kode</th>
+            <th class ="text-center">berat (gr)</th>
+            <th class ="text-center">Harga</th>
         </tr>
     </thead>
     <tbody>
@@ -107,7 +107,8 @@
                 <td style="text-align:center;vertical-align:bottom">
                     {{ $saleDetail->quantity }}</td>
                 <td style="text-align:center;vertical-align:bottom">
-                    {{ $saleDetail->product->product_name }} </td>
+                    {{ $saleDetail->product->product_name }} 
+                </td>
                 <td style="text-align:center;vertical-align:bottom">
                     {{ $saleDetail->product_code }}</td>
                 <td style="text-align:center;vertical-align:bottom">
@@ -138,8 +139,14 @@
         </tr>
 
         <tr>
+            <td colspan = '5'><div style='text-align:right'>Diskon : </div></td>
+            <td style='text-align:right'>Rp {{ number_format($sale->dicount_amount) }}</td>
+        </tr>
+
+        <tr>
             <td colspan = '5'><div style='text-align:right'>Total : </div></td>
-            <td style='text-align:right'>Rp {{ number_format($total) }}</td></tr>
+            <td style='text-align:right'>Rp {{ number_format($total) }}</td>
+        </tr>
 
 
     </tfoot>

@@ -117,6 +117,12 @@
                                 <table style="width: 100% !important;" 
                                 class="table md:table-sm lg:table-sm">
                                     <tbody>
+                                 
+                                        <tr>
+                                            <td class="left text-gray-600">
+                                                <div class="mt-1">Grand Total</div></td>
+                                            <td class="right text-xl text-blue-500"><strong>{{ format_currency($sale->discount_amount) }}</strong></td>
+                                        </tr>
                                     
                                     @if(!empty($sale->salePayments))
                                     @foreach($sale->salePayments as $row)
