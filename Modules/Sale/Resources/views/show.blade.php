@@ -127,7 +127,7 @@
                                         <tr>
                                             <td class="left text-gray-600">
                                                 <div class="mt-1">Diskon</div></td>
-                                            <td class="right text-md text-blue-500"><strong>Rp. {{ number_format($sale->discount_amount) }}</strong></td>
+                                            <td class="right text-md text-blue-500"><strong>{{ format_currency($sale->discount_amount) }}</strong></td>
                                         </tr>
                                     
                                     @if(!empty($sale->salePayments))
