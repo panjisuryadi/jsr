@@ -1,0 +1,27 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ production ]
+  pull_request:
+    branches: [ production ]
+
+  jobs:
+     laravel-tests:
+     runs-on: ubuntu-latest
+       steps:
+    - name: Deploy to production
+      uses: appleboy/ssh-action@master
+      with:
+         host: ${{ secrets.SSH_HOST }}
+         username: ${{ secrets.SSH_USERNAME }}
+         key: ${{ secrets.SSH_PRIVATE_KEY }}
+         port: ${{ secrets.SSH_PORT }}
+         script: |
+          cd /home/pos/public_html
+          git pull origin production
+          composer update
+          php artisan migrate
+          composer clear-all
+          sudo chmod 777 -R storage
+          php artisan optimize:clear
