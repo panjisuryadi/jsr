@@ -12,7 +12,7 @@
 
    <style>
    @page {
-         size: 7.7cm 2.4cm;
+         size: 8.47cm 2.64cm;
           margin: 0;
         }
   </style>
@@ -38,17 +38,17 @@ div#kanan {
 
         <td class ="text-dark" style="width:40%;border:none !important;text-align: left;">
           <div style="relative">
-            <div style="position:absolute; top:1.8rem;font-size: 0.9rem;left:2.3rem;">
+            <div style="position:absolute; top:1.2rem;font-size: 0.9rem;left:2.3rem;">
               <img width="27" src="data:image/png;base64, {!! $barcode !!}">   
             </div>
-            <div style="position:absolute; bottom:1rem;left:1.6rem;">
-              <div style="font-size: 0.45rem; font-weight: bold;" class="qr-dark">
+            <div style="position:absolute; bottom:1rem;left:2.3rem;">
+              <div style="font-size: 0.6rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_name}}
               </div>
               <div style="font-size: 1rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_item[0]->berat_total ?? 0}} Gr
               </div>
-              <div style="font-size: 0.45rem; font-weight: bold;" class="qr-dark">
+              <div style="font-size: 0.6rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_code}}
               </div>
             </div>
@@ -57,18 +57,18 @@ div#kanan {
 
         <td style="border:none !important;">
           <div style="relative">
-            <div class="tf" style="position:absolute; top:1rem;right:3.7rem;">
-              <div style="font-size: 0.45rem; font-weight: bold;" class="qr-dark">
+            <div class="tf" style="position:absolute; top:1rem;right:3.2rem;">
+              <div style="font-size: 0.6rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_name}}
               </div>
               <div style="font-size: 1rem;  font-weight: bold;" class="qr-dark">
                   {{$product->product_item[0]->berat_total ?? 0 }} Gr
               </div>
-              <div style="font-size: 0.45rem; font-weight: bold;" class="qr-dark">
+              <div style="font-size: 0.6rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_code}}
               </div>
             </div>
-            <div style="position:absolute; bottom:1.8rem;right:2.3rem;">
+            <div style="position:absolute; bottom:1.2rem;right:3.2rem;">
               <img class="tf" width="27" src="data:image/png;base64, {!! $barcode !!}">   
             </div>
           </div>   
