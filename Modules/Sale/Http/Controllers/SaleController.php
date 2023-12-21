@@ -387,6 +387,9 @@ public function store_ajax(StoreSaleRequest $request)
             'sale' => $sale,
         ])->setPaper([20, 10, 300, 400], 'mm');
 
+
+
+
         return $pdf->stream('sale-'. $sale->reference .'.pdf');
     }
 
@@ -397,6 +400,18 @@ public function store_ajax(StoreSaleRequest $request)
         $pdf = PDF::loadView('sale::print', [
             'sale' => $sale,
             'customer' => $customer,
+        ])->setPaper('a4');
+
+        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+    }
+
+
+
+  public function generateInvoice($id) {
+   // 210 x 297
+        $sale = Sale::findOrFail($id);
+        $pdf = PDF::loadView('sale::print', [
+            'sale' => $sale,
         ])->setPaper('a4');
 
         return $pdf->stream('sale-'. $sale->reference .'.pdf');
@@ -538,17 +553,6 @@ public function generateInvoice_0ljg($id)
   //       return $pdf->stream('sale-'. $sale->reference .'.pdf');
      return view('sale::print', compact('sale'));
 }
-
-
-
-  public function generateInvoice($id) {
-        $sale = Sale::findOrFail($id);
-        $pdf = PDF::loadView('sale::print', [
-            'sale' => $sale,
-        ])->setPaper('a4');
-
-        return $pdf->stream('sale-'. $sale->reference .'.pdf');
-    }
 
 
 
