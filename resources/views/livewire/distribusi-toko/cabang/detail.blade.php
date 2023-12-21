@@ -113,9 +113,9 @@
                                     <td class="text-left font-semibold">
                                         <div class="p-3">
                                             <p>Nama Produk : {{ $row->product?->product_name }}</p>
-                                            <p>Kategori : {{ $row->product->category?->category_name }}</p>
-                                            <p>Karat Emas : {{ $row->product->karat?->label }}</p>
-                                            <p>Berat Emas : {{ $row->product?->berat_emas }}</p>
+                                            <p>Kategori : {{ $row->product->category->category_name ?? '-' }}</p>
+                                            <p>Karat Emas : {{ $row->product->karat->label ?? '-'}}</p>
+                                            <p>Berat Emas : {{ $row->product->berat_emas ?? '0'}}</p>
     
                                             @if(!empty($berlian_info))
                                             <br>
