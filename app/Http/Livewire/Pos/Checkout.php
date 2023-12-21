@@ -458,19 +458,14 @@ class Checkout extends Component
         ];
         $this->emit('cartAdded', $cart);
         $cart_items = Cart::instance($this->cart_instance)->content();
-        if(count($cart_items)){
-            $this->dispatchBrowserEvent(
-                'showCheckoutModal',
-                [
-                    'customer_id' => $this->customer_id
-    
-                ]
-            );
-        }else{
-            $this->dispatchBrowserEvent('cart:empty',[
-                'message' => 'Cart Kosong, Pilih Produk'
-            ]);
-        }
+        $this->dispatchBrowserEvent(
+            'showCheckoutModal',
+            [
+                'customer_id' => $this->customer_id
+
+            ]
+        );
+        
     }
 
     public function selectcartModal()
