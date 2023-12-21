@@ -138,7 +138,7 @@
                             <option value="" selected disabled>Select Karat</option>
                             @foreach($dataKarat as $karat)
                             <option value="{{$karat->id}}">
-                                {{$karat->name}} | {{$karat->kode}}
+                                {{$karat->label}}
                             </option>
                             @endforeach
                         </select>
