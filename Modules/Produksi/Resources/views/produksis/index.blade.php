@@ -80,7 +80,6 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                                     <th style="width: 5%!important;">NO</th>
                                     <th style="width: 9%!important;">{{ Label_case('image') }}</th>
                                     <th>{{ Label_case('product_name') }}</th>
-                                    <th class="text-center">{{ Label_case('Cabang') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Karat') }}</th>
 
 
@@ -168,11 +167,7 @@ $status = Modules\Product\Models\ProductStatus::READY_OFFICE;
         }, {
             data: 'product_name',
             name: 'product_name'
-        },
-        {
-            data: 'cabang',
-            name: 'cabang'
-        }, {
+        },{
             data: 'karat',
             name: 'karat'
         }, {
