@@ -94,6 +94,7 @@
                         <td class="text-center font-semibold"> {{ucwords(@$row->type_label)}}</td>
                         <td class="font-semibold"> 
                             <p>Nama Produk : {{@$row->product->product_name}}</p>
+                            <p>Kode Produk : {{@$row->product->product_code}}</p>
                             <p>Karat : {{@$row->product->karat->name}}</p>
                             <p>Berat : {{@$row->product->berat_emas}} gr</p>
                         </td>
