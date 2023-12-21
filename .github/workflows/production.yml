@@ -13,10 +13,10 @@ on:
     - name: Deploy to production
       uses: appleboy/ssh-action@master
       with:
-         host: ${{ secrets.SSH_HOST }}
+         host: ${{ secrets.SSH_HOST_PROD }}
          username: ${{ secrets.SSH_USERNAME }}
-         key: ${{ secrets.SSH_PRIVATE_KEY }}
-         port: ${{ secrets.SSH_PORT }}
+         key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
+         port: ${{ secrets.SSH_PORT_PROD }}
          script: |
           cd /home/pos/public_html
           git pull origin production
@@ -25,3 +25,13 @@ on:
           composer clear-all
           sudo chmod 777 -R storage
           php artisan optimize:clear
+
+        #-----------------------------------------
+        #php artisan optimize:clear
+        #php artisan migrate:fresh --seed
+        #sudo chmod 777 -R storage
+        #sudo chmod 777 -R bootstrap/cache
+
+        #-----------------------------------------
+        #php artisan migrate
+        #php artisan optimize:clear
