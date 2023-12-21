@@ -137,7 +137,7 @@
                     
                     ?>
                      {{-- {{ $imagePath }} --}}
-                  <img src="{{ $imagePath }}"/>
+                  <img width="200" src="{{ $imagePath }}"/>
 
 
                   </td>
