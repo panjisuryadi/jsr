@@ -84,7 +84,7 @@
     
 <td width="70%">
     
-  <table width="100%">
+  <table>
                     <tr>
                         <td width="30%">Tanggal</td>
                         <td width="2%">:</td>
