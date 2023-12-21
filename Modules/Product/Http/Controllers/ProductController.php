@@ -993,7 +993,7 @@ public function getPdf($id) {
         $product = $module_model::where('id', $id)->first();
        // $customPaper = 'A4';
         $customPaper = array(0,0,120,420);
-        $barcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate('string'));
+        $barcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($product->product_code));
           $pdf = PDF::loadView('product::barcode.cetak', compact('product','barcode'))
           ->setPaper($customPaper, 'landscape');
            return $pdf->stream('barcodes-'. $product->product_code .'.pdf');
