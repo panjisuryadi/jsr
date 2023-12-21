@@ -109,6 +109,7 @@
     <thead>
         <tr>
             <th>#</th>
+            <th style="width:10%;">Photo</th>
             <th style="width:5%;">Qty</th>
             <th>Barang</th>
             <th>kode</th>
@@ -127,8 +128,30 @@
         <tr>
 
             <td>{{ $no++ }}</td>
+
+
+
+                <td style="text-align:center;vertical-align:bottom">
+                   <?php
+                     $image = $saleDetail->product->images;
+                    if (empty($image)) {
+                        $imagePath = public_path('images/fallback_product_image.png');
+                     } else {
+                        $imagePath = public_path('storage/uploads/'.$image.'');
+                     }
+                    
+                    ?>
+                     {{-- {{ $imagePath }} --}}
+                  <img width="30" src="{{ $imagePath }}"/>
+
+
+
+                </td>
+
                 <td style="text-align:center;vertical-align:bottom">
                     {{ $saleDetail->quantity }}</td>
+
+
                 <td style="text-align:center;vertical-align:bottom">
                     {{ $saleDetail->product->product_name }} </td>
                 <td style="text-align:center;vertical-align:bottom">
@@ -148,7 +171,7 @@
         @endphp
         @empty
         <tr>
-            <td colspan="5" class="text-center">Tidak ada data</td>
+            <td colspan="6" class="text-center">Tidak ada data</td>
         </tr>
         @endforelse
 
@@ -156,22 +179,22 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Qty : </div></td>
+            <td colspan = '6'><div style='text-align:right'>Qty : </div></td>
             <td style='text-align:right'>{{ number_format($totalQty) }} Item</td>
         </tr>
 
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Total : </div></td>
+            <td colspan = '6'><div style='text-align:right'>Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($total) }}</td>
         </tr>
 
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Diskon : </div></td>
+            <td colspan = '6'><div style='text-align:right'>Diskon : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->discount_amount) }}</td>
         </tr>
 
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Grand Total : </div></td>
+            <td colspan = '6'><div style='text-align:right'>Grand Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->grand_total_amount) }}</td>
         </tr>
 
