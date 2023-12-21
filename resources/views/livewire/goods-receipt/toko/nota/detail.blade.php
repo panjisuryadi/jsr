@@ -21,9 +21,9 @@
                         <h5 class="mb-2 border-bottom pb-2">Detail Nota:</h5>
                         <div>Invoice: <strong>{{ $nota->invoice }}</strong></div>
                         <div>Tanggal: <strong> {{ \Carbon\Carbon::parse($nota->date)->format('d M, Y') }}</strong></div>
-                        <div>Cabang: <strong>{{ $nota->cabang->name }}</strong></div>
+                        <div>Cabang: <strong>{{ $nota->cabang?->name }}</strong></div>
                         <div>
-                            Dibuat oleh: <strong>{{ $nota->pic->name }}</strong>
+                            Dibuat oleh: <strong>{{ $nota->pic?->name }}</strong>
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3 mb-md-0">
