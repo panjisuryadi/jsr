@@ -98,7 +98,7 @@
                                         $berlian_info .= ' '.$shape . ' '. $item->qty . ': ' . (float)$item->karatberlians . ' ct ';
                                     }
                                 }
-                                $image = $row->product->images;
+                                $image = $row->product?->images;
                                 $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                 @endphp
                                 <tr>
@@ -112,10 +112,10 @@
                                     </td>
                                     <td class="text-left font-semibold">
                                         <div class="p-3">
-                                            <p>Nama Produk : {{ $row->product->product_name }}</p>
-                                            <p>Kategori : {{ $row->product->category->category_name }}</p>
-                                            <p>Karat Emas : {{ $row->product->karat->label }}</p>
-                                            <p>Berat Emas : {{ $row->product->berat_emas }}</p>
+                                            <p>Nama Produk : {{ $row->product?->product_name }}</p>
+                                            <p>Kategori : {{ $row->product->category->category_name ?? '-' }}</p>
+                                            <p>Karat Emas : {{ $row->product->karat->label ?? '-'}}</p>
+                                            <p>Berat Emas : {{ $row->product->berat_emas ?? '0'}}</p>
     
                                             @if(!empty($berlian_info))
                                             <br>
@@ -125,7 +125,7 @@
                                     </td>
                                     <td class="text-left font-semibold">
                                         <div class="p-3">
-                                            <p>{{ $row->product->product_code }}</p>
+                                            <p>{{ $row->product?->product_code }}</p>
                                         </div>  
                                     </td>
                                 </tr>

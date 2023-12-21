@@ -495,7 +495,7 @@ class Checkout extends Component
 
 
         if (empty($product->product_price) && empty($product->karat->penentuanHarga->harga_jual)) {
-            session()->flash('message', 'Penentuan Harga ' . $product->karat->label . ' Belum di setting!');
+            session()->flash('message', 'Penentuan Harga ' . $product->karat?->label . ' Belum di setting!');
             return;
         }
 
