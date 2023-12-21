@@ -6,10 +6,12 @@ on:
   pull_request:
     branches: [ production ]
 
-  jobs:
-     laravel-tests:
-     runs-on: ubuntu-latest
-       steps:
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Deploy to production
       uses: appleboy/ssh-action@master
       with:
@@ -19,19 +21,12 @@ on:
          port: ${{ secrets.SSH_PORT_PROD }}
          script: |
           cd /home/pos/public_html
-          git pull origin production
+          git stash
+          git pull
+          sudo update-alternatives --set php /usr/bin/php8.0
           composer update
           php artisan migrate
-          composer clear-all
           sudo chmod 777 -R storage
-          php artisan optimize:clear
+          sudo chmod 777 -R bootstrap/cache
+          sudo composer clear-all
 
-        #-----------------------------------------
-        #php artisan optimize:clear
-        #php artisan migrate:fresh --seed
-        #sudo chmod 777 -R storage
-        #sudo chmod 777 -R bootstrap/cache
-
-        #-----------------------------------------
-        #php artisan migrate
-        #php artisan optimize:clear
