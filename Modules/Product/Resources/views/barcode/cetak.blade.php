@@ -12,7 +12,7 @@
 
    <style>
    @page {
-/*          size: 9.5cm 3.0cm;*/
+         size: 7.7cm 2.4cm;
           margin: 0;
         }
   </style>
@@ -26,51 +26,53 @@ div#kanan {
 .tf {
   transform: rotate(180deg);
 }
+.qr-dark {
+  color:#000;
+}
 </style>
 </head>
 <body>
 <table class="table borderless">
 
-      <tr style="border:none !important;">
+      <tr style="border:none !important;" >
 
-        <td style="width:40%;border:none !important;text-align: left;">
-<div style="relative">
-<div style="position:absolute; top:1.8rem;font-size: 0.9rem;left:5.3rem;">
- <img width="57" src="data:image/png;base64, {!! $barcode !!}">   
-</div>
-<div style="position:absolute; bottom:1rem;left:3.6rem;">
-  <div style="font-size: 0.9rem; font-weight: bold;">
-    {{$product->product_name}}
-  </div>
-  <div style="font-size: 2rem; font-weight: bold;">
-{{$product->product_item[0]->berat_total ?? 0}} Gr
-</div>
-<div style="font-size: 0.9rem; font-weight: bold;">
-  {{$product->product_code}}
-</div>
-</div>
-  </div>
+        <td class ="text-dark" style="width:40%;border:none !important;text-align: left;">
+          <div style="relative">
+            <div style="position:absolute; top:1.8rem;font-size: 0.9rem;left:2.3rem;">
+              <img width="27" src="data:image/png;base64, {!! $barcode !!}">   
+            </div>
+            <div style="position:absolute; bottom:1rem;left:1.6rem;">
+              <div style="font-size: 0.45rem; font-weight: bold;" class="qr-dark">
+                  {{$product->product_name}}
+              </div>
+              <div style="font-size: 1rem; font-weight: bold;" class="qr-dark">
+                  {{$product->product_item[0]->berat_total ?? 0}} Gr
+              </div>
+              <div style="font-size: 0.45rem; font-weight: bold;" class="qr-dark">
+                  {{$product->product_code}}
+              </div>
+            </div>
+          </div>
         </td>
-<td style="border:none !important;">
- <div style="relative">
-<div class="tf" style="position:absolute; top:1rem;right:3.7rem;">
-<div style="font-size: 0.9rem; font-weight: bold;">
-    {{$product->product_name}}
-  </div>
-  <div style="font-size: 2rem;">
-{{$product->product_item[0]->berat_total ?? 0 }} Gr
-</div>
-<div style="font-size: 0.9rem; font-weight: bold;">
-  {{$product->product_code}}
-</div>
-</div>
 
-<div style="position:absolute; bottom:1.8rem;right:6.3rem;">
-  <img class="tf" width="57" src="data:image/png;base64, {!! $barcode !!}">   
-</div>
-
-</div>   
-    </td>
+        <td style="border:none !important;">
+          <div style="relative">
+            <div class="tf" style="position:absolute; top:1rem;right:3.7rem;">
+              <div style="font-size: 0.45rem; font-weight: bold;" class="qr-dark">
+                  {{$product->product_name}}
+              </div>
+              <div style="font-size: 1rem;  font-weight: bold;" class="qr-dark">
+                  {{$product->product_item[0]->berat_total ?? 0 }} Gr
+              </div>
+              <div style="font-size: 0.45rem; font-weight: bold;" class="qr-dark">
+                  {{$product->product_code}}
+              </div>
+            </div>
+            <div style="position:absolute; bottom:1.8rem;right:2.3rem;">
+              <img class="tf" width="27" src="data:image/png;base64, {!! $barcode !!}">   
+            </div>
+          </div>   
+        </td>
       
       </tr>
     
