@@ -76,7 +76,15 @@
         </thead>
         <tr>
             <td width="100%">
-                <table width="100%">
+
+
+<table width="100%">
+    
+<tr>
+    
+<td width="70%">
+    
+  <table width="100%">
                     <tr>
                         <td width="30%">Tanggal</td>
                         <td width="2%">:</td>
@@ -115,6 +123,31 @@
                         <td><b>Rp. {{number_format($item->nominal)}}</b></td>
                     </tr>
                 </table>
+</td>
+
+    <td width="30%" style="vertical-align: middle;">
+                      
+                   <?php
+                     $image = $item->product->images;
+                    if (empty($image)) {
+                        $imagePath = public_path('images/fallback_product_image.png');
+                     } else {
+                        $imagePath = public_path('storage/uploads/'.$image.'');
+                     }
+                    
+                    ?>
+                     {{-- {{ $imagePath }} --}}
+                  <img src="{{ $imagePath }}"/>
+
+
+                  </td>
+
+</tr>
+
+</table>
+
+
+              
             </td>
         </tr>
     </table>
