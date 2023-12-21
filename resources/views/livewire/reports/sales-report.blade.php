@@ -186,7 +186,7 @@
                                 <td>
                                     @php
                                         $output = collect($sale->saleDetails)->map(function ($detail, $index) {
-                                            return "<p> - Produk " . ($index + 1) . " : {$detail->product->category->category_name} / {$detail->product->product_code} / {$detail->product->karat?->label} ({$detail->product->berat_emas} gr) <br> {$detail->product->berlian_short_label} </p>";
+                                            return "<p> - Produk " . ($index + 1) . " : {$detail->product->category?->category_name} / {$detail->product?->product_code} / {$detail->product->karat?->label} ({$detail->product->berat_emas} gr) <br> {$detail->product->berlian_short_label} </p>";
                                         })->implode('');
                                     @endphp
                                     <p>Jumlah : {{ $sale->saleDetails->count() }} buah</p>
