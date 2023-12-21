@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Invoice</title>
+    <title>Invoice | JSR</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,8 +85,9 @@
 <table class="invoice-items">
     <thead>
         <tr>
-            <th style="width:5%;" class ="text-center">#</th>
-            <th style="width:5%;" class ="text-center">banyak nya</th>
+            <th style="width:5%;" class ="text-center">No</th>
+            <th style="width:10%;" class ="text-center">Gambar</th>
+            <th style="width:5%;" class ="text-center">Jumlah</th>
             <th class ="text-center">nama barang</th>
             <th class ="text-center">kode</th>
             <th class ="text-center">berat (gr)</th>
@@ -104,8 +105,32 @@
         <tr>
 
             <td>{{ $no++ }}</td>
+
+
+<td style="text-align:center;vertical-align:bottom">
+    <?php
+    
+    //$img = public_path('images/fallback_product_image.png')
+    $image = $saleDetail->product->images;
+    if (empty($image)) {
+        $imagePath = public_path('images/fallback_product_image.png');
+     } else {
+        $imagePath = public_path('storage/uploads/'.$image.'');
+     }
+
+    
+    ?>
+     <img src="{{ $imagePath }}" order="0" width="70"/>
+    
+    
+</td>
+
                 <td style="text-align:center;vertical-align:bottom">
-                    {{ $saleDetail->quantity }}</td>
+               
+                    {{ @$saleDetail->quantity }}
+
+                </td> 
+
                 <td style="text-align:center;vertical-align:bottom">
                     {{ $saleDetail->product->product_name }} 
                 </td>
@@ -134,22 +159,22 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Qty : </div></td>
+            <td colspan = '6'><div style='text-align:right'>Qty : </div></td>
             <td style='text-align:right'>{{ number_format($totalQty) }} Item</td>
         </tr>
 
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Total : </div></td>
+            <td colspan = '6'><div style='text-align:right'>Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($total) }}</td>
         </tr>
 
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Diskon : </div></td>
+            <td colspan = '6'><div style='text-align:right'>Diskon : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->discount_amount) }}</td>
         </tr>
 
         <tr>
-            <td colspan = '5'><div style='text-align:right'>Grand Total : </div></td>
+            <td colspan = '6'><div style='text-align:right'>Grand Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->grand_total_amount) }}</td>
         </tr>
 

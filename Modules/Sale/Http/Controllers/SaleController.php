@@ -391,6 +391,18 @@ public function store_ajax(StoreSaleRequest $request)
     }
 
 
+    public function pdf($id) {
+        $sale = Sale::findOrFail($id);
+        $customer = Customer::find($sale->customer_id);
+        $pdf = PDF::loadView('sale::print', [
+            'sale' => $sale,
+            'customer' => $customer,
+        ])->setPaper('a4');
+
+        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+    }
+
+
 
 
 
