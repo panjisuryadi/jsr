@@ -16,9 +16,9 @@
                             <div>Tanggal: <strong> {{ \Carbon\Carbon::parse($nota->date)->format('d M, Y') }}</strong></div>
                         </div>
                         <div class="text-gray-600">
-                            <div>Cabang: <strong>{{ $nota->cabang->name }}</strong></div>
+                            <div>Cabang: <strong>{{ $nota->cabang->name ?? '-' }}</strong></div>
                             <div>
-                                Dibuat oleh: <strong>{{ $nota->pic->name }}</strong>
+                                Dibuat oleh: <strong>{{ $nota->pic->name ?? '-' }}</strong>
                             </div>
                         </div>
 
