@@ -98,7 +98,7 @@
                                         $berlian_info .= ' '.$shape . ' '. $item->qty . ': ' . (float)$item->karatberlians . ' ct ';
                                     }
                                 }
-                                $image = $row->product->images;
+                                $image = $row->product?->images;
                                 $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                 @endphp
                                 <tr>
