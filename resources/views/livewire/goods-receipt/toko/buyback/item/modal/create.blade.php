@@ -57,7 +57,7 @@
 
                         <div class="col-span-2">
 
-                            @if (isset($product))
+                            @if (isset($product->id))
                             <div class="card">
                                 <div class="card-header">
                                     <div class="grid grid-cols-2 gap-2">
@@ -76,30 +76,30 @@
                                             <div class="form-group col-span-2">
                                                 <span class="font-medium">Nama Produk</span>
                                                 <div class="flex-1 mt-1">
-                                                    <span class="font-bold">{{ $product['product_name'] }}</span>
+                                                    <span class="font-bold">{{ $product?->product_name }}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <span class="font-medium">Karat</span>
                                                 <div class="flex-1 mt-1">
-                                                    <span class="font-bold">{{ $product['karat']['name'] }} | {{ $product['karat']['kode'] }}</span>
+                                                    <span class="font-bold">{{ $product?->karat?->label }}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <span class="font-medium">Berat Emas</span>
                                                 <div class="flex-1 mt-1">
-                                                    <span class="font-bold">{{ $product['berat_emas'] }} gr</span>
+                                                    <span class="font-bold">{{ $product?->berat_emas }} gr</span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <span class="font-medium">Harga Beli</span>
                                                 <div class="flex-1 mt-1">
-                                                    <span class="font-bold">Rp. {{ rupiah($product->sale_detail?->price) }}</span>
+                                                    <span class="font-bold">Rp. {{ rupiah($product?->sale_detail?->price) }}</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="flex justify-center">
-                                            <img src="{{ asset(imageUrl() . $product['images']) }}" alt="">
+                                            <img src="{{ asset(imageUrl() . $product?->images) }}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -107,8 +107,8 @@
                             </div>
 
                             <div class="grid grid-cols-2 gap-2 mt-3">
-
-                                <div class="form-group">
+                                
+                                <!-- <div class="form-group">
                                     <?php
                                     $field_name = 'customer_id';
                                     $field_lable = label_case('customer');
@@ -127,6 +127,24 @@
                                     <span class="invalid feedback"role="alert">
                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small
                                         class="text-danger">
+                                    </span>
+                                    @endif
+                                </div> -->
+                                <div class="form-group">
+                                    <?php
+                                    $field_name = 'customer';
+                                    $field_lable = label_case('nama customer');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = "required";
+                                    ?>
+                                    <label class="font-medium" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}">
+                                    </div>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                                     </span>
                                     @endif
                                 </div>
