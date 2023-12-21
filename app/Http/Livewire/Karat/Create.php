@@ -74,6 +74,24 @@ class Create extends Component
         DB::beginTransaction();
         try{
             $this->karat->save();
+            if(empty($this->karat->parent_id)){
+                $data = [
+                    'user_id' => auth()->id(),
+                    'tgl_update' => now(),
+                    'harga_emas' => 0,
+                    'harga_modal' => 0,
+                    'margin' => 0,
+                    'harga_jual' => 0
+                ];
+                $penentuan_harga = $this->karat->penentuanHarga()->create($data);
+
+                $data['karat_id'] = $this->karat->id;
+                $data['updated'] = 1;
+                $data['created_by'] = auth()->user()->name;
+                unset($data['tgl_update']);
+                $data['tanggal'] = now();
+                $penentuan_harga->history()->create($data);
+            }
             DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 

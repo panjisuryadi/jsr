@@ -17,14 +17,20 @@ class Create extends Component
 {
     public $code;
     public $date;
-    public $product;
+    public Product $product;
     public $nominal_text = '';
 
-    public $customer_id = '';
+    public $customer;
     public $customers;
     public $nominal = 0;
 
     public $note = '';
+
+    public function __construct()
+    {
+        $this->product = new Product();
+    }
+
     public function mount() {
         $this->date = (new DateTime())->format('Y-m-d');
         $this->customers = Customer::all();
@@ -51,16 +57,14 @@ class Create extends Component
                     }
                 }
             ],
-            'customer_id' => 'required',
+            'customer' => 'required',
             'date' => 'required',
             'nominal' => 'required|gt:0'
         ];
     }
 
     public function render() {
-        return view('livewire.goods-receipt.toko.buyback.item.modal.create', [
-            'product' => $this->product
-        ]);
+        return view('livewire.goods-receipt.toko.buyback.item.modal.create');
     }
 
     public function findProduct(){
@@ -81,7 +85,7 @@ class Create extends Component
             $data = [
                 'product_id' => $this->product->id,
                 'cabang_id' => auth()->user()->namacabang()->id,
-                'customer_id' => $this->customer_id,
+                'customer' => $this->customer,
                 'pic_id' => auth()->id(),
                 'nominal' => $this->nominal,
                 'note' => empty($this->note)?null:$this->note,

@@ -2,6 +2,7 @@
 
 namespace Modules\Product\Entities;
 
+use App\Models\LookUp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Product\Notifications\NotifyQuantityAlert;
@@ -60,9 +61,8 @@ class Product extends Model implements HasMedia
 
     public function scopeAkses($query)
     {
-
         if(auth()->user()->isUserCabang()){
-            return $query->where('cabang_id', '=', Auth::user()->namacabang()->id);
+            $query->where('cabang_id', auth()->user()->namacabang()->id);
         }
     }
 
@@ -143,6 +143,7 @@ class Product extends Model implements HasMedia
             $produk_code = !empty(env('PRODUCT_CODE')) ? env('PRODUCT_CODE') : self::PRODUKCODE;
             $dateCode = $produk_code . $date;
             $lastOrder = self::select([DB::raw('MAX(products.product_code) AS last_code')])
+                ->withTrashed()
                 ->where('product_code', 'like', $dateCode . '%')
                 ->first();
             $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;

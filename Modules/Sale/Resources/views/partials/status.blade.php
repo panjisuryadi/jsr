@@ -11,8 +11,10 @@ href="{{ route('sales.show_cicilan', $data->id) }}">
         {{ $data->status }}
     </span>
 @else
-    <span class="badge badge-success">
-        Tunai
-    </span>
+    @foreach ($data->salePayments as $item)
+        <span class="badge badge-success">
+            {{ $item->payment_method }}
+        </span>
+    @endforeach
 @endif
 </div>

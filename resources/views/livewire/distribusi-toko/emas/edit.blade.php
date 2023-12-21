@@ -245,8 +245,8 @@
 <script>
     window.addEventListener('create-modal:close', event => {
         $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
         $('#createModal').modal('hide');
+        $('.modal-backdrop').remove();
         $('#imageprev').attr('src','');
         toastr.success('Berhasil Menambahkan Produk');
     });
@@ -255,6 +255,10 @@
     });
     window.addEventListener('group:not-selected', event => {
         toastr.error('Group belum dipilih');
+    });
+
+    $("#createModal").on("show.bs.modal", function () {
+        $('.modal-backdrop').remove();
     });
 
     function removeProduct(product){

@@ -32,13 +32,10 @@ class ProfileController extends Controller
         if ($request->has('image')) {
             if ($request->has('image')) {
                 $tempFile = Upload::where('folder', $request->image)->first();
-
+                  //dd($request->has('image'));
                 if (auth()->user()->getFirstMedia('avatars')) {
                     auth()->user()->getFirstMedia('avatars')->delete();
                 }
-
-
-
                 if ($tempFile) {
                     auth()->user()->addMedia(Storage::path('temp/' . $request->image . '/' . $tempFile->filename))->toMediaCollection('avatars');
 

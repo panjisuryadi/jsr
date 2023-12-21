@@ -158,6 +158,11 @@ public function index_data(Request $request)
                                      ' . @$data->customer_name . '</div>';
                                 return $tb;
                             })
+                            ->editColumn('grand_total_amount', function ($data) {
+                                $tb = '<div class="text-center font-bold"> 
+                                        ' . format_uang($data->grand_total_amount) . '</div>';
+                                   return $tb;
+                               })
 
                         ->addColumn('status', function ($data) {
                             $module_name = $this->module_name;
@@ -179,7 +184,7 @@ public function index_data(Request $request)
                                      'sales', 
                                      'cabang', 
                                      'status', 
-                                     'total_amount', 
+                                     'grand_total_amount', 
                                      'action', 
                                      'name'])
                                 ->make(true);
@@ -369,7 +374,7 @@ public function store_ajax(StoreSaleRequest $request)
     public function show(Sale $sale) {
         abort_if(Gate::denies('show_sales'), 403);
 
-        $customer = Customer::findOrFail($sale->customer_id);
+        $customer = Customer::find($sale->customer_id);
 
         return view('sale::show', compact('sale', 'customer'));
     }
@@ -381,6 +386,18 @@ public function store_ajax(StoreSaleRequest $request)
         $pdf = PDF::loadView('sale::nota', [
             'sale' => $sale,
         ])->setPaper([20, 10, 300, 400], 'mm');
+
+        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+    }
+
+
+    public function pdf($id) {
+        $sale = Sale::findOrFail($id);
+        $customer = Customer::find($sale->customer_id);
+        $pdf = PDF::loadView('sale::print', [
+            'sale' => $sale,
+            'customer' => $customer,
+        ])->setPaper('a4');
 
         return $pdf->stream('sale-'. $sale->reference .'.pdf');
     }

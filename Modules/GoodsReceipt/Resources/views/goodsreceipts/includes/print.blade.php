@@ -137,7 +137,7 @@
                                 </td>
 
                                 <td>
-                                    <span class="medium">Tanggal:  {{ tanggal($detail->date)}} </span><br />
+                                    <span class="medium">Tanggal78787:  {{ tanggal($detail->date)}} </span><br />
                                     No Penerimaan Barang:  {{ $detail->code}}<br />
                                 
                                 </td>

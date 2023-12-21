@@ -186,7 +186,7 @@
                                 <td>
                                     @php
                                         $output = collect($sale->saleDetails)->map(function ($detail, $index) {
-                                            return "<p> - Produk " . ($index + 1) . " : {$detail->product->category->category_name} / {$detail->product->product_code} / {$detail->product->karat?->label} ({$detail->product->berat_emas} gr) <br> {$detail->product->berlian_short_label} </p>";
+                                            return "<p> - Produk " . ($index + 1) . " : {$detail->product->category?->category_name} / {$detail->product?->product_code} / {$detail->product->karat?->label} ({$detail->product->berat_emas} gr) <br> {$detail->product->berlian_short_label} </p>";
                                         })->implode('');
                                     @endphp
                                     <p>Jumlah : {{ $sale->saleDetails->count() }} buah</p>
@@ -207,7 +207,7 @@
                                 </span>
                                     @endif
                                 </td> -->
-                                <td>{{ format_uang($sale->total_amount) }}</td>
+                                <td>{{ format_uang($sale->grand_total_amount) }}</td>
                                 <!-- <td>
                                     @if ($sale->payment_status == 'Partial')
                                         <span class="badge badge-warning">

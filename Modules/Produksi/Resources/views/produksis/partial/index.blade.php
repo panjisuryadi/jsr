@@ -4,6 +4,12 @@
         <div class="flex justify-between py-1 border-bottom">
             <div>
                 
+            <div>
+                <p class="uppercase text-lg text-gray-600 font-semibold mb-3">
+                    Stok <span class="text-yellow-500 uppercase">Bahan</span></p>
+            </div>
+            <div id="buttons">
+            </div>
                 <a href="{{ route('produksi.proses') }}"
                     class="btn btn-primary px-3">
                     <i class="bi bi-plus"></i>@lang('Proses')&nbsp;

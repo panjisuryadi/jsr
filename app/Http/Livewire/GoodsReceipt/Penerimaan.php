@@ -35,7 +35,7 @@ class Penerimaan extends Component
         $berat_timbangan,
         $selisih,
         $catatan,
-        $harga_beli,
+        $harga_beli = 0,
         $pic_id = '',
         $document = [],
         $image = '',
@@ -114,7 +114,7 @@ class Penerimaan extends Component
         $this->resetErrorBag();
         unset($this->inputs[$i]);
         $this->inputs = array_values($this->inputs);
-        $this->calculateTotalBeratReal();
+        // $this->calculateTotalBeratReal();
         $this->calculateTotalBeratKotor();
     }
 
@@ -157,7 +157,7 @@ class Penerimaan extends Component
             'total_berat_real' => 'required|numeric',
             'total_berat_kotor' => 'required|numeric',
             'tipe_pembayaran' => 'required',
-            'harga_beli' => 'required_if:tipe_pembayaran,lunas|gt:0',
+            'harga_beli' => 'required_if:tipe_pembayaran,lunas|gt:-1',
             'cicil' => 'required_if:tipe_pembayaran,cicil',
             'tgl_jatuh_tempo' => [
                 'required_if:tipe_pembayaran,jatuh_tempo',

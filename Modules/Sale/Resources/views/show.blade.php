@@ -38,10 +38,10 @@
 
                             <div class="col-sm-4 mb-3 mb-md-0">
                                 <h5 class="mb-2 border-bottom pb-2">Customer Info:</h5>
-                                <div><strong>{{ $customer->customer_name }}</strong></div>
-                                <div>{{ $customer->address }}</div>
-                                <div>Email: {{ $customer->customer_email }}</div>
-                                <div>Phone: {{ $customer->customer_phone }}</div>
+                                <div><strong>{{ $customer->customer_name ?? 'Non Member' }}</strong></div>
+                                <div>{{ $customer->address ?? '-' }}</div>
+                                <div>Email: {{ $customer->customer_email ?? '-' }}</div>
+                                <div>Phone: {{ $customer->customer_phone ?? '-' }}</div>
                             </div>
 
                             <div class="col-sm-4 mb-3 mb-md-0">
@@ -84,6 +84,17 @@
                                             <span class="font-semibold text-green-600">
                                                 {{ $item->product_code }}
                                             </span>
+                                            <div class="p-0 object-center">
+                                                <?php
+                                                
+                                                    $image = $item->product->images;
+                                                    $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
+                                                
+                                                ?>
+                                                <a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " class="single_image">
+                                                    <img src="{{ $imagePath }}" order="0" width="70" class="img-thumbnail"/>
+                                                </a>
+                                                 </div>
                                         </td>
                                           <td class="align-middle">
                                        {{ @$item->product->karat->name }}    
@@ -107,10 +118,35 @@
                                 class="table md:table-sm lg:table-sm">
                                     <tbody>
                                  
+                                        <tr>
+                                            <td class="left text-gray-600">
+                                                <div class="mt-1"> Total</div></td>
+                                            <td class="right text-xl text-blue-500"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
+                                        </tr>
+                                 
+                                        <tr>
+                                            <td class="left text-gray-600">
+                                                <div class="mt-1">Diskon</div></td>
+                                            <td class="right text-md text-blue-500"><strong>{{ format_currency($sale->discount_amount) }}</strong></td>
+                                        </tr>
+                                    
+                                    @if(!empty($sale->salePayments))
+                                    @foreach($sale->salePayments as $row)
+                                        @php
+                                            $bank = $row->bank->nama_bank ?? '';
+                                        @endphp
+                                        <tr>
+                                            <td class="left text-gray-600">
+                                                <div class="mt-1">{{ label_case($row->payment_method) . ' ' . $bank }}</div></td>
+                                            <td class="right text-md text-blue-500"><strong>{{ format_currency($row->paid_amount) }}</strong></td>
+                                        </tr>
+                                    @endforeach
+                                    @endif
+                                 
                                     <tr>
                                         <td class="left text-gray-600">
                                             <div class="mt-1">Grand Total</div></td>
-                                        <td class="right text-xl text-blue-500"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
+                                        <td class="right text-xl text-blue-500"><strong>{{ format_currency($sale->grand_total_amount) }}</strong></td>
                                     </tr>
                                     </tbody>
                                 </table>

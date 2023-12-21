@@ -102,7 +102,12 @@ title="@lang('Informasi Kurs hari ini')"
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
            aria-haspopup="true" title="Informasi Akun" aria-expanded="false">
             <div class="c-avatar mr-2">
-                <img class="w-7 h-7 c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
+
+                {{-- <img class="w-7 h-7 c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image"> --}}
+
+
+     <img class="w-7 h-7 c-avatar rounded-circle" src="{{ asset('images/gtds.svg') }}" alt="{{ auth()->user()->name }}">
+
             </div>
             <div class="d-flex flex-column">
                 <span class="font-weight-bold py-0">{{ auth()->user()->name }}</span>
@@ -117,6 +122,7 @@ title="@lang('Informasi Kurs hari ini')"
 
             <a class="dropdown-item" href="{{ route('profile.edit') }}">
                 <i class="mfe-2  bi bi-person" style="font-size: 1.2rem;"></i> Profile
+
             </a>
             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="mfe-2  bi bi-box-arrow-left" style="font-size: 1.2rem;"></i> Logout

@@ -546,6 +546,7 @@ public function update(Request $request, $id)
     private function _saveHistoryPenentuanHarga($params ,$idph,$karat)
     {
 
+        HistoryPenentuanHarga::where('penentuan_harga_id', $idph)->update(['updated' => '0']);
        $insert =  HistoryPenentuanHarga::create([
             'penentuan_harga_id' => $idph,
             'karat_id'           => $karat,
@@ -558,8 +559,6 @@ public function update(Request $request, $id)
             'user_id'            => auth()->user()->id,
             'created_by'         => auth()->user()->name
          ]);
-          HistoryPenentuanHarga::whereNotIn('karat_id', [$karat])
-              ->update(['updated' => '0']);
         // dd($input);
       }
 

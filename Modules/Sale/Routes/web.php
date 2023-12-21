@@ -18,17 +18,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/app/pos', 'PosController@store')->name('app.pos.store');
 
     //Generate PDF
-    Route::get('/sales/pdf/{id}', function ($id) {
-        $sale = \Modules\Sale\Entities\Sale::findOrFail($id);
-        $customer = \Modules\People\Entities\Customer::findOrFail($sale->customer_id);
-
-        $pdf = \PDF::loadView('sale::print', [
-            'sale' => $sale,
-            'customer' => $customer,
-        ])->setPaper('a4');
-
-        return $pdf->stream('sale-'. $sale->reference .'.pdf');
-    })->name('sales.pdf');
 
     Route::get('/sales/pos/pdf/{id}', function ($id) {
         $sale = \Modules\Sale\Entities\Sale::findOrFail($id);
@@ -53,6 +42,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('sales/cetak/{id}', 'SaleController@cetak')
     ->name('sales.cetak');
+
+
+   Route::get('sales/pdf/{id}', 'SaleController@pdf')
+    ->name('sales.pdf');
+
+
 
     Route::get('sales/generate-invoice/{id}', 'SaleController@generateInvoice')
     ->name('sales.invoice');

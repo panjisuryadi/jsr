@@ -144,7 +144,7 @@
                 {data: 'cabang', name: 'cabang'},
                 {data: 'customer', name: 'customer'},
                 {data: 'reference', name: 'reference'},
-                {data: 'total_amount', name: 'total_amount'},
+                {data: 'grand_total_amount', name: 'grand_total_amount'},
                 {data: 'status', name: 'status'},
             
 

@@ -76,9 +76,9 @@ class Sale extends Model
         return $value / 100;
     }
 
-    public function getDiscountAmountAttribute($value) {
-        return $value / 100;
-    }
+    // public function getDiscountAmountAttribute($value) {
+    //     return $value / 100;
+    // }
 
     public function getCustomerNameAttribute(){
         if(empty($this->attributes['customer_id'])){

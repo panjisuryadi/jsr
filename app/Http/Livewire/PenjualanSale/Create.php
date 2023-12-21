@@ -124,12 +124,15 @@ class Create extends Component
     {
         $this->dataSales = DataSale::all();
         $this->konsumenSales = CustomerSales::all();
-        $this->dataKarat = Karat::where(function($query){
+        $sales_id = $this->penjualan_sales['sales_id'] ?? '';
+        $this->dataKarat = Karat::where(function($query) use ($sales_id){
             $query
-                ->where('parent_id',null)
-                ->whereHas('children', function($query){
-                    $query->whereHas('stockSales', function ($query) {
+                ->whereHas('children', function($query) use ($sales_id){
+                    $query->whereHas('stockSales', function ($query) use ($sales_id) {
                         $query->where('weight', '>',0);
+                        $query->when($sales_id, function ($query) use($sales_id) {
+                            return $query->where('sales_id', $sales_id);
+                        });
                     });
                 });
         })->get();

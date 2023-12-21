@@ -76,7 +76,15 @@
         </thead>
         <tr>
             <td width="100%">
-                <table width="100%">
+
+
+<table width="100%">
+    
+<tr>
+    
+<td width="70%">
+    
+  <table>
                     <tr>
                         <td width="30%">Tanggal</td>
                         <td width="2%">:</td>
@@ -115,14 +123,79 @@
                         <td><b>Rp. {{number_format($item->nominal)}}</b></td>
                     </tr>
                 </table>
+</td>
+
+    <td width="30%" style="vertical-align: middle;">
+                      
+                   <?php
+                     $image = $item->product->images;
+                    if (empty($image)) {
+                        $imagePath = public_path('images/fallback_product_image.png');
+                     } else {
+                        $imagePath = public_path('storage/uploads/'.$image.'');
+                     }
+                    
+                    ?>
+                     {{-- {{ $imagePath }} --}}
+                  <img width="200" src="{{ $imagePath }}"/>
+
+
+                  </td>
+
+</tr>
+
+</table>
+
+
+              
             </td>
         </tr>
     </table>
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<table style='width:100%!important; font-size:12pt;' cellspacing='2'>
+            <tr>
+              
+
+
+                <td style='border: none !important; padding:5px; text-align:left; width:30%'>
+                    
+
+                </td>
+                <td style="text-align: center; border: none !important;" align='center'>
+              
+                </td>
+
+  <td width="30%" style="border: none !important;text-align: center;font-weight: bold;" align='center'>
+                 Customer,
+                </br></br>
+                </br></br>
+                </br></br>
+                <p>{{ $item->customer_name }}</p>
+                </td>
+
+            </tr>
+        </table>
+
+
+
+{{-- 
+
+
     <div class="penerima">
         <p class="mb-5">Customer</p>
         <p>{{ $item->customer_name }}</p>
-    </div>
+    </div> --}}
+
+
+
 </body>
 
 </html>

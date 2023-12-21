@@ -97,7 +97,7 @@ class UsersController extends Controller
 
         if ($request->has('image')) {
             $tempFile = Upload::where('folder', $request->image)->first();
-
+             //dd($tempFile);
             if ($user->getFirstMedia('avatars')) {
                 $user->getFirstMedia('avatars')->delete();
             }

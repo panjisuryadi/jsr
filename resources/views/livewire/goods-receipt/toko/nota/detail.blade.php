@@ -21,9 +21,9 @@
                         <h5 class="mb-2 border-bottom pb-2">Detail Nota:</h5>
                         <div>Invoice: <strong>{{ $nota->invoice }}</strong></div>
                         <div>Tanggal: <strong> {{ \Carbon\Carbon::parse($nota->date)->format('d M, Y') }}</strong></div>
-                        <div>Cabang: <strong>{{ $nota->cabang->name }}</strong></div>
+                        <div>Cabang: <strong>{{ $nota->cabang?->name }}</strong></div>
                         <div>
-                            Dibuat oleh: <strong>{{ $nota->pic->name }}</strong>
+                            Dibuat oleh: <strong>{{ $nota->pic?->name }}</strong>
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3 mb-md-0">
@@ -88,6 +88,7 @@
                                 <td class="text-center font-semibold"> {{ucwords(@$row->type_label)}}</td>
                                 <td class="font-semibold"> 
                                     <p>Nama Produk : {{@$row->product->product_name}}</p>
+                                    <p>Kode Produk : {{@$row->product->product_code}}</p>
                                     <p>Karat : {{@$row->product->karat->name}}</p>
                                     <p>Berat : {{@$row->product->berat_emas}} gr</p>
                                 </td>
