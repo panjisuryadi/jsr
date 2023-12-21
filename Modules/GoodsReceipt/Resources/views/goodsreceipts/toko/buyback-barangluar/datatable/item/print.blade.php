@@ -152,10 +152,50 @@
         </tr>
     </table>
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<table style='width:100%!important; font-size:12pt;' cellspacing='2'>
+            <tr>
+              
+
+
+                <td style='border: none !important; padding:5px; text-align:left; width:30%'>
+                    
+
+                </td>
+                <td style="text-align: center; border: none !important;" align='center'>
+              
+                </td>
+
+  <td width="30%" style="border: none !important;text-align: center;font-weight: bold;" align='center'>
+                 Customer,
+                </br></br>
+                </br></br>
+                </br></br>
+                <p>{{ $item->customer_name }}</p>
+                </td>
+
+            </tr>
+        </table>
+
+
+
+{{-- 
+
+
     <div class="penerima">
         <p class="mb-5">Customer</p>
         <p>{{ $item->customer_name }}</p>
-    </div>
+    </div> --}}
+
+
+
 </body>
 
 </html>
