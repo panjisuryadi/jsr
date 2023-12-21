@@ -205,7 +205,7 @@ public function index_data_ready_office(Request $request)
                             <div>
                             <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                                 ' . $data->category->category_name . '</div>
-                                <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
+                                <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3><h3 class="text-sm font-bold text-gray-800 dark:text-white "> ' . $data->product_code . '</h3>
                             
 
                             </div>
@@ -584,9 +584,7 @@ public function index_data_pending_office(Request $request)
                             <div>
                             <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                                 ' . $data->category->category_name . '</div>
-                                <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                            
-
+                                <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3><h3 class="text-sm font-bold text-gray-800 dark:text-white "> ' . $data->product_code . '</h3>
                             </div>
                                 </div>';
                             return $tb;
@@ -658,7 +656,7 @@ public function index_data_pending(Request $request)
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                             ' . $data->category->category_name . '</div>
                             <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                           
+                            <h3 class="text-sm font-bold text-gray-800 dark:text-white "> ' . $data->product_code . '</h3>
 
                         </div>
                             </div>';
