@@ -39,13 +39,13 @@ div#kanan {
  <img width="57" src="data:image/png;base64, {!! $barcode !!}">   
 </div>
 <div style="position:absolute; bottom:1rem;left:3.6rem;">
-  <div style="font-size: 0.9rem;">
+  <div style="font-size: 0.9rem; font-weight: bold;">
     {{$product->product_name}}
   </div>
-  <div style="font-size: 2rem;">
+  <div style="font-size: 2rem; font-weight: bold;">
 {{$product->product_item[0]->berat_total ?? 0}} Gr
 </div>
-<div style="font-size: 0.9rem;">
+<div style="font-size: 0.9rem; font-weight: bold;">
   {{$product->product_code}}
 </div>
 </div>
@@ -54,13 +54,13 @@ div#kanan {
 <td style="border:none !important;">
  <div style="relative">
 <div class="tf" style="position:absolute; top:1rem;right:3.7rem;">
-<div style="font-size: 0.9rem;">
+<div style="font-size: 0.9rem; font-weight: bold;">
     {{$product->product_name}}
   </div>
   <div style="font-size: 2rem;">
 {{$product->product_item[0]->berat_total ?? 0 }} Gr
 </div>
-<div style="font-size: 0.9rem;">
+<div style="font-size: 0.9rem; font-weight: bold;">
   {{$product->product_code}}
 </div>
 </div>
