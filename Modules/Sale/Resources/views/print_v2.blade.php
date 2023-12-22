@@ -13,18 +13,17 @@
 
         @page {
             size: 105mm 148.5mm; /* A4 size in millimeters */
-            margin: 3mm; /* 20mm margin for all sides */
+            margin: 4mm; /* 20mm margin for all sides */
         }
 
         .invoice {
             width: 100%;
             margin: 0px auto;
-
-            padding: 6px;
+           
         }
         .header {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: red; /* Change text color to red */
         }
         .invoice-details {
@@ -49,26 +48,33 @@
         table {
             width: 100%;
             border-collapse: collapse;
+             border-radius: 10px;
         }
+
+
 .table1 table {
             width: 100%;
             border-collapse: collapse;
+             border-radius: 10px;
         }
 
   .table1 th, td {
             border: none;
+             border-radius: 10px;
 
         }
   
         th, td {
+
             border: 1px solid red; /* Change border color to red */
             padding: 2px;
             text-align: left;
-            font-size: 7pt !important;
+            font-size: 6pt !important;
             color: red; /* Change text color to red */
         }
         th{
             text-transform: uppercase;
+             padding: 4px;
 
         }
         .total {
@@ -79,11 +85,11 @@
     </style>
 </head>
 <body>
-    <div class="invoice">
+<div class="invoice">
 
 <div class="invoice-items">
 
-<table class="table1" style='width:100%; border: none !important; font-size:13pt; font-family:calibri; border-collapse: collapse;' border="0">
+<table class="table1" style='width:100%; border: none !important; font-size:15pt; font-family:calibri; border-collapse: collapse;' border="0">
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:60px; vertical-align:top'>
         <span style='font-size:16pt'><b>{{ settings()->company_name }}</b></span></br>
          {{ settings()->company_email }}, {{ settings()->company_phone }}
@@ -103,11 +109,13 @@
         <tr >
             <th style="width:5%;" class ="fh text-center">No</th>
             <th style="width:10%;" class ="fh text-center">Gambar</th>
-            <th style="width:5%;" class ="fh text-center">Jumlah</th>
+         
             <th class ="fh text-center">barang</th>
             <th class ="fh text-center">kode</th>
             <th class ="fh text-center">berat <span style="font-size:4pt;">(gr)</span></th>
+              <th style="width:5%;" class ="fh text-center">Qty</th>
             <th class ="fh text-center">Harga</th>
+          
         </tr>
     </thead>
     <tbody>
@@ -136,16 +144,12 @@
 
     
     ?>
-     <img src="{{ $imagePath }}" order="0" width="40"/>
+     <img src="{{ $imagePath }}" width="32"/>
     
     
 </td>
 
-                <td style="text-align:center;vertical-align:bottom">
-               
-                    {{ @$saleDetail->quantity }}
-
-                </td> 
+            
 
                 <td style="text-align:center;vertical-align:bottom">
                     {{ $saleDetail->product->product_name }} 
@@ -154,12 +158,18 @@
                     {{ $saleDetail->product_code }}</td>
                 <td style="text-align:center;vertical-align:bottom">
                     {{ $saleDetail->unit_price }}</td>
+                  <td style="text-align:center;vertical-align:bottom">
+               
+                    {{ @$saleDetail->quantity }}
+
+                </td>      
                 <td style="text-align:center;vertical-align:bottom">
                     {{ format_currency($saleDetail->price) }}
                 </td>
+             
 
         </tr>
-        ​
+       
         @php
         $totalPrice += $saleDetail->price;
         $totalQty += $saleDetail->quantity;
@@ -197,10 +207,10 @@
 
     </tfoot>
 </table>
-<hr>
+<hr style="color:red;">
 
 <div style="padding: 2px;color: red !important;">
-<div style="font-weight: bold;font-size: 9pt;" class="bold">CATATAN</div>
+<div style="font-weight: bold;font-size: 7pt;" class="bold">CATATAN</div>
 
 <ol style="font-size:7pt;">
   <li>Mas dan Berat Barang telah di timbang dan disaksikan pembeli</li>
