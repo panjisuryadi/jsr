@@ -566,5 +566,9 @@ class Create extends Component
             }
         }
     }
+
+    public function handleWebcamReset(){
+        $this->image = '';
+    }
     
 }
