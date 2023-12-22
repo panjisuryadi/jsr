@@ -48,7 +48,19 @@
                     </select>
                 </div>
                 @if(!$isBerlian)
+
+
                 <div class="form-group">
+
+                    <input type="radio" id="tipe_nominal" name="tipe" value="tipe_nominal" checked>
+                    <label for="tipe_nominal">Nominal</label>
+                    <input type="radio" id="emas" name="tipe" value="emas">
+                    <label for="emas">{{ label_case('emas') }}</label>
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text tipe_err"></span>
+                    </span>
+                </div>
+                <div class="form-group" id="form_jumlah_cicilan">
                     <?php
                         $field_name = 'jumlah_cicilan';
                         $field_lable = label_case('Berat');
@@ -63,7 +75,7 @@
                     </span>
                 </div>
                 @endif
-                <div class="form-group">
+                <div class="form-group" id="form_nominal">
                     <?php
                         $field_name = 'nominal';
                         $field_lable = label_case('Nominal');
@@ -84,14 +96,42 @@
                 </div>
             </div>
         @else
-        <span class="text-dark mb-4"> Tanggal jatuh tempo {{ $data->jatuh_tempo }} <span class="ml-1 text-warning">23:59 .</span> <span class="text-danger"> Harga Beli Rp. {{ number_format($harga_beli) }}. </span>
+        <span class="text-dark mb-4"> Tanggal jatuh tempo <span class="ml-1 text-warning">  {{ $data->jatuh_tempo }} 23:59 </span> @if(!$isBerlian) Jumlah yang harus dibayar {{ $total_harus_bayar }}gr @endif <span class="text-danger"> {{ !empty($harga_beli) ? ' Harga Beli Rp. ' . number_format($harga_beli) : '' }}. </span>
 
         <div class="flex flex-row grid grid-cols-2 gap-4 mt-4">
             <div class="form-group">
                 <input class="form-control" type="hidden" name="tgl_jatuh_tempo" value="{{ $data->jatuh_tempo }}" id="">
                 <input class="form-control" type="hidden" name="is_cicilan" id="" value="0">
                 <input class="form-control" type="hidden" name="total_harus_bayar" id="" value="{{ $total_harus_bayar }}">
+
+                @if(!$isBerlian)
                 <div class="form-group">
+
+                    <input type="radio" id="tipe_nominal" name="tipe" value="tipe_nominal" checked>
+                    <label for="tipe_nominal">Nominal</label>
+                    <input type="radio" id="emas" name="tipe" value="emas">
+                    <label for="emas">{{ label_case('emas') }}</label>
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text tipe_err"></span>
+                    </span>
+                </div>
+                <div class="form-group" id="form_jumlah_cicilan">
+                    <?php
+                        $field_name = 'jumlah_cicilan';
+                        $field_lable = label_case('Berat');
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = "required";
+                    ?>
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="" >
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
+                </div>
+
+                @endif
+                <div class="form-group" id = "form_nominal">
                     <?php
                         $field_name = 'nominal';
                         $field_lable = label_case('Nominal');
@@ -179,10 +219,27 @@ $(document).ready(function(){
         }
     });
 
+    
+    $('input[type=radio][name=tipe]').change(function() {
+        if (this.value == 'emas') {
+            formEmas()
+        }else if(this.value == 'tipe_nominal'){
+            formNominal()
+        }
+    });
+
     $('#FormEdit').submit(function(e){
         e.preventDefault();
         Update();
     });
+
+    function formNominal(){
+        $('#form_nominal').show()
+    }
+
+    function formEmas(){
+        $('#form_nominal').hide()
+    }
 
 });
 })(jQuery);

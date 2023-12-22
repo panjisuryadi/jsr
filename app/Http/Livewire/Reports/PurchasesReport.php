@@ -78,15 +78,18 @@ class PurchasesReport extends Component
                 })
                 ->orderBy('tgl_bayar', 'desc');
         $this->purchase_data = $data->clone()->get();
-        $total_harga = 0;
+        $total_harga = $total_emas = 0;
         foreach ($this->purchase_data as $row){
-            $total_harga += !empty( $row->nominal) ? $row->nominal : $row->harga_beli;
+            $row_nominal = !empty( $row->nominal) ? $row->nominal : $row->harga_beli;
+            $total_harga += $row_nominal;
+            $total_emas += (empty($row_nominal) ? $row->jumlah_cicilan : 0);
         }
         $this->total_harga = $total_harga;
 
         return view('livewire.reports.purchases-report', [
             'datas' => $data->paginate(10),
-            'total_harga' => $total_harga
+            'total_harga' => $total_harga,
+            'total_emas' => $total_emas,
         ]);
     }
 

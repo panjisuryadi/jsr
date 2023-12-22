@@ -410,9 +410,9 @@ public function store_ajax(StoreSaleRequest $request)
   public function generateInvoice($id) {
    // 210 x 297
         $sale = Sale::findOrFail($id);
-        $pdf = PDF::loadView('sale::print', [
+        $pdf = PDF::loadView('sale::print_v2', [
             'sale' => $sale,
-        ])->setPaper('a4');
+        ])->setPaper('a4','l');
 
         return $pdf->stream('sale-'. $sale->reference .'.pdf');
     }

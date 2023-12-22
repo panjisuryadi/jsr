@@ -5,7 +5,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
-
+use Modules\Stok\Models\StockKroom;
 
 class TipePembelian extends Model
 {
