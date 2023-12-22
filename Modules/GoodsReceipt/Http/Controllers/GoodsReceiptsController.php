@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\Adjustment;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
+use Modules\Stok\Models\StockKroom;
 
 class GoodsReceiptsController extends Controller
 {
@@ -389,27 +390,45 @@ public function update_status_pembelian (Request $request){
     $sisa_cicilan = $request->post('sisa_cicilan');
     $total_harus_bayar_nominal = $request->post('total_harus_bayar_nominal');
     $is_berlian = $request->post('is_berlian');
+    $tipe = $request->post('tipe','');
+    $stok_lantakan = '';
+    $stok_lantakan_weight = 0;
+    $jumlah_cicilan = $request->post('jumlah_cicilan');
     DB::beginTransaction();
-    // dd($is_berlian && $sisa_cicilan == 1 && $request->post('nominal') != $request->post('total_harus_bayar_nominal'), $is_berlian, $request, $sisa_cicilan);
 
     try {
+        if($tipe == 'emas') {
+            $stok_lantakan = StockKroom::first();
+            $stok_lantakan_weight = $stok_lantakan->weight;
+        }
         if ( $is_cicilan ) {
             $validator = \Validator::make($request->all(),[
                 'cicilan_id' => 'required',
                 'jumlah_cicilan' => [
                     'required_if:is_berlian, true',
-                    'lte:' . floatval($request->post('total_harus_bayar')),
-                    function ($attribute, $value, $fail) use ($request, $sisa_cicilan) {
+                    // 'lte:' . floatval($request->post('total_harus_bayar')),
+                    function ($attribute, $value, $fail) use ($request, $sisa_cicilan, $tipe, $stok_lantakan_weight) {
                         if ($sisa_cicilan == 1 && $value != floatval($request->post('total_harus_bayar'))) {
                             $fail('Berat untuk cicilan terakhir harus sama dengan sisa cicilan.');
+                        }
+                        if($tipe == 'emas' && $stok_lantakan_weight < $value) {
+                            $fail('Stok lantakan tidak cukup');
                         }
                     },
                 ],
                 'nominal' => [
-                    'required',
-                    'numeric',
-                    'gt:0',
-                    function($attribute, $value, $fail) use($request, $is_berlian, $sisa_cicilan) {
+                    'required_if:tipe,=,tipe_nominal',
+                    // 'numeric',
+                    // 'gt:-1',
+                    function($attribute, $value, $fail) use($request, $is_berlian, $sisa_cicilan, $tipe) {
+                        if($tipe != 'emas') {
+                            if(!is_numeric($value)) {
+                                $fail('Nominal harus berupa numeric');
+                            }
+                            if($value < 0) {
+                                $fail('Nominal harus lebih dari 0');
+                            }
+                        }
                         if ($is_berlian && $sisa_cicilan == 1 && $value != $request->post('total_harus_bayar_nominal')) {
                             $fail('Nominal untuk cicilan terakhir harus sama dengan sisa cicilan.');
                         }
@@ -426,7 +445,6 @@ public function update_status_pembelian (Request $request){
             }
                     
             $penerimaan_barang_cicilan_id = $request->post('cicilan_id');
-            $jumlah_cicilan = $request->post('jumlah_cicilan');
             $nominal = $request->post('nominal');
 
             $penerimaan_barang_cicilan = GoodsReceiptInstallment::find($penerimaan_barang_cicilan_id);
@@ -452,7 +470,32 @@ public function update_status_pembelian (Request $request){
 
         } else {
             $validator = \Validator::make($request->all(),[
-                'nominal' => 'required|numeric|gt:0', 
+                'nominal' => [
+                    'required_if:tipe,=,tipe_nominal',
+                    // 'numeric',
+                    // 'gt:-1',
+                    function($attribute, $value, $fail) use($tipe) {
+                        if($tipe != 'emas') {
+                            if(!is_numeric($value)) {
+                                $fail('Nominal harus berupa numeric');
+                            }
+                            if($value < 0) {
+                                $fail('Nominal harus lebih dari 0');
+                            }
+                        }
+                    }
+                ],
+                'jumlah_cicilan' => [
+                    'required_if:tipe,=,emas',
+                    function ($attribute, $value, $fail) use ($request, $tipe, $stok_lantakan_weight) {
+                        if ($value != floatval($request->post('total_harus_bayar'))) {
+                            $fail('Berat tidak sama dengan yang harus dibayarkan.');
+                        }
+                        if($tipe == 'emas' && $stok_lantakan_weight < $value) {
+                            $fail('Stok lantakan tidak cukup');
+                        }
+                    },
+                ], 
             ]);
             
             if (!$validator->passes()) {
@@ -461,18 +504,37 @@ public function update_status_pembelian (Request $request){
             $tipe_pembelian = TipePembelian::findOrFail($pembelian_id);
             $tipe_pembelian->lunas = 'lunas';
             $tipe_pembelian->save();
-            GoodsReceiptInstallment::updateOrCreate(
+            $penerimaan_barang_cicilan = GoodsReceiptInstallment::updateOrCreate(
                 [
                     'payment_id' => $pembelian_id,
                     'tanggal_cicilan' => $tgl_jatuh_tempo,
                     'nomor_cicilan' => 1
                 ],
-                ['nominal' => $nominal]
+                [
+                    'nominal' => $nominal,
+                    'jumlah_cicilan' => $jumlah_cicilan,
+                ]
             );
             
             $goodsreceipt = GoodsReceipt::find($tipe_pembelian->goodsreceipt_id);
             $goodsreceipt->harga_beli = $nominal;
             $goodsreceipt->save();
+        }
+
+        if($tipe == 'emas'){
+            if($penerimaan_barang_cicilan && $stok_lantakan) {
+                $penerimaan_barang_cicilan->stock_kroom()->attach($stok_lantakan->id,[
+                    'karat_id'=>$stok_lantakan->karat_id,
+                    'in' => false,
+                    'berat_real' => -1 * $penerimaan_barang_cicilan->jumlah_cicilan,
+                    'berat_kotor' => -1 * $penerimaan_barang_cicilan->jumlah_cicilan
+                ]);
+
+                $berat_real = $stok_lantakan->history->sum('berat_real');
+                $berat_real = $stok_lantakan->weight - $penerimaan_barang_cicilan->jumlah_cicilan;
+                $stok_lantakan->update(['weight'=> $berat_real]);
+            }
+
         }
     } catch (\Throwable $e) {
         DB::rollBack();

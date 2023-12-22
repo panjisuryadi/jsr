@@ -4,6 +4,7 @@ namespace Modules\GoodsReceipt\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Stok\Models\StockKroom;
 
 class GoodsReceiptInstallment extends Model
 {
@@ -27,4 +28,10 @@ class GoodsReceiptInstallment extends Model
     public function pembelian(){
         return $this->belongsTo(TipePembelian::class, 'payment_id');
     }
+
+    public function stock_kroom()
+    {
+        return $this->morphToMany(StockKroom::class, 'transaction','stock_kroom_history','transaction_id','stock_kroom_id','id','id')->withTimestamps();
+    }
+
 }
