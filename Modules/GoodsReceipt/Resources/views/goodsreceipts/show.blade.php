@@ -207,19 +207,30 @@
                                     <tr>
                                         <th class="text-center">Nomor Cicilan</th>
                                         <th class="text-center">Tanggal Cicilan</th>
-                                        <th class="text-center">Jumlah Cicilan</th>
+                                        <th class="text-center">Jumlah Cicilan Emas</th>
+                                        <th class="text-center">Jumlah Cicilan Nominal</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Sisa Cicilan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $sisa_nominal = $detail->harga_beli ?? 0;
+                                        $sisa_emas = $detail->total_emas ?? 0;
+                                    @endphp
                                     @forelse($detail->pembelian->detailCicilan as $row)
                                     <tr>
                                         <th class="text-center">{{$row->nomor_cicilan}}</th>
                                         <td class="text-center"> {{@$row->tanggal_cicilan}}</td>
-                                        <td class="text-center"> {{@$row->jumlah_cicilan??'-'}}</td>
-                                        <td class="text-center"> - </td>
-                                        <td class="text-center"> - </td>
+                                        <td class="text-center"> {{!empty($row->jumlah_cicilan) ? formatBerat($row->jumlah_cicilan) . ' gr' : ''}} </td>
+                                        <td class="text-center"> {{!empty($row->nominal) ? format_currency($row->nominal) : '' }}</td>
+                                        <td class="text-center"> {{label_case($detail->pembelian->lunas)}} </td>
+                                        @if($isBerlian)
+                                            <td class="text-center"> {{ format_currency($sisa_nominal -= $row->nominal) }}</td>
+                                        @endif
+                                        @if(!$isBerlian)
+                                            <td class="text-center"> {{ formatBerat($sisa_emas -= $row->jumlah_cicilan) }} gr</td>
+                                        @endif
                                     </tr>
                                     @empty
                                     <tr>
