@@ -23,6 +23,10 @@
 @push('page_scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
+    
+window.addEventListener('total_payment_amount', event => {
+    toastr.error(event.detail.message);
+});
 function createModal(){
     $('#goodsreceipt-toko-buyback-create').modal('show');
 }
