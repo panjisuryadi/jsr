@@ -207,66 +207,42 @@
 
     </tfoot>
 </table>
-<hr style="color:red;">
 
-<div style="padding: 2px;color: red !important;">
-<div style="font-weight: bold;font-size: 7pt;" class="bold">CATATAN</div>
 
-<ol style="font-size:7pt;">
+<hr style="color:red;margin-bottom: 5pt;">
+<table border="0" width="100%">
+    
+<tr>
+<td width="60%" style="vertical-align:top;padding-top:5pt;">
+<div style="margin-left:4pt;font-weight: bold;font-size: 6pt;" class="bold">CATATAN</div>
+<ul style="margin-left:10pt;padding:1px;font-size:6pt;">
   <li>Emas dan Berat Barang telah di timbang dan disaksikan pembeli</li>
   <li>Barang ini dapat dijual kembali dengan potongan yang ditentukan</li>
   <li>Barang yang rusak terkena <strong>potongan hingga 30%</strong></li>
   <li>Bila dijual kembali harap membawa Surat</li>
-</ol>
+</ul>
+
+</td>
+
+<td width="40%" style="vertical-align:top;padding-top:5pt;">
+ <div style="margin-left:4pt;font-weight: bold;font-size: 6pt;" class="bold">LAIN - LAIN</div>   
+<ul style="margin-left:10pt;padding:1px;font-size:6pt;">
+  @forelse ($sale->manual as $row)
+  <li> {{ $row->note }}  | {{ number_format($row->nominal) }}</li>
+  @empty
+
+  @endforelse
+</ul>
+
+</td>
+</tr>
+
+
+</table>
+
+
 
 </div>
-        <table style='width:100%!important; font-size:11pt;' cellspacing='2'>
-            <tr>
-                <td style="border: none !important;text-align: center;" align='center'>
-                    Diterima Oleh,
-                </br></br>
-                </br></br>
-                </br></br>
-                <u>(.............................................)</u>
-                </td>
-                <td style='border: none !important; padding:5px; text-align:left; width:30%'></td>
-                <td style="text-align: center; border: none !important;" align='center'>Hormat Kami,<br>
-                <span style='font-size:9pt'><b>{{ settings()->company_name }}</b></span></br>
-
-                </br>
-                </br></br>
-                </br></br>
-                <u>(..............................................)</u>
-                </td>
-            </tr>
-        </table>
-
-
-
-
-
-
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
