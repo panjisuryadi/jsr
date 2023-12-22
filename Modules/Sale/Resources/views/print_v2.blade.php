@@ -213,7 +213,7 @@
 <div style="font-weight: bold;font-size: 7pt;" class="bold">CATATAN</div>
 
 <ol style="font-size:7pt;">
-  <li>Mas dan Berat Barang telah di timbang dan disaksikan pembeli</li>
+  <li>Emas dan Berat Barang telah di timbang dan disaksikan pembeli</li>
   <li>Barang ini dapat dijual kembali dengan potongan yang ditentukan</li>
   <li>Barang yang rusak terkena <strong>potongan hingga 30%</strong></li>
   <li>Bila dijual kembali harap membawa Surat</li>
