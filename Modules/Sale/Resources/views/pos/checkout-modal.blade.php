@@ -489,7 +489,7 @@
                                 </div>
                             </div>
                             <div class="form-group mb-5">
-                                <label for="note">Catatan
+                                <label for="note">Potongan
                                     <span class="small text-blue-500">(Jika diperlukan)</span>
                                 </label>
                                 <textarea name="note" id="note" rows="3" class="form-control" wire:model.debounce.500ms="note"></textarea>
