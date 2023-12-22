@@ -104,6 +104,7 @@
                 <input class="form-control" type="hidden" name="is_cicilan" id="" value="0">
                 <input class="form-control" type="hidden" name="total_harus_bayar" id="" value="{{ $total_harus_bayar }}">
 
+                @if(!$isBerlian)
                 <div class="form-group">
 
                     <input type="radio" id="tipe_nominal" name="tipe" value="tipe_nominal" checked>
@@ -128,6 +129,8 @@
                         <span class="text-danger error-text {{ $field_name }}_err"></span>
                     </span>
                 </div>
+
+                @endif
                 <div class="form-group" id = "form_nominal">
                     <?php
                         $field_name = 'nominal';
