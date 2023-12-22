@@ -251,7 +251,7 @@ class Create extends Component
                     }
                 },
             ],
-            'grand_total' => 'gt:0',
+            'grand_total' => 'required|gt:0',
             'bank_id' => 'required_if:payment_method,transfer',
             'edc_id' => 'required_if:payment_method,edc'
         ];

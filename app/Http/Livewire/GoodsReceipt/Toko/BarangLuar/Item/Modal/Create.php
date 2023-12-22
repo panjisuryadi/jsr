@@ -7,6 +7,8 @@ use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Modules\DataBank\Models\DataBank;
+use Modules\DataRekening\Models\DataRekening;
 use Modules\DistribusiToko\Models\DistribusiToko;
 use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\Group\Models\Group;
@@ -23,6 +25,28 @@ use function PHPUnit\Framework\isEmpty;
 
 class Create extends Component
 {
+    public $grand_total = 0;
+    public $paid_amount = 0;
+    public $return_amount = 0;
+    public $banks;
+    public $edcs;
+    public $bank_id = '';
+    public $edc_id = '';
+    public $payment_method = '';
+    public $multiple_payment_method = "false";
+    public $total_payment_amount = 0;
+    public $remaining_payment_amount = 0;
+    public $payments = [
+        [
+            'method' => '',
+            'amount' => 0,
+            'paid_amount' => 0,
+            'return_amount' => 0,
+            'bank_id' => '',
+            'edc_id' => ''
+        ]
+    ];
+
     public $date;
     public $today;
     public $customer;
@@ -78,6 +102,161 @@ class Create extends Component
         'webcamCaptured' => 'handleWebcamCaptured',
         'webcamReset' => 'handleWebcamReset',
     ];
+
+    public function updatedGrandTotal($value)
+    {
+        $this->calculateGrandTotal();
+    }
+
+    public function calculateGrandTotal()
+    {
+        if ($this->multiple_payment_method == 'false') {
+            if($this->payment_method === 'tunai'){
+                if (!empty($this->grand_total) && !empty($this->paid_amount)) {
+                    $this->return_amount = $this->paid_amount - $this->grand_total;
+                }else{
+                    $this->reset('return_amount');
+                }
+            }
+        }elseif($this->multiple_payment_method == 'true'){
+            $this->updateRemainingPaymentAmount();
+        }
+    }
+    
+    public function updatedMultiplePaymentMethod($value){
+        $this->resetSinglePaymentMethod();
+        $this->resetMultiplePaymentMethod();
+        if($value == 'true'){
+            $this->updateRemainingPaymentAmount();
+        }
+    }
+
+    public function resetSinglePaymentMethod(){
+        $this->reset([
+            'payment_method',
+            'paid_amount',
+            'return_amount',
+            'bank_id',
+            'edc_id'
+        ]);
+    }
+
+    public function resetMultiplePaymentMethod(){
+        $this->reset('payments');
+        $this->reset('total_payment_amount');
+        $this->reset('remaining_payment_amount');
+    }
+
+    public function getReturnAmountTextProperty()
+    {
+        return format_uang($this->return_amount);
+    }
+
+    public function getTotalAmountTextProperty()
+    {
+        return format_uang($this->total_amount);
+    }
+
+    public function getGrandTotalTextProperty()
+    {
+        if(!empty($this->grand_total)){
+            return format_uang($this->grand_total);
+        }
+    }
+
+    public function getTotalPaymentAmountTextProperty(){
+        return format_uang($this->total_payment_amount);
+    }
+
+    public function getRemainingPaymentAmountTextProperty(){
+        return format_uang($this->remaining_payment_amount);
+    }
+
+    public function getAmountText($index){
+        if(!empty($this->payments[$index]['amount'])){
+            return format_uang($this->payments[$index]['amount']);
+        }
+    }
+
+    public function remove_payment_method($index){
+        unset($this->payments[$index]);
+        $this->payments = array_values($this->payments);
+        $this->calculateTotalPaymentAmount();
+    }
+
+    public function calculateTotalPaymentAmount(){
+        $total = 0;
+        foreach($this->payments as $payment){
+            if(!empty($payment['amount'])){
+                $total += $payment['amount'];
+            }
+        }
+        $this->total_payment_amount = $total;
+        $this->updateRemainingPaymentAmount();
+    }
+
+    public function updateRemainingPaymentAmount(){
+        $this->remaining_payment_amount = $this->grand_total - $this->total_payment_amount;
+    }
+
+    public function amountUpdated($index){
+        $paid_amount = $this->payments[$index]['paid_amount'];
+        if($this->payments[$index]['method'] === 'tunai'){
+            if(!empty($paid_amount) && !empty($this->payments[$index]['amount']) && ($paid_amount >= $this->payments[$index]['amount'])){
+                $this->payments[$index]['return_amount'] = $paid_amount - $this->payments[$index]['amount'];
+            }else{
+                $this->payments[$index]['return_amount'] = 0;
+            }
+        }
+        $this->calculateTotalPaymentAmount();
+    }
+    
+    public function paymentPaidAmountUpdated($index){
+        if ($this->payments[$index]['paid_amount'] != '' && $this->payments[$index]['amount'] != '' && $this->payments[$index]['paid_amount'] >= $this->payments[$index]['amount']) {
+            $this->payments[$index]['return_amount'] = $this->payments[$index]['paid_amount'] - $this->payments[$index]['amount'];
+        }else{
+            $this->payments[$index]['return_amount'] = 0;
+        }
+    }
+
+    public function getReturnAmountText($index)
+    {
+        return format_uang($this->payments[$index]['return_amount']);
+    }
+
+    public function add_payment_method(){
+        $this->payments[] = [
+            'method' => '',
+            'amount' => 0,
+            'paid_amount' => 0,
+            'return_amount' => 0,
+            'bank_id' => '',
+            'edc_id' => ''
+        ];
+    }
+
+    public function updatedPaidAmount($value)
+    {
+        if ($value != '') {
+            $this->return_amount = $value - $this->grand_total;
+        }else{
+            $this->reset('return_amount');
+        }
+    }
+
+    public function updatedPaymentMethod($value){
+        $this->reset([
+            'paid_amount',
+            'return_amount',
+            'bank_id',
+            'edc_id'
+        ]);
+    }
+
+
+
+
+
     public function render(){
         return view("livewire.goods-receipt.toko.barangluar.item.modal.create");
     }
@@ -109,6 +288,8 @@ class Create extends Component
         $this->cabang = auth()->user()->namacabang();
         $this->groups = Group::all();
         $this->models = ProdukModel::all();
+        $this->banks = DataBank::all();
+        $this->edcs = DataRekening::all();
     }
 
     public function setAdditionalAttribute($name,$selectedText){
@@ -160,7 +341,23 @@ class Create extends Component
         $rules = [
             'date' => 'required',
             'customer' => 'required',
-            'nominal' => 'required|gt:0'
+            'payment_method' => 'required_if:multiple_payment_method,false',
+            'paid_amount' => [
+                'required_if:payment_method,tunai',
+                function ($attribute, $value, $fail) {
+                    if (($this->multiple_payment_method === "false") && ($this->payment_method === "tunai")) {
+                        if (empty(intval($value))) {
+                            $fail('Wajib diisi');
+                        }
+                        if ($value < $this->grand_total) {
+                            $fail('Jumlah yang dibayarkan tidak cukup.');
+                        }
+                    }
+                },
+            ],
+            'grand_total' => 'required|gt:0',
+            'bank_id' => 'required_if:payment_method,transfer',
+            'edc_id' => 'required_if:payment_method,edc'
         ];
 
 
@@ -181,12 +378,62 @@ class Create extends Component
         $rules['data.additional_data.no_certificate'] = 'required_if:data.additional_data.product_category.id,'.$this->logam_mulia_id;
         $rules['data.additional_data.image'] = 'required';
 
+
+        foreach($this->payments as $index => $payment){
+            $rules['payments.' . $index . '.method'] = ['required_if:multiple_payment_method,true'];
+            $rules['payments.' . $index . '.amount'] = [
+                'required_if:multiple_payment_method,true',
+                function ($attribute, $value, $fail) {
+                    if ($this->multiple_payment_method == 'true') {
+                        if (empty(intval($value))) {
+                            $fail('Wajib diisi');
+                        }
+                        if ($this->total_payment_amount > $this->grand_total) {
+                            $fail('Jumlah melebihi grand total');
+                        }
+                    }
+                },
+            ];
+            $rules['payments.' . $index . '.paid_amount'] = [
+                'required_if:payments.'.$index.'.method,tunai',
+                function ($attribute, $value, $fail) use ($index){
+                    if ($this->multiple_payment_method == 'true' && $this->payments[$index]['method'] === 'tunai') {
+                        if (empty(intval($value))) {
+                            $fail('Wajib diisi');
+                        }
+                        if ($value < $this->payments[$index]['amount']) {
+                            $fail('Jumlah yang dibayarkan tidak cukup');
+                        }
+                    }
+                },
+            ];
+        }
+
         return $rules;
     }
 
     public function store()
     {
         $this->validate();
+        $this->validate([
+            'total_payment_amount' => [
+                function ($attribute, $value, $fail){
+                    if ($this->multiple_payment_method == 'true') {
+                        if ($value < $this->grand_total) {
+                            $fail('Jumlah yang dibayarkan tidak cukup');
+                            $this->dispatchBrowserEvent('total_payment_amount',[
+                                'message' => 'Total yang dibayarkan belum memenuhi Grand Total'
+                            ]);
+                        }elseif($value > $this->grand_total){
+                            $fail('Jumlah yang dibayarkan melebihi grand total');
+                            $this->dispatchBrowserEvent('total_payment_amount',[
+                                'message' => 'Total yang dibayarkan melebihi Grand Total'
+                            ]);
+                        }
+                    }
+                },
+            ]
+        ]);
         
         DB::beginTransaction();
         try{
@@ -250,12 +497,13 @@ class Create extends Component
                 'cabang_id' => $this->cabang->id,
                 'customer' => $this->customer,
                 'pic_id' => auth()->id(),
-                'nominal' => $this->nominal,
+                'nominal' => $this->grand_total,
                 'date' => $this->date,
                 'type' => 2,
             ];
 
-            BuyBackBarangLuar\GoodsReceiptItem::create($data);
+            $item = BuyBackBarangLuar\GoodsReceiptItem::create($data);
+            $this->managePayment($item);
 
             DB::commit();
         }catch (\Exception $e) {
@@ -266,6 +514,40 @@ class Create extends Component
         toast('Berhasil Menyimpan Barang Luar','success');
         return redirect(route('goodsreceipt.toko.buyback-barangluar.index'));
     }
+
+    private function managePayment($item){
+        if($this->multiple_payment_method === 'false'){
+            $data = [
+                'paid_amount' => ($this->payment_method === 'tunai')?$this->paid_amount:$this->grand_total,
+                'payment_method' => $this->payment_method
+            ];
+            if($this->payment_method === 'tunai'){
+                $data['return_amount'] = $this->return_amount;
+            }elseif($this->payment_method === 'transfer'){
+                $data['bank_id'] = $this->bank_id;
+            }elseif($this->payment_method === 'edc'){
+                $data['edc_id'] = $this->edc_id;
+            }
+            $item->payments()->create($data);
+        }elseif($this->multiple_payment_method === 'true'){
+            foreach($this->payments as $index => $payment){
+                $data = [
+                    'paid_amount' => ($payment['method'] === 'tunai')?$payment['paid_amount']:$payment['amount'],
+                    'payment_method' => $payment['method']
+                ];
+                if($payment['method'] === 'tunai'){
+                    $data['return_amount'] = $payment['return_amount'];
+                }elseif($payment['method'] === 'transfer'){
+                    $data['bank_id'] = $payment['bank_id'];
+                }elseif($payment['method'] === 'edc'){
+                    $data['edc_id'] = $payment['edc_id'];
+                }
+        
+                $item->payments()->create($data);
+            }
+        }
+    }
+
 
     private function uploadImage($img){
         $folderPath = "uploads/";
