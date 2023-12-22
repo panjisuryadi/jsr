@@ -83,8 +83,18 @@
                                     <div>
                                         <div class="text-value text-primary">{{ format_currency($total_harga) }}</div>
                                         <div class="text-muted text-uppercase font-weight-bold small">
-                                    @lang('Purchases')
+                                            @lang('Purchases')
+                                        </div>
                                     </div>
+
+                                    <div class="bg-gradient-primary p-4 mfe-3 rounded-left ml-2">
+                                        <i class="bi bi-bar-chart font-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-value text-primary">{{ formatBerat($total_emas) }} gr</div>
+                                        <div class="text-muted text-uppercase font-weight-bold small">
+                                            @lang('Gold')
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +163,13 @@
                                     @endif
                                     
                                 </td>
-                                <td>Rp. {{ number_format(!empty( $data->nominal) ? $data->nominal : $data->harga_beli) }}</td>
+                                <td>
+                                    @php
+                                        $nominal = number_format(!empty( $data->nominal) ? $data->nominal : $data->harga_beli);
+                                        
+                                    @endphp
+                                    {{ !empty($nominal) ? 'Rp. ' . $nominal : formatBerat($data->jumlah_cicilan) . ' gr' }}
+                                </td>
                             </tr>
                         @empty
                             <tr>

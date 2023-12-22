@@ -373,5 +373,11 @@ class PenerimaanQc extends Component
         $this->sertifikat[$key]['tanggal'] = $this->hari_ini;
         $this->currentKey = $key;
     }
+
+
+    public function handleWebcamReset(){
+        $this->image = '';
+    }
+
     
 }
