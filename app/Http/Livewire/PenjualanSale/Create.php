@@ -178,7 +178,10 @@ class Create extends Component
 
         ];
         $stok_terpakai = 0;
+        $stok_karat_terpakai = [];
         foreach ($this->penjualan_sales_details as $key => $value) {
+            $karat_id = $this->penjualan_sales_details[$key]['karat_id'] ?? 0;
+            $stok_terpakai = $stok_karat_terpakai[$karat_id] ?? 0;
 
             $rules['penjualan_sales_details.'.$key.'.karat_id'] = 'required';
             $rules['penjualan_sales_details.'.$key.'.weight'] = 'required|gt:0';
@@ -215,6 +218,7 @@ class Create extends Component
                 'gt:-1',
             ];
             $stok_terpakai += !empty($this->penjualan_sales_details[$key]['weight']) ? $this->penjualan_sales_details[$key]['weight'] : 0;
+            $stok_karat_terpakai[$karat_id] = $stok_terpakai;
 
 
         }

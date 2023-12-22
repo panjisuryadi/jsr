@@ -5,6 +5,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\Cabang\Models\Cabang;
+use Modules\GoodsReceipt\Models\GoodsReceiptItemPayment;
 use Modules\Karat\Models\Karat;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
@@ -82,6 +83,10 @@ class GoodsReceiptItem extends Model
     public function reject(){
         $this->status_id = self::REJECTED;
         $this->save();
+    }
+
+    public function payments(){
+        return $this->hasMany(GoodsReceiptItemPayment::class, 'goodsreceipt_toko_item_id');
     }
 
 }
