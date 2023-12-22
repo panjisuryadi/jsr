@@ -226,10 +226,10 @@
                                         <td class="text-center"> {{!empty($row->nominal) ? format_currency($row->nominal) : '' }}</td>
                                         <td class="text-center"> {{label_case($detail->pembelian->lunas)}} </td>
                                         @if($isBerlian)
-                                            <td class="text-center"> {{ format_currency($sisa_nominal - $row->nominal) }}</td>
+                                            <td class="text-center"> {{ format_currency(($sisa_nominal - $row->nominal) > 0 ? $sisa_nominal - $row->nominal : 0) }}</td>
                                         @endif
                                         @if(!$isBerlian)
-                                            <td class="text-center"> {{ formatBerat($sisa_emas - $row->jumlah_cicilan) }} gr</td>
+                                            <td class="text-center"> {{ formatBerat(($sisa_emas - $row->jumlah_cicilan) ? $sisa_emas - $row->jumlah_cicilan : 0 ) }} gr</td>
                                         @endif
                                     </tr>
                                     @empty
