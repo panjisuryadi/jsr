@@ -11,7 +11,7 @@
         <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" wire:change="updateKarat">
             <option value="" selected disabled>Pilih Karat</option>
             @foreach($allKarat as $karat)
-            <option value="{{ $karat->id }}">{{ $karat->name }}</option>
+            <option value="{{ $karat->id }}">{{ $karat->label }}</option>
             @endforeach
         </select>
         @if ($errors->has($field_name))

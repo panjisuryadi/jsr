@@ -84,7 +84,7 @@
                             <tr>
 
                                 <td class="text-center">{{$loop->iteration}}</td>
-                                <td class="text-center font-semibold"> {{@$row->karat->name}} {{@$row->karat->kode}}</td>
+                                <td class="text-center font-semibold"> {{@$row->karat?->label}}</td>
                                 <td class="text-center font-semibold"> {{@$row->gold_weight}} gr</td>
                                 <td class="text-center font-semibold">{{ $data->product_category->name }}</td>
                                 <td class="text-center font-semibold">{{ $data->group->name }}</td>
@@ -162,7 +162,7 @@
                             <tr>
 
                                 <td class="text-center">{{$loop->iteration}}</td>
-                                <td class="text-center font-semibold"> {{@$row->karat->name}} {{@$row->karat->kode}}</td>
+                                <td class="text-center font-semibold"> {{@$row->karat?->label}}</td>
                                 <td class="text-center font-semibold"> {{@$row->gold_weight}} gr</td>
                                 <td class="text-center font-semibold">{{ $data->product_category->name }}</td>
                                 <td class="text-center font-semibold">{{ $data->group->name }}</td>

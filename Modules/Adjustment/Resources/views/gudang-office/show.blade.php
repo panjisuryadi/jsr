@@ -69,7 +69,7 @@
                                     @endphp
                                     @endif
                                     <tr>
-                                        <td>{{ $item->karat->name }}</td>
+                                        <td>{{ $item->karat->label }}</td>
                                         <td>{{ $item->pivot->weight_before }}</td>
                                         <td>{{ $item->pivot->weight_after }}</td>
                                         <td colspan="2"><span class="text-success">Barang Lebih {{$new}}</span> | <span class="text-danger">Barang Kurang {{$lost}}</span></td>

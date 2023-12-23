@@ -140,7 +140,7 @@
                                         $karat = $row->klasifikasi_berlian . ' (' . $row->karatberlians . ' ct)';
                                     }
                                     if(!empty($row->karat_id)) {
-                                        $karat = $row->karat->kode .' | '.  $row->karat->name;
+                                        $karat = $row->karat?->label;
                                     }
                                 @endphp
                                 <tr>
@@ -178,7 +178,7 @@
                                         $karat = $row->klasifikasi_berlian . ' (' . $row->karatberlians . ' ct)';
                                     }
                                     if(!empty($row->karat_id)) {
-                                        $karat = $row->karat->kode .' | '.  $row->karat->name;
+                                        $karat = $row->karat?->label;
                                     }
                                 @endphp
                                 <tr>

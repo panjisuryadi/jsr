@@ -52,7 +52,7 @@
                                             <select class="form-control select2" name="karat_id" id="karat_id" required>
                                                 <option value="" selected disabled>Select Karat</option>
                                                 @foreach(\Modules\Karat\Models\Karat::all() as $karat)
-                                                <option value="{{ $karat->id }}">{{ $karat->name }}</option>
+                                                <option value="{{ $karat->id }}">{{ $karat->label }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -114,15 +114,9 @@ public function index_data(Request $request)
                                 return $tb;
                             })
                             ->editColumn('barang', function ($data) {
-                                $label = '';
-                                if(!empty($data->product->karat->parent_id)){
-                                    $label = $data->product->karat->parent->label . ' ' . $data->product->karat->name;
-                                }else{
-                                    $label = $data->product->karat->label;
-                                }
                                 $tb = '<div>
                                         <h3 class="text-xs font-medium text-gray-800">Karat : 
-                                        ' .$label . '</h3>
+                                        ' .$data->product->karat?->label . '</h3>
                                         <p class="text-xs font-medium text-gray-800">Berat : 
                                         ' .$data->product->berat_emas . ' gr</p>
                                         </div>';
@@ -218,15 +212,9 @@ public function index_data(Request $request)
                                 return $tb;
                             })
                             ->editColumn('barang', function ($data) {
-                                $label = '';
-                                if(!empty($data->product->karat->parent_id)){
-                                    $label = $data->product->karat->parent->label . ' ' . $data->product->karat->name;
-                                }else{
-                                    $label = $data->product->karat->label;
-                                }
                                 $tb = '<div>
                                         <h3 class="text-xs font-medium text-gray-800">Karat : 
-                                        ' .$label . '</h3>
+                                        ' .$data->product->karat?->label . '</h3>
                                         <p class="text-xs font-medium text-gray-800">Berat : 
                                         ' .$data->product->berat_emas . ' gr</p>
                                         </div>';

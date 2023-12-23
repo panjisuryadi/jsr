@@ -108,7 +108,7 @@ class ReturPembeliansController extends Controller
                         $karat = !empty($row->karat->name) ? $row->karat->name : '';
                         $tb .= '
                             <div class="text-xs">
-                                <b>Karat </b> :  ' .$karat . ' (<b> ' . formatBerat($row->weight) . ' gr </b>)
+                                <b>Karat </b> :  ' .$row->karat?->label . ' (<b> ' . formatBerat($row->weight) . ' gr </b>)
                             </div>
                                 ';
                     }

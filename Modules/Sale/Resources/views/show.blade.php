@@ -97,7 +97,7 @@
                                                  </div>
                                         </td>
                                           <td class="align-middle">
-                                       {{ @$item->product->karat->name }}    
+                                       {{ @$item->product->karat?->label }}    
                                         </td>
 
                                         <td class="align-middle">

@@ -38,7 +38,7 @@
                                 <label for="karat_filter" class="font-bold">Pilih Karat</label>
                                 <select name="karat_filter" id="karat_filter" class="form-control">
                                     @foreach ($datakarat as $karat )
-                                    <option value="{{$karat->id}}">{{ $karat->name }} | {{$karat->kode}}</option>
+                                    <option value="{{$karat->id}}">{{ $karat->label }}</option>
                                     @endforeach
                                 </select>
                             </div>

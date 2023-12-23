@@ -294,7 +294,7 @@ public function show($id)
                             return $data->weight . " gram";
                             })
                         ->editColumn('karat', function ($data) {
-                            return $data->karat->name. ' | ' . $data->karat->kode;
+                            return $data->karat?->label;
                             })
                         ->rawColumns([ 
                              'action', 

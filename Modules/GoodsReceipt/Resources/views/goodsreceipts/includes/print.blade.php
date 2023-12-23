@@ -262,7 +262,7 @@
    <tr>
       <th class="text-center">{{$loop->iteration}}</th>
       <td style="text-align:center;" class="text-center">{{@$row->mainkategori->name}}</td>
-     <td class="text-center">{{@$row->karat->kode}} | {{@$row->karat->name}}</td>
+     <td class="text-center">{{@$row->karat?->label}}</td>
       <td class="text-center"> {{@$row->berat_real}}</td>
       <td class="text-center"> {{@$row->berat_kotor}}</td>
     
