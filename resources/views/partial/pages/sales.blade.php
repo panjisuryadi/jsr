@@ -197,7 +197,7 @@
                                             @endif
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $row->karat->kode }} | {{ $row->karat->name }}</td>
+                            <td>{{ $row->karat?->label }}</td>
                             <td>{{ $row->sales->name }}</td>
                             <td>{{ $row->weight ?? ' - ' }}</td>
                             <td>

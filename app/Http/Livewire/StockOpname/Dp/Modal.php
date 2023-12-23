@@ -22,7 +22,7 @@ class Modal extends Component
         $this->validate();
         $data = [
             'id' => $this->data->id,
-            'product_name'=>$this->data->karat->name . ' | ' . $this->data->karat->kode,
+            'product_name'=>$this->data->karat->label,
             'cabang_name' => $this->data->cabang->name,
             'current_stock' => $this->data->weight,
             'new_stock'=>$this->stock_rill

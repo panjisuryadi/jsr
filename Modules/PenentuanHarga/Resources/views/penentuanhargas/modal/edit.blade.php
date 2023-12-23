@@ -19,7 +19,7 @@
                 <td>Karat</td>
                 <td>
                     <span class="text-lg font-semibold">
-                        {{@$detail->karat->name }} |  <span class="text-blue-400">{{@$detail->karat->kode }}</span></span>
+                        {{@$detail->karat->label }}</span>
                 </td>
             </tr> 
 

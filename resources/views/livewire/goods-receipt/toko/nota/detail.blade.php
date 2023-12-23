@@ -89,7 +89,7 @@
                                 <td class="font-semibold"> 
                                     <p>Nama Produk : {{@$row->product->product_name}}</p>
                                     <p>Kode Produk : {{@$row->product->product_code}}</p>
-                                    <p>Karat : {{@$row->product->karat->name}}</p>
+                                    <p>Karat : {{@$row->product->karat?->label}}</p>
                                     <p>Berat : {{@$row->product->berat_emas}} gr</p>
                                 </td>
                                 <td class="text-center font-semibold">{{ @$row->customer_name }}</td>
@@ -167,7 +167,7 @@
                                 <td class="text-center font-semibold"> {{ucwords(@$row->type_label)}}</td>
                                 <td class="font-semibold"> 
                                     <p>Nama Produk : {{@$row->product->product_name}}</p>
-                                    <p>Karat : {{@$row->product->karat->name}}</p>
+                                    <p>Karat : {{@$row->product->karat?->label}}</p>
                                     <p>Berat : {{@$row->product->berat_emas}} gr</p>
                                 </td>
                                 <td class="text-center font-semibold">{{ @$row->customer_name }}</td>

@@ -122,7 +122,7 @@ public function index_data(Request $request)
                                      Prduk :<strong>' . $data->product_name . '
                                     </strong></div>'; 
                              $tb .= '<div class="text-gray-800">
-                                     Karat :<strong>' . $data->karat->name . '
+                                     Karat :<strong>' . $data->karat->label . '
                                     </strong></div>';   
 
                              $tb .= '<div class="text-gray-800">
@@ -135,7 +135,7 @@ public function index_data(Request $request)
 
                           ->editColumn('kadar', function ($data) {
                                 $tb = '<div class="font-semibold items-center text-center">
-                                        ' . $data->karat->name . '
+                                        ' . $data->karat->label . '
                                        </div>';
                                    return $tb;
                                })

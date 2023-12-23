@@ -73,7 +73,7 @@
                                  {{-- {{$detail}} --}}
                                     <tr>
                                      <td> {{@$detail->product_name}}</td>   
-                                     <td> {{@$detail->karat->name}}</td>   
+                                     <td> {{@$detail->karat?->label}}</td>   
                                      <td> {{@$detail->weight}} <small>Gram</small></td>   
                                      <td> {{format_uang(@$detail->nominal)}}</td>   
                                      

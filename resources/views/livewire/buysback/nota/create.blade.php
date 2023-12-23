@@ -83,7 +83,7 @@
                                 </td>
                                 <td class="text-center">{{$loop->iteration}}</td>
                                 <td class="text-center font-semibold"> {{@$row->product->product_name}} gr</td>
-                                <td class="text-center font-semibold"> {{@$row->karat->name}} </td>
+                                <td class="text-center font-semibold"> {{@$row->karat?->label}} </td>
                                 <td class="text-center font-semibold">{{@$row->weight}}</td>
                                 <td class="text-center font-semibold">{{ @$row->customer->customer_name }}</td>
                                 <td class="text-center font-semibold">{{ $this->nominalText(@$row->nominal) }}</td>

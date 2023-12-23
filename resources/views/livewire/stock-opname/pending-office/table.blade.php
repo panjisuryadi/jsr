@@ -34,7 +34,7 @@
                 @foreach ($products as $key => $value)
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
-                    <td>{{ $value->karat->name }} - {{$value->karat->kode}}</td>
+                    <td>{{ $value->karat?->label}}</td>
                     <td>{{ $value->weight }}</td>
                     <td>
             <button wire:click="selectProduct('{{ $value->id }}')"

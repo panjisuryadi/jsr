@@ -21,6 +21,10 @@ class GoodsReceipt extends Model implements HasMedia
     protected $table = 'goodsreceipts';
     protected $guarded = [];
     public const GRCODE = 'PO';
+    public const TIPE_PENERIMAAN = [
+        '1' => 'PCS',
+        '2' => 'Mata Tabur'
+    ];
 
   public function products() {
         return $this->hasMany(Product::class, 'goodsreceipt_id', 'id');
@@ -135,6 +139,23 @@ class GoodsReceipt extends Model implements HasMedia
                 $q->where('jumlah_cicilan', '!=', null);
             });
         });
+    }
+
+    public function getBerlianShortLabelAttribute(){
+        $query = $this->goodsreceiptitem();
+        $tipe = '';
+        $str = '';
+
+        if($this->tipe_penerimaan_barang =='2'){
+            $tipe = self::TIPE_PENERIMAAN[$this->tipe_penerimaan_barang] . ' ';
+        }
+        if($query->count()){
+            foreach($query->get() as $row) {
+                $shapeberlian = $row->shape_berlian()->shape_name ?? '';
+                $str .= "Berlian " . $tipe . $shapeberlian . " " . $row->klasifikasi_berlian . " colour : " . $row->colour . ", clarity:" . $row->clarity .  " \r\n";
+            }
+        }
+        return $str;
     }
 
 

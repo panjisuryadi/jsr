@@ -161,7 +161,7 @@
                 </tr> 
                 @foreach($detail->detail as $row)
                 <tr>
-                    <td>{{ $row->karat->name }} | {{ $row->karat->kode }}</td>
+                    <td>{{ $row->karat?->label }}</td>
                     <td>{{ $row->weight }} GRAM</td>
                 </tr>
                 @endforeach

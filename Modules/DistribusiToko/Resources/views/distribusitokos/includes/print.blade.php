@@ -142,7 +142,7 @@
                  <tr class="details">
                     <td>Karat</td>
 
-                    <td> {{ @$detail->karat->kode}} | {{ @$detail->karat->name}}</td>
+                    <td> {{ @$detail->karat?->label}}</td>
                 </tr>
 
                 <tr class="details">

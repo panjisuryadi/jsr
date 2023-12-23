@@ -162,7 +162,7 @@
         <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" >
             <option value="" selected disabled>Pilih Karat</option>
             @foreach(\Modules\Karat\Models\Karat::all() as $karat)
-            <option value="{{ $karat->id }}">{{ $karat->name }}</option>
+            <option value="{{ $karat->id }}">{{ $karat->label }}</option>
             @endforeach
         </select>
         @if ($errors->has($field_name))

@@ -140,7 +140,7 @@
                                         $karat = $row->klasifikasi_berlian . ' (' . $row->karatberlians . ' ct)';
                                     }
                                     if(!empty($row->karat_id)) {
-                                        $karat = $row->karat->kode .' | '.  $row->karat->name;
+                                        $karat = $row->karat?->label;
                                     }
                                 @endphp
                                 <tr>
@@ -178,7 +178,7 @@
                                         $karat = $row->klasifikasi_berlian . ' (' . $row->karatberlians . ' ct)';
                                     }
                                     if(!empty($row->karat_id)) {
-                                        $karat = $row->karat->kode .' | '.  $row->karat->name;
+                                        $karat = $row->karat?->label;
                                     }
                                 @endphp
                                 <tr>
@@ -226,16 +226,20 @@
                                         <td class="text-center"> {{!empty($row->nominal) ? format_currency($row->nominal) : '' }}</td>
                                         <td class="text-center"> {{label_case($detail->pembelian->lunas)}} </td>
                                         @if($isBerlian)
-                                            <td class="text-center"> {{ format_currency($sisa_nominal -= $row->nominal) }}</td>
+                                            <td class="text-center"> {{ format_currency(($sisa_nominal - $row->nominal) > 0 ? $sisa_nominal - $row->nominal : 0) }}</td>
                                         @endif
                                         @if(!$isBerlian)
-                                            <td class="text-center"> {{ formatBerat($sisa_emas -= $row->jumlah_cicilan) }} gr</td>
+                                            <td class="text-center"> {{ formatBerat(($sisa_emas - $row->jumlah_cicilan) ? $sisa_emas - $row->jumlah_cicilan : 0 ) }} gr</td>
                                         @endif
                                     </tr>
                                     @empty
                                     <tr>
                                         <th colspan="5" class="text-center">Tidak ada data</th>
                                     </tr>
+                                    @php
+                                        $sisa_nominal -= $row->nominal;
+                                        $sisa_emas -= $row->jumlah_cicilan;
+                                    @endphp
                                     @endforelse
                                 </tbody>
                             </table>

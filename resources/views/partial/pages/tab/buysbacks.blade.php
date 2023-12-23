@@ -27,7 +27,7 @@
                             <td class="text-blue-400">{{ shortdate($sale->date) }}</td>
                             <td>{{ $sale->no_buy_back }}</td>
                             <td>{{ $sale->cabang->name }}</td>
-                            <td>{{ $sale->karat->name }}</td>
+                            <td>{{ $sale->karat?->label }}</td>
                             <td>{{ $sale->weight }}</td>
 
 

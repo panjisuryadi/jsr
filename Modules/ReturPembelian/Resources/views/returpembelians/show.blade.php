@@ -156,7 +156,7 @@
                                 @foreach($detail->detail as $row)
                                 <tr>
                                     <th class="text-center">{{$loop->iteration}}</th>
-                                    <td class="text-center"> {{$row->karat->kode}} | {{$row->karat->name}}</td>
+                                    <td class="text-center"> {{$row->karat?->label}}</td>
                                     <td class="text-center"> {{ formatBerat($row->weight) . 'gr' }}</td>
                                     <td class="text-center"> {{ $row->harga . ' %' }}</td>
                                     <td class="text-center"> {{ $row->pure_gold }} </td>

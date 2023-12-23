@@ -23,7 +23,7 @@
                     <input type="hidden" name="product_location_id" id="product_location_id">
                     <div class="col-md-6">
                         <div>Karat</div>
-                        <div><b><span id="product_name">{{ $data->karat->name }} | {{ $data->karat->kode }}</span></b></div>
+                        <div><b><span id="product_name">{{ $data->karat?->label }}</span></b></div>
                     </div>
                     <div class="col-md-6">
                         <div>Location</div>

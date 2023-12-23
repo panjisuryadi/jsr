@@ -39,7 +39,7 @@ class GoodsReceiptItem extends Model
 
     public function shape_berlian()
     {
-        return $this->hasOne(ShapeBerlian::class, 'id', 'shapeberlian_id');
+        return $this->belongsTo(ShapeBerlian::class, 'shapeberlian_id', 'id');
     }
 
     public function accessories()

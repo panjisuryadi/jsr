@@ -26,7 +26,7 @@
         @forelse ($piutang_sales_report as $report)
             <tr>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ $report->date }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ $report->karat->name }} | {{ $report->karat->kode }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ $report->karat?->label }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ $report->description }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ $report->weight_in }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ $report->weight_out }}</td>

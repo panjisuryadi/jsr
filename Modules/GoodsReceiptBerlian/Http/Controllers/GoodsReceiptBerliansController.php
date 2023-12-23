@@ -202,7 +202,7 @@ class GoodsReceiptBerliansController extends Controller
                 })
                 
             ->editColumn('keterangan', function ($data) {
-                return '';
+                return $data->getBerlianShortLabelAttribute();
             })
                 
             ->editColumn('note', function ($data) {

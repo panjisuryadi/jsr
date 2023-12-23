@@ -185,7 +185,7 @@ top: 55% !important;
  @foreach($detail->detail as $row)
    <tr>
       <th class="text-center">{{$loop->iteration}}</th>
-      <td class="text-center"> {{$row->karat->kode}} | {{$row->karat->name}}</td>
+      <td class="text-center"> {{$row->karat?->label}}</td>
       <td class="text-center"> {{$row->weight}}</td>
       <td class="text-center"> Rp. {{rupiah($row->nominal)}}</td>
     

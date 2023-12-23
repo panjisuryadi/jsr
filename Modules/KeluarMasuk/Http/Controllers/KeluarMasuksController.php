@@ -84,7 +84,7 @@ public function index_data(Request $request)
                         ->editColumn('karat', function ($data) {
                             $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                    ' .$data->karat->name . '|'. $data->karat->kode .'</h3>
+                                    ' .$data->karat?->label .'</h3>
                                     </div>';
                                 return $tb;
                             })

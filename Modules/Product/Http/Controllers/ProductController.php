@@ -449,7 +449,7 @@ public function index_data_by_kategori(Request $request ,$id)
            ->editColumn('karat', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                     <h3 class="text-sm font-semibold text-center text-gray-800">
-                     ' . $data->product_item[0]->karat->kode . ' |  ' . $data->product_item[0]->karat->name . ' </h3>
+                     ' . $data->product_item[0]->karat?->label . ' </h3>
                         </div>';
                 return $tb;
             })
@@ -1883,7 +1883,7 @@ public function index_distribusi(Request $request)
            ->editColumn('karat', function ($data) {
                 $tb = '<div class="flex items-center gap-x-2">
                     <h3 class="text-sm font-semibold text-center text-gray-800">
-                     ' . @$data->product_item[0]->karat->kode . ' |  ' . @$data->product_item[0]->karat->name . ' </h3>
+                     ' . @$data->product_item[0]->karat?->label . ' </h3>
                         </div>';
                 return $tb;
             })
