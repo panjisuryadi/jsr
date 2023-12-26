@@ -1948,6 +1948,25 @@ class GenerateMenus
             ]);
 
 
+     // LaporanAssets
+            $report->add('<i class="c-sidebar-nav-icon  bi bi-file-earmark-bar-graph text-sm"></i> '.__('Laporan Assets'), [
+                'route' => 'laporanasset.index',
+                'class' => 'nav-item',
+            ])
+            ->data([
+                'order'         => 88,
+                'activematches' => ['laporanassets*'],
+                'permission'    => ['access_laporanassets'],
+            ])
+            ->link->attr([
+                'class' => 'c-sidebar-nav-link py-2',
+            ]);
+
+
+
+
+
+
  // Access Control Dropdown
             $setting = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-gear"></i>'.__('Setting').'', [
                 'class' => 'c-sidebar-nav-dropdown',

@@ -78,5 +78,6 @@
     "GoodsReceiptBerlian": true,
     "Produksi": true,
     "Accessory": true,
-    "ReturPembelian": true
+    "ReturPembelian": true,
+    "LaporanAsset": true
 }
