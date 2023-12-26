@@ -123,8 +123,13 @@
     </script>
 
 <script type="text/javascript">
+    var table = jQuery('#datatable').DataTable();
+
 jQuery.noConflict();
 (function( $ ) {
+    $( document ).ready(function(){
+        var table = $('#datatable').DataTable();
+    })
 $(document).on('click', '#Tambah, #Edit', function(e){
          e.preventDefault();
         if($(this).attr('id') == 'Tambah')

@@ -206,7 +206,8 @@ public function show($id)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.edit',
+        // dd($detail);
+          return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
             'detail',
@@ -231,30 +232,20 @@ public function show($id)
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
         $request->validate([
-            'name' => 'required|min:3|max:191',
+                    'no_rekening' => 'required|min:3|max:191',
+                    'nama_rekening' => 'required|min:3|max:191',
+                    'kode_bank' => 'required|min:3|max:191',
                  ]);
         $params = $request->except('_token');
-        $params['name'] = $params['name'];
-        $params['description'] = $params['description'];
+        $params['nama_rekening'] = $params['nama_rekening'];
+        $params['kode_bank'] = $params['kode_bank'];
+        $params['no_rekening'] = $params['no_rekening'];
 
-       // if ($image = $request->file('image')) {
-       //                if ($$module_name_singular->image !== 'no_foto.png') {
-       //                    @unlink(imageUrl() . $$module_name_singular->image);
-       //                  }
-       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
-       //              $constraint->aspectRatio();
-       //              })->encode();
-       //   $normalpath = 'uploads/' . $gambar;
-       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-       //   Storage::disk($storage)->put($normalpath, (string) $normal);
-       //   $params['image'] = "$gambar";
-       //  }else{
-       //      unset($params['image']);
-       //  }
         $$module_name_singular->update($params);
-         toast(''. $module_title.' Updated!', 'success');
-         return redirect()->route(''.$module_name.'.index');
+        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
+        //  toast(''. $module_title.' Updated!', 'success');
+        //  return redirect()->route(''.$module_name.'.index');
     }
 
 
