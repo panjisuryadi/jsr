@@ -53,7 +53,7 @@
 
                                  <div class="form-group">
                                         <label class="mb-1" for="supplier_phone">{{__('Phone')}} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="supplier_phone" required>
+                                        <input type="number" min="0" class="form-control" name="supplier_phone" required>
                                     </div>
 
                                     <div class="form-group">
