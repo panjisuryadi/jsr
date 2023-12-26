@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DataRekening\Http\Controllers;
+namespace Modules\LaporanAsset\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -13,17 +13,17 @@ use Illuminate\Support\Str;
 use Lang;
 use Image;
 
-class DataRekeningsController extends Controller
+class LaporanAssetsController extends Controller
 {
 
   public function __construct()
     {
         // Page Title
-        $this->module_title = 'Data Rekening';
-        $this->module_name = 'datarekening';
-        $this->module_path = 'datarekenings';
+        $this->module_title = 'LaporanAsset';
+        $this->module_name = 'laporanasset';
+        $this->module_path = 'laporanassets';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "Modules\DataRekening\Models\DataRekening";
+        $this->module_model = "Modules\LaporanAsset\Models\LaporanAsset";
 
     }
 
@@ -97,6 +97,10 @@ public function index_data(Request $request)
 
 
 
+
+
+
+
     /**
      * Show the form for creating a new resource.
      * @return Renderable
@@ -124,6 +128,47 @@ public function index_data(Request $request)
      * @param Request $request
      * @return Renderable
      */
+    public function store_default(Request $request)
+    {
+         abort_if(Gate::denies('create_laporanasset'), 403);
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Store';
+
+        $request->validate([
+             'name' => 'required|min:3|max:191',
+             'description' => 'required|min:3|max:191',
+         ]);
+       // $params = $request->all();
+        //dd($params);
+        $params = $request->except('_token');
+        $params['name'] = $params['name'];
+        $params['description'] = $params['description'];
+        //  if ($image = $request->file('image')) {
+        //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
+        //             $constraint->aspectRatio();
+        //             })->encode();
+        //  $normalpath = 'uploads/' . $gambar;
+        //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+        //  Storage::disk($storage)->put($normalpath, (string) $normal);
+        //  $params['image'] = "$gambar";
+        // }else{
+        //    $params['image'] = 'no_foto.png';
+        // }
+
+
+         $$module_name_singular = $module_model::create($params);
+         toast(''. $module_title.' Created!', 'success');
+         return redirect()->route(''.$module_name.'.index');
+    }
+
+
 
 //store ajax version
 
@@ -136,9 +181,8 @@ public function store(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'no_rekening' => 'required|max:191|unique:'.$module_model.',no_rekening',
-             'kode_bank' => 'required|max:191',
-             'nama_rekening' => 'required|max:191',
+             'code' => 'required|max:191|unique:'.$module_model.',code',
+             'name' => 'required|max:191',
 
         ]);
         if (!$validator->passes()) {
@@ -148,6 +192,8 @@ public function store(Request $request)
         $input = $request->all();
         $input = $request->except('_token');
         // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+        $input['code'] = $input['code'];
+        $input['name'] = $input['name'];
         $$module_name_singular = $module_model::create($input);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
@@ -206,7 +252,6 @@ public function show($id)
         $module_action = 'Edit';
         abort_if(Gate::denies('edit_'.$module_name.''), 403);
         $detail = $module_model::findOrFail($id);
-        // dd($detail);
           return view(''.$module_name.'::'.$module_path.'.modal.edit',
            compact('module_name',
             'module_action',
@@ -221,7 +266,7 @@ public function show($id)
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update_default(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -232,27 +277,37 @@ public function show($id)
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
         $request->validate([
-                    'no_rekening' => 'required|min:3|max:191',
-                    'nama_rekening' => 'required|min:3|max:191',
-                    'kode_bank' => 'required|min:3|max:191',
+            'name' => 'required|min:3|max:191',
                  ]);
         $params = $request->except('_token');
-        $params['nama_rekening'] = $params['nama_rekening'];
-        $params['kode_bank'] = $params['kode_bank'];
-        $params['no_rekening'] = $params['no_rekening'];
+        $params['name'] = $params['name'];
+        $params['description'] = $params['description'];
 
+       // if ($image = $request->file('image')) {
+       //                if ($$module_name_singular->image !== 'no_foto.png') {
+       //                    @unlink(imageUrl() . $$module_name_singular->image);
+       //                  }
+       //   $gambar = 'category_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+       //   $normal = Image::make($image)->resize(1000, null, function ($constraint) {
+       //              $constraint->aspectRatio();
+       //              })->encode();
+       //   $normalpath = 'uploads/' . $gambar;
+       //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+       //   Storage::disk($storage)->put($normalpath, (string) $normal);
+       //   $params['image'] = "$gambar";
+       //  }else{
+       //      unset($params['image']);
+       //  }
         $$module_name_singular->update($params);
-        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
-
-        //  toast(''. $module_title.' Updated!', 'success');
-        //  return redirect()->route(''.$module_name.'.index');
+         toast(''. $module_title.' Updated!', 'success');
+         return redirect()->route(''.$module_name.'.index');
     }
 
 
 
 
 //update ajax version
-public function update_ajax(Request $request, $id)
+public function update(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

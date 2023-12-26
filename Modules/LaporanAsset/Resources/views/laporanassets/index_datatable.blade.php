@@ -17,13 +17,9 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
-                                id="Tambah"
-                                data-toggle="tooltip"
-                                 class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                                </a>
-
+                            <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
+                                Add {{$module_title}}<i class="bi bi-plus"></i>
+                            </a>
                         </div>
                         <div id="buttons">
                         </div>
@@ -32,16 +28,13 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('No Rekening') }}</th>
-                                    <th class="text-left">{{ __('Nama Rekening') }}</th>
-
-  <th style="width: 10%!important;" class="text-center">{{ __('Kode Bank') }}</th>
+                                    <th style="width: 5%!important;">NO</th>
+                                    <th>Title</th>
                                     <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
+                                        Updated
                                     </th>
-                                    <th style="width: 18%!important;" class="text-center">
-                                        {{ __('Action') }}
+                                    <th style="width: 15%!important;" class="text-center">
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -88,7 +81,8 @@
             ajax: '{{ route("$module_name.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
-
+                'copy',
+                'csv',
                 'excel',
                 'pdf',
                 'print'
@@ -101,11 +95,14 @@
                     }
                 },
 
-                {data: 'no_rekening', name: 'no_rekening'},
-                {data: 'nama_rekening', name: 'nama_rekening'},
-                {data: 'kode_bank', name: 'kode_bank'},
-                {data: 'updated_at', name: 'updated_at'},
-
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'updated_at',
+                    name: 'updated_at'
+                },
                 {
                     data: 'action',
                     name: 'action',
@@ -117,38 +114,5 @@
         .buttons()
         .container()
         .appendTo("#buttons");
-
-
-
     </script>
-
-<script type="text/javascript">
-    var table = jQuery('#datatable').DataTable();
-
-jQuery.noConflict();
-(function( $ ) {
-    $( document ).ready(function(){
-        var table = $('#datatable').DataTable();
-    })
-$(document).on('click', '#Tambah, #Edit', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-md');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').removeClass('modal-lg');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').addClass('modal-md');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('.modal-dialog').removeClass('modal-lg');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
-</script>
 @endpush

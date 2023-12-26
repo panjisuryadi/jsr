@@ -1,46 +1,66 @@
   <div class="px-3">
   <x-library.alert />
+  {{-- @dd($detail) --}}
   <form id="FormEdit" action="{{ route(''.$module_name.'.update', $detail) }}" method="POST">
                             @csrf
                             @method('patch')
-             <div class="flex flex-row grid grid-cols-2 gap-4">
-                            <div class="form-group">
-                                <?php
-                                $field_name = 'code';
-                                $field_lable = label_case('Code');
-                                $field_placeholder = $field_lable;
-                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                $required = "required";
-                                ?>
-                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                        name="{{ $field_name }}"
-                        id="{{ $field_name }}"
-                        value="{{$detail->code }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
+             <div class="flex flex-row grid grid-cols-1 gap-4">
+                <div class="form-group">
+                    <?php
+                    $field_name = 'no_rekening';
+                    $field_lable = label_case('No Rekening');
+                    $field_placeholder = $field_lable;
+                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                    $required = "required";
+                    ?>
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text"
+                    name="{{ $field_name }}"
+                    id="{{ $field_name }}"
+                    value="{{$detail->no_rekening }}">
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
 
-                            </div>
+                </div>
 
-                       <div class="form-group">
-                                <?php
-                                $field_name = 'name';
-                                $field_lable = label_case('Name');
-                                $field_placeholder = $field_lable;
-                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                $required = "required";
-                                ?>
-                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                        name="{{ $field_name }}"
-                        id="{{ $field_name }}"
-                        value="{{$detail->name }}">
-                                <span class="invalid feedback" role="alert">
-                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
-                                </span>
+                <div class="form-group">
+                    <?php
+                    $field_name = 'nama_rekening';
+                    $field_lable = label_case('Nama Rekening');
+                    $field_placeholder = $field_lable;
+                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                    $required = "required";
+                    ?>
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text"
+                    name="{{ $field_name }}"
+                    id="{{ $field_name }}"
+                    value="{{$detail->nama_rekening }}">
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
 
-                            </div>
+                </div>
+
+                <div class="form-group">
+                    <?php
+                    $field_name = 'kode_bank';
+                    $field_lable = label_case('Kode Bank');
+                    $field_placeholder = $field_lable;
+                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                    $required = "required";
+                    ?>
+                    <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text"
+                    name="{{ $field_name }}"
+                    id="{{ $field_name }}"
+                    value="{{$detail->kode_bank }}">
+                    <span class="invalid feedback" role="alert">
+                        <span class="text-danger error-text {{ $field_name }}_err"></span>
+                    </span>
+
+                </div>
 
 
 
@@ -74,11 +94,10 @@
 jQuery.noConflict();
 (function( $ ) {
 
- function autoRefresh(){
-      var table = $('#datatable').DataTable();
+    function autoRefresh(){
         table.ajax.reload();
+    }
 
-}
     function Update()
     {
         $.ajax({
@@ -88,15 +107,14 @@ jQuery.noConflict();
             data: $('#FormEdit').serialize(),
             dataType:'json',
             success: function(data) {
-                  console.log(data.error)
                     if($.isEmptyObject(data.error)){
                       $('#ResponseInput').html(data.success);
                       $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                       $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
                       setTimeout(function(){ autoRefresh(); }, 1000);
                       setTimeout(function () {
-                              $('#ModalGue').modal('hide');
-                            }, 3000);
+                            $('#tombol_close').trigger('click');
+                        }, 2000);
 
                  }else{
                         printErrorMsg(data.error);
@@ -117,7 +135,7 @@ jQuery.noConflict();
 
 $(document).ready(function(){
 
-    var Tombol = "<button type='button' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
+    var Tombol = "<button type='button' class='btn btn-danger px-5' id='tombol_close' data-dismiss='modal'>{{ __('Close') }}</button>";
     Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanUpdate'>{{ __('Update') }}</button>";
     $('#ModalFooter').html(Tombol);
 
