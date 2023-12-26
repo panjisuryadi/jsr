@@ -41,7 +41,7 @@
                             <div class="px-2">
                                 <div class="form-group">
                                     <label for="customer_phone">Nomor Kontak <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="customer_phone" required>
+                                    <input type="number" class="form-control" name="customer_phone" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="city">Kota</label>
