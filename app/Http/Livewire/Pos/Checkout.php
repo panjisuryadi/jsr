@@ -836,7 +836,7 @@ class Checkout extends Component
 
                 ]);
                 if($this->isDp()){
-                    $detail->product->updateTracking(ProductStatus::PENDING_CABANG, $sale->cabang_id);
+                    $detail->product->updateTracking(ProductStatus::DP, $sale->cabang_id);
                 }else{
                     $detail->product->updateTracking(ProductStatus::SOLD, $sale->cabang_id);
                 }
