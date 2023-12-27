@@ -159,8 +159,9 @@ public function index_data(Request $request)
                                 return $tb;
                             })
                             ->editColumn('grand_total_amount', function ($data) {
+                                $nominal = empty($data->dp_payment) ? $data->grand_total_amount : $data->dp_nominal;
                                 $tb = '<div class="text-center font-bold"> 
-                                        ' . format_uang($data->grand_total_amount) . '</div>';
+                                        ' . format_uang($nominal) . '</div>';
                                    return $tb;
                                })
 
@@ -171,6 +172,14 @@ public function index_data(Request $request)
                             return view(''.$module_path.'::.partials.status',
                             compact('module_name', 'data', 'module_model'));
                                 })
+
+                        ->addColumn('cara_bayar', function ($data) {
+                            $module_name = $this->module_name;
+                            $module_model = $this->module_model;
+                            $module_path = $this->module_path;
+                            return view(''.$module_path.'::.partials.cara-bayar',
+                            compact('module_name', 'data', 'module_model'));
+                        })
                            ->addColumn('total_amount', function ($data) {
                             $module_name = $this->module_name;
                             $module_model = $this->module_model;
