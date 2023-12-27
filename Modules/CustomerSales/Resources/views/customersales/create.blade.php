@@ -36,8 +36,8 @@
                             
                             <div class="px-2">
                                 <div class="form-group">
-                                    <label for="customer_phone">{{ __('Telepon') }}</label>
-                                    <input type="text" class="form-control" name="customer_phone" >
+                                    <label for="customer_phone">Telepon</label>
+                                    <input type="number" min="0" class="form-control" name="customer_phone" >
                                 </div>
                                 <div class="form-group">
                                     <label for="market">{{ __('Nama Pasar') }} <span class="text-danger">*</span></label>
