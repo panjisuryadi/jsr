@@ -19,27 +19,27 @@
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <tr>
-                                    <th>Customer Name</th>
+                                    <th>{{ __('Konsumen Sales') }} </th>
                                     <td>{{ $customersale->customer_name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Customer Email</th>
+                                    <th> Email</th>
                                     <td>{{ $customersale->customer_email }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Customer Phone</th>
+                                    <th>{{  __('Telepon')  }}</th>
                                     <td>{{ $customersale->customer_phone }}</td>
                                 </tr>
                                 <tr>
-                                    <th>City</th>
-                                    <td>{{ $customersale->city }}</td>
+                                    <th>{{ __('Nama Pasar') }}</th>
+                                    <td>{{ $customersale->market }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Country</th>
+                                    <th>{{ __('Negara') }}</th>
                                     <td>{{ $customersale->country }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Address</th>
+                                    <th>{{ __('Alamat') }}</th>
                                     <td>{{ $customersale->address }}</td>
                                 </tr>
                             </table>
