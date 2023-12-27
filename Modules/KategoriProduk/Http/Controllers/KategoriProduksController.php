@@ -172,7 +172,9 @@ public function create()
 
 
          $$module_name_singular = $module_model::create($params);
-         toast(''. $module_title.' Created!', 'success');
+        //  toast(''. $module_title.' Created!', 'success');
+         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
+
          return redirect()->route(''.$module_name.'.index');
     }
 
