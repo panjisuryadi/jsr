@@ -43,8 +43,8 @@
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="customer_phone">Telepon <span class="text-danger"></span></label>
-                                        <input type="text" class="form-control" name="customer_phone" required value="{{ $customersale->customer_phone }}">
+                                        <label for="customer_phone">Phone <span class="text-danger">*</span></label>
+                                        <input type="number" min="0" class="form-control" name="customer_phone" required value="{{ $customersale->customer_phone }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">

@@ -13,7 +13,7 @@
                                 ?>
                                 <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                         <input class="form-control"
-                         type="text"
+                         type="number" min="0"
                          name="{{ $field_name }}"
                          id="{{ $field_name }}"
                          placeholder="{{ $field_placeholder }}">
