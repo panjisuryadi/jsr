@@ -13,6 +13,11 @@ class Sale extends Model
 
     protected $guarded = [];
 
+    public const SP_DP = 'dp';
+    public const SP_PAID = 'paid';
+    public const S_COMPLETED = 'completed';
+    public const S_DP = 'dp';
+
     public function saleDetails() {
         return $this->hasMany(SaleDetails::class, 'sale_id', 'id');
     }

@@ -25,7 +25,7 @@ class HomeController extends Controller
 
         $paging = $request->get('key') ?? '';
          //dd($paging);
-        activity()->log(' '.auth()->user()->name.'Masuk ke halaman Dashoard ');
+        // activity()->log(' '.auth()->user()->name.'Masuk ke halaman Dashoard ');
 
       $lastActivity = ActivityLog::latest()->Join('users', 'activity_log.causer_id', '=', 'users.id')
             ->select(['activity_log.id', 'activity_log.description',  'activity_log.log_name',  'activity_log.created_at',

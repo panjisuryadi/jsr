@@ -80,6 +80,10 @@ class Checkout extends Component
     public $loading = false;
     public $PaymentType;
     public $showPaymentType = 'tunai';
+    public $dp_payment = 0;
+    public $dp_nominal = 0;
+    public $remain_amount = 0;
+    public $tmp_grand_total = 0;
 
     public function updatedMultiplePaymentMethod($value){
         $this->resetSinglePaymentMethod();
@@ -246,7 +250,10 @@ class Checkout extends Component
                         if (empty(intval($value))) {
                             $fail('Wajib diisi');
                         }
-                        if ($value < $this->grand_total) {
+                        if ($value < $this->grand_total && !$this->isDp()) {
+                            $fail('Jumlah yang dibayarkan tidak cukup.');
+                        }
+                        if($this->isDp() && $value < $this->dp_nominal){
                             $fail('Jumlah yang dibayarkan tidak cukup.');
                         }
                     }
@@ -255,7 +262,9 @@ class Checkout extends Component
             'total_amount' => 'required',
             'grand_total' => 'gt:0',
             'bank_id' => 'required_if:payment_method,transfer',
-            'edc_id' => 'required_if:payment_method,edc'
+            'edc_id' => 'required_if:payment_method,edc',
+            'dp_nominal' => 'required_if:dp_payment,==,1|gt:-1',
+            'remain_amount' => 'required_if:dp_payment,==,1',
         ];
 
         foreach ($this->other_fees as $index => $fee) {
@@ -272,7 +281,10 @@ class Checkout extends Component
                         if (empty(intval($value))) {
                             $fail('Wajib diisi');
                         }
-                        if ($this->total_payment_amount > $this->grand_total) {
+                        if ($this->total_payment_amount > $this->grand_total && !$this->isDp()) {
+                            $fail('Jumlah melebihi grand total');
+                        }
+                        if ($this->total_payment_amount > $this->dp_nominal && $this->isDp()) {
                             $fail('Jumlah melebihi grand total');
                         }
                     }
@@ -762,15 +774,27 @@ class Checkout extends Component
             'total_payment_amount' => [
                 function ($attribute, $value, $fail){
                     if ($this->multiple_payment_method == 'true') {
-                        if ($value < $this->grand_total) {
+                        if ($value < $this->grand_total && !$this->isDp()) {
                             $fail('Jumlah yang dibayarkan tidak cukup');
                             $this->dispatchBrowserEvent('total_payment_amount',[
                                 'message' => 'Total yang dibayarkan belum memenuhi Grand Total'
                             ]);
-                        }elseif($value > $this->grand_total){
+                        }elseif($value > $this->grand_total  && !$this->isDp()){
                             $fail('Jumlah yang dibayarkan melebihi grand total');
                             $this->dispatchBrowserEvent('total_payment_amount',[
                                 'message' => 'Total yang dibayarkan melebihi Grand Total'
+                            ]);
+                        }
+
+                        if ($value < $this->dp_nominal && $this->isDp()) {
+                            $fail('Jumlah yang dibayarkan tidak cukup');
+                            $this->dispatchBrowserEvent('total_payment_amount',[
+                                'message' => 'Total yang dibayarkan belum memenuhi nominal dp'
+                            ]);
+                        }elseif($value > $this->dp_nominal && $this->isDp()){
+                            $fail('Jumlah yang dibayarkan melebihi nominal dp');
+                            $this->dispatchBrowserEvent('total_payment_amount',[
+                                'message' => 'Total yang dibayarkan melebihi nominal dp'
                             ]);
                         }
                     }
@@ -791,6 +815,11 @@ class Checkout extends Component
                 'note' => !empty($this->note)?$this->note:null,
                 'user_id' => Auth::user()->id,
                 'cabang_id' => $this->cabang_id,
+                'payment_status' => !$this->isDp() ? Sale::SP_PAID : Sale::SP_DP,
+                'status' => !$this->isDp() ? Sale::S_COMPLETED : Sale::S_DP,
+                'dp_payment' => $this->dp_payment,
+                'dp_nominal' => $this->dp_nominal,
+                'remain_amount' => $this->remain_amount,
             ]);
             foreach (Cart::instance('sale')->content() as $cart_item) {
                 $detail = SaleDetails::create([
@@ -805,7 +834,11 @@ class Checkout extends Component
                     'product_tax_amount' => 0,
 
                 ]);
-                $detail->product->updateTracking(ProductStatus::SOLD, $sale->cabang_id);
+                if($this->isDp()){
+                    $detail->product->updateTracking(ProductStatus::PENDING_CABANG, $sale->cabang_id);
+                }else{
+                    $detail->product->updateTracking(ProductStatus::SOLD, $sale->cabang_id);
+                }
             }
 
             // sale manual
@@ -874,5 +907,14 @@ class Checkout extends Component
                 ]);
             }
         }
+    }
+
+    public function updatedDpNominal()
+    {
+        $this->remain_amount = $this->grand_total - $this->dp_nominal;
+    }
+
+    public function isDp(){
+        return $this->dp_payment ?? 0;
     }
 }
