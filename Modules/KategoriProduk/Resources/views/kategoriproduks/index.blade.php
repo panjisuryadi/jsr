@@ -30,7 +30,7 @@
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
                                     <th style="width: 12% !important;">Image</th>
-                                    <th>Title</th>
+                                    <th>Name</th>
                                     <th style="width: 15%!important;" class="text-center">
                                         Updated
                                     </th>

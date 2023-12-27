@@ -148,7 +148,7 @@ public function create()
         $module_action = 'Store';
 
         $request->validate([
-             'name' => 'required|min:3|max:191',
+             'name' => 'required|min:3|max:191|unique:kategoriproduks,name',
              'description' => 'required|min:3|max:191',
          ]);
        // $params = $request->all();
