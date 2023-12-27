@@ -28,7 +28,7 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="customer_name">Konsumen Sales<span class="text-danger">*</span></label>
+                                        <label for="customer_name">{{ __('Konsumen Sales')  }}<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="customer_name" required value="{{ $customersale->customer_name }}">
                                     </div>
                                 </div>
@@ -43,20 +43,20 @@
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="customer_phone">Phone <span class="text-danger">*</span></label>
-                                        <input type="number" min="0" class="form-control" name="customer_phone" required value="{{ $customersale->customer_phone }}">
+                                        <label for="customer_phone">{{  __('Telepon')  }}</label>
+                                        <input type="number" min="0" class="form-control" name="customer_phone" >
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="city">Nama Pasar <span class="text-danger">*</span></label>
+                                        <label for="city">{{ __('Nama Pasar') }}  <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="market" required value="{{ $customersale->market }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="country">Negara <span class="text-danger"></span></label>
-                                        <input type="text" class="form-control" name="country" required value="{{ $customersale->country }}">
+                                        <label for="country">{{ __('Negara') }} </label>
+                                        <input type="text" class="form-control" name="country">
                                     </div>
                                 </div>
                             </div>
@@ -64,8 +64,8 @@
                             <div class="form-row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="address">Alamat <span class="text-danger"></span></label>
-                                        <input type="text" class="form-control" name="address" required value="{{ $customersale->address }}">
+                                        <label for="address">{{ __('Alamat') }} </label>
+                                        <input type="text" class="form-control" name="address">
                                     </div>
                                 </div>
                             </div>
