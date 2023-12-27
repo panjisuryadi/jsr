@@ -79,7 +79,6 @@
     jQuery.noConflict();
     (function( $ ) {
         function autoRefresh(){
-            var table = $('#datatable').DataTable();
             table.ajax.reload();
         }
         function Tambah()
@@ -99,10 +98,10 @@
                         $('#ResponseInput').html(data.success);
                         $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                         $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
-                        setTimeout(function(){ autoRefresh(); }, 1000);
-                        $('#FormTambah').each(function(){
-                            this.reset();
-                        });
+                        setTimeout(function(){ autoRefresh(); 
+                            $('#btn-close').trigger('click');
+                        }, 2000);
+                        
                     }else{
                         printErrorMsg(data.error);
                     }
@@ -118,7 +117,7 @@
             });
         }
         $(document).ready(function(){
-            var Tombol = "<button type='button' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
+            var Tombol = "<button type='button' class='btn btn-danger px-5' id='btn-close' data-dismiss='modal'>{{ __('Close') }}</button>";
             Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanTambah'>{{ __('Create') }}</button>";
             $('#ModalFooter').html(Tombol);
             $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();
