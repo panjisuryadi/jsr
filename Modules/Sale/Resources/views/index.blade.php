@@ -73,6 +73,7 @@
   <th style="width: 11%!important;" class="text-center">{{ Label_Case('Kostumer') }}</th>
   <th style="width: 9%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
   <th style="width: 8%!important;" class="text-center">{{ Label_Case('Nominal') }}</th>
+ <th style="width: 6%!important;" class="text-center">{{ Label_Case('Cara Bayar') }}</th>
  <th style="width: 6%!important;" class="text-center">{{ Label_Case('status') }}</th>
  <th style="width: 8%!important;" class="text-center"> {{ __('Action') }} </th>
                                 </tr>
@@ -145,6 +146,7 @@
                 {data: 'customer', name: 'customer'},
                 {data: 'reference', name: 'reference'},
                 {data: 'grand_total_amount', name: 'grand_total_amount'},
+                {data: 'cara_bayar', name: 'cara_bayar'},
                 {data: 'status', name: 'status'},
             
 

@@ -115,6 +115,56 @@
                             <div class="card shadow-md">
                                 <div class="card-header">
                                     <h3 class="font-bold text-medium">
+                                        Pembayaran DP
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="p-2 grid grid-cols-2 gap-4 my-2 mt-0">
+                                        <div class="px-1">
+                                            <div class="form-group my-3">
+                                                <div class="grid grid-cols-7 gap-2 items-center">
+                                                    <div class="col-span-6 grid grid-cols-2 gap-2">
+                                                        <div class="form-group">
+                                                            <?php
+                                                            $field_name = 'dp_payment';
+                                                            ?>
+                                                            <label for="dp_payment"> Pembayaran DP ? </label> <span class="text-danger small" id="dp_payment"></span>
+                                                            <input type="checkbox" class="form-control @error($field_name) is-invalid @enderror" wire:model.debounce.500ms="{{$field_name}}">
+                                                            @if ($errors->has($field_name))
+                                                            <span class="invalid feedback" role="alert">
+                                                                <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                            </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if($dp_payment)
+                                        <div class="px-1">
+                                            <div class="form-group">
+                                                <?php
+                                                $field_name = 'dp_nominal';
+                                                ?>
+                                                <label for="discount">Nominal DP <span class="small text-danger">(Nominal)</span></label>
+                                                <input id="number" type="number" class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" wire:model.debounce.500ms="{{$field_name}}" min="0">
+                                                @if ($errors->has($field_name))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                </span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="note">Sisa</label> <span class="text-danger small" id="message"></span>
+                                                <input id="final" type="text" class="form-control text-black text-3xl" name="remain_amount" value="{{ format_currency($remain_amount )}}" disabled>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow-md">
+                                <div class="card-header">
+                                    <h3 class="font-bold text-medium">
                                         Metode Pembayaran
                                     </h3>
                                 </div>
