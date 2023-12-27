@@ -44,7 +44,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="customer_phone">{{  __('Telepon')  }}</label>
-                                        <input type="number" min="0" class="form-control" name="customer_phone" >
+                                        <input type="number" min="0" class="form-control" name="customer_phone" required value="{{ $customersale->customer_phone }}" >
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -56,7 +56,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="country">{{ __('Negara') }} </label>
-                                        <input type="text" class="form-control" name="country">
+                                        <input type="text" class="form-control" name="country" required value="{{ $customersale->country }}">
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="address">{{ __('Alamat') }} </label>
-                                        <input type="text" class="form-control" name="address">
+                                        <input type="text" class="form-control" name="address" required value="{{ $customersale->address }}">
                                     </div>
                                 </div>
                             </div>
