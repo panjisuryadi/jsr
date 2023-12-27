@@ -563,6 +563,7 @@ class Checkout extends Component
         }elseif($this->multiple_payment_method == 'true'){
             $this->updateRemainingPaymentAmount();
         }
+        $this->tmp_grand_total = $this->grand_total;
     }
 
     private function totalOtherFees()
@@ -911,7 +912,9 @@ class Checkout extends Component
 
     public function updatedDpNominal()
     {
-        $this->remain_amount = $this->grand_total - $this->dp_nominal;
+        $this->grand_total = $this->tmp_grand_total;
+        $this->remain_amount = (int) $this->grand_total - (int) (!empty($this->dp_nominal) ? $this->dp_nominal :  0) ;
+        $this->grand_total = $this->dp_nominal;
     }
 
     public function isDp(){
