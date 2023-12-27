@@ -1,7 +1,7 @@
 {
     "Welcome to": "Welcome to :name Admin Dashboard.",
     "Dashboard": "Dashboard",
-     "POS System": "POS System",
+    "POS System": "POS System",
     "Name": "Name",
     "Email": "Email",
     "Password": "Password",
@@ -93,7 +93,10 @@
     "Published": "Published",
 
     "Goods Receipt Debts": "Goods Receipt Debts",
+    "Nama Pasar": "Market Name",
+    "Telepon": "Phone Number",
+    "Negara": "Country",
+    "Alamat": "Address",
 
     "Unpublished": "Unpublished"
-    
 }

@@ -29,14 +29,14 @@
                                     <input type="text" class="form-control" name="customer_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="customer_email">Email</label>
+                                    <label for="customer_email">Email<span class="text-danger">*</span></label>
                                     <input type="email" class="form-control" name="customer_email" >
                                 </div>
                             </div>
                             
                             <div class="px-2">
                                 <div class="form-group">
-                                    <label for="customer_phone">Telepon</label>
+                                    <label for="customer_phone">{{ __('Telepon') }}</label>
                                     <input type="text" class="form-control" name="customer_phone" >
                                 </div>
                                 <div class="form-group">
