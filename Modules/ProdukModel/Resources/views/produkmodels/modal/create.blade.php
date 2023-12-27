@@ -32,7 +32,7 @@
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
                                 ?>
-                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger"></span></label>
                         <input class="form-control"
                          type="text"
                          name="{{ $field_name }}"
