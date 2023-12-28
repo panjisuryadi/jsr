@@ -20,6 +20,7 @@ use Modules\Sale\Http\Requests\UpdateSaleRequest;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Modules\Cabang\Models\Cabang;
+use Modules\Product\Models\ProductStatus;
 use PDF;
 class SaleController extends Controller
 {
@@ -562,6 +563,29 @@ public function generateInvoice_0ljg($id)
   //       return $pdf->stream('sale-'. $sale->reference .'.pdf');
      return view('sale::print', compact('sale'));
 }
+
+    public function failed($id){
+        try {
+            DB::beginTransaction();
+            $sale = Sale::with('saleDetails')->find($id);
+    
+            if(!empty($sale->saleDetails)){
+                foreach($sale->saleDetails() as $detail) {
+                    $detail->product->updateTracking(ProductStatus::READY, $sale->cabang_id);
+                }
+
+                $sale->status = 'failed';
+                $sale->save();
+            }
+
+            toast('Sale Updated!', 'info');
+            DB::commit();
+            return redirect()->route('sales.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th->getMessage();
+        }
+    }
 
 
 

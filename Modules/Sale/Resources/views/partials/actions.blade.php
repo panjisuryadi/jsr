@@ -18,6 +18,19 @@
     <a class="dropdown-item" href="{{ route('sales.show', $data->id) }}">
        <i class="bi bi-x-square"></i>&nbsp;@lang('Void')</a>
 
+    @can('edit_sales')
+        <button id="delete" class="dropdown-item px-2 ml-2 hover:no-underline" onclick="
+            event.preventDefault();
+            if (confirm('Anda yakin akan melakukan aksi ini?')) {
+            document.getElementById('failed{{ $data->id }}').submit()
+            }">
+            <i class="bi bi-x-square"></i> &nbsp;@lang('Failed')
+            <form id="failed{{ $data->id }}" class="d-none" action="{{ route('sales.failed', $data->id) }}" method="POST">
+                @csrf
+                @method('post')
+            </form>
+        </button>
+      @endcan
 
 
          @can('delete_sales')
