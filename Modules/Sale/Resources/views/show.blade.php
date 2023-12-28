@@ -123,14 +123,6 @@
                                                 <div class="mt-1"> Total</div></td>
                                             <td class="right text-xl text-blue-500"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
                                         </tr>
-
-                                        @if($sale->dp_payment)
-                                        <tr>
-                                            <td class="left text-gray-600">
-                                                <div class="mt-1">DP</div></td>
-                                            <td class="right text-md text-blue-500"><strong>{{ format_currency($sale->dp_nominal) }}</strong></td>
-                                        </tr>
-                                        @endif
                                  
                                         <tr>
                                             <td class="left text-gray-600">
@@ -149,6 +141,15 @@
                                             <td class="right text-md text-blue-500"><strong>{{ format_currency($row->paid_amount) }}</strong></td>
                                         </tr>
                                     @endforeach
+                                    @endif
+
+
+                                    @if($sale->dp_payment)
+                                    <tr>
+                                        <td class="left text-gray-600">
+                                            <div class="mt-1">DP</div></td>
+                                        <td class="right text-md text-blue-500"><strong>{{ format_currency($sale->dp_nominal) }}</strong></td>
+                                    </tr>
                                     @endif
                                  
                                     <tr>
