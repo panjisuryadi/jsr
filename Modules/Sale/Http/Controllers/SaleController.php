@@ -570,7 +570,7 @@ public function generateInvoice_0ljg($id)
             $sale = Sale::with('saleDetails')->find($id);
     
             if(!empty($sale->saleDetails)){
-                foreach($sale->saleDetails() as $detail) {
+                foreach($sale->saleDetails as $detail) {
                     $detail->product->updateTracking(ProductStatus::READY, $sale->cabang_id);
                 }
 
