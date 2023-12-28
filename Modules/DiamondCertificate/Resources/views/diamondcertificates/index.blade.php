@@ -39,10 +39,10 @@
                                 </th>
 
                                 <th>
-                                    Name
+                                  Nama
                                 </th>
                                 <th>
-                                    Description
+                                   Deskripsi
                                 </th>
 
                                 <th>
