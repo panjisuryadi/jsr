@@ -1,7 +1,7 @@
 {
     "Welcome to": "Welcome to :name Admin Dashboard.",
     "Dashboard": "Dashboard",
-     "POS System": "POS System",
+    "POS System": "POS System",
     "Name": "Name",
     "Email": "Email",
     "Password": "Password",
@@ -95,5 +95,4 @@
     "Goods Receipt Debts": "Goods Receipt Debts",
 
     "Unpublished": "Unpublished"
-    
 }

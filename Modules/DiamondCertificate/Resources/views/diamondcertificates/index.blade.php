@@ -39,10 +39,10 @@
                                 </th>
 
                                 <th>
-                                  Nama
+                                    {{ __("Name") }}
                                 </th>
                                 <th>
-                                   Deskripsi
+                                   {{ __("Description") }}
                                 </th>
 
                                 <th>
