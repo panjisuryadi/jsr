@@ -39,7 +39,10 @@
                                 </th>
 
                                 <th>
-                                    Title
+                                    Name
+                                </th>
+                                <th>
+                                    Description
                                 </th>
 
                                 <th>
@@ -99,6 +102,10 @@
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
                 },
                 {
                     data: 'updated_at',
