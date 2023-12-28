@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //Sales
+    Route::post('sales/failed/{id}', 'SaleController@failed')->name('sales.failed'); //digunakan untuk set status dp yang jatuh tempo
 
     Route::get('sales/index_data', 'SaleController@index_data')
     ->name('sales.index_data'); 
