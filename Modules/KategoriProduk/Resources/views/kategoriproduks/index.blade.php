@@ -30,7 +30,8 @@
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
                                     <th style="width: 12% !important;">Image</th>
-                                    <th>Title</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
                                     <th style="width: 15%!important;" class="text-center">
                                         Updated
                                     </th>
@@ -96,6 +97,10 @@
 
                 {data: 'image', name: 'image'}, 
                 {data: 'name', name: 'name'},
+                {
+                    data: 'description',
+                    name: 'description'
+                },
                  {
                     data: 'updated_at',
                     name: 'updated_at'
