@@ -85,7 +85,7 @@
                                     ?>
                                     <label for="{{ $field_name}}">{{ $field_lable }} <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" id="{{ $field_name}}" class="form-control {{ $invalid }}" name="{{ $field_name}}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}">
+                                        <input type="Number" min="0" id="{{ $field_name}}" class="form-control {{ $invalid }}" name="{{ $field_name}}" placeholder="{{ $field_placeholder }}" wire:model="{{ $field_name }}">
                                     </div>
                                     @if ($errors->has($field_name))
                                     <span class="invalid feedback" role="alert">
