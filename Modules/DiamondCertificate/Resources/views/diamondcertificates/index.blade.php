@@ -39,7 +39,10 @@
                                 </th>
 
                                 <th>
-                                    Title
+                                    {{ __("Name") }}
+                                </th>
+                                <th>
+                                   {{ __("Description") }}
                                 </th>
 
                                 <th>
@@ -99,6 +102,10 @@
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
                 },
                 {
                     data: 'updated_at',
