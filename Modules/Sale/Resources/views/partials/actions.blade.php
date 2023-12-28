@@ -31,6 +31,10 @@
                     @method('post')
                 </form>
             </button>
+
+            <a class="dropdown-item" id="btn-dp" data-toggle="modal" data-target="#pembayaran_dp" data-id ="{{ $data->id }}"  wire:click = "$emitUp('postAdded')" href="#">
+                <i class="bi bi-x-square"></i>&nbsp;@lang('Bayar DP') </a>
+            </a>
         @endif
       @endcan
 

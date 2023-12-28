@@ -85,6 +85,8 @@
         </div>
     </div>
 </div>
+@livewire('penjualan-sale.dp.bayar')
+
 @endsection
 
 <x-library.datatable />
@@ -142,8 +144,16 @@
                 },
 
                 {data: 'date', name: 'date'},
-                {data: 'cabang', name: 'cabang'},
-                {data: 'customer', name: 'customer'},
+                {
+                    data: 'cabang', 
+                    searchable: false,
+                    name: 'cabang'
+                },
+                {
+                    data: 'customer', 
+                    orderable: false,
+                    name: 'customer'
+                },
                 {data: 'reference', name: 'reference'},
                 {data: 'grand_total_amount', name: 'grand_total_amount'},
                 {data: 'cara_bayar', name: 'cara_bayar'},
@@ -171,7 +181,9 @@
 <script type="text/javascript">
 jQuery.noConflict();
 (function( $ ) {
-
+    $( document ).ready(function() {
+        var idSales;
+    });
    
 $(document).on('click', '#Tambah, #Edit, #Show', function(e){
          e.preventDefault();
@@ -197,6 +209,21 @@ $(document).on('click', '#Tambah, #Edit, #Show', function(e){
         $('#ModalContent').load($(this).attr('href'));
         $('#ModalGue').modal('show');
     });
+
+    $(document).on("click", "#btn-dp", function (e) {
+
+        e.preventDefault();
+        var _self = $(this);
+        idSales = _self.data('id');
+    });
+
+    // A $( document ).ready() block.
+    $( document ).ready(function() {
+        $(document).on('shown.bs.modal', '#pembayaran_dp', function (e) {
+            Livewire.emit('setSaleId', idSales)
+        })
+    });
+
 })(jQuery);
 </script>
 @endpush
