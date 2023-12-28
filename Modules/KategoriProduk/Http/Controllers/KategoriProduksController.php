@@ -147,10 +147,16 @@ public function create()
 
         $module_action = 'Store';
 
-        $request->validate([
-             'name' => 'required|min:3|max:191',
+        
+        $validator = \Validator::make($request->all(),[
+             'name' => 'required|min:3|max:191|unique:kategoriproduks,name',
              'description' => 'required|min:3|max:191',
          ]);
+
+            
+         if (!$validator->passes()) {
+            return response()->json(['error'=>$validator->errors()]);
+        }
        // $params = $request->all();
         //dd($params);
         $params = $request->except('_token');
