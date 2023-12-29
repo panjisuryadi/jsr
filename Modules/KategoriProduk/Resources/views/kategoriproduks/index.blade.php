@@ -18,7 +18,7 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                             <a href="{{ route(''.$module_name.'.create') }}" id="Tambah" class="btn btn-primary">
-                                Add {{$module_title}}<i class="bi bi-plus"></i>
+                              {{ __('Add Main Category') }}<i class="bi bi-plus"></i>
                             </a>
                         </div>
                         <div id="buttons">
@@ -28,15 +28,15 @@
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%!important;">NO</th>
-                                    <th style="width: 12% !important;">Image</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
+                                    <th style="width: 5%!important;">No</th>
+                                    <th style="width: 12% !important;">{{ __('Image') }}</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Description') }}</th>
                                     <th style="width: 15%!important;" class="text-center">
-                                        Updated
+                                       {{ __('Updated') }}
                                     </th>
                                     <th style="width: 22%!important;" class="text-center">
-                                        Action
+                                        {{ __('action') }}
                                     </th>
                                 </tr>
                             </thead>
