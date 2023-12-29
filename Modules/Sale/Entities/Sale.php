@@ -17,6 +17,7 @@ class Sale extends Model
     public const SP_PAID = 'paid';
     public const S_COMPLETED = 'completed';
     public const S_DP = 'dp';
+    public const S_FAILED = 'failed';
 
     public function saleDetails() {
         return $this->hasMany(SaleDetails::class, 'sale_id', 'id');

@@ -20,6 +20,7 @@ use Modules\Sale\Http\Requests\UpdateSaleRequest;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Modules\Cabang\Models\Cabang;
+use Modules\Product\Models\ProductStatus;
 use PDF;
 class SaleController extends Controller
 {
@@ -159,7 +160,7 @@ public function index_data(Request $request)
                                 return $tb;
                             })
                             ->editColumn('grand_total_amount', function ($data) {
-                                $nominal = empty($data->dp_payment) ? $data->grand_total_amount : $data->dp_nominal;
+                                $nominal = empty($data->dp_payment) || empty($data->remain_amount) ? $data->grand_total_amount : $data->dp_nominal;
                                 $tb = '<div class="text-center font-bold"> 
                                         ' . format_uang($nominal) . '</div>';
                                    return $tb;
@@ -562,6 +563,29 @@ public function generateInvoice_0ljg($id)
   //       return $pdf->stream('sale-'. $sale->reference .'.pdf');
      return view('sale::print', compact('sale'));
 }
+
+    public function failed($id){
+        try {
+            DB::beginTransaction();
+            $sale = Sale::with('saleDetails')->find($id);
+    
+            if(!empty($sale->saleDetails)){
+                foreach($sale->saleDetails as $detail) {
+                    $detail->product->updateTracking(ProductStatus::READY, $sale->cabang_id);
+                }
+
+                $sale->status = 'failed';
+                $sale->save();
+            }
+
+            toast('Sale Updated!', 'info');
+            DB::commit();
+            return redirect()->route('sales.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th->getMessage();
+        }
+    }
 
 
 
