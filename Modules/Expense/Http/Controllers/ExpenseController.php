@@ -2,6 +2,7 @@
 
 namespace Modules\Expense\Http\Controllers;
 
+use App\Http\Livewire\Product\Sales;
 use App\Models\LookUp;
 use Modules\Expense\DataTables\ExpensesDataTable;
 use Illuminate\Contracts\Support\Renderable;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Modules\Expense\Entities\Expense;
+use Modules\Sale\Entities\Sale;
 use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Exp;
 
 class ExpenseController extends Controller
@@ -45,8 +47,15 @@ class ExpenseController extends Controller
             'date' => $request->date,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
+            'sale_id' => $request->sale_id,
             'details' => $request->details
         ]);
+
+        if(!empty($request->sale_id)) {
+            $sale =  Sale::find($request->sale_id);
+            $sale->status = Sale::S_COMPLETED;
+            $sale->save();
+        }
 
         toast('Expense Created!', 'success');
 
@@ -77,6 +86,7 @@ class ExpenseController extends Controller
             'reference' => $request->reference,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
+            'sale_id' => $request->sale_id,
             'details' => $request->details
         ]);
 

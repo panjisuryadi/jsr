@@ -59,11 +59,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-row" id="form_invoice_no">
+                            <div class="form-row" id="form_sale_id">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="reference">Invoice No <span class="text-danger">*</span></label>
-                                        <select name="reference" id="reference" class="form-control" required>
+                                        <label for="sale_id">Invoice No <span class="text-danger">*</span></label>
+                                        <select name="sale_id" id="sale_id" class="form-control" required>
                                             <option value="" selected>Select Invoice</option>
                                             @foreach(\Modules\Sale\Entities\Sale::where('status', 'failed')->get() as $item)
                                                 <option value="{{ $item->id }}">{{ $item->reference }}</option>
@@ -87,9 +87,10 @@
 @push('page_scripts')
     <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
+
+        var id_kategori_dp = "{{ $id_kategori_dp }}";
         $(document).ready(function () {
-            var id_kategori_dp = "{{ $id_kategori_dp }}";
-            $('#form_reference').hide();
+            $('#form_sale_id').hide();
 
             $('#amount').maskMoney({
                 prefix:'{{ settings()->currency->symbol }}',
@@ -101,6 +102,15 @@
                 var amount = $('#amount').maskMoney('unmasked')[0];
                 $('#amount').val(amount);
             });
+
+            $('#category_id').on('change', function(){
+                let current_value = $('option:selected',this).val();
+                if(current_value == id_kategori_dp) { 
+                    $('#form_sale_id').show();
+                }else{
+                    $('#form_sale_id').hide();
+                }
+            })
         });
     </script>
 @endpush
