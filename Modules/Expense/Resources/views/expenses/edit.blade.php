@@ -58,6 +58,21 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (!empty($expense->sale_id))
+                            <div class="form-row" id="form_sale_id">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="sale_id">Invoice No <span class="text-danger">*</span></label>
+                                        <select name="sale_id" id="sale_id" class="form-control" required disabled>
+                                            <option value="{{ $expense->sales_id }}" selected>{{ $expense->sale?->reference }}</option>
+                                            @foreach(\Modules\Sale\Entities\Sale::where('status', 'failed')->get() as $item)
+                                                <option value="{{ $item->id }}">{{ $item->reference }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
 
                             <div class="form-group">
                                 <label for="details">Details</label>
