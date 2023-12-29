@@ -28,7 +28,6 @@
     "Cost Parameters": "Parameter Ongkos",
     "Buys Back": "Beli Kembali",
 
-
     "Price": "Harga",
     "is low in quantity!": "Stok Hampir Habis!",
     "Barcode Symbology": "Tipe Barcode",
@@ -46,42 +45,33 @@
     "Subtraction": "Pengurangan",
     "Create Adjustments": "Tambah Stok Opname",
 
+    "Payment Sent & Received": "Pembayaran Terkirim dan Diterima",
+    "Monthly Cash Flow": "Kas Bulanan",
+    "Sales & Purchases of Last 7 Days": "Penjualan & Pembelian Seminggu Terakhir",
+    "Purchases Return": "Retur Pembelian",
+    "Sales Return": "Retur Penjualan",
+    "Profit": "Laba",
+    "Revenue": "Pendapatan",
+    "Expenses": "Pengeluaran",
+    "People": "Pelanggan / Supplier",
+    "Customers": "Pelanggan",
 
-     "Payment Sent & Received": "Pembayaran Terkirim dan Diterima",
-     "Monthly Cash Flow": "Kas Bulanan",
-     "Sales & Purchases of Last 7 Days": "Penjualan & Pembelian Seminggu Terakhir",
-     "Purchases Return": "Retur Pembelian",
-     "Sales Return": "Retur Penjualan",
-     "Profit": "Laba",
-     "Revenue": "Pendapatan",
-     "Expenses": "Pengeluaran",
-     "People": "Pelanggan / Supplier",
-     "Customers": "Pelanggan",
+    "Quotations": "Penawaran",
+    "Purchases": "Pembelian",
+    "Purchase": "Pembelian",
+    "Purchase Returns": "Retur Pembelian",
+    "Purchase Return": "Retur",
 
+    "General Settings": "Pengaturan Umum",
+    "Company": "Perusahaan",
+    "Company Address": "Alamat Perusahaan",
+    "Company Phone": "Telepon Perusahaan",
+    "Company Name": "Nama Perusahaan",
 
-     "Quotations": "Penawaran",
-     "Purchases": "Pembelian",
-     "Purchase": "Pembelian",
-     "Purchase Returns": "Retur Pembelian",
-     "Purchase Return": "Retur",
+    "Company Email": "Email Perusahaan",
 
-
-      "General Settings": "Pengaturan Umum",
-      "Company": "Perusahaan",
-      "Company Address": "Alamat Perusahaan",
-      "Company Phone": "Telepon Perusahaan",
-      "Company Name": "Nama Perusahaan",
-
-
-      "Company Email": "Email Perusahaan",
-
-
-      "Goods Receipts": "Penerimaan Barang",
-      "Diamond Goods Receipts": "Penerimaan Berlian",
-
-
-
-
+    "Goods Receipts": "Penerimaan Barang",
+    "Diamond Goods Receipts": "Penerimaan Berlian",
 
     "No Product Found": "Produk tidak ditemukan",
     "If Needed": "Jika diperlukan",
@@ -175,15 +165,11 @@
     "Draft": "Draft",
     "Published": "dipublish",
 
-
     "Transaction Date": "Tanggal Transaksi",
     "Transaction No": "Nomor Transaksi",
     "Supplier": "Supplier",
     "Payment Date": "Tanggal Pembayaran",
     "Notes": "Catatan",
-    
-
-
 
     "Goods Receipt": "Pembelian",
 
@@ -203,7 +189,13 @@
     "Confirm": "Konfirmasi",
     "BuyBack Item": "Barang BuyBack",
     "Outside Item": "Barang Luar",
-    "Gold": "Emas"
-    
-}
+    "Add Customer": "Tambah Pelanggan",
+    "Customer Name": "Nama Pelanggan",
+    "Customer Phone": "Telepon Pelanggan",
+    "Customer Email": "Email Pelanggan",
+    "action": "Aksi",
+    "Country": "Negara",
+    "Update Customer": "Ubah Data Pelanggan",
 
+    "Gold": "Emas"
+}
