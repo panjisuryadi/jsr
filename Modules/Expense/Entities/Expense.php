@@ -5,6 +5,7 @@ namespace Modules\Expense\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
+use Modules\Sale\Entities\Sale;
 
 class Expense extends Model
 {
@@ -35,5 +36,9 @@ class Expense extends Model
 
     public function getAmountAttribute($value) {
         return ($value / 100);
+    }
+
+    public function sale() {
+        return $this->belongsTo(Sale::class, 'sale_id', 'id');
     }
 }
