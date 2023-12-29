@@ -147,10 +147,21 @@ public function create()
 
         $module_action = 'Store';
 
-        $request->validate([
-             'name' => 'required|min:3|max:191',
-             'description' => 'required|min:3|max:191',
-         ]);
+        // $request->validate([
+        //      'name' => 'required|min:3|max:191|unique:kategoriproduks,name',
+        //      'description' => 'required|min:3|max:191',
+        //  ], ['name.unique' => 'Nama kategori sudah ada.',]
+        // );
+        $validator = \Validator::make($request->all(),[
+            'name' => 'required|min:3|max:191|unique:kategoriproduks,name',
+            'description' => 'required|min:3|max:191',
+        ]);
+
+           
+        if (!$validator->passes()) {
+           return response()->json(['error'=>$validator->errors()]);
+       }
+
        // $params = $request->all();
         //dd($params);
         $params = $request->except('_token');
@@ -172,7 +183,9 @@ public function create()
 
 
          $$module_name_singular = $module_model::create($params);
-         toast(''. $module_title.' Created!', 'success');
+        //  toast(''. $module_title.' Created!', 'success');
+         return response()->json(['success'=>'  '.$module_title.' Berhasil ditambahkan.']);
+
          return redirect()->route(''.$module_name.'.index');
     }
 

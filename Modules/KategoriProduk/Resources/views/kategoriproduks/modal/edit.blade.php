@@ -87,7 +87,6 @@ jQuery.noConflict();
 (function( $ ) {
 
  function autoRefresh(){
-      var table = $('#datatable').DataTable();
         table.ajax.reload();
 
 }
@@ -110,7 +109,7 @@ jQuery.noConflict();
                       $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
                       setTimeout(function(){ autoRefresh(); }, 1000);
                       setTimeout(function () {
-                              $('#ModalGue').modal('hide');
+                              $('#btn-close').trigger('click');
                             }, 3000);
 
                  }else{
@@ -132,7 +131,7 @@ jQuery.noConflict();
 
 $(document).ready(function(){
 
-    var Tombol = "<button type='button' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
+    var Tombol = "<button type='button' id='btn-close' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
     Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanUpdate'>{{ __('Update') }}</button>";
     $('#ModalFooter').html(Tombol);
 

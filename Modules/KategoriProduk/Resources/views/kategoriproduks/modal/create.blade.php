@@ -45,12 +45,9 @@
                     ?>
                  <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
                 <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value="{{ old('name') }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
-                    @if ($errors->has($field_name))
-                        <span class="invalid feedback"role="alert">
-                            <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                class="text-danger">
-                        </span>
-                    @endif
+                <span class="invalid feedback" role="alert">
+                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                </span>
                 </div>
                        <div class="form-group">
                              <?php
@@ -63,12 +60,9 @@
             <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
             <textarea name="{{ $field_name }}" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}">{{ old('description') }}</textarea>
 
-               @if ($errors->has($field_name))
-                                <span class="invalid feedback"role="alert">
-                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small
-                                        class="text-danger">
-                                </span>
-                            @endif
+            <span class="invalid feedback" role="alert">
+                <span class="text-danger error-text {{ $field_name }}_err"></span>
+            </span>
                             </div>
                         </div>
                     </div>
@@ -79,7 +73,6 @@
     jQuery.noConflict();
     (function( $ ) {
         function autoRefresh(){
-            var table = $('#datatable').DataTable();
             table.ajax.reload();
         }
         function Tambah()
@@ -99,13 +92,16 @@
                         $('#ResponseInput').html(data.success);
                         $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                         $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
-                        setTimeout(function(){ autoRefresh(); }, 1000);
-                        $('#FormTambah').each(function(){
-                            this.reset();
-                        });
+                        setTimeout(function(){ autoRefresh(); 
+                            $('#btn-close').trigger('click');
+                        }, 2000);
+                        
                     }else{
                         printErrorMsg(data.error);
                     }
+                },
+                error:function(xhr,status){
+                    console.log( xhr,status)
                 }
             });
         }
@@ -118,7 +114,7 @@
             });
         }
         $(document).ready(function(){
-            var Tombol = "<button type='button' class='btn btn-danger px-5' data-dismiss='modal'>{{ __('Close') }}</button>";
+            var Tombol = "<button type='button' class='btn btn-danger px-5' id='btn-close' data-dismiss='modal'>{{ __('Close') }}</button>";
             Tombol += "<button type='button' class='px-5 btn btn-primary' id='SimpanTambah'>{{ __('Create') }}</button>";
             $('#ModalFooter').html(Tombol);
             $("#FormTambah").find('input[type=text],textarea,select').filter(':visible:first').focus();
