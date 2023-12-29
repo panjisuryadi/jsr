@@ -160,7 +160,7 @@ public function index_data(Request $request)
                                 return $tb;
                             })
                             ->editColumn('grand_total_amount', function ($data) {
-                                $nominal = empty($data->dp_payment) ? $data->grand_total_amount : $data->dp_nominal;
+                                $nominal = empty($data->dp_payment) || empty($data->remain_amount) ? $data->grand_total_amount : $data->dp_nominal;
                                 $tb = '<div class="text-center font-bold"> 
                                         ' . format_uang($nominal) . '</div>';
                                    return $tb;
