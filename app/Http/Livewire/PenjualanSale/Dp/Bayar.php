@@ -337,7 +337,7 @@ class Bayar extends Component
                 }
 
                 $sale->status = 'complete';
-                $sale->grand_total_amount = $this->grand_total+$this->remain_amount;
+                $sale->grand_total_amount = $this->dp_nominal+$this->remain_amount;
                 $sale->remain_amount = 0;
                 $sale->save();
             }
