@@ -29,15 +29,15 @@
                                     <input type="text" class="form-control" name="customer_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="customer_email">Email</label>
-                                    <input type="email" class="form-control" name="customer_email" >
+                                    <label for="customer_email">Email<span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" name="customer_email" required >
                                 </div>
                             </div>
                             
                             <div class="px-2">
                                 <div class="form-group">
-                                    <label for="customer_phone">Telepon</label>
-                                    <input type="text" class="form-control" name="customer_phone" >
+                                    <label for="customer_phone">{{  __('Telepon')  }}</label>
+                                    <input type="number" min="0" class="form-control" name="customer_phone" >
                                 </div>
                                 <div class="form-group">
                                     <label for="market">{{ __('Nama Pasar') }} <span class="text-danger">*</span></label>

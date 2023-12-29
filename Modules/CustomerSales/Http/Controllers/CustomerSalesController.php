@@ -68,18 +68,16 @@ class CustomerSalesController extends Controller
 
         $request->validate([
             'customer_name'  => 'required|string|max:255',
-            'customer_phone' => 'required|max:255',
             'customer_email' => 'required|email|max:255',
-            'city'           => 'required|string|max:255',
-            'country'        => 'required|string|max:255',
-            'address'        => 'required|string|max:500',
+            'market'           => 'required|string|max:255',
+     
         ]);
 
         $customersale->update([
             'customer_name'  => $request->customer_name,
             'customer_phone' => $request->customer_phone,
             'customer_email' => $request->customer_email,
-            'city'           => $request->city,
+            'market'           => $request->market,
             'country'        => $request->country,
             'address'        => $request->address
         ]);
