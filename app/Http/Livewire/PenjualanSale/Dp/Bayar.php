@@ -66,7 +66,7 @@ class Bayar extends Component
         $this->sale_id = $sale_id;
         $sale = Sale::with('saleDetails')->find($this->sale_id);
         $this->sale = $sale;
-        $this->total = $sale->grand_total_amount + $sale->remain_amount;
+        $this->total = $sale->dp_nominal + $sale->remain_amount;
         $this->remain_amount = $sale->remain_amount;
         $this->grand_total = $sale->remain_amount;
         $this->dp_nominal = $sale->dp_nominal;
