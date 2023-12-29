@@ -38,10 +38,10 @@ div#kanan {
 
         <td class ="text-dark" style="width:40%;border:none !important;text-align: left;">
           <div style="relative">
-            <div style="position:absolute; top:1.2rem;font-size: 0.9rem;left:2.3rem;">
+            <div style="position:absolute; top:1.2rem;font-size: 0.9rem;left:0.5rem;">
               <img width="35" src="data:image/png;base64, {!! $barcode !!}">   
             </div>
-            <div style="position:absolute; bottom:1rem;left:2.3rem;">
+            <div style="position:absolute; bottom:1rem;left:0.5rem;">
               <div style="font-size: 0.65rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_name}}
               </div>
