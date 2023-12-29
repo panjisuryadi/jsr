@@ -190,5 +190,13 @@
     "BuyBack Item": "Barang BuyBack",
     "Outside Item": "Barang Luar",
     "Description": "Deskripsi",
+    "Add Customer": "Tambah Pelanggan",
+    "Customer Name": "Nama Pelanggan",
+    "Customer Phone": "Telepon Pelanggan",
+    "Customer Email": "Email Pelanggan",
+    "action": "Aksi",
+    "Country": "Negara",
+    "Update Customer": "Ubah Data Pelanggan",
+
     "Gold": "Emas"
 }
