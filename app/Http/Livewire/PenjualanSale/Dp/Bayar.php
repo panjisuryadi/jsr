@@ -336,10 +336,14 @@ class Bayar extends Component
                     $detail->product->updateTracking(ProductStatus::SOLD, $sale->cabang_id);
                 }
 
-                $sale->status = 'complete';
+                $sale->status = Sale::S_COMPLETED;
                 $sale->grand_total_amount = $this->dp_nominal+$this->remain_amount;
                 $sale->remain_amount = 0;
                 $sale->save();
+                
+            // payment
+            $this->managePayment($sale);
+            
             }
 
             DB::commit();
@@ -353,13 +357,12 @@ class Bayar extends Component
         
     }
 
-    public function updatedNominal($value){
-        $this->nominal_text = 'Rp. ' . number_format(intval($value), 0, ',', '.');
-    }
 
-    private function managePayment($item){
+    private function managePayment($sale){
         if($this->multiple_payment_method === 'false'){
             $data = [
+                'date' => now()->format('Y-m-d'),
+                'reference' => 'INV/'.$sale->reference,
                 'paid_amount' => ($this->payment_method === 'tunai')?$this->paid_amount:$this->grand_total,
                 'payment_method' => $this->payment_method
             ];
@@ -370,10 +373,13 @@ class Bayar extends Component
             }elseif($this->payment_method === 'edc'){
                 $data['edc_id'] = $this->edc_id;
             }
-            $item->payments()->create($data);
+    
+            $sale->salePayments()->create($data);
         }elseif($this->multiple_payment_method === 'true'){
             foreach($this->payments as $index => $payment){
                 $data = [
+                    'date' => now()->format('Y-m-d'),
+                    'reference' => 'INV/'.$sale->reference,
                     'paid_amount' => ($payment['method'] === 'tunai')?$payment['paid_amount']:$payment['amount'],
                     'payment_method' => $payment['method']
                 ];
@@ -385,9 +391,13 @@ class Bayar extends Component
                     $data['edc_id'] = $payment['edc_id'];
                 }
         
-                $item->payments()->create($data);
+                $sale->salePayments()->create($data);
             }
         }
+    }
+
+    public function updatedNominal($value){
+        $this->nominal_text = 'Rp. ' . number_format(intval($value), 0, ',', '.');
     }
 
     public function updated($propertyName){
