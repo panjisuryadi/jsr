@@ -59,6 +59,20 @@
                                 </div>
                             </div>
 
+                            <div class="form-row" id="form_invoice_no">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="reference">Invoice No <span class="text-danger">*</span></label>
+                                        <select name="reference" id="reference" class="form-control" required>
+                                            <option value="" selected>Select Invoice</option>
+                                            @foreach(\Modules\Sale\Entities\Sale::where('status', 'failed')->get() as $item)
+                                                <option value="{{ $item->id }}">{{ $item->reference }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="details">Details</label>
                                 <textarea class="form-control" rows="6" name="details"></textarea>
@@ -70,11 +84,13 @@
         </form>
     </div>
 @endsection
-
 @push('page_scripts')
     <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
         $(document).ready(function () {
+            var id_kategori_dp = "{{ $id_kategori_dp }}";
+            $('#form_reference').hide();
+
             $('#amount').maskMoney({
                 prefix:'{{ settings()->currency->symbol }}',
                 thousands:'{{ settings()->currency->thousand_separator }}',

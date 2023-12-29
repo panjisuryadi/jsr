@@ -2,6 +2,7 @@
 
 namespace Modules\Expense\Http\Controllers;
 
+use App\Models\LookUp;
 use Modules\Expense\DataTables\ExpensesDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -22,8 +23,10 @@ class ExpenseController extends Controller
 
     public function create() {
         abort_if(Gate::denies('create_expenses'), 403);
-
-        return view('expense::expenses.create');
+        $data = [
+            'id_kategori_dp' => LookUp::where('kode','id_kategori_dp')->value('value'),
+        ];
+        return view('expense::expenses.create', $data);
     }
 
 
