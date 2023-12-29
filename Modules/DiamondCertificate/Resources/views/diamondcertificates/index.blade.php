@@ -23,7 +23,7 @@
  <div class="flex justify-between py-1 border-bottom">
   <div>
    <a href="{{ route(''.$module_name.'.create') }}" class="btn btn-primary">
-                            Add {{$module_title}}<i class="bi bi-plus"></i>
+                           {{ __('Add Diamond Certificate') }}<i class="bi bi-plus"></i>
                         </a>
     </div>
 
@@ -39,14 +39,17 @@
                                 </th>
 
                                 <th>
-                                    Title
+                                    {{ __("Name") }}
+                                </th>
+                                <th>
+                                   {{ __("Description") }}
                                 </th>
 
                                 <th>
-                                    Updated
+                                   {{ __("Updated") }}
                                 </th>
                                 <th style="width: 21%!important;" class="text-center">
-                                    Action
+                                  {{ __("action") }}
                                 </th>
                             </tr>
                         </thead>
@@ -99,6 +102,10 @@
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
                 },
                 {
                     data: 'updated_at',

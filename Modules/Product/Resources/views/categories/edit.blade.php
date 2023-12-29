@@ -24,7 +24,7 @@
 
 
                                   <div class="form-group">
-                                        <label for="kategori_produk_id">Main Category <span class="text-danger">*</span></label>
+                                        <label class="font-weight-bold" for="kategori_produk_id">{{ __('Main Category') }}<span class="text-danger">*</span></label>
                                         <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
                                             @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $main)
                                                 <option {{ $main->id == $category->kategori_produk_id ? 'selected' : '' }} value="{{ $main->id }}">{{ $main->name }}</option>
@@ -34,11 +34,11 @@
 
 
                             <div class="form-group">
-                                <label class="font-weight-bold" for="category_code">Category Code <span class="text-danger">*</span></label>
+                                <label class="font-weight-bold" for="category_code">{{ __('Category Code') }} <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="category_code" required value="{{ $category->category_code }}">
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold" for="category_name">Category Name <span class="text-danger">*</span></label>
+                                <label class="font-weight-bold" for="category_name">{{ __('Category Name') }} <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="category_name" required value="{{ $category->category_name }}">
                             </div>
 
@@ -62,7 +62,7 @@
                         reader.readAsDataURL($refs.photo.files[0]);
     ">
 
-     <label for="Image" class="block text-gray-700 text-sm font-bold mb-2 text-center">Image</label>
+     <label for="Image" class="block text-gray-700 text-sm font-bold mb-2 text-center">{{ __('Image') }}</label>
 
     <div class="text-center">
             <div class="mt-2" x-show="! photoPreview">
@@ -89,7 +89,7 @@
 
 
   <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Update <i class="bi bi-check"></i></button>
+                                <button type="submit" class="btn btn-primary">{{ __('Update') }} <i class="bi bi-check"></i></button>
                             </div>
 
 
