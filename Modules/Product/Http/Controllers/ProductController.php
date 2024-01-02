@@ -35,7 +35,9 @@ use Milon\Barcode\Facades\DNS1DFacade;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\Product\Models\Penyusutan;
 
 class ProductController extends Controller
 {
@@ -1959,13 +1961,54 @@ public function index_distribusi(Request $request)
     public function update_status(Request $request)
     {
         $model = $this->module_model::findOrFail($request->data_id);
+        $old_berat_emas = $model->berat_emas;
+        DB::beginTransaction();
         try {
             $model->updateTracking($request->status_id);
+
+            if(!empty($request->post('berat_total'))) {
+
+
+        
+                $validator = \Validator::make($request->all(),[
+                    'berat_total' => [
+                        function($attribute, $value, $fail) use($request, $old_berat_emas){
+                            if($request->post('berat_total') > $old_berat_emas) {
+                                $fail('Jumlah kembali tidak boleh lebih dari berat asal!');
+                            }
+                        }
+                    ],
+                ]);
+
+                
+                if (!$validator->passes()) {
+                    return response()->json(['error'=>$validator->errors()]);
+                }
+                $history_penyusutan = Penyusutan::create([
+                    'product_id' => $request->data_id,
+                    'berat_asal' => $request->post('berat_asal'),
+                    'berat_asli' => $request->post('berat_total'),
+                    'berat_susut' => $request->post('berat_susut'),
+                    'created_by' => auth()->user()->id,
+                ]);
+
+                $model->berat_emas = $request->post('berat_total');
+
+                $product_item = ProductItem::where('product_id', $request->data_id)->first();
+                
+                if($product_item && ($product_item->berat_total == $old_berat_emas)){
+                    $product_item->berat_total = $request->post('berat_total');
+                    $product_item->save();
+                }
+            }
+            $model->save();
+            DB::commit();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Status Berhasil Diupdate'
             ]);
         } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json([
                 'status' => 'error',
                 'message' => $th->getMessage()
