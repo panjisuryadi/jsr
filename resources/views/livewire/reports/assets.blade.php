@@ -88,12 +88,12 @@
                                 <td>
                                     <div class="form-group">
                                         <?php
-                                            $field_name = 'stock_office_coef.' . $key;
+                                            $field_name = 'stock_office_coef.' . $item->karat_id;
                                             $field_lable = __('Tentukan harga (%)');
                                             $field_placeholder = Label_case($field_lable);
                                             $required = '';
                                         ?>
-                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
+                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('office', {{$item->karat_id}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
                                     </div>
                                 </td>
                                 <td>{{ formatBerat($stock_office_24[$item->karat_id] ?? 0) }}</td>

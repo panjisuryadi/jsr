@@ -59,10 +59,16 @@ class AssetsReport extends Component
     public function generate_default_coef(){
         if(!empty($this->stock_office)){
             foreach($this->stock_office as $item) {
-                $this->stock_office_coef[$item->karat_id] = $item->karat?->harga?->coef ?? 0;
-                $this->stock_office_24[$item->karat_id] = $item->berat_total * $this->stock_office_coef[$item->karat_id];
+                $this->stock_office_coef[$item->karat_id] = !empty($item->karat?->coef) ? $item->karat?->coef*100 : 0;
+                $this->stock_office_24[$item->karat_id] = $item->berat_real * ($this->stock_office_coef[$item->karat_id]/100);
             }
         }
-        dd($this->stock_office_coef, $this->stock_office_24);
+    }
+
+    public function hitungHarga($slug, $karat_id) {
+        if($slug == 'office') {
+            $result = ($this->stock_office_coef[$karat_id]/100) * ($this->stock_office_array[$karat_id]['berat_real'] ?? 0);
+            $this->stock_office_24[$karat_id] = $result;
+        }
     }
 }
