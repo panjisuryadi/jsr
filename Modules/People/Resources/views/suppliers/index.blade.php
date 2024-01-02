@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route('suppliers.create') }}" class="btn btn-primary">
-                            Add Supplier <i class="bi bi-plus"></i>
+                            {{ __('Add Supplier') }} <i class="bi bi-plus"></i>
                         </a>
 
                         <hr>

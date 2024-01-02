@@ -45,10 +45,9 @@
                     ?>
                  <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
                 <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value="{{ old('name') }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
-                    
-                    <span class="invalid feedback" role="alert">
-                        <span class="text-danger error-text {{ $field_name }}_err"></span>
-                    </span>
+                <span class="invalid feedback" role="alert">
+                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                </span>
                 </div>
                        <div class="form-group">
                              <?php
@@ -60,12 +59,13 @@
                             ?>
             <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
             <textarea name="{{ $field_name }}" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}">{{ old('description') }}</textarea>
-                    <span class="invalid feedback" role="alert">
-                        <span class="text-danger error-text {{ $field_name }}_err"></span>
-                    </span>
-            </div>
-        </div>
-    </div>
+
+            <span class="invalid feedback" role="alert">
+                <span class="text-danger error-text {{ $field_name }}_err"></span>
+            </span>
+                            </div>
+                        </div>
+                    </div>
     </form>
 </div>
 {{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
@@ -99,6 +99,9 @@
                     }else{
                         printErrorMsg(data.error);
                     }
+                },
+                error:function(xhr,status){
+                    console.log( xhr,status)
                 }
             });
         }
