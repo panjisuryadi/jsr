@@ -127,7 +127,7 @@ class GenerateMenus
 
 
             //menuemas
-            $emas = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> Emas', [
+            $emas = $menu->add('<i class="c-sidebar-nav-icon bi bi-star"></i> Emas', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -162,7 +162,7 @@ class GenerateMenus
             ]);
 
             // EMAS - PEMBELIAN
-            $Purchases = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
+            $Purchases = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-bag"></i>'.__('Purchases').'', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -238,7 +238,7 @@ class GenerateMenus
 
 
             // EMAS - TOKO master menu
-            $toko = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Toko').'', [
+            $toko = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-shop"></i>'.__('Toko').'', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -436,7 +436,7 @@ class GenerateMenus
         
 
             // EMAS - SALES master menu
-            $sales = $emas->add('<i class="c-sidebar-nav-icon cil-apps"></i> Sales Office', [
+            $sales = $emas->add('<i class="c-sidebar-nav-icon bi bi-currency-dollar"></i> Sales Office', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -597,7 +597,7 @@ class GenerateMenus
             
 
             // EMAS - STOK
-            $stok = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
+            $stok = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-box-seam"></i> Stok', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -927,7 +927,7 @@ class GenerateMenus
             // ]);
 
             // EMAS - PROSES
-            $proses = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Proses', [
+            $proses = $emas->add('<i class="mb-2 c-sidebar-nav-icon bi bi-recycle"></i> Proses', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -1373,7 +1373,7 @@ class GenerateMenus
     
 // ================ Start of Berlian =================
 
-            $berlian = $menu->add('<i class="c-sidebar-nav-icon cil-apps"></i> ' .__('Berlian'), [
+            $berlian = $menu->add('<i class="c-sidebar-nav-icon bi bi-gem"></i> ' .__('Berlian'), [
                 'class' => 'c-sidebar-nav-dropdown',
                 ])->data([
                     'order'         => 3,
@@ -1394,7 +1394,7 @@ class GenerateMenus
             ]);
 
             // // BERLIAN - PEMBELIAN
-            $purchase_berlian = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Purchases').'', [
+            $purchase_berlian = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-bag"></i>'.__('Purchases').'', [
                 'class' => 'c-sidebar-nav-dropdown',
                 ])->data([
                     'order'         => 1,
@@ -1451,7 +1451,7 @@ class GenerateMenus
             ]);
 
             // Berlian - TOKO
-            $berlianToko = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-journal-check"></i>'.__('Toko').'', [
+            $berlianToko = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-shop"></i>'.__('Toko').'', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
@@ -1513,7 +1513,7 @@ class GenerateMenus
             ]);
 
             // Berlian - STOK
-            $stok_berlian = $berlian->add('<i class="mb-2 c-sidebar-nav-icon bi bi-card-checklist"></i> Stok', [
+            $stok_berlian = $berlian->add('<i class="mb-2 c-sidebar-nav-icon bi bi-box-seam"></i> Stok', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
             ->data([
