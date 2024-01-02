@@ -31,7 +31,10 @@
                         </div>
                         <div class="form-group " id ="form_berat_total">
                             <label for="">Kembali</label>
-                            <input class="form-control" type="text" name="berat_total" id="berat_total" value="">
+                            <input class="form-control" type="number" name="berat_total" id="berat_total" value="">                    
+                            <span class="invalid feedback" role="alert">
+                                <span class="text-danger error-text berat_total_err"></span>
+                            </span>
                             <small id="emailHelp" class="form-text text-muted">Abaikan atau isi 0 jika beratnya tetap sama.</small>
                         </div>
                         <div class="form-group " id ="form_berat_susut">
@@ -76,6 +79,15 @@
         let current_value = $(this).val();
         $('#berat_susut').val(_datas.berat_emas - current_value)
     })
+
+    function printErrorMsg (msg) {
+        $.each( msg, function( key, value ) {
+            console.log(key);
+            $('#'+key+'').addClass("");
+            $('#'+key+'').addClass("is-invalid");
+            $('.'+key+'_err').text(value);
+        });
+    }
 
 </script>
 @endpush
