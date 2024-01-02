@@ -17,7 +17,7 @@
                 <div class="card-body">
 
 
-                    {{-- < class="flex justify-between py-1 border-bottom"> --}}
+                    <div class="flex justify-between py-1 border-bottom">
                      <div>
                        <p class="uppercase text-lg text-gray-600 font-semibold">
                       Stok 
@@ -26,6 +26,7 @@
                         </div>
                         <div id="buttons">
                         </div>
+                    </div>
 
 
 <div class="grid grid-cols-2 gap-2 mb-3 px-3 py-2 mt-2 rounded-md border border-gray-300">
@@ -60,13 +61,13 @@
 </select>
 </div>
 
+</div>
 @endif
-</div>
+
+
 
 
 </div>
-
-
                     
 
 
@@ -89,13 +90,12 @@
                             </thead>
                         </table>
                     </div>
-                </>
+                </div>
             </div>
         </div>
     </div>
     @include('product::products.modal.process')
 </div>
-
 @endsection
 
 <x-library.datatable />
