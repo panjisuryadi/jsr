@@ -77,10 +77,14 @@ public function __construct()
             ProductStatus::SECOND,
             ProductStatus::READY_OFFICE
         ]);
+        $add_data = [
+            'status_id_ready_office' => ProductStatus::READY_OFFICE,
+        ];
         abort_if(Gate::denies('show_proses_cuci'), 403);
             return view('product::products.page.process.cuci',
             compact(
             'datakarat',
+            'add_data',
             'product_status'));
     }
 
@@ -148,10 +152,14 @@ public function __construct()
             ProductStatus::SECOND,
             ProductStatus::READY_OFFICE
         ]);
+        $add_data = [
+            'status_id_ready_office' => ProductStatus::READY_OFFICE,
+        ];
         abort_if(Gate::denies('show_proses_masak'), 403);
             return view('product::products.page.process.masak',
             compact(
             'datakarat',
+            'add_data',
             'product_status'));
     }
 
@@ -219,10 +227,14 @@ public function __construct()
             ProductStatus::SECOND,
             ProductStatus::READY_OFFICE
         ]);
+        $add_data = [
+            'status_id_ready_office' => ProductStatus::READY_OFFICE,
+        ];
         abort_if(Gate::denies('show_proses_rongsok'), 403);
             return view('product::products.page.process.rongsok',
             compact(
             'datakarat',
+            'add_data',
             'product_status'));
     }
 
@@ -290,10 +302,14 @@ public function __construct()
             ProductStatus::SECOND,
             ProductStatus::READY_OFFICE
         ]);
+        $add_data = [
+            'status_id_ready_office' => ProductStatus::READY_OFFICE,
+        ];
         abort_if(Gate::denies('show_proses_reparasi'), 403);
             return view('product::products.page.process.reparasi',
             compact(
             'datakarat',
+            'add_data',
             'product_status'));
     }
 
@@ -361,10 +377,14 @@ public function __construct()
             ProductStatus::REPARASI,
             ProductStatus::READY_OFFICE
         ]);
+        $add_data = [
+            'status_id_ready_office' => ProductStatus::READY_OFFICE,
+        ];
         abort_if(Gate::denies('show_proses_second'), 403);
             return view('product::products.page.process.second',
             compact(
             'datakarat',
+            'add_data',
             'product_status'));
     }
 

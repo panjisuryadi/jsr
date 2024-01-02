@@ -68,10 +68,14 @@
     @include('product::products.modal.process')
 </div>
 @endsection
-
+@php
+    $status_id_ready_office = $add_data['status_id_ready_office'] ?? 0;
+@endphp
 <x-library.datatable />
 @push('page_scripts')
    <script type="text/javascript">
+        var status_id_ready_office = "{{ $status_id_ready_office }}";
+        var _datas = [];
         $(function(){
             datatable()
             getStockInfo()
@@ -157,6 +161,7 @@
 
 
         function process(data){
+            _datas = data;
             $('#product-process-modal').modal('show')
             $('#product-process-modal #data_id').val(data.id)
         }
