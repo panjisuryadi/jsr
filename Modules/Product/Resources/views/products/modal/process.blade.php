@@ -31,7 +31,7 @@
                         </div>
                         <div class="form-group " id ="form_berat_total">
                             <label for="">Kembali</label>
-                            <input class="form-control" type="text" name="berat_total" id="berat_total" value="">                    
+                            <input class="form-control" type="number" name="berat_total" id="berat_total" value="">                    
                             <span class="invalid feedback" role="alert">
                                 <span class="text-danger error-text berat_total_err"></span>
                             </span>
