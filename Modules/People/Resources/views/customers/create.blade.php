@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 @include('utils.alerts')
                 <div class="form-group">
-                    <button class="btn btn-primary">Buat Data Customer <i class="bi bi-check"></i></button>
+                    <button class="btn btn-primary">{{ __('Add Customer') }}<i class="bi bi-check"></i></button>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -25,30 +25,30 @@
                             
                             <div class="border-right px-2">
                                 <div class="form-group">
-                                    <label for="customer_name">Nama Customer<span class="text-danger">*</span></label>
+                                    <label for="customer_name">{{ __('Customer Name') }}<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="customer_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="customer_email">Email</label>
+                                    <label for="customer_email">{{ __('Email') }}</label>
                                     <input type="email" class="form-control" name="customer_email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="country">Negara </label>
+                                    <label for="country">{{ __('country') }} </label>
                                     <input type="text" class="form-control" name="country">
                                 </div>
                             </div>
                             
                             <div class="px-2">
                                 <div class="form-group">
-                                    <label for="customer_phone">Nomor Kontak <span class="text-danger">*</span></label>
+                                    <label for="customer_phone">{{ __('Phone') }} <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="customer_phone" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="city">Kota</label>
+                                    <label for="city">{{ __('City') }}</label>
                                     <input type="text" class="form-control" name="city">
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Address</label>
+                                    <label for="address">{{ __('Address') }}</label>
                                     <input type="text" class="form-control" name="address">
                                 </div>
                             </div>

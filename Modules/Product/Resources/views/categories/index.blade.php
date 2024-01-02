@@ -32,7 +32,7 @@ table.dataTable th {
                         <div>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryCreateModal">
-                            Add {{ $module_title }} <i class="bi bi-plus"></i>
+                            {{ __('Add Product Category') }} <i class="bi bi-plus"></i>
                             </button>
                         </div>
                         <div id="buttons">
@@ -43,14 +43,14 @@ table.dataTable th {
                             <thead>
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
-                                    <th style="width: 9%!important;">Image</th>
-                                    <th>Title</th>
-                                    <th class="text-center items-center" style="width: 16%!important;">Products Count</th>
+                                    <th style="width: 9%!important;">{{ __('Image') }}</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th class="text-center items-center" style="width: 16%!important;">{{ __('Products Count') }}</th>
                                     <th style="width: 15%!important;" class="text-center">
-                                        Updated
+                                        {{ __('Updated') }}
                                     </th>
                                     <th style="width: 18%!important;" class="text-center">
-                                        Action
+                                        {{ __('action') }}
                                     </th>
                                 </tr>
                             </thead>
@@ -68,7 +68,7 @@ table.dataTable th {
             <div class="modal-header">
                 <h5 class="modal-title" id="categoryCreateModalLabel font-semibold">
 <i class="bi bi-grid-fill"></i> &nbsp;
-                Create {{ $module_title }}</h5>
+              {{ __('Add Product Category') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -103,27 +103,27 @@ table.dataTable th {
                                         </span>
                                     </div>
                                     <button type="button" class="btn btn-secondary px-5" x-on:click.prevent="$refs.photo.click()">
-                                    @lang('Select Image')
+                                   {{ __('Select Image') }}
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="w-2/3">
                             <div class="form-group">
-                                <label for="kategori_produk_id">@lang('Main Kategori') <span class="text-danger">*</span></label>
+                                <label for="kategori_produk_id">{{ __('Main Category') }} <span class="text-danger">*</span></label>
                                 <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
-                                    <option value="" selected disabled>Select Main Kategori</option>
+                                    <option value="" selected disabled>{{ __('Select Main Kategori') }}</option>
                                     @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $kat)
                                     <option value="{{ $kat->id }}">{{ $kat->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="category_code">Category Code <span class="text-danger">*</span></label>
+                                <label for="category_code">{{ __('Category Code') }}<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="category_code" required>
                             </div>
                             <div class="form-group">
-                                <label for="category_name">Category Name <span class="text-danger">*</span></label>
+                                <label for="category_name">{{ __('Category Name') }} <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="category_name" required>
                             </div>
                         </div>
@@ -131,9 +131,9 @@ table.dataTable th {
                 </div>
                 <div class="modal-footer">
 <button type="button" class="btn btn-danger px-5" data-dismiss="modal" aria-label="Close">
-               Close
+               {{ __('Close') }}
                 </button>
-                    <button type="submit" class="px-5 btn btn-primary">Create <i class="bi bi-check"></i></button>
+                    <button type="submit" class="px-5 btn btn-primary">{{ __('Create') }} <i class="bi bi-check"></i></button>
                 </div>
             </form>
         </div>
