@@ -1967,6 +1967,23 @@ public function index_distribusi(Request $request)
             $model->updateTracking($request->status_id);
 
             if(!empty($request->post('berat_total'))) {
+
+
+        
+                $validator = \Validator::make($request->all(),[
+                    'berat_total' => [
+                        function($attribute, $value, $fail) use($request, $old_berat_emas){
+                            if($request->post('berat_total') > $old_berat_emas) {
+                                $fail('Jumlah kembali tidak boleh lebih dari berat asal!');
+                            }
+                        }
+                    ],
+                ]);
+
+                
+                if (!$validator->passes()) {
+                    return response()->json(['error'=>$validator->errors()]);
+                }
                 $history_penyusutan = Penyusutan::create([
                     'product_id' => $request->data_id,
                     'berat_asal' => $request->post('berat_asal'),

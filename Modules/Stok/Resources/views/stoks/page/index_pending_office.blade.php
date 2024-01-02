@@ -183,7 +183,8 @@
                             $('#product-process-modal').modal('hide')
                         }, 1000);
                     }else{
-                        toastr.error(data.message)
+                        toastr.error('Kesalahan input!')
+                        printErrorMsg(data.error);
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) { // if error occured
