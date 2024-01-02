@@ -228,7 +228,7 @@ class Product extends Model implements HasMedia
         }
 
         public function scopeReadyOffice($query){
-            $query->where('status_id', ProductStatus::READY_OFFICE);
+            $query->where('status_id', 13);
         }
 
         public function scopeReady($query){

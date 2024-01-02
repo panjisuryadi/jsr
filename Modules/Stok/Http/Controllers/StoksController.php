@@ -116,6 +116,9 @@ public function pending_office() {
     $module_name_singular = Str::singular($module_name);
     $karat_ids = Product::pendingOffice()->get()->groupBy('karat_id')->keys()->toArray();
     $datakarat = Karat::find($karat_ids);
+    $add_data = [
+        'status_id_ready_office' => ProductStatus::READY_OFFICE,
+    ];
     $product_status = ProductStatus::find([
         ProductStatus::CUCI,
         ProductStatus::MASAK,
@@ -132,6 +135,7 @@ public function pending_office() {
         'module_title',
         'datakarat',
         'product_status',
+        'add_data',
         'module_icon', 'module_model'));
 }
 
