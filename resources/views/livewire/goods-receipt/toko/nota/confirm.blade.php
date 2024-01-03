@@ -68,6 +68,7 @@
                                 <th class="text-center">Customer</th>
                                 <th class="text-center">Nominal</th>
                                 <th class="text-center">Note</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,6 +105,13 @@
                                 <td class="text-center font-semibold">{{ @$row->customer_name }}</td>
                                 <td class="text-center font-semibold">{{ $this->nominalText(@$row->nominal) }}</td>
                                 <td class="text-center font-semibold">{{ @$row->note }}</td>
+                                <td class="text-center font-semibold">
+                                    @if ($row->type === 2)
+                                    <a href="#" class="btn btn-sm btn-primary" wire:click.prevent="editTafsir({{$row}})">
+                                        <i class="bi bi-pencil"></i> Nilai Tafsir
+                                    </a>
+                                    @endif
+                                </td>
 
                             </tr>
                             @empty
@@ -145,6 +153,7 @@
     </div>
     @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.modal.tracking')
     @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.modal.approve-summary')
+    @include('goodsreceipt::goodsreceipts.toko.buyback-barangluar.modal.edit_tafsir')
 </div>
 @push('page_scripts')
 <script>
