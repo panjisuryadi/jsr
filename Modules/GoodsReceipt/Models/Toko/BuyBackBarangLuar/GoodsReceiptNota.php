@@ -77,7 +77,7 @@ class GoodsReceiptNota extends Model
     }
 
     public function pic(){
-        return $this->belongsTo(User::class,'pic_id');
+        return $this->belongsTo(User::class,'pic_id')->withoutGlobalScopes();
     }
 
     public function send(){

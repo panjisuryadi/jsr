@@ -12,8 +12,10 @@
 
 @section('content')
     <div class="container-fluid">
-    @if ($nota->isProcessing())
+    @if ($nota->isProcessing() && !auth()->user()->isUserCabang())
         @livewire('goods-receipt.toko.nota.confirm',['nota' => $nota])
+    @elseif ($nota->isProcessing() && auth()->user()->isUserCabang())
+        @livewire('goods-receipt.toko.nota.waiting-process',['nota' => $nota])
     @elseif ($nota->isSent())
         @livewire('goods-receipt.toko.nota.sent',['nota' => $nota])
     @else
