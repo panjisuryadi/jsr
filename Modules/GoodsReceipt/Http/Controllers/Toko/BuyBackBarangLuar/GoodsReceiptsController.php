@@ -113,7 +113,7 @@ class GoodsReceiptsController extends Controller
                                                      </strong></div>';
 
                 $tb .= '<div class="text-gray-800">
-                                                      Berat : <strong>' . $data->product->weight . '
+                                                      Berat Emas : <strong>' . $data->product->berat_emas . '
                                                       gr</strong></div>';
                 $tb .= '</div>';
                 return $tb;
