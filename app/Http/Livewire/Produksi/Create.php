@@ -412,6 +412,8 @@ class Create extends Component
                 $image = "$fileName";
             }
 
+            
+
             $product = Product::create([
                 'category_id' => $this->category_id,
                 'cabang_id' => null,
