@@ -355,7 +355,7 @@
                                                 <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
                                                     <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                     @foreach($dataKarat as $jp)
-                                                    <option value="{{ $jp->id }}">{{ $jp->name }} {{$jp->kode}}</option>
+                                                    <option value="{{ $jp->id }}">{{ $jp->label }}</option>
                                                     @endforeach
                                                 </select>
                                                 @if($errors->has($field_name))

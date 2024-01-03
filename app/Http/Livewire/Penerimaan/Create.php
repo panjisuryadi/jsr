@@ -40,7 +40,7 @@ class Create extends Component
   
     public function mount()
     {
-       $this->cabang_for_incentive = Cabang::whereIn('id',[2,3])->get();
+       $this->cabang_for_incentive = Cabang::all();
       
     }
     public function render()
