@@ -4,6 +4,7 @@ namespace Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar;
 
 use App\Models\TrackingStatus;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Cabang\Models\Cabang;
@@ -39,6 +40,14 @@ class GoodsReceiptNota extends Model
                 'cabang_id' => $goodsreceipt_nota->cabang_id
             ]);
         });
+
+        if (auth()->check()) {
+            if(auth()->user()->isUserCabang()){
+                static::addGlobalScope('filter_by_cabang', function (Builder $builder) {
+                    $builder->where('cabang_id', auth()->user()->namacabang()->id);
+                });
+            }
+        }
     }
     
     
