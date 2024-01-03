@@ -37,10 +37,13 @@ class GoodsReceiptItem extends Model
         return $this->belongsTo(Product::class)->withoutGlobalScope('filter_by_cabang');
     }
 
-    public function scopePending(){
-        return $this->whereHas('product', function ($query) {
+    public function scopePending($query){
+        $query->whereHas('product', function ($query) {
             $query->where('status_id', ProductStatus::PENDING_CABANG);
         });
+        if(auth()->user()->isUserCabang()){
+            $query->where('cabang_id',auth()->user()->namacabang()->id);
+        }
     }
 
     public function member_customer(){

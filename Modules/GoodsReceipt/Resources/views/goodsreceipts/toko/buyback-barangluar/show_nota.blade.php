@@ -12,8 +12,10 @@
 
 @section('content')
     <div class="container-fluid">
-    @if ($nota->isProcessing())
+    @if ($nota->isProcessing() && !auth()->user()->isUserCabang())
         @livewire('goods-receipt.toko.nota.confirm',['nota' => $nota])
+    @elseif ($nota->isProcessing() && auth()->user()->isUserCabang())
+        @livewire('goods-receipt.toko.nota.waiting-process',['nota' => $nota])
     @elseif ($nota->isSent())
         @livewire('goods-receipt.toko.nota.sent',['nota' => $nota])
     @else
@@ -51,8 +53,23 @@
             toastr.error(event.detail.message);
         });
 
+        window.addEventListener('barang-luar:empty-tafsir', event => {
+            toastr.error(event.detail.message);
+        });
+
         window.addEventListener('approve:modal', event => {
             $('#approve-modal').modal('show');
+        });
+
+        window.addEventListener('edit-tafsir:modal', event => {
+            $('#edit-tafsir-modal').modal('show');
+        });
+
+        window.addEventListener('barang-luar:updated', event => {
+            $('body').removeClass('modal-open');
+            $('#edit-tafsir-modal').modal('hide');
+            $('.modal-backdrop').remove();
+            toastr.success(event.detail.message);
         });
 
         window.addEventListener('check:all-selected', event => {

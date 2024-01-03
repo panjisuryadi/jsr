@@ -5,6 +5,7 @@ namespace App\Http\Livewire\GoodsReceipt\Toko\Nota;
 use App\Models\LookUp;
 use App\Models\TrackingStatus;
 use DateTime;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
@@ -18,13 +19,20 @@ use Modules\Status\Models\ProsesStatus;
 use Modules\Stok\Models\StockCabang;
 
 use Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar;
+use Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptItem;
 use Modules\Product\Models\ProductStatus;
 
 class Confirm extends Component
 {
+    public GoodsReceiptItem $item;
     public $nota;
 
     public $nota_items;
+
+    public function __construct()
+    {
+        $this->item = new GoodsReceiptItem();
+    }
 
     public function render()
     {
@@ -67,11 +75,22 @@ class Confirm extends Component
         $this->nota_items = $this->nota->items;
     }
 
+    public function updatedItemNilaiTafsir($value){
+        if($this->item->nilai_tafsir != ''){
+            $this->item->nilai_selisih = intval($this->item->nilai_tafsir) - $this->item->nominal;
+        }else{
+            $this->item->nilai_selisih = 0;
+        }
+    }
+
     public function rules()
     {
         $rules = [
             'note' => 'required_if:selectAll,false'
         ];
+        $rules['item.nilai_tafsir'] = '';
+        $rules['item.nilai_selisih'] = '';
+
         return $rules;
     }
 
@@ -83,7 +102,17 @@ class Confirm extends Component
 
     public function proses()
     {
-        $this->dispatchBrowserEvent('approve:modal');
+        $emptyTafsir = $this->nota_items
+                        ->whereIn('id',$this->selectedItems)
+                        ->where('type',2)
+                        ->whereNull('nilai_tafsir')->first();
+        if(!empty($emptyTafsir)){
+            $this->dispatchBrowserEvent('barang-luar:empty-tafsir',[
+                'message' => 'Nilai Tafsir Produk ' . $emptyTafsir->product->product_code . ' Belum ditentukan!'
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('approve:modal');
+        }
     }
 
     public function showTracking(){
@@ -113,6 +142,28 @@ class Confirm extends Component
         }
         toast('Penerimaan Barang Berhasil dilakukan','success');
         return redirect(route('goodsreceipt.toko.buyback-barangluar.index'));
+    }
+
+    public function editTafsir(GoodsReceiptItem $item){
+        $this->item = $item;
+        $this->dispatchBrowserEvent('edit-tafsir:modal');
+    }
+
+    public function updateNilaiTafsir(){
+        $this->validate([
+            'item.nilai_tafsir' => 'required',
+        ]);
+        try{
+            $this->item->save();
+            DB::commit();
+            $this->reset('item');
+            $this->dispatchBrowserEvent('barang-luar:updated',[
+                'message' => 'Nilai Tafsir Berhasil di Update'
+            ]);
+        }catch (\Exception $e) {
+            DB::rollBack(); 
+            throw $e;
+        }
     }
 
 }

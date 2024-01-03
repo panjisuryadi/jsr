@@ -17,6 +17,7 @@ use Modules\Status\Models\ProsesStatus;
 
 
 use Livewire\Component;
+use Modules\GoodsReceipt\Models\Toko\BuyBackBarangLuar\GoodsReceiptItem;
 use Modules\PenerimaanBarangLuar\Models\PenerimaanBarangLuarIncentive;
 
 class Create extends Component
@@ -39,7 +40,7 @@ class Create extends Component
   
     public function mount()
     {
-       $this->cabang_for_incentive = Cabang::whereIn('id',[2,3])->get();
+       $this->cabang_for_incentive = Cabang::all();
       
     }
     public function render()
@@ -63,15 +64,20 @@ class Create extends Component
 
     public function fetchNilai(){
       if(!empty($this->cabang_id) && !empty($this->month) && !empty($this->year)){
-         $barangluar = PenerimaanBarangLuar::where('cabang_id',$this->cabang_id);
-         $this->nilai_angkat = $barangluar->whereMonth('date',$this->month)->whereYear('date',$this->year)->sum('nilai_angkat');
+         $barangluar = GoodsReceiptItem::where('cabang_id',$this->cabang_id)
+                        ->where('type',2)
+                        ->whereNotNull('nilai_tafsir')
+                        ->where('status_id', GoodsReceiptItem::APPROVED);
+         $this->nilai_angkat = $barangluar->whereMonth('date',$this->month)->whereYear('date',$this->year)->sum('nominal');
          $this->nilai_tafsir = $barangluar->whereMonth('date',$this->month)->whereYear('date',$this->year)->sum('nilai_tafsir');
          $this->nilai_selisih = $barangluar->whereMonth('date',$this->month)->whereYear('date',$this->year)->sum('nilai_selisih');
       }
     }
 
      public function calculateIncentive(){
-      $this->nilai_insentif = $this->nilai_selisih * $this->persentase / 100;
+      if(!empty($this->persentase)){
+         $this->nilai_insentif = $this->nilai_selisih * $this->persentase / 100;
+      }
      }
 
 
@@ -100,6 +106,10 @@ class Create extends Component
          'incentive' => $this->nilai_insentif,
       ]);
       return redirect()->route('penerimaanbarangluar.index_insentif');
+     }
+
+     public function updated($property){
+      $this->validateOnly($property);
      }
 
 

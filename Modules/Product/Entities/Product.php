@@ -200,7 +200,10 @@ class Product extends Model implements HasMedia
        }
 
        public function scopePending($query){
-            return $this->where('status_id', ProductStatus::PENDING_CABANG);
+            $query->where('status_id', ProductStatus::PENDING_CABANG);
+            if(auth()->user()->isUserCabang()){
+                $query->where('cabang_id',auth()->user()->namacabang()->id);
+            }
        }
 
        public function scopeCuci($query){
