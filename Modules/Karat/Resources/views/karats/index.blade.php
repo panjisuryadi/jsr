@@ -52,7 +52,7 @@
                                     </th> 
 
                                     <th style="width: 13%!important;" class="text-center">
-                                        Action
+                                       {{__('Action')}}
                                     </th>
                                 </tr>
                             </thead>
