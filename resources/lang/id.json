@@ -139,7 +139,6 @@
     "Backups": "Backups",
     "File": "File",
     "Size": "Size",
-    "Date": "Date",
     "Age": "Age",
     "Download": "Download",
     "Download File": "Download File",
@@ -211,5 +210,13 @@
     "Code": "Kode",
     "Add Diamond Certificate": "Tambah Setifikat Berlian",
     "Add Supplier": "Tambah Supplier",
-    "Group Type": "Jenis Grup"
+    "Group Type": "Jenis Grup",
+    "Code Group Type": "Kode Jenis Grup",
+    "Add Category": "Tambah Kategori",
+    "Category Description": "Deskripsi Kategori",
+    "Expenses Count": "Hitungan Biaya",
+    "Add Expense": "Tambah Biaya",
+    "Expenses": "Biaya",
+    "Amount": "Jumlah",
+    "Reference": "Referensi"
 }

@@ -33,7 +33,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                    <th class="text-lef">{{ __('Kode Jenis Group') }}</th>
+                                    <th class="text-lef">{{ __('Code Group Type') }}</th>
 
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
@@ -87,9 +87,24 @@
             dom: 'Blfrtip',
             buttons: [
 
-                'excel',
-                'pdf',
-                'print'
+            {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4 ]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4 ]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4 ]
+                    }
+                }
             ],
             columns: [{
                     "data": 'id',
