@@ -117,10 +117,24 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
             ajax: '{{ route("$module_name.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
-
-                'excel',
-                'pdf',
-                'print'
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4 ]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4, ]
+                    }
+                }
             ],
             columns: [{
                     "data": 'id',

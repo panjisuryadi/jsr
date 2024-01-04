@@ -150,9 +150,24 @@ $status = Modules\Product\Models\ProductStatus::READY_OFFICE;
         },
         dom: 'Blfrtip',
         buttons: [
-        'excel',
-        'pdf',
-        'print'
+            {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5,6 ]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5,6 ]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5,6 ]
+                    }
+                }
         ],
         columns: [{
             "data": 'id',

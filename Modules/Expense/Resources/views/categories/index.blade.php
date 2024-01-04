@@ -10,7 +10,7 @@
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('expenses.index') }}">Expenses</a></li>
-        <li class="breadcrumb-item active">Categories</li>
+        <li class="breadcrumb-item active">{{ __("Categories") }}</li>
     </ol>
 @endsection
 
@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryCreateModal">
-                            Add Category <i class="bi bi-plus"></i>
+                            {{ __("Add Category") }} <i class="bi bi-plus"></i>
                         </button>
 
                         <hr>
@@ -51,16 +51,16 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="category_name">Category Name <span class="text-danger">*</span></label>
+                            <label for="category_name">{{ __("Category Name") }} <span class="text-danger">*</span></label>
                             <input class="form-control" type="text" name="category_name" required>
                         </div>
                         <div class="form-group">
-                            <label for="category_description">Description</label>
+                            <label for="category_description">{{ __("Description") }}</label>
                             <textarea class="form-control" name="category_description" id="category_description" rows="5"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Create <i class="bi bi-check"></i></button>
+                        <button type="submit" class="btn btn-primary">{{ __("Create") }} <i class="bi bi-check"></i></button>
                     </div>
                 </form>
             </div>
