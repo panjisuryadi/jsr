@@ -68,9 +68,9 @@
                             <thead>
                                 <tr>
  <th style="width: 3%!important;">No</th>
-  <th style="width: 10%!important;" class="text-center">{{ Label_Case('date') }}</th>
+  <th style="width: 10%!important;" class="text-center">{{ __("Date") }}</th>
   <th style="width: 11%!important;" class="text-center">{{ Label_Case('Cabang') }}</th>
-  <th style="width: 11%!important;" class="text-center">{{ Label_Case('Kostumer') }}</th>
+  <th style="width: 11%!important;" class="text-center">{{ __("Customers") }}</th>
   <th style="width: 9%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
   <th style="width: 8%!important;" class="text-center">{{ Label_Case('Nominal') }}</th>
  <th style="width: 6%!important;" class="text-center">{{ Label_Case('status') }}</th>
@@ -128,9 +128,24 @@
           
             dom: 'Blfrtip',
             buttons: [
-                'excel',
-                'pdf',
-                'print'
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4 ]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4 ]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4 ]
+                    }
+                }
             ],
             columns: [{
                     "data": 'id',
