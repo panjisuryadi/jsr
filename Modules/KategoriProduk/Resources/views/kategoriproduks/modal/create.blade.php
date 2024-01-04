@@ -37,13 +37,13 @@
                         <div class="w-2/3">
                               <div class="form-group">
                   <?php
-                    $field_name = 'name';
+                    $field_name = 'Name';
                     $field_lable = __($field_name);
                     $field_placeholder = Label_case($field_lable);
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = '';
                     ?>
-                 <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
+                 <label for="{{ $field_name }}">{{ $field_placeholder }} <span class="text-danger">*</span></label>
                 <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" value="{{ old('name') }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                 <span class="invalid feedback" role="alert">
                     <span class="text-danger error-text {{ $field_name }}_err"></span>
@@ -51,13 +51,13 @@
                 </div>
                        <div class="form-group">
                              <?php
-                            $field_name = 'description';
+                            $field_name = 'Description';
                             $field_lable = __($field_name);
                             $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                             $required = '';
                             ?>
-            <label for="{{ $field_name }}">{{ $field_placeholder }}</label>
+            <label for="{{ $field_name }}">{{ $field_placeholder }} <span class="text-danger">*</span> </label>
             <textarea name="{{ $field_name }}" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}">{{ old('description') }}</textarea>
 
             <span class="invalid feedback" role="alert">

@@ -33,7 +33,7 @@
                                     <input type="email" class="form-control" name="customer_email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="country">{{ __('country') }} </label>
+                                    <label for="country">{{ __('Country') }} </label>
                                     <input type="text" class="form-control" name="country">
                                 </div>
                             </div>

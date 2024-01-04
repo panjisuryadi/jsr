@@ -6,7 +6,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item active">{{$module_title}}</li>
+    <li class="breadcrumb-item active">Jenis Grup</li>
 </ol>
 @endsection
 @section('content')
@@ -21,7 +21,7 @@
                                 id="Tambah"
                                 data-toggle="tooltip"
                                  class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ __('Group Type') }}
                                 </a>
 
                         </div>

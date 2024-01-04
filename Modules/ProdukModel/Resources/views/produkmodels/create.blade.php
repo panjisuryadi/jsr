@@ -3,7 +3,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb border-0 m-0">
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route("produkmodel.index") }}">ProdukModel</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("produkmodel.index") }}">Produk Model</a></li>
     <li class="breadcrumb-item active">Add</li>
 </ol>
 @endsection
@@ -21,7 +21,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                           <?php
-                            $field_name = 'name';
+                            $field_name = 'Name';
                             $field_lable = __($field_name);
                             $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';
