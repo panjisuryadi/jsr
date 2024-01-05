@@ -1326,30 +1326,43 @@ public function cetak($id) {
             toast('Stock Opname sedang Aktif!', 'error');
             return redirect()->back();
         }
-
+        DB::beginTransaction();
         try {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-
-        $module_action = 'Delete';
-
-        $$module_name_singular = $module_model::findOrFail($id);
-     
-        $$module_name_singular->delete();
-
-
-         toast(''. $module_title.' Deleted!', 'success');
-         return redirect()->route(''.$module_name.'.riwayat-penerimaan');
-
-          } catch (\Exception $e) {
-           // dd($e);
-                toast(''. $module_title.' error!', 'warning');
-                return redirect()->back();
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
+            
+            $module_action = 'Delete';
+            
+            $$module_name_singular = $module_model::find($id);
+            
+            $gr_item = GoodsReceiptItem::where('goodsreceipt_id', $id)->get();
+            foreach($gr_item as $item) {
+                $stock_office = StockOffice::where('karat_id', $item->karat_id)->first();
+                $item->stock_office()->attach($stock_office->id,[
+                    'karat_id'=>$item['karat_id'],
+                    'in' => false,
+                    'berat_real' => -1 * $item->berat_real,
+                    'berat_kotor' => -1 * $item->berat_kotor
+                ]);
+                $berat_real = $stock_office->berat_real - $item->berat_real;
+                $berat_kotor = $stock_office->berat_kotor - $item->berat_kotor;
+                $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
+                $item->delete();
             }
+            $$module_name_singular->delete();
+            DB::commit();
+            toast(''. $module_title.' Deleted!', 'success');
+            return redirect()->route(''.$module_name.'.index');
+
+        } catch (\Exception $e) {
+            dd($e);
+            toast(''. $module_title.' error! ' . $e->getMessage(), 'warning');
+            return redirect()->back();
+        }
 
     }
 
