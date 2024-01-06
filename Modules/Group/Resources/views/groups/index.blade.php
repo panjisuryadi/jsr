@@ -89,9 +89,24 @@
             dom: 'Blfrtip',
             buttons: [
 
-                'excel',
-                'pdf',
-                'print'
+            {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5 ]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5 ]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5 ]
+                    }
+                }
             ],
             columns: [{
                     "data": 'id',

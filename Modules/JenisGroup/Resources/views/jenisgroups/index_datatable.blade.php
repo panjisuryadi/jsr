@@ -78,7 +78,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data") },
+            ajax: '{{ route("$module_name.index_data") }',
               dom: 'Blfrtip',
                         buttons: [
                             'copy',
@@ -88,7 +88,7 @@
                             'print'
                         ],
 
-                 }',
+                 },
           
             columns: [{
                     "data": 'id',
