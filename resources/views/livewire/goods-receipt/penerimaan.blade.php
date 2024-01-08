@@ -93,7 +93,7 @@
                                     $required = '';
                                     ?>
                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-                                    <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
+                                    <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" wire:model.lazy="{{ $field_name }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                                     @if ($errors->has($field_name))
                                     <span class="invalid feedback" role="alert">
                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -200,7 +200,7 @@
                                             @if ($key==0)
                                             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                             @endif
-                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
                                             @if ($errors->has($field_name))
                                             <span class="invalid feedback" role="alert">
                                                 <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -220,7 +220,7 @@
                                             @if ($key==0)
                                             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                             @endif
-                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:change="calculateTotalBeratKotor()" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:change="calculateTotalBeratKotor()" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
 
                                             @if ($errors->has($field_name))
                                             <span class="invalid feedback" role="alert">
@@ -272,7 +272,7 @@
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}
                                             <span class="text-danger small"> (yg harus dibayar)</span></label>
-                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" min="0" step="0.001">
+                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model.debounce.1s="{{ $field_name }}" placeholder="{{ $field_placeholder }}" min="0" step="0.001" wire:change="calculateSelisih">
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -289,7 +289,7 @@
                                         $required = "required";
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" readonly>
+                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model.lazy="{{ $field_name }}" placeholder="{{ $field_placeholder }}" readonly>
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -306,7 +306,7 @@
                                         $required = "required";
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="number" name="{{ $field_name }}" min="0" step="0.001" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:change="calculateSelisih">
+                                        <input class="form-control" type="number" name="{{ $field_name }}" min="0" step="0.001" id="{{ $field_name }}" wire:model.debounce.1s="{{ $field_name }}" placeholder="{{ $field_placeholder }}" wire:change="calculateSelisih">
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -324,7 +324,7 @@
                                         $required = "required";
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger small">(Gram)</span></label>
-                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="0" readonly>
+                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model.lazy="{{ $field_name }}" placeholder="0" readonly>
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -351,7 +351,7 @@
                                 $required = '';
                                 ?>
                                 <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-                                <textarea name="{{ $field_name }}" placeholder="{{ $field_placeholder }}" rows="5" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}" wire:model="{{ $field_name }}"></textarea>
+                                <textarea name="{{ $field_name }}" placeholder="{{ $field_placeholder }}" rows="5" id="{{ $field_name }}" rows="4 " class="form-control {{ $invalid }}" wire:model.lazy="{{ $field_name }}"></textarea>
                                 @if ($errors->has($field_name))
                                 <span class="invalid feedback" role="alert">
                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -390,7 +390,7 @@
                                     $required = "required";
                                     ?>
                                     <label class="mb-0" for="{{ $field_name }}"> {{ $field_lable }} <span class="text-danger"></span></label>
-                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="0">
+                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model.lazy="{{ $field_name }}" placeholder="0">
                                     @if ($errors->has($field_name))
                                     <span class="invalid feedback" role="alert">
                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -487,7 +487,7 @@
                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                     ?>
                                     <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
-                                    <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}">
+                                    <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" wire:model.lazy="{{ $field_name }}" placeholder="{{ $field_placeholder }}">
                                     @if ($errors->has($field_name))
                                     <span class="invalid feedback" role="alert">
                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">

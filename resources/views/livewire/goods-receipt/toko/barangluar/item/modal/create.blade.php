@@ -20,7 +20,7 @@
                                 ?>
                                 <label class="font-medium" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}">
+                                    <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model.lazy="{{ $field_name }}">
                                 </div>
                                 @if ($errors->has($field_name))
                                 <span class="invalid feedback" role="alert">
@@ -237,7 +237,7 @@
                             type="number"
                             name="{{ $field_name }}"
                             id="{{ $field_name }}"
-                            wire:model="{{ $field_name }}"
+                            wire:model.lazy="{{ $field_name }}"
                             placeholder="{{ $field_placeholder }}"
                             readonly>
                         </div>
@@ -373,7 +373,7 @@
                                 type="number"
                                 name="{{ $field_name }}"
                                 id="{{ $field_name }}"
-                                wire:model="{{ $field_name }}"
+                                wire:model.lazy="{{ $field_name }}"
                                 placeholder="{{ $field_placeholder }}"
                                 readonly>
                             </div>
