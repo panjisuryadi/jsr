@@ -383,7 +383,26 @@
                         </div>
                         <div class="col-span-2">
                             <div class="form-group">
-                                <x-library.goodsreceipt-toko.barangluar.webcam />
+                                <div class="py-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="upload" id="up2" checked>
+                                        <label class="form-check-label" for="up2">Upload</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="upload" id="up1">
+                                        <label class="form-check-label" for="up1">Webcam</label>
+                                    </div>
+                                </div>
+                                <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
+                                    <x-library.goodsreceipt-toko.barangluar.webcam />
+                                </div>
+                                <div id="upload1" style="display: block !important;" class="align-items-center justify-content-center" wire:ignore>
+                                    <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
+                                        <div class="dz-message" data-dz-message>
+                                            <i class="text-red-800 bi bi-cloud-arrow-up"></i>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if ($errors->has('data.additional_data.image'))
                                 <span class="invalid feedback"role="alert">
                                     <small class="text-danger">{{ $errors->first('data.additional_data.image') }}.</small
@@ -803,6 +822,67 @@
 </div>
 
 @push('page_scripts')
+<script src="{{ asset('js/dropzone.js') }}"></script>
+<script type="text/javascript">
+    $('#up1').change(function() {
+        $('#upload2').toggle();
+        $('#upload1').hide();
+        });
+    $('#up2').change(function() {
+        $('#upload1').toggle();
+        $('#upload2').hide();
+    });
+</script>
+<script>
+    var uploadedDocumentMap = {}
+    Dropzone.options.documentDropzone = {
+        url: '{{ route('dropzone.upload') }}',
+        maxFilesize: 1,
+        acceptedFiles: '.jpg, .jpeg, .png',
+        maxFiles: 1,
+        addRemoveLinks: true,
+        dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        success: function (file, response) {
+            $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
+            uploadedDocumentMap[file.name] = response.name;
+            Livewire.emit('imageUploaded',response.name);
+        },
+        removedfile: function (file) {
+            file.previewElement.remove();
+            var name = '';
+            if (typeof file.file_name !== 'undefined') {
+                name = file.file_name;
+            } else {
+                name = uploadedDocumentMap[file.name];
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ route('dropzone.delete') }}",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'file_name': `${name}`
+                },
+            });
+            $('form').find('input[name="document[]"][value="' + name + '"]').remove();
+            Livewire.emit('imageRemoved',name);
+        },
+        init: function () {
+            @if(isset($product) && $product->getMedia('images'))
+                var files = {!! json_encode($product->getMedia('images')) !!};
+                for (var i in files) {
+                    var file = files[i];
+                    this.options.addedfile.call(this, file);
+                    this.options.thumbnail.call(this, file, file.original_url);
+                    file.previewElement.classList.add('dz-complete');
+                    $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+                }
+            @endif
+        }
+    }
+</script>
 <script>
     function setAdditionalAttribute(name,selectElement){
         let selectedText = selectElement.options[selectElement.selectedIndex].text;
@@ -814,6 +894,13 @@
             window.location.reload();
             toastr.success('Item Berhasil di ditambahkan')
         });
+    });
+
+    window.addEventListener('webcam-image:remove', event => {
+        $('#imageprev').attr('src','');
+    });
+    window.addEventListener('uploaded-image:remove', event => {
+        Dropzone.forElement("div#document-dropzone").removeAllFiles(true);
     });
 
 </script>

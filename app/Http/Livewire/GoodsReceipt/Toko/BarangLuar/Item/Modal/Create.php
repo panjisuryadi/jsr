@@ -72,7 +72,8 @@ class Create extends Component
             'no_certificate' => '',
             'accessories_weight' => 0,
             'tag_weight' => 0,
-            'image' => ''
+            'image' => '',
+            'uploaded_image' => ''
         ],
         'gold_weight' => 0,
         'total_weight' => 0,
@@ -101,6 +102,8 @@ class Create extends Component
         'setAdditionalAttribute',
         'webcamCaptured' => 'handleWebcamCaptured',
         'webcamReset' => 'handleWebcamReset',
+        'imageUploaded',
+        'imageRemoved'
     ];
 
     public function updatedGrandTotal($value)
@@ -263,11 +266,25 @@ class Create extends Component
 
     public function handleWebcamCaptured($data_uri){
         $this->data['additional_data']['image'] = $data_uri;
+        $this->imageRemoved();
     }
 
     public function handleWebcamReset(){
         $this->data['additional_data']['image'] = '';
+        $this->dispatchBrowserEvent('webcam-image:remove');
     }
+
+    public function imageUploaded($fileName){
+        $this->data['additional_data']['uploaded_image'] = $fileName;
+        $this->handleWebcamReset();
+    }
+
+    public function imageRemoved($fileName = null){
+        $this->data['additional_data']['uploaded_image'] = '';
+        $this->dispatchBrowserEvent('uploaded-image:remove');
+    }
+
+
 
     
 
@@ -376,7 +393,7 @@ class Create extends Component
         $rules['data.total_weight'] = 'required|gt:0';
         $rules['data.additional_data.certificate_id'] = 'required_if:data.additional_data.product_category.id,'.$this->logam_mulia_id;
         $rules['data.additional_data.no_certificate'] = 'required_if:data.additional_data.product_category.id,'.$this->logam_mulia_id;
-        $rules['data.additional_data.image'] = 'required';
+        $rules['data.additional_data.image'] =['required_if:data.additional_data.uploaded_image,'];
 
 
         foreach($this->payments as $index => $payment){
@@ -437,29 +454,6 @@ class Create extends Component
         
         DB::beginTransaction();
         try{
-            $additional_data = [
-                "product_information" => [
-                    "product_category" => [
-                        "id" => $this->data['additional_data']['product_category']['id'],
-                        "name" => $this->data['additional_data']['product_category']['name']
-                    ],
-                    "group" => [
-                        'id' => $this->data['additional_data']['group']['id'],
-                        'name' => $this->data['additional_data']['group']['name']
-                    ],
-                    "model" => [
-                        'id' => $this->data['additional_data']['model']['id'],
-                        'name' => $this->data['additional_data']['model']['name']
-                    ],
-                    "code" => $this->data['additional_data']['code'],
-                    'certificate_id' => $this->data['additional_data']['certificate_id'],
-                    'no_certificate' => $this->data['additional_data']['no_certificate'],
-                    'accessories_weight' => $this->data['additional_data']['accessories_weight'],
-                    'tag_weight' => $this->data['additional_data']['tag_weight'],
-                    'image' => $this->uploadImage($this->data['additional_data']['image']),
-                    'total_weight' => $this->data['total_weight']
-                ]
-            ];
             // Create product first
             $product_data = [
                 'category_id' => $this->data['additional_data']['product_category']['id'],
@@ -473,7 +467,7 @@ class Create extends Component
                 'product_code'               => $this->data['additional_data']['code'],
                 'product_barcode_symbology'  => 'C128',
                 'product_unit'               => 'Gram',
-                'images' => $this->uploadImage($this->data['additional_data']['image']),
+                'images' => $this->getUploadedImage(),
             ];
             $product_data['product_name'] = $this->groups->find($this->data['additional_data']['group']['id'])->name;
             if(!empty($this->data['additional_data']['model']['id'])){
@@ -557,6 +551,22 @@ class Create extends Component
         $file = $folderPath . $fileName;
         Storage::disk('public')->put($file,$image_base64);
         return $fileName;
+    }
+
+    private function getUploadedImage(){
+        $folderPath = "uploads/";
+        if(!empty($this->data['additional_data']['uploaded_image'])){
+            Storage::disk('public')->move("temp/dropzone/{$this->data['additional_data']['uploaded_image']}","{$folderPath}{$this->data['additional_data']['uploaded_image']}");
+            return $this->data['additional_data']['uploaded_image'];  
+        }
+        elseif(!empty($this->data['additional_data']['image'])){
+            $image_parts = explode(";base64,", $this->data['additional_data']['image']);
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName ='webcam_'. uniqid() . '.jpg';
+            $file = $folderPath . $fileName;
+            Storage::disk('public')->put($file,$image_base64);
+            return $fileName;
+        }
     }
 
     public function updated($propertyName)
