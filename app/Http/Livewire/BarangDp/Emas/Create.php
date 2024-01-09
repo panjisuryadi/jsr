@@ -33,6 +33,7 @@ class Create extends Component
     public $uploaded_image = '';
     public $webcam_image = '';
 
+
     public function render()
     {
         return view('livewire.barang-dp.emas.create');
@@ -177,17 +178,21 @@ class Create extends Component
 
     public function handleWebcamCaptured($data_uri){
         $this->webcam_image = $data_uri;
+        $this->imageRemoved();
     }
 
     public function handleWebcamReset(){
         $this->webcam_image = '';
+        $this->dispatchBrowserEvent('webcam-image:remove');
     }
 
     public function imageUploaded($fileName){
         $this->uploaded_image = $fileName;
+        $this->handleWebcamReset();
     }
 
-    public function imageRemoved($fileName){
+    public function imageRemoved($fileName = null){
         $this->uploaded_image = '';
+        $this->dispatchBrowserEvent('uploaded-image:remove');
     }
 }

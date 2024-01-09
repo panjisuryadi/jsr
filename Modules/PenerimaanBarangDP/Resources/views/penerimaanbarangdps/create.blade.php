@@ -240,6 +240,13 @@ margin-bottom: 0.5rem !important;
         });
 
         })(jQuery);
+
+        window.addEventListener('webcam-image:remove', event => {
+            $('#imageprev').attr('src','');
+        });
+        window.addEventListener('uploaded-image:remove', event => {
+            Dropzone.forElement("div#document-dropzone").removeAllFiles(true);
+        });
  </script>
 @endpush
 
