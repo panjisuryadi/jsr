@@ -4,7 +4,7 @@ namespace Modules\PenerimaanBarangDP\Models;
 
 use App\Models\User;
 use Carbon\Carbon;
-
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,6 +47,12 @@ class PenerimaanBarangDP extends Model implements HasMedia
         $penerimaanBarangDP->cabang_id = auth()->user()->namacabang()->id;
       }
     });
+
+    if(auth()->check() && auth()->user()->isUserCabang()){
+      self::addGlobalScope(function(Builder $builder) {
+        $builder->where('cabang_id', auth()->user()->namacabang()->id);
+      });
+    }
   }
   protected static function newFactory()
   {
