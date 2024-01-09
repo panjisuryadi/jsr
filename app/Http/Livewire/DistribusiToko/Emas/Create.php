@@ -55,6 +55,8 @@ class Create extends Component
     protected $listeners = [
         'webcamCaptured' => 'handleWebcamCaptured',
         'webcamReset' => 'handleWebcamReset',
+        'imageUploaded',
+        'imageRemoved',
         'setAdditionalAttribute',
         'removeProduct' => 'handleRemoveProduct'
     ];
@@ -85,15 +87,28 @@ class Create extends Component
         'total_weight' => 0,
         'accessories_weight' => 0,
         'tag_weight' => 0,
-        'webcam_image' => ''
+        'webcam_image' => '',
+        'uploaded_image' => ''
     ];
 
     public function handleWebcamCaptured($data_uri){
         $this->new_product['webcam_image'] = $data_uri;
+        $this->imageRemoved();
     }
 
     public function handleWebcamReset(){
         $this->new_product['webcam_image'] = '';
+        $this->dispatchBrowserEvent('webcam-image:remove');
+    }
+
+    public function imageUploaded($fileName){
+        $this->new_product['uploaded_image'] = $fileName;
+        $this->handleWebcamReset();
+    }
+
+    public function imageRemoved($fileName = null){
+        $this->new_product['uploaded_image'] = '';
+        $this->dispatchBrowserEvent('uploaded-image:remove');
     }
 
     public function handleRemoveProduct(Product $product){
@@ -399,7 +414,7 @@ class Create extends Component
             'new_product.total_weight' => 'required|gt:0',
             'new_product.certificate_id' => 'required_if:new_product.product_category_id,'.$this->logam_mulia_id,
             'new_product.no_certificate' => 'required_if:new_product.product_category_id,'.$this->logam_mulia_id,
-            'new_product.webcam_image' => 'required',
+            'new_product.webcam_image' => ['required_if:new_product.uploaded_image,']
         ];
     }
 
@@ -431,7 +446,7 @@ class Create extends Component
                 'product_code'               => $this->new_product['code'],
                 'product_barcode_symbology'  => 'C128',
                 'product_unit'               => 'Gram',
-                'images' => $this->uploadImage($this->new_product['webcam_image']),
+                'images' => $this->getUploadedImage(),
             ];
             $product_data['product_name'] = $this->groups->find($this->new_product['group_id'])->name;
             if(!empty($this->new_product['model_id'])){
@@ -492,5 +507,21 @@ class Create extends Component
         $berat_real = $stock_office->history->sum('berat_real');
         $berat_kotor = $stock_office->history->sum('berat_kotor');
         $stock_office->update(['berat_real'=> $berat_real, 'berat_kotor'=>$berat_kotor]);
+    }
+
+    private function getUploadedImage(){
+        $folderPath = "uploads/";
+        if(!empty($this->new_product['uploaded_image'])){
+            Storage::disk('public')->move("temp/dropzone/{$this->new_product['uploaded_image']}","{$folderPath}{$this->new_product['uploaded_image']}");
+            return $this->new_product['uploaded_image'];  
+        }
+        elseif(!empty($this->new_product['webcam_image'])){
+            $image_parts = explode(";base64,", $this->new_product['webcam_image']);
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName ='webcam_'. uniqid() . '.jpg';
+            $file = $folderPath . $fileName;
+            Storage::disk('public')->put($file,$image_base64);
+            return $fileName;
+        }
     }
 }

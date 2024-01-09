@@ -241,6 +241,67 @@
 
 @push('page_scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/dropzone.js') }}"></script>
+<script type="text/javascript">
+    $('#up1').change(function() {
+        $('#upload2').toggle();
+        $('#upload1').hide();
+        });
+    $('#up2').change(function() {
+        $('#upload1').toggle();
+        $('#upload2').hide();
+    });
+</script>
+<script>
+    var uploadedDocumentMap = {}
+    Dropzone.options.documentDropzone = {
+        url: '{{ route('dropzone.upload') }}',
+        maxFilesize: 1,
+        acceptedFiles: '.jpg, .jpeg, .png',
+        maxFiles: 1,
+        addRemoveLinks: true,
+        dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        success: function (file, response) {
+            $('#createModal form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
+            uploadedDocumentMap[file.name] = response.name;
+            Livewire.emit('imageUploaded',response.name);
+        },
+        removedfile: function (file) {
+            file.previewElement.remove();
+            var name = '';
+            if (typeof file.file_name !== 'undefined') {
+                name = file.file_name;
+            } else {
+                name = uploadedDocumentMap[file.name];
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ route('dropzone.delete') }}",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'file_name': `${name}`
+                },
+            });
+            $('#createModal form').find('input[name="document[]"][value="' + name + '"]').remove();
+            Livewire.emit('imageRemoved',name);
+        },
+        init: function () {
+            @if(isset($product) && $product->getMedia('images'))
+                var files = {!! json_encode($product->getMedia('images')) !!};
+                for (var i in files) {
+                    var file = files[i];
+                    this.options.addedfile.call(this, file);
+                    this.options.thumbnail.call(this, file, file.original_url);
+                    file.previewElement.classList.add('dz-complete');
+                    $('#createModal form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+                }
+            @endif
+        }
+    }
+</script>
 <script>
     window.addEventListener('create-modal:close', event => {
         $('body').removeClass('modal-open');
@@ -286,6 +347,13 @@
             text: "Produk gagal dihapus",
             icon: "danger"
         });
+    });
+
+    window.addEventListener('webcam-image:remove', event => {
+        $('#imageprev').attr('src','');
+    });
+    window.addEventListener('uploaded-image:remove', event => {
+        Dropzone.forElement("div#document-dropzone").removeAllFiles(true);
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>

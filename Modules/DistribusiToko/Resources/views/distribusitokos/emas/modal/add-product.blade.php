@@ -348,8 +348,27 @@
                         @endif
                         </div>
                         <div class="col-span-2">
-                            <div class="form-group">
-                                <x-library.distribusi-toko.emas.webcam />
+                            <div class="form-group">                                
+                                <div class="py-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="upload" id="up2" checked>
+                                        <label class="form-check-label" for="up2">Upload</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="upload" id="up1">
+                                        <label class="form-check-label" for="up1">Webcam</label>
+                                    </div>
+                                </div>
+                                <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
+                                    <x-library.distribusi-toko.emas.webcam />
+                                </div>
+                                <div id="upload1" style="display: block !important;" class="align-items-center justify-content-center" wire:ignore>
+                                    <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
+                                        <div class="dz-message" data-dz-message>
+                                            <i class="text-red-800 bi bi-cloud-arrow-up"></i>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if ($errors->has('new_product.webcam_image'))
                                 <span class="invalid feedback"role="alert">
                                     <small class="text-danger">{{ $errors->first('new_product.webcam_image') }}.</small
