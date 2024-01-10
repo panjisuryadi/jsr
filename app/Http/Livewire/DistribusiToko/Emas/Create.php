@@ -271,7 +271,7 @@ class Create extends Component
                                 'name' => $this->models->find($this->distribusi_toko_details[$key]['model_id'])?->name
                             ],
                             "code" => $this->distribusi_toko_details[$key]['product_code'],
-                            'certificate_id' => $this->distribusi_toko_details[$key]['product_item']['certificate_id'],
+                            'certificate_id' => $this->distribusi_toko_details[$key]['product_item']['certificate_id'] ?? '',
                             'no_certificate' => $this->distribusi_toko_details[$key]['product_item']['no_certificate'],
                             'accessories_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_accessories'],
                             'tag_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_label'],
