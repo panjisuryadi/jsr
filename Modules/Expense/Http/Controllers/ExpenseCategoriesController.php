@@ -12,13 +12,15 @@ use Modules\Expense\Entities\ExpenseCategory;
 class ExpenseCategoriesController extends Controller
 {
 
-    public function index(ExpenseCategoriesDataTable $dataTable) {
+    public function index(ExpenseCategoriesDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
         return $dataTable->render('expense::categories.index');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
         $request->validate([
@@ -37,14 +39,16 @@ class ExpenseCategoriesController extends Controller
     }
 
 
-    public function edit(ExpenseCategory $expenseCategory) {
+    public function edit(ExpenseCategory $expenseCategory)
+    {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
         return view('expense::categories.edit', compact('expenseCategory'));
     }
 
 
-    public function update(Request $request, ExpenseCategory $expenseCategory) {
+    public function update(Request $request, ExpenseCategory $expenseCategory)
+    {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
         $request->validate([
@@ -63,10 +67,11 @@ class ExpenseCategoriesController extends Controller
     }
 
 
-    public function destroy(ExpenseCategory $expenseCategory) {
+    public function destroy(ExpenseCategory $expenseCategory)
+    {
         abort_if(Gate::denies('access_expense_categories'), 403);
 
-        if ($expenseCategory->expenses()->isNotEmpty()) {
+        if ($expenseCategory->expenses->isNotEmpty()) {
             return back()->withErrors('Can\'t delete beacuse there are expenses associated with this category.');
         }
 
