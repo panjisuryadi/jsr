@@ -196,9 +196,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($distribusi_toko_details as $index => $product )
+                                @forelse ($selected_product_data as $index => $product )
                                 @php
-                                    $image = $product['images'];
+                                    $image = $product->images;
                                     $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                 @endphp
                                 <tr>
@@ -208,13 +208,13 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <span class="block">Nama : <span class="font-bold">{{ $product['product_name'] }}</span></span>
-                                        <span class="block">Kode : <span class="font-bold">{{ $product['product_code'] }}</span></span>
-                                        <span class="block">Karat : <span class="font-bold">{{ $product['karat']['name'] }} | {{ $product['karat']['kode'] }}</span></span>
-                                        <span class="block">Berat : <span class="font-bold">{{ $product['berat_emas'] }} gr</span></span>
+                                        <span class="block">Nama : <span class="font-bold">{{ $product->product_name }}</span></span>
+                                        <span class="block">Kode : <span class="font-bold">{{ $product->product_code }}</span></span>
+                                        <span class="block">Karat : <span class="font-bold">{{ $product->karat->label }}</span></span>
+                                        <span class="block">Berat : <span class="font-bold">{{ $product->berat_emas }} gr</span></span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $index }})">
+                                        <button type="button" class="btn btn-danger btn-sm" wire:click="remove({{ $product->id }})">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </td>

@@ -48,8 +48,6 @@ class Create extends Component
 
     public $dataKarat = [];
 
-    public $distribusi_toko_details = [];
-
     public $used_stock = [];
 
     protected $listeners = [
@@ -61,7 +59,8 @@ class Create extends Component
         'removeProduct' => 'handleRemoveProduct'
     ];
 
-    public $exceptProductId = [];
+    public $selected_product_ids = [];
+    public $selected_product_data = [];
 
     public $produksis_id;
 
@@ -126,49 +125,16 @@ class Create extends Component
         }
     }
 
-    public function setAdditionalAttribute($key,$name,$selectedText){
-        $this->distribusi_toko_details[$key][$name] = $selectedText;
-    }
-
-    private function resetDistribusiToko()
-    {
-        $this->distribusi_toko = [
-            'date' => '',
-            'cabang_id' => ''
-        ];
-    }
-    private function resetDistribusiTokoDetails()
-    {
-        $this->distribusi_toko_details = [
-            [
-                'product_category' => '',
-                'group' => '',
-                'model' => '',
-                'gold_category' => '',
-                'karat' => '',
-                'accessoris_weight' => 0,
-                'label_weight' => 0,
-                'gold_weight' => 0,
-                'total_weight' => 0,
-                'code' => '',
-                'file' => '',
-                'certificate_id' => '',
-                'no_certificate' => '',
-                'webcam_image' => '',
-                'product_category_name' => '',
-                'group_name' => '',
-                'model_name' => '',
-            ]
-        ];
-    }
-
     public function render(){
-        $data = Product::orderBy('updated_at','desc')->with('product_item')
+        $query = Product::query();
+        $data = $query->with('product_item')
                     ->whereIn('status_id',[ProductStatus::READY_OFFICE])
-                    ->whereRelation('category.kategoriproduk',fn($q) => $q->whereIn('slug',['gold','emas']));
-                    
-        if (!empty($this->exceptProductId)) {
-            $data = $data->whereNotIn('id', $this->exceptProductId);
+                    ->whereRelation('category.kategoriproduk',fn($q) => $q->whereIn('slug',['gold','emas']))
+                    ->orderBy('updated_at','desc');
+
+        $this->selected_product_data = $data->clone()->whereIn('id',$this->selected_product_ids)->get();
+        if (!empty($this->selected_product_ids)) {
+            $data = $data->whereNotIn('id', $this->selected_product_ids);
         }
         if (!empty($this->search)) {
             $search = $this->search;
@@ -179,7 +145,7 @@ class Create extends Component
         }
         $data = $data->paginate(5);
         return view("livewire.distribusi-toko.emas.create",[
-            'products' => $data
+            'products' => $data,
         ]);
     }
 
@@ -240,7 +206,7 @@ class Create extends Component
 
     public function store()
     {
-        if(!count($this->distribusi_toko_details)){
+        if(!count($this->selected_product_ids)){
             $this->dispatchBrowserEvent('not:selected');
         }else{
             $this->validate();
@@ -255,37 +221,37 @@ class Create extends Component
                     'pic_id'                  => auth()->id(),
                 ]);
     
-                foreach($this->distribusi_toko_details as $key => $value) {
+                foreach($this->selected_product_data as $product) {
                     $additional_data = [
                         "product_information" => [
                             "product_category" => [
-                                "id" => $this->distribusi_toko_details[$key]['category_id'],
-                                "name" => $this->product_categories->find($this->distribusi_toko_details[$key]['category_id'])->category_name
+                                "id" => $product->category_id,
+                                "name" => $this->product_categories->find($product->category_id)->category_name
                             ],
                             "group" => [
-                                'id' => $this->distribusi_toko_details[$key]['group_id'],
-                                'name' => $this->groups->find($this->distribusi_toko_details[$key]['group_id'])->name
+                                'id' => $product->group_id,
+                                'name' => $this->groups->find($product->group_id)->name
                             ],
                             "model" => [
-                                'id' => $this->distribusi_toko_details[$key]['model_id'],
-                                'name' => $this->models->find($this->distribusi_toko_details[$key]['model_id'])?->name
+                                'id' => $product->model_id,
+                                'name' => $this->models->find($product->model_id)?->name
                             ],
-                            "code" => $this->distribusi_toko_details[$key]['product_code'],
-                            'certificate_id' => $this->distribusi_toko_details[$key]['product_item']['certificate_id'] ?? '',
-                            'no_certificate' => $this->distribusi_toko_details[$key]['product_item']['no_certificate'],
-                            'accessories_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_accessories'],
-                            'tag_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_label'],
-                            'image' => $this->distribusi_toko_details[$key]['images'],
-                            'total_weight' => $this->distribusi_toko_details[$key]['product_item']['berat_total']
+                            "code" => $product->product_code,
+                            'certificate_id' => $product->product_item->certificate_id,
+                            'no_certificate' => $product->product_item->no_certificate,
+                            'accessories_weight' => $product->product_item->berat_accessories,
+                            'tag_weight' => $product->product_item->berat_label,
+                            'image' => $product->images,
+                            'total_weight' => $product->product_item->berat_total
                         ]
                     ];
                     $dist_item = $distribusi_toko->items()->create([
-                        'karat_id' => $this->distribusi_toko_details[$key]['karat_id'],
-                        'gold_weight' => $this->distribusi_toko_details[$key]['berat_emas'],
-                        'product_id' => $this->distribusi_toko_details[$key]['id'],
+                        'karat_id' => $product->karat_id,
+                        'gold_weight' => $product->berat_emas,
+                        'product_id' => $product->id,
                         'additional_data' => json_encode($additional_data),
                     ]);
-                    $dist_item->product->updateTracking(ProductStatus::DRAFT);
+                    $product->updateTracking(ProductStatus::DRAFT);
                 }
                 
                 $distribusi_toko->setAsDraft();
@@ -296,7 +262,6 @@ class Create extends Component
                 throw $e;
             }
     
-            $this->resetInputFields();
             toast('Saved to Draft Successfully','success');
             return redirect(route('distribusitoko.detail', $distribusi_toko));
         }
@@ -307,20 +272,14 @@ class Create extends Component
     }
 
     public function selectProduct($product) {
-        $this->exceptProductId[] = $product['id'];
-        $this->distribusi_toko_details[] = $product;
+        $this->selected_product_ids[] = $product['id'];
     }
 
-    public function remove($index)
+    public function remove($productId)
     {
-        $data = $this->distribusi_toko_details[$index];
-        unset($this->distribusi_toko_details[$index]);
-        $product_id = !empty($data['id']) ? $data['id'] : '';
-        if (!empty($product_id)) {
-            $key = array_search($product_id, $this->exceptProductId);
-            if(!is_bool($key)){
-                unset($this->exceptProductId[$key]);
-            }
+        $index = array_search($productId, $this->selected_product_ids);
+        if(!is_bool($index)){
+            unset($this->selected_product_ids[$index]);
         }
     }
 
@@ -328,8 +287,8 @@ class Create extends Component
     {
         if(!empty($this->kode_produk)){
             $data = Product::where('product_code',$this->kode_produk)->whereIn('status_id',[ProductStatus::READY_OFFICE]);
-            if (!empty($this->exceptProductId)) {
-                $data = $data->whereNotIn('id', $this->exceptProductId);
+            if (!empty($this->selected_product_ids)) {
+                $data = $data->whereNotIn('id', $this->selected_product_ids);
             }
             $data = $data->first();
             if ($data) {
