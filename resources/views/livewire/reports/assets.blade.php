@@ -220,8 +220,14 @@
                                                         $field_lable = __('Tentukan harga (%)');
                                                         $field_placeholder = Label_case($field_lable);
                                                         $required = '';
+                                                        $params = [
+                                                            'cabang' => $key,
+                                                            'status' => $k,
+                                                            'karat_id' => $item->karat_id,
+                                                        ];
                                                     ?>
-                                                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('cabang', {{$item->karat_id}}, {{$key}}, {{$k}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
+                                                {{-- <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('cabang', {{$item->karat_id}}, {{$key}}, {{$k}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" > --}}
+                                                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('cabang', {{ json_encode($params) }})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
                                                 </div>
                                             </td>
                                             <td>{{ formatBerat($stock_cabang_24[$key][$k][$item->karat_id] ?? 0) }}</td>

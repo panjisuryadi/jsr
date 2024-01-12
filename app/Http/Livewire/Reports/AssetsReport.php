@@ -233,8 +233,17 @@ class AssetsReport extends Component
         }
     }
 
-    public function hitungHarga($slug, $karat_id, $cabang = null, $status = null,) {
-        dd($slug);
+    /**
+     * Function ini digunakan untuk menghitung harga
+     * @param $slug = slug untuk membedakan mau menghitung data yang mana 
+     * @param $karat_id = berisi karat id
+     * @param $karat_id = untuk case cabang, ini akan berisi array karena butuh beberapa parameter
+     * @param $karat_id['karat_id] = karat id
+     * @param string $karat_id['cabang] = berisi aray key cabang
+     * @param string $karat_id['status] = berisi aray key status
+     */
+    
+    public function hitungHarga($slug, $karat_id) {
         switch ($slug) {
             case "office":
                 $result = ($this->stock_office_coef[$karat_id]/100) * ($this->stock_office_array[$karat_id]['berat_real'] ?? 0);
@@ -257,9 +266,14 @@ class AssetsReport extends Component
                 $this->stock_office_ready_24[$karat_id] = $result;
                 break;
             case "cabang":
-                $result = ($this->stock_cabang_coef[$cabang][$status][$karat_id]/100) * ($this->stock_cabang_array[$cabang][$status][$karat_id]['berat_real'] ?? 0);
-                $this->stock_cabang_24[$cabang][$status][$karat_id] = $result;
-                dd($cabang, $status, $karat_id, $result, $this->stock_cabang_coef, $this->stock_cabang_24);
+                $params = $karat_id;
+                $karat_id = $params['karat_id'] ?? null;
+                $cabang = $params['cabang'] ?? null;
+                $status = $params['status'] ?? null;
+                if(!empty($karat_id) && !empty($cabang) && !empty($status)) {
+                    $result = ($this->stock_cabang_coef[$cabang][$status][$karat_id]/100) * ($this->stock_cabang_array[$cabang][$status][$karat_id]['berat_real'] ?? 0);
+                    $this->stock_cabang_24[$cabang][$status][$karat_id] = $result;
+                }
                 break;
             default:
               return true;
