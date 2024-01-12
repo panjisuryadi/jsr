@@ -427,6 +427,8 @@ class Create extends Component
             ])]);
 
             $this->reset('new_product');
+            $this->handleWebcamReset();
+            $this->imageRemoved();
             $this->dispatchBrowserEvent('create-modal:close');
 
             DB::commit();
