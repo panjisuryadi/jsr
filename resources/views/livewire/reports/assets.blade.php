@@ -236,25 +236,19 @@
                                 @endforeach
                             @endforeach
                             
-
-                            <tr>
-                                <td>Stok Gudang</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            
-                            </tr>
-
-                            <tr>
-                                <td>17K</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            
-                            </tr>
                         
                         </tbody>
                     </table>
+
+                    <div class="mt-4 flex justify-between">
+                        <div></div>
+                        <div class="form-group">
+                            {{-- <a class="px-5 btn btn-danger" href="{{ route("laporanasset.index") }}">
+                                @lang('Cancel')</a> --}}
+                            <button type="submit" class="px-5 btn btn-success" wire:click="submit()">@lang('Save') <i class="bi bi-check"></i></button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

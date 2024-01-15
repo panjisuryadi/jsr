@@ -279,4 +279,8 @@ class AssetsReport extends Component
               return true;
           }
     }
+
+    public function submit(){
+        dd('auuu');
+    }
 }
