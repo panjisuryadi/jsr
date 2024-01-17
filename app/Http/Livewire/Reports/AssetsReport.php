@@ -55,6 +55,7 @@ class AssetsReport extends Component
     ];
 
     public $assetsReport;
+    public $view = 'livewire.reports.assets';
 
     protected $rules = [
         'start_date' => 'required|date|before:end_date',
@@ -164,7 +165,7 @@ class AssetsReport extends Component
         $this->getProductQueries();
         $this->generate_array_stok_cabang();
 
-        return view('livewire.reports.assets');
+        return view($this->view);
     } 
 
     public function generateReport() {

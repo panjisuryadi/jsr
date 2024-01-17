@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="card py-3 px-4 flex flex-row grid grid-cols-4 gap-2">
+    {{-- <div class="card py-3 px-4 flex flex-row grid grid-cols-4 gap-2">
         <div class="form-group">
             <label>Start Date <span class="text-danger">*</span></label>
             <input wire:model.defer="start_date" type="date" class="form-control" name="start_date">
@@ -43,6 +43,68 @@
             <i class="bi bi-shuffle"></i>
             Filter Report
             </button>
+        </div>
+    </div> --}}
+
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <form wire:submit.prevent="generateReport">
+                    <div class="form-row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Tipe Periode</label>
+                                <select wire:model="periode_type" class="form-control" name="periode_type">
+                                    <option value="">Pilih Tipe Periode</option>
+                                    <option value="month">Bulan</option>
+                                    <option value="year">Tahun</option>
+                                </select>
+                            </div>
+                        </div>
+                        @if($periode_type == 'month')
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Bulan <span class="text-danger">*</span></label>
+                                <input wire:model.defer="month" type="month" class="form-control" name="month">
+                                @error('month')
+                                <span class="text-danger mt-1">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        @elseif ($periode_type == 'year')
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Tahun <span class="text-danger">*</span></label>
+                                <input wire:model.defer="year" type="number" min="1900" max="2099" step="1" class="form-control" name="year">
+                                @error('year')
+                                <span class="text-danger mt-1">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    {{-- <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select wire:model.defer="purchase_return_status" class="form-control" name="purchase_return_status">
+                                    <option value="">Select Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Shipped">Shipped</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="form-group mb-0">
+                        <button type="submit" class="btn btn-primary">
+                            <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
+                            Filter Report
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
