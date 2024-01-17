@@ -73,6 +73,18 @@ class AssetsReport extends Component
         $this->start_date = today()->subDays(30)->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
 
+        $this->getDataAssets();
+        $this->getProductQueries();
+        $this->setArrayForProductBase();
+        
+        // Generate default coef
+        $this->generate_default_coef();
+
+        $this->assetsReport = AssetReports::where('date', date('y-m-d'))->first();
+    }
+
+    public function getDataAssets() {
+
         // Stok Office Gudang bahan baku
         $this->stock_office = StockOffice::all();
         $this->stock_office_array = $this->stock_office->map(function($data){
@@ -100,30 +112,6 @@ class AssetsReport extends Component
                 ->keyBy('karat_id')
                 ->toArray();
         
-        $this->getProductQueries();
-        
-        // Stok Pending Office berupa product
-        $this->stock_office_pending_array = $this->stock_office_pending->map(function($data){
-                return $data;
-            })
-            ->flatten()
-            ->keyBy('karat_id')
-            ->toArray();
-        
-        // Stok Ready Office berupa product
-        $this->stock_office_ready_array = $this->stock_office_ready->map(function($data){
-                return $data;
-            })
-            ->flatten()
-            ->keyBy('karat_id')
-            ->toArray();
-        
-        
-        
-        // Generate default coef
-        $this->generate_default_coef();
-
-        $this->assetsReport =AssetReports::where('date', date('y-m-d'))->first();
     }
 
     public function getProductQueries(){
@@ -154,6 +142,26 @@ class AssetsReport extends Component
                                     )
                                     ->whereNotNull('cabang_id')
                                     ->whereIn('status_id', $this->status_cabang)->get();
+    }
+
+    public function setArrayForProductBase() {
+
+        // Stok Pending Office berupa product
+        $this->stock_office_pending_array = $this->stock_office_pending->map(function($data){
+                return $data;
+            })
+            ->flatten()
+            ->keyBy('karat_id')
+            ->toArray();
+        
+        // Stok Ready Office berupa product
+        $this->stock_office_ready_array = $this->stock_office_ready->map(function($data){
+                return $data;
+            })
+            ->flatten()
+            ->keyBy('karat_id')
+            ->toArray();
+
     }
 
     public function render() {
