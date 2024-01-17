@@ -19,9 +19,9 @@ class CreateTableAssetsRepotTable extends Migration
             $table->string('slug');
             $table->string('status_id')->nullable();
             $table->string('cabang_id')->nullable();
-            $table->decimal('berat_real', 12, 3, true);
-            $table->decimal('coef', 12, 3, true);
-            $table->decimal('pure_gold', 12, 3, true);
+            $table->decimal('berat_real', 12, 3);
+            $table->decimal('coef', 12, 3);
+            $table->decimal('pure_gold', 12, 3);
             $table->integer('created_by');
             $table->date('date');
             $table->timestamps();

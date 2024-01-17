@@ -245,7 +245,6 @@
                                                             'karat_id' => $item->karat_id,
                                                         ];
                                                     ?>
-                                                {{-- <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('cabang', {{$item->karat_id}}, {{$key}}, {{$k}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" > --}}
                                                 <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('cabang', {{ json_encode($params) }})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
                                                 </div>
                                             </td>

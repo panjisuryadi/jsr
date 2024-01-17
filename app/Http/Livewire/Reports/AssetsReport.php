@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reports;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,33 +23,24 @@ class AssetsReport extends Component
 
     public $start_date;
     public $end_date;
+    public $date;
     public $periode_type = '';
     public $month = '';
     public $year = '';
 
     public $stock_office = [];
-    public $stock_office_coef = [];
-    public $stock_office_24 = [];
     public $stock_office_array = [];
 
     public $stock_office_lantakan = [];
-    public $stock_office_lantakan_coef = [];
-    public $stock_office_lantakan_24 = [];
     public $stock_office_lantakan_array = [];
 
     public $stock_office_rongsok = [];
-    public $stock_office_rongsok_coef = [];
-    public $stock_office_rongsok_24 = [];
     public $stock_office_rongsok_array = [];
 
     public $stock_office_pending;
-    public $stock_office_pending_coef = [];
-    public $stock_office_pending_24 = [];
     public $stock_office_pending_array = [];
 
     public $stock_office_ready;
-    public $stock_office_ready_coef = [];
-    public $stock_office_ready_24 = [];
     public $stock_office_ready_array = [];
 
     public $stock_cabang = [];
@@ -79,8 +71,12 @@ class AssetsReport extends Component
         
         // Generate default coef
         $this->generate_default_coef();
+        $date = Carbon::now();
 
-        $this->assetsReport = AssetReports::where('date', date('y-m-d'))->first();
+        $this->assetsReport = AssetReports::whereMonth('date', $date->month)
+                            ->whereYear('date', $date->year)
+                            ->first();
+        $this->date = $date;
     }
 
     public function getDataAssets() {
@@ -222,10 +218,14 @@ class AssetsReport extends Component
         if(!empty($this->stock_cabang)){
             foreach($this->stock_cabang as $item){
                 $berat_real = ($this->stock_cabang_array[$item->cabang?->name][$item->karat?->name]['berat_real'] ?? 0) + $item->berat_real;
+                $coef = !empty($item->karat?->coef) ? $item->karat?->coef*100 : 0;
+                $item->coef = $coef;
                 $item->berat_real = $berat_real;
+                $pure_gold =  $item->berat_real * ($coef/100);
+                $item->pure_gold = $pure_gold;
+                $this->stock_cabang_coef[$item->cabang?->name][$item->current_status->name][$item->karat_id] = $coef;
+                $this->stock_cabang_24[$item->cabang?->name][$item->current_status->name][$item->karat_id] = $pure_gold;
                 $this->stock_cabang_array[$item->cabang?->name][$item->current_status->name][$item->karat_id] = $item;
-                $this->stock_cabang_coef[$item->cabang?->name][$item->current_status->name][$item->karat_id] = !empty($item->karat?->coef) ? $item->karat?->coef*100 : 0;
-                $this->stock_cabang_24[$item->cabang?->name][$item->current_status->name][$item->karat_id] = $item->berat_real * ($this->stock_cabang_coef[$item->cabang?->name][$item->current_status->name][$item->karat_id]/100);
                 
             }
         }
@@ -277,8 +277,11 @@ class AssetsReport extends Component
                 $cabang = $params['cabang'] ?? null;
                 $status = $params['status'] ?? null;
                 if(!empty($karat_id) && !empty($cabang) && !empty($status)) {
-                    $result = ($this->stock_cabang_coef[$cabang][$status][$karat_id]/100) * ($this->stock_cabang_array[$cabang][$status][$karat_id]['berat_real'] ?? 0);
+                    $coef = ($this->stock_cabang_coef[$cabang][$status][$karat_id]/100);
+                    $result = $coef * ($this->stock_cabang_array[$cabang][$status][$karat_id]['berat_real'] ?? 0);
                     $this->stock_cabang_24[$cabang][$status][$karat_id] = $result;
+                    $this->stock_cabang_array[$cabang][$status][$karat_id]['pure_gold'] = $result;
+                    $this->stock_cabang_array[$cabang][$status][$karat_id]['coef'] = $coef;
                 }
                 break;
             default:
@@ -301,7 +304,8 @@ class AssetsReport extends Component
             if($this->assetsReport){
                 toast('Report Asset Untuk Bulan ini sudah dibuat!', 'error');
             }else{
-
+                AssetReports::insert($data);
+                toast('Report asset berhasil dibuat!', 'success');
             }
             DB::commit();
         } catch (\Exception $e) {
@@ -320,14 +324,16 @@ class AssetsReport extends Component
                 foreach ($items as $k => $rows) {
                     foreach ($rows as $value) {
                         $berat_real = ($value['berat_real'] ?? 0) ?? ($value['weight'] ?? 0);
+                        $karat_id = $value['karat_id'] ?? null;
                         $results[] = [
+                            'date' => date("Y-m-d H:i:s", strtotime($this->date)),
                             'slug' => $slug,
-                            'karat_id' => $value['karat_id'] ?? null,
+                            'karat_id' => $karat_id,
                             'status_id' => $value['status_id'] ?? null,
                             'cabang_id' => $value['cabang_id'] ?? null,
                             'berat_real' => $berat_real,
-                            'coef' => $value['coef'] ?? null,
-                            'pure_gold' => $value['pure_gold'] ?? null,
+                            'coef' => $this->stock_cabang_coef[$key][$k][$karat_id] ?? null,
+                            'pure_gold' => $this->stock_cabang_24[$key][$k][$karat_id] ?? null,
                             'created_by' => auth()->user()->id,
                         ];
                     }
@@ -335,6 +341,7 @@ class AssetsReport extends Component
             } else {
                 $berat_real = ($item['berat_real'] ?? 0) ?? ($item['weight'] ?? 0);
                 $results[] = [
+                    'date' => date("Y-m-d H:i:s", strtotime($this->date)),
                     'slug' => $slug,
                     'karat_id' => $items['karat_id'] ?? null,
                     'status_id' => $items['status_id'] ?? null,
