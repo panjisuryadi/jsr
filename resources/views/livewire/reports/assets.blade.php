@@ -88,7 +88,7 @@
                                 <td>
                                     <div class="form-group">
                                         <?php
-                                            $field_name = 'stock_office_coef.' . $item->karat_id;
+                                            $field_name = 'stock_office_array.' . $item->karat_id . '.coef';
                                             $field_lable = __('Tentukan harga (%)');
                                             $field_placeholder = Label_case($field_lable);
                                             $required = '';
@@ -96,7 +96,7 @@
                                         <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('office', {{$item->karat_id}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
                                     </div>
                                 </td>
-                                <td>{{ formatBerat($stock_office_24[$item->karat_id] ?? 0) }}</td>
+                                <td>{{ formatBerat($stock_office_array[$item->karat_id]['pure_gold'] ?? 0) }}</td>
                             </tr> 
                             @endforeach
                         {{-- Stok Lantakan --}}
@@ -117,7 +117,7 @@
                                     <td>
                                         <div class="form-group">
                                             <?php
-                                                $field_name = 'stock_office_lantakan_coef.' . $item->karat_id;
+                                                $field_name = 'stock_office_lantakan_array.' . $item->karat_id . '.coef';
                                                 $field_lable = __('Tentukan harga (%)');
                                                 $field_placeholder = Label_case($field_lable);
                                                 $required = '';
@@ -125,7 +125,7 @@
                                         <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('office_lantakan', {{$item->karat_id}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
                                         </div>
                                     </td>
-                                    <td>{{ formatBerat($stock_office_lantakan_24[$item->karat_id] ?? 0) }}</td>
+                                    <td>{{ formatBerat($stock_office_lantakan_array[$item->karat_id]['pure_gold'] ?? 0) }}</td>
                                 </tr> 
                             @endforeach
                         {{-- Stok Rongsok --}}
@@ -143,7 +143,7 @@
                                     <td>
                                         <div class="form-group">
                                             <?php
-                                                $field_name = 'stock_office_rongsok_coef.' . $item->karat_id;
+                                                $field_name = 'stock_office_rongsok_array.' . $item->karat_id . '.coef';
                                                 $field_lable = __('Tentukan harga (%)');
                                                 $field_placeholder = Label_case($field_lable);
                                                 $required = '';
@@ -151,7 +151,7 @@
                                             <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('office_rongsok', {{$item->karat_id}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
                                         </div>
                                     </td>
-                                    <td>{{ formatBerat($stock_office_rongsok_24[$item->karat_id] ?? 0) }}</td>
+                                    <td>{{ formatBerat($stock_office_rongsok_array[$item->karat_id]['pure_gold'] ?? 0) }}</td>
                                 </tr> 
                             @endforeach
 
@@ -171,7 +171,7 @@
                                     <td>
                                         <div class="form-group">
                                             <?php
-                                                $field_name = 'stock_office_pending_coef.' . $item->karat_id;
+                                                $field_name = 'stock_office_pending_array.' . $item->karat_id . '.coef';
                                                 $field_lable = __('Tentukan harga (%)');
                                                 $field_placeholder = Label_case($field_lable);
                                                 $required = '';
@@ -179,7 +179,7 @@
                                             <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('office_pending', {{$item->karat_id}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
                                         </div>
                                     </td>
-                                    <td>{{ formatBerat($stock_office_pending_24[$item->karat_id] ?? 0) }}</td>
+                                    <td>{{ formatBerat($stock_office_pending_array[$item->karat_id]['pure_gold'] ?? 0) }}</td>
                                 </tr> 
                             @endforeach
 
@@ -191,6 +191,25 @@
                                 <td></td>
                             
                             </tr> 
+
+                            @foreach ($stock_office_ready as $key => $item)
+                                <tr class="text-center">
+                                    <td>{{ $item->karat?->label }}</td>
+                                    <td>{{ formatBerat($item->berat_real) }} gr</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <?php
+                                                $field_name = 'stock_office_ready_array.' . $item->karat_id . '.coef';
+                                                $field_lable = __('Tentukan harga (%)');
+                                                $field_placeholder = Label_case($field_lable);
+                                                $required = '';
+                                            ?>
+                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:change="hitungHarga('office_ready', {{$item->karat_id}})" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" >
+                                        </div>
+                                    </td>
+                                    <td>{{ formatBerat($stock_office_ready_array[$item->karat_id]['pure_gold'] ?? 0) }}</td>
+                                </tr> 
+                            @endforeach
 
                         {{-- Stok Cabang --}}
                             <tr >
