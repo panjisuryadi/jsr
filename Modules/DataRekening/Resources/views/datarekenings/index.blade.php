@@ -21,7 +21,7 @@
                                 id="Tambah"
                                 data-toggle="tooltip"
                                  class="btn btn-primary px-3">
-                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;
                                 </a>
 
                         </div>
@@ -34,9 +34,9 @@
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('No Rekening') }}</th>
-                                    <th class="text-left">{{ __('Nama Rekening') }}</th>
+                                    <th class="text-left">{{ __('Nama Bank') }}</th>
 
-  <th style="width: 10%!important;" class="text-center">{{ __('Kode Bank') }}</th>
+  <th style="width: 10%!important;" class="text-center">{{ __('Kode EDC') }}</th>
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
                                     </th>

@@ -1323,7 +1323,7 @@ class GenerateMenus
 
      $databank->add(
                 '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
-                 '.__('List Bank'), [
+                 '.__('List Bank Transfer'), [
                 'route' => 'databank.index',
                 'class' => 'nav-item',
             ])
@@ -1339,7 +1339,7 @@ class GenerateMenus
 
         $databank->add(
                     '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i>
-                     '.__('List Rekening'), [
+                     '.__('List EDC'), [
                     'route' => 'datarekening.index',
                     'class' => 'nav-item',
                 ])
