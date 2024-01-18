@@ -292,7 +292,7 @@
                                     </tr> 
                                     @foreach ($collection as $item)
                                         <tr class="text-center">
-                                            <td>{{ $item->karat->label }}</td>
+                                            <td>{{ $item->karat?->label }}</td>
                                             <td>{{ formatBerat($item->berat_real) }} gr</td>
                                             <td>
                                                 <div class="form-group">
