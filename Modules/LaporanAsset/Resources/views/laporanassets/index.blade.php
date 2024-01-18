@@ -21,5 +21,15 @@
 <x-library.datatable />
 @push('page_scripts')
 
+<script type="text/javascript">
+    jQuery.noConflict();
+    (function( $ ) {
+    $(document).on('click', '#reset-report', function(e){
+        if (confirm('Apakah anda yakin akan mereset data report bulan ini?')) {
+            Livewire.emit('resetReport')
+        }
+    });
+    })(jQuery);
+</script>
 
 @endpush

@@ -63,6 +63,8 @@ class AssetsReport extends Component
         'end_date'   => 'required|date|after:start_date',
     ];
 
+    protected $listeners = ['resetReport' => 'resetReport'];
+
     public function mount() {
         $this->start_date = today()->subDays(30)->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
@@ -353,7 +355,7 @@ class AssetsReport extends Component
                             'berat_real' => $berat_real,
                             'coef' => $this->stock_cabang_coef[$key][$k][$karat_id] ?? null,
                             'pure_gold' => $this->stock_cabang_24[$key][$k][$karat_id] ?? null,
-                            'created_by' => auth()->user()->id,
+                            'created_by' => auth()->user()->id
                         ];
                     }
                 }
@@ -424,5 +426,30 @@ class AssetsReport extends Component
         }else{
             $this->is_report = true;
         }
+    }
+
+    public function resetReport(){
+        DB::beginTransaction();
+        try {
+            $date = $this->date;
+            $month = $date->month;
+            $year = $date->year;
+            $assets_report = AssetReports::with('karat')
+                                ->when($month, function ($query) use ($month) {
+                                    return $query->whereMonth('date', $month);
+                                })
+                                ->when($year, function ($query) use ($year) {
+                                    return $query->whereYear('date', $year);
+                                });
+            $assets_report->delete();
+            toast('Report asset berhasil dihapus!', 'success');
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            toast($e->getMessage());
+        }
+
+        return redirect()->route('laporanasset.index');
+
     }
 }

@@ -279,7 +279,8 @@
                             <div class="form-group">
                                 {{-- <a class="px-5 btn btn-danger" href="{{ route("laporanasset.index") }}">
                                     @lang('Cancel')</a> --}}
-                                <button type="submit" class="px-5 btn btn-success" wire:click="submit()">@lang('Save') <i class="bi bi-check"></i></button>
+                                {{-- <button type="button" id="reset-report" class="px-5 btn btn-danger" wire:click="delete()">@lang('Reset Report untuk bulan ini?') <i class="bi bi-check"></i></button> --}}
+                                <button type="button" id="reset-report" class="px-5 btn btn-danger"><i class="bi bi-trash"></i> @lang('Reset Report untuk bulan ini?') </button>
                             </div>
                         @endif
                     </div>
