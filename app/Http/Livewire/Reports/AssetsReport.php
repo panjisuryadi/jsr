@@ -346,32 +346,36 @@ class AssetsReport extends Component
                     foreach ($rows as $value) {
                         $berat_real = ($value['berat_real'] ?? 0) ?? ($value['weight'] ?? 0);
                         $karat_id = $value['karat_id'] ?? null;
-                        $results[] = [
-                            'date' => date("Y-m-d H:i:s", strtotime($this->date)),
-                            'slug' => $slug,
-                            'karat_id' => $karat_id,
-                            'status_id' => $value['status_id'] ?? null,
-                            'cabang_id' => $value['cabang_id'] ?? null,
-                            'berat_real' => $berat_real,
-                            'coef' => $this->stock_cabang_coef[$key][$k][$karat_id] ?? null,
-                            'pure_gold' => $this->stock_cabang_24[$key][$k][$karat_id] ?? null,
-                            'created_by' => auth()->user()->id
-                        ];
+                        if(!empty($karat_id)) {
+                            $results[] = [
+                                'date' => date("Y-m-d H:i:s", strtotime($this->date)),
+                                'slug' => $slug,
+                                'karat_id' => $karat_id,
+                                'status_id' => $value['status_id'] ?? null,
+                                'cabang_id' => $value['cabang_id'] ?? null,
+                                'berat_real' => $berat_real,
+                                'coef' => $this->stock_cabang_coef[$key][$k][$karat_id] ?? null,
+                                'pure_gold' => $this->stock_cabang_24[$key][$k][$karat_id] ?? null,
+                                'created_by' => auth()->user()->id
+                            ];
+                        }
                     }
                 }
             } else {
                 $berat_real = !empty($items['berat_real']) ? $items['berat_real'] : (!empty($items['weight']) ? $items['weight'] : 0);
-                $results[] = [
-                    'date' => date("Y-m-d H:i:s", strtotime($this->date)),
-                    'slug' => $slug,
-                    'karat_id' => $items['karat_id'] ?? null,
-                    'status_id' => $items['status_id'] ?? null,
-                    'cabang_id' => $items['cabang_id'] ?? null,
-                    'berat_real' => $berat_real,
-                    'coef' => $items['coef'] ?? null,
-                    'pure_gold' => $items['pure_gold'] ?? null,
-                    'created_by' => auth()->user()->id,
-                ];
+                if(!empty($items['karat_id'] )) {
+                    $results[] = [
+                        'date' => date("Y-m-d H:i:s", strtotime($this->date)),
+                        'slug' => $slug,
+                        'karat_id' => $items['karat_id'] ?? null,
+                        'status_id' => $items['status_id'] ?? null,
+                        'cabang_id' => $items['cabang_id'] ?? null,
+                        'berat_real' => $berat_real,
+                        'coef' => $items['coef'] ?? null,
+                        'pure_gold' => $items['pure_gold'] ?? null,
+                        'created_by' => auth()->user()->id,
+                    ];
+                }
             }
         }
         return $results;
