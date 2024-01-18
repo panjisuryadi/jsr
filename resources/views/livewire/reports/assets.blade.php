@@ -51,7 +51,7 @@
             <div class="card-body">
                 <form wire:submit.prevent="generateReport">
                     <div class="form-row">
-                        <div class="col-lg-4">
+                        {{-- <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Tipe Periode</label>
                                 <select wire:model="periode_type" class="form-control" name="periode_type">
@@ -60,8 +60,8 @@
                                     <option value="year">Tahun</option>
                                 </select>
                             </div>
-                        </div>
-                        @if($periode_type == 'month')
+                        </div> --}}
+                        {{-- @if($periode_type == 'month') --}}
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Bulan <span class="text-danger">*</span></label>
@@ -71,7 +71,7 @@
                                 @enderror
                             </div>
                         </div>
-                        @elseif ($periode_type == 'year')
+                        {{-- @elseif ($periode_type == 'year')
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Tahun <span class="text-danger">*</span></label>
@@ -81,7 +81,7 @@
                                 @enderror
                             </div>
                         </div>
-                        @endif
+                        @endif --}}
                     </div>
                     {{-- <div class="form-row">
                         <div class="col-lg-6">

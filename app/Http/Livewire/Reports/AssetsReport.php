@@ -54,8 +54,9 @@ class AssetsReport extends Component
         ProductStatus::DP,
     ];
 
-    public $assetsReport;
+    public $assets_report;
     public $view = 'livewire.reports.assets';
+    public $is_report = false;
 
     protected $rules = [
         'start_date' => 'required|date|before:end_date',
@@ -66,6 +67,8 @@ class AssetsReport extends Component
         $this->start_date = today()->subDays(30)->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
 
+        //** Blok untuk insert data baru per bulan */
+
         $this->getDataAssets();
         $this->getProductQueries();
         $this->setArrayForProductBase();
@@ -73,10 +76,6 @@ class AssetsReport extends Component
         // Generate default coef
         $this->generate_default_coef();
         $date = Carbon::now();
-
-        $this->assetsReport = AssetReports::whereMonth('date', $date->month)
-                            ->whereYear('date', $date->year)
-                            ->first();
         $this->date = $date;
     }
 
@@ -162,15 +161,35 @@ class AssetsReport extends Component
     }
 
     public function render() {
-        $this->getProductQueries();
-        $this->generate_array_stok_cabang();
+        $date = $this->date;
+        $month = !empty($this->month) ? date('m', strtotime($this->month)) : $date->month;
+        $year = !empty($this->year) ? date('Y', strtotime($this->month)) : $date->year;
+        $datas = [];
+        $this->assets_report = AssetReports::with('karat')
+                            ->when($month, function ($query) use ($month) {
+                                return $query->whereMonth('date', $month);
+                            })
+                            ->when($year, function ($query) use ($year) {
+                                return $query->whereYear('date', $year);
+                            })->get();
+        $this->setIsReport();
 
-        return view($this->view);
+        if(!$this->is_report) {
+            $this->getProductQueries();
+            $this->generate_array_stok_cabang();
+        }else{
+            $datas = $this->generateDataReport();
+            $this->view = 'livewire.reports.assets-report';
+
+        }
+
+        return view($this->view, compact('datas'));
     } 
 
     public function generateReport() {
         $this->validate();
         $this->render();
+        $this->is_report = true;
     }
 
     public function generate_default_coef(){
@@ -286,8 +305,8 @@ class AssetsReport extends Component
                 }
                 break;
             default:
-              return true;
-          }
+                return true;
+        }
     }
 
     public function submit(){
@@ -301,8 +320,8 @@ class AssetsReport extends Component
             $data = array_merge($this->collectData('office_pending', $this->stock_office_pending_array), $data);
             $data = array_merge($this->collectData('office_ready', $this->stock_office_ready_array), $data);
             $data = array_merge($this->collectData('cabang', $this->stock_cabang_array), $data);
-            
-            if($this->assetsReport){
+
+            if(!$this->assets_report->isEmpty()){
                 toast('Report Asset Untuk Bulan ini sudah dibuat!', 'error');
             }else{
                 AssetReports::insert($data);
@@ -311,7 +330,6 @@ class AssetsReport extends Component
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e->getMessage());
             toast($e->getMessage(), 'error');
         }
         return redirect()->route('laporanasset.index');
@@ -340,7 +358,7 @@ class AssetsReport extends Component
                     }
                 }
             } else {
-                $berat_real = ($item['berat_real'] ?? 0) ?? ($item['weight'] ?? 0);
+                $berat_real = !empty($items['berat_real']) ? $items['berat_real'] : (!empty($items['weight']) ? $items['weight'] : 0);
                 $results[] = [
                     'date' => date("Y-m-d H:i:s", strtotime($this->date)),
                     'slug' => $slug,
@@ -355,5 +373,56 @@ class AssetsReport extends Component
             }
         }
         return $results;
+    }
+
+    public function generateDataReport(){
+        
+        $datas = [];
+        if(!empty($this->assets_report)) {
+            foreach($this->assets_report as $item) {
+
+                switch ($item->slug) {
+                    case "office":
+                        $datas[$item->slug][] = $item; 
+                        break;
+                    case "office_lantakan":
+                        $datas[$item->slug][] = $item;
+                        break;
+                    case "office_rongsok":
+                        $datas[$item->slug][] = $item;
+                        break;
+                    case "office_pending":
+                        $datas[$item->slug][] = $item;
+                        break;
+                    case "office_ready":
+                        $datas[$item->slug][] = $item;
+                        break;
+                    case "cabang":
+                        $datas[$item->slug][$item->cabang?->name][$item->current_status?->name][$item->karat_id] = $item;
+                        break;
+                    default:
+                        return true;
+                }
+            }
+        }
+        return $datas;
+
+        
+        // dd(
+        // $this->stock_office_array,
+        // $this->stock_office_lantakan_array,
+        // $this->stock_office_rongsok_array,
+        // $this->stock_office_pending_array,
+        // $this->stock_office_ready_array,
+        // $this->stock_cabang_array
+        // );
+    }
+
+    public function setIsReport(){
+        if($this->assets_report->isEmpty() && (empty($this->year) || empty($this->month))){
+            $this->is_report = false;
+        }else{
+            $this->is_report = true;
+        }
     }
 }
