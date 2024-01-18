@@ -98,14 +98,24 @@
 
 <div class="flex flex-row justify-between gap-1 py-2">
 
-<div class="px-1 text-center justify-items-center">
-   <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
-   <i class="hover:text-red-400 text-2xl text-gray-500 bi bi-trash"></i>
-  <div class="mb-1 ml-1 lg:text-sm md:text-sm text-xl py-0 font-semibold">Hapus</div>
-</button>
-</div>
+  <div class="px-1 text-center justify-items-center">
+    <button wire:loading.class="text-gray-200" wire:click="resetCart" type="button" class="flex flex-row hover:no-underline hover:text-red-400 text-gray-500 px-3 text-center items-center">
+      <i class="hover:text-red-400 text-2xl text-gray-500 bi bi-trash"></i>
+      <div class="mb-1 ml-1 lg:text-sm md:text-sm text-xl py-0 font-semibold">Hapus</div>
+    </button>
+  </div>
+  <div class="px-1 text-center justify-items-center">
+    <button wire:loading.class="text-gray-200" wire:click="showCustom" type="button" class="flex flex-row hover:no-underline hover:text-blue-400 text-gray-500 px-3 text-center items-center">
+      <i class="hover:text-blue-400 text-2xl text-gray-500 bi bi-file-plus"></i>
+      <div class="mb-1 ml-1 lg:text-sm md:text-sm text-xl py-0 font-semibold">Custom</div>
+    </button>
+  </div>
 
 
+{{-- <div class="relative items-center hover:text-gray-300 justify-center text-center md:text-xl">
+  <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="flex flex-row hover:no-underline hover:text-gray-300 text-white text-2xl font-semibold text-center items-center">Bayar
+   </button>
+</div> --}}
 
 
 
@@ -165,8 +175,6 @@
         <div class="relative items-center hover:text-gray-300 justify-center text-center md:text-xl">
             <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="flex flex-row hover:no-underline hover:text-gray-300 text-white text-2xl font-semibold text-center items-center">Bayar
              </button>
-
-
         </div>
 
 
@@ -189,6 +197,7 @@
 
     {{--Checkout Modal--}}
 
+    @include('sale::pos.custom-modal')
     @include('sale::pos.checkout-modal')
-</div>
+  </div>
 

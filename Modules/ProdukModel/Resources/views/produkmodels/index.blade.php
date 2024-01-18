@@ -33,7 +33,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 6%!important;">No</th>
-                                   <th style="width: 15%!important;" class="text-center">{{ __('Name') }}</th>
+                                    <th style="width: 15%!important;" class="text-center">{{ __('Name') }}</th>
                                     <th class="text-lef">{{ __('Deskripsi') }}</th>
 
                                     <th style="width: 15%!important;" class="text-center">

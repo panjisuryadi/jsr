@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\ProdukModel\Http\Controllers;
+
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -16,15 +17,14 @@ use Image;
 class ProdukModelsController extends Controller
 {
 
-  public function __construct()
+    public function __construct()
     {
         // Page Title
         $this->module_title = 'Produk Model';
         $this->module_name = 'produkmodel';
         $this->module_path = 'produkmodels';
         $this->module_icon = 'fas fa-sitemap';
-        $this->module_model = "Modules\ProdukModel\Models\ProdukModel";
-
+        $this->module_model = 'Modules\ProdukModel\Models\ProdukModel';
     }
 
     /**
@@ -32,7 +32,8 @@ class ProdukModelsController extends Controller
      * @return Renderable
      */
 
-  public function index() {
+    public function index()
+    {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -40,18 +41,23 @@ class ProdukModelsController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
-         return view(''.$module_name.'::'.$module_path.'.index',
-           compact('module_name',
-            'module_action',
-            'module_title',
-            'module_icon', 'module_model'));
+        abort_if(Gate::denies('access_' . $module_name . ''), 403);
+        return view(
+            '' . $module_name . '::' . $module_path . '.index',
+            compact(
+                'module_name',
+                'module_action',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
     }
 
 
 
 
-public function index_data(Request $request)
+    public function index_data(Request $request)
 
     {
         $module_title = $this->module_title;
@@ -68,32 +74,34 @@ public function index_data(Request $request)
         $data = $$module_name;
 
         return Datatables::of($$module_name)
-                        ->addColumn('action', function ($data) {
-                           $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            return view('includes.action',
-                            compact('module_name', 'data', 'module_model'));
-                                })
-                          ->editColumn('name', function ($data) {
-                             $tb = '<div class="items-center text-center">
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                return view(
+                    'includes.action',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+            ->editColumn('name', function ($data) {
+                $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                     ' .$data->name . '</h3>
+                                     ' . $data->name . '</h3>
                                     </div>';
-                                return $tb;
-                            })
-                           ->editColumn('updated_at', function ($data) {
-                            $module_name = $this->module_name;
+                return $tb;
+            })
+            ->editColumn('updated_at', function ($data) {
+                $module_name = $this->module_name;
 
-                            $diff = Carbon::now()->diffInHours($data->updated_at);
-                            if ($diff < 25) {
-                                return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
-                            } else {
-                                return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
-                            }
-                        })
-                        ->rawColumns(['updated_at', 'action', 'name'])
-                        ->make(true);
-                     }
+                $diff = Carbon::now()->diffInHours($data->updated_at);
+                if ($diff < 25) {
+                    return \Carbon\Carbon::parse($data->updated_at)->diffForHumans();
+                } else {
+                    return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
+                }
+            })
+            ->rawColumns(['updated_at', 'action', 'name'])
+            ->make(true);
+    }
 
 
 
@@ -105,27 +113,7 @@ public function index_data(Request $request)
      * Show the form for creating a new resource.
      * @return Renderable
      */
-        public function create()
-        {
-           $module_title = $this->module_title;
-            $module_name = $this->module_name;
-            $module_path = $this->module_path;
-            $module_icon = $this->module_icon;
-            $module_model = $this->module_model;
-            $module_name_singular = Str::singular($module_name);
-            $module_action = 'Create';
-            abort_if(Gate::denies('add_'.$module_name.''), 403);
-              return view(''.$module_name.'::'.$module_path.'.modal.create',
-               compact('module_name',
-                'module_action',
-                'module_title',
-                'module_icon', 'module_model'));
-        }
-
-
-//store ajax version
-
-public function store(Request $request)
+    public function create()
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -133,13 +121,38 @@ public function store(Request $request)
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        $validator = \Validator::make($request->all(),[
-                 'name' => 'required|max:191',
-                 'description' => 'max:255',
+        $module_action = 'Create';
+        abort_if(Gate::denies('add_' . $module_name . ''), 403);
+        return view(
+            '' . $module_name . '::' . $module_path . '.modal.create',
+            compact(
+                'module_name',
+                'module_action',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
+    }
+
+
+    //store ajax version
+
+    public function store(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required|unique|max:191',
+            'description' => 'max:255',
 
         ]);
         if (!$validator->passes()) {
-          return response()->json(['error'=>$validator->errors()]);
+            return response()->json(['error' => $validator->errors()]);
         }
 
         $input = $request->all();
@@ -148,7 +161,7 @@ public function store(Request $request)
         $input['description'] = $input['description'];
         $$module_name_singular = $module_model::create($input);
 
-        return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
+        return response()->json(['success' => '  ' . $module_title . ' Sukses disimpan.']);
     }
 
 
@@ -165,7 +178,7 @@ public function store(Request $request)
      * @param int $id
      * @return Renderable
      */
-public function show($id)
+    public function show($id)
     {
 
 
@@ -176,16 +189,20 @@ public function show($id)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
-        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        abort_if(Gate::denies('show_' . $module_name . ''), 403);
         $detail = $module_model::findOrFail($id);
         //dd($detail);
-          return view(''.$module_name.'::'.$module_path.'.show',
-           compact('module_name',
-            'module_action',
-            'detail',
-            'module_title',
-            'module_icon', 'module_model'));
-
+        return view(
+            '' . $module_name . '::' . $module_path . '.show',
+            compact(
+                'module_name',
+                'module_action',
+                'detail',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
     }
 
     /**
@@ -195,21 +212,26 @@ public function show($id)
      */
     public function edit($id)
     {
-       $module_title = $this->module_title;
+        $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Edit';
-        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        abort_if(Gate::denies('edit_' . $module_name . ''), 403);
         $detail = $module_model::findOrFail($id);
-          return view(''.$module_name.'::'.$module_path.'.modal.edit',
-           compact('module_name',
-            'module_action',
-            'detail',
-            'module_title',
-            'module_icon', 'module_model'));
+        return view(
+            '' . $module_name . '::' . $module_path . '.modal.edit',
+            compact(
+                'module_name',
+                'module_action',
+                'detail',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
     }
 
     /**
@@ -218,10 +240,10 @@ public function show($id)
      * @param int $id
      * @return Renderable
      */
-   
 
-//update ajax version
-public function update(Request $request, $id)
+
+    //update ajax version
+    public function update(Request $request, $id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -231,19 +253,20 @@ public function update(Request $request, $id)
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Update';
         $$module_name_singular = $module_model::findOrFail($id);
-        $validator = \Validator::make($request->all(),
+        $validator = \Validator::make(
+            $request->all(),
             [
-            'name' => [
-                'required',
-                'unique:'.$module_model.',name,'.$id
-            ],
-            'description' => 'max:255',
+                'name' => [
+                    'required',
+                    'unique:' . $module_model . ',name,' . $id
+                ],
+                'description' => 'max:255',
 
+            ]
+        );
 
-        ]);
-
-       if (!$validator->passes()) {
-          return response()->json(['error'=>$validator->errors()]);
+        if (!$validator->passes()) {
+            return response()->json(['error' => $validator->errors()]);
         }
 
         $input = $request->all();
@@ -252,9 +275,8 @@ public function update(Request $request, $id)
         $params['name'] = $params['name'];
         $params['description'] = $params['description'];
         $$module_name_singular->update($params);
-        return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
-
- }
+        return response()->json(['success' => '  ' . $module_title . ' Sukses diupdate.']);
+    }
 
 
 
@@ -267,27 +289,24 @@ public function update(Request $request, $id)
     {
 
         try {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
+            $module_title = $this->module_title;
+            $module_name = $this->module_name;
+            $module_path = $this->module_path;
+            $module_icon = $this->module_icon;
+            $module_model = $this->module_model;
+            $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'Delete';
+            $module_action = 'Delete';
 
-        $$module_name_singular = $module_model::findOrFail($id);
+            $$module_name_singular = $module_model::findOrFail($id);
 
-        $$module_name_singular->delete();
-         toast(''. $module_title.' Deleted!', 'success');
-         return redirect()->route(''.$module_name.'.index');
-
-          } catch (\Exception $e) {
-           // dd($e);
-                toast(''. $module_title.' error!', 'warning');
-                return redirect()->back();
-            }
-
+            $$module_name_singular->delete();
+            toast('' . $module_title . ' Deleted!', 'success');
+            return redirect()->route('' . $module_name . '.index');
+        } catch (\Exception $e) {
+            // dd($e);
+            toast('' . $module_title . ' error!', 'warning');
+            return redirect()->back();
+        }
     }
-
 }

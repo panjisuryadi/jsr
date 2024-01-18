@@ -4,7 +4,7 @@
         <div class="modal-header">
             <h5 class="modal-title font-semibold text-lg" id="checkoutModalLabel">
             <i class="bi bi-cart-check text-primary"></i>
-            Konfirmasi Pembayaran
+            Konfirmasi Pembayaran 2
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

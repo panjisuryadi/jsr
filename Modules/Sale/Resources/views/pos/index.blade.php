@@ -53,8 +53,12 @@
 
 @push('page_scripts')
 <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
-    <script>
+    <script>        
         $(document).ready(function () {
+            // $('#checkoutModal').modal('show');
+            window.addEventListener('showCustomModal', event => {
+                $('#customModal').modal('show');
+            });
             window.addEventListener('showCheckoutModal', event => {
                 $('#checkoutModal').modal('show');
 

@@ -24,6 +24,7 @@ class Checkout extends Component
     public $cabangs;
     public $cabang_id;
     public $other_fees = [];
+    public $other_thing = [];
     public $payment_method = '';
     public $paid_amount = 0;
     public $return_amount = 0;
@@ -35,6 +36,13 @@ class Checkout extends Component
     public $multiple_payment_method = "false";
     public $total_payment_amount = 0;
     public $remaining_payment_amount = 0;
+    public $inputs = [
+        [
+            'karat_id' => '',
+            'berat_real' => 0,
+            'berat_kotor' => 0
+        ]
+    ];
 
     public $payments = [
         [
@@ -85,15 +93,29 @@ class Checkout extends Component
     public $remain_amount = 0;
     public $tmp_grand_total = 0;
 
-    public function updatedMultiplePaymentMethod($value){
+    // Custome oop
+    public $jenis_barang;
+    public $karat_id;
+    public $berat_gr;
+    public $harga_gr;
+    public $ongkos_produksi;
+    public $ongkos_cuci;
+    public $ongkos_rnk;
+    public $ongkos_mt;
+    public $total_custom;
+    // end
+
+    public function updatedMultiplePaymentMethod($value)
+    {
         $this->resetSinglePaymentMethod();
         $this->resetMultiplePaymentMethod();
-        if($value == 'true'){
+        if ($value == 'true') {
             $this->updateRemainingPaymentAmount();
         }
     }
 
-    public function resetSinglePaymentMethod(){
+    public function resetSinglePaymentMethod()
+    {
         $this->reset([
             'payment_method',
             'paid_amount',
@@ -103,7 +125,8 @@ class Checkout extends Component
         ]);
     }
 
-    public function resetMultiplePaymentMethod(){
+    public function resetMultiplePaymentMethod()
+    {
         $this->reset('payments');
         $this->reset('total_payment_amount');
         $this->reset('remaining_payment_amount');
@@ -155,7 +178,8 @@ class Checkout extends Component
         return format_uang($this->payments[$index]['return_amount']);
     }
 
-    public function add_payment_method(){
+    public function add_payment_method()
+    {
         $this->payments[] = [
             'method' => '',
             'amount' => 0,
@@ -166,16 +190,18 @@ class Checkout extends Component
         ];
     }
 
-    public function remove_payment_method($index){
+    public function remove_payment_method($index)
+    {
         unset($this->payments[$index]);
         $this->payments = array_values($this->payments);
         $this->calculateTotalPaymentAmount();
     }
 
-    public function calculateTotalPaymentAmount(){
+    public function calculateTotalPaymentAmount()
+    {
         $total = 0;
-        foreach($this->payments as $payment){
-            if(!empty($payment['amount'])){
+        foreach ($this->payments as $payment) {
+            if (!empty($payment['amount'])) {
                 $total += $payment['amount'];
             }
         }
@@ -183,40 +209,46 @@ class Checkout extends Component
         $this->updateRemainingPaymentAmount();
     }
 
-    public function amountUpdated($index){
+    public function amountUpdated($index)
+    {
         $paid_amount = $this->payments[$index]['paid_amount'];
-        if($this->payments[$index]['method'] === 'tunai'){
-            if(!empty($paid_amount) && $paid_amount >= $this->payments[$index]['amount']){
+        if ($this->payments[$index]['method'] === 'tunai') {
+            if (!empty($paid_amount) && $paid_amount >= $this->payments[$index]['amount']) {
                 $this->payments[$index]['return_amount'] = $paid_amount - $this->payments[$index]['amount'];
-            }else{
+            } else {
                 $this->payments[$index]['return_amount'] = 0;
             }
         }
         $this->calculateTotalPaymentAmount();
     }
 
-    public function updateRemainingPaymentAmount(){
+    public function updateRemainingPaymentAmount()
+    {
         $this->remaining_payment_amount = $this->grand_total - $this->total_payment_amount;
     }
 
-    public function getTotalPaymentAmountTextProperty(){
+    public function getTotalPaymentAmountTextProperty()
+    {
         return format_uang($this->total_payment_amount);
     }
 
-    public function getRemainingPaymentAmountTextProperty(){
+    public function getRemainingPaymentAmountTextProperty()
+    {
         return format_uang($this->remaining_payment_amount);
     }
 
-    public function getAmountText($index){
-        if(!empty($this->payments[$index]['amount'])){
+    public function getAmountText($index)
+    {
+        if (!empty($this->payments[$index]['amount'])) {
             return format_uang($this->payments[$index]['amount']);
         }
     }
 
-    public function paymentPaidAmountUpdated($index){
+    public function paymentPaidAmountUpdated($index)
+    {
         if ($this->payments[$index]['paid_amount'] != '' && $this->payments[$index]['amount'] != '' && $this->payments[$index]['paid_amount'] >= $this->payments[$index]['amount']) {
             $this->payments[$index]['return_amount'] = $this->payments[$index]['paid_amount'] - $this->payments[$index]['amount'];
-        }else{
+        } else {
             $this->payments[$index]['return_amount'] = 0;
         }
     }
@@ -226,7 +258,8 @@ class Checkout extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function updatedPaymentMethod($value){
+    public function updatedPaymentMethod($value)
+    {
         $this->reset([
             'paid_amount',
             'return_amount',
@@ -253,7 +286,7 @@ class Checkout extends Component
                         if ($value < $this->grand_total && !$this->isDp()) {
                             $fail('Jumlah yang dibayarkan tidak cukup.');
                         }
-                        if($this->isDp() && $value < $this->dp_nominal){
+                        if ($this->isDp() && $value < $this->dp_nominal) {
                             $fail('Jumlah yang dibayarkan tidak cukup.');
                         }
                     }
@@ -267,12 +300,19 @@ class Checkout extends Component
             'remain_amount' => 'required_if:dp_payment,==,1',
         ];
 
+        // Rules storeCusome
+        foreach ($this->other_thing as $index => $fee) {
+            $rules['other_thing.' . $index . '.custom_note'] = ['required'];
+            $rules['other_thing.' . $index . '.custom_nominal'] = ['required', 'gt:0'];
+        }
+        // end
+
         foreach ($this->other_fees as $index => $fee) {
             $rules['other_fees.' . $index . '.note'] = ['required'];
             $rules['other_fees.' . $index . '.nominal'] = ['required', 'gt:0'];
         }
 
-        foreach($this->payments as $index => $payment){
+        foreach ($this->payments as $index => $payment) {
             $rules['payments.' . $index . '.method'] = ['required_if:multiple_payment_method,true'];
             $rules['payments.' . $index . '.amount'] = [
                 'required_if:multiple_payment_method,true',
@@ -291,8 +331,8 @@ class Checkout extends Component
                 },
             ];
             $rules['payments.' . $index . '.paid_amount'] = [
-                'required_if:payments.'.$index.'.method,tunai',
-                function ($attribute, $value, $fail) use ($index){
+                'required_if:payments.' . $index . '.method,tunai',
+                function ($attribute, $value, $fail) use ($index) {
                     if ($this->multiple_payment_method == 'true' && $this->payments[$index]['method'] === 'tunai') {
                         if (empty(intval($value))) {
                             $fail('Wajib diisi');
@@ -456,7 +496,70 @@ class Checkout extends Component
         ]);
     }
 
+    //========================== Costom Function ====================================
+    public function showCustom()
+    {
+        $cart = [
+            "customer_id" => $this->customer_id,
+            "total_amount" => $this->total_amount,
+            "paid" => $this->total_amount
+        ];
+        $this->emit('cartAdded', $cart);
+        $cart_items = Cart::instance($this->cart_instance)->content();
+        $this->dispatchBrowserEvent(
+            'showCustomModal',
+            [
+                'customer_id' => $this->customer_id
 
+            ]
+        );
+    }
+
+    public function addInput()
+    {
+        $this->inputs[] = [
+            'berat_ct' => 0,
+            'harga_ct' => 0
+        ];
+    }
+
+    public function remove($i)
+    {
+        $this->resetErrorBag();
+        unset($this->inputs[$i]);
+        $this->inputs = array_values($this->inputs);
+    }
+
+    public function storeCustom()
+    {
+        $this->validate([
+            'cabang_id' => 'required',
+            'jenis_barang' => 'required',
+            'karat_id' => 'required',
+            'berat_gr' => 'required',
+            'harga_gr' => 'required',
+            'ongkos_produksi' => 'required',
+            'ongkos_cuci' => 'required',
+            'ongkos_rnk' => 'required',
+            'ongkos_mt' => 'required',
+            'total_custom' => 'required'
+        ]);
+    }
+
+    public function add_other_thing()
+    {
+        $this->other_thing[] = [
+            'custom_note' => '',
+            'custom_nominal' => 0
+        ];
+    }
+
+    public function remove_other_thing($index)
+    {
+        unset($this->other_thing[$index]);
+    }
+
+    // ========================= End Function =======================================
 
     public function proceed()
     {
@@ -477,7 +580,6 @@ class Checkout extends Component
 
             ]
         );
-        
     }
 
     public function selectcartModal()
@@ -554,13 +656,13 @@ class Checkout extends Component
 
     public function calculateGrandTotal()
     {
-        $diskon = !empty($this->diskon)?$this->diskon:0;
+        $diskon = !empty($this->diskon) ? $this->diskon : 0;
         $this->grand_total = ($this->total_amount - $diskon) + $this->totalOtherFees();
         if ($this->multiple_payment_method == 'false') {
-            if($this->payment_method === 'tunai'){
+            if ($this->payment_method === 'tunai') {
                 $this->return_amount = $this->paid_amount - $this->grand_total;
             }
-        }elseif($this->multiple_payment_method == 'true'){
+        } elseif ($this->multiple_payment_method == 'true') {
             $this->updateRemainingPaymentAmount();
         }
         $this->tmp_grand_total = $this->grand_total;
@@ -773,28 +875,28 @@ class Checkout extends Component
         $this->validate();
         $this->validate([
             'total_payment_amount' => [
-                function ($attribute, $value, $fail){
+                function ($attribute, $value, $fail) {
                     if ($this->multiple_payment_method == 'true') {
                         if ($value < $this->grand_total && !$this->isDp()) {
                             $fail('Jumlah yang dibayarkan tidak cukup');
-                            $this->dispatchBrowserEvent('total_payment_amount',[
+                            $this->dispatchBrowserEvent('total_payment_amount', [
                                 'message' => 'Total yang dibayarkan belum memenuhi Grand Total'
                             ]);
-                        }elseif($value > $this->grand_total  && !$this->isDp()){
+                        } elseif ($value > $this->grand_total  && !$this->isDp()) {
                             $fail('Jumlah yang dibayarkan melebihi grand total');
-                            $this->dispatchBrowserEvent('total_payment_amount',[
+                            $this->dispatchBrowserEvent('total_payment_amount', [
                                 'message' => 'Total yang dibayarkan melebihi Grand Total'
                             ]);
                         }
 
                         if ($value < $this->dp_nominal && $this->isDp()) {
                             $fail('Jumlah yang dibayarkan tidak cukup');
-                            $this->dispatchBrowserEvent('total_payment_amount',[
+                            $this->dispatchBrowserEvent('total_payment_amount', [
                                 'message' => 'Total yang dibayarkan belum memenuhi nominal dp'
                             ]);
-                        }elseif($value > $this->dp_nominal && $this->isDp()){
+                        } elseif ($value > $this->dp_nominal && $this->isDp()) {
                             $fail('Jumlah yang dibayarkan melebihi nominal dp');
-                            $this->dispatchBrowserEvent('total_payment_amount',[
+                            $this->dispatchBrowserEvent('total_payment_amount', [
                                 'message' => 'Total yang dibayarkan melebihi nominal dp'
                             ]);
                         }
@@ -807,13 +909,13 @@ class Checkout extends Component
             $sale = Sale::create([
                 'date' => date('Y-m-d'),
                 'reference' => 'jsr',
-                'customer_id' => !empty($this->customer_id)?$this->customer_id:null,
+                'customer_id' => !empty($this->customer_id) ? $this->customer_id : null,
                 'customer_name' => Customer::find($this->customer_id)?->customer_name,
                 'total_amount' => $this->total_amount,
                 'grand_total_amount' => $this->grand_total,
                 'other_total_amount' => $this->totalOtherFees(),
-                'discount_amount' => !empty($this->diskon)?$this->diskon:0,
-                'note' => !empty($this->note)?$this->note:null,
+                'discount_amount' => !empty($this->diskon) ? $this->diskon : 0,
+                'note' => !empty($this->note) ? $this->note : null,
                 'user_id' => Auth::user()->id,
                 'cabang_id' => $this->cabang_id,
                 'payment_status' => !$this->isDp() ? Sale::SP_PAID : Sale::SP_DP,
@@ -835,9 +937,9 @@ class Checkout extends Component
                     'product_tax_amount' => 0,
 
                 ]);
-                if($this->isDp()){
+                if ($this->isDp()) {
                     $detail->product->updateTracking(ProductStatus::DP, $sale->cabang_id);
-                }else{
+                } else {
                     $detail->product->updateTracking(ProductStatus::SOLD, $sale->cabang_id);
                 }
             }
@@ -859,47 +961,49 @@ class Checkout extends Component
         return redirect()->route('sales.index');
     }
 
-    private function managePayment($sale){
-        if($this->multiple_payment_method === 'false'){
+    private function managePayment($sale)
+    {
+        if ($this->multiple_payment_method === 'false') {
             $data = [
                 'date' => now()->format('Y-m-d'),
-                'reference' => 'INV/'.$sale->reference,
-                'paid_amount' => ($this->payment_method === 'tunai')?$this->paid_amount:$this->grand_total,
+                'reference' => 'INV/' . $sale->reference,
+                'paid_amount' => ($this->payment_method === 'tunai') ? $this->paid_amount : $this->grand_total,
                 'payment_method' => $this->payment_method
             ];
-            if($this->payment_method === 'tunai'){
+            if ($this->payment_method === 'tunai') {
                 $data['return_amount'] = $this->return_amount;
-            }elseif($this->payment_method === 'transfer'){
+            } elseif ($this->payment_method === 'transfer') {
                 $data['bank_id'] = $this->bank_id;
-            }elseif($this->payment_method === 'edc'){
+            } elseif ($this->payment_method === 'edc') {
                 $data['edc_id'] = $this->edc_id;
             }
-    
+
             $sale->salePayments()->create($data);
-        }elseif($this->multiple_payment_method === 'true'){
-            foreach($this->payments as $index => $payment){
+        } elseif ($this->multiple_payment_method === 'true') {
+            foreach ($this->payments as $index => $payment) {
                 $data = [
                     'date' => now()->format('Y-m-d'),
-                    'reference' => 'INV/'.$sale->reference,
-                    'paid_amount' => ($payment['method'] === 'tunai')?$payment['paid_amount']:$payment['amount'],
+                    'reference' => 'INV/' . $sale->reference,
+                    'paid_amount' => ($payment['method'] === 'tunai') ? $payment['paid_amount'] : $payment['amount'],
                     'payment_method' => $payment['method']
                 ];
-                if($payment['method'] === 'tunai'){
+                if ($payment['method'] === 'tunai') {
                     $data['return_amount'] = $payment['return_amount'];
-                }elseif($payment['method'] === 'transfer'){
+                } elseif ($payment['method'] === 'transfer') {
                     $data['bank_id'] = $payment['bank_id'];
-                }elseif($payment['method'] === 'edc'){
+                } elseif ($payment['method'] === 'edc') {
                     $data['edc_id'] = $payment['edc_id'];
                 }
-        
+
                 $sale->salePayments()->create($data);
             }
         }
     }
 
-    private function manageSaleManual($sale){
+    private function manageSaleManual($sale)
+    {
         if (count($this->other_fees)) {
-            foreach($this->other_fees as $index => $fee){
+            foreach ($this->other_fees as $index => $fee) {
                 $sale->manual()->create([
                     'date' => now()->format('Y-m-d'),
                     'reference' => 'INV/' . $sale->reference,
@@ -913,11 +1017,12 @@ class Checkout extends Component
     public function updatedDpNominal()
     {
         $this->grand_total = $this->tmp_grand_total;
-        $this->remain_amount = (int) $this->grand_total - (int) (!empty($this->dp_nominal) ? $this->dp_nominal :  0) ;
+        $this->remain_amount = (int) $this->grand_total - (int) (!empty($this->dp_nominal) ? $this->dp_nominal :  0);
         $this->grand_total = $this->dp_nominal;
     }
 
-    public function isDp(){
+    public function isDp()
+    {
         return $this->dp_payment ?? 0;
     }
 }
