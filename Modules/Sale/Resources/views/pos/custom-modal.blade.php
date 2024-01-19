@@ -52,7 +52,7 @@
                                                 $required = '';
                                             ?>
                                             <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                            <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                            <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
                                             @if ($errors->has($field_name))
                                                 <span class="invalid feedback" role="alert">
                                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
@@ -121,14 +121,14 @@
                                         </div>
 
 
-                                    @foreach($inputs as $key => $value)
+                                    @foreach($inputCustom as $key => $value)
                                     <div class="flex justify-between mt-0">
                                         <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
 
 
                                             <div class="form-group">
                                                 <?php
-                                                $field_name = 'inputs.' . $key . '.berat_ct';
+                                                $field_name = 'inputCustom.' . $key . '.berat_ct';
                                                 $field_lable = label_case('Berat_(Ct)');
                                                 $field_placeholder = $field_lable;
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -148,7 +148,7 @@
 
                                             <div class="form-group">
                                                 <?php
-                                                $field_name = 'inputs.' . $key . '.harga_ct';
+                                                $field_name = 'inputCustom.' . $key . '.harga_ct';
                                                 $field_lable = label_case('Harga');
                                                 $field_placeholder = $field_lable;
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -346,5 +346,12 @@
 </style>
 @endpush
 @push('page_scripts')
-
+<script>
+    document.addEventListener('livewire:load', function () {
+        Livewire.on('reload-page-create', function () {
+            window.location.reload();
+            toastr.success('Item Berhasil di ditambahkan')
+        });
+    });
+</script>
 @endpush

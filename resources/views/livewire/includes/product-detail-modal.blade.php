@@ -1,14 +1,14 @@
 <!-- Button trigger Modal -->
-<button role="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#detailProduk{{ $cart_item->id }}">
+<button role="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#detailProduk{{ $cart_item ?? ''->id }}">
     <i class="small p-1 bi bi-search text-white"></i>
 </button>
 <!--  Modal -->
-<div wire:ignore.self class="modal fade" id="detailProduk{{ $cart_item->id }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="detailProduk{{ $cart_item ?? ''->id }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                <h5 class="modal-title" id="discountModalLabel">
-                    {{ $cart_item->name }}
+                    {{ $cart_item ?? ''->name }}
                     
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -23,8 +23,8 @@
 <div class="p-0 object-center">
 <?php
 
-      if ($cart_item->options->images) {
-            $logo = asset("storage/uploads/" .$cart_item->options->images);
+      if ($cart_item ?? ''->options->images) {
+            $logo = asset("storage/uploads/" .$cart_item ?? ''->options->images);
         }else{
             $logo = asset('images/fallback_product_image.png');
         }
@@ -42,7 +42,7 @@
                    Product Code
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                   {{ $cart_item->options->code }}
+                   {{ $cart_item ?? ''->options->code }}
                 </dd>
             </div> 
 
@@ -51,7 +51,7 @@
                    Karat
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                   {{ $cart_item->options->karat }}
+                   {{ $cart_item ?? ''->options->karat }}
                 </dd>
             </div>
      <div class="py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -59,7 +59,7 @@
                    Berat Emas
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                      {{ $cart_item->options->berat_emas }} <small>Gram</small>
+                      {{ $cart_item ?? ''->options->berat_emas }} <small>Gram</small>
                 </dd>
             </div>
 
@@ -70,7 +70,7 @@
                    Harga Jual
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-               {{ format_uang($cart_item->options->harga_jual) }}
+               {{ format_uang($cart_item ?? ''->options->harga_jual) }}
                 </dd>
             </div>
 
@@ -79,7 +79,7 @@
                    Harga Total
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                 {{ format_uang($cart_item->price) }}
+                 {{ format_uang($cart_item ?? ''->price) }}
                 </dd>
             </div>
 

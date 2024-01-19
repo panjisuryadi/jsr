@@ -17,7 +17,7 @@
                     </div>
                 @endif
 
-                <div class="px-3">
+<div class="px-3">
 
             <input id="customer_id" wire:model="customer_id" type="hidden" name="customer_id">
 
@@ -96,6 +96,95 @@
                     
                 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div style="height: 440px;" class="overflow-y-auto max-h-full md:max-h-screen">
+            @if($customs->isNotEmpty())
+            @php 
+              $jumlah = 0; 
+            @endphp
+              @foreach($customs as $custom)
+           {{-- {{dd($cart_item)}} --}}
+             <!-- component -->
+                <div class="bg-white text-white w-full max-w-lg flex flex-col border-b rounded-md p-1">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                      <div class="text-md text-dark font-bold">
+                         <div class="text-lg relative">{{ $custom->jenis_barang }}
+                          {{-- @include('livewire.includes.product-detail-modal')  --}}
+                         </div>
+                      <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $custom->harga }}
+                        <span class="text-yellow-500">
+                            {{ $custom->jenis_barang }}
+                        </span>|
+                        <span class="text-blue-400">
+                            {{ format_uang($custom->total) }}
+                        </span>
+                      </div>
+                       </div>
+                    </div>
+                      <div class="flex items-center space-x-4">
+                        <div class="text-gray-500 hover:text-gray-300 cursor-pointer">
+                          <a href="#" wire:loading.class="opacity-50" wire:click.prevent="removeCustome('{{ $custom->id }}')">
+                            <i class="bi bi-x-circle font-xl text-danger"></i>
+                          </a>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                    @php
+                       //$jumlah = $jumlah +  $cart_item->qty
+                    @endphp
+
+                      @endforeach
+                    @else
+                    
+                  <span class="flex text-center text-danger py-2">
+                     Tidak memiliki custome produk
+                  </span>
+                  @endif
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
 <div class="flex flex-row justify-between gap-1 py-2">
 
   <div class="px-1 text-center justify-items-center">
@@ -134,11 +223,9 @@
 
 
 </div>
-
-
-
-
 </div>
+
+
 
 
 
@@ -183,11 +270,10 @@
 
     </div>  
 
- <div class="w-60 justify-end flex text-center items-center">
-     <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_uang(!empty($this->total_amount) ? $this->total_amount : 0) }}</span>
-       <i class="ml-3 text-2xl bi bi-chevron-right"></i>
-    </div>
-
+<div class="w-60 justify-end flex text-center items-center">
+  <span class="md:text-base lg:text-xl text-xl font-semibold">{{ format_uang(!empty($this->total_amount) ? $this->total_amount : 0) }}</span>
+    <i class="ml-3 text-2xl bi bi-chevron-right"></i>
+  </div>
 </div>
 
 

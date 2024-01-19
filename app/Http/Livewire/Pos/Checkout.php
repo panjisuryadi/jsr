@@ -16,6 +16,9 @@ use Modules\DataRekening\Models\DataRekening;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
+use Modules\Sale\Entities\Customs;
+use Modules\Sale\Entities\CustomsCt;
+use Modules\Sale\Entities\CustomsManual;
 use Modules\Sale\Entities\SaleManual;
 
 class Checkout extends Component
@@ -41,6 +44,12 @@ class Checkout extends Component
             'karat_id' => '',
             'berat_real' => 0,
             'berat_kotor' => 0
+        ]
+    ];
+    public $inputCustom = [
+        [
+            'berat_ct' => 0,
+            'harga_ct' => 0
         ]
     ];
 
@@ -370,6 +379,7 @@ class Checkout extends Component
         $this->showPaymentType;
         $this->paid_amount;
         $this->cabangs = Cabang::all();
+        // $this->customs;
         $this->cabang_id = auth()->user()->isUserCabang() ? auth()->user()->namacabang()->id : '';
         $this->banks = DataBank::all();
         $this->edcs = DataRekening::all();
@@ -491,26 +501,20 @@ class Checkout extends Component
     public function render()
     {
         $cart_items = Cart::instance($this->cart_instance)->content();
+        $customs = Customs::where('sales_id', null)->get();
         return view('livewire.pos.checkout', [
-            'cart_items' => $cart_items
+            'cart_items' => $cart_items,
+            'customs' => $customs
         ]);
     }
 
-    //========================== Costom Function ====================================
+    //========================== Custom Function ====================================
     public function showCustom()
     {
-        $cart = [
-            "customer_id" => $this->customer_id,
-            "total_amount" => $this->total_amount,
-            "paid" => $this->total_amount
-        ];
-        $this->emit('cartAdded', $cart);
-        $cart_items = Cart::instance($this->cart_instance)->content();
         $this->dispatchBrowserEvent(
             'showCustomModal',
             [
                 'customer_id' => $this->customer_id
-
             ]
         );
     }
@@ -535,15 +539,57 @@ class Checkout extends Component
         $this->validate([
             'cabang_id' => 'required',
             'jenis_barang' => 'required',
-            'karat_id' => 'required',
+            // 'karat_id' => 'required',
             'berat_gr' => 'required',
             'harga_gr' => 'required',
-            'ongkos_produksi' => 'required',
-            'ongkos_cuci' => 'required',
-            'ongkos_rnk' => 'required',
-            'ongkos_mt' => 'required',
+            // 'ongkos_produksi' => 'required',
+            // 'ongkos_cuci' => 'required',
+            // 'ongkos_rnk' => 'required',
+            // 'ongkos_mt' => 'required',
             'total_custom' => 'required'
         ]);
+
+        DB::beginTransaction();
+        try {
+            Customs::create([
+                'cabang_id' => $this->cabang_id,
+                'jenis_barang' => $this->jenis_barang,
+                'karat_id' => 1,
+                'berat' => $this->berat_gr,
+                'harga' => $this->harga_gr,
+                'ongkos_produksi' => $this->ongkos_produksi ?: 0,
+                'ongkos_cuci' => $this->ongkos_cuci ?: 0,
+                'ongkos_rnk' => $this->ongkos_rnk ?: 0,
+                'ongkos_mt' => $this->ongkos_mt ?: 0,
+                'total' => $this->total_custom
+            ]);
+            foreach ($this->inputCustom as $input) {
+                CustomsCt::create([
+                    'berat' => $input['berat_ct'],
+                    'harga' => $input['harga_ct'],
+                ]);
+            }
+            foreach ($this->other_thing as $fee) {
+                CustomsManual::create([
+                    'catatan' => $fee['custom_note'],
+                    'nominal' => $fee['custom_nominal'],
+                ]);
+            }
+
+            // dd($this->karat_id);
+
+            DB::commit();
+            $this->emit('reload-page-create');
+            // $this->resetForm();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+    }
+
+    public function removeCustome($row_id)
+    {
+        Customs::destroy($row_id);
     }
 
     public function add_other_thing()
@@ -573,6 +619,10 @@ class Checkout extends Component
         ];
         $this->emit('cartAdded', $cart);
         $cart_items = Cart::instance($this->cart_instance)->content();
+
+        $dataCustoms = Customs::whereNull('sales_id')->exists();
+        $this->dp_payment = $dataCustoms ? 1 : 0;
+
         $this->dispatchBrowserEvent(
             'showCheckoutModal',
             [
@@ -764,9 +814,6 @@ class Checkout extends Component
     }
 
 
-
-
-
     public function discountModalRefresh($product_id, $row_id)
     {
         $this->updateQuantity($row_id, $product_id);
@@ -949,6 +996,7 @@ class Checkout extends Component
 
             // payment
             $this->managePayment($sale);
+            Customs::whereNull('sales_id')->update(['sales_id' => $sale->id]);
 
             Cart::instance('sale')->destroy();
 
