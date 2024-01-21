@@ -30,35 +30,38 @@ Route::group(['middleware' => 'auth'], function () {
             ->setOption('margin-left', 5)
             ->setOption('margin-right', 5);
 
-        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+        return $pdf->stream('sale-' . $sale->reference . '.pdf');
     })->name('sales.pos.pdf');
 
+
+    //Custom
+    Route::get('/custom', 'CustomController@index')->name('sale.custom.index');
 
 
     //Sales
     Route::post('sales/failed/{id}', 'SaleController@failed')->name('sales.failed'); //digunakan untuk set status dp yang jatuh tempo
 
     Route::get('sales/index_data', 'SaleController@index_data')
-    ->name('sales.index_data'); 
+        ->name('sales.index_data');
 
     Route::get('sales/cetak/{id}', 'SaleController@cetak')
-    ->name('sales.cetak');
+        ->name('sales.cetak');
 
 
-   Route::get('sales/pdf/{id}', 'SaleController@pdf')
-    ->name('sales.pdf');
+    Route::get('sales/pdf/{id}', 'SaleController@pdf')
+        ->name('sales.pdf');
 
 
 
     Route::get('sales/generate-invoice/{id}', 'SaleController@generateInvoice')
-    ->name('sales.invoice');
+        ->name('sales.invoice');
 
     Route::get('sales/show-cicilan/{id}', 'SaleController@show_cicilan')
-    ->name('sales.show_cicilan');
+        ->name('sales.show_cicilan');
 
 
 
-    
+
     Route::resource('sales', 'SaleController');
 
 
@@ -66,9 +69,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Payments
     Route::get('/sale-payments/{sale_id}', 'SalePaymentsController@index')
-    ->name('sale-payments.index');
+        ->name('sale-payments.index');
 
-  
+
 
     Route::get('/sale-payments/{sale_id}/create', 'SalePaymentsController@create')->name('sale-payments.create');
     Route::post('/sale-payments/store', 'SalePaymentsController@store')->name('sale-payments.store');
@@ -76,6 +79,3 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/sale-payments/update/{salePayment}', 'SalePaymentsController@update')->name('sale-payments.update');
     Route::delete('/sale-payments/destroy/{salePayment}', 'SalePaymentsController@destroy')->name('sale-payments.destroy');
 });
-
-
-

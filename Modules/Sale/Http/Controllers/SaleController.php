@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Sale\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -22,6 +23,7 @@ use Carbon\Carbon;
 use Modules\Cabang\Models\Cabang;
 use Modules\Product\Models\ProductStatus;
 use PDF;
+
 class SaleController extends Controller
 {
 
@@ -44,33 +46,38 @@ class SaleController extends Controller
         $this->module_detail = "Modules\Sale\Entities\SaleDetails";
         $this->module_payment = "Modules\Sale\Entities\SalePayment";
         $this->module_product = "Modules\Product\Entities\Product";
-
-
     }
 
 
- public function index(Request $request) {
+    public function index(Request $request)
+    {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $type = $request->type ?? '';
-        
+
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
         $cabangs = Cabang::get();
         abort_if(Gate::denies('access_sales'), 403);
-         return view('sale::index',
-           compact('module_name',
-            'module_action',
-            'module_title',
-            'type',
-            'cabangs',
-            'module_icon', 'module_model'));
+        return view(
+            'sale::index',
+            compact(
+                'module_name',
+                'module_action',
+                'module_title',
+                'type',
+                'cabangs',
+                'module_icon',
+                'module_model'
+            )
+        );
     }
 
-    public function index_table(SalesDataTable $dataTable) {
+    public function index_table(SalesDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_sales'), 403);
         return $dataTable->render('sale::index');
     }
@@ -79,7 +86,7 @@ class SaleController extends Controller
 
 
 
-   public function show_cicilan($id)
+    public function show_cicilan($id)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -88,23 +95,27 @@ class SaleController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Show';
-        abort_if(Gate::denies('show_'.$module_name.''), 403);
+        abort_if(Gate::denies('show_' . $module_name . ''), 403);
         $detail = $module_model::findOrFail($id);
         //dd($detail);
-          return view(''.$module_path.'::.modal.show_cicilan',
-           compact('module_name',
-            'module_action',
-            'detail',
-            'module_title',
-            'module_icon', 'module_model'));
-
+        return view(
+            '' . $module_path . '::.modal.show_cicilan',
+            compact(
+                'module_name',
+                'module_action',
+                'detail',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
     }
 
 
 
 
 
-public function index_data(Request $request)
+    public function index_data(Request $request)
 
     {
         $type = $request->type;
@@ -116,93 +127,104 @@ public function index_data(Request $request)
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
- 
-       $$module_name = $module_model::akses();
-        if($type) {
-           $$module_name->where('payment_method',$type);
-           $$module_name->orderBy('created_at', 'desc');
-         }else{
-             $$module_name->orderBy('created_at', 'desc');
-         }
-         $$module_name->get();
 
-         $data = $$module_name;
+        $$module_name = $module_model::akses();
+        if ($type) {
+            $$module_name->where('payment_method', $type);
+            $$module_name->orderBy('created_at', 'desc');
+        } else {
+            $$module_name->orderBy('created_at', 'desc');
+        }
+        $$module_name->get();
+
+        $data = $$module_name;
 
         return Datatables::of($$module_name)
-                        ->addColumn('action', function ($data) {
-                           $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            $module_path = $this->module_path;
-                            return view(''.$module_path.'::.partials.actions',
-                            compact('module_name', 'data', 'module_model'));
-                                })
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view(
+                    '' . $module_path . '::.partials.actions',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
 
-                           ->editColumn('date', function ($data) {
-                             $tb = '<div class="text-center text-gray-800"> 
-                                     ' .shortdate($data->date) . '</div>';
-                                return $tb;
-                            })
-                            ->editColumn('reference', function ($data) {
-                             $tb = '<div class="text-center text-blue-800"> 
-                                     ' .$data->reference . '</div>';
-                                return $tb;
-                            })  
+            ->editColumn('date', function ($data) {
+                $tb = '<div class="text-center text-gray-800"> 
+                                     ' . shortdate($data->date) . '</div>';
+                return $tb;
+            })
+            ->editColumn('reference', function ($data) {
+                $tb = '<div class="text-center text-blue-800"> 
+                                     ' . $data->reference . '</div>';
+                return $tb;
+            })
 
-                            ->editColumn('cabang', function ($data) {
-                             $tb = '<div class="text-center text-blue-800"> 
-                                     ' .@$data->cabang->name . '</div>';
-                                return $tb;
-                            })
+            ->editColumn('cabang', function ($data) {
+                $tb = '<div class="text-center text-blue-800"> 
+                                     ' . @$data->cabang->name . '</div>';
+                return $tb;
+            })
 
-                            ->editColumn('customer', function ($data) {
-                             $tb = '<div class="text-center text-green-800"> 
+            ->editColumn('customer', function ($data) {
+                $tb = '<div class="text-center text-green-800"> 
                                      ' . @$data->customer_name . '</div>';
-                                return $tb;
-                            })
-                            ->editColumn('grand_total_amount', function ($data) {
-                                $nominal = empty($data->dp_payment) || empty($data->remain_amount) ? $data->grand_total_amount : $data->dp_nominal;
-                                $tb = '<div class="text-center font-bold"> 
+                return $tb;
+            })
+            ->editColumn('grand_total_amount', function ($data) {
+                $nominal = empty($data->dp_payment) || empty($data->remain_amount) ? $data->grand_total_amount : $data->dp_nominal;
+                $tb = '<div class="text-center font-bold"> 
                                         ' . format_uang($nominal) . '</div>';
-                                   return $tb;
-                               })
+                return $tb;
+            })
 
-                        ->addColumn('status', function ($data) {
-                            $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            $module_path = $this->module_path;
-                            return view(''.$module_path.'::.partials.status',
-                            compact('module_name', 'data', 'module_model'));
-                                })
+            ->addColumn('status', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view(
+                    '' . $module_path . '::.partials.status',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
 
-                        ->addColumn('cara_bayar', function ($data) {
-                            $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            $module_path = $this->module_path;
-                            return view(''.$module_path.'::.partials.cara-bayar',
-                            compact('module_name', 'data', 'module_model'));
-                        })
-                           ->addColumn('total_amount', function ($data) {
-                            $module_name = $this->module_name;
-                            $module_model = $this->module_model;
-                            $module_path = $this->module_path;
-                            return view(''.$module_path.'::.partials.nominal',
-                            compact('module_name', 'data', 'module_model'));
-                                })
-                                ->rawColumns(['customer', 
-                                     'reference', 
-                                     'date', 
-                                     'sales', 
-                                     'cabang', 
-                                     'status', 
-                                     'grand_total_amount', 
-                                     'action', 
-                                     'name'])
-                                ->make(true);
-                               }
+            ->addColumn('cara_bayar', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view(
+                    '' . $module_path . '::.partials.cara-bayar',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+            ->addColumn('total_amount', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view(
+                    '' . $module_path . '::.partials.nominal',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+            ->rawColumns([
+                'customer',
+                'reference',
+                'date',
+                'sales',
+                'cabang',
+                'status',
+                'grand_total_amount',
+                'action',
+                'name'
+            ])
+            ->make(true);
+    }
 
 
 
-    public function create() {
+    public function create()
+    {
         abort_if(Gate::denies('create_sales'), 403);
 
         Cart::instance('sale')->destroy();
@@ -213,7 +235,8 @@ public function index_data(Request $request)
 
 
 
-    public function store(StoreSaleRequest $request) {
+    public function store(StoreSaleRequest $request)
+    {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
@@ -226,7 +249,7 @@ public function index_data(Request $request)
             }
 
 
-            
+
             $sale = Sale::create([
                 'date' => $request->date,
                 'customer_id' => $request->customer_id,
@@ -243,7 +266,7 @@ public function index_data(Request $request)
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' => Cart::instance('sale')->discount() * 100,
-               
+
             ]);
 
             foreach (Cart::instance('sale')->content() as $cart_item) {
@@ -274,7 +297,7 @@ public function index_data(Request $request)
             if ($sale->paid_amount > 0) {
                 SalePayment::create([
                     'date' => $request->date,
-                    'reference' => 'INV/'.$sale->reference,
+                    'reference' => 'INV/' . $sale->reference,
                     'amount' => $sale->paid_amount,
                     'sale_id' => $sale->id,
                     'payment_method' => $request->payment_method
@@ -290,7 +313,7 @@ public function index_data(Request $request)
 
 
 
-public function store_ajax(StoreSaleRequest $request)
+    public function store_ajax(StoreSaleRequest $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -307,7 +330,7 @@ public function store_ajax(StoreSaleRequest $request)
         //   return response()->json(['error'=>$validator->errors()]);
         // }
 
-           DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
             if ($due_amount == $request->total_amount) {
@@ -367,7 +390,7 @@ public function store_ajax(StoreSaleRequest $request)
             if ($sale->paid_amount > 0) {
                 SalePayment::create([
                     'date' => $request->date,
-                    'reference' => 'INV/'.$sale->reference,
+                    'reference' => 'INV/' . $sale->reference,
                     'amount' => $sale->paid_amount,
                     'sale_id' => $sale->id,
                     'payment_method' => $request->payment_method
@@ -375,13 +398,14 @@ public function store_ajax(StoreSaleRequest $request)
             }
         });
 
-        return response()->json(['success'=>'Sales Sukses disimpan.']);
+        return response()->json(['success' => 'Sales Sukses disimpan.']);
     }
 
 
 
 
-    public function show(Sale $sale) {
+    public function show(Sale $sale)
+    {
         abort_if(Gate::denies('show_sales'), 403);
 
         $customer = Customer::find($sale->customer_id);
@@ -391,7 +415,8 @@ public function store_ajax(StoreSaleRequest $request)
 
 
 
-    public function cetak($id) {
+    public function cetak($id)
+    {
         $sale = Sale::findOrFail($id);
         $pdf = PDF::loadView('sale::nota', [
             'sale' => $sale,
@@ -400,11 +425,12 @@ public function store_ajax(StoreSaleRequest $request)
 
 
 
-        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+        return $pdf->stream('sale-' . $sale->reference . '.pdf');
     }
 
 
-    public function pdf($id) {
+    public function pdf($id)
+    {
         $sale = Sale::findOrFail($id);
         $customer = Customer::find($sale->customer_id);
         $pdf = PDF::loadView('sale::print', [
@@ -412,26 +438,28 @@ public function store_ajax(StoreSaleRequest $request)
             'customer' => $customer,
         ])->setPaper('a4');
 
-        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+        return $pdf->stream('sale-' . $sale->reference . '.pdf');
     }
 
 
 
-  public function generateInvoice($id) {
-   // 210 x 297
+    public function generateInvoice($id)
+    {
+        // 210 x 297
         $sale = Sale::findOrFail($id);
         $pdf = PDF::loadView('sale::print_v2', [
             'sale' => $sale,
-        ])->setPaper('a4','l');
+        ])->setPaper('a4', 'l');
 
-        return $pdf->stream('sale-'. $sale->reference .'.pdf');
+        return $pdf->stream('sale-' . $sale->reference . '.pdf');
     }
 
 
 
 
 
-    public function edit(Sale $sale) {
+    public function edit(Sale $sale)
+    {
         abort_if(Gate::denies('edit_sales'), 403);
 
         $sale_details = $sale->saleDetails;
@@ -463,7 +491,8 @@ public function store_ajax(StoreSaleRequest $request)
     }
 
 
-    public function update(UpdateSaleRequest $request, Sale $sale) {
+    public function update(UpdateSaleRequest $request, Sale $sale)
+    {
         DB::transaction(function () use ($request, $sale) {
 
             $due_amount = $request->total_amount - $request->paid_amount;
@@ -537,7 +566,8 @@ public function store_ajax(StoreSaleRequest $request)
     }
 
 
-    public function destroy(Sale $sale) {
+    public function destroy(Sale $sale)
+    {
         abort_if(Gate::denies('delete_sales'), 403);
 
         $sale->delete();
@@ -550,27 +580,28 @@ public function store_ajax(StoreSaleRequest $request)
 
 
 
-public function generateInvoice_0ljg($id)
-{
+    public function generateInvoice_0ljg($id)
+    {
 
-    $sale = \Modules\Sale\Entities\Sale::findOrFail($id);
+        $sale = \Modules\Sale\Entities\Sale::findOrFail($id);
 
-  // $pdf = \PDF::loadView('sale::print', [
-  //           'sale' => $sale,
+        // $pdf = \PDF::loadView('sale::print', [
+        //           'sale' => $sale,
 
-  //       ]);
+        //       ]);
 
-  //       return $pdf->stream('sale-'. $sale->reference .'.pdf');
-     return view('sale::print', compact('sale'));
-}
+        //       return $pdf->stream('sale-'. $sale->reference .'.pdf');
+        return view('sale::print', compact('sale'));
+    }
 
-    public function failed($id){
+    public function failed($id)
+    {
         try {
             DB::beginTransaction();
             $sale = Sale::with('saleDetails')->find($id);
-    
-            if(!empty($sale->saleDetails)){
-                foreach($sale->saleDetails as $detail) {
+
+            if (!empty($sale->saleDetails)) {
+                foreach ($sale->saleDetails as $detail) {
                     $detail->product->updateTracking(ProductStatus::READY, $sale->cabang_id);
                 }
 
@@ -586,15 +617,4 @@ public function generateInvoice_0ljg($id)
             return $th->getMessage();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 }
