@@ -6,7 +6,7 @@
                             <th>{{ label_case('Sales') }}</th>
                             <th>{{ label_case('karat') }}</th>
                             <th>{{ label_case('Berat') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
+                            <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
                       @php
 
@@ -20,11 +20,11 @@
                             <td>{{ $row->karat?->label }}</td>
                             <td>{{ $row->cabang->name }}</td>
                             <td>{{ $row->weight ?? ' - ' }}</td>
-                            <td>
+                            <td class="text-center">
 
-                                    <a href="{{ route("sales.show",$row->id) }}"
+                                    <a href="{{ route("stok.pending") }}"
                                      class="btn btn-outline-success btn-sm">
-                                        <i class="bi bi-eye"></i>&nbsp;@lang('Detail')
+                                        <i class="bi bi-eye"></i>&nbsp;@lang('Detail Stok Pending')
                                     </a>
                                 @can('show_sales')
                                 @endcan

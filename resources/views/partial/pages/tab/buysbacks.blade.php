@@ -11,7 +11,7 @@
                             <th>{{ label_case('berat') }}</th>
 
                             <th>{{ label_case('Status') }}</th>
-                            <th>{{ label_case('Aksi') }}</th>
+                          
                         </tr>
                 @php
                   $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(5, ['*'], 'buysbacks');
@@ -41,13 +41,7 @@
                             </a>
 
                             </td>
-                            <td>
-
-                        <a href="{{ route('buysback.show', $sale->id) }}"
-                            data-toggle="tooltip"
-                             class="btn btn-sm btn-outline-info uppercase">Detail
-                            </a>
-                            </td>
+                          
                         </tr>
                         @empty
                             <tr>
