@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Custom
     Route::get('/custom', 'CustomController@index')->name('sale.custom.index');
+    Route::get('/custom/create', 'CustomController@create')->name('sale.custom.create');
 
 
     //Sales

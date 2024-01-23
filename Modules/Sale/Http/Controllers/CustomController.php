@@ -2,14 +2,23 @@
 
 namespace Modules\Sale\Http\Controllers;
 
+use DateTime;
+use App\Models\LookUp;
 use Illuminate\Http\Request;
 use Modules\Cabang\Models\Cabang;
 use Illuminate\Routing\Controller;
-use Illuminate\Contracts\Support\Renderable;
 use Modules\Sale\Entities\Customs;
+use Modules\Product\Entities\Product;
+use Modules\Product\Entities\Category;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\KategoriProduk\Models\KategoriProduk;
+use Modules\Produksi\Models\DiamondCertificateAttributes;
 
 class CustomController extends Controller
 {
+    public $dataKategoriProduk = [];
+    public $id_kategoriproduk_berlian;
+    public $dataCertificateAttribute;
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -29,7 +38,21 @@ class CustomController extends Controller
      */
     public function create()
     {
-        return view('sale::create');
+        $code = Product::generateCode();
+        $hari_ini = new DateTime();
+        $hari_ini = $hari_ini->format('Y-m-d');
+        $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
+        $id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
+        $dataKategoriProduk = Category::where('kategori_produk_id', $id_kategoriproduk_berlian)->get();
+        $this->dataCertificateAttribute = DiamondCertificateAttributes::all();
+        return view('sale::custom.create', compact(
+            'code',
+            'hari_ini',
+            'id_kategoriproduk_berlian'
+        ))->with([
+            'dataKategoriProduk' => $dataKategoriProduk,
+            'dataCertificateAttribute' => $this->dataCertificateAttribute
+        ]);
     }
 
     /**

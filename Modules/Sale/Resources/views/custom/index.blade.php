@@ -73,7 +73,7 @@
                                                 {{ __('Action') }}
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Hasil</a>
+                                                <a class="dropdown-item" href="{{ route('sale.custom.create') }}">Hasil</a>
                                                 <a class="dropdown-item" href="#">Proses</a>
                                                 <!-- ... tambahkan pilihan lainnya jika diperlukan ... -->
                                             </div>
