@@ -110,14 +110,14 @@
                                     </tr>
                                 @endforeach
 
-                              @if($item->note)
+                          {{--     @if($item->note)
                                 <tr>
                                     <td colspan ='6'>
                                         <div class="text-dark py-1 px-1 font-semibold">Note</div>
                                         <div class="text-dark py-1 px-1">{{ $item->note }}</div>
                                     </td>
                                 </tr> 
-                               @endif
+                               @endif --}}
 
 
                                 </tbody>
