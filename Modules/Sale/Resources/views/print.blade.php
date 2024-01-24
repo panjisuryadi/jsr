@@ -70,7 +70,7 @@
 
 <table class="table1" style='width:100%; border: none !important; font-size:14pt; font-family:calibri; border-collapse: collapse;' border="0">
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:80px; vertical-align:top'>
-        <span style='font-size:22pt'><b>{{ settings()->company_name }}</b></span></br>
+        <span style='font-size:16pt'><b>{{ settings()->company_name }}</b></span></br>
          {{ settings()->company_email }}, {{ settings()->company_phone }}
                 <br>{{ settings()->company_address }}
     </td>
