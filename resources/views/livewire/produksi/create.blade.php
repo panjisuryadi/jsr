@@ -601,6 +601,7 @@
                                                 <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                                 <input class="form-control"
                                                     type="number"
+                                                    step="any"
                                                     name="{{ $field_name }}"
                                                     id="{{ $field_name }}"
                                                     wire:model = "{{ $field_name }}"
