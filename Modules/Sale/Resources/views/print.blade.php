@@ -157,13 +157,26 @@
 
     </tbody>
     <tfoot>
-        <tr>
-            <td colspan = '6'><div style='text-align:right'>Qty : </div></td>
+
+
+           @if($saleDetail->note)
+            <tr>
+                <td colspan ='7'>
+                    <div class="text-danger">Note</div>
+                    <div class="text-danger">{{ $saleDetail->note }}</div>
+                 
+                </td>
+            </tr> 
+           @endif
+
+
+          <tr>
+            <td colspan ='6'><div style='text-align:right'>Qty : </div></td>
             <td style='text-align:right'>{{ number_format($totalQty) }} Item</td>
         </tr>
 
         <tr>
-            <td colspan = '6'><div style='text-align:right'>Total : </div></td>
+            <td colspan ='6'><div style='text-align:right'>Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($total) }}</td>
         </tr>
 

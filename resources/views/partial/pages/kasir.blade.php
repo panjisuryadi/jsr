@@ -70,9 +70,6 @@
     </div>
 </div>
 
-
-
-
 </div>
 @endcan
 
@@ -90,7 +87,14 @@
   </div>
   <div class="relative flex justify-left">
     <span class="bg-white pl-0 pr-3  text-sm uppercase tracking-wider font-semibold text-dark">
-    Dashboard Kasir
+    Dashboard Kasir  
+
+    <?php 
+        if (!$paging) {
+            $paging = 'penjualan';
+        }
+    ?>
+    {{-- {{ $paging }} --}}
    </span>
   </div>
 </div>
@@ -224,7 +228,7 @@
                             <td>
                                 
                                 @can('approve_distribusi')
-                              <a href="{{ route("sales.show",$row->id) }}"
+                                <a href="{{ route("sales.show",$row->id) }}"
                                      class="btn btn-outline-success btn-sm">
                                    {{ Label_case('approve_distribusi') }}
                                     </a>

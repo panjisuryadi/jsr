@@ -30,7 +30,7 @@
                             <i class="bi bi-eye"></i> Show
                         </a>   
 
-                         <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('sales.cetak', $row->id) }}">
+                         <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('sales.invoice', $row->id) }}">
                             <i class="bi bi-save"></i> Cetak Nota
                         </a>   
 
