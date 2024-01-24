@@ -108,16 +108,21 @@
                                        {{ rupiah( @$item->price) }}
                                         </td>
                                     </tr>
+
+                                   @if($item->note)
+                                    <tr>
+                                        <td><div class="text-dark py-1 px-1 font-semibold">Note</div></td>
+                                        <td colspan ='6'>
+                                            <div class="text-dark py-1 px-1">
+                                                {{ $item->note }}
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                   @endif 
+
                                 @endforeach
 
-                          {{--     @if($item->note)
-                                <tr>
-                                    <td colspan ='6'>
-                                        <div class="text-dark py-1 px-1 font-semibold">Note</div>
-                                        <div class="text-dark py-1 px-1">{{ $item->note }}</div>
-                                    </td>
-                                </tr> 
-                               @endif --}}
+                          
 
 
                                 </tbody>
