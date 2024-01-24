@@ -72,6 +72,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($sale->saleDetails as $item)
+                                
                                     <tr>
                                         <td class="align-middle">
                                           {{ $loop->iteration }}
@@ -109,21 +110,23 @@
                                         </td>
                                     </tr>
 
-                                   @if($item->note)
-                                    <tr>
-                                        <td><div class="text-dark py-1 px-1 font-semibold">Note</div></td>
-                                        <td colspan ='6'>
-                                            <div class="text-dark py-1 px-1">
-                                                {{ $item->note }}
-                                            </div>
-                                        </td>
-                                    </tr> 
-                                   @endif 
+
+
 
                                 @endforeach
 
                           
 
+                                   @if($sale->note)
+                                    <tr>
+                                        <td><div class="text-dark py-1 px-1 font-semibold">Note</div></td>
+                                        <td colspan ='6'>
+                                            <div class="text-dark py-1 px-1">
+                                                {{ $sale->note }}
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                   @endif 
 
                                 </tbody>
                             </table>
