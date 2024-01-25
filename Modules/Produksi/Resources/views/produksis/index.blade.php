@@ -64,7 +64,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div> 
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk  </span> 
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold">List Produk  </span> 
 
                             
                            <a href="{{ route('produksi.create') }}"class="btn btn-primary px-3">
@@ -80,7 +80,7 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                                     <th style="width: 5%!important;">NO</th>
                                     <th style="width: 9%!important;">{{ Label_case('image') }}</th>
                                     <th>{{ Label_case('product_name') }}</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Karat') }}</th>
+                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Harga Jual') }}</th>
 
 
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>

@@ -37,7 +37,6 @@
                                 </div>
                                 <div id="upload1" wire:ignore>
                                     <div class="form-group">
-
                                         <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                             <div class="dz-message" data-dz-message>
                                                 <i class="bi bi-cloud-arrow-up"></i>
@@ -227,7 +226,7 @@
                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                     $required = '';
                                     ?>
-                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }} <span class="text-danger">*</span></label>
+                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_placeholder }}</label>
                                     <input type="text" name="{{ $field_name }}" class="form-control {{ $invalid }}" name="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{ $field_placeholder }}" {{ $required }}>
                                     @if ($errors->has($field_name))
                                     <span class="invalid feedback" role="alert">
