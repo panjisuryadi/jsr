@@ -1,6 +1,6 @@
     <div class="pt-3">
 
-                   <table style="width: 100%;" class="table table-striped table-bordered">
+                   <table style="width: 100%;" class="table table-sm table-striped table-bordered">
                         <tr>
                             <th style="width:2%;" class="text-center">{{ label_case('No') }}</th>
                             <th style="width:5%;" class="text-center">{{ label_case('Invoice') }}</th>

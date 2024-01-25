@@ -537,7 +537,7 @@ if (!function_exists('bpstts')) {
         $tgl = $date->format('d/m/Y');
         $jam = $date->format('H:i');
 
-         return $date = '<div class="text-center"><span class="text-dark">'. $tgl.'</span><span class="ml-1 text-warning">'. $jam.'</span></div>';
+         return $date = '<div class="text-center"><span class="text-gray-500">'. $tgl.'</span>| <span class="ml-1 text-jsr">'. $jam.'</span></div>';
 
          }
       }
