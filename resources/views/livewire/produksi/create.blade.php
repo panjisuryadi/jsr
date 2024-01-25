@@ -160,7 +160,7 @@
                                                     @endif
                                                 </div>
 
-                                                @if($inputs[$key]['type'] == 1)
+                                                @if($inputs[$key]['type'] == 2)
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'inputs.' . $key . '.id_items';
@@ -176,9 +176,9 @@
                                                         <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setSelectedItem({{ $key }})">
                                                             <option value="">Pilih </option>
                                                             @foreach($dataPenerimaanBerlian as $item)
-                                                            @if($item->goodsreceiptitem->tipe_penerimaan_barang == (!empty($inputs[$key]['type']) ? $inputs[$key]['type'] : 0))
-                                                            <option value="{{ $item->id }}" {{  in_array($item->id, $selectedItemId) ? 'disabled' : '' }}> {{ $item->code . ' ' . $item->klasifikasi_berlian}} </option>
-                                                            @endif
+                                                                @if($item->goodsreceiptitem->tipe_penerimaan_barang == (!empty($inputs[$key]['type']) ? $inputs[$key]['type'] : 0))
+                                                                    <option value="{{ $item->id }}" {{  in_array($item->id, $selectedItemId) ? 'disabled' : '' }}> {{ $item->code . ' ' . $item->klasifikasi_berlian}} </option>
+                                                                @endif
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->has($field_name))
@@ -189,7 +189,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if($inputs[$key]['type'] == 2)
+                                                @if($inputs[$key]['type'] == 1)
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'inputs.' . $key . '.accessories_id';
@@ -197,6 +197,7 @@
                                                         $field_placeholder = $field_lable;
                                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                         $required = '';
+                                                        // dd($dataAccessories);
                                                         ?>
                                                         @if ($key==$lowest_key)
                                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
