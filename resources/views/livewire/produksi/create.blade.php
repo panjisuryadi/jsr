@@ -450,8 +450,7 @@
                                         color: #333;
                                         background-color: #333;">
                                     <div class="flex flex-row grid grid-cols-4 gap-1 mt-2">
-
-                                        <div class="px-0 py-2 col-span-1">
+                                        <div class="px-0 py-2">
                                             <div class="form-group">
                                                 <div class="py-1">
                                                     <div class="form-check form-check-inline">
@@ -464,11 +463,11 @@
                                                     </div>
                                                 </div>
                                                 <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
-                                                    @livewire('goods-receipt-berlian.webcam')
+                                                @livewire('webcam', ['key' => 0], key('cam-'. 0))
                                                 </div>
                                                 <div id="upload1" wire:ignore>
                                                     <div class="form-group">
-
+                
                                                         <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                                             <div class="dz-message" data-dz-message>
                                                                 <i class="bi bi-cloud-arrow-up"></i>
@@ -476,6 +475,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @if ($errors->has('image'))
+                                                    <span class="invalid feedback" role="alert">
+                                                        <small class="text-danger">{{ $errors->first('image') }}</small class="text-danger">
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="flex flex-row col-span-2 grid grid-cols-2 gap-1 mt-2 ml-2">

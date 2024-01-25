@@ -8,24 +8,8 @@
 </ol>
 @endsection
 @section('content')
-@push('page_css')
-
-<style type="text/css">
-    .dropzone {
-        height: 280px !important;
-        min-height: 190px !important;
-        border: 2px dashed #FF9800 !important;
-        border-radius: 8px;
-        background: #ff98003d !important;
-    }
-
-    .dropzone i.bi.bi-cloud-arrow-up {
-        font-size: 5rem;
-        color: #bd4019 !important;
-    }
-</style>
-@endpush
 <div class="container-fluid">
+    <script src="{{  asset('js/jquery.min.js') }}"></script>
     @livewire('produksi.create',[
         'module_name' => $module_name,
         'module_action' => $module_action,
@@ -46,7 +30,7 @@
         url: "{{ route('dropzone.upload') }}",
         maxFilesize: 1,
         acceptedFiles: '.jpg, .jpeg, .png',
-        maxFiles: 3,
+        maxFiles: 1,
         addRemoveLinks: true,
         dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
         headers: {
@@ -91,6 +75,13 @@
             @endif
         }
     }
+
+    window.addEventListener('webcam-image:remove', event => {
+        $('#imageprev0').attr('src','');
+    });
+    window.addEventListener('uploaded-image:remove', event => {
+        Dropzone.forElement("div#document-dropzone").removeAllFiles(true);
+    });
 </script>
 
 @endpush
@@ -102,18 +93,13 @@
     (function($) {
 
         $('#up1').change(function() {
-            if( $(this).is(':checked') ) {
-                $('#upload2').toggle();
-                $('#upload1').hide();
-            }
+            $('#upload2').toggle();
+            $('#upload1').hide();
         });
         $('#up2').change(function() {
-            if( $(this).is(':checked') ) {
-                $('#upload1').toggle();
-                $('#upload2').hide();
-            }
+            $('#upload1').toggle();
+            $('#upload2').hide();
         });
-        
 
         $(document).ready(function() {
             $('.numeric').keypress(function(e) {
