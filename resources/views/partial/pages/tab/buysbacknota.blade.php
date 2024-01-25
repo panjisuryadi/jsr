@@ -11,7 +11,7 @@
                          
                         </tr>
         @php
-        $buybacknota =\Modules\BuysBack\Models\BuyBackNota::latest()->paginate(5);
+        $buybacknota =\Modules\BuysBack\Models\BuyBackNota::latest()->paginate(10);
        @endphp
 
                     @forelse($buybacknota as $row)

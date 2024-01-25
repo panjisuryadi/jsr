@@ -11,7 +11,9 @@
                         </tr>
 
               @php
-               $stockreadys = \Modules\Product\Entities\Product::ready()->latest()->paginate(2, ['*'], 'stockready');
+               $stockreadys = \Modules\Product\Entities\Product::ready()
+               ->latest()
+               ->paginate(10, ['*'], 'stockready');
               @endphp   
                     @forelse($stockreadys as $row)
                        {{--  @if($loop->index > 4)

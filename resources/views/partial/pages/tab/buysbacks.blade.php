@@ -14,7 +14,7 @@
                           
                         </tr>
                 @php
-                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(5, ['*'], 'buysbacks');
+                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(10, ['*'], 'buysbacks');
                 @endphp
                         @forelse($buysbacks as $sale)
                            {{--  @if($loop->index > 3)

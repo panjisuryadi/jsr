@@ -12,7 +12,7 @@
                 <th class="text-center">{{ label_case('Aksi') }}</th>
             </tr>
             @php
-            $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(2, ['*'], 'distribusitoko');
+            $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(10, ['*'], 'distribusitoko');
             @endphp
             @forelse($distribusitoko as $row)
             {{--     @if($loop->index > 4)

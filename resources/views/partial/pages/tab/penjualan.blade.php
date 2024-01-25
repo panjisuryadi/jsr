@@ -11,7 +11,7 @@
                         </tr>
 
                        @php
-            $penjualan = \Modules\Sale\Entities\Sale::akses()->latest()->paginate(5, ['*'], 'penjualan');
+            $penjualan = \Modules\Sale\Entities\Sale::akses()->latest()->paginate(10, ['*'], 'penjualan');
             @endphp   
                     @forelse($penjualan as $row)
                            
