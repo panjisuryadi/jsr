@@ -21,7 +21,7 @@
 
                            <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ tgl($row->created_at) }}</td>
+                                <td>{!!tgljam($row->created_at) !!}</td>
                                 <td>{{ @$row->product_name }}</td>
                                 <td>{{ @$row->karat?->label }}</td>
                                 <td>

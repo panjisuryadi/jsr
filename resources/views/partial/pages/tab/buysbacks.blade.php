@@ -24,7 +24,7 @@
 
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td class="text-blue-400">{{ shortdate($sale->date) }}</td>
+                            <td >{!!tgljam($sale->created_at) !!}</td>
                             <td>{{ $sale->no_buy_back }}</td>
                             <td>{{ $sale->cabang->name }}</td>
                             <td>{{ $sale->karat?->label }}</td>

@@ -5,7 +5,7 @@
                             <th class="text-center">{{ label_case('No') }}</th>
                             <th class="text-center">{{ label_case('Date') }}</th>
                             <th>{{ label_case('invoice_no') }}</th>
-                            <th>{{ label_case('Invoice Series') }}</th>
+                            <th class="text-center">{{ label_case('Invoice Series') }}</th>
                             <th>{{ label_case('Cabang') }}</th>
                             <th>{{ label_case('Pic') }}</th>
                          
@@ -17,9 +17,13 @@
                     @forelse($buybacknota as $row)
                            <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ shortdate($row->date) }}</td>
+                                <td>{!!tgljam($row->created_at) !!}</td>
                                 <td>{{ $row->invoice }}</td>
-                                <td>{{ $row->invoice_series }}</td>
+                                <td class="text-center">
+                                    <span class="btn btn-sm font-bold btn-warning text-dark">  
+                                        {{ $row->invoice_series }}</span>
+                                  
+                                </td>
                                 <td>{{ @$row->cabang->name }}</td>
                                 <td>{{ @$row->pic->name }}</td>
                           

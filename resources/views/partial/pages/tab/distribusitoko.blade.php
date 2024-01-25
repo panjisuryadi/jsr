@@ -3,7 +3,7 @@
         <table style="width: 100%;" class="table table-sm table-striped table-bordered">
             <tr>
                 <th class="text-center">{{ label_case('No') }}</th>
-                <th class="text-center">{{ label_case('Cabang') }}</th>
+             
                 <th class="text-center">{{ label_case('Date') }}</th>
                 <th class="text-center">{{ label_case('Invoice') }}</th>
                 <th class="text-center">{{ label_case('Items') }}</th>
@@ -22,8 +22,8 @@
             {{-- {{ $row }} --}}
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $row->cabang->name }}</td>
-                <td>{{ shortdate($row->date) }}</td>
+               
+                <td>{!!tgljam($row->created_at) !!}</td>
                 <td>{{ $row->no_invoice }}</td>
                 <td>{{ $row->items->count() }}</td>
                 <td>
