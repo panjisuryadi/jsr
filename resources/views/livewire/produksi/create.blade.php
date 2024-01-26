@@ -220,6 +220,7 @@
 
                                                 @if(!empty($inputs[$key]['id_items']))
                                                     @php
+                                                    
                                                         $id_items = (int) $inputs[$key]['id_items'];
                                                         $colour = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['colour']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['colour'] : '-';
                                                         $clarity = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['clarity']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['clarity'] : '-';
@@ -227,17 +228,20 @@
                                                         $klasifikasi_berlian = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['klasifikasi_berlian']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['klasifikasi_berlian'] : '-';
                                                         $karatberlians = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['amount']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['amount'] : 0;
                                                         $karatberlians_terpakai = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['amount_used']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['amount_used'] : 0;
+                                                        $harga_beli = $dataPenerimaanBerlianArray[$id_items]['harga_beli'];
                                                         $sisa_stok = $karatberlians - $karatberlians_terpakai;
                                                         $inputs[$key]['sisa_stok'] = $sisa_stok;
+                                                        dd($dataPenerimaanBerlianArray[$id_items]['harga_beli']);
                                                     @endphp
-                                                    @if(!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 2)
-                                                    <div class="form-group">
-                                                        Colour : {{ $colour }} <br>
-                                                        Clarity : {{ $clarity }} <br>
-                                                        Shape : {{ $shape }} <br>
-                                                        Size : {{ $klasifikasi_berlian }} <br>
-                                                        Sisa Stok : {{ $sisa_stok }}
-                                                    </div>
+                                                    @if(!empty($inputs[$key]['type']))
+                                                        <div class="form-group">
+                                                            {{-- Colour : {{ $colour }} <br>
+                                                            Clarity : {{ $clarity }} <br>
+                                                            Shape : {{ $shape }} <br>
+                                                            Size : {{ $klasifikasi_berlian }} <br>
+                                                            Sisa Stok : {{ $sisa_stok }} --}}
+                                                            Harga Beli : {{ $harga_beli }}
+                                                        </div>
                                                     @endif
                                                 @endif
 
@@ -266,26 +270,6 @@
                                                     </span>
                                                     @endif
                                                 </div>
-
-                                                {{-- <div class="form-group">
-                                                    @php
-                                                    $field_name = 'inputs.' . $key . '.shapeberlian_id';
-                                                    $field_lable = __('Shape');
-                                                    $field_placeholder = Label_case($field_lable);
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $required = '';
-                                                    @endphp
-                                                    @if ($key==$lowest_key)
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    @endif
-                                                    <input class="form-control" type="hidden" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
-
-                                                    @if ($errors->has($field_name))
-                                                    <span class="invalid feedback" role="alert">
-                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                                    </span>
-                                                    @endif
-                                                </div> --}}
 
                                                 <div class="form-group">
                                                     @php

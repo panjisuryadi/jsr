@@ -94,6 +94,7 @@ class Create extends Component
     ];
 
     public $currentKey;
+    public $dataPembelianQc;
     public $tmpCertificate = [];
 
     public $hari_ini;
@@ -140,6 +141,7 @@ class Create extends Component
         $this->dataKarat = Karat::whereNull('parent_id')->get();
         $this->dataKaratBerlian = KaratBerlian::all();
         $this->dataShapes = ShapeBerlian::all();
+        $this->dataPembelianQc = GoodsReceipt::all();
         $this->dataGroup = Group::all();
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
