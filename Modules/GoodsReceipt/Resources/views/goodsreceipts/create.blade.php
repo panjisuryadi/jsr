@@ -62,6 +62,7 @@
             $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
             uploadedDocumentMap[file.name] = response.name;
             Livewire.emit('imageUploaded',response.name);
+            console.log(response.name);
         },
         removedfile: function(file) {
             file.previewElement.remove();

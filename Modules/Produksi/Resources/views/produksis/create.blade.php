@@ -7,21 +7,37 @@
     <li class="breadcrumb-item active">Add</li>
 </ol>
 @endsection
+@push('page_css')
+    <style type="text/css">
+        .dropzone {
+            height: 280px !important;
+            min-height: 190px !important;
+            border: 2px dashed #FF9800 !important;
+            border-radius: 8px;
+            background: #ff98003d !important;
+        }
+
+        .dropzone i.bi.bi-cloud-arrow-up {
+            font-size: 5rem;
+            color: #bd4019 !important;
+        }
+    </style>
+@endpush
 @section('content')
-<div class="container-fluid">
-    <script src="{{  asset('js/jquery.min.js') }}"></script>
-    @livewire('produksi.create',[
-        'module_name' => $module_name,
-        'module_action' => $module_action,
-        'module_title' => $module_title,
-        'module_model' => $module_model
-    ])
-</div>
+    <div class="container-fluid">
+        <script src="{{  asset('js/jquery.min.js') }}"></script>
+        @livewire('produksi.create',[
+            'module_name' => $module_name,
+            'module_action' => $module_action,
+            'module_title' => $module_title,
+            'module_model' => $module_model
+        ])
+    </div>
 @endsection
 <x-library.select2 />
 <x-toastr />
 @section('third_party_scripts')
-<script src="{{ asset('js/dropzone.js') }}"></script>
+    <script src="{{ asset('js/dropzone.js') }}"></script>
 @endsection
 @push('page_scripts')
 <script>
@@ -37,7 +53,7 @@
             "X-CSRF-TOKEN": "{{ csrf_token() }}"
         },
         success: function(file, response) {
-            $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
+            $('form').append('<input type="text" name="document[]" value="' + response.name + '">');
             uploadedDocumentMap[file.name] = response.name;
             Livewire.emit('imageUploaded',response.name);
         },
@@ -70,7 +86,7 @@
                 this.options.addedfile.call(this, file);
                 this.options.thumbnail.call(this, file, file.original_url);
                 file.previewElement.classList.add('dz-complete');
-                $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+                $('form').append('<input type="text" name="document[]" value="' + file.file_name + '">');
             }
             @endif
         }

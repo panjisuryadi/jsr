@@ -89,7 +89,7 @@ class PenerimaanQc extends Component
     public $dataCurrency = [];
     public $dataKlasifikasiBerlian = [];
     public $currentKey;
-    
+
     public $sertifikat = [];
 
     protected $listeners = [
@@ -97,8 +97,9 @@ class PenerimaanQc extends Component
         'webcamReset' => 'handleWebcamReset'
     ];
 
-    public function handleWebcamCaptured($data_uri){
-        $this->image= $data_uri;
+    public function handleWebcamCaptured($data_uri)
+    {
+        $this->image = $data_uri;
     }
 
     public function mount()
@@ -120,7 +121,6 @@ class PenerimaanQc extends Component
         $this->dataCertificateAttribute = DiamondCertificateAttributes::where('status', 1)->get();
 
         $this->inputs[0]['code'] = $this->generateCodeItems(0);
-
     }
 
     public function addInput()
@@ -216,7 +216,7 @@ class PenerimaanQc extends Component
         //     $rules['karat_id'] = 'required';
         // }
 
-        if(!empty($this->karat_id)) {
+        if (!empty($this->karat_id)) {
             foreach ($this->inputs as $key => $value) {
                 $rules['inputs.' . $key . '.karatberlians'] = 'required';
                 $rules['inputs.' . $key . '.qty'] = 'required|gt:0';
@@ -236,13 +236,12 @@ class PenerimaanQc extends Component
     {
         $this->validate();
         $total_karat = 0;
-        if(!empty($this->inputs)) {
+        if (!empty($this->inputs)) {
 
             foreach ($this->inputs as $k => $item) {
                 $total_karat += !empty($item['karatberlians']) ? $item['karatberlians'] : 0;
                 $this->inputs[$k]['sertifikat'] = !empty($this->sertifikat[$k]) ? $this->sertifikat[$k] : [];
             }
-
         }
 
         $data = [
@@ -253,10 +252,10 @@ class PenerimaanQc extends Component
             'supplier_id' => $this->supplier_id,
             'karat_id' => $this->karat_id,
             'model_id' => $this->model_id,
-            'tipe_pembayaran'=>$this->tipe_pembayaran,
+            'tipe_pembayaran' => $this->tipe_pembayaran,
             'tanggal' => $this->tanggal,
-            'cicil' => $this->tipe_pembayaran == 'cicil'? $this->cicil : 0,
-            'tgl_jatuh_tempo' => $this->tipe_pembayaran == 'jatuh_tempo'? $this->tgl_jatuh_tempo : null,
+            'cicil' => $this->tipe_pembayaran == 'cicil' ? $this->cicil : 0,
+            'tgl_jatuh_tempo' => $this->tipe_pembayaran == 'jatuh_tempo' ? $this->tgl_jatuh_tempo : null,
             'berat_timbangan' => $this->berat_timbangan,
             'selisih' => $this->selisih,
             'catatan' => $this->catatan,
@@ -274,11 +273,10 @@ class PenerimaanQc extends Component
             'currency_id' => $this->currency_id,
             'detail_cicilan' => $this->detail_cicilan,
         ];
-        
+
         $request = new Request($data);
         $controller = new GoodsReceiptBerliansController();
         $store = $controller->store_qc($request);
-
     }
 
 
@@ -304,42 +302,47 @@ class PenerimaanQc extends Component
         }
     }
 
-    public function imageUploaded($fileName){
+    public function imageUploaded($fileName)
+    {
         $this->document[] = $fileName;
     }
 
-    public function imageRemoved($fileName){
-        $this->document = array_filter($this->document, function($file) use ($fileName){
+    public function imageRemoved($fileName)
+    {
+        $this->document = array_filter($this->document, function ($file) use ($fileName) {
             return $file != $fileName;
         });
     }
 
-    public function getMinCicilDate($key){
-        if(in_array($key-1,array_keys($this->detail_cicilan))){
-            $minCicilDate = new DateTime($this->detail_cicilan[$key-1]);
+    public function getMinCicilDate($key)
+    {
+        if (in_array($key - 1, array_keys($this->detail_cicilan))) {
+            $minCicilDate = new DateTime($this->detail_cicilan[$key - 1]);
             return $minCicilDate->modify("+1 day")->format("Y-m-d");
-        }else{
+        } else {
             return $this->hari_ini;
         }
     }
 
-    public function resetDetailCicilanAfterwards($key){
-        for ($i=$key+1; $i <= count($this->detail_cicilan) ; $i++) { 
+    public function resetDetailCicilanAfterwards($key)
+    {
+        for ($i = $key + 1; $i <= count($this->detail_cicilan); $i++) {
             $this->detail_cicilan[$i] = "";
         }
     }
 
-    public function setImageFromWebcam($image) {
+    public function setImageFromWebcam($image)
+    {
         $this->image = $image;
     }
 
-    public function clearHarga($key=null)
+    public function clearHarga($key = null)
     {
-        if(!is_null($key)) {
-            if(isset($this->inputs[$key]['harga_beli'])){
+        if (!is_null($key)) {
+            if (isset($this->inputs[$key]['harga_beli'])) {
                 $this->inputs[$key]['harga_beli'] = 0;
             }
-        }else{
+        } else {
             $this->harga_beli = 0;
         }
     }
@@ -352,19 +355,17 @@ class PenerimaanQc extends Component
         $orderCode = $dateCode . $penerimaan_code_number .  '001';
         $lastkey = array_key_last($this->inputs);
         $lastGrCode = '';
-        if(!empty($this->inputs[$lastkey]['code'])) {
+        if (!empty($this->inputs[$lastkey]['code'])) {
             $lastGrCode = $this->inputs[$lastkey]['code'];
             $lastOrderNumber = str_replace($dateCode . $penerimaan_code_number, '', $lastGrCode);
             $nextOrderNumber = sprintf('%03d', (int)$lastOrderNumber + 1);
             $orderCode = $dateCode . $penerimaan_code_number . $nextOrderNumber;
             return $orderCode;
-
-        }else{
+        } else {
             return $orderCode;
         }
         if ($lastGrCode) {
         }
-
     }
 
 
@@ -375,9 +376,8 @@ class PenerimaanQc extends Component
     }
 
 
-    public function handleWebcamReset(){
+    public function handleWebcamReset()
+    {
         $this->image = '';
     }
-
-    
 }

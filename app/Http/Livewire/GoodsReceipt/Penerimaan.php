@@ -67,22 +67,26 @@ class Penerimaan extends Component
 
     ];
 
-    public function handleWebcamCaptured($key,$data_uri){
+    public function handleWebcamCaptured($key, $data_uri)
+    {
         $this->image = $data_uri;
         $this->handleRemoveUploadedImage();
     }
 
-    public function handleWebcamReset($key = null){
+    public function handleWebcamReset($key = null)
+    {
         $this->image = '';
         $this->dispatchBrowserEvent('webcam-image:remove');
     }
 
-    public function handleUploadedImage($fileName){
+    public function handleUploadedImage($fileName)
+    {
         $this->uploaded_image = $fileName;
         $this->handleWebcamReset();
     }
 
-    public function handleRemoveUploadedImage(){
+    public function handleRemoveUploadedImage()
+    {
         $this->uploaded_image = '';
         $this->dispatchBrowserEvent('uploaded-image:remove');
     }
@@ -182,8 +186,8 @@ class Penerimaan extends Component
             $rules['inputs.' . $key . '.berat_kotor'] = 'required|gt:0';
         }
 
-        if($this->cicil != ''){
-            for($i=1;$i<=$this->cicil;$i++){
+        if ($this->cicil != '') {
+            for ($i = 1; $i <= $this->cicil; $i++) {
                 $rules['detail_cicilan.' . $i] = 'required_if:tipe_pembayaran,cicil';
             }
         }
@@ -201,16 +205,16 @@ class Penerimaan extends Component
     public function submit(Request $request)
     {
         $this->validate();
-
+        dd($this->image);
         $data = [
             'code' => $this->code,
             'no_invoice' => $this->no_invoice,
-            'pengirim'=>$this->pengirim,
+            'pengirim' => $this->pengirim,
             'supplier_id' => $this->supplier_id,
-            'tipe_pembayaran'=>$this->tipe_pembayaran,
+            'tipe_pembayaran' => $this->tipe_pembayaran,
             'tanggal' => $this->tanggal,
-            'cicil' => $this->tipe_pembayaran == 'cicil'?$this->cicil:0,
-            'tgl_jatuh_tempo' => $this->tipe_pembayaran == 'jatuh_tempo'? $this->tgl_jatuh_tempo : null,
+            'cicil' => $this->tipe_pembayaran == 'cicil' ? $this->cicil : 0,
+            'tgl_jatuh_tempo' => $this->tipe_pembayaran == 'jatuh_tempo' ? $this->tgl_jatuh_tempo : null,
             'berat_timbangan' => $this->berat_timbangan,
             'selisih' => $this->selisih,
             'catatan' => $this->catatan,
@@ -252,31 +256,36 @@ class Penerimaan extends Component
         }
     }
 
-    public function calculateSelisih(){
-        $this->selisih = round(doubleval($this->berat_timbangan) - $this->total_berat_real,3);
+    public function calculateSelisih()
+    {
+        $this->selisih = round(doubleval($this->berat_timbangan) - $this->total_berat_real, 3);
     }
 
-    public function imageUploaded($fileName){
+    public function imageUploaded($fileName)
+    {
         $this->document[] = $fileName;
     }
 
-    public function imageRemoved($fileName){
-        $this->document = array_filter($this->document, function($file) use ($fileName){
+    public function imageRemoved($fileName)
+    {
+        $this->document = array_filter($this->document, function ($file) use ($fileName) {
             return $file != $fileName;
         });
     }
 
-    public function getMinCicilDate($key){
-        if(in_array($key-1,array_keys($this->detail_cicilan))){
-            $minCicilDate = new DateTime($this->detail_cicilan[$key-1]);
+    public function getMinCicilDate($key)
+    {
+        if (in_array($key - 1, array_keys($this->detail_cicilan))) {
+            $minCicilDate = new DateTime($this->detail_cicilan[$key - 1]);
             return $minCicilDate->modify("+1 day")->format("Y-m-d");
-        }else{
+        } else {
             return $this->hari_ini;
         }
     }
 
-    public function resetDetailCicilanAfterwards($key){
-        for ($i=$key+1; $i <= count($this->detail_cicilan) ; $i++) { 
+    public function resetDetailCicilanAfterwards($key)
+    {
+        for ($i = $key + 1; $i <= count($this->detail_cicilan); $i++) {
             $this->detail_cicilan[$i] = "";
         }
     }
