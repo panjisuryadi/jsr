@@ -231,18 +231,18 @@
                                                         $harga_beli = $dataPenerimaanBerlianArray[$id_items]['harga_beli'];
                                                         $sisa_stok = $karatberlians - $karatberlians_terpakai;
                                                         $inputs[$key]['sisa_stok'] = $sisa_stok;
-                                                        dd($dataPenerimaanBerlianArray[$id_items]['harga_beli']);
+                                                        //dd($dataPenerimaanBerlianArray[$id_items]['harga_beli']);
                                                     @endphp
-                                                    @if(!empty($inputs[$key]['type']))
+                                                    {{-- @if(!empty($inputs[$key]['type']))
                                                         <div class="form-group">
-                                                            {{-- Colour : {{ $colour }} <br>
+                                                            Colour : {{ $colour }} <br>
                                                             Clarity : {{ $clarity }} <br>
                                                             Shape : {{ $shape }} <br>
                                                             Size : {{ $klasifikasi_berlian }} <br>
-                                                            Sisa Stok : {{ $sisa_stok }} --}}
+                                                            Sisa Stok : {{ $sisa_stok }}
                                                             Harga Beli : {{ $harga_beli }}
                                                         </div>
-                                                    @endif
+                                                    @endif --}}
                                                 @endif
 
                                                 <div class="form-group">
@@ -291,6 +291,13 @@
                                                     </span>
                                                     @endif
                                                 </div>
+
+                                                @if(!empty($inputs[$key]['type']))
+                                                    <div class="form-group">
+                                                        <p class="uppercase text-lg text-gray-600 mx-4 mt-4">
+                                                        Harga Beli : {{ $harga_beli ?? '' }} </p>
+                                                    </div>
+                                                @endif
 
                                                 {{-- <div class="form-group">
                                                     @php
