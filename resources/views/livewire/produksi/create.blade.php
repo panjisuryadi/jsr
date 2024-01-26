@@ -160,7 +160,7 @@
                                                     @endif
                                                 </div>
 
-                                                @if($inputs[$key]['type'] == 1)
+                                                @if($inputs[$key]['type'] == 2)
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'inputs.' . $key . '.id_items';
@@ -189,7 +189,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if($inputs[$key]['type'] == 2)
+                                                @if($inputs[$key]['type'] == 1)
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'inputs.' . $key . '.accessories_id';
