@@ -73,33 +73,70 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-3">
-                            <div class="card border-0">
-                                <div class="card-body p-0 d-flex align-items-center shadow-sm">
-                                    <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
-                                        <i class="bi bi-bar-chart font-2xl"></i>
-                                    </div>
-                                    <div>
-                                        <div class="text-value text-primary">{{ format_currency($total_harga) }}</div>
-                                        <div class="text-muted text-uppercase font-weight-bold small">
-                                            @lang('Purchases')
-                                        </div>
-                                    </div>
+                  
 
-                                    <div class="bg-gradient-primary p-4 mfe-3 rounded-left ml-2">
-                                        <i class="bi bi-bar-chart font-2xl"></i>
-                                    </div>
-                                    <div>
-                                        <div class="text-value text-primary">{{ formatBerat($total_emas) }} gr</div>
-                                        <div class="text-muted text-uppercase font-weight-bold small">
-                                            @lang('Gold')
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<div class="flex flex-row grid grid-cols-3 gap-3 mb-2">
+    
+
+              <div class="card border-0">
+                    <div class="card-body p-0 d-flex align-items-center shadow-sm">
+                        <div class="bg-gradient-primary p-4 mfe-3 rounded-left">
+                            <i class="bi bi-receipt font-2xl"></i>
+                        </div>
+                        <div>
+                            <div class="text-value text-primary">
+                            {{ format_currency($total_harga) }}</div>
+                            <div class="text-muted text-uppercase font-weight-bold">
+                            @lang('Purchases')
+                         </div>
                         </div>
                     </div>
+                </div>
+
+
+      <div class="card border-0">
+                    <div class="card-body p-0 d-flex align-items-center shadow-sm">
+                        <div class="bg-gradient-warning p-4 mfe-3 rounded-left">
+                            <i class="bi bi-bar-chart font-2xl"></i>
+
+                        </div>
+                        <div>
+                            <div class="text-value text-primary">
+                           {{ formatBerat($total_emas) }} <small>gr</small>
+                          </div>
+                            <div class="text-muted text-uppercase font-weight-bold">
+                               @lang('Gold')
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+      <div class="card border-0">
+                    <div class="card-body p-0 d-flex align-items-center shadow-sm">
+                        <div class="bg-gradient-success p-4 mfe-3 rounded-left">
+                         
+                            <i class="bi bi-currency-dollar font-2xl"></i>
+                        </div>
+                        <div>
+                            <div class="text-value text-primary">
+                             {{ format_currency($total_harga) }}</div>
+                            <div class="text-muted text-uppercase font-weight-bold">
+                           Pembelian <small class="text-muted">Dollar</small> </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+</div>
+
+
 
                     <table class="table table-bordered table-striped text-center mb-0">
                         <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
