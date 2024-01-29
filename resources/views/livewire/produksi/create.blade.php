@@ -160,7 +160,7 @@
                                                     @endif
                                                 </div>
 
-                                                @if($inputs[$key]['type'] == 1)
+                                                @if($inputs[$key]['type'] == 2)
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'inputs.' . $key . '.id_items';
@@ -189,7 +189,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if($inputs[$key]['type'] == 2)
+                                                @if($inputs[$key]['type'] == 1)
                                                     <div class="form-group">
                                                         <?php
                                                         $field_name = 'inputs.' . $key . '.accessories_id';
@@ -220,6 +220,7 @@
 
                                                 @if(!empty($inputs[$key]['id_items']))
                                                     @php
+                                                    
                                                         $id_items = (int) $inputs[$key]['id_items'];
                                                         $colour = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['colour']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['colour'] : '-';
                                                         $clarity = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['clarity']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['clarity'] : '-';
@@ -227,18 +228,21 @@
                                                         $klasifikasi_berlian = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['klasifikasi_berlian']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['klasifikasi_berlian'] : '-';
                                                         $karatberlians = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['amount']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['amount'] : 0;
                                                         $karatberlians_terpakai = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['amount_used']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['amount_used'] : 0;
+                                                        $harga_beli = $dataPenerimaanBerlianArray[$id_items]['harga_beli'];
                                                         $sisa_stok = $karatberlians - $karatberlians_terpakai;
                                                         $inputs[$key]['sisa_stok'] = $sisa_stok;
+                                                        //dd($dataPenerimaanBerlianArray[$id_items]['harga_beli']);
                                                     @endphp
-                                                    @if(!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 2)
-                                                    <div class="form-group">
-                                                        Colour : {{ $colour }} <br>
-                                                        Clarity : {{ $clarity }} <br>
-                                                        Shape : {{ $shape }} <br>
-                                                        Size : {{ $klasifikasi_berlian }} <br>
-                                                        Sisa Stok : {{ $sisa_stok }}
-                                                    </div>
-                                                    @endif
+                                                    {{-- @if(!empty($inputs[$key]['type']))
+                                                        <div class="form-group">
+                                                            Colour : {{ $colour }} <br>
+                                                            Clarity : {{ $clarity }} <br>
+                                                            Shape : {{ $shape }} <br>
+                                                            Size : {{ $klasifikasi_berlian }} <br>
+                                                            Sisa Stok : {{ $sisa_stok }}
+                                                            Harga Beli : {{ $harga_beli }}
+                                                        </div>
+                                                    @endif --}}
                                                 @endif
 
                                                 <div class="form-group">
@@ -267,26 +271,6 @@
                                                     @endif
                                                 </div>
 
-                                                {{-- <div class="form-group">
-                                                    @php
-                                                    $field_name = 'inputs.' . $key . '.shapeberlian_id';
-                                                    $field_lable = __('Shape');
-                                                    $field_placeholder = Label_case($field_lable);
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $required = '';
-                                                    @endphp
-                                                    @if ($key==$lowest_key)
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    @endif
-                                                    <input class="form-control" type="hidden" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}">
-
-                                                    @if ($errors->has($field_name))
-                                                    <span class="invalid feedback" role="alert">
-                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                                    </span>
-                                                    @endif
-                                                </div> --}}
-
                                                 <div class="form-group">
                                                     @php
                                                     $field_name = 'inputs.' . $key . '.qty';
@@ -307,6 +291,13 @@
                                                     </span>
                                                     @endif
                                                 </div>
+
+                                                @if(!empty($inputs[$key]['type']))
+                                                    <div class="form-group">
+                                                        <p class="uppercase text-lg text-gray-600 mx-4 mt-4">
+                                                        Harga Beli : {{ $harga_beli ?? '' }} </p>
+                                                    </div>
+                                                @endif
 
                                                 {{-- <div class="form-group">
                                                     @php
@@ -450,8 +441,7 @@
                                         color: #333;
                                         background-color: #333;">
                                     <div class="flex flex-row grid grid-cols-4 gap-1 mt-2">
-
-                                        <div class="px-0 py-2 col-span-1">
+                                        <div class="px-0 py-2">
                                             <div class="form-group">
                                                 <div class="py-1">
                                                     <div class="form-check form-check-inline">
@@ -464,11 +454,11 @@
                                                     </div>
                                                 </div>
                                                 <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
-                                                    @livewire('goods-receipt-berlian.webcam')
+                                                @livewire('webcam', ['key' => 0], key('cam-'. 0))
                                                 </div>
                                                 <div id="upload1" wire:ignore>
                                                     <div class="form-group">
-
+                
                                                         <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                                             <div class="dz-message" data-dz-message>
                                                                 <i class="bi bi-cloud-arrow-up"></i>
@@ -476,6 +466,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @if ($errors->has('image'))
+                                                    <span class="invalid feedback" role="alert">
+                                                        <small class="text-danger">{{ $errors->first('image') }}</small class="text-danger">
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="flex flex-row col-span-2 grid grid-cols-2 gap-1 mt-2 ml-2">
@@ -864,27 +859,3 @@
     </form>
     </div>
 </div>
-
-@push('page_scripts')
-    <script type="text/javascript">
-
-        function showModal(key) {
-            $("#singleSertifikatModal").modal('show')
-        }
-
-        $('#up1').change(function() {
-                if( $(this).is(':checked') ) {
-                    $('#upload2').toggle();
-                    $('#upload1').hide();
-                }
-            });
-        $('#up2').change(function() {
-            if( $(this).is(':checked') ) {
-                $('#upload1').toggle();
-                $('#upload2').hide();
-            }
-        });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-
-@endpush
