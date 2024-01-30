@@ -234,7 +234,7 @@
                                                         $inputs[$key]['sisa_stok'] = $sisa_stok;
                                                         //dd($dataPenerimaanBerlianArray[$id_items]['harga_beli']);
                                                     @endphp
-                                                    @if(!empty($inputs[$key]['type']))
+                                                    {{-- @if(!empty($inputs[$key]['type']))
                                                         <div class="form-group">
                                                             Colour : {{ $colour }} <br>
                                                             Clarity : {{ $clarity }} <br>
@@ -243,7 +243,7 @@
                                                             Sisa Stok : {{ $sisa_stok }}
                                                             Harga Beli : {{ $harga_beli ?? 0 }}
                                                         </div>
-                                                    @endif
+                                                    @endif --}}
                                                 @endif
 
                                                 @if($inputs[$key]['type'] == 2)
