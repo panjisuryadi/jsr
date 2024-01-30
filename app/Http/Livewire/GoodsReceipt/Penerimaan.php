@@ -205,7 +205,7 @@ class Penerimaan extends Component
     public function submit(Request $request)
     {
         $this->validate();
-        dd($this->image);
+        // dd($this->image);
         $data = [
             'code' => $this->code,
             'no_invoice' => $this->no_invoice,

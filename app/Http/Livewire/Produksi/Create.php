@@ -110,6 +110,11 @@ class Create extends Component
     public $dataAccessories = [];
     public $dataAccessoriesArray = [];
 
+    public $dataPcs = [];
+    public $dataPcsArray = [];
+    public $selectedTotalKarat = '';
+
+
     public $dataSatuans = [];
 
     public function handleWebcamCaptured($key, $data_uri)
@@ -138,6 +143,7 @@ class Create extends Component
 
     public function mount()
     {
+        
         $this->dataKarat = Karat::whereNull('parent_id')->get();
         $this->dataKaratBerlian = KaratBerlian::all();
         $this->dataShapes = ShapeBerlian::all();
@@ -165,13 +171,21 @@ class Create extends Component
         $this->kategoriproduk_id = $this->id_kategoriproduk_berlian;
         $this->category_id = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->first()->value('id');
         $this->dataItemProduksi = ProduksiItems::with('model', 'karat')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
-        $this->dataPenerimaanBerlian = GoodsReceiptItem::with('goodsreceiptitem', 'accessories.accessories_berlian.shape')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
-        $this->dataPenerimaanBerlianArray = $this->dataPenerimaanBerlian->map(function ($data) {
+        $this->dataPcs = GoodsReceipt::where('tipe_penerimaan_barang', 1)->get();
+        $this->dataPcsArray = $this->dataPcs->map(function ($data) {
             return $data;
         })
             ->flatten()
             ->keyBy('id')
             ->toArray();
+            $this->dataPenerimaanBerlian = GoodsReceiptItem::with('goodsreceiptitem', 'accessories.accessories_berlian.shape')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
+            $this->dataPenerimaanBerlianArray = $this->dataPenerimaanBerlian->map(function ($data) {
+                return $data;
+            })
+            ->flatten()
+            ->keyBy('id')
+            ->toArray();
+            // dd($this->dataPcs);
         $this->dataGroupArray = $this->dataGroup->map(function ($data) {
             return $data;
         })
@@ -190,7 +204,8 @@ class Create extends Component
             ->flatten()
             ->keyBy('id')
             ->toArray();
-        $this->dataAccessories = Accessories::where('status', 1)->get();
+
+            $this->dataAccessories = Accessories::where('status', 1)->get();
 
         $this->dataAccessoriesArray = $this->dataAccessories->map(function ($data) {
             return $data;
@@ -614,5 +629,13 @@ class Create extends Component
                 $this->selectedAccItemId[$key] = !empty($row['accessories_id']) ? $row['accessories_id'] : '';
             }
         }
+    }
+    public function setSelectedPcs($key)
+    {
+        // Logika pemilihan item
+        $totalKaratPcs = $this->dataPcs[$key];
+
+        // Tetapkan nilai total_karat yang dipilih ke variabel
+        $this->selectedTotalKarat = $totalKaratPcs->total_karat;
     }
 }

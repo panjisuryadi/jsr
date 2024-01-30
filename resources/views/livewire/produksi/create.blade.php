@@ -204,10 +204,10 @@
 
                                                         <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }} wire:change="setSelectedItem({{ $key }})">
                                                             <option value="">Pilih </option>
-                                                            @foreach($dataAccessories as $item)
-                                                            @if($item->type ==1)
-                                                                <option value="{{ $item->id }}" {{  in_array($item->id, $selectedAccItemId) ? 'disabled' : '' }}> {{ $item->code . ' ' . $item->amount . 'ct ' . $item->accessories_berlian?->shape?->shape_name }} </option>
-                                                            @endif
+                                                            @foreach($dataPcs as $item)
+                                                            {{-- @if($item->type ==1) --}}
+                                                                <option value="{{ $item->id }}" {{  in_array($item->id, $selectedAccItemId) ? 'disabled' : '' }}> {{ $item->code . '' . $item->karat }} </option>
+                                                            {{-- @endif --}}
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->has($field_name))
@@ -228,76 +228,91 @@
                                                         $klasifikasi_berlian = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['klasifikasi_berlian']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['klasifikasi_berlian'] : '-';
                                                         $karatberlians = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['amount']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['amount'] : 0;
                                                         $karatberlians_terpakai = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['amount_used']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['amount_used'] : 0;
-                                                        $harga_beli = $dataPenerimaanBerlianArray[$id_items]['harga_beli'];
+                                                        $harga_beli = !empty($dataPenerimaanBerlianArray[$id_items]['harga_beli']) ? $dataPenerimaanBerlianArray[$id_items]['harga_beli'] : 0;
+                                                        $hagra_beli_pcs = !empty($dataPcsArray[$id_items]['harga_beli']) ? $dataPcsArray[$id_items]['harga_beli'] : 0;
                                                         $sisa_stok = $karatberlians - $karatberlians_terpakai;
                                                         $inputs[$key]['sisa_stok'] = $sisa_stok;
                                                         //dd($dataPenerimaanBerlianArray[$id_items]['harga_beli']);
                                                     @endphp
-                                                    {{-- @if(!empty($inputs[$key]['type']))
+                                                    @if(!empty($inputs[$key]['type']))
                                                         <div class="form-group">
                                                             Colour : {{ $colour }} <br>
                                                             Clarity : {{ $clarity }} <br>
                                                             Shape : {{ $shape }} <br>
                                                             Size : {{ $klasifikasi_berlian }} <br>
                                                             Sisa Stok : {{ $sisa_stok }}
-                                                            Harga Beli : {{ $harga_beli }}
+                                                            Harga Beli : {{ $harga_beli ?? 0 }}
                                                         </div>
-                                                    @endif --}}
+                                                    @endif
                                                 @endif
 
-                                                <div class="form-group">
-                                                    <?php
-                                                    $field_name = 'inputs.' . $key . '.amount';
-                                                    $field_lable = "Karat Berlian";
-                                                    $field_placeholder = $field_lable;
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $readonly = !empty($inputs[$key]['produksi_item_id']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
-                                                    $required = '';
-                                                    $field_name_shape = 'inputs.' . $key . '.shapeberlian_id';
-                                                    // $field_name_qty = 'inputs.' . $key . '.qty';
-
-                                                    ?>
-                                                    @if ($key==$lowest_key)
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    @endif
-                                                    <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" {{ $readonly }}>
-                                                    <input class="form-control" type="hidden" name="{{ $field_name_shape }}" id="{{ $field_name_shape }}" wire:model="{{ $field_name_shape }}">
-                                                    {{-- <input class="form-control" type="hidden" name="{{ $field_name_qty }}" id="{{ $field_name_qty }}" wire:model="{{ $field_name_qty }}"> --}}
-
-                                                    @if ($errors->has($field_name))
-                                                    <span class="invalid feedback" role="alert">
-                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                                    </span>
-                                                    @endif
-                                                </div>
-
-                                                <div class="form-group">
-                                                    @php
-                                                    $field_name = 'inputs.' . $key . '.qty';
-                                                    $field_lable = "Qty";
-                                                    $field_placeholder = $field_lable;
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $readonly = !empty($inputs[$key]['produksi_item_id']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
-                                                    $required = '';
-                                                    @endphp
-                                                    @if ($key==$lowest_key)
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    @endif
-                                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" {{ $readonly }}>
-
-                                                    @if ($errors->has($field_name))
-                                                    <span class="invalid feedback" role="alert">
-                                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                                    </span>
-                                                    @endif
-                                                </div>
-
-                                                @if(!empty($inputs[$key]['type']))
+                                                @if($inputs[$key]['type'] == 2)
                                                     <div class="form-group">
-                                                        <p class="uppercase text-lg text-gray-600 mx-4 mt-4">
-                                                        Harga Beli : {{ $harga_beli ?? '' }} </p>
+                                                        <?php
+                                                        $field_name = 'inputs.' . $key . '.amount';
+                                                        $field_lable = "Karat Berlian";
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $readonly = !empty($inputs[$key]['produksi_item_id']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
+                                                        $required = '';
+                                                        // $field_name_shape = 'inputs.' . $key . '.shapeberlian_id';
+                                                        // $field_name_qty = 'inputs.' . $key . '.qty';
+
+                                                        ?>
+                                                        @if ($key==$lowest_key)
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        @endif
+                                                        <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" {{ $readonly }}>
+                                                        {{-- <input class="form-control" type="hidden" name="{{ $field_name_shape }}" id="{{ $field_name_shape }}" wire:model="{{ $field_name_shape }}"> --}}
+                                                        {{-- <input class="form-control" type="hidden" name="{{ $field_name_qty }}" id="{{ $field_name_qty }}" wire:model="{{ $field_name_qty }}"> --}}
+
+                                                        @if ($errors->has($field_name))
+                                                        <span class="invalid feedback" role="alert">
+                                                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                        </span>
+                                                        @endif
                                                     </div>
-                                                @endif
+
+                                                    <div class="form-group">
+                                                        @php
+                                                        $field_name = 'inputs.' . $key . '.qty';
+                                                        $field_lable = "Qty";
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $readonly = !empty($inputs[$key]['produksi_item_id']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
+                                                        $required = '';
+                                                        @endphp
+                                                        @if ($key==$lowest_key)
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        @endif
+                                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}" placeholder="{{$field_lable}}" {{ $readonly }}>
+
+                                                        @if ($errors->has($field_name))
+                                                        <span class="invalid feedback" role="alert">
+                                                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                        </span>
+                                                        @endif
+                                                    </div>
+
+                                                    @endif
+                                                    <div class="form-group">
+                                                        @php
+                                                        $field_name = 'harga_beli';
+                                                        $field_lable = "Harga Beli";
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $readonly = !empty($inputs[$key]['harga_beli']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
+                                                        $required = '';
+                                                        @endphp           
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="{{ $harga_beli ?? $harga_beli_pcs ?? 0 }}" placeholder="{{$field_lable}}" {{ $readonly }} disabled>
+
+                                                        @if ($errors->has($field_name))
+                                                        <span class="invalid feedback" role="alert">
+                                                            <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                                        </span>
+                                                        @endif
+                                                    </div>
 
                                                 {{-- <div class="form-group">
                                                     @php
@@ -342,13 +357,12 @@
                                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                 </span>
                                             </button>
-                                            <button type="button" class="btn text-white text-sm btn-info btn-md" onclick="showModal()">
+                                            <button type="button" class="btn text-white text-sm btn-info btn-md" data-toggle="modal" data-target="#singleSertifikatModal">
                                                 <span > Input Sertifikat Perhiasan<i class="bi bi-plus"></i></span>
                                             </button>
                                         </div>
                                     </div>
                                     @endif
-
 
                                     <div class="py-2 mt-3">
                                         <p class="uppercase text-lg text-gray-600 font-semibold"> Aksesoris </p>

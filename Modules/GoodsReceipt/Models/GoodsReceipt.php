@@ -3,16 +3,17 @@
 namespace Modules\GoodsReceipt\Models;
 use Carbon\Carbon;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\People\Entities\Supplier;
-use Modules\GoodsReceipt\Models\GoodsReceiptItem;
-use Modules\GoodsReceipt\Models\TipePembelian;
 use App\Models\User;
-use Modules\GoodsReceiptBerlian\Models\GoodsReceiptQcAttribute;
 use Spatie\MediaLibrary\HasMedia;
+use Modules\People\Entities\Supplier;
+use Modules\Product\Entities\Product;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Modules\GoodsReceipt\Models\TipePembelian;
+use Modules\GoodsReceipt\Models\GoodsReceiptItem;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Modules\GoodsReceiptBerlian\Models\GoodsReceiptQcAttribute;
 
 class GoodsReceipt extends Model implements HasMedia
 {

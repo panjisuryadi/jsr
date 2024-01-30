@@ -70,7 +70,7 @@ class PenerimaanQc extends Component
         ]
     ];
 
-    public $total_berat_real = 0;
+    public $total_berat_real ;
     public $total_berat_kotor = 0;
     public $dataSupplier = [];
     public $dataKarat = [];
@@ -176,6 +176,7 @@ class PenerimaanQc extends Component
         $rules = [
             'code' => 'required',
             'supplier_id' => 'required',
+            // 'no_invoice' => 'required',
             // 'nama_produk' => 'required',
             'tanggal' => [
                 'required',
@@ -189,6 +190,9 @@ class PenerimaanQc extends Component
                     }
                 }
             ],
+            // 'karat_id' => 'required',
+            // 'model_id' => 'required',
+            // 'total_berat_real' => 'required',
             'tipe_pembayaran' => 'required',
             'cicil' => 'required_if:tipe_pembayaran,cicil',
             'tgl_jatuh_tempo' => [
