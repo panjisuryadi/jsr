@@ -90,14 +90,14 @@
 <div style="margin:0 auto">
     <div style="color:red;" id="receipt-data">
         <div class="centered">
-            <h2 style="margin-bottom: 5px">{{ settings()->company_name }}</h2>
+            <h5 style="margin-bottom: 5px">{{ settings()->company_name }}</h5>
 
-            <p style="font-size: 14px;line-height: 15px;margin-top: 0">
+            <p style="font-size: 12px;line-height: 15px;margin-top: 0">
                 {{ settings()->company_email }}, {{ settings()->company_phone }}
                 <br>{{ settings()->company_address }}
             </p>
         </div>
-        <p style="font-size: 14px;line-height: 15px;margin-top: 0">
+        <p style="font-size: 12px;line-height: 15px;margin-top: 0">
             Tanggal: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}<br>
             Invoice: {{ $sale->reference }}
             <br>
@@ -165,6 +165,17 @@
         </tr>
 
 
+
+           @if($saleDetail->note)
+            <tr>
+                <td colspan ='7'>
+                    <div class="text-danger">Note</div>
+                    <div class="text-danger">
+                        {{ $saleDetail->note }}</div>
+                 
+                </td>
+            </tr> 
+           @endif
 
 
 
