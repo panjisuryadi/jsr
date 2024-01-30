@@ -1087,7 +1087,10 @@ public function approve_distribusi(Request $request, $id)
 
     public function index_data_emas(Request $request)
     {
-        $module_name = $this->module_model::gold()->orderBy('updated_at','desc')->get();
+        // $module_name = $this->module_model::gold()->latest()
+        // ->orderBy('created_ats','desc')->get();
+
+         $module_name = $this->module_model::latest()->get();
 
         return Datatables::of($module_name)
             ->addColumn('action', function ($data) {

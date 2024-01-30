@@ -1,7 +1,7 @@
         <div class="pt-3">
 
 
-<table style="width: 100%;" class="table table-striped table-bordered">
+<table style="width: 100%;" class="table table-sm table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
                             <th>{{ label_case('no_buys_back') }}</th>
@@ -14,7 +14,7 @@
                           
                         </tr>
                 @php
-                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(5, ['*'], 'buysbacks');
+                  $buysbacks = \Modules\BuysBack\Models\BuysBack::latest()->paginate(10, ['*'], 'buysbacks');
                 @endphp
                         @forelse($buysbacks as $sale)
                            {{--  @if($loop->index > 3)
@@ -24,7 +24,7 @@
 
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td class="text-blue-400">{{ shortdate($sale->date) }}</td>
+                            <td >{!!tgljam($sale->created_at) !!}</td>
                             <td>{{ $sale->no_buy_back }}</td>
                             <td>{{ $sale->cabang->name }}</td>
                             <td>{{ $sale->karat?->label }}</td>

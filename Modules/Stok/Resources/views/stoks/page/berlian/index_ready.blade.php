@@ -26,38 +26,6 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2 mb-3 px-3 py-2 mt-2 rounded-md border border-gray-300">
-                        @if (count($datakarat))
-                            {{-- <div class="py-2 px-2 font-semibold flex flex-col justify-center">
-                                <p class="text-gray-400 text-lg">Karat : <span class="text-gray-800" id="karat"></span></p>
-                                <p class="text-gray-400 text-lg">Jumlah Stok : <span class="text-gray-800" id="sisa-stok"></span></p>
-                            </div> --}}
-                            <div>
-                            @if (!auth()->user()->isUserCabang())
-                                <div class="form-group">
-                                    <label for="cabang_filter" class="font-bold mb-0">Cabang</label>
-                                    <select name="cabang_filter" id="cabang_filter" class="form-control">
-                                        <option value="" selected>Pilih Cabang</option>
-                                        @foreach ($dataCabang as $cabang )
-                                        <option value="{{$cabang->id}}">{{ $cabang->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            @endif
-                            {{-- <div class="form-group">
-                                <label for="karat_filter" class="mb-0 font-semibold">Karat</label>
-                                <select name="karat_filter" id="karat_filter" class="form-control">
-                                    <option value="" selected>Pilih Karat</option>
-                                    @foreach ($datakarat as $karat )
-                                        <option value="{{$karat->id}}">{{ $karat->label }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
-                        @endif
-                    </div>
-
-                </div>
-                    
                 <div class="table-responsive mt-1">
 
                     <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">

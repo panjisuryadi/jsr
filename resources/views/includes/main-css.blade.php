@@ -259,21 +259,36 @@ button:focus {
     border-radius: 0.2rem;
 }
 
-
-
-
-
-
-
-
-.table-sm td, .table-sm th {
-    padding: 0.3rem !important;
+.text-xs {
+    font-size: 0.65rem !important;
+    line-height: 1rem !important;
 }
+
+.text-jsr {
+    color: #ee0086 !important;
+   
+}
+
+.table-sm td {
+    padding: 0.3rem 0.5rem 0.3rem 0.5rem!important;
+   
+     font-size: 0.8rem !important;
+}
+
+
+.table-sm th {
+    padding: 0.5rem 0.3rem 0.5rem 0.3rem!important;
+   
+     font-size: 0.8rem !important;
+}
+
+
 
 @media (max-width: 767.98px) { 
  .table-sm th,
  .table-sm td {
-     padding: 0.3rem !important;
+      padding: 0.3rem 0.5rem 0.3rem 0.5rem!important;
+      font-size: 0.8rem !important;
   }
 }
 

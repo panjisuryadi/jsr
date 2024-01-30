@@ -1,9 +1,9 @@
           <div class="pt-3">
            
-        <table style="width: 100%;" class="table table-striped table-bordered">
+        <table style="width: 100%;" class="table table-sm table-striped table-bordered">
             <tr>
                 <th class="text-center">{{ label_case('No') }}</th>
-                <th class="text-center">{{ label_case('Cabang') }}</th>
+             
                 <th class="text-center">{{ label_case('Date') }}</th>
                 <th class="text-center">{{ label_case('Invoice') }}</th>
                 <th class="text-center">{{ label_case('Items') }}</th>
@@ -12,7 +12,7 @@
                 <th class="text-center">{{ label_case('Aksi') }}</th>
             </tr>
             @php
-            $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(2, ['*'], 'distribusitoko');
+            $distribusitoko = \Modules\DistribusiToko\Models\DistribusiToko::inprogress()->latest()->paginate(10, ['*'], 'distribusitoko');
             @endphp
             @forelse($distribusitoko as $row)
             {{--     @if($loop->index > 4)
@@ -22,8 +22,8 @@
             {{-- {{ $row }} --}}
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $row->cabang->name }}</td>
-                <td>{{ shortdate($row->date) }}</td>
+               
+                <td>{!!tgljam($row->created_at) !!}</td>
                 <td>{{ $row->no_invoice }}</td>
                 <td>{{ $row->items->count() }}</td>
                 <td>
