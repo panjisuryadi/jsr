@@ -39,6 +39,9 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\Product\Models\Penyusutan;
+use Modules\Produksi\Models\DiamondCertificateAttribute;
+use Modules\Produksi\Models\DiamondCertificateAttributes;
+use Modules\Produksi\Models\DiamondCertifikatT;
 
 class ProductController extends Controller
 {
@@ -1697,6 +1700,76 @@ class ProductController extends Controller
     }
 
 
+
+    public function showSertifikat($id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Show';
+        abort_if(Gate::denies('show_' . $module_name . ''), 403);
+        $product = $module_model::akses()->with('product_item.karat.penentuanHarga')->where('id', $id)->first();
+        $diamondCertifikatT = DiamondCertifikatT::where('id', $product->diamond_certificate_id)->first();
+        // $diamondCertifikatAttribute = DiamondCertificateAttribute::where('diamond_certificate_id', $diamondCertifikatT->id)->get();
+        $diamondCertifikatAttribute = DB::table('diamond_certificate_attributes_t')
+        ->join('diamond_certificate_attributes_m', 'diamond_certificate_attributes_t.diamond_certificate_attributes_id', '=', 'diamond_certificate_attributes_m.id')
+        ->where('diamond_certificate_attributes_t.diamond_certificate_id', $diamondCertifikatT->id)
+        ->select('diamond_certificate_attributes_t.*', 'diamond_certificate_attributes_m.name as name')
+        ->get();
+        $detail = $module_model::where('id', $id)->first();
+
+        //dd($detail);
+        return view(
+            'product::products.modal.show_sertifikat',
+            compact(
+                'module_name',
+                'module_action',
+                'product',
+                'detail',
+                'diamondCertifikatAttribute',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
+    }
+
+    public function printSertifikat($id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        
+        $product = $module_model::akses()->with('product_item.karat.penentuanHarga')->where('id', $id)->first();
+        $diamondCertifikatT = DiamondCertifikatT::where('id', $product->diamond_certificate_id)->first();
+        // $diamondCertifikatAttribute = DiamondCertificateAttribute::where('diamond_certificate_id', $diamondCertifikatT->id)->get();
+        $diamondCertifikatAttribute = DB::table('diamond_certificate_attributes_t')
+        ->join('diamond_certificate_attributes_m', 'diamond_certificate_attributes_t.diamond_certificate_attributes_id', '=', 'diamond_certificate_attributes_m.id')
+        ->where('diamond_certificate_attributes_t.diamond_certificate_id', $diamondCertifikatT->id)
+        ->select('diamond_certificate_attributes_t.*', 'diamond_certificate_attributes_m.name as name')
+        ->take(6)
+        ->get();
+        $image = $product->images;
+        if (empty($image)) {
+            $imagePath = public_path('images/fallback_product_image.png');
+         } else {
+            $imagePath = public_path('storage/uploads/'.$image.'');
+         }
+        $detail = $module_model::where('id', $id)->first();
+        
+        // $customPaper = 'A4';
+        $customPaper = array(0, 0, 120, 420);
+        $barcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($product->product_code));
+
+        $pdf = PDF::loadView('product::barcode.print_sertifikat', compact('product', 'barcode', 'diamondCertifikatAttribute', 'imagePath'))
+            ->setPaper($customPaper, 'landscape');
+        return $pdf->stream('barcodes-' . $product->product_code . '.pdf');
+    }
 
     public function show_distribusi($id)
     {
