@@ -153,14 +153,18 @@ class Product extends Model implements HasMedia
                 ->first();
 
 
-
+            $rand = rand(0, 99999999);
             $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
             $orderCode = $dateCode . '001';
             if ($lastOrderCode) {
                 $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
-                $nextOrderNumber = sprintf('%03d', (int)$lastOrderNumber + 1);
+                $nextOrderNumber = sprintf('%03d', (int)$rand + 1);
                 $orderCode = $dateCode . $nextOrderNumber;
             }
+
+            if (self::_isUniqueCodeExists($orderCode)) {
+                return self::generateUnique();
+             }
             return $orderCode;
         }
 
@@ -282,11 +286,6 @@ class Product extends Model implements HasMedia
     public function sale_detail(){
         return $this->hasone(SaleDetails::class, 'product_id', 'id');
     }
-
-    public function getDetailProduksiBerlian(){
-        return $this->detailProduksi();
-    }
-
 
 
 
