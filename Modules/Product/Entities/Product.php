@@ -163,7 +163,7 @@ class Product extends Model implements HasMedia
             }
 
             if (self::_isUniqueCodeExists($orderCode)) {
-                return self::generateUnique();
+                return self::generateCode();
              }
             return $orderCode;
         }
@@ -296,8 +296,8 @@ class Product extends Model implements HasMedia
     {
       $dateCode = self::PRODUKCODE . '-';
 
-      $lastOrder = self::select([\DB::raw('MAX(products.code) AS last_code')])
-         ->where('code', 'like', $dateCode . '%')
+      $lastOrder = self::select([\DB::raw('MAX(products.product_code) AS last_code')])
+         ->where('product_code', 'like', $dateCode . '%')
          ->first();
 
       $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
@@ -325,7 +325,7 @@ class Product extends Model implements HasMedia
 
    private static function _isUniqueCodeExists($UniqueCode)
    {
-      return Product::where('code', '=', $UniqueCode)->exists();
+      return Product::where('product_code', '=', $UniqueCode)->exists();
    }
 
 
