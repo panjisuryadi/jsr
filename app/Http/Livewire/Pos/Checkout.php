@@ -531,7 +531,7 @@ class Checkout extends Component
                 'stock'                 => 1,
                 'unit'                  => $product->product_unit,
                 'karat_id'              => $product->karat_id,
-                'karat'                 => $product->karat->label,
+                'karat'                 => $product->karat->label ?? '',
                 'harga_jual'            => $this->HitungHarga($product),
                 'berat_emas'            => $product->berat_emas,
                 'images'                => $product->images,

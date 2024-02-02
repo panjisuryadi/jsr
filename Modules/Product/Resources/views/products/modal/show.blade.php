@@ -70,9 +70,6 @@
                 <td>{{ number_format(@$product->product_item[0]->karat->PenentuanHarga->harga_emas) }} </td>
             </tr>
             
-      
-            
-            
             <tr>
                 <th>Note</th>
                 <td>{{ $product->product_note ?? 'N/A' }}</td>

@@ -1713,7 +1713,7 @@ class ProductController extends Controller
         abort_if(Gate::denies('show_' . $module_name . ''), 403);
         $product = $module_model::akses()->with('product_item.karat.penentuanHarga')->where('id', $id)->first();
         $diamondCertifikatT = DiamondCertifikatT::where('id', $product->diamond_certificate_id)->first();
-        // $diamondCertifikatAttribute = DiamondCertificateAttribute::where('diamond_certificate_id', $diamondCertifikatT->id)->get();
+
         $diamondCertifikatAttribute = DB::table('diamond_certificate_attributes_t')
         ->join('diamond_certificate_attributes_m', 'diamond_certificate_attributes_t.diamond_certificate_attributes_id', '=', 'diamond_certificate_attributes_m.id')
         ->where('diamond_certificate_attributes_t.diamond_certificate_id', $diamondCertifikatT->id)

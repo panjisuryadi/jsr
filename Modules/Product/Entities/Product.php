@@ -16,6 +16,7 @@ use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Models\ProductAccessories;
@@ -72,6 +73,10 @@ class Product extends Model implements HasMedia
     }
     public function pembelian() {
         return $this->belongsTo(GoodsReceipt::class, 'goodsreceipt_id', 'id');
+    }
+
+    public function detailProduksi() {
+        return $this->belongsTo(GoodsReceiptItem::class, 'goodsreceipt_id', 'id');
     }
 
     public function cabang() {
@@ -146,6 +151,9 @@ class Product extends Model implements HasMedia
                 ->withTrashed()
                 ->where('product_code', 'like', $dateCode . '%')
                 ->first();
+
+
+
             $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
             $orderCode = $dateCode . '001';
             if ($lastOrderCode) {
@@ -203,7 +211,7 @@ class Product extends Model implements HasMedia
             $query->where('status_id', ProductStatus::PENDING_CABANG);
             if(auth()->user()->isUserCabang()){
                 $query->where('cabang_id',auth()->user()->namacabang()->id);
-            }
+            }   
        }
 
        public function scopeCuci($query){
@@ -273,6 +281,10 @@ class Product extends Model implements HasMedia
 
     public function sale_detail(){
         return $this->hasone(SaleDetails::class, 'product_id', 'id');
+    }
+
+    public function getDetailProduksiBerlian(){
+        return $this->detailProduksi();
     }
 
 }

@@ -21,7 +21,7 @@
         </div>
         <div class="flex justify-center text-center items-center">
             <a target="_blank" href="{{ route('products.print_sertifikat', $detail->id) }}" class="btn btn-danger btn-sm mt-3">
-                <i class="bi bi-printer"></i>&nbsp; Print Sertifikat
+                <i class="bi bi-printer"></i>&nbsp; Sertifikat
             </a>
         </div>
     </div>
