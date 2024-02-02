@@ -153,9 +153,9 @@ class Product extends Model implements HasMedia
                 ->first();
 
 
-            $rand = rand(0, 99999999);
+            $rand = rand(0, 999);
             $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
-            $orderCode = $dateCode . '001';
+            $orderCode = $dateCode . $rand;
             if ($lastOrderCode) {
                 $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
                 $nextOrderNumber = sprintf('%03d', (int)$rand + 1);
