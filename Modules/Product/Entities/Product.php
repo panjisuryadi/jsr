@@ -287,4 +287,59 @@ class Product extends Model implements HasMedia
         return $this->detailProduksi();
     }
 
+
+
+
+
+
+//kode Produk
+    public static function generateUnique()
+    {
+      $dateCode = self::PRODUKCODE . '-';
+
+      $lastOrder = self::select([\DB::raw('MAX(products.code) AS last_code')])
+         ->where('code', 'like', $dateCode . '%')
+         ->first();
+
+      $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
+
+      $rand = rand(0, 99999999);
+      $UniqueCode = $dateCode . $rand;
+
+      if ($lastOrderCode) {
+         $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
+         $nextOrderNumber = sprintf('%03d', (int)$rand + 1);
+
+         $UniqueCode = $dateCode . $nextOrderNumber;
+      }
+
+      if (self::_isUniqueCodeExists($UniqueCode)) {
+         return generateUnique();
+      }
+
+      return $UniqueCode;
+   }
+
+
+
+
+
+   private static function _isUniqueCodeExists($UniqueCode)
+   {
+      return Product::where('code', '=', $UniqueCode)->exists();
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
