@@ -756,16 +756,3 @@ if (!function_exists('format_uang')) {
     }
 }
 
-
-if (!function_exists('getPublicIp')) {
-    function getPublicIp()
-    {
-        try {
-            $response = Http::get('https://httpbin.org/ip');
-            $data = $response->json();
-            return $data['origin'] ?? null;
-        } catch (\Exception $e) {
-            return null;
-        }
-    }
-}

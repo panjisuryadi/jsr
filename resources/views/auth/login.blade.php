@@ -159,7 +159,7 @@ if (settings()->site_logo) {
 
                             </div>
                         </form>
-<div class="mt-1 px-2 flex justify-between text-center text-muted">
+{{-- <div class="mt-1 px-2 flex justify-between text-center text-muted">
 <?php
 
 $publicIp = getPublicIp();
@@ -176,7 +176,7 @@ if ($publicIp == '103.171.154.31') {
     <div>{{ $server }}</div>
     
 </div>
-
+ --}}
 
                     </div>
                 </div>
