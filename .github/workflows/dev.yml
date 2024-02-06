@@ -2,9 +2,9 @@ name: Laravel
 
 on:
   push:
-    branches: [ production ]
+    branches: [ dev ]
   pull_request:
-    branches: [ production ]
+    branches: [ dev ]
 
 jobs:
   laravel-tests:
@@ -20,13 +20,14 @@ jobs:
          key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
          port: ${{ secrets.SSH_PORT_DEV }}
          script: |
-          cd /home/pos/public_html
+          cd /home/dev.hokkie.official-jsr.com/public_html
           git stash
           git pull
           sudo update-alternatives --set php /usr/bin/php8.0
+         
           sudo chmod 777 -R storage
           sudo chmod 777 -R bootstrap/cache
-         
+       
 
        #-----------------------------------------
         #php artisan schedule:run >> /dev/null 2>&1
