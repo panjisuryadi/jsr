@@ -24,11 +24,10 @@ jobs:
           git stash
           git pull
           sudo update-alternatives --set php /usr/bin/php8.0
-          composer update
-          php artisan migrate
+        
           sudo chmod 777 -R storage
           sudo chmod 777 -R bootstrap/cache
-          sudo composer clear-all
+      
 
         #-----------------------------------------
         #php artisan schedule:run >> /dev/null 2>&1
