@@ -152,8 +152,32 @@ if (settings()->site_logo) {
                                     <button
                                     class="btn btn-primary px-5" type="submit">Login</button>
                                 </div>
+
+
+
+
+
                             </div>
                         </form>
+<div class="mt-1 px-2 flex justify-between text-center text-muted">
+<?php
+
+$publicIp = getPublicIp();
+
+if ($publicIp == '103.171.154.31') {
+  $server = 'Server : BDG01';
+} else {
+   $server = 'Server : JKT02';
+}
+
+
+?>
+    <div></div>
+    <div>{{ $server }}</div>
+    
+</div>
+
+
                     </div>
                 </div>
 

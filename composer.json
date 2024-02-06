@@ -19,7 +19,7 @@
         "hisorange/browser-detect": "^4.5",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.40",
-        "laravel/tinker": "^2.5",
+        "laravel/tinker": "^2.5",        
         "laravel/ui": "^3.3",
         "lavary/laravel-menu": "^1.7",
         "league/flysystem-aws-s3-v3": "^1.0",
@@ -37,6 +37,7 @@
         "spatie/laravel-medialibrary": "^9.0.0",
         "spatie/laravel-permission": "^4.2",
         "stevebauman/location": "^6.5",
+        "symfony/console": "5.4.35",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
@@ -99,3 +100,4 @@
     "minimum-stability": "dev",
     "prefer-stable": true
 }
+ 
