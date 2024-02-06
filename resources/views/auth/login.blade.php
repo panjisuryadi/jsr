@@ -159,23 +159,19 @@ if (settings()->site_logo) {
 
                             </div>
                         </form>
-<div class="mt-1 px-2 flex justify-between text-center text-muted">
-<?php
-
-$publicIp = getipadress();
-
-if ($publicIp == '103.171.154.31') {
-  $server = 'Server : BDG01';
-} else {
-   $server = 'Server : JKT02';
-}
-
-
-?>
-    <div></div>
-    <div>{{ $server }}</div>
-    
-</div>
+            <div class="mt-1 px-2 flex justify-between text-center text-muted">
+                <?php
+                $publicIp = getipadress();
+                if ($publicIp == '103.171.154.31') {
+                $server = 'Server : BDG01';
+                } else {
+                $server = 'Server : JKT02';
+                }
+                ?>
+                <div></div>
+                <div>{{ $server }}</div>
+                
+            </div>
 
 
                     </div>
