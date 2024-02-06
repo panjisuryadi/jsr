@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <?php
                     $field_name = 'nama_rekening';
-                    $field_lable = label_case('Nama Rekening');
+                    $field_lable = label_case('Nama Bank');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = "required";
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <?php
                     $field_name = 'kode_bank';
-                    $field_lable = label_case('Kode Bank');
+                    $field_lable = 'Kode EDC';
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = "required";
