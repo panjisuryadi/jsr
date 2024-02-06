@@ -19,7 +19,7 @@
         "hisorange/browser-detect": "^4.5",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.40",
-        "laravel/tinker": "^2.5",        
+        "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "lavary/laravel-menu": "^1.7",
         "league/flysystem-aws-s3-v3": "^1.0",
@@ -27,9 +27,7 @@
         "livewire/livewire": "^2.5",
         "maatwebsite/excel": "^3.1",
         "milon/barcode": "^8.0",
-        "n0izestr3am/sso-client": "dev-main",
-        "nasirkhan/module-manager": "^0.4.0",
-        "nwidart/laravel-modules": "8.2.*",
+        "nwidart/laravel-modules": "^8.0",
         "realrashid/sweet-alert": "^4.0",
         "simplesoftwareio/simple-qrcode": "~4",
         "spatie/laravel-activitylog": "^3.17",
@@ -54,7 +52,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Modules\\": "Modules/"
+             "Modules\\": "Modules/"
         },
         "files": [
             "app/Helpers/helpers.php"
@@ -100,4 +98,3 @@
     "minimum-stability": "dev",
     "prefer-stable": true
 }
- 

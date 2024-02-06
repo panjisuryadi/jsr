@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2cbee30d425504bc35563ce0bc5b916b",
+    "content-hash": "b68468526e4b47205a5e870d12396d9a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4705,112 +4705,6 @@
             "time": "2022-08-04T09:53:51+00:00"
         },
         {
-            "name": "n0izestr3am/sso-client",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/n0izestr3am/sso-client.git",
-                "reference": "de02c34a93880797bd37116f83d2e23ab81f597e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/n0izestr3am/sso-client/zipball/de02c34a93880797bd37116f83d2e23ab81f597e",
-                "reference": "de02c34a93880797bd37116f83d2e23ab81f597e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3|^8.0"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "n0izestr3am\\SSO\\Providers\\SSOServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "n0izestr3am\\SSO\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "n0izestr3am",
-                    "email": "n0izestr3am@gmail.com"
-                }
-            ],
-            "description": " OAuth 2.0 Single Sign On Laravel (Client)",
-            "support": {
-                "issues": "https://github.com/n0izestr3am/sso-client/issues",
-                "source": "https://github.com/n0izestr3am/sso-client/tree/main"
-            },
-            "time": "2023-07-10T04:41:02+00:00"
-        },
-        {
-            "name": "nasirkhan/module-manager",
-            "version": "v0.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nasirkhan/module-manager.git",
-                "reference": "f04a6dc31869a884ae7eead5312db0f8ca828993"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nasirkhan/module-manager/zipball/f04a6dc31869a884ae7eead5312db0f8ca828993",
-                "reference": "f04a6dc31869a884ae7eead5312db0f8ca828993",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Nasirkhan\\ModuleManager\\ModuleManagerServiceProvider"
-                    ],
-                    "aliases": {
-                        "ModuleManager": "Nasirkhan\\ModuleManager\\ModuleManagerFacade"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Nasirkhan\\ModuleManager\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nasir Khan",
-                    "email": "nasir8891@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Module Manager & Generator for Laravel Starter Kit (https://github.com/nasirkhan/laravel-starter)",
-            "homepage": "https://github.com/nasirkhan/module-manager",
-            "keywords": [
-                "laravel-starter",
-                "module-generator",
-                "module-manager",
-                "nasirkhan"
-            ],
-            "support": {
-                "issues": "https://github.com/nasirkhan/module-manager/issues",
-                "source": "https://github.com/nasirkhan/module-manager/tree/v0.4.0"
-            },
-            "time": "2022-12-28T08:32:13+00:00"
-        },
-        {
             "name": "nesbot/carbon",
             "version": "2.72.3",
             "source": {
@@ -5125,16 +5019,16 @@
         },
         {
             "name": "nwidart/laravel-modules",
-            "version": "8.2.0",
+            "version": "8.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nWidart/laravel-modules.git",
-                "reference": "6ade5ec19e81a0e4807834886a2c47509d069cb7"
+                "reference": "8f0d90d9f7ba986a98f9be20ae2d2487cb6a0119"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/6ade5ec19e81a0e4807834886a2c47509d069cb7",
-                "reference": "6ade5ec19e81a0e4807834886a2c47509d069cb7",
+                "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/8f0d90d9f7ba986a98f9be20ae2d2487cb6a0119",
+                "reference": "8f0d90d9f7ba986a98f9be20ae2d2487cb6a0119",
                 "shasum": ""
             },
             "require": {
@@ -5148,7 +5042,7 @@
                 "orchestra/testbench": "^6.2",
                 "phpstan/phpstan": "^0.12.14",
                 "phpunit/phpunit": "^8.5",
-                "spatie/phpunit-snapshot-assertions": "^2.1.0"
+                "spatie/phpunit-snapshot-assertions": "^2.1.0|^4.2"
             },
             "type": "library",
             "extra": {
@@ -5194,15 +5088,19 @@
             ],
             "support": {
                 "issues": "https://github.com/nWidart/laravel-modules/issues",
-                "source": "https://github.com/nWidart/laravel-modules/tree/8.2.0"
+                "source": "https://github.com/nWidart/laravel-modules/tree/8.6.0"
             },
             "funding": [
+                {
+                    "url": "https://github.com/dcblogdev",
+                    "type": "github"
+                },
                 {
                     "url": "https://github.com/nwidart",
                     "type": "github"
                 }
             ],
-            "time": "2020-11-11T09:24:22+00:00"
+            "time": "2024-02-02T15:32:19+00:00"
         },
         {
             "name": "opis/closure",
@@ -12706,9 +12604,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "n0izestr3am/sso-client": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
