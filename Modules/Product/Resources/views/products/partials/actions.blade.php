@@ -4,6 +4,12 @@
 </a>
 @endcan
 
+@can('show_products')
+<a id="Show" href="{{ route('products.show_sertifikat', $data->id) }}" class="btn btn-outline-primary btn-sm">
+    <i class="bi bi-printer"></i>&nbsp;Print Sertifikat
+</a>    
+@endcan
+
 @can('delete_products')
 <button id="delete" class="btn btn-outline-danger btn-sm" onclick="
     event.preventDefault();

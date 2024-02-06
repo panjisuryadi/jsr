@@ -259,6 +259,7 @@
                                                     @endif
                                                     <input class="form-control"
                                                         type="number"
+                                                        step="any"
                                                         name="{{ $field_name }}"
                                                         id="{{ $field_name }}"
                                                         wire:model = "{{ $field_name }}"

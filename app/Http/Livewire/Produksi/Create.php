@@ -52,9 +52,11 @@ class Create extends Component
         $karat24k,
         $id_kategoriproduk_berlian,
         $code,
-        $image,
         $harga_jual,
-        $model_id;
+        $model_id,
+        $document = [],
+        $image = '',
+        $uploaded_image = '';
 
     public $inputs = [
         [
@@ -92,6 +94,7 @@ class Create extends Component
     ];
 
     public $currentKey;
+    public $dataPembelianQc;
     public $tmpCertificate = [];
 
     public $hari_ini;
@@ -107,13 +110,44 @@ class Create extends Component
     public $dataAccessories = [];
     public $dataAccessoriesArray = [];
 
+    public $dataPcs = [];
+    public $dataPcsArray = [];
+    public $selectedTotalKarat = '';
+
+
     public $dataSatuans = [];
+
+    public function handleWebcamCaptured($key, $data_uri)
+    {
+        $this->image = $data_uri;
+        $this->handleRemoveUploadedImage();
+    }
+
+    public function handleWebcamReset($key = null)
+    {
+        $this->image = '';
+        $this->dispatchBrowserEvent('webcam-image:remove');
+    }
+
+    public function handleUploadedImage($fileName)
+    {
+        $this->uploaded_image = $fileName;
+        $this->handleWebcamReset();
+    }
+
+    public function handleRemoveUploadedImage()
+    {
+        $this->uploaded_image = '';
+        $this->dispatchBrowserEvent('uploaded-image:remove');
+    }
 
     public function mount()
     {
+        
         $this->dataKarat = Karat::whereNull('parent_id')->get();
         $this->dataKaratBerlian = KaratBerlian::all();
         $this->dataShapes = ShapeBerlian::all();
+        $this->dataPembelianQc = GoodsReceipt::all();
         $this->dataGroup = Group::all();
         $this->hari_ini = new DateTime();
         $this->hari_ini = $this->hari_ini->format('Y-m-d');
@@ -135,15 +169,23 @@ class Create extends Component
 
         $this->karatasal_id = $this->karat24k;
         $this->kategoriproduk_id = $this->id_kategoriproduk_berlian;
-        // $this->category_id = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->first()->value('id');
+        $this->category_id = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->first()->value('id');
         $this->dataItemProduksi = ProduksiItems::with('model', 'karat')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
-        $this->dataPenerimaanBerlian = GoodsReceiptItem::with('goodsreceiptitem', 'accessories.accessories_berlian.shape')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
-        $this->dataPenerimaanBerlianArray = $this->dataPenerimaanBerlian->map(function ($data) {
+        $this->dataPcs = GoodsReceipt::where('tipe_penerimaan_barang', 1)->get();
+        $this->dataPcsArray = $this->dataPcs->map(function ($data) {
             return $data;
         })
             ->flatten()
             ->keyBy('id')
             ->toArray();
+            $this->dataPenerimaanBerlian = GoodsReceiptItem::with('goodsreceiptitem', 'accessories.accessories_berlian.shape')->where('kategoriproduk_id', $this->id_kategoriproduk_berlian)->where('status', 1)->get();
+            $this->dataPenerimaanBerlianArray = $this->dataPenerimaanBerlian->map(function ($data) {
+                return $data;
+            })
+            ->flatten()
+            ->keyBy('id')
+            ->toArray();
+            // dd($this->dataPcs);
         $this->dataGroupArray = $this->dataGroup->map(function ($data) {
             return $data;
         })
@@ -162,7 +204,8 @@ class Create extends Component
             ->flatten()
             ->keyBy('id')
             ->toArray();
-        $this->dataAccessories = Accessories::where('status', 1)->get();
+
+            $this->dataAccessories = Accessories::where('status', 1)->get();
 
         $this->dataAccessoriesArray = $this->dataAccessories->map(function ($data) {
             return $data;
@@ -175,13 +218,22 @@ class Create extends Component
     }
 
     protected $listeners = [
+        'imageUploaded' => 'handleUploadedImage',
+        'imageRemoved' => 'handleRemoveUploadedImage',
         'webcamCaptured' => 'handleWebcamCaptured',
         'webcamReset' => 'handleWebcamReset'
     ];
 
-    public function handleWebcamCaptured($data_uri)
+    public function imageUploaded($fileName)
     {
-        $this->image = $data_uri;
+        $this->document = $fileName;
+    }
+
+    public function imageRemoved($fileName)
+    {
+        $this->document = array_filter($this->document, function ($file) use ($fileName) {
+            return $file != $fileName;
+        });
     }
 
     public function addInput()
@@ -258,6 +310,7 @@ class Create extends Component
             // 'model_id' => 'required',
             // 'karat_id' => 'required',
             'category_id' => 'required',
+            'image' => ['required_if:uploaded_image,'],
             'harga_jual' => 'required|gt:0',
             'berat' => 'required|numeric|regex:/^\d+(\.\d{1,3})?$/'
         ];
@@ -357,7 +410,7 @@ class Create extends Component
     {
         $this->validate();
         $this->accessories = array_merge($this->inputs, $this->accessories);
-
+        // dd($this->uploaded_image);
         DB::beginTransaction();
         try {
             $attribute = [];
@@ -391,19 +444,20 @@ class Create extends Component
                 }
             }
 
-            $image = '';
-            if ($this->image) {
-                $img = $this->image;
-                $folderPath = "uploads/";
-                $image_parts = explode(";base64,", $img);
-                $image_type_aux = explode("image/", $image_parts[0]);
-                $image_type = $image_type_aux[1];
-                $image_base64 = base64_decode($image_parts[1]);
-                $fileName = 'webcam_' . uniqid() . '.jpg';
-                $file = $folderPath . $fileName;
-                Storage::disk('public')->put($file, $image_base64);
-                $image = "$fileName";
-            }
+            // Gagal upload image dropzone, tpi siapa tau kepake lagi
+            // $image = '';
+            // if ($this->image) {
+            //     $img = $this->image;
+            //     $folderPath = "uploads/";
+            //     $image_parts = explode(";base64,", $img);
+            //     $image_type_aux = explode("image/", $image_parts[0]);
+            //     $image_type = $image_type_aux[1];
+            //     $image_base64 = base64_decode($image_parts[1]);
+            //     $fileName = 'webcam_' . uniqid() . '.jpg';
+            //     $file = $folderPath . $fileName;
+            //     Storage::disk('public')->put($file, $image_base64);
+            //     $image = "$fileName";
+            // }
 
 
 
@@ -413,7 +467,6 @@ class Create extends Component
                 'product_stock_alert' => 5,
                 'product_name' => $model_name . ' ' . $karat_name . ' Berlian',
                 'product_code' => $this->code,
-                'images' => $this->image,
                 'product_price' => $this->harga_jual,
                 'product_barcode_symbology' => 'C128',
                 'product_unit'              => 'Gram',
@@ -422,7 +475,8 @@ class Create extends Component
                 'berat_emas'                => $this->berat,
                 'total_karatberlians'       => $total_karat_berlians,
                 'diamond_certificate_id'    => !empty($diamond_certificate->id) ? $diamond_certificate->id : null,
-                'images'                    => $image,
+                'images'                    => $this->getUploadedImage($this->image, $this->uploaded_image),
+                // 'images'                    => $image,
                 'status_id'                 => 11,
                 'produksi_item_id'          => $this->produksi_item_id,
             ]);
@@ -469,6 +523,22 @@ class Create extends Component
         activity()->log(' ' . auth()->user()->name . ' input data pembuatan product ' . !empty($product->id) ? $product->id : '');
         toast('Produk Berhasil dibuat!', 'success');
         return redirect()->route('produksi.index');
+    }
+
+    private function getUploadedImage($image, $uploaded_image)
+    {
+        $folderPath = "uploads/";
+        if (!empty($uploaded_image)) {
+            Storage::disk('public')->move("temp/dropzone/{$uploaded_image}", "{$folderPath}{$uploaded_image}");
+            return $uploaded_image;
+        } elseif (!empty($image)) {
+            $image_parts = explode(";base64,", $image);
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName = 'webcam_' . uniqid() . '.jpg';
+            $file = $folderPath . $fileName;
+            Storage::disk('public')->put($file, $image_base64);
+            return $fileName;
+        }
     }
 
     public function setCurrentKey($key)
@@ -560,9 +630,12 @@ class Create extends Component
             }
         }
     }
-
-    public function handleWebcamReset()
+    public function setSelectedPcs($key)
     {
-        $this->image = '';
+        // Logika pemilihan item
+        $totalKaratPcs = $this->dataPcs[$key];
+
+        // Tetapkan nilai total_karat yang dipilih ke variabel
+        $this->selectedTotalKarat = $totalKaratPcs->total_karat;
     }
 }

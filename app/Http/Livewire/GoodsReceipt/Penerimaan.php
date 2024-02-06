@@ -205,7 +205,7 @@ class Penerimaan extends Component
     public function submit(Request $request)
     {
         $this->validate();
-
+        // dd($this->image);
         $data = [
             'code' => $this->code,
             'no_invoice' => $this->no_invoice,
@@ -256,9 +256,8 @@ class Penerimaan extends Component
         }
     }
 
-    public function calculateSelisih()
-    {
-        $this->selisih = round(doubleval($this->berat_timbangan) - $this->total_berat_kotor, 3);
+    public function calculateSelisih(){
+        $this->selisih = round(doubleval($this->berat_timbangan) - $this->total_berat_real,3);
     }
 
     public function imageUploaded($fileName)

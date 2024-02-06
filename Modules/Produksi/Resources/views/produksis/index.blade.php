@@ -64,12 +64,10 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div> 
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk  </span> 
-
-                            
-                           <a href="{{ route('produksi.create') }}"class="btn btn-primary px-3">
-                           <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
-                       </a>
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold">List Produk  </span>
+                            <a href="{{ route('produksi.create') }}"class="btn btn-primary px-3">
+                            <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                        </a>
                         </div>
                         <div id="buttons"></div>
                     </div>
@@ -80,17 +78,11 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
                                     <th style="width: 5%!important;">NO</th>
                                     <th style="width: 9%!important;">{{ Label_case('image') }}</th>
                                     <th>{{ Label_case('product_name') }}</th>
-                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Karat') }}</th>
-
-
+                                    <th style="width: 15%!important;" class="text-center">{{ Label_case('Harga Jual') }}</th>
                                     <th style="width: 15%!important;" class="text-center">{{ Label_case('Date') }}</th>
-
-                      <th style="width: 10%!important;" class="text-center">{{ Label_case('Qr Code') }}</th>
-
-
-                      <th style="width: 8%!important;" class="text-center">{{ Label_case('Status') }}</th>
-
-                                    <th style="width: 11%!important;" class="text-center">
+                                    <th style="width: 10%!important;" class="text-center">{{ Label_case('Qr Code') }}</th>
+                                    <th style="width: 8%!important;" class="text-center">{{ Label_case('Status') }}</th>
+                                    <th style="width: 16%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -193,7 +185,9 @@ $status = Modules\Product\Models\ProductStatus::READY_OFFICE;
             name: 'tracking'
         },{
             data: 'status',
-            name: 'status'
+            name: 'status',
+            orderable: false,
+            searchable: false
         },
         {
             data: 'action',

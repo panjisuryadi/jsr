@@ -1,6 +1,6 @@
     <div class="pt-3">
 
-                   <table style="width: 100%;" class="table table-striped table-bordered">
+                   <table style="width: 100%;" class="table table-sm table-striped table-bordered">
                         <tr>
                             <th style="width:2%;" class="text-center">{{ label_case('No') }}</th>
                             <th style="width:5%;" class="text-center">{{ label_case('Invoice') }}</th>
@@ -11,7 +11,7 @@
                         </tr>
 
                        @php
-            $penjualan = \Modules\Sale\Entities\Sale::akses()->latest()->paginate(5, ['*'], 'penjualan');
+            $penjualan = \Modules\Sale\Entities\Sale::akses()->latest()->paginate(10, ['*'], 'penjualan');
             @endphp   
                     @forelse($penjualan as $row)
                            
@@ -31,7 +31,7 @@
                             <i class="bi bi-eye"></i> Show
                         </a>   
 
-                         <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('sales.cetak', $row->id) }}">
+                         <a target="_blank" class="btn btn-sm btn-warning mfe-1 d-print-none" href="{{ route('sales.invoice', $row->id) }}">
                             <i class="bi bi-save"></i> Cetak Nota
                         </a>   
 

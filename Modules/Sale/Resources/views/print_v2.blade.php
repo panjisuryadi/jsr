@@ -91,12 +91,12 @@
 
 <table class="table1" style='width:100%; border: none !important; font-size:15pt; font-family:calibri; border-collapse: collapse;' border="0">
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:60px; vertical-align:top'>
-        <span style='font-size:16pt'><b>{{ settings()->company_name }}</b></span></br>
-         {{ settings()->company_email }}, {{ settings()->company_phone }}
-                <br>{{ settings()->company_address }}
+        <span style='font-size:10pt'><b>{{ settings()->company_name }}</b></span>
+        </br>
+         {{ settings()->company_email }}, {{ settings()->company_phone }} <br>
+         {{ settings()->company_address }}
     </td>
     <td style='border: none !important;vertical-align:top' width='40%' align='left'>
-        <br>
         Invoice: {{ $sale->reference }}</br>
         Tanggal : {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</br>
         Kostumer: {{ $sale->customer_name }}</br>
@@ -110,7 +110,7 @@
             <th style="width:5%;" class ="fh text-center">No</th>
             <th style="width:10%;" class ="fh text-center">Gambar</th>
          
-            <th class ="fh text-center">barang</th>
+            <th class ="fh text-center">Barang</th>
             <th class ="fh text-center">kode</th>
             <th class ="fh text-center">berat <span style="font-size:4pt;">(gr)</span></th>
               <th style="width:5%;" class ="fh text-center">Qty</th>

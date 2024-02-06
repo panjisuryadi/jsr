@@ -83,7 +83,11 @@
    </span>
   </div>
 </div>
-
+ <?php 
+        if (!$paging) {
+            $paging = 'buysbacks';
+        }
+    ?>
 {{-- nav  tab --}}
 
     <ul class="nav nav-tabs py-1" role="tablist">

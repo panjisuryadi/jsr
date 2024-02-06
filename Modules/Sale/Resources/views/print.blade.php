@@ -70,7 +70,7 @@
 
 <table class="table1" style='width:100%; border: none !important; font-size:14pt; font-family:calibri; border-collapse: collapse;' border="0">
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:80px; vertical-align:top'>
-        <span style='font-size:22pt'><b>{{ settings()->company_name }}</b></span></br>
+        <span style='font-size:16pt'><b>{{ settings()->company_name }}</b></span></br>
          {{ settings()->company_email }}, {{ settings()->company_phone }}
                 <br>{{ settings()->company_address }}
     </td>
@@ -157,13 +157,26 @@
 
     </tbody>
     <tfoot>
-        <tr>
-            <td colspan = '6'><div style='text-align:right'>Qty : </div></td>
+
+
+           @if($saleDetail->note)
+            <tr>
+                <td colspan ='7'>
+                    <div class="text-danger">Note</div>
+                    <div class="text-danger">{{ $saleDetail->note }}</div>
+                 
+                </td>
+            </tr> 
+           @endif
+
+
+          <tr>
+            <td colspan ='6'><div style='text-align:right'>Qty : </div></td>
             <td style='text-align:right'>{{ number_format($totalQty) }} Item</td>
         </tr>
 
         <tr>
-            <td colspan = '6'><div style='text-align:right'>Total : </div></td>
+            <td colspan ='6'><div style='text-align:right'>Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($total) }}</td>
         </tr>
 

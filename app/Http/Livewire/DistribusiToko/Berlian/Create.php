@@ -195,7 +195,7 @@ class Create extends Component
                     "product_information" => $value
                 ];
                 $distribusi_toko->items()->create([
-                    'karat_id' => !empty($value['karat_id']) ? $value['karat_id'] : 0,
+                    'karat_id' => !empty($value['karat_id']) ? $value['karat_id'] : 1,
                     'gold_weight' => !empty($value['berat_emas']) ? $value['berat_emas'] : 0,
                     'product_id' => !empty($value['id']) ? $value['id'] : null,
                     'additional_data' => json_encode($additional_data),

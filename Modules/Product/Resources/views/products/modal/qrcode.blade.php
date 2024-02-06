@@ -16,7 +16,7 @@
             </div>
             <div class="py-0 justify-center text-center items-center">
            <a target="_blank" href="{{ route('products.getPdf', $detail->id) }}" class="btn btn-danger btn-sm">
-                    <i class="bi bi-print"></i> Cetak Barcode
+                    <i class="bi bi-printer"></i>&nbsp;Cetak Barcode
                 </a>
             </div>
 

@@ -36,7 +36,7 @@ div#kanan {
 
       <tr style="border:none !important;" >
 
-        <td class ="text-dark" style="width:40%;border:none !important;text-align: left;">
+        <td  class ="text-dark" style="width:40%;border:none !important;text-align: left;">
           <div style="relative">
             <div style="position:absolute; top:1.2rem;font-size: 0.9rem;left:1rem;">
               <img width="35" src="data:image/png;base64, {!! $barcode !!}">   
@@ -46,7 +46,7 @@ div#kanan {
                   {{$product->product_name}}
               </div>
               <div style="font-size: 1rem; font-weight: bold;" class="qr-dark">
-                  {{$product->product_item[0]->berat_total ?? 0}} Gr
+                  {{$product->product_item[0]->berat_total ?? 0}} Ct
               </div>
               <div style="font-size: 0.65rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_code}}
@@ -62,7 +62,7 @@ div#kanan {
                   {{$product->product_name}}
               </div>
               <div style="font-size: 1rem;  font-weight: bold;" class="qr-dark">
-                  {{$product->product_item[0]->berat_total ?? 0 }} Gr
+                  {{$product->product_item[0]->berat_total ?? 0 }} Ct
               </div>
               <div style="font-size: 0.65rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_code}}

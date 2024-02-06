@@ -23,6 +23,10 @@ Route::group(['middleware' => 'auth'], function () {
 
   Route::get("products/index_distribusi", ['as' => "products.index_distribusi", 'uses' => "ProductController@index_distribusi"]);
 
+    //Print Sertifikat
+    Route::get("products/show_sertifikat/{id}", ['as' => "products.show_sertifikat", 'uses' => "ProductController@showSertifikat"]);
+
+    Route::get("products/print-sertifikat/{id}", ['as' => "products.print_sertifikat", 'uses' => "ProductController@printSertifikat"]);
 
   // Proses
   // Cuci

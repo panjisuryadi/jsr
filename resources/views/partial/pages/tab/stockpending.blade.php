@@ -1,6 +1,6 @@
          <div class="pt-3">
 
-                   <table style="width: 100%;" class="table table-striped table-bordered">
+                   <table style="width: 100%;" class="table table-sm table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
                             <th>{{ label_case('Sales') }}</th>
@@ -10,7 +10,7 @@
                         </tr>
                       @php
 
-                  $StockPending = \Modules\Stok\Models\StockPending::latest()->paginate(5, ['*'], 'stockpending');
+                  $StockPending = \Modules\Stok\Models\StockPending::latest()->paginate(10, ['*'], 'stockpending');
               
                    @endphp
 

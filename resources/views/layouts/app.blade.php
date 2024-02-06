@@ -20,7 +20,8 @@
             && ! request()->routeIs('goodsreceipt.add_products_by_categories')
             && ! request()->routeIs('goodsreceipt.create')
             && ! request()->routeIs('goodsreceipt.show')
-             && ! request()->routeIs('iventory.type')
+            && ! request()->routeIs('iventory.type')
+            && ! request()->routeIs('distribusitoko.berlian.create')
             )
              @include('layouts.sidebar')
             @endif

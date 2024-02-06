@@ -1,6 +1,6 @@
     <div class="pt-3">
 
-                   <table style="width: 100%;" class="table table-striped table-bordered">
+                   <table style="width: 100%;" class="table table-sm table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
                             <th class="text-center">{{ label_case('Date') }}</th>
@@ -21,7 +21,7 @@
 
                            <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ tgl($row->created_at) }}</td>
+                                <td>{!!tgljam($row->created_at) !!}</td>
                                 <td>{{ @$row->product_name }}</td>
                                 <td>{{ @$row->karat?->label }}</td>
                                 <td>

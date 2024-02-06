@@ -16,6 +16,7 @@ use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Group\Models\Group;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Models\ProductAccessories;
@@ -72,6 +73,10 @@ class Product extends Model implements HasMedia
     }
     public function pembelian() {
         return $this->belongsTo(GoodsReceipt::class, 'goodsreceipt_id', 'id');
+    }
+
+    public function detailProduksi() {
+        return $this->belongsTo(GoodsReceiptItem::class, 'goodsreceipt_id', 'id');
     }
 
     public function cabang() {
@@ -146,13 +151,20 @@ class Product extends Model implements HasMedia
                 ->withTrashed()
                 ->where('product_code', 'like', $dateCode . '%')
                 ->first();
+
+
+            $rand = rand(0, 999);
             $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
-            $orderCode = $dateCode . '001';
+            $orderCode = $dateCode . $rand;
             if ($lastOrderCode) {
                 $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
-                $nextOrderNumber = sprintf('%03d', (int)$lastOrderNumber + 1);
+                $nextOrderNumber = sprintf('%03d', (int)$rand + 1);
                 $orderCode = $dateCode . $nextOrderNumber;
             }
+
+            if (self::_isUniqueCodeExists($orderCode)) {
+                return self::generateCode();
+             }
             return $orderCode;
         }
 
@@ -203,7 +215,7 @@ class Product extends Model implements HasMedia
             $query->where('status_id', ProductStatus::PENDING_CABANG);
             if(auth()->user()->isUserCabang()){
                 $query->where('cabang_id',auth()->user()->namacabang()->id);
-            }
+            }   
        }
 
        public function scopeCuci($query){
@@ -274,5 +286,59 @@ class Product extends Model implements HasMedia
     public function sale_detail(){
         return $this->hasone(SaleDetails::class, 'product_id', 'id');
     }
+
+
+
+
+
+//kode Produk
+    public static function generateUnique()
+    {
+      $dateCode = self::PRODUKCODE . '-';
+
+      $lastOrder = self::select([\DB::raw('MAX(products.product_code) AS last_code')])
+         ->where('product_code', 'like', $dateCode . '%')
+         ->first();
+
+      $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
+
+      $rand = rand(0, 99999999);
+      $UniqueCode = $dateCode . $rand;
+
+      if ($lastOrderCode) {
+         $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
+         $nextOrderNumber = sprintf('%03d', (int)$rand + 1);
+
+         $UniqueCode = $dateCode . $nextOrderNumber;
+      }
+
+      if (self::_isUniqueCodeExists($UniqueCode)) {
+         return generateUnique();
+      }
+
+      return $UniqueCode;
+   }
+
+
+
+
+
+   private static function _isUniqueCodeExists($UniqueCode)
+   {
+      return Product::where('product_code', '=', $UniqueCode)->exists();
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -121,7 +121,7 @@ namespace App\Http\Livewire\GoodsReceipt;
                 $this->resetInputFields();
 
                 session()->flash('message', 'Created Successfully.');
-                      }
+            }
 
 
              public function convertRupiah()
