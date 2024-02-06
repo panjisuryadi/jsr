@@ -551,7 +551,7 @@ class Checkout extends Component
 
         DB::beginTransaction();
         try {
-            Customs::create([
+            $customs = Customs::create([
                 'cabang_id' => $this->cabang_id,
                 'jenis_barang' => $this->jenis_barang,
                 'karat_id' => 1,
@@ -565,12 +565,14 @@ class Checkout extends Component
             ]);
             foreach ($this->inputCustom as $input) {
                 CustomsCt::create([
+                    'customs_id' => $customs->id,
                     'berat' => $input['berat_ct'],
                     'harga' => $input['harga_ct'],
                 ]);
             }
             foreach ($this->other_thing as $fee) {
                 CustomsManual::create([
+                    'customs_id' => $customs->id,
                     'catatan' => $fee['custom_note'],
                     'nominal' => $fee['custom_nominal'],
                 ]);
