@@ -22,12 +22,10 @@ jobs:
          script: |
           cd /home/dev.hokkie.official-jsr.com/public_html
           git stash
-          git pull
+          git pull origin dev
           sudo update-alternatives --set php /usr/bin/php8.0
           sudo chmod 777 -R storage
           sudo chmod 777 -R bootstrap/cache
-    
-
        
 
        #-----------------------------------------
