@@ -63,7 +63,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="sale_id">Invoice No <span class="text-danger">*</span></label>
-                                        <select name="sale_id" id="sale_id" class="form-control" required>
+                                        <select name="sale_id" id="sale_id" class="form-control">
                                             <option value="" selected>Select Invoice</option>
                                             @foreach(\Modules\Sale\Entities\Sale::where('status', 'failed')->get() as $item)
                                                 <option value="{{ $item->id }}">{{ $item->reference }}</option>
