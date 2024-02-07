@@ -17,6 +17,7 @@ yarn-error.log
 /.vscode
 /dev.sh
 /push.sh
+/note.txt
 .DS_Store
 .phpunit.database.checkum
 .zed
