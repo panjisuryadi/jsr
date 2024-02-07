@@ -162,10 +162,12 @@
                 {
                     data: 'cabang', 
                     searchable: false,
+                    orderable: false,
                     name: 'cabang'
                 },
                 {
-                    data: 'customer', 
+                    data: 'customer',
+                    searchable: false,
                     orderable: false,
                     name: 'customer'
                 },

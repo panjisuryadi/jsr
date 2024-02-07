@@ -26,6 +26,15 @@ use PDF;
 class SaleController extends Controller
 {
 
+    private $module_title;
+    private $module_name;
+    private $module_path;
+    private $module_icon;
+    private $module_model;
+    private $module_detail;
+    private $module_payment;
+    private $module_product;
+
     public function __construct()
     {
         // Page Title
@@ -118,7 +127,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
  
-       $$module_name = $module_model::akses();
+        $$module_name = $module_model::akses();
         if($type) {
            $$module_name->where('payment_method',$type);
            $$module_name->orderBy('created_at', 'desc');

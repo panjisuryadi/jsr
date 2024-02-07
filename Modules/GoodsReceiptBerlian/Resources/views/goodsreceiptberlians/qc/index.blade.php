@@ -82,6 +82,7 @@
             ],
             "sPaginationType": "simple_numbers",
             ajax: {
+                type : 'GET',
                 url : '{{ route("$module_name.index_data") }}',
                 data : {
                     is_qc : 1
@@ -119,9 +120,9 @@
 
                 {data: 'code', name: 'code'},
                 {data: 'date', name: 'date'},
-                {data: 'supplier', name: 'supplier'},
-                {data: 'pembayaran', name: 'pembayaran'},
-                {data: 'keterangan', name: 'keterangan'},
+                {data: 'supplier', name: 'supplier', orderable: false},
+                {data: 'pembayaran', name: 'pembayaran', orderable: false},
+                {data: 'keterangan', name: 'keterangan', orderable: false},
 
                 {
                     data: 'action',

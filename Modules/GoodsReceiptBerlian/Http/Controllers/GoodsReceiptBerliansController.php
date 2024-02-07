@@ -96,17 +96,18 @@ class GoodsReceiptBerliansController extends Controller
     public function index_data(Request $request)
     {
         $module_name = $this->module_name;
-        $module_name = \Modules\GoodsReceipt\Models\GoodsReceipt::with('pembelian');
+        $module_model = $this->module_model;
+        // $module_name = \Modules\GoodsReceipt\Models\GoodsReceipt::with('pembelian');
         $id_kategoriproduk_berlian = LookUp::select('value')->where('kode', 'id_kategoriproduk_berlian')->first();
         $id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
 
-        $module_name->where('kategoriproduk_id', $id_kategoriproduk_berlian);
+        $$module_name = $module_model::with('pembelian')->where('kategoriproduk_id', $id_kategoriproduk_berlian)->latest()->get();;
         if($request->has('is_qc')){
-            $module_name->where('is_qc', $request->input('is_qc'));
+            $$module_name->where('is_qc', $request->input('is_qc'));
         }
-        $module_name->latest()->get();
+        // $module_name->latest()->get();
         
-        return Datatables::of($module_name)
+        return Datatables::of($$module_name)
 
             ->addColumn('action', function ($data) {
                 $module_name = 'goodsreceipt';
