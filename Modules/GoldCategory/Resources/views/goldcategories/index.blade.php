@@ -137,6 +137,7 @@
     </script>
 
 <script type="text/javascript">
+var table = jQuery('#datatable').DataTable();
 jQuery.noConflict();
 (function( $ ) {
 $(document).on('click', '#Tambah, #Edit', function(e){
