@@ -55,6 +55,9 @@ class Create extends Component
     public $reference;
     public $countProduct;
     public $dynamic_note;
+    public $countData;
+    public $notes;
+
 
 
     private function resetDistribusiToko()
@@ -85,15 +88,15 @@ class Create extends Component
         if (!empty($this->exceptProductId)) {
                 $data = $data->whereNotIn('id', $this->exceptProductId);
             }
-            if (!empty($this->search)) {
-                $search = $this->search;
-                $data->where(function($query) use ($search) {
-                        $query->where('code','like', '%'. $search . '%');
-                        $query->orWhere('berat','like', '%'. $search . '%');
-                    });
-            }
+        if (!empty($this->search)) {
+            $search = $this->search;
+            $data->where(function($query) use ($search) {
+                    $query->where('code','like', '%'. $search . '%');
+                    $query->orWhere('berat','like', '%'. $search . '%');
+                });
+        }
         $this->countProduct = $data->count();
-        $this->dynamic_note .= "\r\n failed " . $this->countProduct . "pcs"; 
+        $this->dynamic_note .= " Failed " . $this->countProduct . "pcs"; 
         $data = $data->paginate(5);
         return view("livewire.stock-opname.cabang.create",[
             'products' => $data
@@ -120,13 +123,18 @@ class Create extends Component
     {
         $this->validate();
 
+        // ga tau kenapa ga bisa pake $dynamic_note
+        $data = Product::where('status_id', ProductStatus::READY)->where('cabang_id', $this->cabang_id);
+        $this->countData = $data->count();
+        $this->notes .= " Failed " . $this->countData . "pcs"; 
+
         DB::beginTransaction();
         try{
             
             $adjustment = Adjustment::create([
                 'date' => $this->date,
                 'reference' =>  Adjustment::generateCode(),
-                'note' => $this->note ." Additional Note : " . $this->dynamic_note,
+                'note' => $this->note ." Additional Note : " . $this->notes,
                 'cabang_id' => $this->cabang_id,
                 'created_by' => auth()->user()->id,
             ]);

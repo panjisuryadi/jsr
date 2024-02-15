@@ -1493,11 +1493,11 @@ class GenerateMenus
             $berlianToko = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-shop"></i>' . __('Toko') . '', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])
-                ->data([
-                    'order'         => 2,
-                    'activematches' => ['produksis*'],
-                    'permission'    => ['access_produksis'],
-                ]);
+            ->data([
+                'order'         => 2,
+                'activematches' => ['produksis*'],
+                'permission'    => ['access_produksis'],
+            ]);
             $berlianToko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',
                 'href'  => '#',

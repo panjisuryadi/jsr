@@ -173,8 +173,16 @@
                 },
                 {data: 'reference', name: 'reference'},
                 {data: 'grand_total_amount', name: 'grand_total_amount'},
-                {data: 'cara_bayar', name: 'cara_bayar'},
-                {data: 'status', name: 'status'},
+                {
+                    data: 'cara_bayar', 
+                    orderable: false,
+                    name: 'cara_bayar'
+                },
+                {
+                    data: 'status', 
+                    orderable: false,
+                    name: 'status'
+                },
             
 
                 {

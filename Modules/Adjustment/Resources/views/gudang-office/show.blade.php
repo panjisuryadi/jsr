@@ -72,7 +72,10 @@
                                         <td>{{ $item->karat->label }}</td>
                                         <td>{{ $item->pivot->weight_before }}</td>
                                         <td>{{ $item->pivot->weight_after }}</td>
-                                        <td colspan="2"><span class="text-success">Barang Lebih {{$new}}</span> | <span class="text-danger">Barang Kurang {{$lost}}</span></td>
+                                        @if ($new) 
+                                            <td colspan="2"><span class="text-success">Barang Lebih {{$new}} gram</span> </td>
+                                        @endif
+                                        <td colspan="2"><span class="text-danger">Barang Kurang {{$lost}} gram</span></td>
                                     </tr>
                                 @endforeach
                             </table>
