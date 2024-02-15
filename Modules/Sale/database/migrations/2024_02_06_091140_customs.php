@@ -16,13 +16,18 @@ class Customs extends Migration
         Schema::create('customs', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_barang');
-            $table->decimal('berat');
+            $table->double('berat');
             $table->integer('harga');
             $table->integer('ongkos_produksi');
             $table->integer('ongkos_cuci');
             $table->integer('ongkos_rnk');
             $table->integer('ongkos_mt');
             $table->integer('total');
+            $table->double('berat_jadi',12, 3, true)->nullable();
+            $table->integer('harga_jual')->nullable();
+            $table->date('date')->nullable();
+            $table->string('code')->nullable();;
+            $table->string('status')->nullable();;
             $table->timestamps();
             $table->unsignedBigInteger('sales_id')->nullable();
             $table->foreign('sales_id')->references('id')->on('sales');

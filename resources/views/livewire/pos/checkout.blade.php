@@ -118,20 +118,18 @@
 
 
 
-          <div style="height: 440px;" class="overflow-y-auto max-h-full md:max-h-screen">
+          {{-- <div style="height: 440px;" class="overflow-y-auto max-h-full md:max-h-screen">
             @if($customs->isNotEmpty())
             @php 
               $jumlah = 0; 
             @endphp
               @foreach($customs as $custom)
-           {{-- {{dd($cart_item)}} --}}
-             <!-- component -->
+
                 <div class="bg-white text-white w-full max-w-lg flex flex-col border-b rounded-md p-1">
                   <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-4">
                       <div class="text-md text-dark font-bold">
                          <div class="text-lg relative">{{ $custom->jenis_barang }}
-                          {{-- @include('livewire.includes.product-detail-modal')  --}}
                          </div>
                       <div style="font-size: 0.6rem;" class="text-gray-400">#{{ $custom->harga }}
                         <span class="text-yellow-500">
@@ -153,18 +151,14 @@
                   </div>
                 </div>
 
-                    @php
-                       //$jumlah = $jumlah +  $cart_item->qty
-                    @endphp
-
-                      @endforeach
-                    @else
+              @endforeach
+            @else
                     
-                  <span class="flex text-center text-danger py-2">
-                     Tidak memiliki custome produk
-                  </span>
-                  @endif
-          </div>
+            <span class="flex text-center text-danger py-2">
+                Tidak memiliki custome produk
+            </span>
+            @endif
+          </div> --}}
 
 
 

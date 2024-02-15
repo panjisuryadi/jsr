@@ -189,58 +189,24 @@
         .container()
         .appendTo("#buttons");
 
- 
-     })(jQuery);
+        $( document ).ready(function() {
+            var idSales;
+        });
+
+        $(document).on("click", "#btn-dp", function (e) {
+
+            e.preventDefault();
+            var _self = $(this);
+            idSales = _self.data('id');
+        });
+
+        // A $( document ).ready() block.
+        $( document ).ready(function() {
+            $(document).on('shown.bs.modal', '#pembayaran_dp', function (e) {
+                Livewire.emit('setSaleId', idSales)
+            })
+        });
+
+    })(jQuery);
     </script>
-
-
-
-<script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-    $( document ).ready(function() {
-        var idSales;
-    });
-   
-$(document).on('click', '#Tambah, #Edit, #Show', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        } 
-        if($(this).attr('id') == 'Show')
-        {
-            $('.modal-dialog').addClass('modal-md');
-            $('.modal-dialog').removeClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Show {{ Label_case($module_title) }}');
-        }
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-
-    $(document).on("click", "#btn-dp", function (e) {
-
-        e.preventDefault();
-        var _self = $(this);
-        idSales = _self.data('id');
-    });
-
-    // A $( document ).ready() block.
-    $( document ).ready(function() {
-        $(document).on('shown.bs.modal', '#pembayaran_dp', function (e) {
-            Livewire.emit('setSaleId', idSales)
-        })
-    });
-
-})(jQuery);
-</script>
 @endpush

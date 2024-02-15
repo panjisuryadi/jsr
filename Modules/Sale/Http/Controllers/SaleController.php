@@ -140,22 +140,12 @@ class SaleController extends Controller
  
         $$module_name = $module_model::akses();
         if($type) {
-           $$module_name->where('payment_method',$type);
-           $$module_name->orderBy('created_at', 'desc');
-         }else{
-             $$module_name->orderBy('created_at', 'desc');
-         }
-         $$module_name->get();
-
-        $$module_name = $module_model::akses();
-        if ($type) {
-            $$module_name->where('payment_method', $type);
+            $$module_name->where('payment_method',$type);
             $$module_name->orderBy('created_at', 'desc');
-        } else {
+        }else{
             $$module_name->orderBy('created_at', 'desc');
         }
         $$module_name->get();
-
         $data = $$module_name;
 
         return Datatables::of($$module_name)
@@ -165,7 +155,7 @@ class SaleController extends Controller
                 $module_path = $this->module_path;
                 return view(
                     '' . $module_path . '::.partials.actions',
-                    compact('module_name', 'data', 'module_model')
+                    compact( 'data')
                 );
             })
 

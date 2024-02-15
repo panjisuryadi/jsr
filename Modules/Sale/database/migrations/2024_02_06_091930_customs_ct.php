@@ -15,7 +15,7 @@ class CustomsCt extends Migration
     {
         Schema::create('customs_ct', function (Blueprint $table) {
             $table->id();
-            $table->decimal('berat');
+            $table->double('berat', 12, 3, true)->nullable();
             $table->integer('harga');
             $table->timestamps();
             $table->unsignedBigInteger('customs_id');

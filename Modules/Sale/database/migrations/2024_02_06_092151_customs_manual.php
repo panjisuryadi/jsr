@@ -30,6 +30,6 @@ class CustomsManual extends Migration
      */
     public function down()
     {
-        Schema::dropDatabaseIfExists('customs_manual');
+        Schema::dropIfExists('customs_manual');
     }
 }

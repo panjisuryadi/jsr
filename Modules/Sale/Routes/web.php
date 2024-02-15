@@ -36,7 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Custom
     Route::get('/custom', 'CustomController@index')->name('sale.custom.index');
-    Route::get('/custom/create', 'CustomController@create')->name('sale.custom.create');
+    Route::get('/custom/create/{custom_id}', 'CustomController@create')->name('sale.custom.create');
+    Route::post('/custom/store', 'CustomController@store')->name('sale.custom.store');
+    Route::delete('/custom/destroy/{custom_id}', 'CustomController@destroy')->name('sale.custom.destroy');
 
 
     //Sales

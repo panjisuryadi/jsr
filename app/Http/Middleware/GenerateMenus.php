@@ -1495,8 +1495,8 @@ class GenerateMenus
             ])
                 ->data([
                     'order'         => 2,
-                    'activematches' => [],
-                    'permission'    => [],
+                    'activematches' => ['produksis*'],
+                    'permission'    => ['access_produksis'],
                 ]);
             $berlianToko->link->attr([
                 'class' => 'c-sidebar-nav-dropdown-toggle',

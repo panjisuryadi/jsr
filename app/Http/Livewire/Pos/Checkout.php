@@ -591,6 +591,7 @@ class Checkout extends Component
 
     public function removeCustome($row_id)
     {
+        CustomsCt::where('customs_id', $row_id)->delete();
         Customs::destroy($row_id);
     }
 
