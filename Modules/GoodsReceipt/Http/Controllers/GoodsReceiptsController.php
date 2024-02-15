@@ -38,6 +38,14 @@ use Modules\Stok\Models\StockKroom;
 class GoodsReceiptsController extends Controller
 {
 
+    private $module_title;
+    private $module_name;
+    private $module_path;
+    private $module_icon;
+    private $module_model;
+    private $module_categories;
+    private $module_products;
+
     public function __construct()
     {
         // Page Title

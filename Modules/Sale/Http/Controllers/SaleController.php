@@ -28,6 +28,15 @@ use PDF;
 class SaleController extends Controller
 {
 
+    private $module_title;
+    private $module_name;
+    private $module_path;
+    private $module_icon;
+    private $module_model;
+    private $module_detail;
+    private $module_payment;
+    private $module_product;
+
     public function __construct()
     {
         // Page Title
@@ -128,6 +137,15 @@ class SaleController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
+ 
+        $$module_name = $module_model::akses();
+        if($type) {
+           $$module_name->where('payment_method',$type);
+           $$module_name->orderBy('created_at', 'desc');
+         }else{
+             $$module_name->orderBy('created_at', 'desc');
+         }
+         $$module_name->get();
 
         $$module_name = $module_model::akses();
         if ($type) {
