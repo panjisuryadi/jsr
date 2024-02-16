@@ -39,15 +39,16 @@ class Checkout extends Component
     public $multiple_payment_method = "false";
     public $total_payment_amount = 0;
     public $remaining_payment_amount = 0;
-    public $inputs = [
-        [
-            'karat_id' => '',
-            'berat_real' => 0,
-            'berat_kotor' => 0
-        ]
-    ];
+    // public $inputs = [
+    //     [
+    //         'karat_id' => '',
+    //         'berat_real' => 0,
+    //         'berat_kotor' => 0
+    //     ]
+    // ];
     public $inputCustom = [
         [
+            
             'berat_ct' => 0,
             'harga_ct' => 0
         ]
@@ -521,7 +522,7 @@ class Checkout extends Component
 
     public function addInput()
     {
-        $this->inputs[] = [
+        $this->inputCustom[] = [
             'berat_ct' => 0,
             'harga_ct' => 0
         ];
@@ -530,8 +531,8 @@ class Checkout extends Component
     public function remove($i)
     {
         $this->resetErrorBag();
-        unset($this->inputs[$i]);
-        $this->inputs = array_values($this->inputs);
+        unset($this->inputCustom[$i]);
+        $this->inputCustom = array_values($this->inputCustom);
     }
 
     public function storeCustom()

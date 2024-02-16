@@ -10,9 +10,9 @@
             <form wire:submit.prevent="store">
             <div class="modal-body">
                 <!-- Display data received from Livewire -->
-                <p><strong>Total:</strong> {{ $custom->total  ?? ''}}</p>
-                <p><strong>Nominal DP:</strong> {{ $custom->harga_jual  ?? ''}}</p>
-                <p><strong>Sisa Pembayaran :</strong> {{ $sisaBayar}}</p>
+                <p><strong>Harga Jual : </strong> {{ $custom->harga_jual  ?? ''}}</p>
+                <p><strong>Nominal DP : </strong> {{ $custom->total  ?? ''}}</p>
+                <p><strong>Sisa Pembayaran : </strong> {{ $sisaBayar}}</p>
                 <!-- You can display other data here as well -->
             
 

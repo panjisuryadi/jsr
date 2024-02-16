@@ -122,10 +122,16 @@ class CustomController extends Controller
 
             $customs->code = $request->code;
             $customs->date = $request->tanggal;
-            // $customs->berat_jadi = $request->berat_jadi;
+            $customs->berat_jadi = number_format($request->berat_jadi, 3, '.', '');
             $customs->harga_jual = $request->harga_jual;
+
+            $customs->ongkos_produksi = $request->ongkos_produksi ?? 0;
+            $customs->ongkos_cuci = $request->ongkos_cuci ?? 0;
+            $customs->ongkos_rnk = $request->ongkos_rnk ?? 0;
+            $customs->ongkos_mt = $request->ongkos_mt ?? 0;
     
             $customs->save();
+
             // dd($customs);
             DB::commit();
             return redirect()->route('sale.custom.index')->with('message', 'Barang custom berhasil.');

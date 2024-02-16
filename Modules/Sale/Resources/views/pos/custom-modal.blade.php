@@ -121,77 +121,68 @@
                                         </div>
 
 
-                                    @foreach($inputCustom as $key => $value)
-                                    <div class="flex justify-between mt-0">
-                                        <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
-
-
-                                            <div class="form-group">
-                                                <?php
-                                                $field_name = 'inputCustom.' . $key . '.berat_ct';
-                                                $field_lable = label_case('Berat_(Ct)');
-                                                $field_placeholder = $field_lable;
-                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                $required = '';
-                                                ?>
-                                                @if ($key==0)
-                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                @endif
-                                                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
-                                                @if ($errors->has($field_name))
-                                                <span class="invalid feedback" role="alert">
-                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                                </span>
+                                        @foreach($inputCustom as $key => $value)
+                                            <div class="flex justify-between mt-0">
+                                                <div class="add-input w-full mx-auto flex flex-row grid grid-cols-3 gap-2">
+                                                    <div class="form-group">
+                                                        @php
+                                                            $field_name = 'inputCustom.' . $key . '.berat_ct';
+                                                            $field_label = ucwords(str_replace('_', ' ', 'Berat_(Ct)'));
+                                                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        @endphp
+                                                        @if ($key == 0)
+                                                            <label class="mb-0" for="{{ $field_name }}">{{ $field_label }}</label>
+                                                        @endif
+                                                        <input class="form-control{{ $invalid }}" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{ $field_label }}">
+                                                        @if ($errors->has($field_name))
+                                                            <span class="invalid feedback" role="alert">
+                                                                <small class="text-danger">{{ $errors->first($field_name) }}</small>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                        
+                                                    <div class="form-group">
+                                                        @php
+                                                            $field_name = 'inputCustom.' . $key . '.harga_ct';
+                                                            $field_label = ucwords(str_replace('_', ' ', 'Harga'));
+                                                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        @endphp
+                                                        @if ($key == 0)
+                                                            <label class="mb-0" for="{{ $field_name }}">{{ $field_label }}</label>
+                                                        @endif
+                                                        <input class="form-control{{ $invalid }}" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{ $field_label }}">
+                                                        @if ($errors->has($field_name))
+                                                            <span class="invalid feedback" role="alert">
+                                                                <small class="text-danger">{{ $errors->first($field_name) }}</small>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                @if ($key == 0)
+                                                    <div class="px-1 mt-3">
+                                                        <button class="btn text-white text-xl btn-info btn-md" wire:click.prevent="addInput()" wire:loading.attr="disabled">
+                                                            <span wire:loading.remove wire:target="addInput"><i class="bi bi-plus"></i></span>
+                                                            <span wire:loading wire:target="addInput" class="text-center">
+                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                @else
+                                                    <div class="px-1">
+                                                        <button class="btn text-white text-xl btn-danger btn-md" wire:click.prevent="remove({{ $key }})" wire:loading.attr="disabled">
+                                                            <span wire:loading.remove wire:target="remove({{ $key }})"><i class="bi bi-trash"></i></span>
+                                                            <span wire:loading wire:target="remove({{ $key }})" class="text-center">
+                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
                                                 @endif
                                             </div>
-
-
-                                            <div class="form-group">
-                                                <?php
-                                                $field_name = 'inputCustom.' . $key . '.harga_ct';
-                                                $field_lable = label_case('Harga');
-                                                $field_placeholder = $field_lable;
-                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                $required = '';
-                                                ?>
-                                                @if ($key==0)
-                                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                @endif
-                                                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
-
-                                                @if ($errors->has($field_name))
-                                                <span class="invalid feedback" role="alert">
-                                                    <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
-                                                </span>
-                                                @endif
-                                            </div>
-
-                                        </div>
-                                        @if ($key == 0)
-                                        <div class="px-1 mt-3">
-                                            <button class="btn text-white text-xl btn-info btn-md" wire:click.prevent="addInput()" wire:loading.attr="disabled">
-                                                <span wire:loading.remove wire:target="add"><i class="bi bi-plus"></i></span>
-                                                <span wire:loading wire:target="add" class="text-center">
-                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        @else
-                                        <div class="px-1">
-                                            <button class="btn text-white text-xl btn-danger btn-md" wire:click.prevent="remove({{$key}})" wire:loading.attr="disabled">
-                                                <span wire:loading.remove wire:target="remove({{$key}})"><i class="bi bi-trash"></i></span>
-                                                <span wire:loading wire:target="remove({{$key}})" class="text-center">
-                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        @endif
-                                    </div>
-                                    @endforeach
+                                        @endforeach
 
 
                                         <div class="add-input w-full mx-auto flex flex-row grid grid-cols-2 gap-2">
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <?php
                                                     $field_name = 'ongkos_produksi';
                                                     $field_lable = label_case('Ongkos Produksi');
@@ -254,7 +245,7 @@
                                                         <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                                                     </span>
                                                 @endif
-                                            </div>
+                                            </div> --}}
                                             <div class="px-1">
                                                 <div class="form-group my-3">
                                                     <div class="grid grid-cols-2 gap-2 justify-between mb-1">
@@ -300,7 +291,7 @@
                                         <div class="form-group">
                                             <?php
                                                 $field_name = 'total_custom';
-                                                $field_lable = label_case('Total');
+                                                $field_lable = label_case('Nominal DP');
                                                 $field_placeholder = $field_lable;
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                 $required = '';

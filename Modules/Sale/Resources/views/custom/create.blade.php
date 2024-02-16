@@ -150,11 +150,76 @@
                                 </span>
                                 @endif
                             </div>
+
+                            <div class="form-group">
+                                <?php
+                                    $field_name = 'ongkos_produksi';
+                                    $field_lable = label_case('Ongkos Produksi');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = '';
+                                ?>
+                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <?php
+                                    $field_name = 'ongkos_cuci';
+                                    $field_lable = label_case('Ongkos Cuci');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = '';
+                                ?>
+                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <?php
+                                    $field_name = 'ongkos_rnk';
+                                    $field_lable = label_case('Ongkos RNK');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = '';
+                                ?>
+                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <?php
+                                    $field_name = 'ongkos_mt';
+                                    $field_lable = label_case('Ongkos MT');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = '';
+                                ?>
+                                <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" min="0" step="0.001" wire:model.lazy="{{ $field_name }}" placeholder="{{$field_lable}}">
+                                @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                @endif
+                            </div>
                 
                             <div class="form-group">
                                 <?php
                                     $field_name = 'harga_jual';
-                                    $field_lable = label_case('Harga');
+                                    $field_lable = label_case('Harga Jual');
                                     $field_placeholder = $field_lable;
                                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                     $required = "required";
