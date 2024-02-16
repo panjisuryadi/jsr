@@ -101,7 +101,7 @@
                                 @endif
                             </div>
                 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 @php
                                     $field_name = 'category_id';
                                     $field_lable = __('Pilih Kategori');
@@ -112,8 +112,7 @@
                                 <select class="form-control" name="{{ $field_name }}" wire:model = {{ $field_name }}>
                                     <option value="" selected >Select Tipe</option>
                                     @foreach($dataKategoriProduk as $row)
-                                        <option value="{{$row->id}}" {{ old('category_id') == $row->id ? 'selected' : '' }}
-                                            {{ $row->kategori_produk_id != $id_kategoriproduk_berlian ? 'disabled' : '' }}>
+                                        <option value="{{$row->id}}">
                                             {{$row->category_name}}
                                         </option>
                                     @endforeach
@@ -123,7 +122,7 @@
                                     <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
                                 </span>
                                 @endif
-                            </div>
+                            </div> --}}
                 
                             <div class="form-group">
                                 <?php

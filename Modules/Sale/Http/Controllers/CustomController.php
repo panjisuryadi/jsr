@@ -94,7 +94,7 @@ class CustomController extends Controller
         $rules = [
             'code' => 'required',
             'tanggal' => 'required',
-            'category_id' => 'required',
+            // 'category_id' => 'required',
             'berat' => 'required',
             'harga_jual' => 'required'
         ];
@@ -111,7 +111,7 @@ class CustomController extends Controller
         $request->validate([ 
             'code' => 'required',
             'tanggal' => 'required',
-            'category_id' => 'required',
+            // 'category_id' => 'required',
             'berat' => 'required',
             'harga_jual' => 'required'
         ]);

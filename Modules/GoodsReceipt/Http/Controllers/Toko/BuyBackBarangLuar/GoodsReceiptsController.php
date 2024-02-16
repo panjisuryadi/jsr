@@ -115,6 +115,9 @@ class GoodsReceiptsController extends Controller
                 $tb .= '<div class="text-gray-800">
                                                       Berat Emas : <strong>' . $data->product->berat_emas . '
                                                       gr</strong></div>';
+                $tb .= '<div class="text-gray-800">
+                                                      Kode : <strong>' . $data->product->product_code . '
+                                                      </strong></div>';
                 $tb .= '</div>';
                 return $tb;
             })

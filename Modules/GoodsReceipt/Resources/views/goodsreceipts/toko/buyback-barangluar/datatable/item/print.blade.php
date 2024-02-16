@@ -86,6 +86,11 @@
     
   <table>
                     <tr>
+                        <td width="30%">Kode</td>
+                        <td width="2%">:</td>
+                        <td><b>{{ $item->product->product_code }}</b></td>
+                    </tr>
+                    <tr>
                         <td width="30%">Tanggal</td>
                         <td width="2%">:</td>
                         <td><b>{{ $datetime->format('d F Y H.i T') }}</b></td>
