@@ -58,11 +58,12 @@
                             <thead>
                                 <tr>
                                     <th style="width: 3%!important;">No</th>
-                                    <th style="width: 20%!important;" class="text-center">{{ __("Date") }}</th>
-                                    <th style="width: 11%!important;" class="text-center">{{ __('Berat') }}</th>
-                                    <th style="width: 11%!important;" class="text-center">{{ __("Harga") }}</th>
+                                    <th style="width: 10%!important;" class="text-center">{{ __("Date") }}</th>
+                                    <th style="width: 10%!important;" class="text-center">{{ __("Nomor Pesanan") }}</th>
                                     <th style="width: 19%!important;" class="text-center">{{ __('Jenis Barang') }}</th>
-                                    <th style="width: 18%!important;" class="text-center">{{ __('Total') }}</th>
+                                    <th style="width: 11%!important;" class="text-center">{{ __('Berat Emas') }}</th>
+                                    <th style="width: 18%!important;" class="text-center">{{ __('Nominal DP') }}</th>
+                                    <th style="width: 11%!important;" class="text-center">{{ __("Harga Jual") }}</th>
                                     <th style="width: 18%!important;" class="text-center">{{ __('Status') }}</th>
                                     <th style="width: 18%!important;" class="text-center"> {{ __('Action') }} </th>
                                 </tr>
@@ -72,10 +73,11 @@
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td class="text-center">{{ \Carbon\Carbon::parse($custom['created_at'])->format('d/m/Y') }}</td>
-                                        <td class="text-center">{{ $custom['berat'] }}</td>
-                                        <td class="text-center">{{ $custom['harga'] }}</td>
+                                        <td class="text-center">{{ $custom['custom_code'] }}</td>
                                         <td class="text-center">{{ $custom['jenis_barang'] }}</td>
+                                        <td class="text-center">{{ $custom['berat'] }}</td>
                                         <td class="text-center">{{ $custom['total'] }}</td>
+                                        <td class="text-center">{{ $custom['harga'] }}</td>
                                         <td class="text-center p-6 bg-violet-600 border-4 border-violet-300 border-dashed">
                                             @if ($custom['status'])
                                                 

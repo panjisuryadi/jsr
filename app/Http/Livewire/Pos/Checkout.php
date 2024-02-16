@@ -310,7 +310,7 @@ class Checkout extends Component
             'remain_amount' => 'required_if:dp_payment,==,1',
         ];
 
-        // Rules storeCusome
+        // Rules storeCustome
         foreach ($this->other_thing as $index => $fee) {
             $rules['other_thing.' . $index . '.custom_note'] = ['required'];
             $rules['other_thing.' . $index . '.custom_nominal'] = ['required', 'gt:0'];
@@ -554,6 +554,7 @@ class Checkout extends Component
         try {
             $customs = Customs::create([
                 'cabang_id' => $this->cabang_id,
+                'custom_code' => $this->generateCodeCustom(),
                 'jenis_barang' => $this->jenis_barang,
                 'karat_id' => 1,
                 'berat' => $this->berat_gr,
@@ -582,8 +583,8 @@ class Checkout extends Component
             // dd($this->karat_id);
 
             DB::commit();
-            $this->emit('reload-page-create');
-            // $this->resetForm();
+            toast('Produk Custom Berhasil Dibuat!', 'success');
+            return redirect()->route('sale.custom.index');
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
@@ -608,6 +609,29 @@ class Checkout extends Component
     {
         unset($this->other_thing[$index]);
     }
+
+    public function generateCodeCustom()
+    {
+        $date = now()->format('dmY');
+        $code = 'CTM';
+        $dateCode = $code . $date;
+        $lastOrder = Customs::where('custom_code', 'like', $dateCode . '%')
+                         ->orderBy('custom_code', 'desc')
+                         ->first();
+        
+        $lastOrderCode = $lastOrder ? $lastOrder->custom_code : null;
+    
+        $orderCode = $dateCode . '00001';
+        
+        if ($lastOrderCode) {
+            $lastOrderNumber = intval(substr($lastOrderCode, -5));
+            $nextOrderNumber = sprintf('%05d', $lastOrderNumber + 1);
+            $orderCode = $code . '-' . $nextOrderNumber;
+        }
+    
+        return $orderCode;
+    }
+    
 
     // ========================= End Function =======================================
 
