@@ -1,0 +1,1526 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"font",
+				"font-semibold "
+			],
+			[
+				"te",
+				"text-muted"
+			],
+			[
+				"border-b",
+				"border-bottom"
+			],
+			[
+				"text-gray",
+				"text-gray-500 "
+			],
+			[
+				"text-red",
+				"text-red-600 "
+			],
+			[
+				"fonte",
+				"font-semibold "
+			],
+			[
+				"text",
+				"text-gray-500 "
+			],
+			[
+				"tex",
+				"text-uppercase"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"co",
+				"color"
+			],
+			[
+				"fo",
+				"font-size"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"mi",
+				"middle"
+			],
+			[
+				"bo",
+				"bottom"
+			],
+			[
+				"f",
+				"font-semibold "
+			],
+			[
+				"text-gra",
+				"text-gray-800 "
+			],
+			[
+				"data",
+				"dataproduk"
+			],
+			[
+				"btn",
+				"btn-outline-success"
+			],
+			[
+				"jus",
+				"justify-content-center"
+			],
+			[
+				"nama",
+				"nama_pemilik"
+			],
+			[
+				"access_dat",
+				"access_datarekenings"
+			],
+			[
+				"penj",
+				"penjualansales"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"text-bl",
+				"text-blue-500 "
+			],
+			[
+				"tracking-w",
+				"tracking-widest "
+			],
+			[
+				"tra",
+				"tracking-wider "
+			],
+			[
+				"just",
+				"justify-between "
+			],
+			[
+				"if",
+				"ifelse\tif … else …"
+			],
+			[
+				"w-2",
+				"w-1/2 "
+			],
+			[
+				"w-1",
+				"w-1/3 "
+			],
+			[
+				"modal",
+				"modal-lg"
+			],
+			[
+				"harga",
+				"harga_jual"
+			],
+			[
+				"hitung",
+				"HitungHarga"
+			],
+			[
+				"pr",
+				"product_name"
+			],
+			[
+				"prod",
+				"product_name"
+			],
+			[
+				"bara",
+				"barangBuysBack"
+			],
+			[
+				"BARA",
+				"barangLuar"
+			],
+			[
+				"custo",
+				"customer_id"
+			],
+			[
+				"ju",
+				"justify-between "
+			],
+			[
+				"berat",
+				"berat_emas"
+			],
+			[
+				"st",
+				"status_id"
+			],
+			[
+				"Pro",
+				"ProsesStatus"
+			],
+			[
+				"ite",
+				"items-center "
+			],
+			[
+				"belongs",
+				"belongsToMany"
+			],
+			[
+				"be",
+				"belongsToMany"
+			],
+			[
+				"text-blue",
+				"text-blue-500 "
+			],
+			[
+				"buysbac",
+				"buysback"
+			],
+			[
+				"bg",
+				"bg-red-100 "
+			],
+			[
+				"har",
+				"harga_emas"
+			],
+			[
+				"sto",
+				"stokcabangs"
+			],
+			[
+				"c",
+				"colspan"
+			],
+			[
+				"border-t",
+				"border-t-black "
+			],
+			[
+				"access_re",
+				"access_retursale"
+			],
+			[
+				"pen",
+				"penjualansales"
+			],
+			[
+				"buy",
+				"buybacks"
+			],
+			[
+				"text-",
+				"text-lg "
+			],
+			[
+				"px",
+				"px-2 "
+			],
+			[
+				"border",
+				"border-0"
+			],
+			[
+				"table",
+				"table-bordered"
+			],
+			[
+				"nomi",
+				"nominal_manual"
+			],
+			[
+				"foreac",
+				"endforeach"
+			],
+			[
+				"p",
+				"py-4 "
+			],
+			[
+				"total",
+				"total_amount"
+			],
+			[
+				"dis",
+				"discount"
+			],
+			[
+				"items",
+				"items-start "
+			],
+			[
+				"pe",
+				"penerimaanbarangluar"
+			],
+			[
+				"cur",
+				"cursor-pointer "
+			],
+			[
+				"float",
+				"float-right "
+			],
+			[
+				"bg-blue",
+				"bg-blue-400 "
+			],
+			[
+				"text-b",
+				"text-blue-700 "
+			],
+			[
+				"no",
+				"no-underline "
+			],
+			[
+				"kar",
+				"karat_id"
+			],
+			[
+				"Pen",
+				"PenentuanHarga"
+			],
+			[
+				"pene",
+				"penentuan_harga"
+			],
+			[
+				"pro",
+				"products"
+			],
+			[
+				"flex",
+				"flex-row "
+			],
+			[
+				"bor",
+				"border-gray-400 "
+			],
+			[
+				"bg-gray",
+				"bg-gray-400 "
+			],
+			[
+				"ta",
+				"table-sm"
+			],
+			[
+				"tab",
+				"table-sm"
+			],
+			[
+				"product",
+				"product_id"
+			],
+			[
+				"caba",
+				"cabang_id"
+			],
+			[
+				"cuso",
+				"customer"
+			],
+			[
+				"cus",
+				"customer"
+			],
+			[
+				"user",
+				"user_id"
+			],
+			[
+				"cabang",
+				"cabang_id"
+			],
+			[
+				"User",
+				"UserCabang"
+			],
+			[
+				"end",
+				"endforeach"
+			],
+			[
+				"rou",
+				"rounded-lg "
+			],
+			[
+				"rounded",
+				"rounded-lg "
+			],
+			[
+				"lead",
+				"leading-4 "
+			],
+			[
+				"endf",
+				"endforeach"
+			],
+			[
+				"kode",
+				"kode_member"
+			],
+			[
+				"total_be",
+				"total_belanja"
+			],
+			[
+				"col",
+				"col-12"
+			],
+			[
+				"crea",
+				"created_at"
+			],
+			[
+				"nu",
+				"nullable"
+			],
+			[
+				"Set",
+				"Setting"
+			],
+			[
+				"Se",
+				"Setting"
+			],
+			[
+				"bu",
+				"b4:button:dark\tbutton-dark"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "hapus\ndocker rm -vf $(docker ps -aq)\ndocker rmi -f $(docker images -aq)\ndocker system prune -a\n==================================\n\n\n\n\n\n\n\n\n\n\n\n\n\n34.69.8.115\n\n127.0.1.1   ns1.cinocino.com.com ns1\n127.0.0.1   localhost\n\n cat ~/.ssh/id_rsa.pub\n\n xfs_repair -L /dev/centos/home\n\n\njitsi\n35.223.201.197\n-----------------------------\nssh ns6@34.122.75.101  = webrtc\nssh ns6@35.223.201.197 = jitsi\nssh ns6@34.134.98.111  = web\n----------------------------\n110.50.87.98\n/etc/init.d/webmin start\nssh root@34.134.98.111\n\nPostgres GCP\nhttps://cinocino.com/phppgadmin/\n-----------------------------------\nuser : cinocino\npass :kaladium18b\n\nssh-keygen -t rsa -f ~/.ssh/GCP -C USER -b 2048\n\nRestAPI Staging GCP\n-------------------------------------------\nhttps://api.staging.teramedik.zapps.co.id/\n\n\niptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.1.111:80\niptables -t nat -A POSTROUTING -j MASQUERADE\n\nJupiterMeet\nURL     : peer.vigo.id/install\n\nMySQL\nDatabase: jupitermeet\nUser    : root\nPassword: f$MghFSZL(c%2k3elB03F7ddbMpbVw\n\nphpMyAdmin\nURL     : peer.vigo.id/phpmyadmin\nUsername: root\nPassword: f$MghFSZL(c%2k3elB03F7ddbMpbVw\n\nSSL\nCert    : /etc/letsencrypt/live/peer.vigo.id/fullchain.pem\nPkey    : /etc/letsencrypt/live/peer.vigo.id/privkey.pem\n\nTURN\nURL     : turn:peer.vigo.id\nUsername: RDxIaoHXSq\nPassword: LSJGLr92A)&DidYP\n\n\n\n\n\nServer Google Cloud Teramedik\n================================================\nhttps://api.staging.teramedik.zapps.co.id:10000/\nuser : api\npassword : kaladium18b\n\n\n- update status minipic\nhttps://cpepolio.biofarma.co.id/biofarma/pages/status_mini_pc\n\n- update status AI\nhttps://cpepolio.biofarma.co.id/biofarma/pages/status_ai\n\nsudo adduser mkryuto api\n\ngithub : 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\n\ngitlab : glpat-NamNtK5RWxBZaHqTtBF3\n\nhttps://gitlab.com/teramedik-x-zapps/rs-sync.git\n\n\nhttps://github.com/ZAPPS-AI/gamification-landingpage.git\n\n\n\n\nhttps://github.com/ZAPPS-AI/sentiment-sosmed.git\nhttps://github.com/ZAPPS-AI/gti-pos.git\nhttps://github.com/ZAPPS-AI/hookie.git\n\nhttps://github.com/ZAPPS-AI/compro-GTDS.git\nhttps://github.com/ZAPPS-AI/gti-pos.git\n\ngit clone https://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@github.com/bilaschandra/laravel-coreui.git .\n\ngit clone https://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@github.com/zaxwebs/ex-l8-coreui.git .\n\n\nhttps://github.com/zaxwebs/ex-l8-coreui.git\n\nhttps://github.com/bilaschandra/laravel-coreui.git\n\n\nhttps://github.com/ZAPPS-AI/cms_biofarma.git\n\ngit clone https://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@github.com/Zakarialabib/myStockMaster.git\n\n\nhttps://github.com/ZAPPS-AI/gamification-landingpage.git\n\n\nhttps://github.com/ZAPPS-AI/web-teksimi.git\n\n\ngit clone https://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@github.com/ZAPPS-AI/gamification-landingpage.git\ngit clone https://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@github.com/ZAPPS-AI/biofarma-cpe-inference.git\ngit clone https://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@github.com/ZAPPS-AI/clarte-pos-v2.git\n\n\ngit remote add origin https://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@github.com/n0izestr3am/laravel-sso-server.git\n\n\ngit remote add origin https://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@github.com/ZAPPS-AI/clarte-pos-v2.git\n\nhttps://github.com/ZAPPS-AI/fe-gamefication.git\n\ngit clone https://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@github.com/ZAPPS-AI/api-nolate.git\ngit clone https://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@github.com/ZAPPS-AI/abracadabra-api.git\n\n\ngit clone https://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@github.com/ZAPPS-AI/erp-zapps.git\ngit clone https://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@github.com/ZAPPS-AI/cms_biofarma.git\nhttps://github.com/ZAPPS-AI/cms_biofarma.git\n\ngit clone https://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@github.com/hersista/bf-mlpolio.git\n\n\nhttps://github.com/ZAPPS-AI/Dokumentasi-Biofarma.git\n\nhttps://github.com/hersista/bf-mlpolio.git\n\n\nhttps://github.com/ZAPPS-AI/abracadabra-api.git\ngit clone https://oauth2:glpat-NamNtK5RWxBZaHqTtBF3@gitlab.com/zappsindonesia/be-telehealth.git\ngit clone https://oauth2:glpat-NamNtK5RWxBZaHqTtBF3@gitlab.com/teramedik-x-zapps/rs-sync.git\n\nhttps://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@github.com/firmanmardiyanto/asc-siasat.git\ngit clone https://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@github.com/JordyAraujo/LaravelSSOServer.git .\n\nhttps://github.com/JordyAraujo/LaravelSSOServer.git\n\ngit remote add origin https://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@github.com/n0izestr3am/api_mks_zapps.git\n\n\n\nhttps://gitlab.com/zappsindonesia/be-telehealth.git\n\nhttps://oauth2:glpat-NamNtK5RWxBZaHqTtBF3@gitlab.com/zappsindonesia/be-telehealth.git\n\ngit pull https://oauth2:glpat-NamNtK5RWxBZaHqTtBF3@gitlab.com/teramedik-x-zapps/be-teramedik.git main\n\n\ngit pull https://oauth2:glpat-NamNtK5RWxBZaHqTtBF3@gitlab.com/abracadabra-startquest/be-abracadabra.git\n\n url = https://oauth2:glpat-EDWUvRAenC3_Y9vGGKAv@gitlab.com/abracadabra-startquest/be-abracadabra.git\n\n\n\n\nhttps://gitlab.com/teramedik-x-zapps/be-teramedik.git\n\ngit remote add origin https://gitlab.com/teramedik-x-zapps/be-teramedik.git\n\ngit clone https://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@github.com/n0izestr3am/koperasi_kpkb_ci3.git\ngit clone https://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@github.com/firmanmardiyanto/jupitermeet.git .\n//gitlab\ngit remote add origin https://oauth2:glpat-EDWUvRAenC3_Y9vGGKAv@gitlab.com/abracadabra-startquest/be-abracadabra.git\n\n\ngit checkout -- application/config/database.php\necho database.php >> application/config/.gitignore\n\ngit config --global user.name \"n0izestr3am\"\ngit config --global user.email \"n0izestr3am@gmail.com\"\ngit add .\ngit commit -m \"Initial commit\"\ngit branch -M main\ngit push -u origin main\n=======================================================================\ntelehealth :  git pull origin master\n\nGIT PULL\n=======================================================================\ngit stash\n1. git fetch --all\n2. git reset --hard origin/main\ngit pull origin main\nchmod 777 -R storage\n\n\n===========================================================================\ngit remote add origin https://gitlab.com/teramedik-x-zapps/cms-teramedik.git\ngit pull origin main\n\n\ngit push github\ngit push origin main\n\n\nphp_value upload_max_filesize 128M\nphp_value post_max_size 128M\nphp_value max_execution_time 300\nphp_value max_input_time 300\nmemory_limit = -1\n\n\nI7G6VSflwt73nE6k1CnkZQUslS\ngit remote add https://gitlab.com/teramedik-x-zapps/cms-teramedik.git\ngit clone https://gitlab.com/teramedik-x-zapps/cms-teramedik.git\n\nsudo chown ns6 -R var/www/html/\n\ncomposer config --global --auth github-oauth.github.com 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\n\nhttps://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@github.com/firmanmardiyanto/asc-siasat.git\ngit remote add github https://github.com/n0izestr3am/dev_teramedik.git\ngit remote add github https://github.com/n0izestr3am/cms.git\n\ngit remote add github https://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@github.com/firmanmardiyanto/asc-siasat.git\ngit clone https://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@github.com/n0izestr3am/dev_telehealth.git\n\n\ngit clone https://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@github.com/n0izestr3am/cms.git\n\n\n\n\n\ngit remote add origin https://github.com/n0izestr3am/telehealth.git\ngit remote add origin https://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@github.com/n0izestr3am/dev_telehealth.git\n\ngit remote add origin https://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@github.com/n0izestr3am/asset.git\ngit remote add origin https://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@github.com/n0izestr3am/dev_teramedik.git\ngit push --set-upstream origin master\ngit branch --set-upstream-to=origin/main master\n\n\nadb shell wm density reset\nadb shell wm overscan reset\nadb devices\n\nssh -p 4646 root@110.50.84.245\n\n/biofarma\n//status CPE = udah report atau belum\ngi\nlatest CPE\nstatus :  1\nwarning : 1\njika cpe nilainya kurang dari cpe latest\nmaka buat kondisi alert\n\n////////////////////////////////////////\nAPI sedang berlangsung.. 1json\nphp artisan make:controller PesanController --resource --model=Pesan\n\n////////////////\n\n\nsunlife@2023##\n\nroles\ntime setting /2 button\nstart /pause\nPanen\n\nsudo nano /etc/nginx/sites-available/vigo.id\n\nsudo certbot --nginx -d aplikasi.zapps.co.id\n\ncertbot --nginx -d wearedollies.com\nssh gamication@103.134.154.202\nssh root@103.134.154.202\nZapps2022\n\nsudo certbot --nginx -d dev.ooooo.id -d dev.ooooo.id\n\nhttps://member.abc-pasko.com/\nALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'kaladium18b';\n\ncertbot -d abracadabra.events,www.abracadabra.events --force-renewal\n\n\nsudo certbot --nginx --cert-name abracadabra.events \\\n-d abracadabra.events -d www.abracadabra.events\n\n\nhttps://cms.game.zapps.co.id/\nuser : super@admin.com\npass : password\naltern\n\n\n//error cerbots\necho \"nameserver 8.8.8.8\" | sudo tee /etc/resolv.conf > /dev/null\necho \"nameserver 8.8.8.8\" | sudo tee /etc/resolv.conf > /dev/null\n\n\n- pipeline gambar dari database ke model // post gambar\n\n//https\ncertbot --nginx -d iis.zapps.co.id\ncertbot --nginx -d hokkie.official-jsr.com\ncertbot --nginx -d api.demo.nolate.hd.hokkie.id\n\n\nsudo apt-get install python3-certbot-nginx\nfind / -type f -name \".certbot.lock\"\nfind / -type f -name \".certbot.lock\" -exec rm {} \\;\nps -ef | grep certb\nps -ef | grep certb\n\nsudo apt-get update && sudo apt-get upgrade\necho \"nameserver 8.8.8.8\" | sudo tee /etc/resolv.conf > /dev/null\n\n\nsudo apt-get install build-essential autoconf libtool pkg-config python-opengl python-pil python-pyrex python-pyside.qtopengl idle-python2.7 qt4-dev-tools qt4-designer libqtgui4 libqtcore4 libqt4-xml libqt4-test libqt4-script libqt4-network libqt4-dbus python-qt4 python-qt4-gl libgle3 python-dev libssl-dev\n\n-----------------------------\nsudo apt install libpq-dev\n\npython3 manage.py createsuperuser\n\n\n\n\ngunicorn --bind 127.0.0.1:8000 mysite.wsgi\n\n\n\nsudo apt-get install python-dev python3-dev\nsudo apt-get install libmysqlclient-dev\npython3 -m pip install PyMySQL\npip install pymysql\npip install mysqlclient\n=======================\nimport pymysql\n\npymysql.install_as_MySQLdb() = init.py\n\n\nversi 1\nhttps://wearedollies.com/v2\n\nversi 2\nhttps://wearedollies.com/v3\n\n-- informasi cara bayar\nhttps://wearedollies.com/pages/how-to-pay\n-- informasi cara order\nhttps://wearedollies.com/pages/how-to-order\n-- informasi return\nhttps://wearedollies.com/pages/return-exchange\n--informasi pengiriman\nhttps://wearedollies.com/pages/shipping-information\n-------------------------------------------------------\n\nphp artisan optimize:clear\nphp artisan make:resource VisitorResource\n\ncd {laravel_root}/storage\nmkdir -pv framework/views app framework/sessions framework/cache\ncd ..\nchmod 777 -R storage\nchown -R www-data:www-data storage\nsudo chown ns6 -R irock\n\n------------------------------root direktori\nusermod -aG sudo ns6\nsudo chown staging: staging\nsudo chmod u+w  staging\n\n\nsudo apt install php7.3-common\nsudo a2dismod php7.2\nsudo a2enmod php7.4\n\nsudo adb kill-server\nsudo adb start-server\n adb devices\n adb shell wm overscan 0,0,0,100\nhttp://localhost/pis/proses_bisnis/add\nhttp://localhost/pis/proses_bisnis/edit/11.1\n----------------------------------------------------\n//Proses Bisnis Tambah\n----------------------------------------------------\n\n\n//update composer\n\n\nmkdir -p /var/_swap_\ncd /var/_swap_\ndd if=/dev/zero of=swapfile bs=1M count=2000\nmkswap swapfile\nswapon swapfile\nchmod 600 swapfile\necho \"/var/_swap_/swapfile none swap sw 0 0\" >> /etc/fstab\nfree -m\n\npgloader mysql://root:root@localhost:3306/cms8 postgresql://admin:admin@localhost:5432/laravel8\n\n\n\nrm -rf vendor/\nrm composer.lock\ncomposer update\ncomposer dump-autoload\n\nCOMPOSER_MEMORY_LIMIT=-1 composer update\nphp -d memory_limit=-1 /usr/local/bin/composer install\n\n\nphp artisan make:migration create_visitor_table\nphp artisan make:model Models\\pengiriman\n\n\nhttps://www.hostinger.co.id/cpanel-login\nu:u874090911\np:3ent3WEB99\n\nfor admin :\nweb https://www.hostinger.co.id:\n\n\n\nEmail Citcom :\ncitcom.id@gmail.com\n3NT3Rprise2k20\n\n\ncomposer clear-all`\nphp artisan config:cache\nphp artisan cache:clear\nphp artisan route:cache\nphp artisan view:clear\n\ngit config --global --add safe.directory /home/admin/public_html\n\nssh-keygen -t ed25519 -C \"n0izestr3am@gmail.com\"\nsudo chown -R www-data:www-data /var/www\nsudo chown ns6 -R _site\nsudo kill $(sudo lsof -t -i:8000)\n\n// pavucontrol\n\n\nsftp://zapps.co.id\n{\n    \"dependencies\": {\n        \"graceful-fs\": {\n            \"version\": \"4.2.2\"\n        }\n    }\n}\n\n// Clone the repository\ncp .env.example .env\ncomposer install\nphp artisan key:generate\nphp artisan migrate --seed\nadmin@admin.com - password\n\necho \"<?php phpinfo();\" > /var/www/html/master/public/index.php\nphp artisan make:controller Admin/ServiceController --resource\n\nln -s /home/wearedollies/public_html/storage/app/public /home/wearedollies/public_html/public/storage\n\nsudo chmod -R 777 /home/api.telehealth.ooooo.id/public_html/bootstrap/storage/\nsudo chmod -R 777 /home/api.telehealth.ooooo.id/public_html/bootstrap/bootstrap/cache/\nsudo chmod -R 777 /var/www/html/hrm3/storage/cache/\nsudo chmod -R 777 /var/www/html/hrm3/storage/logs/\nsudo chmod -R 777 /var/www/html/hrm3/storage/\n\nsudo a2dismod php8.0\nsudo update-alternatives --list php\nsudo update-alternatives --set php /usr/bin/php8.0\n\n\n\n\n//centos\nsudo yum list rh-php7[0-9].x86_64\n\n\nhttps://github.com/jchieppa/laravel-admintemplate\n\nhttps://pis.zapps.co.id/\n\nuseradmin          : rahasia ( Superadmin)\npis6@pertamina.com : rahasia (Role Management)\n\nuser//\n\npis13@pertamina.com  : rahasia\npis14@pertamina.com  : rahasia\n\n\n\nphp artisan vendor:publish --provider=\"Maatwebsite\\Excel\\ExcelServiceProvider\"\n\ngit commit -m \"edit script.blade\" resources/views/base/pages/script.blade.php\n\n\nsudo rm /var/lib/dpkg/info/ linux-image-unsigned-5.15.0-50-generic.list      php8.1-mbstring.list\nlinux-image-unsigned-5.15.0-50-generic.md5sums   php8.1-mbstring.md5sums\nlinux-image-unsigned-5.15.0-50-generic.postrm    php8.1-mbstring.postinst\nlinux-image-unsigned-5.15.0-50-generic.preinst   php8.1-mbstring.postrm\nlinux-image-unsigned-5.15.0-50-generic.prerm     php8.1-mbstring.preinst\nlinux-image-unsigned-5.15.0-50-generic.triggers  php8.1-mbstring.prerm\n\n\n\nsudo apt-get install memcached gettext php8.0-imagick php8.0-memcache php8.0-bcmath php8.0-intl php8.0-cgi php8.0-fpm php8.0-mysql php8.0-curl php8.0-gd php8.0-tidy php8.0-xml php8.0-xsl php8.0-mbstring php8.0-zip php8.0-cli php8.0-soap php8.0-gmp php8.0-sqlite3\n\n\nsudo apt install php8.0-imagick imagick\n\n\nsudo apt-get install imagemagick memcached gettext php7.4-imagick php7.4-memcache php7.4-bcmath php7.4-intl php7.4-cgi php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-tidy php7.4-xml php7.4-xsl php7.4-mbstring php7.4-zip php7.4-cli php7.4-soap php7.4-gmp php7.4-sqlite3\n\n\n\n\n\n\n\n\n\n\nadd-apt-repository ppa:ondrej/php && apt-get update\napt-get install php5.6-{cli,pdo,fpm,zip,gd,xml,mysql,cgi}\nsudo apt-get install php7.4-{cli,pdo,fpm,zip,gd,xml,gd,gd,curl,bcmath,mbstring,cgi}\napt-get install php8.0-{cli,pdo,fpm,zip,gd,xml,mysql,cgi}\n###\nsudo apt-get install php7.4-{cli,pdo,fpm,curl,zip,gd,xml,mysql,pdo,mbstring,gd,intl,cgi,bcmath}\n\nsudo apt-get install -y  php7.3-curl php-pgsql  php7.3-cli php7.3-common php7.3-mysql php7.3-zip php7.3-gd php7.3-mbstring php7.3-xml php7.3-bcmath\n\nsudo apt install openssl php-common php-curl php-json php-mbstring php-mysql php-xml php-zip\nsudo apt install php-curl php-json php-mbstring php-mysql php-xml php-zip\n\n\nsudo apt-get install -y  php8.1-curl\n\n\nsudo update-alternatives --set php /usr/bin/php8.0\n\n--------------------------------------------------\nsudo update-alternatives --set php /usr/bin/php7.4\n\ncd /var/lib/dpkg/info/\ndpkg --configure -a\n\n\n\n[Desktop Entry]\nVersion=1.0\nName=Update Ubuntu\nComment=Update ubuntu\nExec=sudo apt-get update\nTerminal=true\nType=Application\nCategories=Utility;Application;\n\n/////////////////////////////////////////\n\nemail ooooo.id\nus1-9b3b04ac-87349f9cfb6eda74807cf7e1a.pages.mailchi.mp DNS EMAIL\n148.105.251.17 Ip\n\nnvm ls-remote\n\n\nhttp://localhost/dollies/orders/received/25\n\n\ncheckout /show color\n\n\nMerchant ID\tG269381942\nClient Key\tSB-Mid-client-pek-lY1j9zd1NKuV\nServer Key\tSB-Mid-server-sO4Oz3LRPVJYLxeUDnTmL-5-\n\n\nLink : https://server.zapps.co.id:20000/\nemail : sales@cinocino.com\npassword : kaladium18b\n\n--------------------------------------------------\nType: TXT\nHost/Name: _DMARC.cinocino.com\nValue: v=DMARC1; p=none; rua=mailto:7c75ec5f@mxtoolbox.dmarc-report.com; ruf=mailto:7c75ec5f@forensics.dmarc-report.com; fo=1\n\n--------------------------------------------------\nv=spf1 mx a ip4:103.214.113.123 ip6:fe80::5054:ff:feda:27db a:wearedollies.com include:_spf.google.com ~all\n\n-----------------------------------------------------------------------------\nv=spf1 a mx ip4:103.214.113.123 include:_spf.google.com ~all\nv=spf1 mx a ip4:103.214.113.123 ip4:128.199.254.184 ip4:10.6.160.164 ip6:fe80::5054:ff:feda:27db a:wearedollies.com include:_spf.google.com -all\n\nv=spf1 a mx ip4:103.247.8.75 ip4:103.247.9.92 ip4:103.253.214.201 ip4:103.214.113.123 include:amazonses.com include:_spf.google.com ~all\n\n\nv=DMARC1;p=none;sp=none;pct=5;adkim=s;aspf=s;rua=mailto:cs@wearedollies.com;ruf=mailto:info@wearedollies.com;fo=1\n\n\n\ntelehealth@2022\n\n\nv=spf1 +a +mx +ip4:103.214.113.123 include:spf.spamdisinfect.com ~all\nv=spf1 +a +mx +ip4:216.185.114.147 include:_spf.google.com ?all\nv=DMARC1; p=quarantine; pct=5; rua=mailto:postmaster@cinocino.com\nv=DMARC1; p=quarantine; pct=5; rua=mailto:postmaster@ashh.co.id\nv=DMARC1;p=none;pct=100;ruf=mailto:postmaster@cinocino.com;fo=0:d:s;aspf=r;adkim=r;\ndsdds\n\n\nphp artisan make:migration add_status_to_campaign_table --table=campaign\n\n\nphp artisan migrate:refresh --path=database/migrations/2022_11_29_115403_seo_meta_table.php\n\n\n\n\n\n\n\nphp artisan make:migration reedem_poin_table\nphp artisan migrate --path=/database/migrations/2021_10_12_132245_pelaksanaan_kontrak_table.php\n\nphp -d memory_limit=1024M artisan route:clear\nphp -d memory_limit=1024M composer install\n\n\n\n\nDB_DATABASE=dev_abc_pasko_com\nDB_USERNAME=dev_abc-pasko_com\nDB_PASSWORD=kaladium18b\n\n\n\n\n----------------------------------\nhttps://dev.abc-pasko.com:10000/\nusername : dev.abc-pasko.com\npass : kaladium18b\n\n--------------------------------------\nedit database\nhttps://mysql.ooooo.id/db/\nusername : dev_abc-pasko_com\npass : kaladium18b\n-------------------------------\n\n\n\n\nnpm rebuild node-sass --force\n* run `npm install`\n* run `npm gulp build`\n* run `npm gulp default`\n\n\n\nphp artisan make:migration add_icon_categories --table=categories\n\ncertbot --force-renewal -d www.sudo certbot --nginx --agree-tos --preferred-challenges http -d staging.teramedik.zapps.co.id\n\n certbot --nginx --agree-tos --preferred-challenges http -d asset.zapps.co.id\n\nsudo certbot --nginx --agree-tos --preferred-challenges http -d sales.wearedollies.com\nsudo certbot --nginx --agree-tos --preferred-challenges http -d member.abc-pasko.com\n\n\nsudo certbot --nginx -d keu.official-jsr.com\n\n\n\n\n\n//module\nphp artisan module:make-model RedeemPoin RedeemPoin\n\n\n\nphp artisan module:make-migration RedeemPoin RedeemPoin\n\nphp artisan module:make-migration create_product_locations_table Product\n\n\nphp artisan module:make-model AdjustedLocations Location\n\n\n\nphp artisan module:make-migration create_adjusted_locations_table Location\nphp artisan module:make-migration create_users_locations_table Location\n\n\n\nphp artisan migrate --path=/Modules/Notification/Database/Migrations\nphp artisan module:migrate Pages\n\n\n\nphp artisan stub:publish\ncp -R vendor/nwidart/laravel-modules/src/Commands/stubs Modules/stubs\nenabled = true, path = Modules/stubs\n\n\n\n\n\n\nphp artisan module:make-controller MusersController Master\nphp artisan module:make-middleware GenerateMenus Messages\nphp artisan module:publish\n\n------------------------------------------------------------------------\nSetting : filezilla FTP\nhost : api.telehealth.ooooo.id\nuser : api.telehealth.ooooo.id\npassword : telehealth\nencryption : Only use plain Ftp\nLogon type : Normal\n-------------------------------------------------------------------------\n\npgsql\n\nALTER TABLE m_users ALTER COLUMN ALAMAT_KERJA_KELURAHAN TYPE integer USING (ALAMAT_KERJA_KELURAHAN::integer);\nALTER TABLE wilayah_desa ALTER COLUMN id TYPE integer USING (id::integer);\n\n\nSELECT setval(promo_id_seq('promo', 'id'), coalesce(max(id)+1, 1), false) FROM promo;\n\nALTER TABLE m_users ALTER COLUMN alamat_kerja_kelurahan  TYPE integer USING (alamat_kerja_kelurahan::integer);\n\n\nhttps://pgsql.ooooo.id/\n\n\n\n\nSELECT  \"TANGGAL_SERTIFIKAT\", count(*) AS \"count\" ,EXTRACT(month from \"TANGGAL_SERTIFIKAT\"::timestamp) as month FROM \"t_sertifikat\"\nGROUP BY \"TANGGAL_SERTIFIKAT\" ORDER BY \"TANGGAL_SERTIFIKAT\"\n\n\nSELECT  count(*) AS \"count\" ,\nEXTRACT(month from \"TANGGAL_SERTIFIKAT\"::text) as month\n FROM \"t_sertifikat\"\nGROUP BY \"TANGGAL_SERTIFIKAT\" ORDER BY \"TANGGAL_SERTIFIKAT\"\n\n\n\nSELECT  count(*) AS \"count\" ,\nDATE_TRUNC('month'::text,\"TANGGAL_SERTIFIKAT\"::date) as date\n FROM \"t_sertifikat\"\nGROUP BY \"TANGGAL_SERTIFIKAT\" ORDER BY \"TANGGAL_SERTIFIKAT\"\n\n\nSELECT  count(*) AS \"count\" ,\nEXTRACT(month from \"TANGGAL_SERTIFIKAT\"::date) as bulan\n FROM \"t_sertifikat\"\nGROUP BY \"bulan\"\n\n\nSELECT\n  COUNT(id) AS count,\ncreated_at,\n  EXTRACT(\n    MONTH FROM settings\n    ) AS \"Month\"\n\n         COUNT(id) AS count\nFROM settings\nGROUP BY DATE_TRUNC('month',created_at);\n\nSELECT setval(broadcast_history_id_seq('broadcast_history', 'id'), coalesce(max(id)+1, 1), false) FROM broadcast_history;\n\n\n\nCREATE SEQUENCE broadcast_history_id_seq\n  INCREMENT 1\n  MINVALUE 1\n  MAXVALUE 9223372036854775807\n  START 3\n  CACHE 1;\nALTER TABLE broadcast_history_id_seq\n  OWNER TO postgres;\n\n\nALTER TABLE broadcast_history ALTER COLUMN id SET DEFAULT nextval('broadcast_history_id_seq'::regclass);\n\nUPDATE dokter SET name_real = trim(regexp_replace(name_real, '\\s+', ' ', 'g'));\n\n\nsudo apt-get install ppa-purge\nsudo ppa-purge ppa:ondrej/php-8.0\n\nssh -p 4646 zapps@110.50.84.143\n\nssh zapps@103.176.79.79\nssh internal@103.23.198.134\n\n\n\nnano ~/.ssh/authorized_keys\ncat ~/.ssh/id_rsa.pub\n\ncat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys\ncat ~/.ssh/id_rsa\n\n\n\n\n\n==============================================\nssh root@103.176.79.79  // server ABC PASKO\n\nssh root@wearedollies.com -p 4646\nssh -i root root@wearedollies.com -p 4646\n\nssh ns6@34.134.98.111 = server GCP zapps\nssh -p 4646 asahi@wearedollies.com\nssh-copy-id asahi@wearedollies.com -p 4646\nTelehealth\nhttps://postgres.ooooo.id/phppgadmin/\nuser : postgres\npassword : kaladium18b\ndatabase : staging_telehealth\n-------------------------------------\n\nhttps://ns1.ooooo.id:10000/\nuser : root\npass : kaladium18b\n------------------------------------\n\nlink API DEV\nhttps://api.dev.telehealth.ooooo.id/\n\n\nAdministrators =  https://pro.zapps.co.id/admin\nKlien =  https://pro.zapps.co.id/clients\n\nservice php8.0-fpm restart\nservice php7.3-fpm restart\nsudo crontab -e\n# every 1 minute pull changes (if any)\n*/1 * * * * su -s /bin/sh $user -c 'cd /home/video/public_html && /usr/bin/git pull origin main'\n\n*/1 * * * * cd /home/staging.telehealth.ooooo.id/public_html && git pull -q origin main\n*/1 * * * * cd /home/staging.telehealth.ooooo.id/public_html && git pull -q origin main\n\n\n*/1 * * * * cd /home/bts/public_html && git stash && git pull -q origin main\n*/1 * * * * cd /home/asahi/public_html && git stash && git pull -q origin main\n\n\n\n\n*/1 * * * * cd /home/api.hrm.zapps.co.id/public_html && git stash && git pull -q origin main\n\n\n\n*/1 * * * * cd /var/www/html/biofarma && git pull -q origin master\n*/1 * * * * cd /var/www/html/biofarma && git pull -q origin master\n\n\n*/1 * * * * cd /home/api.staging.telehealth.ooooo.id/public_html && git pull -q origin main\n*/1 * * * * cd /home/wearedollies/public_html && git pull -q origin main\n*/1 * * * * cd /home/flask && git stash && git pull -q origin main && sudo systemctl restart flask\n\ncheck : crontab -l\n\n\n//sublime\nsudo chmod 775 -R projectname/\nsudo chown username -R projectname/\n\nsudo chown -R $(whoami) /var/www/html/telehealth\nsudo chown -R $(whoami) /var/www/html/pasko\n\n\nSERVER STAGING // GCP : GOOGLE\n-------------------------------------------------\nAPI : https://api.staging.teramedik.zapps.co.id/\nCMS : https://staging.teramedik.zapps.co.id/\nDATABASE : staging_teramedik\nWEB PANEL : https://gcp.cinocino.com:10000/\nPGSQL PANEL : https://pgsql.zapps.co.id/phppgadmin/\nusername : postgres\npassword : kaladium18b\n------------------------------------------------\n\nSERVER DEVELOPMENT // ZAPPS  : SUMBERSARI\n-------------------------------------------------\nAPI : https://dev.api.teramedik.zapps.co.id/\nCMS : https://dev.teramedik.zapps.co.id/\nDATABASE : dev_teramedik\nWEB PANEL : https://ns1.ooooo.id:10000/\nPGSQL PANEL : https://postgres.ooooo.id/phppgadmin/\nusername : postgres\npassword : kaladium18b\n------------------------------------------------\n\n  ===================== BIOFARMA\n\n  -- next\n   - modul Report\n   - Backup all zip image : masih perlu riset\n\n\n\nManagement IBI Makassar\n----------------------------------\n user :  timpua.jenny@gmail.com\n pass :  telehealth\n\n Kota Makassar Sulawesi Selatan\n Bidan ....\n -  Micha Erawati, S.ST, SKM,M.Kes\n\n pass : 38f94da556d3c303deb0aa46c95b887d = telehealth\n\n///////////////////////////////////////\nwp workers\n- wp\n- curent status ( wherehas)\n- business_partner_workers\n-`work_permits`.`expiry_date`  >  Aktif\n>>>> file\n\n\nvscode insider\n\nns1.abc-pasko.com\npos.abc-pasko.com\nsite.abc-pasko.com\nhttps://dev.asahi.ooooo.id/abc.zip\nssh zapps@103.176.79.79\nssh root@103.176.79.79\n\nv=spf1 +mx +a +ip4:103.176.79.79 include:_spf.google.com ~all\nv=DMARC1; p=none; rua=mailto:info@bc-pasko.com;\n\n\nv=spf1 +a +mx +ip4:103.176.79.79 include:spf.spamdisinfectant.com ~all\n\n\n\n\n\ninternal.zapps.co.id:10001\n\n\n//ganti password webmin ---\n/usr/share/webmin/changepass.pl /etc/webmin root sumbersari101a\n\nsudo nano -w /etc/webmin/miniserv.conf\n\n\n\n\n\nCREATE USER 'zapps'@'localhost' IDENTIFIED BY 'kaladium18b';\n\nGRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;\n\n\n\nsudo apt install php7.3-common php7.3-mysql php7.3-php_gd2 php7.3-xml php7.3-zip php7.3-php_xml php7.3-xmlrpc php7.3-curl php7.3-gd php7.3-imagick php7.3-cli php7.3-dev php7.3-php_iconv\nphp7.3-php_simplexml\nphp7.3-php_xmlreader\nphp7.3-php_zlib\n\n\n\n\nsudo apt-get install php7.4-php-pgsql\n\n\n\nPHP: ^7.2\\|^8.0\nLaravel: ^5.8\nPhpSpreadsheet: ^1.21\npsr/simple-cache: ^1.0\nPHP extension php_zip enabled\nPHP extension php_xml enabled\nPHP extension php_gd2 enabled\nPHP extension php_iconv enabled\nPHP extension php_simplexml enabled\nPHP extension php_xmlreader enabled\nPHP extension php_zlib enabled\n#\n\napt-get install php7.4-{cli,pdo,fpm,zip,gd,xml,mysql,cgi,gd2,gd2,iconv,xmlreader,zlib,simplexml}\n\napt install php-pear php7.3-curl php7.3-dev php7.3-gd php7.3-mbstring php7.3-zip php7.3-mysql php7.3-xml php7.3-fpm libapache2-mod-php7.3 php7.3-imagick php7.3-recode php7.3-tidy php7.3-xmlrpc php7.3-intl\n\napt-get install php7.4-{cli,pdo,fpm,zip,gd,xml,gd,curl,bcmath,mbstring,cgi}\n\n\nsudo apt install php7.3-cli php7.3-fpm php7.3-json php7.3-pdo php7.3-mysql php7.3-zip php7.3-gd  php7.3-mbstring php7.3-curl php7.3-xml php7.3-bcmath php7.3-json\n\nsudo apt install php8.1-curl \nsudo apt-get install php7.3-mbstring\n\n\nhttps://asset.zapps.co.id/\nUsername: admin@example.com\nPassword: 123456\n\nWeb Panel assets managemnet\nhttps://ns1.ooooo.id:10000/\nuser : asset\npass :kaladium18b\n\n\n\nAkun Gmail server\n\nppibisvr@gmail.com\nppibijoharbaru\n\n\nhttps://console.agora.io/\n-------------------------------\nemail    : ppibisvr@gmail.com\npassword :Telebidan@2022\n\nv=DMARC1; p=none; rua=mailto:info@ibi.or.id;\nv=spf1 +mx +a +ip4:202.157.189.113 include:_spf.google.com ~all\n202.157.189.113\n\nhttps://svrteleb.ibi.or.id:10000/\n\n\nssh root@103.186.0.4\nssh ppibiserver@103.186.0.4\nUsername : ppibiserver\nPassword : PpibiServer-24\nResourcename : ppibiserver\n\n\nsudo -u postgres psql -c \"ALTER USER postgres PASSWORD 'psql -U postgres';\"\n\nALTER USER postgres with password 'kaladium18b';\n\n/usr/share/webmin/changepass.pl /etc/webmin root PpibiServer-24\nhostnamectl set-hostname ibiserver.ooooo.id\n\n\n/etc/postgresql/14/main/pg_hba.conf\n\n\nBUCKET TELEHEALTH\n---------------------------------------------------------------\nurl = https://is3.cloudhost.id/bucket-telebidan\nSecret Access Key = GHDEsDaPlDlUiDGGTG8mRUh4uEESh2NYPQFE45YI\nAccess Key ID = 2E223TYFJC1YBB619T00\nType = Global\n---------------------------------------------------------------\nDOkumentasi : https://idcloudhost.com/panduan/cara-akses-object-storage-idcloudhost-menggunakan-cyberduck/\n\nssh-keygen -f \"/home/ns6/.ssh/known_hosts\" -R \"[ooooo.id]:4646\"\n\nssh asahi@110.50.84.143 -p 4646\ncomposer install --ignore-platform-reqs\n\n\nssh dopay@103.187.146.151\nDopay123456\n\nirock\n1. event_contest_weekly_winners\n2. event_contest_most_point_winners\n3. performer_event_winners\n4. selector_performer_winners\nrelasi ke user utk foto\n\n\nssh ubuntu@ec2-108-136-162-126.ap-southeast-3.compute.amazonaws.com //cms backend\n\nssh ubuntu@ec2-108-136-191-124.ap-southeast-3.compute.amazonaws.com //frontend\n\n\nAWS ABRACADABRA\n\n13.228.210.75\nssh ubuntu@ec2-13-228-210-75.ap-southeast-1.compute.amazonaws.com //new backend\n\nssh ubuntu@ec2-13-228-210-75.ap-southeast-1.compute.amazonaws.com\n\n\ngalaxy@sbm-itb.ac.id\nDopay12345\n\n===============================================================================\nssh ubuntu@ec2-18-141-51-175.ap-southeast-1.compute.amazonaws.com // New Frontend\n\nssh root@18.143.108.237\nssh root@18.143.131.7\n\nsftp ec2-user@18.143.108.237\nsftp ubuntu@43.218.7.140\n\nMatch User ec2-user\nPermitTunnel no\nAllowAgentForwarding no\nAllowTcpForwarding no\nX11Forwarding no\n\n curl icanhazip.com\n\ncertbot -d abracadabra.events,www.abracadabra.events --force-renewal\n\nnano  /etc/ssh/sshd_config\nsudo find . -type d -exec chmod -R 775 {} \\;\nsudo find . -type f -exec chmod -R 664 {} \\;\nsudo chmod -R ugo+s html\nsudo chown -R ubuntu:www-data html\n\nLOGIN sftp Server AWS abracadabra\n\nuser: ec2-user\nip : 18.143.108.237\npass :abracadabra2022\nport : 22\n\n-- Akun AWS klien abracadabra ----\n\nhariman@abracadabra.events\n4brac4da8r4@3vent5!\n--------------------------------\n\nhttps://www.namesilo.com/\nUser: auausolow\nPw: Hantaronta098!\n\n\namazonses.noreply@abracadabra-starquest.events\n\n\n\nabracadabra-starquest.events\n\n-----------------------------\n//sendgrid akun login\nhttps://app.sendgrid.com/\n\nsocial@abracadabra.events\nEmail@Abracadabra2022\n------------------------------\n\nemail-smtp.ap-southeast-1.amazonaws.com\nSMTP Username:\nAKIAVRZA7U3X2LI27VGY\n\nSMTP Password:\nBMnTAdd3JUS7/jE3A5PVfQYk93tV66CpjouOWQorzurp\n\n\n\n\nMAIL_MAILER=smtp\nMAIL_HOST=smtp.mailgun.org\nMAIL_PORT=587\nMAIL_USERNAME=postmaster@sandbox27fb3f13349c4856b3fe22463e07c6bb.mailgun.org\nMAIL_PASSWORD=6f8659cac32c4408ecaef238e412b54d-bdb2c8b4-134e0763\nMAIL_ENCRYPTION=tls\n\n\n\n\nopenssl x509 -in /etc/ssl/certs/certificate.crt -text -noout\n\n\n\n\n\n\nhttps://app.fastmail.com/\nstarquest.events\n\nf5iqzboihfshju4iosuldhozx4\n\n\nhx7knd5n\n\n\n\n\n\n\n\nmailgun\nEmail@StartReuquest2022\n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\n\n\n//config .env\n\nMAIL_DRIVER=smtp\nMAIL_HOST=smtp.sendgrid.net\nMAIL_PORT=587\nMAIL_USERNAME=apikey\nMAIL_PASSWORD=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\nMAIL_ENCRYPTION=tls\nMAIL_FROM_ADDRESS=noreplay@abracadabra.events\nMAIL_FROM_NAME=Abracadabra\n\n\n\n\n============================================================\nhost : abracadabra.cybratrcrsml.ap-southeast-1.rds.amazonaws.com\nuser : abracadabra\npass : abracadabra2022!\ndb : abracadabra (lagi proses copy)\n\n\n//db cms aws production\nDB_CONNECTION=mysql\nDB_HOST=abracadabra.cybratrcrsml.ap-southeast-1.rds.amazonaws.com\nDB_PORT=3306\nDB_DATABASE=abracadabra\nDB_USERNAME=abracadabra\nDB_PASSWORD=abracadabra2022!\n\n\nvirtual server block\n==========================================\nsudo mkdir -p /var/www/production/html\nsudo chown -R $USER:$USER /var/www/production/html\nsudo nano /var/www/production/html/index.html\nsudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/production\nsudo nano /etc/nginx/sites-available/production\n\nserver {\n        server_name staging.abracadabra.events www.staging.abracadabra.events;\n        index index.html index.htm index.nginx\n        index index.php index.htm index.html;\n\n\n        root /var/www/staging/html;\n\n      location / {\n\n                try_files $uri $uri/ =404;\n        }\n\n        location = /favicon.ico { access_log off; log_not_found off; }\n        location = /robots.txt  { access_log off; log_not_found off; }\n\n        location ~ \\.php$ {\n        include snippets/fastcgi-php.conf;\n        fastcgi_pass unix:/run/php/php8.0-fpm.sock;\n\n      }\n\n   }\n\n\n\nserver{\n    listen 80;\n    server_name abracadabra.events www.abracadabra.events;\n    location / {\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header Host $host;\n        proxy_pass http://127.0.0.1:3000;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \"upgrade\";\n        # location /overview {\n        #     proxy_pass http://127.0.0.1:3000$request_uri;\n        #     proxy_redirect off;\n        # }\n    }\n}\n\n\n\n\n\nsudo ln -s /etc/nginx/sites-available/production /etc/nginx/sites-enabled/\n========================================================================\n\nwget https://www.adminer.org/latest.php -O /var/www/pgsql/html/index.php\nDB_HOST=abacadabra.c7qbmajqjhf3.ap-southeast-3.rds.amazonaws.com\n\nDB_DATABASE=abacadabra\nDB_USERNAME=abacadabra\nDB_PASSWORD=abacadabra2022!\n\n\n108.136.162.126 : cms\n108.136.191.124  : staging\n\nssh ubuntu@ec2-108-136-191-124.ap-southeast-3.compute.amazonaws.com\n\n\n\nserver{\nserver_name abcd.ooooo.id www.abcd.ooooo.id;\n\n    location / {\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header Host $host;\n        proxy_pass http://127.0.0.1:3000;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \"upgrade\";\n        # location /overview {\n        #     proxy_pass http://127.0.0.1:3000$request_uri;\n        #     proxy_redirect off;\n        # }\n    }\n\n    listen 443 ssl; # managed by Certbot\n    ssl_certificate /etc/letsencrypt/live/abcd.ooooo.id/fullchain.pem; # managed by Certbot\n    ssl_certificate_key /etc/letsencrypt/live/abcd.ooooo.id/privkey.pem; # managed by Certbot\n    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot\n    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot\n\n}\n\n\n\nserver{\n    if ($host = abcd.ooooo.id) {\n        return 301 https://$host$request_uri;\n    } # managed by Certbot\n\n\n    listen 80;\nserver_name abcd.ooooo.id www.abcd.ooooo.id;\n    return 404; # managed by Certbot\n\n\n}\nsudo chmod 0640 /etc/letsencrypt/live/staging.abracadabra.events/{cert,chain,fullchain}*.pem\n\nsudo chown -R $USER:$USER /etc/letsencrypt/live/staging.abracadabra.events/\n\n\n\nDB_CONNECTION=mysql\nDB_HOST=abracadabra.c7qbmajqjhf3.ap-southeast-3.rds.amazonaws.com\nDB_PORT=3306\nDB_DATABASE=abracadabra\nDB_USERNAME=abracadabra\nDB_PASSWORD=abracadabra2022!\n\nabracadabra.c7qbmajqjhf3.ap-southeast-3.rds.amazonaws.com\nabracadabra\nabracadabra2022!\n\n\nrapture.stevenz7@gmail.com\n\n\nhttps://my.domainesia.com/clientarea.php?action=details\n\nrapture.stevenz7@icloud.com\nPass : suksesjaya\n\n\n\nnovanadityakencana@gmail.com\n\nEmail@Abracadabra2022\n\n============================================================\nvirtualhost apache\n\nsudo mkdir /etc/httpd/sites-available /etc/httpd/sites-enabled\nsudo nano /etc/httpd/conf/httpd.conf\nIncludeOptional sites-enabled/*.conf\n<VirtualHost *:80>\n    ServerName www.DomainAnda.me\n    ServerAlias DomainAnda.me\n    DocumentRoot /var/www/html/cms-irock\n    ErrorLog /var/www/html/log/error.log\n    CustomLog /var/www/html/log/requests.log combined\n</VirtualHost>\n\nsudo ln -s /etc/httpd/sites-available/website-1.conf /etc/httpd/sites-enabled/website-1.conf\nsudo setsebool -P httpd_unified 1\nsudo systemctl restart httpd\n\n\n\ntimedatectl set-time 2022-11-12\n\n\n43.218.7.140  backend.abracadabra.event === backend\n43.218.4.207  demo.abracadabra.event\nssh ubuntu@43.218.4.207\n\n\nip : 43.218.7.140\npass :abracadabra2022\nport : 22\n\n\nsudo mkdir -p /var/www/example.com/public_html\n\nhttp://admin.abracadabra.events/\n\n\nnano /etc/httpd/sites-available/admin.abracadabra.events\n\nchown -R apache:apache /var/www/abracadabra.events/\n\n\n ln -s /etc/httpd/sites-available/admin.abracadabra.events /etc/httpd/sites-enabled/\n\n\nsudo nano /etc/apache2/sites-available/example.com.conf\n\nsudo certbot --apache -d admin.abracadabra.events\n\n\n\n//EMAIL SIASAT\nnewsiasat.srvasc@gmail.com\ndldzihbtlgkxnynh\n\n\nMAIL_DRIVER=smtp\nMAIL_HOST=smtp.gmail.com\nMAIL_PORT=465\nMAIL_USERNAME=newsiasat.srvasc@gmail.com\nMAIL_PASSWORD=dldzihbtlgkxnynh\nMAIL_ENCRYPTION=ssl\nMAIL_FROM_NAME=newsiasat.srvasc@gmail.com\n\n\n\n\nsocial@abracadabra.events\nLetsdothemagic!\n\n\n\n\n\n\n\nhttps://login.mailgun.com/login/\nemail : social@abracadabra.events\npassword : Email@StartReuquest2022\n\n\n\n\n\nEmail Abracadabra\n----------------------------------------------\nnoreply@abracadabra.events\npassword         : Letsdothemagic!\npassword for App : eyttrscdjpviiflq\n\n----------------------------------------------\nconfig\nMAIL_USERNAME=noreply@abracadabra.events\nMAIL_PASSWORD=qovoqtijsqhtczp\nMAIL_ENCRYPTION=ssl\nMAIL_FROM_ADDRESS=noreply@abracadabra.events\n-----------------------------------------------\n\nCONFIG SENDMAIL CMS\n----------------------------------------------\nMAIL_DRIVER=smtp\nMAIL_HOST=smtp.gmail.com\nMAIL_PORT=465\nMAIL_USERNAME=noreply@abracadabra.events\nMAIL_PASSWORD=gpzzuyatoafjqgpr\nMAIL_ENCRYPTION=ssl\nMAIL_FROM_NAME=noreply@abracadabra.events\n\n\n\n\nMAIL_MAILER=smtp\nMAIL_HOST=mail.srvasc.com\nMAIL_PORT=465\nMAIL_USERNAME=newsiasat@srvasc.com\nMAIL_PASSWORD=P@$$w0rdnewsiasat\nMAIL_ENCRYPTION=ssl\n\n\n\n\nssh ec2-user@52.77.232.74 // aws be scalling\nssh ec2-user@18.138.128.171  // aws be\nssh ec2-user@54.169.28.91 // aws frontend klien\nssh ec2-user@admin.abracadabra.events  // aws klien : backend\n\n\nec2-54-169-56-180.ap-southeast-1.compute.amazonaws.com\n\nsudo certbot --apache -d cms.game.zapps.co.id\n\n\n\ndig admin.abracadabra.events\n18.138.128.171 // Backend abracadabra\nabracadabra.events\nserver klien : 54.169.28.91\n\nsudo yum certbot --apache -d abracadabra.events\n<VirtualHost *:80>\n    ServerName www.abracadabra.events\n    ServerAlias abracadabra.events\nDocumentRoot /var/www/html/cms-irock/public\n</VirtualHost>\n\nsudo yum certbot --apache -d abracadabra.events -d www.abracadabra.events\n\n<VirtualHost *:80>\n    ServerName www.abracadabra.events\n    ServerAlias abracadabra.events\n    ProxyPreserveHost On\n\n    ProxyPass / http://127.0.0.1:3000/ retry=1 acquire=3000 timeout=600 keepalive=On\n    ProxyPassReverse / http://127.0.0.1:3000/\n</VirtualHost>\n\n\n///gamification\n\nportal diisi : vpn-mitra3.telkom.co.id\nuser: syarif_neu\npassword: 5#100orueN\n\n=======================================\n\nsds\nAkses Gitlab Telkom\nkoneksinya bisa pakai vpn ini\nuser: syarif_neu\npassword: Neuron#003!syarif\n\nuntuk user gitlab nya\nsyarif.hidayatulloh@neuron.co.id\nawqwerty311\n\n\nhttps://console-openshift-console.apps.mypaas.telkom.co.id/\n\nAWS: info@zapps.co.id Pass: Irockdev5!\n\nssh ec2@ipFe\nsudo su\ncd abracadabra\ngit pull\nnpm run build\npm2 restart fe\n\nDatabase Telkom Gamification\ndatabase PostgreSQL ver. 12.9 pada server:\ndb-prod-telkom-game    (IP: 10.60.174.114)\ndb-staging-telkom-game (IP: 10.60.174.115)\ndb-dev-telkom-game     (IP: 10.60.174.116)\ndengan detail user akses database sebagai berikut:\n\nusername: admapp\npassword: 4dmapp2022#!\n\n\n\npgsql solved\n/etc/postgresql/\n= make-ssl-cert generate-default-snakeoil --force-overwrite\nsudo systemctl start postgresql@12-main\nsudo -u postgres psql -c \"ALTER USER postgres PASSWORD 'kaladium18b';\"\n\n\nphp artisan migrate --path=/database/migrations/2023_01_13_235139_create_kota_table.php\nphp artisan migrate --path=/database/migrations/2023_01_13_235419_create_cabang_table.php\n\n\nphp artisan migrate:rollback --path=/database/migrations/2023_01_13_235419_create_cabang_table.php\n\n\nALTER TABLE migrations MODIFY id INTEGER NOT NULL AUTO_INCREMENT;\n\n\n\nphp artisan make:model RedeemPoin --migration\n\n\n\nphp artisan module:make-model LuckyDraws Campaign --migration\n\n\nphp artisan module:migrate  RedeemPoin\n\nphp artisan module:migrate add_userid_table --table=Applications\n\nphp artisan make:migration add_userid_table --table=Applications\n\nphp artisan module:make-migration create_poin_rewards_table RedeemPoin\n\n\nphp artisan module:make-migration add_status_to_products_table Product\nphp artisan module:make-migration add_kode_sales_to_purchases_table Purchase\n\n\n//okee gami > > penambahan tabel\nphp artisan migrate --path=/database/migrations/2023_01_26_170054_add_userid_table.php\n\nphp artisan module:migrate  Campaign\n\n\n\nphp artisan make:migration update_achivements_table\nphp artisan make:migration create_level_badges_table\n\n\nphp artisan make:migration add_color_profile_table --table=level_badges\n\nphp artisan make:migration add_color_profile_to_level_badges --table=level_badges\nphp artisan make:migration add_file_to_pages --table=pages --path=/Modules/Page/database/Migrations\n\nphp artisan migrate --path=/database/migrations/2023_01_16_120043_update_achivements_table.php\nphp artisan migrate:rollback --path=/database/migrations/2023_01_16_120043_update_achivements_table.php\nphp artisan module:make-model LevelsBadges Levels\nphp artisan migrate --path=/database/migrations/2023_01_16_122731_create_level_badges_table.php\n\n\nphp artisan migrate --path=/database/migrations/2023_01_31_121933_create_history_poins_table.php\n\nphp artisan module:make-factory LuckySpin LuckySpin\n----------------------------------------------------\nphp artisan make:model PoinRewards --migration\nphp artisan make:model JenisBerlian --migration\nphp artisan make:model JenisSertifikat --migration\nphp artisan make:model HistoryPoin --migration\n\n\n\n\nphp artisan module:make PoinRewards\nphp artisan module:make-model PoinRewards --migration\nphp artisan module:make-model PoinRewards PoinRewards\n\n\n\n\nphp artisan module:make-model HistoryPurchases Purchase --migration\nphp artisan module:make-factory AttendanceRewards AttendanceRewards\nphp artisan make:model JenisSertifikat\nphp artisan make:controller Admin/ActivityController\n\n\nuser : harrier2016\npass : @Koyulkoyul82\n\n//make module seeder\nphp artisan module:make:make:seeder Applications ApplicationsTableSeeder\n\nphp artisan module:make-migration add_location_to_product_items_tabel Product\n\n//tambah kolum di modul\n\nphp artisan make:migration add_icon_to_pages_tabel --table=pages --path=/Modules/Page/database/migrations\n\n\nWireguard (VPN)\nhttp://54.169.131.168:51821/\npassword : ZappsAI2023\n\nProxy (public ip)\nhttp://54.169.131.168/\n\nFrontend (local ip)\nhttp://10.0.132.224:3044/\n\nBackend (on going)\n\n\n\nhttp://newsiasat.srvasc.com/api/update-app?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb24iOiJTSUFTQVQgREVWRUxPUE1FTlQifQ.SvgtdWG_IHozbfrenge0fYjnFwu0sq4-hlalaQVWy0Y\n\n\nAWS: info@zapps.co.id Pass: Irockdev5!\n\nsudo fsck.ext4 -f /dev/sda2\n\nPUSH ASAHI ======\nhttp://newsiasat.srvasc.com/api/update-app?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb24iOiJTSUFTQVQgREVWRUxPUE1FTlQifQ.SvgtdWG_IHozbfrenge0fYjnFwu0sq4-hlalaQVWy0Y\n\n====================================================================\n\n\nKaladium18b\n\nsudo docker run -d -p 192.168.1.100:9006:9006 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer\n\n\n\ndocker run -d --name portainer-new --restart always -p 192.168.1.100:9006:9006 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce\n\n\ndocker run --restart always -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Sunlife@2023' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest\n\n\n--Config SQL server\n----------------------------------------------------\nip              : 103.171.154.31\nport            : 1435\ndatabase/schema : master\nauthentication  : sQL Server Authentication\n\n--Credential ---------------------------------------\n\nusername  : sa\npassword  : Sumbersari101@\n\n\n========================================================\nssh root@10.54.68.229\n\nSERVER\nip: 10.54.68.229\nuser: root\npass: centos750gb\n\nPOSTGRES\n- HOST: 10.54.68.229:5432\n- USER: postgres\n- PW : pgcentos750gb\n- DIR_DATA: /mnt/data/pgdata/11\n\n\nTOMCAT\n- HOST: 10.54.68.229:8080\n- USER: admin\n- PW: adminadmin\n\n\n=========================================\n\nv=DMARC1; p=reject; rua=mailto:info@official-gtds.com; pct=10;\nv=spf1 a:official-gtds.com ip4:103.176.79.79 include:_spf.google.com ~all\nv=spf1 +a +mx +ip4:103.176.79.79 include:spf.spamdisinfectant.com ~all\n\n\nsudo apt-get install --reinstall $(dpkg -l | grep -i yaru | awk '{print $2}')\n\n\napt install imagemagick memcached redis-server gettext php8.0-imagick php8.0-memcache php8.0-redis php8.0-bcmath php8.0-intl php8.0-mcrypt php8.0-cgi php8.0-fpm php8.0-mysql php8.0-curl php8.0-gd php8.0-imap php8.0-tidy php8.0-xmlrpc php8.0-xml php8.0-xsl php8.0-mbstring php8.0-zip php8.0-cli php8.0-soap php8.0-gmp php8.0-sqlite3\n\napt install imagemagick memcached redis-server gettext php7.4-imagick php7.4-memcache php7.4-redis php7.4-bcmath php7.4-intl php7.4-mcrypt php7.4-cgi php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-imap php7.4-tidy php7.4-xmlrpc php7.4-xml php7.4-xsl php7.4-mbstring php7.4-zip php7.4-cli php7.4-soap php7.4-gmp php7.4-sqlite3\n\n\ntoken github gtds ----------------------\n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\n\n\n\n\ngit remote add origin https://github.com/OfficialGtds/acuan-jsr.git\n\n\ngit remote add origin https://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@github.com/OfficialGtds/nolate-jsr.git\n\n\n\ngit clone https://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@github.com/OfficialGtds/hokkie-jsr.git .\n\n\n//worker loadbalancer\nssh dbgtds@103.54.170.9\n\nssh root@103.174.114.33 : kaladium18b\n\nssh root@103.54.170.9\n\n\nhttp://103.54.170.9:8090/\n\n\n                fastcgi_intercept_errors on;\n                fastcgi_buffers 8 16k;\n                fastcgi_buffer_size 32k;\n                fastcgi_connect_timeout 900;\n                fastcgi_send_timeout 900;\n                fastcgi_read_timeout 900;",
+			"file": "/home/ipunk/Desktop/note",
+			"file_size": 46007,
+			"file_write_time": 133511645691248059,
+			"settings":
+			{
+				"buffer_size": 46030,
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					6,
+					1,
+					"",
+					null,
+					"AQAAAF2yAAAAAAAAcLIAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABdsgAAAAAAAF2yAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					11,
+					1,
+					"insert",
+					{
+						"characters": "ssh"
+					},
+					"AwAAAF2yAAAAAAAAXrIAAAAAAAAAAAAAXrIAAAAAAABfsgAAAAAAAAAAAABfsgAAAAAAAGCyAAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABdsgAAAAAAAF2yAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					12,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAGCyAAAAAAAAYbIAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABgsgAAAAAAAGCyAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		},
+		{
+			"file": "composer.json",
+			"settings":
+			{
+				"buffer_size": 3211,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					347,
+					1,
+					"left_delete",
+					null,
+					"AQAAAIEEAAAAAAAAgQQAAAAAAAABAAAAOA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAgQQAAAAAAACCBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					349,
+					1,
+					"insert",
+					{
+						"characters": "7"
+					},
+					"AQAAAIEEAAAAAAAAggQAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAgQQAAAAAAACBBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					374,
+					1,
+					"right_delete",
+					null,
+					"AQAAAO0HAAAAAAAA7QcAAAAAAAAlAAAALAogICAgICAgICAgICAiTW9kdWxlc1xcIjogIk1vZHVsZXMvIg",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAA7QcAAAAAAAASCAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					386,
+					1,
+					"right_delete",
+					null,
+					"AQAAADUEAAAAAAAANQQAAAAAAABTAAAAICAibmFzaXJraGFuL21vZHVsZS1tYW5hZ2VyIjogIl4wLjQuMCIsCiAgICAgICAgIm53aWRhcnQvbGFyYXZlbC1tb2R1bGVzIjogIjcuMi4qIiw",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAANQQAAAAAAACIBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					391,
+					1,
+					"right_delete",
+					null,
+					"AQAAAAgEAAAAAAAACAQAAAAAAAA0AAAAICJuMGl6ZXN0cjNhbS9zc28tY2xpZW50IjogImRldi1tYWluIiwKICAgICAgCiAgICAgIA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAACAQAAAAAAAA8BAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					400,
+					1,
+					"revert",
+					null,
+					"AgAAAAAAAAAAAAAAAAAAAAAAAABEDAAAewogICAgIm5hbWUiOiAibGFyYXZlbC9sYXJhdmVsIiwKICAgICJ0eXBlIjogInByb2plY3QiLAogICAgImRlc2NyaXB0aW9uIjogIlRoZSBMYXJhdmVsIEZyYW1ld29yay4iLAogICAgImtleXdvcmRzIjogWyJmcmFtZXdvcmsiLCAibGFyYXZlbCJdLAogICAgImxpY2Vuc2UiOiAiTUlUIiwKICAgICJyZXF1aXJlIjogewogICAgICAgICJwaHAiOiAiXjcuM3xeOC4wIiwKICAgICAgICAiYmFycnl2ZGgvbGFyYXZlbC1kb21wZGYiOiAiXjIuMCIsCiAgICAgICAgImJyaWFuMjY5NC9sYXJhdmVsLXRvYXN0ciI6ICJeNS41NCIsCiAgICAgICAgImJ1bWJ1bW1lbjk5L3Nob3BwaW5nY2FydCI6ICJeNC4wIiwKICAgICAgICAiZG9jdHJpbmUvZGJhbCI6ICJeMy42IiwKICAgICAgICAiZG9tcGRmL2RvbXBkZiI6ICJeMi4wIiwKICAgICAgICAiZmlkZWxvcGVyL3Byb3h5IjogIl40LjQiLAogICAgICAgICJmcnVpdGNha2UvbGFyYXZlbC1jb3JzIjogIl4yLjAiLAogICAgICAgICJndXp6bGVodHRwL2d1enpsZSI6ICJeNy4wLjEiLAogICAgICAgICJoNGNjL3draHRtbHRvcGRmLWFtZDY0IjogIl4wLjEyLjQiLAogICAgICAgICJoYXNoaWRzL2hhc2hpZHMiOiAiXjQuMSIsCiAgICAgICAgImhpc29yYW5nZS9icm93c2VyLWRldGVjdCI6ICJeNC41IiwKICAgICAgICAiaW50ZXJ2ZW50aW9uL2ltYWdlIjogIl4yLjUiLAogICAgICAgICJsYXJhdmVsL2ZyYW1ld29yayI6ICJeOC40MCIsCiAgICAgICAgImxhcmF2ZWwvdGlua2VyIjogIl4yLjUiLCAgICAgICAgCiAgICAgICAgImxhcmF2ZWwvdWkiOiAiXjMuMyIsCiAgICAgICAgImxhdmFyeS9sYXJhdmVsLW1lbnUiOiAiXjEuNyIsCiAgICAgICAgImxlYWd1ZS9mbHlzeXN0ZW0tYXdzLXMzLXYzIjogIl4xLjAiLAogICAgICAgICJsaXZld2lyZS11aS9tb2RhbCI6ICJeMS4wIiwKICAgICAgICAibGl2ZXdpcmUvbGl2ZXdpcmUiOiAiXjIuNSIsCiAgICAgICAgIm1hYXR3ZWJzaXRlL2V4Y2VsIjogIl4zLjEiLAogICAgICAgICJtaWxvbi9iYXJjb2RlIjogIl44LjAiLAogICAgICAgICAicmVhbHJhc2hpZC9zd2VldC1hbGVydCI6ICJeNC4wIiwKICAgICAgICAic2ltcGxlc29mdHdhcmVpby9zaW1wbGUtcXJjb2RlIjogIn40IiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtYWN0aXZpdHlsb2ciOiAiXjMuMTciLAogICAgICAgICJzcGF0aWUvbGFyYXZlbC1odG1sIjogIl4zLjIiLAogICAgICAgICJzcGF0aWUvbGFyYXZlbC1tZWRpYWxpYnJhcnkiOiAiXjkuMC4wIiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtcGVybWlzc2lvbiI6ICJeNC4yIiwKICAgICAgICAic3RldmViYXVtYW4vbG9jYXRpb24iOiAiXjYuNSIsCiAgICAgICAgInN5bWZvbnkvY29uc29sZSI6ICI1LjQuMzUiLAogICAgICAgICJ5YWpyYS9sYXJhdmVsLWRhdGF0YWJsZXMiOiAiXjEuNSIKICAgIH0sCiAgICAicmVxdWlyZS1kZXYiOiB7CiAgICAgICAgImJhcnJ5dmRoL2xhcmF2ZWwtZGVidWdiYXIiOiAiXjMuNiIsCiAgICAgICAgImZhY2FkZS9pZ25pdGlvbiI6ICJeMi41IiwKICAgICAgICAiZmFrZXJwaHAvZmFrZXIiOiAiXjEuOS4xIiwKICAgICAgICAibGFyYXZlbC9zYWlsIjogIl4xLjAuMSIsCiAgICAgICAgIm1vY2tlcnkvbW9ja2VyeSI6ICJeMS40LjIiLAogICAgICAgICJudW5vbWFkdXJvL2NvbGxpc2lvbiI6ICJeNS4wIiwKICAgICAgICAicGhwdW5pdC9waHB1bml0IjogIl45LjMuMyIKICAgIH0sCiAgICAiYXV0b2xvYWQiOiB7CiAgICAgICAgInBzci00IjogewogICAgICAgICAgICAiQXBwXFwiOiAiYXBwLyIsCiAgICAgICAgICAgICJEYXRhYmFzZVxcRmFjdG9yaWVzXFwiOiAiZGF0YWJhc2UvZmFjdG9yaWVzLyIsCiAgICAgICAgICAgICJEYXRhYmFzZVxcU2VlZGVyc1xcIjogImRhdGFiYXNlL3NlZWRlcnMvIgogICAgICAgIH0sCiAgICAgICAgImZpbGVzIjogWwogICAgICAgICAgICAiYXBwL0hlbHBlcnMvaGVscGVycy5waHAiCiAgICAgICAgXQogICAgfSwKICAgICJhdXRvbG9hZC1kZXYiOiB7CiAgICAgICAgInBzci00IjogewogICAgICAgICAgICAiVGVzdHNcXCI6ICJ0ZXN0cy8iCiAgICAgICAgfQogICAgfSwKICAgICJzY3JpcHRzIjogewogICAgICAgICJwb3N0LWF1dG9sb2FkLWR1bXAiOiBbCiAgICAgICAgICAgICJJbGx1bWluYXRlXFxGb3VuZGF0aW9uXFxDb21wb3NlclNjcmlwdHM6OnBvc3RBdXRvbG9hZER1bXAiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIHBhY2thZ2U6ZGlzY292ZXIgLS1hbnNpIgogICAgICAgIF0sCiAgICAgICAgInBvc3Qtcm9vdC1wYWNrYWdlLWluc3RhbGwiOiBbCiAgICAgICAgICAgICJAcGhwIC1yIFwiZmlsZV9leGlzdHMoJy5lbnYnKSB8fCBjb3B5KCcuZW52LmV4YW1wbGUnLCAnLmVudicpO1wiIgogICAgICAgIF0sCiAgICAgICAgInBvc3QtY3JlYXRlLXByb2plY3QtY21kIjogWwogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGtleTpnZW5lcmF0ZSAtLWFuc2kiCiAgICAgICAgXSAsCiAgICAgICAgImNsZWFyLWFsbCI6IFsKICAgICAgICAgICAgImNvbXBvc2VyIGR1bXBhdXRvbG9hZCAtbyIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY2xlYXItY29tcGlsZWQiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNhY2hlOmNsZWFyIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiByb3V0ZTpjbGVhciIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gdmlldzpjbGVhciIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY29uZmlnOmNsZWFyIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBjb25maWc6Y2FjaGUiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNhY2hlOmZvcmdldCBzcGF0aWUucGVybWlzc2lvbi5jYWNoZSIKICAgICAgICBdCiAgICB9LAogICAgImV4dHJhIjogewogICAgICAgICJsYXJhdmVsIjogewogICAgICAgICAgICAiZG9udC1kaXNjb3ZlciI6IFtdCiAgICAgICAgfQogICAgfSwKICAgICJjb25maWciOiB7CiAgICAgICAgIm9wdGltaXplLWF1dG9sb2FkZXIiOiB0cnVlLAogICAgICAgICJwcmVmZXJyZWQtaW5zdGFsbCI6ICJkaXN0IiwKICAgICAgICAic29ydC1wYWNrYWdlcyI6IHRydWUKICAgIH0sCiAgICAibWluaW11bS1zdGFiaWxpdHkiOiAiZGV2IiwKICAgICJwcmVmZXItc3RhYmxlIjogdHJ1ZQp9CiAAAAAAAAAAAGIMAAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAXAUAAAAAAABcBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					428,
+					1,
+					"insert",
+					{
+						"characters": ","
+					},
+					"AQAAAIUHAAAAAAAAhgcAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAhQcAAAAAAACFBwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					430,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAIYHAAAAAAAAhwcAAAAAAAAAAAAAhwcAAAAAAACTBwAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAhgcAAAAAAACGBwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					434,
+					1,
+					"",
+					null,
+					"AQAAAJMHAAAAAAAAqwcAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAkwcAAAAAAACTBwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					464,
+					1,
+					"left_delete",
+					null,
+					"AQAAAB0EAAAAAAAAHQQAAAAAAAABAAAAKg",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAHgQAAAAAAAAeBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					466,
+					1,
+					"paste",
+					null,
+					"AQAAAB0EAAAAAAAAIQQAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAHQQAAAAAAAAdBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					470,
+					1,
+					"revert",
+					null,
+					"AgAAAAAAAAAAAAAAAAAAAAAAAACLDAAAewogICAgIm5hbWUiOiAibGFyYXZlbC9sYXJhdmVsIiwKICAgICJ0eXBlIjogInByb2plY3QiLAogICAgImRlc2NyaXB0aW9uIjogIlRoZSBMYXJhdmVsIEZyYW1ld29yay4iLAogICAgImtleXdvcmRzIjogWyJmcmFtZXdvcmsiLCAibGFyYXZlbCJdLAogICAgImxpY2Vuc2UiOiAiTUlUIiwKICAgICJyZXF1aXJlIjogewogICAgICAgICJwaHAiOiAiXjcuM3xeOC4wIiwKICAgICAgICAiYmFycnl2ZGgvbGFyYXZlbC1kb21wZGYiOiAiXjIuMCIsCiAgICAgICAgImJyaWFuMjY5NC9sYXJhdmVsLXRvYXN0ciI6ICJeNS41NCIsCiAgICAgICAgImJ1bWJ1bW1lbjk5L3Nob3BwaW5nY2FydCI6ICJeNC4wIiwKICAgICAgICAiZG9jdHJpbmUvZGJhbCI6ICJeMy42IiwKICAgICAgICAiZG9tcGRmL2RvbXBkZiI6ICJeMi4wIiwKICAgICAgICAiZmlkZWxvcGVyL3Byb3h5IjogIl40LjQiLAogICAgICAgICJmcnVpdGNha2UvbGFyYXZlbC1jb3JzIjogIl4yLjAiLAogICAgICAgICJndXp6bGVodHRwL2d1enpsZSI6ICJeNy4wLjEiLAogICAgICAgICJoNGNjL3draHRtbHRvcGRmLWFtZDY0IjogIl4wLjEyLjQiLAogICAgICAgICJoYXNoaWRzL2hhc2hpZHMiOiAiXjQuMSIsCiAgICAgICAgImhpc29yYW5nZS9icm93c2VyLWRldGVjdCI6ICJeNC41IiwKICAgICAgICAiaW50ZXJ2ZW50aW9uL2ltYWdlIjogIl4yLjUiLAogICAgICAgICJsYXJhdmVsL2ZyYW1ld29yayI6ICJeOC40MCIsCiAgICAgICAgImxhcmF2ZWwvdGlua2VyIjogIl4yLjUiLAogICAgICAgICJsYXJhdmVsL3VpIjogIl4zLjMiLAogICAgICAgICJsYXZhcnkvbGFyYXZlbC1tZW51IjogIl4xLjciLAogICAgICAgICJsZWFndWUvZmx5c3lzdGVtLWF3cy1zMy12MyI6ICJeMS4wIiwKICAgICAgICAibGl2ZXdpcmUtdWkvbW9kYWwiOiAiXjEuMCIsCiAgICAgICAgImxpdmV3aXJlL2xpdmV3aXJlIjogIl4yLjUiLAogICAgICAgICJtYWF0d2Vic2l0ZS9leGNlbCI6ICJeMy4xIiwKICAgICAgICAibWlsb24vYmFyY29kZSI6ICJeOC4wIiwKICAgICAgICAibndpZGFydC9sYXJhdmVsLW1vZHVsZXMiOiAiXjguMCIsCiAgICAgICAgInJlYWxyYXNoaWQvc3dlZXQtYWxlcnQiOiAiXjQuMCIsCiAgICAgICAgInNpbXBsZXNvZnR3YXJlaW8vc2ltcGxlLXFyY29kZSI6ICJ+NCIsCiAgICAgICAgInNwYXRpZS9sYXJhdmVsLWFjdGl2aXR5bG9nIjogIl4zLjE3IiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtaHRtbCI6ICJeMy4yIiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtbWVkaWFsaWJyYXJ5IjogIl45LjAuMCIsCiAgICAgICAgInNwYXRpZS9sYXJhdmVsLXBlcm1pc3Npb24iOiAiXjQuMiIsCiAgICAgICAgInN0ZXZlYmF1bWFuL2xvY2F0aW9uIjogIl42LjUiLAogICAgICAgICJzeW1mb255L2NvbnNvbGUiOiAiNS40LjM1IiwKICAgICAgICAieWFqcmEvbGFyYXZlbC1kYXRhdGFibGVzIjogIl4xLjUiCiAgICB9LAogICAgInJlcXVpcmUtZGV2IjogewogICAgICAgICJiYXJyeXZkaC9sYXJhdmVsLWRlYnVnYmFyIjogIl4zLjYiLAogICAgICAgICJmYWNhZGUvaWduaXRpb24iOiAiXjIuNSIsCiAgICAgICAgImZha2VycGhwL2Zha2VyIjogIl4xLjkuMSIsCiAgICAgICAgImxhcmF2ZWwvc2FpbCI6ICJeMS4wLjEiLAogICAgICAgICJtb2NrZXJ5L21vY2tlcnkiOiAiXjEuNC4yIiwKICAgICAgICAibnVub21hZHVyby9jb2xsaXNpb24iOiAiXjUuMCIsCiAgICAgICAgInBocHVuaXQvcGhwdW5pdCI6ICJeOS4zLjMiCiAgICB9LAogICAgImF1dG9sb2FkIjogewogICAgICAgICJwc3ItNCI6IHsKICAgICAgICAgICAgIkFwcFxcIjogImFwcC8iLAogICAgICAgICAgICAiRGF0YWJhc2VcXEZhY3Rvcmllc1xcIjogImRhdGFiYXNlL2ZhY3Rvcmllcy8iLAogICAgICAgICAgICAiRGF0YWJhc2VcXFNlZWRlcnNcXCI6ICJkYXRhYmFzZS9zZWVkZXJzLyIsCiAgICAgICAgICAgICAiTW9kdWxlc1xcIjogIk1vZHVsZXMvIgogICAgICAgIH0sCiAgICAgICAgImZpbGVzIjogWwogICAgICAgICAgICAiYXBwL0hlbHBlcnMvaGVscGVycy5waHAiCiAgICAgICAgXQogICAgfSwKICAgICJhdXRvbG9hZC1kZXYiOiB7CiAgICAgICAgInBzci00IjogewogICAgICAgICAgICAiVGVzdHNcXCI6ICJ0ZXN0cy8iCiAgICAgICAgfQogICAgfSwKICAgICJzY3JpcHRzIjogewogICAgICAgICJwb3N0LWF1dG9sb2FkLWR1bXAiOiBbCiAgICAgICAgICAgICJJbGx1bWluYXRlXFxGb3VuZGF0aW9uXFxDb21wb3NlclNjcmlwdHM6OnBvc3RBdXRvbG9hZER1bXAiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIHBhY2thZ2U6ZGlzY292ZXIgLS1hbnNpIgogICAgICAgIF0sCiAgICAgICAgInBvc3Qtcm9vdC1wYWNrYWdlLWluc3RhbGwiOiBbCiAgICAgICAgICAgICJAcGhwIC1yIFwiZmlsZV9leGlzdHMoJy5lbnYnKSB8fCBjb3B5KCcuZW52LmV4YW1wbGUnLCAnLmVudicpO1wiIgogICAgICAgIF0sCiAgICAgICAgInBvc3QtY3JlYXRlLXByb2plY3QtY21kIjogWwogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGtleTpnZW5lcmF0ZSAtLWFuc2kiCiAgICAgICAgXSAsCiAgICAgICAgImNsZWFyLWFsbCI6IFsKICAgICAgICAgICAgImNvbXBvc2VyIGR1bXBhdXRvbG9hZCAtbyIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY2xlYXItY29tcGlsZWQiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNhY2hlOmNsZWFyIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiByb3V0ZTpjbGVhciIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gdmlldzpjbGVhciIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY29uZmlnOmNsZWFyIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBjb25maWc6Y2FjaGUiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNhY2hlOmZvcmdldCBzcGF0aWUucGVybWlzc2lvbi5jYWNoZSIKICAgICAgICBdCiAgICB9LAogICAgImV4dHJhIjogewogICAgICAgICJsYXJhdmVsIjogewogICAgICAgICAgICAiZG9udC1kaXNjb3ZlciI6IFtdCiAgICAgICAgfQogICAgfSwKICAgICJjb25maWciOiB7CiAgICAgICAgIm9wdGltaXplLWF1dG9sb2FkZXIiOiB0cnVlLAogICAgICAgICJwcmVmZXJyZWQtaW5zdGFsbCI6ICJkaXN0IiwKICAgICAgICAic29ydC1wYWNrYWdlcyI6IHRydWUKICAgIH0sCiAgICAibWluaW11bS1zdGFiaWxpdHkiOiAiZGV2IiwKICAgICJwcmVmZXItc3RhYmxlIjogdHJ1ZQp9CgAAAAAAAAAAYAwAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAIQQAAAAAAAAhBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					475,
+					1,
+					"revert",
+					null,
+					"AgAAAAAAAAAAAAAAAAAAAAAAAABgDAAAewogICAgIm5hbWUiOiAibGFyYXZlbC9sYXJhdmVsIiwKICAgICJ0eXBlIjogInByb2plY3QiLAogICAgImRlc2NyaXB0aW9uIjogIlRoZSBMYXJhdmVsIEZyYW1ld29yay4iLAogICAgImtleXdvcmRzIjogWyJmcmFtZXdvcmsiLCAibGFyYXZlbCJdLAogICAgImxpY2Vuc2UiOiAiTUlUIiwKICAgICJyZXF1aXJlIjogewogICAgICAgICJwaHAiOiAiXjcuM3xeOC4wIiwKICAgICAgICAiYmFycnl2ZGgvbGFyYXZlbC1kb21wZGYiOiAiXjIuMCIsCiAgICAgICAgImJyaWFuMjY5NC9sYXJhdmVsLXRvYXN0ciI6ICJeNS41NCIsCiAgICAgICAgImJ1bWJ1bW1lbjk5L3Nob3BwaW5nY2FydCI6ICJeNC4wIiwKICAgICAgICAiZG9jdHJpbmUvZGJhbCI6ICJeMy42IiwKICAgICAgICAiZG9tcGRmL2RvbXBkZiI6ICJeMi4wIiwKICAgICAgICAiZmlkZWxvcGVyL3Byb3h5IjogIl40LjQiLAogICAgICAgICJmcnVpdGNha2UvbGFyYXZlbC1jb3JzIjogIl4yLjAiLAogICAgICAgICJndXp6bGVodHRwL2d1enpsZSI6ICJeNy4wLjEiLAogICAgICAgICJoNGNjL3draHRtbHRvcGRmLWFtZDY0IjogIl4wLjEyLjQiLAogICAgICAgICJoYXNoaWRzL2hhc2hpZHMiOiAiXjQuMSIsCiAgICAgICAgImhpc29yYW5nZS9icm93c2VyLWRldGVjdCI6ICJeNC41IiwKICAgICAgICAiaW50ZXJ2ZW50aW9uL2ltYWdlIjogIl4yLjUiLAogICAgICAgICJsYXJhdmVsL2ZyYW1ld29yayI6ICJeOC40MCIsCiAgICAgICAgImxhcmF2ZWwvdGlua2VyIjogIl4yLjUiLAogICAgICAgICJsYXJhdmVsL3VpIjogIl4zLjMiLAogICAgICAgICJsYXZhcnkvbGFyYXZlbC1tZW51IjogIl4xLjciLAogICAgICAgICJsZWFndWUvZmx5c3lzdGVtLWF3cy1zMy12MyI6ICJeMS4wIiwKICAgICAgICAibGl2ZXdpcmUtdWkvbW9kYWwiOiAiXjEuMCIsCiAgICAgICAgImxpdmV3aXJlL2xpdmV3aXJlIjogIl4yLjUiLAogICAgICAgICJtYWF0d2Vic2l0ZS9leGNlbCI6ICJeMy4xIiwKICAgICAgICAibWlsb24vYmFyY29kZSI6ICJeOC4wIiwKICAgICAgICAicmVhbHJhc2hpZC9zd2VldC1hbGVydCI6ICJeNC4wIiwKICAgICAgICAic2ltcGxlc29mdHdhcmVpby9zaW1wbGUtcXJjb2RlIjogIn40IiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtYWN0aXZpdHlsb2ciOiAiXjMuMTciLAogICAgICAgICJzcGF0aWUvbGFyYXZlbC1odG1sIjogIl4zLjIiLAogICAgICAgICJzcGF0aWUvbGFyYXZlbC1tZWRpYWxpYnJhcnkiOiAiXjkuMC4wIiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtcGVybWlzc2lvbiI6ICJeNC4yIiwKICAgICAgICAic3RldmViYXVtYW4vbG9jYXRpb24iOiAiXjYuNSIsCiAgICAgICAgInN5bWZvbnkvY29uc29sZSI6ICI1LjQuMzUiLAogICAgICAgICJ5YWpyYS9sYXJhdmVsLWRhdGF0YWJsZXMiOiAiXjEuNSIKICAgIH0sCiAgICAicmVxdWlyZS1kZXYiOiB7CiAgICAgICAgImJhcnJ5dmRoL2xhcmF2ZWwtZGVidWdiYXIiOiAiXjMuNiIsCiAgICAgICAgImZhY2FkZS9pZ25pdGlvbiI6ICJeMi41IiwKICAgICAgICAiZmFrZXJwaHAvZmFrZXIiOiAiXjEuOS4xIiwKICAgICAgICAibGFyYXZlbC9zYWlsIjogIl4xLjAuMSIsCiAgICAgICAgIm1vY2tlcnkvbW9ja2VyeSI6ICJeMS40LjIiLAogICAgICAgICJudW5vbWFkdXJvL2NvbGxpc2lvbiI6ICJeNS4wIiwKICAgICAgICAicGhwdW5pdC9waHB1bml0IjogIl45LjMuMyIKICAgIH0sCiAgICAiYXV0b2xvYWQiOiB7CiAgICAgICAgInBzci00IjogewogICAgICAgICAgICAiQXBwXFwiOiAiYXBwLyIsCiAgICAgICAgICAgICJEYXRhYmFzZVxcRmFjdG9yaWVzXFwiOiAiZGF0YWJhc2UvZmFjdG9yaWVzLyIsCiAgICAgICAgICAgICJEYXRhYmFzZVxcU2VlZGVyc1xcIjogImRhdGFiYXNlL3NlZWRlcnMvIiwKICAgICAgICAgICAgICJNb2R1bGVzXFwiOiAiTW9kdWxlcy8iCiAgICAgICAgfSwKICAgICAgICAiZmlsZXMiOiBbCiAgICAgICAgICAgICJhcHAvSGVscGVycy9oZWxwZXJzLnBocCIKICAgICAgICBdCiAgICB9LAogICAgImF1dG9sb2FkLWRldiI6IHsKICAgICAgICAicHNyLTQiOiB7CiAgICAgICAgICAgICJUZXN0c1xcIjogInRlc3RzLyIKICAgICAgICB9CiAgICB9LAogICAgInNjcmlwdHMiOiB7CiAgICAgICAgInBvc3QtYXV0b2xvYWQtZHVtcCI6IFsKICAgICAgICAgICAgIklsbHVtaW5hdGVcXEZvdW5kYXRpb25cXENvbXBvc2VyU2NyaXB0czo6cG9zdEF1dG9sb2FkRHVtcCIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gcGFja2FnZTpkaXNjb3ZlciAtLWFuc2kiCiAgICAgICAgXSwKICAgICAgICAicG9zdC1yb290LXBhY2thZ2UtaW5zdGFsbCI6IFsKICAgICAgICAgICAgIkBwaHAgLXIgXCJmaWxlX2V4aXN0cygnLmVudicpIHx8IGNvcHkoJy5lbnYuZXhhbXBsZScsICcuZW52Jyk7XCIiCiAgICAgICAgXSwKICAgICAgICAicG9zdC1jcmVhdGUtcHJvamVjdC1jbWQiOiBbCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4ga2V5OmdlbmVyYXRlIC0tYW5zaSIKICAgICAgICBdICwKICAgICAgICAiY2xlYXItYWxsIjogWwogICAgICAgICAgICAiY29tcG9zZXIgZHVtcGF1dG9sb2FkIC1vIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBjbGVhci1jb21waWxlZCIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY2FjaGU6Y2xlYXIiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIHJvdXRlOmNsZWFyIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiB2aWV3OmNsZWFyIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBjb25maWc6Y2xlYXIiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNvbmZpZzpjYWNoZSIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY2FjaGU6Zm9yZ2V0IHNwYXRpZS5wZXJtaXNzaW9uLmNhY2hlIgogICAgICAgIF0KICAgIH0sCiAgICAiZXh0cmEiOiB7CiAgICAgICAgImxhcmF2ZWwiOiB7CiAgICAgICAgICAgICJkb250LWRpc2NvdmVyIjogW10KICAgICAgICB9CiAgICB9LAogICAgImNvbmZpZyI6IHsKICAgICAgICAib3B0aW1pemUtYXV0b2xvYWRlciI6IHRydWUsCiAgICAgICAgInByZWZlcnJlZC1pbnN0YWxsIjogImRpc3QiLAogICAgICAgICJzb3J0LXBhY2thZ2VzIjogdHJ1ZQogICAgfSwKICAgICJtaW5pbXVtLXN0YWJpbGl0eSI6ICJkZXYiLAogICAgInByZWZlci1zdGFibGUiOiB0cnVlCn0KAAAAAAAAAACIDAAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAIQQAAAAAAAAhBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					492,
+					1,
+					"paste",
+					{
+						"event":
+						{
+							"modifier_keys":
+							{
+							},
+							"text_point": 1053,
+							"x": 821.423522949,
+							"y": 313.215667725
+						}
+					},
+					"AgAAAB0EAAAAAAAAIQQAAAAAAAAAAAAAIQQAAAAAAAAhBAAAAAAAAAEAAAAq",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAHQQAAAAAAAAeBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					6,
+					1,
+					"revert",
+					null,
+					"AgAAAAAAAAAAAAAAAAAAAAAAAACLDAAAewogICAgIm5hbWUiOiAibGFyYXZlbC9sYXJhdmVsIiwKICAgICJ0eXBlIjogInByb2plY3QiLAogICAgImRlc2NyaXB0aW9uIjogIlRoZSBMYXJhdmVsIEZyYW1ld29yay4iLAogICAgImtleXdvcmRzIjogWyJmcmFtZXdvcmsiLCAibGFyYXZlbCJdLAogICAgImxpY2Vuc2UiOiAiTUlUIiwKICAgICJyZXF1aXJlIjogewogICAgICAgICJwaHAiOiAiXjcuM3xeOC4wIiwKICAgICAgICAiYmFycnl2ZGgvbGFyYXZlbC1kb21wZGYiOiAiXjIuMCIsCiAgICAgICAgImJyaWFuMjY5NC9sYXJhdmVsLXRvYXN0ciI6ICJeNS41NCIsCiAgICAgICAgImJ1bWJ1bW1lbjk5L3Nob3BwaW5nY2FydCI6ICJeNC4wIiwKICAgICAgICAiZG9jdHJpbmUvZGJhbCI6ICJeMy42IiwKICAgICAgICAiZG9tcGRmL2RvbXBkZiI6ICJeMi4wIiwKICAgICAgICAiZmlkZWxvcGVyL3Byb3h5IjogIl40LjQiLAogICAgICAgICJmcnVpdGNha2UvbGFyYXZlbC1jb3JzIjogIl4yLjAiLAogICAgICAgICJndXp6bGVodHRwL2d1enpsZSI6ICJeNy4wLjEiLAogICAgICAgICJoNGNjL3draHRtbHRvcGRmLWFtZDY0IjogIl4wLjEyLjQiLAogICAgICAgICJoYXNoaWRzL2hhc2hpZHMiOiAiXjQuMSIsCiAgICAgICAgImhpc29yYW5nZS9icm93c2VyLWRldGVjdCI6ICJeNC41IiwKICAgICAgICAiaW50ZXJ2ZW50aW9uL2ltYWdlIjogIl4yLjUiLAogICAgICAgICJsYXJhdmVsL2ZyYW1ld29yayI6ICJeOC40MCIsCiAgICAgICAgImxhcmF2ZWwvdGlua2VyIjogIl4yLjUiLAogICAgICAgICJsYXJhdmVsL3VpIjogIl4zLjMiLAogICAgICAgICJsYXZhcnkvbGFyYXZlbC1tZW51IjogIl4xLjciLAogICAgICAgICJsZWFndWUvZmx5c3lzdGVtLWF3cy1zMy12MyI6ICJeMS4wIiwKICAgICAgICAibGl2ZXdpcmUtdWkvbW9kYWwiOiAiXjEuMCIsCiAgICAgICAgImxpdmV3aXJlL2xpdmV3aXJlIjogIl4yLjUiLAogICAgICAgICJtYWF0d2Vic2l0ZS9leGNlbCI6ICJeMy4xIiwKICAgICAgICAibWlsb24vYmFyY29kZSI6ICJeOC4wIiwKICAgICAgICAibndpZGFydC9sYXJhdmVsLW1vZHVsZXMiOiAiXjguMCIsCiAgICAgICAgInJlYWxyYXNoaWQvc3dlZXQtYWxlcnQiOiAiXjQuMCIsCiAgICAgICAgInNpbXBsZXNvZnR3YXJlaW8vc2ltcGxlLXFyY29kZSI6ICJ+NCIsCiAgICAgICAgInNwYXRpZS9sYXJhdmVsLWFjdGl2aXR5bG9nIjogIl4zLjE3IiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtaHRtbCI6ICJeMy4yIiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtbWVkaWFsaWJyYXJ5IjogIl45LjAuMCIsCiAgICAgICAgInNwYXRpZS9sYXJhdmVsLXBlcm1pc3Npb24iOiAiXjQuMiIsCiAgICAgICAgInN0ZXZlYmF1bWFuL2xvY2F0aW9uIjogIl42LjUiLAogICAgICAgICJzeW1mb255L2NvbnNvbGUiOiAiNS40LjM1IiwKICAgICAgICAieWFqcmEvbGFyYXZlbC1kYXRhdGFibGVzIjogIl4xLjUiCiAgICB9LAogICAgInJlcXVpcmUtZGV2IjogewogICAgICAgICJiYXJyeXZkaC9sYXJhdmVsLWRlYnVnYmFyIjogIl4zLjYiLAogICAgICAgICJmYWNhZGUvaWduaXRpb24iOiAiXjIuNSIsCiAgICAgICAgImZha2VycGhwL2Zha2VyIjogIl4xLjkuMSIsCiAgICAgICAgImxhcmF2ZWwvc2FpbCI6ICJeMS4wLjEiLAogICAgICAgICJtb2NrZXJ5L21vY2tlcnkiOiAiXjEuNC4yIiwKICAgICAgICAibnVub21hZHVyby9jb2xsaXNpb24iOiAiXjUuMCIsCiAgICAgICAgInBocHVuaXQvcGhwdW5pdCI6ICJeOS4zLjMiCiAgICB9LAogICAgImF1dG9sb2FkIjogewogICAgICAgICJwc3ItNCI6IHsKICAgICAgICAgICAgIkFwcFxcIjogImFwcC8iLAogICAgICAgICAgICAiRGF0YWJhc2VcXEZhY3Rvcmllc1xcIjogImRhdGFiYXNlL2ZhY3Rvcmllcy8iLAogICAgICAgICAgICAiRGF0YWJhc2VcXFNlZWRlcnNcXCI6ICJkYXRhYmFzZS9zZWVkZXJzLyIsCiAgICAgICAgICAgICAiTW9kdWxlc1xcIjogIk1vZHVsZXMvIgogICAgICAgIH0sCiAgICAgICAgImZpbGVzIjogWwogICAgICAgICAgICAiYXBwL0hlbHBlcnMvaGVscGVycy5waHAiCiAgICAgICAgXQogICAgfSwKICAgICJhdXRvbG9hZC1kZXYiOiB7CiAgICAgICAgInBzci00IjogewogICAgICAgICAgICAiVGVzdHNcXCI6ICJ0ZXN0cy8iCiAgICAgICAgfQogICAgfSwKICAgICJzY3JpcHRzIjogewogICAgICAgICJwb3N0LWF1dG9sb2FkLWR1bXAiOiBbCiAgICAgICAgICAgICJJbGx1bWluYXRlXFxGb3VuZGF0aW9uXFxDb21wb3NlclNjcmlwdHM6OnBvc3RBdXRvbG9hZER1bXAiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIHBhY2thZ2U6ZGlzY292ZXIgLS1hbnNpIgogICAgICAgIF0sCiAgICAgICAgInBvc3Qtcm9vdC1wYWNrYWdlLWluc3RhbGwiOiBbCiAgICAgICAgICAgICJAcGhwIC1yIFwiZmlsZV9leGlzdHMoJy5lbnYnKSB8fCBjb3B5KCcuZW52LmV4YW1wbGUnLCAnLmVudicpO1wiIgogICAgICAgIF0sCiAgICAgICAgInBvc3QtY3JlYXRlLXByb2plY3QtY21kIjogWwogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGtleTpnZW5lcmF0ZSAtLWFuc2kiCiAgICAgICAgXSAsCiAgICAgICAgImNsZWFyLWFsbCI6IFsKICAgICAgICAgICAgImNvbXBvc2VyIGR1bXBhdXRvbG9hZCAtbyIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY2xlYXItY29tcGlsZWQiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNhY2hlOmNsZWFyIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiByb3V0ZTpjbGVhciIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gdmlldzpjbGVhciIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY29uZmlnOmNsZWFyIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBjb25maWc6Y2FjaGUiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNhY2hlOmZvcmdldCBzcGF0aWUucGVybWlzc2lvbi5jYWNoZSIKICAgICAgICBdCiAgICB9LAogICAgImV4dHJhIjogewogICAgICAgICJsYXJhdmVsIjogewogICAgICAgICAgICAiZG9udC1kaXNjb3ZlciI6IFtdCiAgICAgICAgfQogICAgfSwKICAgICJjb25maWciOiB7CiAgICAgICAgIm9wdGltaXplLWF1dG9sb2FkZXIiOiB0cnVlLAogICAgICAgICJwcmVmZXJyZWQtaW5zdGFsbCI6ICJkaXN0IiwKICAgICAgICAic29ydC1wYWNrYWdlcyI6IHRydWUKICAgIH0sCiAgICAibWluaW11bS1zdGFiaWxpdHkiOiAiZGV2IiwKICAgICJwcmVmZXItc3RhYmxlIjogdHJ1ZQp9CgAAAAAAAAAA8AwAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKwEAAAAAAAArAQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					7,
+					1,
+					"revert",
+					null,
+					"BAAAAAAAAAAAAAAAAAAAAAAAAADwDAAAewogICAgIm5hbWUiOiAibGFyYXZlbC9sYXJhdmVsIiwKICAgICJ0eXBlIjogInByb2plY3QiLAogICAgImRlc2NyaXB0aW9uIjogIlRoZSBMYXJhdmVsIEZyYW1ld29yay4iLAogICAgImtleXdvcmRzIjogWyJmcmFtZXdvcmsiLCAibGFyYXZlbCJdLAogICAgImxpY2Vuc2UiOiAiTUlUIiwKICAgICJyZXF1aXJlIjogewogICAgICAgICJwaHAiOiAiXjcuM3xeOC4wIiwKICAgICAgICAiYmFycnl2ZGgvbGFyYXZlbC1kb21wZGYiOiAiXjIuMCIsCiAgICAgICAgImJyaWFuMjY5NC9sYXJhdmVsLXRvYXN0ciI6ICJeNS41NCIsCiAgICAgICAgImJ1bWJ1bW1lbjk5L3Nob3BwaW5nY2FydCI6ICJeNC4wIiwKICAgICAgICAiZG9jdHJpbmUvZGJhbCI6ICJeMy42IiwKICAgICAgICAiZG9tcGRmL2RvbXBkZiI6ICJeMi4wIiwKICAgICAgICAiZmlkZWxvcGVyL3Byb3h5IjogIl40LjQiLAogICAgICAgICJmcnVpdGNha2UvbGFyYXZlbC1jb3JzIjogIl4yLjAiLAogICAgICAgICJndXp6bGVodHRwL2d1enpsZSI6ICJeNy4wLjEiLAogICAgICAgICJoNGNjL3draHRtbHRvcGRmLWFtZDY0IjogIl4wLjEyLjQiLAogICAgICAgICJoYXNoaWRzL2hhc2hpZHMiOiAiXjQuMSIsCiAgICAgICAgImhpc29yYW5nZS9icm93c2VyLWRldGVjdCI6ICJeNC41IiwKICAgICAgICAiaW50ZXJ2ZW50aW9uL2ltYWdlIjogIl4yLjUiLAogICAgICAgICJsYXJhdmVsL2ZyYW1ld29yayI6ICJeOC40MCIsCiAgICAgICAgImxhcmF2ZWwvdGlua2VyIjogIl4yLjUiLCAgICAgICAgCiAgICAgICAgImxhcmF2ZWwvdWkiOiAiXjMuMyIsCiAgICAgICAgImxhdmFyeS9sYXJhdmVsLW1lbnUiOiAiXjEuNyIsCiAgICAgICAgImxlYWd1ZS9mbHlzeXN0ZW0tYXdzLXMzLXYzIjogIl4xLjAiLAogICAgICAgICJsaXZld2lyZS11aS9tb2RhbCI6ICJeMS4wIiwKICAgICAgICAibGl2ZXdpcmUvbGl2ZXdpcmUiOiAiXjIuNSIsCiAgICAgICAgIm1hYXR3ZWJzaXRlL2V4Y2VsIjogIl4zLjEiLAogICAgICAgICJtaWxvbi9iYXJjb2RlIjogIl44LjAiLAogICAgICAgICJuMGl6ZXN0cjNhbS9zc28tY2xpZW50IjogImRldi1tYWluIiwKICAgICAgICAibmFzaXJraGFuL21vZHVsZS1tYW5hZ2VyIjogIl4wLjQuMCIsCiAgICAgICAgIm53aWRhcnQvbGFyYXZlbC1tb2R1bGVzIjogIjguMi4qIiwKICAgICAgICAicmVhbHJhc2hpZC9zd2VldC1hbGVydCI6ICJeNC4wIiwKICAgICAgICAic2ltcGxlc29mdHdhcmVpby9zaW1wbGUtcXJjb2RlIjogIn40IiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtYWN0aXZpdHlsb2ciOiAiXjMuMTciLAogICAgICAgICJzcGF0aWUvbGFyYXZlbC1odG1sIjogIl4zLjIiLAogICAgICAgICJzcGF0aWUvbGFyYXZlbC1tZWRpYWxpYnJhcnkiOiAiXjkuMC4wIiwKICAgICAgICAic3BhdGllL2xhcmF2ZWwtcGVybWlzc2lvbiI6ICJeNC4yIiwKICAgICAgICAic3RldmViYXVtYW4vbG9jYXRpb24iOiAiXjYuNSIsCiAgICAgICAgInN5bWZvbnkvY29uc29sZSI6ICI1LjQuMzUiLAogICAgICAgICJ5YWpyYS9sYXJhdmVsLWRhdGF0YWJsZXMiOiAiXjEuNSIKICAgIH0sCiAgICAicmVxdWlyZS1kZXYiOiB7CiAgICAgICAgImJhcnJ5dmRoL2xhcmF2ZWwtZGVidWdiYXIiOiAiXjMuNiIsCiAgICAgICAgImZhY2FkZS9pZ25pdGlvbiI6ICJeMi41IiwKICAgICAgICAiZmFrZXJwaHAvZmFrZXIiOiAiXjEuOS4xIiwKICAgICAgICAibGFyYXZlbC9zYWlsIjogIl4xLjAuMSIsCiAgICAgICAgIm1vY2tlcnkvbW9ja2VyeSI6ICJeMS40LjIiLAogICAgICAgICJudW5vbWFkdXJvL2NvbGxpc2lvbiI6ICJeNS4wIiwKICAgICAgICAicGhwdW5pdC9waHB1bml0IjogIl45LjMuMyIKICAgIH0sCiAgICAiYXV0b2xvYWQiOiB7CiAgICAgICAgInBzci00IjogewogICAgICAgICAgICAiQXBwXFwiOiAiYXBwLyIsCiAgICAgICAgICAgICJEYXRhYmFzZVxcRmFjdG9yaWVzXFwiOiAiZGF0YWJhc2UvZmFjdG9yaWVzLyIsCiAgICAgICAgICAgICJEYXRhYmFzZVxcU2VlZGVyc1xcIjogImRhdGFiYXNlL3NlZWRlcnMvIiwKICAgICAgICAgICAgIk1vZHVsZXNcXCI6ICJNb2R1bGVzLyIKICAgICAgICB9LAogICAgICAgICJmaWxlcyI6IFsKICAgICAgICAgICAgImFwcC9IZWxwZXJzL2hlbHBlcnMucGhwIgogICAgICAgIF0KICAgIH0sCiAgICAiYXV0b2xvYWQtZGV2IjogewogICAgICAgICJwc3ItNCI6IHsKICAgICAgICAgICAgIlRlc3RzXFwiOiAidGVzdHMvIgogICAgICAgIH0KICAgIH0sCiAgICAic2NyaXB0cyI6IHsKICAgICAgICAicG9zdC1hdXRvbG9hZC1kdW1wIjogWwogICAgICAgICAgICAiSWxsdW1pbmF0ZVxcRm91bmRhdGlvblxcQ29tcG9zZXJTY3JpcHRzOjpwb3N0QXV0b2xvYWREdW1wIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBwYWNrYWdlOmRpc2NvdmVyIC0tYW5zaSIKICAgICAgICBdLAogICAgICAgICJwb3N0LXJvb3QtcGFja2FnZS1pbnN0YWxsIjogWwogICAgICAgICAgICAiQHBocCAtciBcImZpbGVfZXhpc3RzKCcuZW52JykgfHwgY29weSgnLmVudi5leGFtcGxlJywgJy5lbnYnKTtcIiIKICAgICAgICBdLAogICAgICAgICJwb3N0LWNyZWF0ZS1wcm9qZWN0LWNtZCI6IFsKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBrZXk6Z2VuZXJhdGUgLS1hbnNpIgogICAgICAgIF0gLAogICAgICAgICJjbGVhci1hbGwiOiBbCiAgICAgICAgICAgICJjb21wb3NlciBkdW1wYXV0b2xvYWQgLW8iLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNsZWFyLWNvbXBpbGVkIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBjYWNoZTpjbGVhciIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gcm91dGU6Y2xlYXIiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIHZpZXc6Y2xlYXIiLAogICAgICAgICAgICAiQHBocCBhcnRpc2FuIGNvbmZpZzpjbGVhciIsCiAgICAgICAgICAgICJAcGhwIGFydGlzYW4gY29uZmlnOmNhY2hlIiwKICAgICAgICAgICAgIkBwaHAgYXJ0aXNhbiBjYWNoZTpmb3JnZXQgc3BhdGllLnBlcm1pc3Npb24uY2FjaGUiCiAgICAgICAgXQogICAgfSwKICAgICJleHRyYSI6IHsKICAgICAgICAibGFyYXZlbCI6IHsKICAgICAgICAgICAgImRvbnQtZGlzY292ZXIiOiBbXQogICAgICAgIH0KICAgIH0sCiAgICAiY29uZmlnIjogewogICAgICAgICJvcHRpbWl6ZS1hdXRvbG9hZGVyIjogdHJ1ZSwKICAgICAgICAicHJlZmVycmVkLWluc3RhbGwiOiAiZGlzdCIsCiAgICAgICAgInNvcnQtcGFja2FnZXMiOiB0cnVlCiAgICB9LAogICAgIm1pbmltdW0tc3RhYmlsaXR5IjogImRldiIsCiAgICAicHJlZmVyLXN0YWJsZSI6IHRydWUKfQogAAAAAAAAAACLDAAAAAAAAAAAAAAAAAAAAAAAAIsMAAAAAAAAAAAAAAAAAAAAAAAAiwwAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKwEAAAAAAAArAQAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 22,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					14,
+					1,
+					"right_delete",
+					null,
+					"AQAAABQAAAAAAAAAFAAAAAAAAADsAQAALSBydW4gYGAgZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9aQVBQUy1BSS9ob29raWUuZ2l0IGBgCi0gcnVuIGBgY29tcG9zZXIgdXBkYXRlIGBgCi0gcnVuIGBgIG5wbSBpbnN0YWxsIGBgCi0gcnVuIGBgbnBtIHJ1biBkZXZgYAotIGNvcHkgLmVudi5leGFtcGxlIHRvIC5lbnYKLSBydW4gYGAgcGhwIGFydGlzYW4ga2V5OmdlbmVyYXRlIGBgCi0gc2V0dGluZyBkYXRhYmFzZSBkaSAuZW52Ci0gcnVuIGBgIHBocCBhcnRpc2FuIG1pZ3JhdGUgLS1zZWVkIGBgCi0gcnVuIGBgIHBocCBhcnRpc2FuIHN0b3JhZ2U6bGluayBgYAotIHJ1biBgYCBwaHAgYXJ0aXNhbiBzZXJ2ZSBgYAoKCiMgQWRtaW4gQ3JlZGVudGlhbHMKPiBFbWFpbDogc3VwZXJAYWRtaW4uY29tIHx8IFBhc3N3b3JkOiBwYXNzd29yZAoKIyMgRGVtbwoqKkxpdmUgRGVtbzoqKiBodHRwczovL2dvbGQuZGVtby5vZmZpY2lhbC1ndGRzLmNvbQoKIyMgIEdvbGQgUE9TIEdURFMKdGVzdCBjb21taXQK",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAACAAAAAAAAFAAAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"contents": "DB_HOST=192.168.1.154\nDB_PORT=6101\nDB_DATABASE=pos_prod\nDB_USERNAME=root\nDB_PASSWORD=kaladium18b",
+			"settings":
+			{
+				"buffer_size": 96,
+				"line_ending": "Unix",
+				"name": "DB_HOST=192.168.1.154"
+			},
+			"undo_stack":
+			[
+				[
+					2,
+					1,
+					"",
+					null,
+					"AQAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 296,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					8,
+					2,
+					"right_delete",
+					null,
+					"AgAAAP8AAAAAAAAA/wAAAAAAAAAJAAAAL25vdGUudHh0/wAAAAAAAAD/AAAAAAAAAAEAAAAK",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAgBAAAAAAAA/wAAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"contents": "\nsudo mkdir -p /var/www/html/biof2_backend\n\nsudo chown -R biofarma:biofarma /var/www/html/biof2_backend\nsudo chmod -R 755 /var/www/html/biofarma-f2-backend\n\nnano /var/www/html/biof2_backend/index.html\n\nsudo nano /etc/nginx/sites-available/biof2_backend\n\n\n\n\n\nserver {\n        listen 60013;\n        listen [::]:60013;\n\n        root /var/www/biof2_backend/html;\n        index index.php index.html index.htm index.nginx-debian.html;\n\n        server_name _;\n\n        location / {\n                try_files $uri $uri/ =404;\n        }\n   }\n\n\nsudo ln -s /etc/nginx/sites-available/biof2_backend /etc/nginx/sites-enabled/\n\n\n\n\n\n\n\n\n\n\nserver {\n    listen 60000;\n    listen [::]:60000;\n    server_name _;\n\n    root /var/www/html/biofarma-f2-backend/public;\n    index index.php index.html index.htm;\n\n    location / {\n        try_files $uri $uri/ /index.php?$query_string;\n    }\n\n    location ~ \\.php$ {\n        include snippets/fastcgi-php.conf;\n        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock; # Update PHP version\n        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;\n        include fastcgi_params;\n    }\n\n    error_log /var/log/nginx/biofarma_be.log;\n    access_log /var/log/nginx/biofarma_be.log;\n}\n\nsudo ln -s /etc/nginx/sites-available/biofarma_be /etc/nginx/sites-enabled/\n\n\nsudo nano /etc/nginx/conf.d/web.hokkie.id.conf \n\n\n===Load balancer =========================================\n\n\nsudo nano /etc/nginx/sites-available/hokkie.official-jsr.com\n\n=====================================================================\n\n\nupstream posjsr {\n    server 103.171.154.31 weight=5;                      #bawah\n    server 103.176.79.79 max_fails=3 fail_timeout=30s;   #atas\n\n}\n\nserver {\n    listen 80;\n    server_name hokkie.official-jsr.com www.hokkie.official-jsr.com;\n\n    location / {\n        proxy_redirect      off;\n        proxy_set_header    X-Real-IP $remote_addr;\n        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header    Host $http_host;\n        proxy_pass http://posjsr;\n    }\n}   \n\nsudo ln -s /etc/nginx/sites-available/hokkie.official-jsr.com /etc/nginx/sites-enabled/\n\n\ncertbot --nginx -d pos.official-jsr.com",
+			"file": "/home/ipunk/Desktop/nginx_virtualhost",
+			"file_size": 2182,
+			"file_write_time": 133516614590346949,
+			"settings":
+			{
+				"buffer_size": 2179,
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					9,
+					1,
+					"insert",
+					{
+						"characters": "pos"
+					},
+					"BAAAAG8IAAAAAAAAcAgAAAAAAAAAAAAAcAgAAAAAAABwCAAAAAAAAAYAAABob2traWVwCAAAAAAAAHEIAAAAAAAAAAAAAHEIAAAAAAAAcggAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABvCAAAAAAAAHUIAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		},
+		{
+			"file": "resources/views/auth/login.blade.php",
+			"settings":
+			{
+				"buffer_size": 7590,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					10,
+					1,
+					"html_beautify",
+					null,
+					"AQAAABMbAAAAAAAAOxwAAAAAAAARAQAAPGRpdiBjbGFzcz0ibXQtMSBweC0yIGZsZXgganVzdGlmeS1iZXR3ZWVuIHRleHQtY2VudGVyIHRleHQtbXV0ZWQiPgo8P3BocAoKJHB1YmxpY0lwID0gZ2V0aXBhZHJlc3MoKTsKCmlmICgkcHVibGljSXAgPT0gJzEwMy4xNzEuMTU0LjMxJykgewogICRzZXJ2ZXIgPSAnU2VydmVyIDogQkRHMDEnOwp9IGVsc2UgewogICAkc2VydmVyID0gJ1NlcnZlciA6IEpLVDAyJzsKfQoKCj8+CiAgICA8ZGl2PjwvZGl2PgogICAgPGRpdj57eyAkc2VydmVyIH19PC9kaXY+CiAgICAKPC9kaXY+",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAkHAAAAAAAABMbAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					12,
+					1,
+					"indent",
+					null,
+					"DQAAABMbAAAAAAAAFxsAAAAAAAAAAAAAWxsAAAAAAABfGwAAAAAAAAAAAABpGwAAAAAAAG0bAAAAAAAAAAAAAIwbAAAAAAAAkBsAAAAAAAAAAAAAuRsAAAAAAAC9GwAAAAAAAAAAAADdGwAAAAAAAOEbAAAAAAAAAAAAAO4bAAAAAAAA8hsAAAAAAAAAAAAAEhwAAAAAAAAWHAAAAAAAAAAAAAAcHAAAAAAAACAcAAAAAAAAAAAAACccAAAAAAAAKxwAAAAAAAAAAAAAOxwAAAAAAAA/HAAAAAAAAAAAAABcHAAAAAAAAGAcAAAAAAAAAAAAAGUcAAAAAAAAaRwAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAATGwAAAAAAADscAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					14,
+					2,
+					"indent",
+					null,
+					"GgAAABMbAAAAAAAAFxsAAAAAAAAAAAAAXxsAAAAAAABjGwAAAAAAAAAAAABxGwAAAAAAAHUbAAAAAAAAAAAAAJgbAAAAAAAAnBsAAAAAAAAAAAAAyRsAAAAAAADNGwAAAAAAAAAAAADxGwAAAAAAAPUbAAAAAAAAAAAAAAYcAAAAAAAAChwAAAAAAAAAAAAALhwAAAAAAAAyHAAAAAAAAAAAAAA8HAAAAAAAAEAcAAAAAAAAAAAAAEscAAAAAAAATxwAAAAAAAAAAAAAYxwAAAAAAABnHAAAAAAAAAAAAACIHAAAAAAAAIwcAAAAAAAAAAAAAJUcAAAAAAAAmRwAAAAAAAAAAAAAExsAAAAAAAAXGwAAAAAAAAAAAABjGwAAAAAAAGcbAAAAAAAAAAAAAHkbAAAAAAAAfRsAAAAAAAAAAAAApBsAAAAAAACoGwAAAAAAAAAAAADZGwAAAAAAAN0bAAAAAAAAAAAAAAUcAAAAAAAACRwAAAAAAAAAAAAAHhwAAAAAAAAiHAAAAAAAAAAAAABKHAAAAAAAAE4cAAAAAAAAAAAAAFwcAAAAAAAAYBwAAAAAAAAAAAAAbxwAAAAAAABzHAAAAAAAAAAAAACLHAAAAAAAAI8cAAAAAAAAAAAAALQcAAAAAAAAuBwAAAAAAAAAAAAAxRwAAAAAAADJHAAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAXGwAAAAAAAG8cAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1,
+					1,
+					"revert",
+					null,
+					"BAAAAAAAAAAAAAAAAAAAAAAAAACmHQAAPCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJ1dGYtOCI+CiAgICA8bWV0YSBodHRwLWVxdWl2PSJYLVVBLUNvbXBhdGlibGUiIGNvbnRlbnQ9IklFPWVkZ2UiPgogICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAsIHNocmluay10by1maXQ9bm8iPgoKICAgIDx0aXRsZT5Mb2dpbiB8IHt7IGNvbmZpZygnYXBwLm5hbWUnKSB9fTwvdGl0bGU+CgogICAgPCEtLSBGYXZpY29uIC0tPgogICAgPGxpbmsgcmVsPSJpY29uIiBocmVmPSJ7eyBhc3NldCgnaW1hZ2VzL2Zhdmljb24ucG5nJykgfX0iPgogICAgPCEtLSBDb3JlVUkgQ1NTIC0tPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJ7eyB1cmwoJy8nKSB9fXt7IG1peCgnY3NzL2FwcC5jc3MnKSB9fSIgY3Jvc3NvcmlnaW49ImFub255bW91cyI+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Int7IHVybCgnLycpIH19e3sgbWl4KCdjc3MvYmFja2VuZC5jc3MnKSB9fSIgY3Jvc3NvcmlnaW49ImFub255bW91cyI+CiAgICA8IS0tIEJvb3RzdHJhcCBJY29ucyAtLT4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9ib290c3RyYXAtaWNvbnNAMS41LjAvZm9udC9ib290c3RyYXAtaWNvbnMuY3NzIj4KIDxzdHlsZT4KQGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9UG9wcGluczp3Z2h0QDMwMDs0MDA7NTAwJmRpc3BsYXk9c3dhcCcpOwo8L3N0eWxlPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgogICAgYm9keSB7CiAgICBtYXJnaW46IDA7CiAgICBvdmVyZmxvdy14OiBoaWRkZW47CiAgIGZvbnQtZmFtaWx5OiAnUG9wcGlucycsIHNhbnMtc2VyaWYgIWltcG9ydGFudDsKICAgIGZvbnQtc2l6ZTogMC44MDVyZW07CiAgICBmb250LXdlaWdodDogNDAwOwogICAgbGluZS1oZWlnaHQ6IDEuNTsKICAgIHRleHQtYWxpZ246IGxlZnQ7CiAgICBjb2xvcjogIzNjNGI2NDsKICAgIGJhY2tncm91bmQtY29sb3I6ICNlYmVkZWY7Cn0KCi5jYXJkIHtib3JkZXItcmFkaXVzOiAwLjY1cmVtICFpbXBvcnRhbnQ7IH0KCi5idG4tbGluayB7CiAgICBmb250LXdlaWdodDogNDAwOwogICAgY29sb3I6ICB7e3NldHRpbmdzKCktPmxpbmtfY29sb3J9fSAhaW1wb3J0YW50OwogICAgdGV4dC1kZWNvcmF0aW9uOiBub25lOwp9CgouYnRuLXByaW1hcnkgewogIGJhY2tncm91bmQtY29sb3I6IHt7c2V0dGluZ3MoKS0+YnRuX2NvbG9yfX0gIWltcG9ydGFudDsiCiAgY29sb3I6IHdoaXRlOwogIHRleHQtZGVjb3JhdGlvbjogbm9uZTsKICBvcGFjaXR5OiAxLjA7Cgp9Ci5idG4tcHJpbWFyeTpob3ZlciB7CiBvcGFjaXR5OiAwLjU7CiAgYmFja2dyb3VuZC1jb2xvcjogIzMzMyAhaW1wb3J0YW50OyIKfQouaHAgewpkaXNwbGF5OiBub25lICFpbXBvcnRhbnQ7Cn0KCiA8L3N0eWxlPgo8L2hlYWQ+Cgo8P3BocAoKaWYgKHNldHRpbmdzKCktPnNpdGVfbG9nbykgewogICAgICAgICAgICAkbG9nbyA9IGFzc2V0KCJzdG9yYWdlL2xvZ28vIiAuc2V0dGluZ3MoKS0+c2l0ZV9sb2dvKTsKICAgICAgICB9ZWxzZXsKICAgICAgICAgICAgJGxvZ28gPSBhc3NldCgnaW1hZ2VzL2xvZ28ucG5nJyk7CiAgICAgICAgfQoKPz4KPGJvZHkgY2xhc3M9ImMtYXBwIGZsZXgtcm93IGFsaWduLWl0ZW1zLWNlbnRlciI+CjxkaXYgY2xhc3M9ImNvbnRhaW5lciI+CgogICAgPGRpdiBjbGFzcz0icm93IGp1c3RpZnktY29udGVudC1jZW50ZXIiPgogICAgICAgIDxkaXYgY2xhc3M9Int7IFJvdXRlOjpoYXMoJ3JlZ2lzdGVyJykgPyAnY29sLW1kLTgnIDogJ2NvbC1tZC03JyB9fSI+CiAgICAgICAgICAgIEBpZihTZXNzaW9uOjpoYXMoJ2FjY291bnRfZGVhY3RpdmF0ZWQnKSkKICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9ImFsZXJ0IGFsZXJ0LWRhbmdlciIgcm9sZT0iYWxlcnQiPgogICAgICAgICAgICAgICAgICAgIHt7IFNlc3Npb246OmdldCgnYWNjb3VudF9kZWFjdGl2YXRlZCcpIH19CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgQGVuZGlmCiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImNhcmQtZ3JvdXAiPgogICAgICAgICAgICAgICAgPGRpdiBjbGFzcz0iY2FyZCBwLTIgYm9yZGVyLTAgc2hhZG93LXNtIj4KICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJjYXJkLWJvZHkgcHktMyI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxmb3JtIG1ldGhvZD0icG9zdCIgYWN0aW9uPSJ7eyB1cmwoJy9sb2dpbicpIH19Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIEBjc3JmCgoKPGRpdiBjbGFzcz0iZmxleCByZWxhdGl2ZSBweS0yIj4KICA8ZGl2IGNsYXNzPSJhYnNvbHV0ZSBpbnNldC0wIGZsZXggaXRlbXMtY2VudGVyIj4KICAgIDxkaXYgY2xhc3M9InctZnVsbCBib3JkZXItYiBib3JkZXItZ3JheS0zMDAiPjwvZGl2PgogIDwvZGl2PgogIDxkaXYgY2xhc3M9InJlbGF0aXZlIGZsZXgganVzdGlmeS1sZWZ0Ij4KICAgIDxzcGFuIGNsYXNzPSJiZy13aGl0ZSBwbC0wIHByLTMgIHRleHQtc20gY2FwaXRhbGl6ZSB0ZXh0LWRhcmsiPkxvZ2luIHRvIHlvdXIgYWNjb3VudDwvc3Bhbj4KICA8L2Rpdj4KPC9kaXY+CgoKPGRpdiBjbGFzcz0iZmxleCBqdXN0aWZ5LWJldHdlZW4gcHgtMSBweS0xIHBiLTMgYm9yZGVyLWJvdHRvbSI+CgogICAgPGRpdiBjbGFzcz0idy0yLzUgZmxleCBqdXN0aWZ5LWNlbnRlciBpdGVtcy1jZW50ZXIiPiAgPGltZyBjbGFzcz0iaXRlbXMtY2VudGVyIG9iamVjdC1jb250YWluIGgtMzIiIHNyYz0ie3sgJGxvZ28gfX0iIGFsdD0iTG9nbyI+PC9kaXY+CiAgICA8ZGl2IGNsYXNzPSJ3LTQvNSBtdC0zIj4KCgogIDxkaXYgY2xhc3M9ImZsZXggcHktMSI+CiAgICA8c3BhbiBjbGFzcz0icHgtMyBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgbWluLXctZml0IHJvdW5kZWQtbC1tZCBib3JkZXIgYm9yZGVyLXItMCBib3JkZXItZ3JheS0yMDAgYmctZ3JheS0xMDAgdGV4dC1zbSB0ZXh0LWdyYXktNTAwIGRhcms6YmctZ3JheS03MDAgZGFyazpib3JkZXItZ3JheS03MDAgZGFyazp0ZXh0LWdyYXktNDAwIj4gPGkgY2xhc3M9ImJpIGJpLXBlcnNvbiI+PC9pPjwvc3Bhbj4KICAgIDxpbnB1dCB0eXBlPSJlbWFpbCIgY2xhc3M9ImZsZXgtc2hyaW5rIGZsZXgtZ3JvdyBmbGV4LWF1dG8gbGVhZGluZy1ub3JtYWwgdy1weCBmbGV4LTEgYm9yZGVyIGgtMTAgYm9yZGVyLWdyZXktbGlnaHQgcHgtMyByZWxhdGl2ZSBmb2N1czpib3JkZXItYmx1ZSBmb2N1czpzaGFkb3cgQGVycm9yKCdlbWFpbCcpIGlzLWludmFsaWQgQGVuZGVycm9yIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBuYW1lPSJlbWFpbCIgdmFsdWU9Int7IG9sZCgnZW1haWwnKSB9fSIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9IkVtYWlsIj4KCgogIDwvZGl2PgpAZXJyb3IoJ2VtYWlsJykKPGRpdiBjbGFzcz0iY2FwaXRhbGl6ZSBzbWFsbCB0ZXh0LXJlZC01MDAiPnt7ICRtZXNzYWdlIH19PC9kaXY+CkBlbmRlcnJvcgoKICA8ZGl2IGNsYXNzPSJmbGV4IHB5LTEgbXQtMiByZWxhdGl2ZSIgIHgtZGF0YT0ieyBzaG93OiB0cnVlIH0iPgogICAgPHNwYW4gY2xhc3M9InB4LTMgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIG1pbi13LWZpdCByb3VuZGVkLWwtbWQgYm9yZGVyIGJvcmRlci1yLTAgYm9yZGVyLWdyYXktMjAwIGJnLWdyYXktMTAwIHRleHQtc20gdGV4dC1ncmF5LTUwMCBkYXJrOmJnLWdyYXktNzAwIGRhcms6Ym9yZGVyLWdyYXktNzAwIGRhcms6dGV4dC1ncmF5LTQwMCI+IDxpIGNsYXNzPSJiaSBiaS1sb2NrIj48L2k+PC9zcGFuPgoKIDxpbnB1dCBjbGFzcz0iZmxleC1zaHJpbmsgZmxleC1ncm93IGZsZXgtYXV0byBsZWFkaW5nLW5vcm1hbCB3LXB4IGZsZXgtMSBib3JkZXIgaC0xMCBib3JkZXItZ3JleS1saWdodCBweC0zIHJlbGF0aXZlIGZvY3VzOmJvcmRlci1ibHVlIGZvY3VzOnNoYWRvdyBAZXJyb3IoJ3Bhc3N3b3JkJykgYm9yZGVyLXJlZC0yMDAgQGVuZGVycm9yIiA6dHlwZT0ic2hvdyA/ICdwYXNzd29yZCcgOiAndGV4dCciIG5hbWU9InBhc3N3b3JkIiBpZD0icGFzc3dvcmQiIGF1dG9jb21wbGV0ZT0ib2ZmIiB0eXBlPSJwYXNzd29yZCIgcGxhY2Vob2xkZXI9IlBhc3N3b3JkIiBuYW1lPSJwYXNzd29yZCI+CgoKICAgPGRpdiBjbGFzcz0iYWJzb2x1dGUgdG9wLTEvMiByaWdodC00IGN1cnNvci1wb2ludGVyIiBzdHlsZT0idHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpOyI+CiAgICAgICAgICA8c3ZnIGNsYXNzPSJoLTQgdGV4dC1ncmF5LTcwMCBibG9jayIgZmlsbD0ibm9uZSIgQGNsaWNrPSJzaG93ID0gIXNob3ciIDpjbGFzcz0ieydoaWRkZW4nOiAhc2hvdywgJ2Jsb2NrJzpzaG93IH0iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDU3NiA1MTIiPgogICAgICAgICAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik01NzIuNTIgMjQxLjRDNTE4LjI5IDEzNS41OSA0MTAuOTMgNjQgMjg4IDY0UzU3LjY4IDEzNS42NCAzLjQ4IDI0MS40MWEzMi4zNSAzMi4zNSAwIDAgMCAwIDI5LjE5QzU3LjcxIDM3Ni40MSAxNjUuMDcgNDQ4IDI4OCA0NDhzMjMwLjMyLTcxLjY0IDI4NC41Mi0xNzcuNDFhMzIuMzUgMzIuMzUgMCAwIDAgMC0yOS4xOXpNMjg4IDQwMGExNDQgMTQ0IDAgMSAxIDE0NC0xNDQgMTQzLjkzIDE0My45MyAwIDAgMS0xNDQgMTQ0em0wLTI0MGE5NS4zMSA5NS4zMSAwIDAgMC0yNS4zMSAzLjc5IDQ3Ljg1IDQ3Ljg1IDAgMCAxLTY2LjkgNjYuOUE5NS43OCA5NS43OCAwIDEgMCAyODggMTYweiI+CiAgICAgICAgICAgIDwvcGF0aD4KICAgICAgICAgIDwvc3ZnPgoKICAgICAgICAgIDxzdmcgY2xhc3M9ImgtNCB0ZXh0LWdyYXktNzAwIGhpZGRlbiIgZmlsbD0ibm9uZSIgQGNsaWNrPSJzaG93ID0gIXNob3ciIDpjbGFzcz0ieydibG9jayc6ICFzaG93LCAnaGlkZGVuJzpzaG93IH0iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDY0MCA1MTIiPgogICAgICAgICAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0zMjAgNDAwYy03NS44NSAwLTEzNy4yNS01OC43MS0xNDIuOS0xMzMuMTFMNzIuMiAxODUuODJjLTEzLjc5IDE3LjMtMjYuNDggMzUuNTktMzYuNzIgNTUuNTlhMzIuMzUgMzIuMzUgMCAwIDAgMCAyOS4xOUM4OS43MSAzNzYuNDEgMTk3LjA3IDQ0OCAzMjAgNDQ4YzI2LjkxIDAgNTIuODctNCA3Ny44OS0xMC40NkwzNDYgMzk3LjM5YTE0NC4xMyAxNDQuMTMgMCAwIDEtMjYgMi42MXptMzEzLjgyIDU4LjFsLTExMC41NS04NS40NGEzMzEuMjUgMzMxLjI1IDAgMCAwIDgxLjI1LTEwMi4wNyAzMi4zNSAzMi4zNSAwIDAgMCAwLTI5LjE5QzU1MC4yOSAxMzUuNTkgNDQyLjkzIDY0IDMyMCA2NGEzMDguMTUgMzA4LjE1IDAgMCAwLTE0Ny4zMiAzNy43TDQ1LjQ2IDMuMzdBMTYgMTYgMCAwIDAgMjMgNi4xOEwzLjM3IDMxLjQ1QTE2IDE2IDAgMCAwIDYuMTggNTMuOWw1ODguMzYgNDU0LjczYTE2IDE2IDAgMCAwIDIyLjQ2LTIuODFsMTkuNjQtMjUuMjdhMTYgMTYgMCAwIDAtMi44Mi0yMi40NXptLTE4My43Mi0xNDJsLTM5LjMtMzAuMzhBOTQuNzUgOTQuNzUgMCAwIDAgNDE2IDI1NmE5NC43NiA5NC43NiAwIDAgMC0xMjEuMzEtOTIuMjFBNDcuNjUgNDcuNjUgMCAwIDEgMzA0IDE5MmE0Ni42NCA0Ni42NCAwIDAgMS0xLjU0IDEwbC03My42MS01Ni44OUExNDIuMzEgMTQyLjMxIDAgMCAxIDMyMCAxMTJhMTQzLjkyIDE0My45MiAwIDAgMSAxNDQgMTQ0YzAgMjEuNjMtNS4yOSA0MS43OS0xMy45IDYwLjExeiI+CiAgICAgICAgICAgIDwvcGF0aD4KICAgICAgICAgIDwvc3ZnPgogICAgICAgIDwvZGl2PgoKCiAgPC9kaXY+CgpAZXJyb3IoJ3Bhc3N3b3JkJykKPGRpdiBjbGFzcz0ic21hbGwgY2FwaXRhbGl6ZSB0ZXh0LXJlZC01MDAiPnt7ICRtZXNzYWdlIH19PC9kaXY+CkBlbmRlcnJvcgoKPC9kaXY+CjwvZGl2PgoKICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9InJvdyBtdC0yIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJjb2wtNCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxhIGNsYXNzPSJidG4gYnRuLWxpbmsgcHgtMCIgaHJlZj0ie3sgcm91dGUoJ3Bhc3N3b3JkLnJlcXVlc3QnKSB9fSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBGb3Jnb3QgcGFzc3dvcmQ/CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvYT4KCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7ey0tICAgIDxhIGNsYXNzPSJidG4gYnRuLWxpbmsgcHgtMCIgaHJlZj0ie3sgcm91dGUoJ3Nzby5sb2dpbicpIH19Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIExvZ2luIFNTTz8KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9hPiAtLX19CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz0iY29sLTggdGV4dC1yaWdodCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3M9ImJ0biBidG4tcHJpbWFyeSBweC01IiB0eXBlPSJzdWJtaXQiPkxvZ2luPC9idXR0b24+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9kaXY+CgoKCgoKICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgICA8L2Zvcm0+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9Im10LTEgcHgtMiBmbGV4IGp1c3RpZnktYmV0d2VlbiB0ZXh0LWNlbnRlciB0ZXh0LW11dGVkIj4KICAgICAgICAgICAgICAgIDw/cGhwCiAgICAgICAgICAgICAgICAkcHVibGljSXAgPSBnZXRpcGFkcmVzcygpOwogICAgICAgICAgICAgICAgaWYgKCRwdWJsaWNJcCA9PSAnMTAzLjE3MS4xNTQuMzEnKSB7CiAgICAgICAgICAgICAgICAkc2VydmVyID0gJ1NlcnZlciA6IEJERzAxJzsKICAgICAgICAgICAgICAgIH0gZWxzZSB7CiAgICAgICAgICAgICAgICAkc2VydmVyID0gJ1NlcnZlciA6IEpLVDAyJzsKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgID8+CiAgICAgICAgICAgICAgICA8ZGl2PjwvZGl2PgogICAgICAgICAgICAgICAgPGRpdj57eyAkc2VydmVyIH19PC9kaXY+CiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgPC9kaXY+CgoKICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KPC9kaXY+Cgo8IS0tIENvcmVVSSAtLT4KPHNjcmlwdCBzcmM9Int7IHVybCgnLycpIH19e3sgbWl4KCdqcy9hcHAuanMnKSB9fSIgZGVmZXI+PC9zY3JpcHQ+Cgo8L2JvZHk+CjwvaHRtbD4KAAAAAAAAAACmHQAAAAAAAAAAAAAAAAAAAAAAAKYdAAAAAAAAAAAAAAAAAAAAAAAAph0AAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAB8bAAAAAAAA1xwAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Enable Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/var/www/html/hokkie_jsr/.github/workflows/prod.yml",
+		"/var/www/html/hokkie_jsr/.github/workflows/dev.yml",
+		"/var/www/html/hokkie_jsr/.gitignore",
+		"/var/www/html/hokkie_jsr/.github/workflows/prod2.yml",
+		"/var/www/html/hokkie_jsr/.github/workflows/dependabot.yml",
+		"/var/www/html/hokkie_jsr/config/modules.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/goods-receipt-berlian/penerimaanqc.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/kasir.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/kepala_toko.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/tab/stockready.blade.php",
+		"/var/www/html/hokkie_jsr/app/Helpers/helpers.php",
+		"/var/www/html/hokkie_jsr/Modules/Stok/Http/Controllers/StoksController.php",
+		"/var/www/html/hokkie_jsr/Modules/Stok/Resources/views/stoks/page/berlian/index_ready.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/includes/main-css.blade.php",
+		"/var/www/html/hokkie_jsr/composer.json",
+		"/var/www/html/hokkie_jsr/resources/views/auth/login.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Product/Entities/Product.php",
+		"/var/www/html/hokkie_jsr/Modules/Cabang/database/factories/CabangFactory.php",
+		"/var/www/html/hokkie_jsr/app/Http/Middleware/GenerateMenus.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/reports/purchases-report.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Produksi/Resources/views/produksis/create.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/produksi/create.blade.php",
+		"/var/www/html/hokkie_jsr/.env",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/tab/stockpending.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/tab/sales.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/tab/penjualan.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/tab/distribusitoko.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/tab/buysbacks.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/tab/buysbacknota.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/layouts/app.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/distribusi-toko/berlian/create.blade.php",
+		"/var/www/html/hokkie_jsr/app/Http/Livewire/DistribusiToko/Berlian/Create.php",
+		"/var/www/html/hokkie_jsr/Modules/DistribusiToko/Http/Controllers/DistribusiTokosController.php",
+		"/var/www/html/hokkie_jsr/Modules/DistribusiToko/Models/DistribusiToko.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/tab/penjualan_sales.blade.php",
+		"/var/www/html/hokkie_jsr/config/database.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Resources/views/nota.blade.php",
+		"/home/ipunk/Desktop/note",
+		"/home/ipunk/Desktop/nginx_virtualhost",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Resources/views/print_v2.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Resources/views/print.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Http/Controllers/SaleController.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Entities/Sale.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Entities/SaleDetails.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Resources/views/show.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Resources/views/print-pos.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/distribusi-toko/emas/create.blade.bak",
+		"/var/www/html/hokkie_jsr/app/Http/Livewire/Product/Create.php",
+		"/var/www/html/hokkie_jsr/Modules/Group/Http/Controllers/GroupsController.php",
+		"/var/www/html/hokkie_jsr/app/Http/Livewire/DistribusiToko/Emas/Create.php",
+		"/var/www/html/hokkie_jsr/resources/views/layouts/header.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Entities/SalePayment.php",
+		"/var/www/html/hokkie_jsr/Modules/PenerimaanBarangDP/Resources/views/penerimaanbarangdps/includes/print.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/GoodsReceipt/Resources/views/goodsreceipts/toko/buyback-barangluar/datatable/item/print.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Routes/web.php",
+		"/var/www/html/hokkie_jsr/Modules/DataBank/Http/Controllers/DataBanksController.php",
+		"/var/www/html/hokkie_jsr/app/Models/User.php",
+		"/var/www/html/hokkie_jsr/note.text",
+		"/home/ipunk/Downloads/DEVOPS/zapps.co.id/laravel.yml",
+		"/var/www/html/hokkie_jsr/Modules/LaporanAsset/Http/Middleware/GenerateMenus.php",
+		"/var/www/html/hokkie_jsr/Modules/LaporanAsset/Resources/views/laporanassets/index.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/LaporanAsset/database/migrations/2023_12_26_103216_create_laporanassets_table.php",
+		"/var/www/html/hokkie_jsr/Modules/User/Http/Controllers/UsersController.php",
+		"/var/www/html/hokkie_jsr/Modules/User/Http/Controllers/ProfileController.php",
+		"/var/www/html/hokkie_jsr/Modules/Upload/Entities/Upload.php",
+		"/var/www/html/hokkie_jsr/Modules/Baki/Resources/views/bakis/index.blade.php",
+		"/home/ipunk/Documents/ABC PASKO/contoh query insert data sales.txt",
+		"/home/ipunk/Downloads/DEVOPS/zapps.co.id/prod.yml",
+		"/home/ipunk/Downloads/DEVOPS/SERVER ZAPPS/laravel.yml",
+		"/home/ipunk/Downloads/DEVOPS/SERVER ZAPPS/config.txt",
+		"/home/ipunk/Downloads/DEVOPS/SERVER ZAPPS/key_server_gtds.txt",
+		"/var/www/html/hokkie_jsr/Modules/GoodsReceipt/Resources/views/goodsreceipts/includes/print.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/pos/product-list.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/GoodsReceipt/Resources/views/goodsreceipts/print_detail.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/pos/includes/checkout-modal.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/pos/checkout.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DistribusiToko/Resources/views/distribusitokos/includes/cetak.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/GoodsReceipt/Http/Controllers/GoodsReceiptsController.php",
+		"/var/www/html/hokkie_jsr/Modules/GoodsReceipt/routes/web.php",
+		"/var/www/html/hokkie_jsr/Modules/GoodsReceipt/Resources/views/goodsreceipts/show.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/layouts/print.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/layouts/cetak.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DataSale/Http/Controllers/LaporanSalesController.php",
+		"/var/www/html/hokkie_jsr/Modules/DataSale/routes/web.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/reports/laporan-sales.blade.php",
+		"/var/www/html/hokkie_jsr/app/Http/Livewire/Reports/LaporanSales.php",
+		"/var/www/html/hokkie_jsr/app/Http/Livewire/GoodsReceipt/Toko/BuyBack/Item/Modal/Create.php",
+		"/var/www/html/hokkie_jsr/app/Http/Livewire/Buysback/Item/Modal/Create.php",
+		"/var/www/html/hokkie_jsr/Modules/User/Resources/views/roles/edit.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/admin_gudang.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/GoodsReceipt/Models/GoodsReceipt.php",
+		"/var/www/html/hokkie_jsr/app/Http/Controllers/HomeController.php",
+		"/var/www/html/hokkie_jsr/Modules/PenjualanSale/Resources/views/penjualansales/includes/action.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Resources/views/index_data_table.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/pos/filter.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Sale/Resources/views/pos/index.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/layouts/footer.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/layouts/sidebar.blade.php",
+		"/var/www/html/hokkie_jsr/app/Http/Livewire/Pos/ProductList.php",
+		"/var/www/html/gold/app/Http/Livewire/Pos/ProductList.php",
+		"/var/www/html/hokkie_jsr/Modules/DataSale/Resources/views/datasales/laporan/index.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DataSale/Resources/views/datasales/laporan/target.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DataSale/Resources/views/datasales/laporan/insentif.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DataSale/Resources/views/datasales/laporan/incentive.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DataSale/Resources/views/datasales/laporan/edit.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DataBank/Resources/views/databanks/index.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DataBank/Resources/views/databanks/modal/create.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/Adjustment/Http/Controllers/AdjustmentController.php",
+		"/var/www/html/hokkie_jsr/Modules/ReturPembelian/Http/Controllers/ReturPembeliansController.php",
+		"/var/www/html/hokkie_jsr/Modules/ReturPembelian/Resources/views/returpembelians/index.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/ReturPembelian/Resources/views/returpembelians/create.blade.php",
+		"/var/www/html/hokkie_jsr/app/Http/Livewire/ReturPembelian/Create.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/retur-pembelian/create.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/PenerimaanBarangDP/Resources/views/penerimaanbarangdps/includes/action.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/StoreEmployee/Http/Controllers/StoreEmployeesController.php",
+		"/var/www/html/hokkie_jsr/resources/views/partial/pages/user.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/DataBank/database/migrations/2023_12_14_102027_add_nama_pemilik_to_databanks_table.php",
+		"/var/www/html/hokkie_jsr/Modules/DataBank/Resources/views/databanks/modal/edit.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/ReturPembelian/database/migrations/2023_12_14_084834_create_returpembelians_table.php",
+		"/var/www/html/hokkie_jsr/Modules/ReturPembelian/Http/Middleware/GenerateMenus.php",
+		"/var/www/html/hokkie_jsr/Modules/ReturSale/Http/Controllers/ReturSalesController.php",
+		"/var/www/html/hokkie_jsr/Modules/ReturSale/Resources/views/retursales/includes/print.blade.php.bak",
+		"/var/www/html/hokkie_jsr/Modules/ReturSale/Resources/views/retursales/includes/print.blade.php",
+		"/var/www/html/hokkie_jsr/Modules/PenjualanSale/Http/Controllers/PenjualanSalesController.php",
+		"/var/www/html/hokkie_jsr/Modules/PenjualanSale/Resources/views/penjualansales/includes/print.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/distribusi-toko/progress_print.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/pagination/custom.blade.php",
+		"/var/www/html/hokkie_jsr/resources/views/livewire/distribusi-toko/completed.blade.php"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 104.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"conflict",
+			"composer",
+			"symfony/console",
+			"singleSertifikatModal",
+			"sertifikatModal",
+			"singleSertifikatModal",
+			"showModal",
+			"purchases-report",
+			"cabang",
+			"index_emas",
+			"updateOrCreate",
+			"update",
+			"tion ceta",
+			"pending",
+			"max",
+			"_saveProductsItem",
+			"rupiah",
+			"product_item",
+			"media",
+			"berat",
+			"resetErrorBag",
+			"accessories",
+			"dataAccessories",
+			"addInput",
+			"input",
+			"sass",
+			"$5.00",
+			"$70.00",
+			"4",
+			"purchases-return-report",
+			"%\">",
+			"invoice-items",
+			";\">",
+			"12pt",
+			"5",
+			"Tanggal",
+			"PDF",
+			"5",
+			"webapps",
+			" updated",
+			"profile updated",
+			"tion prof",
+			"formLantakan",
+			"edit_status",
+			"penerimaan",
+			"create_penjualansales",
+			"delete_penjualansales",
+			"setProduct",
+			"validateOnly",
+			"j",
+			"delete_penerimaanbarangdps",
+			"penerimaanbarang",
+			"show_stock_opname",
+			"dataSales",
+			"text-gray-400",
+			"normuser",
+			"11px",
+			"1cm",
+			"access_laporan_retur_sales",
+			"access_laporan_pembelian",
+			"access_laporan_penjualan",
+			"access_laporan_piutang",
+			"access_laporan_pembayaran",
+			"reports",
+			"access_laporan_laba_rugi",
+			"repor",
+			"rep",
+			"access_reports",
+			"dashboard_sales_office",
+			"access_datasales",
+			"stockpending",
+			"@endphp",
+			"distribusitoko",
+			"$$product",
+			"$product",
+			"buysbacks",
+			"$sale",
+			"tion cetak",
+			"coreui",
+			"git clone",
+			"access_penentuanharga",
+			"delete_storeemployees",
+			"storeemployee",
+			"penentuanharga",
+			"access_menu_stok",
+			"access_menu_proses",
+			"access_inventory",
+			"create_penjualansales",
+			"access_distribusisale",
+			"access_penerimaanbarangluarsales",
+			"access_penerimaanbarangluarsale",
+			"Hutang",
+			"access_penerimaan_qc_berlian",
+			"access_reports",
+			"sale",
+			"tion emas",
+			"Distribusi Toko",
+			"access_distribusitoko",
+			"access_suppliers",
+			"edit_distribusitoko",
+			"create_distribusitoko",
+			"access_distribusitoko",
+			"access_settings",
+			"access_distribusitoko",
+			"1px",
+			"white",
+			"data_ready",
+			"tion index_data",
+			"300",
+			"baya",
+			"tion read",
+			"show_stock_gudang",
+			"stock",
+			"PenentuanHarga",
+			"autoRefresh",
+			"module_name",
+			"py-3",
+			"tion index_dat",
+			"data",
+			"product",
+			"tipebayar",
+			"cicilRadio",
+			"kembalian",
+			"kembali-input",
+			"kembalian",
+			"kembalian-info",
+			"cabang",
+			"paid_amount"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"font-semibold"
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/var/www/html/hokkie_jsr/.github/workflows",
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/ipunk/Desktop/note",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 46030,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11600,
+								11600
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8767.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "composer.json",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3211,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2550,
+								2550
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/JSON/JSON.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1195.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								22,
+								22
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 96,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								96,
+								96
+							]
+						],
+						"settings":
+						{
+							"auto_name": "DB_HOST=192.168.1.154",
+							"default_dir": "/var/www/html/hokkie_jsr/.github/workflows",
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 296,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								254,
+								254
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Git Formats/Git Ignore.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/home/ipunk/Desktop/nginx_virtualhost",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2179,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								616,
+								616
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 285.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "resources/views/auth/login.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7590,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6943,
+								7383
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Laravel Blade Highlighter/Syntaxes/HTML (Blade).sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3762.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.CSS Extended Completions":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 132.0
+	},
+	"pinned_build_system": "",
+	"project": "prod.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"app/Http/Livewire/Pos/Checkout.php"
+			],
+			[
+				"Karat",
+				"Modules/Karat/Models/Karat.php"
+			],
+			[
+				"user",
+				"Modules/UserCabang/Models/UserCabang.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 374.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
