@@ -76,8 +76,8 @@
                                         <td class="text-center">{{ $custom['custom_code'] }}</td>
                                         <td class="text-center">{{ $custom['jenis_barang'] }}</td>
                                         <td class="text-center">{{ $custom['berat'] }}</td>
-                                        <td class="text-center">{{ $custom['total'] }}</td>
-                                        <td class="text-center">{{ $custom['harga'] }}</td>
+                                        <td class="text-center">{{ format_uang($custom['total']) }}</td>
+                                        <td class="text-center">{{ $custom['harga_jual'] ? format_uang($custom['harga_jual']) : '-'}}</td>
                                         <td class="text-center p-6 bg-violet-600 border-4 border-violet-300 border-dashed">
                                             @if ($custom['status'])
                                                 
