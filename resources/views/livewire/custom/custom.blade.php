@@ -1,5 +1,5 @@
 <div class="modal fade" id="pembayaran_dp" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title text-lg font-bold" id="addModalLabel">Pembayaran DP</h3>
@@ -9,11 +9,9 @@
             </div>
             <form wire:submit.prevent="store">
             <div class="modal-body">
-                <!-- Display data received from Livewire -->
                 <p><strong>Harga Jual : </strong> {{ $custom->harga_jual  ?? ''}}</p>
                 <p><strong>Nominal DP : </strong> {{ $custom->total  ?? ''}}</p>
                 <p><strong>Sisa Pembayaran : </strong> {{ $sisaBayar}}</p>
-                <!-- You can display other data here as well -->
             
 
                 <div class="card shadow-md">
@@ -398,7 +396,7 @@
     </div>
 </div>
 
-{{-- @push('page_scripts')
+@push('page_scripts')
 <script>
     
     function setAdditionalAttribute(name, selectElement) {
@@ -415,4 +413,4 @@
     });
 
 </script>
-@endpush --}}
+@endpush
