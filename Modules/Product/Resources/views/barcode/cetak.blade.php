@@ -12,7 +12,7 @@
 
  <style>
    @page {
-         size: 8.57cm 2.70cm;
+         size: 8.57cm 2.80cm;
           margin: 0;
         }
   </style>
@@ -41,7 +41,7 @@ div#kanan {
             <div style="position:absolute; top:1.7rem;font-size: 0.9rem;left:1rem;">
               <img width="35" src="data:image/png;base64, {!! $barcode !!}">   
             </div>
-            <div style="position:absolute; bottom:1.2rem;left:1rem;">
+            <div style="position:absolute; bottom:1.7rem;left:1rem;">
               <div style="font-size: 0.65rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_name}}
               </div>
@@ -57,7 +57,7 @@ div#kanan {
 
         <td style="border:none !important;">
           <div style="relative">
-            <div class="tf" style="position:absolute; top:1.7rem;right:2.3rem;">
+            <div class="tf" style="position:absolute; top:1.5rem;right:1.8rem;">
               <div style="font-size: 0.65rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_name}}
               </div>
@@ -68,7 +68,7 @@ div#kanan {
                   {{$product->product_code}}
               </div>
             </div>
-            <div style="position:absolute; bottom:1.4rem;right:2.3rem;">
+            <div style="position:absolute; bottom:1.7rem;right:1.8rem;">
               <img class="tf" width="35" src="data:image/png;base64, {!! $barcode !!}">   
             </div>
           </div>   
