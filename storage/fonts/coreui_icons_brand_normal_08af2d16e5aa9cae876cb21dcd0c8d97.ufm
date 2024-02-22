@@ -1,6 +1,6 @@
 StartFontMetrics 4.1
 Notice Converted by PHP-font-lib
-Comment https://github.com/PhenX/php-font-lib
+Comment https://github.com/dompdf/php-font-lib
 EncodingScheme FontSpecific
 FontName CoreUI-Brand-Icons
 FontSubfamily Regular
@@ -851,5 +851,6 @@ U 60473 ; WX 1000 ; N uniec39 ; G 829
 U 60474 ; WX 1000 ; N uniec3a ; G 830
 U 60475 ; WX 1000 ; N uniec3b ; G 831
 U 60476 ; WX 1000 ; N uniec3c ; G 832
+U 65533 ; WX 1000 ; N unifffd ; G 0
 EndCharMetrics
 EndFontMetrics

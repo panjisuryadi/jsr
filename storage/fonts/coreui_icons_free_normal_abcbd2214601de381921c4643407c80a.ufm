@@ -1,6 +1,6 @@
 StartFontMetrics 4.1
 Notice Converted by PHP-font-lib
-Comment https://github.com/PhenX/php-font-lib
+Comment https://github.com/dompdf/php-font-lib
 EncodingScheme FontSpecific
 FontName CoreUI-Icons-Free
 FontSubfamily Regular
@@ -524,5 +524,6 @@ U 60670 ; WX 1000 ; N uniecfe ; G 502
 U 60671 ; WX 1000 ; N uniecff ; G 503
 U 60675 ; WX 1000 ; N unied03 ; G 504
 U 60683 ; WX 1000 ; N unied0b ; G 505
+U 65533 ; WX 1000 ; N unifffd ; G 0
 EndCharMetrics
 EndFontMetrics

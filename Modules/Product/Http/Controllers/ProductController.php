@@ -1114,6 +1114,8 @@ class ProductController extends Controller
 
 
 
+
+
     public function create2()
     {
         // $id = decode_id($id);
