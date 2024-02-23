@@ -53,7 +53,7 @@ div#kanan {
               </div>
             </div>
           </div>
-        </td>
+        </td> 
 
         <td style="border:none !important;">
           <div style="relative">

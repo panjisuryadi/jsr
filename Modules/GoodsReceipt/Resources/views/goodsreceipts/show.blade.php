@@ -163,7 +163,7 @@
                                     <th class="text-center">Kategori</th>
                                     <th class="text-center">Karat</th>
                                     <th class="text-center">Berat Real</th>
-                                    <th class="text-center">Berat Kotor</th>
+                                    <th class="text-center">BeratKotor</th>
                                 </tr>
                             </thead>
                             <tbody>
