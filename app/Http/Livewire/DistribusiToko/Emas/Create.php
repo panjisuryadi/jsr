@@ -330,7 +330,7 @@ class Create extends Component
         try {
             $group = Group::find($this->new_product['group_id']);
             $karat = Karat::find($this->new_product['karat_id']);
-            $this->new_product["code"] = Product::generateCode($group->code, $karat->kode);
+            $this->new_product["code"] = Product::generateCode($group->code, $karat->name);
         }catch (\Exception $e) {
             throw $e;
         }
