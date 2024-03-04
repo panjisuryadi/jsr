@@ -356,7 +356,7 @@ public function index_data(Request $request)
          }else{
              $$module_name->orderBy('created_at', 'desc');
          }
-         $$module_name->get();
+        $$module_name->get();
 
          $data = $$module_name;
 
@@ -392,12 +392,14 @@ public function index_data(Request $request)
                                 return $tb;
                             })  
 
-                             ->editColumn('status', function ($data) {
-                             $tb = '<div class="items-center justify-center text-center btn btn-sm text-xs btn-outline-warning">
-                                     ' . $data->current_status->name . '
-                                    </div>';
-                                return $tb;
-                            })
+                            ->addColumn('status', function ($data) {
+                                $module_name = $this->module_name;
+                                $module_model = $this->module_model;
+                                $module_path = $this->module_path;
+                                return view(''.$module_name.'::'.$module_path.
+                                '.includes.status_distribusi',
+                                compact('module_name', 'data', 'module_model'));
+                                    })
                            ->editColumn('karat', function ($data) {
                              $tb = '<div class="items-center">
                                     <h3 class="text-sm text-gray-600">
@@ -419,7 +421,19 @@ public function index_data(Request $request)
                             } else {
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
-                        })
+                           })
+
+                          // ->filter(function ($instance) use ($request) {
+                          //   if (!empty($request->get('search'))) {
+                          //        $instance->where(function($w) use($request){
+                          //           $search = $request->get('search');
+                          //              $w->orWhere('history_distribusi_toko.no_invoice', 'LIKE', "%$search%");
+                          //            });
+                          //         }
+                          //     })
+
+
+
                         ->rawColumns(['updated_at', 
                                     'action',  'cabang','date', 'karat','status',
                                       'no_invoice'])
