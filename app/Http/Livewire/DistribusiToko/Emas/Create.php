@@ -325,7 +325,16 @@ class Create extends Component
     }
 
     public function generateCode(){
-        $this->new_product["code"] = Product::generateCode();
+        $this->validate($this->generate_code_rule());
+
+        try {
+            $group = Group::find($this->new_product['group_id']);
+            $karat = Karat::find($this->new_product['karat_id']);
+            $this->new_product["code"] = Product::generateCode($group->code, $karat->kode);
+        }catch (\Exception $e) {
+            throw $e;
+        }
+
     }
 
     public function calculateTotalWeight(){
@@ -334,6 +343,14 @@ class Create extends Component
         $this->new_product['total_weight'] += doubleval($this->new_product['accessories_weight']);
         $this->new_product['total_weight'] += doubleval($this->new_product['tag_weight']);
         $this->new_product['total_weight'] = round($this->new_product['total_weight'], 3);
+    }
+
+    private function generate_code_rule()
+    {
+        return [
+            'new_product.group_id' => 'required',
+            'new_product.karat_id' => 'required'
+        ];
     }
 
     private function product_rules(){
