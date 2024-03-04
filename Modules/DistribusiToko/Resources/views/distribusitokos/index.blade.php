@@ -33,6 +33,7 @@
 
                         </div>
                         <div id="buttons">
+                            
                         </div>
                     </div>
                     <div class="table-responsive mt-1">

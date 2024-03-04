@@ -1,7 +1,14 @@
 <div class="text-center">
+
+<a target="_blank" href="{{ route(''.$module_name.'.export_emas_detail', $data->id) }}"
+    class="btn btn-outline-success btn-sm">
+    <i class="bi bi-eye"></i> &nbsp;@lang('Export')
+</a>
+
+
 @can('show_distribusitoko')
 <a href="{{ route(''.$module_name.'.detail', $data->id) }}"
-    class="btn btn-outline-success btn-sm">
+    class="btn btn-outline-primary btn-sm">
     <i class="bi bi-eye"></i> &nbsp;@lang('View')
 </a>
 @endcan

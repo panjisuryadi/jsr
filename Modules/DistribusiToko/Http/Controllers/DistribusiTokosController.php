@@ -24,6 +24,13 @@ use Modules\DistribusiToko\Models\DistribusiTokoItem;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductItem;
 use Modules\Stok\Models\StockOffice;
+use App\Exports\Distribusi\EmasExport;
+use App\Exports\Distribusi\EmasExportDetail;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
+use Exception;
+
+
 
 class DistribusiTokosController extends Controller
 {
@@ -182,6 +189,43 @@ public function cetak_pdf($id) {
 
     }
 
+
+public function export_emas_detail_old(DistribusiToko $dist_toko)
+    {
+         $tanggal = date('d-m-Y');
+         // $to_date = $request->get('to_date') ??  date('d-m-Y');
+        // dd($dist_toko);
+         ob_end_clean();
+         ob_start();
+         return Excel::download(new EmasExportDetail($tanggal,$dist_toko),
+            'Esport_Emas_Detail_'.$tanggal.'.xlsx');
+
+
+    }
+
+
+    public function export_emas_detail(DistribusiToko $dist_toko){
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        $distribusi = $dist_toko->items;
+         return view(''.$module_name.'::'.$module_path.'.detail_distribusi_excel',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'dist_toko',
+            'distribusi',
+            'module_icon', 'module_model'));
+
+    }
 
 
 
@@ -485,7 +529,6 @@ public function index_data_table(Request $request)
                                       'no_invoice'])
                         ->make(true);
                      }
-
 
 
 
@@ -1081,6 +1124,23 @@ public function approve_distribusi(Request $request, $id)
             'module_title',
             'module_icon', 'module_model'));
     }
+
+
+
+
+ public function export_emas()
+    {
+        ob_end_clean();
+        ob_start();
+        $tgl = date('d-m-Y');
+        $module_model = $this->module_model;
+        $test = $module_model::gold();
+       // dd($test->items);
+
+        return Excel::download(new EmasExport, 'export-distribusi-emas_'.$tgl.'.xlsx');
+
+    }
+
 
 
     

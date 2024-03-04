@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +11,9 @@
 
     @include('includes.main-css')
     @stack('page_css')
+
+
+
 </head>
 
 <body class="w-full">

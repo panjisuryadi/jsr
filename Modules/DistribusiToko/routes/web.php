@@ -39,7 +39,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     
 
+  Route::get("$module_name/export-detail-emas/{dist_toko}", ['as' => "$module_name.export_emas_detail", 'uses' => "$controller_name@export_emas_detail"]);
+
+
+
   Route::get("$module_name/detail-distribusi/{dist_toko}", ['as' => "$module_name.detail_distribusi", 'uses' => "$controller_name@detail_distribusi"]);
+
+
 
 
   Route::get("$module_name/view-distribusi/{id}", ['as' => "$module_name.view_distribusi", 'uses' => "$controller_name@view_distribusi"]);
@@ -68,9 +74,18 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Emas
     Route::get("$module_name/emas/create", ['as' => "$module_name.emas.create", 'uses' => "$controller_name@create_emas"]);
+
     Route::get("$module_name/emas/edit/{dist_toko}", ['as' => "$module_name.emas.edit", 'uses' => "$controller_name@edit_emas"]);
+
+
     Route::get("$module_name/emas", ['as' => "$module_name.emas", 'uses' => "$controller_name@index_emas"]);
+
     Route::get("$module_name/index_data_emas", ['as' => "$module_name.index_data_emas", 'uses' => "$controller_name@index_data_emas"]);
+
+    Route::get("$module_name/export_emas", ['as' => "$module_name.export_emas", 'uses' => "$controller_name@export_emas"]);
+
+
+
     Route::resource("$module_name", "$controller_name");
 
 

@@ -19,9 +19,15 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                             <a class="btn btn-primary px-5 uppercase tracking-widest mb-2" href="{{ route('distribusitoko.emas.create') }}">
-                                Input Distribusi <i class="bi bi-plus"></i>
+                                Input Distribusi<i class="bi bi-plus"></i>
                             </a>
                         </div>
+
+
+                     <div id="buttons">
+                            
+                        </div>
+
                     </div>
                     <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
@@ -37,7 +43,7 @@
                                     </th>
                                   
                                    
-                                    <th style="width: 14%!important;" class="text-center">
+                                    <th style="width: 20%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -53,6 +59,7 @@
 
 <x-library.datatable />
 @push('page_scripts')
+
    <script type="text/javascript">
         $('#datatable').DataTable({
            processing: true,
@@ -82,27 +89,35 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data_emas") }}',
+            ajax: '{{ route("$module_name.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
-
-                'excel',
-                'pdf',
-                'print'
-            ],
+             
+                        {
+                            className: 'btn btn-success px-3 text-white',
+                            id: 'ExportButton',
+                            text: "Export Excel",
+                            action: function (e, dt, node, config)
+                            {
+                                window.location.href = '{{ route("$module_name.export_emas") }}';
+                            }     
+                        },{
+                                extend: 'print',
+                                className: 'btn btn-secondary text-black',
+                              
+                            }
+               ],
             columns: [{
                     "data": 'id',
                     "sortable": false,
                     render: function(data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
-                },
+                 },
                 {data: 'no_invoice', name: 'no_invoice'},
                 {data: 'cabang', name: 'cabang'},
                 {data: 'karat', name: 'karat'},
                 {data: 'status', name: 'status'},
-              
-
                 {
                     data: 'action',
                     name: 'action',
@@ -111,13 +126,13 @@
                 }
             ]
         })
-        .buttons().remove()
+        .buttons()
         .container()
         .appendTo("#buttons");
-
-
-
     </script>
+
+
+
 
 <script type="text/javascript">
 jQuery.noConflict();
