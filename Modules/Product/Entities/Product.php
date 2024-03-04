@@ -142,10 +142,10 @@ class Product extends Model implements HasMedia
 
 
 
-    public static function generateCode()
+    public static function generateCode($group, $karat)
         {
             $date = now()->format('dmy');
-            $produk_code = !empty(env('PRODUCT_CODE')) ? env('PRODUCT_CODE') : self::PRODUKCODE;
+            $produk_code = $group . $karat;
             $dateCode = $produk_code . $date;
             $lastOrder = self::select([DB::raw('MAX(products.product_code) AS last_code')])
                 ->withTrashed()
@@ -163,7 +163,7 @@ class Product extends Model implements HasMedia
             }
 
             if (self::_isUniqueCodeExists($orderCode)) {
-                return self::generateCode();
+                return self::generateCode($group, $karat);
              }
             return $orderCode;
         }
