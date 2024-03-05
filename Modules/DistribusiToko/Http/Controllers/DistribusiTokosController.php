@@ -103,6 +103,21 @@ class DistribusiTokosController extends Controller
     }
 
 
+public function view_excel(Request $request ,$dist_toko)
+    {
+         $tanggal = date('d-m-Y');
+         // $to_date = $request->get('to_date') ??  date('d-m-Y');
+         //dd($dist_toko);
+         ob_end_clean();
+         ob_start();
+         return Excel::download(new EmasExportDetail($tanggal,$dist_toko),
+            'Esport_Emas_Detail_'.$tanggal.'.xlsx');
+
+
+    }
+
+
+
 
     public function cetak(DistribusiToko $dist_toko){
         if(AdjustmentSetting::exists()){
@@ -190,18 +205,6 @@ public function cetak_pdf($id) {
     }
 
 
-public function export_emas_detail_old(DistribusiToko $dist_toko)
-    {
-         $tanggal = date('d-m-Y');
-         // $to_date = $request->get('to_date') ??  date('d-m-Y');
-        // dd($dist_toko);
-         ob_end_clean();
-         ob_start();
-         return Excel::download(new EmasExportDetail($tanggal,$dist_toko),
-            'Esport_Emas_Detail_'.$tanggal.'.xlsx');
-
-
-    }
 
 
     public function export_emas_detail(DistribusiToko $dist_toko){
@@ -225,6 +228,27 @@ public function export_emas_detail_old(DistribusiToko $dist_toko)
             'distribusi',
             'module_icon', 'module_model'));
 
+    }
+
+
+
+  public function view_excel_old(Request $request ,DistribusiToko $dist_toko) {
+       
+        $status = $request->status ?? '';
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+        abort_if(Gate::denies('access_'.$module_name.''), 403);
+         return view(''.$module_name.'::'.$module_path.'.view_distribusi_excel',
+           compact('module_name',
+            'module_action',
+            'module_title',
+            'status',
+            'module_icon', 'module_model'));
     }
 
 
@@ -749,14 +773,6 @@ public function store(Request $request)
     }
 
 
-
-
-
-
-
-
-
-
     /**
      * Show the specified resource.
      * @param int $id
@@ -1070,18 +1086,6 @@ public function approve_distribusi(Request $request, $id)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -1364,4 +1368,6 @@ public function approve_distribusi(Request $request, $id)
                         'no_invoice'])
             ->make(true);
     }
+
+
 }

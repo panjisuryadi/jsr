@@ -49,8 +49,8 @@
                                         <tr>
                                             <th class="text-center">No</th>
                                             <th class="text-center">Berat Emas</th>
-                                            <th class="text-justify">Informasi Produk</th>
-                                            <th class="text-justify">Gambar Produk</th>
+                                        <th class="text-center">Informasi Produk</th>
+                                           
                                         </tr>
                                     </thead>
 
@@ -84,21 +84,18 @@
                                                     Code : <strong>{{ !empty($data->code) ? $data->code : (!empty($data->product_code) ? $data->product_code : '-')  }}</strong>
                                                 </div>
                                             </td>
-                                            <td> <a href="{{ $imagePath }}" data-lightbox="{{ @$image }} " class="single_image">
-                                            <img src="{{ $imagePath }}" order="0" width="70" class="img-thumbnail"/>
-                                        </a>
-                                    </td>
+                                         
                                         </tr>
                                         @empty
                                         <tr>
-                                            <th colspan="5" class="text-center">Tidak ada data</th>
+                                            <th colspan="4" class="text-center">Tidak ada data</th>
                                         </tr>
                                         @endforelse
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td class="text-right font-extrabold">Jumlah Emas :</td>
+                                           
                                             <td class="text-center font-extrabold">
-                                                {{ $total_weight }} gr
+                                               <span>Jumlah Emas : </span> {{ $total_weight }} gr
                                             </td>
                                         </tr>
                                     </tbody>
