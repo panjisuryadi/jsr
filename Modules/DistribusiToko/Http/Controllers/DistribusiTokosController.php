@@ -379,7 +379,7 @@ public function index_data(Request $request)
                             })
                         ->editColumn('no_invoice', function ($data) {
                             $tb = '<div class="items-center text-center">
-                                    <span class="text-gray-600">
+                                    <span class="font-semibold text-blue-500">
                                     ' .$data->no_invoice . '</span>
                                     </div>';
                                 return $tb;
@@ -406,7 +406,7 @@ public function index_data(Request $request)
                                      Jenis Karat: <strong> ' .$data->items->groupBy('karat_id')->count() . ' buah </strong></h3>
                                     </div>
                                     <div class="items-center">
-                                    <span class="text-sm text-gray-800">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' Gram
+                                    <span class="text-xs text-blue-400">Total Berat Emas: <strong> '.$data->items->sum('gold_weight') .' Gram
                                     </strong></span>
                                    </div>';
                                 return $tb;

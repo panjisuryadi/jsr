@@ -22,6 +22,7 @@
             && ! request()->routeIs('goodsreceipt.show')
             && ! request()->routeIs('iventory.type')
             && ! request()->routeIs('distribusitoko.berlian.create')
+            && ! request()->routeIs('distribusitoko.emas')
             )
              @include('layouts.sidebar')
             @endif
