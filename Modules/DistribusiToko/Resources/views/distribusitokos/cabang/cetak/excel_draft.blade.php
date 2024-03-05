@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <td>
-               Status: <strong>{{ $dist_toko->current_status->name }}</strong>
+               Status: <strong>{{ strtoupper($dist_toko->current_status->name) }}</strong>
                 </td>
                  <td>
                 
@@ -47,10 +47,10 @@
 
 <table style="width: 100% !important;">
     <thead>
-        <tr class="cell">
-            <th class="text-center">No</th>
-            <th class="text-center">Berat Emas</th>
-            <th class="text-center">Informasi Produk</th>
+        <tr style='background-color: #b5b4b3; color: #000000;'>
+            <th style='background-color: #b5b4b3; color: #000000;'>No</th>
+            <th style='background-color: #b5b4b3; color: #000000;'>Berat Emas</th>
+            <th style='background-color: #b5b4b3; color: #000000;'>Informasi Produk</th>
             
         </tr>
     </thead>
@@ -69,18 +69,11 @@
             <th class="text-center">{{$loop->iteration}}</th>
             <td class="text-center font-extrabold"> {{$row->gold_weight}} gr</td>
             <td class="text-justify">
-                <p>
-                    Produk : <strong>{{ !empty($data->product_category->name) ? $data->product_category->name : '-' }}</strong>
-                </p>
-                <div>
-                    Group : <strong>{{ !empty($data->group->name) ? $data->group->name : '' }}</strong>
-                </div>
-                <div>
-                    Model : <strong>{{ !empty($data->model->name) ? $data->model->name : '' }}</strong>
-                </div>
-                <div>
-                    Code : <strong>{{ !empty($data->code) ? $data->code : (!empty($data->product_code) ? $data->product_code : '-')  }}</strong>
-                </div>
+               Produk : {{ !empty($data->product_category->name) ? $data->product_category->name : '-' }}
+             Group : {{ !empty($data->group->name) ? $data->group->name : '' }}
+             Model : {{ !empty($data->model->name) ? $data->model->name : '' }}
+             Code :{{ !empty($data->code) ? $data->code : (!empty($data->product_code) ? $data->product_code : '-')  }}
+             
             </td>
             
         </tr>

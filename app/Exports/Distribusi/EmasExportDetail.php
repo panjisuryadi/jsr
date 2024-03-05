@@ -60,7 +60,7 @@ public function view(): View
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
-                $event->sheet->getDelegate()->mergeCells('A5:G5');
+                $event->sheet->getDelegate()->mergeCells('A1:G1');
                 //$event->sheet->getDelegate()->mergeCells('A2:B2');
               
             },

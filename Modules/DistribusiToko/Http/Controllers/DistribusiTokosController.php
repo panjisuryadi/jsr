@@ -111,10 +111,12 @@ public function view_excel(Request $request ,$dist_toko)
          ob_end_clean();
          ob_start();
          return Excel::download(new EmasExportDetail($tanggal,$dist_toko),
-            'Esport_Emas_Detail_'.$tanggal.'.xlsx');
+            'backup-distribusi-excel'.$tanggal.'.xlsx');
 
 
     }
+
+
 
 
 
