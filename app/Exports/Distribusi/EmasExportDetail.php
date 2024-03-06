@@ -61,7 +61,8 @@ public function view(): View
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->mergeCells('A1:G1');
-                //$event->sheet->getDelegate()->mergeCells('A2:B2');
+                $event->sheet->getDelegate()->mergeCells('A2:G2');
+                $event->sheet->getDefaultRowDimension()->setRowHeight(17);
               
             },
         ];
@@ -80,12 +81,12 @@ public function view(): View
           
         ]);
 
-  $sheet->getStyle('A2:E2')->applyFromArray([
+      $sheet->getStyle('A2:G2')->applyFromArray([
             'font' => [
-                'bold' => true,
+                'bold' => false,
             ],
          
-        ]);
+          ]);
 
       // $sheet->getStyle('A8:E8')->applyFromArray([
       //       'font' => [
