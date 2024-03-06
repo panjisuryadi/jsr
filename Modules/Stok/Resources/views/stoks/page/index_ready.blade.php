@@ -55,6 +55,7 @@
 <div class="form-group">
         <label for="karat_filter" class="mb-0 font-semibold">Karat</label>
         <select name="karat_filter" id="karat_filter" class="form-control">
+            <option value="" selected>Pilih Cabang</option>
             @foreach ($datakarat as $karat )
             <option value="{{$karat->id}}">{{ $karat->label }}</option>
             @endforeach
