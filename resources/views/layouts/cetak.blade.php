@@ -1,9 +1,4 @@
-   <?php 
 
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="distribusi_toko.xlsx"');
-header('Cache-Control: max-age=0');
-    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

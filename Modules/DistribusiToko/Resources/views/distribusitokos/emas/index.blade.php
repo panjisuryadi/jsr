@@ -21,6 +21,9 @@
                                 Input Distribusi <i class="bi bi-plus"></i>
                             </a>
                         </div>
+
+                        <div id="buttons" class="px-1"> </div>
+
                     </div>
                     <div class="table-responsive mt-1">
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
@@ -30,14 +33,14 @@
                                     <th>Tanggal</th>
                                     <th>No Invoice</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('Cabang') }}</th>
-                                    <th>{{ __('Karat') }}</th>
+                                    <th style="width: 16%!important;" >{{ __('Karat') }}</th>
 
                                     <th style="width: 13%!important;" class="text-center">
                                          {{ __('Status') }}
                                     </th>
                                   
                                    
-                                    <th style="width: 20%!important;" class="text-center">
+                                    <th style="width: 14%!important;" class="text-center">
                                         {{ __('Action') }}
                                     </th>
                                 </tr>
@@ -72,11 +75,11 @@
    <script type="text/javascript">
         $('#datatable').DataTable({
            processing: true,
-           serverSide: true,
+           serverSide: false,
            autoWidth: true,
            responsive: true,
            lengthChange: true,
-            searching: false,
+           searching: true,
            "oLanguage": {
             "sSearch": "<i class='bi bi-search'></i> {{ __("labels.table.search") }} : ",
             "sLengthMenu": "_MENU_ &nbsp;&nbsp;Data Per {{ __("labels.table.page") }} ",
@@ -101,8 +104,10 @@
              ajax: {
               url: "{{ route("$module_name.index_data") }}",
               data: function (d) {
-                  
-                    d.search = $('input[type="search"]').val()
+                 d.status = $('#status').val(),
+                 d.start_date =  $('.start_date').val(),
+                 d.end_date = $('.end_date').val(),
+                 d.search = $('input[type="search"]').val()
                 }
               },
             dom: 'Blfrtip',
@@ -111,14 +116,14 @@
             {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [ 0,1,2,3,4,5,6 ]
+                        columns: [ 0,1,2,3,4,5 ]
                     }
                 },
                
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [ 0,1,2,3,4,5,6 ]
+                        columns: [ 0,1,2,3,4,5 ]
                     }
                 }
             ],
@@ -148,6 +153,17 @@
         .buttons()
         .container()
         .appendTo("#buttons");
+
+
+    $('#status').change(function(){
+        table.draw();
+        var show_id = $(this).val();
+        alert(show_id);
+        console.log(show_id);
+    });
+
+
+
 
     </script>
 

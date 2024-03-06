@@ -4,11 +4,14 @@
 @section('content')
 <div class="container-fluid">
     @if ($dist_toko->isInProgress())
-        @livewire('distribusi-toko.cabang.detail',['dist_toko' => $dist_toko])
+     @include ("distribusitoko::distribusitokos.cabang.cetak.inprogress")
     @elseif ($dist_toko->isRetur())
-        @livewire('distribusi-toko.cabang.retur',['dist_toko' => $dist_toko])
+      {{-- @livewire('distribusi-toko.cabang.retur',['dist_toko' => $dist_toko]) --}}
+        @include ("distribusitoko::distribusitokos.cabang.cetak.retur")
     @elseif ($dist_toko->isCompleted())
-        @livewire('distribusi-toko.cabang.completed',['dist_toko' => $dist_toko])
+        @include ("distribusitoko::distribusitokos.cabang.cetak.completed")
+    @elseif ($dist_toko->isDraft())
+        @include ("distribusitoko::distribusitokos.cabang.cetak.draft")
     @endif
 
 </div>

@@ -43,6 +43,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
+  Route::get("$module_name/view-excel/{dist_toko}", ['as' => "$module_name.view_excel", 'uses' => "$controller_name@view_excel"]);
+
+
+
   Route::get("$module_name/detail-distribusi/{dist_toko}", ['as' => "$module_name.detail_distribusi", 'uses' => "$controller_name@detail_distribusi"]);
 
 

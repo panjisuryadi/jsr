@@ -82,7 +82,7 @@
                             @forelse($dist_toko->items()->returned()->get() as $row)
                                 @php
                                 $row->load('product');
-                                $total_weight = $total_weight + $row->product->berat_emas;
+                                $total_weight = $total_weight + @$row->product->berat_emas;
                                 $image = $row->product?->images;
                                 $imagePath = empty($image)?url('images/fallback_product_image.png'):asset(imageUrl().$image);
                                 @endphp
@@ -90,11 +90,11 @@
 
                                 <td class="text-center">{{$loop->iteration}}</td>
                                 <td class="font-semibold">
-                                    <p>Nama : {{ $row->product->product_name }}</p>
-                                    <p>Kategori : {{ $row->product->category->category_name }}</p>
+                                    <p>Nama : {{ @$row->product->product_name }}</p>
+                                    <p>Kategori : {{ @$row->product->category->category_name }}</p>
                                 </td>
                                 <td class="font-semibold text-center">
-                                    <p>{{ $row->product->product_code }}</p>
+                                    <p>{{ @$row->product->product_code }}</p>
                                 </td>
                                 <td class="text-center font-semibold"> {{@$row->product->karat->label}}</td>
                                 <td class="text-center font-semibold"> {{@$row->product->berat_emas}} gr</td>
