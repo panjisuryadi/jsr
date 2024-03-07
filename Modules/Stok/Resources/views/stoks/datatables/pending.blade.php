@@ -16,6 +16,13 @@
                                  class="btn btn-sm btn-outline-success px-3">
                                  <i class="bi bi-file-excel"></i>
                                      @lang('Export Excel')
+                                </a> 
+
+                                <a href="{{ route('stok.export_excel', ['status' =>'lantakan']) }}"  
+                                 target="_blank" 
+                                 class="btn btn-sm btn-outline-danger px-3">
+                                 <i class="bi bi-file-excel"></i>
+                                     @lang('Export Lantakan')
                                 </a>
 
 

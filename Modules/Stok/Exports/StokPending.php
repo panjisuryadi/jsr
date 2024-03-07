@@ -17,12 +17,10 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Modules\Stok\Models\StockPending;
 use Modules\Product\Entities\Product;
+use Modules\Stok\Models\StockKroom;
 
 class StokPending implements FromView, WithTitle, ShouldAutoSize, WithEvents, WithStyles
 {
-
-
-
       /**
      * @return Builder
      */
@@ -32,7 +30,7 @@ class StokPending implements FromView, WithTitle, ShouldAutoSize, WithEvents, Wi
        protected $judul;
        protected $status;
       
-     public function  __construct($tanggal,$judul,$status) {
+     public function  __construct($tanggal,$status,$judul) {
               
                 $this->tanggal =  $tanggal;
                 $this->judul   =  $judul;
@@ -44,10 +42,28 @@ class StokPending implements FromView, WithTitle, ShouldAutoSize, WithEvents, Wi
 
     public function view(): View
         {
-             $judul   =  $this->judul;
+
+             $status = $this->status ?? '';
+             $judul = $this->judul ?? '';
+             //dd($status);
+
+             if ($status == 'lantakan') {
+                 $judul   =  'Lantakan';
+                 $data_stok = StockKroom::get();
+             }
+              elseif($status == 'office'){
+                 $judul   = 'Pending';
+                 $data_stok = Product::pending()->get();
+
+             }else{
+                 $judul   = 'Pending';
+                 $data_stok = Product::pending()->get();
+             }
+           
              return view('stok::stoks.export_excel', [
-                'data_stok' => Product::pending()->get(),
-                'judul' =>$this->judul, 
+                'data_stok' => $data_stok,
+                'judul' =>$judul, 
+                'status' =>$status, 
             ]);
         }
 

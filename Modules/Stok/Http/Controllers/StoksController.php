@@ -172,38 +172,29 @@ public function ready_office() {
 
 public function export_excel(Request $request)
       {
-         ob_end_clean();
-         ob_start();
+      //   ob_end_clean();
+        // ob_start();
          $tanggal = date('dmY');
          $status = $request->get('status') ?? '';
-         switch ($status) {
-                case 'office':
-                $judul = 'Offie';
-                $data_stok = Product::pending()->get();
-                break;
-                            
-                case 'lantakan':
-                 $judul = 'Lantakan';
+         if ($status == 'lantakan') {
+                 $judul   =  'lantakan';
+                 $data_stok = \Modules\Stok\Models\StockKroom::get();
+             }
+              elseif($status == 'office'){
+                 $judul   = 'Pending';
                  $data_stok = Product::pending()->get();
-                 break;
 
-                 case 'rongsok':
-                 $judul = 'Rongsok';
+             }else{
+                 $judul   = 'Pending';
                  $data_stok = Product::pending()->get();
-                 break;
-
-                default:
-                  $judul = 'Pending';
-                  $data_stok = Product::pending()->get();
-                break;
-            }
+             }
 
      
          return Excel::download(new StokPending($tanggal,$status,$judul),
             'export-stok-'.$judul.'_'.$tanggal.'.xlsx');
         
           // return view('stok::stoks.export_excel',
-          //                       compact('tanggal','title','data_stok'));
+          //                       compact('tanggal','judul','status','data_stok'));
 
           }
 

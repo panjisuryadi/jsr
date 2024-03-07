@@ -3,21 +3,21 @@
     <div class="card-body">
         <div class="flex justify-between py-1 border-bottom">
             <div>
-                
-            <div>
-                <p class="uppercase text-lg text-gray-600 font-semibold mb-3">
-                    Stok <span class="text-yellow-500 uppercase">Bahan</span></p>
+           <p class="uppercase text-lg text-gray-600 font-semibold mb-3">
+            Stok <span class="text-yellow-500 uppercase">Bahan</span></p>
             </div>
-            <div id="buttons">
-            </div>
-                <a href="{{ route('produksi.proses') }}"
+             
+    
+            <div id="excelButton">
+             <a href="{{ route('produksi.proses') }}"
                     class="btn btn-primary px-3">
                     <i class="bi bi-plus"></i>@lang('Proses')&nbsp;
                 </a>
+            </div>
+             
 
-            </div>
-            <div id="buttons">
-            </div>
+            
+           
         </div>
         <div class="table-responsive mt-1">
             <table id="datatableProduksi" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
@@ -25,8 +25,8 @@
                     <tr>
                         <th style="">No</th>
                         <th style="width: 15%!important;" class="text-center">{{ __('Kode Produksi') }}</th>
-                        <th class="text-lef">{{ __('Asal') }}</th>
-                        <th class="text-lef">{{ __('Hasil') }}</th>
+                        <th class="text-left">{{ __('Asal') }}</th>
+                        <th class="text-left">{{ __('Hasil') }}</th>
                         {{-- <th style="width: 18%!important;" class="text-center">
                             {{ __('Action') }}
                         </th> --}}
@@ -37,6 +37,8 @@
     </div>
 </div>
 {{-- Modal --}}
+
+<x-library.datatable />
 @push('page_scripts')
     <script type="text/javascript">
         $('#datatableProduksi').DataTable({
@@ -69,12 +71,10 @@
             "sPaginationType": "simple_numbers",
             ajax: '{{ route("produksi.index_data") }}',
             dom: 'Blfrtip',
-            // buttons: [
-
-            //     'excel',
-            //     'pdf',
-            //     'print'
-            // ],
+            buttons: [
+                'excel',
+                'print'
+            ],
             columns: [{
                     "data": 'id',
                     "sortable": false,
@@ -96,24 +96,7 @@
         })
         .buttons()
         .container()
-        .appendTo("#buttons");
+        .appendTo("#excelButton");
     </script>
 
-{{-- <script type="text/javascript">
-jQuery.noConflict();
-(function( $ ) {
-    $(document).on('click', '#Tambah, #Edit', function(e){
-        e.preventDefault();
-        if ($(this).attr('id') == 'Tambah') {
-            $('#createModal').modal('show');
-
-        }
-        if ($(this).attr('id') == 'Edit') {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }
-    });
-})(jQuery);
-</script> --}}
 @endpush

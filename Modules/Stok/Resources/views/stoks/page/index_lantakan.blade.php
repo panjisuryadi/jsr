@@ -18,20 +18,26 @@
                     <div class="flex justify-between py-1 border-bottom">
                      <div>
                        <p class="uppercase text-lg text-gray-600 font-semibold">
-                      Stok <span class="text-yellow-500 uppercase">{{$module_action}}</span></p>
+                      Stok <span class="text-green-500 uppercase">{{$module_action}}</span></p>
                         </div>
                         <div id="buttons">
+                              <a href="{{ route('stok.export_excel', ['status' =>'lantakan']) }}"  
+                                 target="_blank" 
+                                 class="btn btn-success px-3">
+                                 <i class="bi bi-file-excel"></i>
+                                     @lang('Export Lantakan')
+                                </a>
                         </div>
                     </div>
                     <div class="table-responsive mt-1">
-                        <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
+                        <table id="lantakan" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                 <th style="width: 6%!important;">No</th>
-                           <th class="text-left">{{ Label_Case('Karat') }}</th>
+                           <th class="text-center">{{ Label_Case('Karat') }}</th>
                                
-                          <th class="text-left">{{ Label_Case('Berat') }}</th>
-                          <th style="width: 15%!important;">{{ Label_Case('Aksi') }}</th>
+                          <th class="text-center">{{ Label_Case('Berat') }}</th>
+                          <th class="text-center" style="width: 20%!important;">{{ Label_Case('Aksi') }}</th>
                            
                                 </tr>
                             </thead>
@@ -49,7 +55,7 @@
 {{-- <x-library.datatable /> --}}
 @push('page_scripts')
    <script type="text/javascript">
-        $('#datatable').DataTable({
+        $('#lantakan').DataTable({
            processing: true,
            serverSide: true,
            autoWidth: true,
@@ -78,13 +84,7 @@
             ],
             "sPaginationType": "simple_numbers",
             ajax: '{{ route("$module_name.index_data_lantakan") }}',
-            dom: 'Blfrtip',
-            // buttons: [
-
-            //     'excel',
-            //     'pdf',
-            //     'print'
-            // ],
+            
             columns: [{
                     "data": 'id',
                     "sortable": false,
@@ -103,10 +103,7 @@
                     searchable: false
                 }
             ]
-        })
-        .buttons()
-        .container()
-        .appendTo("#buttons");
+        });
 
 
 
@@ -116,7 +113,7 @@
 jQuery.noConflict();
 (function( $ ) {
 
-    $("#buttons").toggle('hide');
+   // $("#buttons").toggle('hide');
 
     $(document).on('click', '#Tambah, #Edit', function(e){
         e.preventDefault();
