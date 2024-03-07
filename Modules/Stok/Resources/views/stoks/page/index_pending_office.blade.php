@@ -22,10 +22,10 @@
                       <span class="text-yellow-500 uppercase">{{$module_action}}</span>
                   </p>
                         </div>
-                        <div id="buttons">
+                        <div id="exportButton">
                         </div>
                     </div>
-                    <div class="flex justify-between">
+                    <div class="grid grid-cols-2 gap-3 py-3">
                             @if (count($datakarat))
                             <div class="card">
                                 <div class="card-body font-semibold">
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <label for="karat_filter" class="font-bold">Pilih Karat</label>
+                                <label for="karat_filter" class="font-semibold mb-0">Pilih Karat</label>
                                 <select name="karat_filter" id="karat_filter" class="form-control">
                                     @foreach ($datakarat as $karat )
                                     <option value="{{$karat->id}}">{{ $karat->label }}</option>
@@ -112,12 +112,12 @@
                 ],
                 "sPaginationType": "simple_numbers",
                 ajax: '{{ route("$module_name.index_data_pending_office") }}?karat='+$('#karat_filter').val(),
-                dom: 'Blfrtip',
-                buttons: [
-                    'excel',
-                    'pdf',
-                    'print'
-                ],
+                 dom: 'Blfrtip',
+                    buttons: [
+
+                        'excel',
+                        'print'
+                    ],
                   columns: [{
                         "data": 'id',
                         "sortable": false,
@@ -133,9 +133,9 @@
                     {data: 'action', name: 'action'}
                 ]
             })
-            .buttons().remove()
+            .buttons()
             .container()
-            .appendTo("#buttons");
+            .appendTo("#exportButton");
         }
         $('#karat_filter').change(function(){
             datatable()
