@@ -22,7 +22,7 @@
                       <span class="text-yellow-500 uppercase">{{$module_action}}</span>
                   </p>
                         </div>
-                        <div id="buttons">
+                        <div id="exportReadyOffice">
                         </div>
                     </div>
                     <div class="flex justify-between">
@@ -111,7 +111,6 @@
                 dom: 'Blfrtip',
                 buttons: [
                     'excel',
-                    'pdf',
                     'print'
                 ],
                   columns: [{
@@ -129,9 +128,9 @@
                     {data: 'action', name: 'action'}
                 ]
             })
-            .buttons().remove()
+            .buttons()
             .container()
-            .appendTo("#buttons");
+            .appendTo("#exportReadyOffice");
         }
         $('#karat_filter').change(function(){
             datatable()

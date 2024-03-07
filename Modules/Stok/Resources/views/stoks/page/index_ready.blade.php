@@ -24,7 +24,7 @@
                       <span class="text-yellow-500 uppercase">{{$module_action}}</span>
                   </p>
                         </div>
-                        <div id="buttons">
+                        <div id="exportReady">
                         </div>
                     </div>
 
@@ -142,7 +142,6 @@
                 dom: 'Blfrtip',
                 buttons: [
                     'excel',
-                    'pdf',
                     'print'
                 ],
                   columns: [{
@@ -160,9 +159,9 @@
                     {data: 'weight', name: 'weight'},
                 ]
             })
-            .buttons().remove()
+            .buttons()
             .container()
-            .appendTo("#buttons");
+            .appendTo("#exportReady");
         }
         $('#karat_filter').change(function(){
             datatable();
