@@ -9,26 +9,46 @@
                       <span class="text-yellow-500 uppercase">{{$module_action}}</span>
                         </p>
                         </div>
-                        <div></div>
-                    </div>
-                    <div class="flex justify-between">
-                            <div class="card">
-                                <div class="card-body font-semibold">
-                                    <p>Info Stok</p>
-                                    <p>Karat : <span id="karat"></span></p>
-                                    <p>Sisa Stok : <span id="sisa-stok"></span></p>
-                                </div>
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="karat_filter" class="font-bold">Pilih Karat</label>
-                                <select name="karat_filter" id="karat_filter" class="form-control">
-                                    @foreach ($datakarat as $karat )
-                                    <option value="{{$karat->id}}">{{ $karat->label}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <div>
+                            
+                              <a href="{{ route('stok.export_excel') }}"  
+                                 target="_blank" 
+                                 class="btn btn-sm btn-outline-success px-3">
+                                 <i class="bi bi-file-excel"></i>
+                                     @lang('Export Excel')
+                                </a>
+
+
 
                         </div>
+                    </div>
+
+<div class="grid grid-cols-2 gap-3 py-3">
+    
+<div class="card mt-3">
+    <div class="card-body font-semibold">
+
+
+        <p>Info Stok</p>
+        <p class="text-gray-400">Karat : <span class="text-lg text-red-500" id="karat"></span></p>
+        <p>Sisa Stok : <span class="text-lg" id="sisa-stok"></span></p>
+    </div>
+</div>
+
+
+<div class="form-group mt-3">
+    <label for="karat_filter" class="font-semibold mb-0">Pilih Karat</label>
+    <select name="karat_filter" id="karat_filter" class="form-control">
+        @foreach ($datakarat as $karat )
+        <option value="{{$karat->id}}">{{ $karat->label}}</option>
+        @endforeach
+    </select>
+</div>
+
+</div>
+                
+
+
                     <div class="table-responsive mt-1">
 
                         <table id="datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">

@@ -31,7 +31,12 @@ Route::group(['middleware' => 'auth'], function () {
  Route::get("$module_name/office/{office}", ['as' => "$module_name.gudang-office.detail", 'uses' => "$controller_name@gudang_office_detail"]);
 
 
+
+
  Route::get("$module_name/pending", ['as' => "$module_name.pending", 'uses' => "$controller_name@pending"]);
+
+ Route::get("$module_name/export-excel", ['as' => "$module_name.export_excel", 'uses' => "$controller_name@export_excel"]);
+ 
 
 Route::get("$module_name/pending/{id}", ['as' => "$module_name.view_pending", 'uses' => "$controller_name@view_pending"]);
 

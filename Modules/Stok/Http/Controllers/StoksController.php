@@ -23,8 +23,9 @@ use Modules\Cabang\Models\Cabang;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
+use Modules\Stok\Exports\StokPending;
 use Modules\Stok\Models\PenerimaanLantakan;
-
+use Maatwebsite\Excel\Facades\Excel;
 class StoksController extends Controller
 {
     public $model_lantakan;
@@ -166,6 +167,57 @@ public function ready_office() {
         'product_status',
         'module_icon', 'module_model'));
 }
+
+
+
+public function export_excel(Request $request)
+      {
+         ob_end_clean();
+         ob_start();
+         $tanggal = date('dmY');
+         $status = $request->get('status') ?? '';
+         switch ($status) {
+                case 'office':
+                $judul = 'Offie';
+                $data_stok = Product::pending()->get();
+                break;
+                            
+                case 'lantakan':
+                 $judul = 'Lantakan';
+                 $data_stok = Product::pending()->get();
+                 break;
+
+                 case 'rongsok':
+                 $judul = 'Rongsok';
+                 $data_stok = Product::pending()->get();
+                 break;
+
+                default:
+                  $judul = 'Pending';
+                  $data_stok = Product::pending()->get();
+                break;
+            }
+
+     
+         return Excel::download(new StokPending($tanggal,$status,$judul),
+            'export-stok-'.$judul.'_'.$tanggal.'.xlsx');
+        
+          // return view('stok::stoks.export_excel',
+          //                       compact('tanggal','title','data_stok'));
+
+          }
+
+
+
+
+
+
+
+
+
+
+
+
 
 public function index_data_ready_office(Request $request)
 
@@ -530,18 +582,6 @@ public function index_data_sales(Request $request)
                         ->rawColumns(['updated_at', 'sales','karat','berat_real', 'berat_kotor', 'action', 'weight'])
                         ->make(true);
                      }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
