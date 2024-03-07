@@ -117,6 +117,7 @@
                responsive: true,
                lengthChange: true,
                 searching: true,
+                "lengthMenu": [[10, 25, 50,75,100,125,150,175,200, -1], [10, 25, 50,75,100,125,150,175,200, "All"]],
                "oLanguage": {
                 "sSearch": "<i class='bi bi-search'></i> {{ __("labels.table.search") }} : ",
                 "sLengthMenu": "_MENU_ &nbsp;&nbsp;Data Per {{ __("labels.table.page") }} ",
