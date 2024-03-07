@@ -1354,9 +1354,9 @@ public function update_ajax(Request $request, $id)
         }
 
         $datas = Product::ready()
-                // ->when(!empty($request->karat), function (Builder $query) use ($request){
-                //     $query->where('karat_id',$request->karat);
-                // })
+                ->when(!empty($request->karat), function (Builder $query) use ($request){
+                    $query->where('karat_id',$request->karat);
+                })
                 ->when(!empty($request->cabang), function (Builder $query) use ($request){
                     if($request->cabang !== 'undefined'){
                         $query->where('cabang_id',$request->cabang);
