@@ -57,7 +57,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('sales/generate-invoice/{id}', 'SaleController@generateInvoice')
-        ->name('sales.invoice');
+        ->name('sales.invoice');  
+
+    Route::get('sales/export-sale-excel', 'SaleController@export_sale_excel')
+        ->name('sales.export_sale_excel');
 
     Route::get('sales/show-cicilan/{id}', 'SaleController@show_cicilan')
         ->name('sales.show_cicilan');

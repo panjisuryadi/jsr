@@ -68,12 +68,12 @@
                             <thead>
                                 <tr>
  <th style="width: 3%!important;">No</th>
-  <th style="width: 10%!important;" class="text-center">{{ __("Date") }}</th>
+  <th style="width: 7%!important;" class="text-center">{{ __("Date") }}</th>
   <th style="width: 11%!important;" class="text-center">{{ Label_Case('Cabang') }}</th>
-  <th style="width: 11%!important;" class="text-center">{{ __("Customers") }}</th>
-  <th style="width: 9%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
-  <th style="width: 8%!important;" class="text-center">{{ Label_Case('Nominal') }}</th>
- <th style="width: 6%!important;" class="text-center">{{ Label_Case('Cara Bayar') }}</th>
+
+  <th style="width: 7%!important;" class="text-center">{{ Label_Case('Invoice') }}</th>
+  <th style="width: 10%!important;" class="text-center">{{ Label_Case('Nominal') }}</th>
+ <th style="width: 10%!important;" class="text-center">{{ Label_Case('Cara Bayar') }}</th>
  <th style="width: 6%!important;" class="text-center">{{ Label_Case('status') }}</th>
  <th style="width: 8%!important;" class="text-center"> {{ __('Action') }} </th>
                                 </tr>
@@ -131,13 +131,15 @@
           
             dom: 'Blfrtip',
             buttons: [
-                {
-                    extend: 'excel',
-                    exportOptions: {
-                        columns: [ 0,1,2,3,4 ]
-                    }
+              
+                 {
+                   text: 'Export Sale',
+                   className: 'btn btn-outline-success',
+                   action: function ( e, dt, button, config ) {
+                    window.location = 'linkpage.php';
+                  }        
                 },
-                {
+               {
                     extend: 'pdf',
                     exportOptions: {
                         columns: [ 0,1,2,3,4 ]
@@ -165,12 +167,7 @@
                     orderable: false,
                     name: 'cabang'
                 },
-                {
-                    data: 'customer',
-                    searchable: false,
-                    orderable: false,
-                    name: 'customer'
-                },
+              
                 {data: 'reference', name: 'reference'},
                 {data: 'grand_total_amount', name: 'grand_total_amount'},
                 {

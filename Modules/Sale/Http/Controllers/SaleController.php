@@ -24,6 +24,10 @@ use Carbon\Carbon;
 use Modules\Cabang\Models\Cabang;
 use Modules\Product\Models\ProductStatus;
 use PDF;
+use Modules\Sale\Exports\ExportSale;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 
 class SaleController extends Controller
 {
@@ -229,6 +233,29 @@ class SaleController extends Controller
             ])
             ->make(true);
     }
+
+
+
+
+public function export_sale_excel(Request $request)
+      {
+      //   ob_end_clean();
+        // ob_start();
+         $tanggal = date('dmY');
+         $status = $request->get('status') ?? '';
+         
+         return Excel::download(new StokPending($tanggal,$status,$judul),
+            'export-stok-'.$judul.'_'.$tanggal.'.xlsx');
+        
+          // return view('stok::stoks.export_excel',
+          //                       compact('tanggal','judul','status','data_stok'));
+
+          }
+
+
+
+
+
 
 
 
