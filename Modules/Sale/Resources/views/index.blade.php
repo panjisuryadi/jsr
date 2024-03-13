@@ -136,7 +136,8 @@
                    text: 'Export Sale',
                    className: 'btn btn-outline-success',
                    action: function ( e, dt, button, config ) {
-                    window.location = 'linkpage.php';
+                    window.location = '{{ route("$module_name.export_sale_excel", 
+                        ['type'=>$type]) }}';
                   }        
                 },
                {

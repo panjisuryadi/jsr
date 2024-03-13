@@ -30,12 +30,14 @@ class ExportSale implements FromView, WithTitle, ShouldAutoSize, WithEvents, Wit
        protected $tanggal;
        protected $judul;
        protected $status;
+       protected $type;
       
-     public function  __construct($tanggal,$status,$judul) {
+     public function  __construct($tanggal,$status,$type,$judul) {
               
                 $this->tanggal =  $tanggal;
                 $this->judul   =  $judul;
                 $this->status   =  $status;
+                $this->type   =  $type;
 
 
         }
@@ -44,25 +46,22 @@ class ExportSale implements FromView, WithTitle, ShouldAutoSize, WithEvents, Wit
     public function view(): View
         {
 
+             $type = $this->type ?? '';
              $status = $this->status ?? '';
              $judul = $this->judul ?? '';
              //dd($status);
-
-             if ($status == 'lantakan') {
-                 $judul   =  'Lantakan';
-                 $data_stok = StockKroom::get();
-             }
-              elseif($status == 'office'){
-                 $judul   = 'Pending';
-                 $data_stok = Product::pending()->get();
-
-             }else{
-                 $judul   = 'Pending';
-                 $data_stok = Product::pending()->get();
-             }
-           
-             return view('stok::stoks.export_excel', [
-                'data_stok' => $data_stok,
+              if($type == null) {
+                 $data_sale =  Sale::akses()->orderBy('created_at', 'desc')
+                 ->get();            
+                }else{
+                  $data_sale = Sale::akses()->where('payment_method',$type)
+                    ->orderBy('created_at', 'desc')->get();
+                   
+                }
+               $data = $data_sale;
+               //dd($data);
+               return view('sale::export_excel', [
+                'data' => $data,
                 'judul' =>$judul, 
                 'status' =>$status, 
             ]);
@@ -75,7 +74,7 @@ class ExportSale implements FromView, WithTitle, ShouldAutoSize, WithEvents, Wit
      */
     public function title(): string
     {
-        return 'STOK | ' .$this->judul;
+        return 'Penjualan | ' .$this->judul;
     }
  
 

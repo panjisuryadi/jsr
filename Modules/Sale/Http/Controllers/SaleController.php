@@ -239,16 +239,30 @@ class SaleController extends Controller
 
 public function export_sale_excel(Request $request)
       {
-      //   ob_end_clean();
-        // ob_start();
-         $tanggal = date('dmY');
-         $status = $request->get('status') ?? '';
-         
-         return Excel::download(new StokPending($tanggal,$status,$judul),
-            'export-stok-'.$judul.'_'.$tanggal.'.xlsx');
-        
-          // return view('stok::stoks.export_excel',
-          //                       compact('tanggal','judul','status','data_stok'));
+
+        $tanggal = date('dmY');
+        $type = $request->type;
+        $status = $request->get('status') ?? '';
+       // $data_sale =  Sale::akses();
+
+        //dd($type);
+         if($type == null) {
+             $data_sale =  Sale::akses()->orderBy('created_at', 'desc')
+             ->get();            
+                }else{
+                       $data_sale =  Sale::akses()->where('payment_method',$type)
+                    ->orderBy('created_at', 'desc')->get();
+                   
+                }
+        $data = $data_sale;
+        //dd($data_sale);
+        ob_end_clean();
+        ob_start();
+        $judul = 'Sale';
+         return Excel::download(new ExportSale($tanggal,$status,$type,$judul),
+            'export-penjualan-'.$judul.'_'.$tanggal.'.xlsx');
+          // return view('sale::export_excel',
+          //                       compact('tanggal','judul','status','data'));
 
           }
 
