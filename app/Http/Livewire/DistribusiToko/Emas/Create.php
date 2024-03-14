@@ -176,7 +176,13 @@ class Create extends Component
     {
         $this->cabangs = Cabang::all();
         $kategori = KategoriProduk::where('slug','gold')->orWhere('slug','emas')->firstOrFail();
-        $this->product_categories = Category::where('kategori_produk_id',$kategori->id)->get();
+        if($kategori){
+
+            $this->product_categories = Category::where('kategori_produk_id',$kategori->id)->get();
+        }else{
+            $this->product_categories = Category::get();
+
+        }
         $this->groups = Group::all();
         $this->models = ProdukModel::all();
 
