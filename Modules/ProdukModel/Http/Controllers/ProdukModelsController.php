@@ -146,22 +146,24 @@ class ProdukModelsController extends Controller
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-        $validator = \Validator::make($request->all(), [
-            'name' => 'required|unique|max:191',
-            'description' => 'max:255',
+        $validator = \Validator::make($request->all(),[
+           //  'code' => 'required|max:191|unique:'.$module_model.',code',
+             'name' => 'required|max:191',
+           
 
         ]);
         if (!$validator->passes()) {
-            return response()->json(['error' => $validator->errors()]);
+          return response()->json(['error'=>$validator->errors()]);
         }
 
         $input = $request->all();
         $input = $request->except('_token');
+        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
         $input['name'] = $input['name'];
         $input['description'] = $input['description'];
         $$module_name_singular = $module_model::create($input);
 
-        return response()->json(['success' => '  ' . $module_title . ' Sukses disimpan.']);
+        return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
     }
 
 
