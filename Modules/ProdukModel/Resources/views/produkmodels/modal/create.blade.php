@@ -1,12 +1,12 @@
   <div class="px-3">
   <x-library.alert />
-  <form id="FormTambah" action="{{ route("$module_name.store") }}" method="POST" enctype="multipart/form-data">
+  <form id="FormTambah" action="{{ route("produkmodel.store") }}" method="POST" enctype="multipart/form-data">
                 @csrf
              <div class="flex flex-row grid grid-cols-1 gap-4">
                             <div class="form-group">
                                 <?php
-                                $field_name = 'Name';
-                                $field_lable = __($field_name);
+                                $field_name = 'name';
+                                $field_lable = label_case($field_name);
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";

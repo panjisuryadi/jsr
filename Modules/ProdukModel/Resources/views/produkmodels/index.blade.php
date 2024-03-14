@@ -136,7 +136,7 @@
     </script>
 
 <script type="text/javascript">
-jQuery.noConflict();
+// jQuery.noConflict();
 (function( $ ) {
 $(document).on('click', '#Tambah, #Edit', function(e){
          e.preventDefault();
