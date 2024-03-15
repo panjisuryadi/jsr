@@ -62,9 +62,9 @@ class Summary extends Component
         DB::beginTransaction();
         try{
             $this->dist_toko->setInProgress();
-            foreach($this->dist_toko_items as $item){
-                $item->product->updateTracking(ProductStatus::OTW);
-            }
+                foreach($this->dist_toko_items as $item){
+                    $item->product->updateTracking(ProductStatus::OTW);
+                }
             DB::commit();
         }catch (\Exception $e) {
             DB::rollBack(); 

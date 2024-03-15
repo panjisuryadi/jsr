@@ -148,7 +148,24 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div></div>
+                                <div class="form-group">
+                                    <?php
+                                    $field_name = 'potongan';
+                                    $field_lable = label_case('potongan');
+                                    $field_placeholder = $field_lable;
+                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                    $required = "required";
+                                    ?>
+                                    <label class="font-medium" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" wire:model="{{ $field_name }}">
+                                    </div>
+                                    @if ($errors->has($field_name))
+                                    <span class="invalid feedback" role="alert">
+                                        <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
                                 <div class="form-group">
@@ -161,7 +178,7 @@
                                     ?>
                                     <label class="font-medium" for="{{ $field_name }}">{{ $field_lable }}</label>
                                     <div class="flex-1">
-                                        <input wire:model.1s="{{ $field_name }}" type="number" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror">
+                                        <input wire:model.1s="{{ $field_name }}" type="number" id="{{ $field_name }}" class="form-control @error($field_name) is-invalid @enderror" readonly>
                                         @if ($errors->has($field_name))
                                         <span class="invalid feedback" role="alert">
                                             <small class="text-danger">{{ $errors->first($field_name) }}.</small class="text-danger">

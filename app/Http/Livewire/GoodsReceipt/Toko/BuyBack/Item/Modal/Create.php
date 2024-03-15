@@ -47,6 +47,7 @@ class Create extends Component
 
     public $customer;
     public $customers;
+    public $potongan;
     public $nominal = 0;
 
     public $note = '';
