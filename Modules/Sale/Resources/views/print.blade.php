@@ -70,17 +70,31 @@
 
 <table class="table1" style='width:100%; border: none !important; font-size:14pt; font-family:calibri; border-collapse: collapse;' border="0">
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:80px; vertical-align:top'>
-        <span style='font-size:16pt'><b>{{ settings()->company_name }}</b></span></br>
-         {{ settings()->company_email }}, {{ settings()->company_phone }}
-                <br>
+<div style="text-align:center;">
+ <div style='font-size:16pt'><b>{{ settings()->company_name }}</b>
+
+ </div>
+<div>
+  {{ settings()->company_email }}, {{ settings()->company_phone }}  
+</div>
+      
+    
+   @if(Auth::user()->isUserCabang())
+  {!! Auth::user()->namacabang()->alamat ?? '' !!} 
+  <div>
+     Telp. {{ ucfirst(Auth::user()->namacabang()->tlp ?? '') }}   
+  </div>
 
 
-   @if(Auth::user()->isAdmin())
-        {{ settings()->company_address }}
     @else
-      {{ Auth::user() }} 
+    {{ settings()->company_address }}
     @endif
-             
+  
+
+</div>
+
+
+
     </td>
     <td style='border: none !important;vertical-align:top' width='40%' align='left'>
         Invoice: {{ $sale->reference }}</br>
