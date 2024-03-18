@@ -24,6 +24,31 @@
                             </div>
 
 
+
+
+                       <div class="form-group">
+                                <?php
+                                $field_name = 'tlp';
+                                $field_lable = label_case('Telepon');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}">
+                                <div class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </div>
+
+                            </div>
+
+
+
+
+
+
             <div class="form-group">
                                 <?php
                                 $field_name = 'name';
@@ -48,6 +73,27 @@
 
 
 
+                    <div class="form-group">
+                        <?php
+                        $field_name = 'alamat';
+                        $field_lable = label_case($field_name);
+                        $field_placeholder = $field_lable;
+                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                        $required = "required";
+                        ?>
+                        <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <textarea
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        rows="3"
+                        class="form-control leading-6">
+                        
+                        </textarea>
+                        <div class="invalid feedback" role="alert">
+                            <span class="text-danger error-text {{ $field_name }}_err"></span>
+                        </div>
+                        
+                    </div>
 
 
 

@@ -17,6 +17,13 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
+                              <a href="{{ route(''.$module_name.'.create') }}"
+                                id="Tambah"
+                                data-toggle="tooltip"
+                                 class="btn btn-primary px-3">
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                </a>
+
                            
 
                         </div>
@@ -30,9 +37,10 @@
                                     <th style="width: 6%!important;">No</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
                                     <th class="text-lef">{{ __('Name') }}</th>
+                                    <th class="text-lef">{{ __('Alamat') }}</th>
 
                                     <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
+                                         {{ __('Telepon') }}
                                     </th>
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
@@ -40,6 +48,8 @@
                                 </tr>
                             </thead>
                         </table>
+
+                        
                     </div>
                 </div>
             </div>
@@ -50,6 +60,20 @@
 
 <x-library.datatable />
 @push('page_scripts')
+
+<script src="https://cdn.tiny.cloud/1/n0943rljxkk8c3osevfgp51frcuh0pctgt6ehui823nuip4o/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+{{-- <script>
+  tinymce.init({
+    selector: 'textarea#alamat',
+    skin: 'bootstrap',
+    plugins: 'lists, link',
+    toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | removeformat help',
+    menubar: false,
+  });
+</script> --}}
+
+
+
    <script type="text/javascript">
         $('#datatable').DataTable({
            processing: true,
@@ -112,7 +136,8 @@
 
                 {data: 'code', name: 'code'},
                 {data: 'name', name: 'name'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'alamat', name: 'alamat'},
+                {data: 'tlp', name: 'tlp'},
 
                 {
                     data: 'action',
@@ -152,4 +177,29 @@ $(document).on('click', '#Tambah, #Edit', function(e){
     });
 })(jQuery);
 </script>
+
+
+<script type="text/javascript">
+tinymce.init({
+    selector:   "textarea#alamat",
+    width:      '100%',
+    height:     70,
+    plugins:    "link",
+    statusbar:  false,
+    toolbar:    "link"
+});
+
+$(document).on('focusin', function(e) {
+    if ($(e.target).closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root").length) {
+        e.stopImmediatePropagation();
+    }
+});
+
+
+</script>
+
+
+
+
 @endpush
+

@@ -70,14 +70,30 @@
 
 <table class="table1" style='width:100%; border: none !important; font-size:14pt; font-family:calibri; border-collapse: collapse;' border="0">
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:80px; vertical-align:top'>
-        <span style='font-size:16pt'><b>{{ settings()->company_name }}</b></span></br>
-         {{ settings()->company_email }}, {{ settings()->company_phone }}
-                <br>{{ settings()->company_address }}
+<div style="text-align:center;">
+ <div style='font-size:16pt'><b>{{ settings()->company_name }}</b>
+
+ </div>
+
+    
+   @if(Auth::user()->isUserCabang())
+  {!! Auth::user()->namacabang()->alamat ?? '' !!} 
+  <div>
+     Telp. {{ ucfirst(Auth::user()->namacabang()->tlp ?? '') }}   
+  </div>
+    @else
+    {{ settings()->company_address }}
+    @endif
+  
+
+</div>
+
+
+
     </td>
     <td style='border: none !important;vertical-align:top' width='40%' align='left'>
         Invoice: {{ $sale->reference }}</br>
         Tanggal : {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</br>
-        Kostumer: {{ $sale->customer_name }}</br>
         Alamat :  - </br>
     </td>
 </table>
