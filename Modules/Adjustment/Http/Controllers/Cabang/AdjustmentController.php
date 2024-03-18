@@ -28,6 +28,9 @@ class AdjustmentController extends Controller {
         return view('adjustment::cabang.create',compact('reference','active_location'));
     }
 
+
+    
+
     public function getdata(){
         $get_data = Adjustment::has('stockOffice')->withCount('products');
 

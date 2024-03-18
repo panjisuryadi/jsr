@@ -18,12 +18,12 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
         .invoice-details {
             display: flex;
             justify-content: space-between;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
         .invoice-details p {
             margin: 0;
@@ -47,11 +47,11 @@
 
 
         th, td {
-            border: 1px solid red; /* Change border color to red */
+            border: 1px solid #e50073; /* Change border color to red */
             padding: 8px;
             text-align: left;
             font-size: 11pt !important;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
         th{
             text-transform: uppercase;
@@ -59,7 +59,7 @@
         .total {
             margin-top: 20px;
             text-align: right;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
     </style>
 </head>
@@ -71,9 +71,9 @@
 <table class="table1" style='width:100%; border: none !important; font-size:14pt; font-family:calibri; border-collapse: collapse;' border="0">
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:80px; vertical-align:top'>
 <div style="text-align:center;">
- <div style='font-size:16pt'><b>{{ settings()->company_name }}</b>
+ {{-- <div style='font-size:16pt'><b>{{ settings()->company_name }}</b></div> --}}
 
- </div>
+<img height="70" style="height: 70px;" src="{{ asset('images/print/logo.png') }}">
 
     
    @if(Auth::user()->isUserCabang())
@@ -222,7 +222,7 @@
 </table>
 <hr>
 
-<div style="padding: 2px;color: red !important;">
+<div style="padding: 2px;color: #e50073 !important;">
 <p style="font-weight: bold;" class="bold">CATATAN</p>
 
 <ol>
