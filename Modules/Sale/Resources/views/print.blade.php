@@ -84,8 +84,6 @@
   <div>
      Telp. {{ ucfirst(Auth::user()->namacabang()->tlp ?? '') }}   
   </div>
-
-
     @else
     {{ settings()->company_address }}
     @endif

@@ -48,6 +48,8 @@
                                 </tr>
                             </thead>
                         </table>
+
+                        
                     </div>
                 </div>
             </div>
@@ -161,4 +163,6 @@ $(document).on('click', '#Tambah, #Edit', function(e){
     });
 })(jQuery);
 </script>
+
+
 @endpush

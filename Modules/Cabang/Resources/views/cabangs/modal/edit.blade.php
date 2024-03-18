@@ -90,6 +90,8 @@
                                 </div>
                                
 
+
+
                             </div>
 
 
@@ -100,6 +102,25 @@
 
 
 </div>
+
+<style type="text/css">
+    .tox-tinymce-aux {
+    z-index: 999999!important;
+}
+</style>
+
+<script src="https://cdn.tiny.cloud/1/n0943rljxkk8c3osevfgp51frcuh0pctgt6ehui823nuip4o/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: 'textarea#alamat',
+    skin: 'bootstrap',
+    plugins: 'lists, link',
+    toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | removeformat help',
+    menubar: false,
+  });
+</script>
+
+
 {{-- <script src="{{ asset('js/jquery-mask-money.js') }}"></script> --}}
 <script>
 jQuery.noConflict();
@@ -173,5 +194,18 @@ $(document).ready(function(){
      //          });
 
 });
+
+// $(document).on('focusin', function(e) {
+//   if ($(e.target).closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root").length) {
+//     e.stopImmediatePropagation();
+//   }
+// });
+
+
+
+
 })(jQuery);
 </script>
+
+
+
