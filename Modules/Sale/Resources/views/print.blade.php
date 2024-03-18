@@ -74,10 +74,7 @@
  <div style='font-size:16pt'><b>{{ settings()->company_name }}</b>
 
  </div>
-<div>
-  {{ settings()->company_email }}, {{ settings()->company_phone }}  
-</div>
-      
+
     
    @if(Auth::user()->isUserCabang())
   {!! Auth::user()->namacabang()->alamat ?? '' !!} 

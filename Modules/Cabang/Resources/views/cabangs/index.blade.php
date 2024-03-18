@@ -60,6 +60,20 @@
 
 <x-library.datatable />
 @push('page_scripts')
+
+<script src="https://cdn.tiny.cloud/1/n0943rljxkk8c3osevfgp51frcuh0pctgt6ehui823nuip4o/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+{{-- <script>
+  tinymce.init({
+    selector: 'textarea#alamat',
+    skin: 'bootstrap',
+    plugins: 'lists, link',
+    toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | removeformat help',
+    menubar: false,
+  });
+</script> --}}
+
+
+
    <script type="text/javascript">
         $('#datatable').DataTable({
            processing: true,
@@ -165,4 +179,27 @@ $(document).on('click', '#Tambah, #Edit', function(e){
 </script>
 
 
+<script type="text/javascript">
+tinymce.init({
+    selector:   "textarea#alamat",
+    width:      '100%',
+    height:     70,
+    plugins:    "link",
+    statusbar:  false,
+    toolbar:    "link"
+});
+
+$(document).on('focusin', function(e) {
+    if ($(e.target).closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root").length) {
+        e.stopImmediatePropagation();
+    }
+});
+
+
+</script>
+
+
+
+
 @endpush
+
