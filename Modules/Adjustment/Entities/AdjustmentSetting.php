@@ -20,7 +20,7 @@ class AdjustmentSetting extends Model
         "4" => "Stok Kroom (Office)",
         "5" => "Stok DP (Cabang)",
         "6" => "Stok Pending (Cabang)",
-        "7" => "Stok (Cabang)",
+        "7" => "Stok Ready (Cabang)",
     ];
 
     /**
