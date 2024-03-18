@@ -17,6 +17,13 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
+                              <a href="{{ route(''.$module_name.'.create') }}"
+                                id="Tambah"
+                                data-toggle="tooltip"
+                                 class="btn btn-primary px-3">
+                                 <i class="bi bi-plus"></i>@lang('Add')&nbsp;{{ $module_title }}
+                                </a>
+
                            
 
                         </div>
@@ -30,9 +37,10 @@
                                     <th style="width: 6%!important;">No</th>
                                    <th style="width: 15%!important;" class="text-center">{{ __('Code') }}</th>
                                     <th class="text-lef">{{ __('Name') }}</th>
+                                    <th class="text-lef">{{ __('Alamat') }}</th>
 
                                     <th style="width: 15%!important;" class="text-center">
-                                         {{ __('Updated') }}
+                                         {{ __('Telepon') }}
                                     </th>
                                     <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
@@ -112,7 +120,8 @@
 
                 {data: 'code', name: 'code'},
                 {data: 'name', name: 'name'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'alamat', name: 'alamat'},
+                {data: 'tlp', name: 'tlp'},
 
                 {
                     data: 'action',

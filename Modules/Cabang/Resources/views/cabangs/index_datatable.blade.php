@@ -31,7 +31,7 @@
                                     <th style="width: 5%!important;">NO</th>
                                     <th>Title</th>
                                     <th style="width: 15%!important;" class="text-center">
-                                        Updated
+                                        Telepon
                                     </th>
                                     <th style="width: 15%!important;" class="text-center">
                                         Action
@@ -100,8 +100,8 @@
                     name: 'name'
                 },
                 {
-                    data: 'updated_at',
-                    name: 'updated_at'
+                    data: 'tlp',
+                    name: 'tlp'
                 },
                 {
                     data: 'action',

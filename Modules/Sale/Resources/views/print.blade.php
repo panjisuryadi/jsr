@@ -72,12 +72,19 @@
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:80px; vertical-align:top'>
         <span style='font-size:16pt'><b>{{ settings()->company_name }}</b></span></br>
          {{ settings()->company_email }}, {{ settings()->company_phone }}
-                <br>{{ settings()->company_address }}
+                <br>
+
+
+   @if(Auth::user()->isAdmin())
+        {{ settings()->company_address }}
+    @else
+      {{ Auth::user() }} 
+    @endif
+             
     </td>
     <td style='border: none !important;vertical-align:top' width='40%' align='left'>
         Invoice: {{ $sale->reference }}</br>
         Tanggal : {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</br>
-        Kostumer: {{ $sale->customer_name }}</br>
         Alamat :  - </br>
     </td>
 </table>

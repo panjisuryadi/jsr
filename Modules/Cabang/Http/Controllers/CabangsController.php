@@ -74,10 +74,32 @@ public function index_data(Request $request)
                             return view('includes.action',
                             compact('module_name', 'data', 'module_model'));
                                 })
-                          ->editColumn('name', function ($data) {
+                          ->editColumn('code', function ($data) {
                              $tb = '<div class="items-center text-center">
-                                    <h3 class="text-sm font-medium text-gray-800">
+                                    <span class="text-gray-800">
+                                     ' .$data->code . '</span>
+                                    </div>';
+                                return $tb;
+                            })
+                           ->editColumn('name', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <h3 class="text-sm font-medium text-blue-600">
                                      ' .$data->name . '</h3>
+                                    </div>';
+                                return $tb;
+                            })  
+                          ->editColumn('alamat', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <span class="text-sm leading-6">
+                                     ' .$data->alamat ?? ' - ' . '</span>
+                                    </div>';
+                                return $tb;
+                            }) 
+
+                             ->editColumn('tlp', function ($data) {
+                             $tb = '<div class="items-center text-center">
+                                    <span class="text-sm leading-6">
+                                     ' .$data->tlp ?? ' - ' . '</span>
                                     </div>';
                                 return $tb;
                             })
@@ -91,7 +113,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'action', 'name'])
+                        ->rawColumns(['updated_at', 'action',  'code',  'tlp', 'alamat', 'name'])
                         ->make(true);
                      }
 
@@ -154,6 +176,8 @@ public function store(Request $request)
         // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
         $input['code'] = $input['code'];
         $input['name'] = $input['name'];
+        $input['alamat'] = $input['alamat'];
+        $input['tlp'] = $input['tlp'];
         $$module_name_singular = $module_model::create($input);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);
@@ -256,11 +280,13 @@ public function update(Request $request, $id)
         }
 
         $input = $request->all();
-        $params = $request->except('_token');
+        $input = $request->except('_token');
         // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $params['code'] = $params['code'];
-        $params['name'] = $params['name'];
-        $$module_name_singular->update($params);
+        $input['code'] = $input['code'];
+        $input['name'] = $input['name'];
+        $input['alamat'] = $input['alamat'];
+        $input['tlp'] = $input['tlp'];
+        $$module_name_singular->update($input);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);
 
  }

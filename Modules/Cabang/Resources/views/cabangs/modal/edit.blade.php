@@ -26,7 +26,7 @@
                        <div class="form-group">
                                 <?php
                                 $field_name = 'name';
-                                $field_lable = label_case('Name');
+                                $field_lable = label_case('Nama Cabang');
                                 $field_placeholder = $field_lable;
                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                 $required = "required";
@@ -44,22 +44,53 @@
 
 
 
+                       <div class="form-group">
+                                <?php
+                                $field_name = 'tlp';
+                                $field_lable = label_case('Telepon');
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text"
+                        name="{{ $field_name }}"
+                        id="{{ $field_name }}"
+                        value="{{$detail->tlp }}">
+                                <span class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </span>
 
-    {{--  <div class="form-group">
-                                        <label for="kategori_produk_id">Main Category <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="kategori_produk_id" id="kategori_produk_id" required>
-                                            @foreach(\Modules\KategoriProduk\Models\KategoriProduk::all() as $main)
-                                                <option {{ $main->id == $category->kategori_produk_id ? 'selected' : '' }} value="{{ $main->id }}">{{ $main->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>--}}
+                            </div>
 
 
 
 
 
+                   <div class="form-group">
+                                <?php
+                                $field_name = 'alamat';
+                                $field_lable = label_case($field_name);
+                                $field_placeholder = $field_lable;
+                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                $required = "required";
+                                ?>
+                                <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
+                          <textarea 
+                            name="{{ $field_name }}"
+                            id="{{ $field_name }}" 
+                            rows="3"
+                            class="form-control leading-6">
+                              {{$detail->alamat }}
 
+                          </textarea>
 
+                                <div class="invalid feedback" role="alert">
+                                    <span class="text-danger error-text {{ $field_name }}_err"></span>
+                                </div>
+                               
+
+                            </div>
 
 
 
@@ -93,10 +124,12 @@ jQuery.noConflict();
                       $('#ResponseInput').html(data.success);
                       $("#sukses").removeClass('d-none').fadeIn('fast').show().delay(3000).fadeOut('slow');
                       $("#ResponseInput").fadeIn('fast').show().delay(3000).fadeOut('slow');
-                      setTimeout(function(){ autoRefresh(); }, 1000);
+                     // setTimeout(function(){ autoRefresh(); }, 1000);
+
                       setTimeout(function () {
                               $('#ModalGue').modal('hide');
                             }, 3000);
+                      setTimeout(() => window.location.reload(), 1000);
 
                  }else{
                         printErrorMsg(data.error);
