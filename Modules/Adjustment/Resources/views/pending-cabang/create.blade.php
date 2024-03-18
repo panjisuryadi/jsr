@@ -19,13 +19,30 @@
 
 
 
- @push('page_css')
+@push('page_css')
 <style>
         html,
         body {
            /* height: 100vh;*/
         }
-    </style>
+
+    .sortir {
+        border: 0.2rem solid;
+        color: #111827;
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 0.1rem;
+        background-color: #f0f0f0;
+        border-style: dashed;
+        height: 5rem;
+    }
+
+
+    .sortir:focus {
+    background-color: #f3d585;
+
+    }
+</style>
     
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
  @endpush
