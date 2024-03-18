@@ -92,7 +92,7 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
 
  @if(Auth::user()->id !== 1)
  @can('access_sortir')
- @include('product::products.sortir_dashboard')
+    @include('product::products.sortir_dashboard')
  @endcan
 
  @can('access_kasir')

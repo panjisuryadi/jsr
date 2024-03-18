@@ -18,10 +18,10 @@
                         <select id="adjustment-location" class="form-control">
                             <option value="">Pilih Lokasi </option>
                         @foreach (\Modules\Adjustment\Entities\AdjustmentSetting::LOCATION as $key => $value)
-                            @if(auth()->user()->isUserCabang() && $key == '7')
-                            <option value="{{ $key }}">{{ $value }}</option>
+                            @if(auth()->user()->isUserCabang() && $key == '6' ||auth()->user()->isUserCabang() && $key == '7')
+                                <option value="{{ $key }}">{{ $value }}</option>
                             @elseif(!auth()->user()->isUserCabang())
-                            <option value="{{ $key }}">{{ $value }}</option>
+                                <option value="{{ $key }}">{{ $value }}</option>
                             @endif
                         @endforeach
                         </select>

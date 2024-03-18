@@ -3,8 +3,8 @@
                    <table style="width: 100%;" class="table table-sm table-striped table-bordered">
                         <tr>
                             <th class="text-center">{{ label_case('No') }}</th>
-                            <th>{{ label_case('Sales') }}</th>
-                            <th>{{ label_case('karat') }}</th>
+                            <th>{{ label_case('Karat') }}</th>
+                            <th>{{ label_case('cabang') }}</th>
                             <th>{{ label_case('Berat') }}</th>
                             <th class="text-center">{{ label_case('Aksi') }}</th>
                         </tr>
