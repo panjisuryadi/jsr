@@ -23,6 +23,7 @@
             && ! request()->routeIs('iventory.type')
             && ! request()->routeIs('distribusitoko.berlian.create')
             && ! request()->routeIs('distribusitoko.emas')
+            && ! request()->routeIs('adjustment.cabang.create')
             )
              @include('layouts.sidebar')
             @endif

@@ -35,34 +35,25 @@
                     color: #333;
                     background-color: #333;">
 
-                <div class="col-md-12 mt-2">
-                    <!-- Search box -->
-                    <div class="row">
-                        <div class="col-md-12 col-sm-6">
-                            <div class="form-group">
+         
+  <div class="px-2 ">
+                       <div class="form-group">
                                 <input id = "barcodeForm" type="text" class="form-control rounded rounded-lg sortir text-center" placeholder="Kode Produk" style="width: 100%;" wire:model='kode_produk' wire:keydown.enter="submitBarcode()" autofocus>
                             </div>
-                        </div>
                     </div>
-                </div>
-
                 
-                <p class="uppercase text-lg text-gray-600 font-semibold">Input Manual</p>
-                <hr style="
-                    height: 1px;
-                    border: none;
-                    color: #333;
-                    background-color: #333;">
+<div class="px-2 justify-between flex py-1">
+<div class="uppercase text-md mt-1 text-gray-600 font-semibold">Input Manual</div>
+
+<div class="form-group">
+<input type="text" class="form-control form-control-sm" placeholder="Cari Produk" style="width: 100%;" >
+</div>
+
+</div>
+              
                 <div class="col-md-12 mt-2">
                     <!-- Search box -->
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Cari Produk" style="width: 100%;" >
-                            </div>
-                        </div>
-                    </div>
-
+                   
                     <!-- Paginated records -->
                     <div class="table-responsive">
                         <table id="produksisTable" class="table table-sm table-striped" style="width: 100%;">
@@ -70,18 +61,18 @@
                                 <tr>
                                     <th class="no-sort text-center">@lang('No')</th>
                                     <th class="no-sort">@lang('Image')</th>
-                                    <th class="no-sort">@lang('Kode Produk')</th>
-                                    <th class="no-sort">@lang('Produk Informasi')</th>
+                                    <th class="leading-4 no-sort">@lang('Kode Produk')</th>
+                                    <th class="leading-4 no-sort">@lang('Produk Informasi')</th>
                                     <th class="align-middle">@lang('Action')</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($products->count())
+                                @if($products->count())
                                 @foreach ($products as $key => $value)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td> <a href="/{{ imageUrl() .'produksi/' . @$value->images }}" data-lightbox="{{ $value->images }} " b class="single_image">
-                                            <img src="/{{ imageUrl() .'produksi/' . @$value->images }}" order="0" width="100" class="img-thumbnail" align="center"/>
+                                            <img src="/{{ imageUrl() .'produksi/' . @$value->images }}" order="0" width="80" class="img-thumbnail" align="center"/>
                                         </a>
                                     </td>
                                     <td> {{ $value->product_code }} </td>
@@ -103,6 +94,7 @@
                         </table>
                         <!-- Pagination navigation links -->
                         {{ $products->links() }}
+
                     </div>
 
                 </div>

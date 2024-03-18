@@ -17,9 +17,11 @@ use Modules\Cabang\Models\Cabang;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
 use Modules\Product\Models\ProductStatus;
-
+use Livewire\WithPagination;
 class Create extends Component
 {
+
+    use WithPagination;
 
     public $cabang;
 
@@ -98,6 +100,7 @@ class Create extends Component
         $this->countProduct = $data->count();
         $this->dynamic_note .= " Failed " . $this->countProduct . "pcs"; 
         $data = $data->paginate(5);
+       
         return view("livewire.stock-opname.cabang.create",[
             'products' => $data
         ]);

@@ -81,10 +81,12 @@ class AdjustmentController extends Controller
             ->select('location_id', DB::raw('count(*) as count'))
             ->groupBy('location_id')
             ->get();
+
+
         }else{
             $product = ProductLocation::select('location_id', DB::raw('count(*) as count'))
             ->groupBy('location_id')
-            ->get();;
+            ->get();
         }
         return view('adjustment::create',compact('reference','product','active_location'));
     }
