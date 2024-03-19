@@ -78,9 +78,19 @@
     
    @if(Auth::user()->isUserCabang())
   {!! Auth::user()->namacabang()->alamat ?? '' !!} 
-  <div>
-     Telp. {{ ucfirst(Auth::user()->namacabang()->tlp ?? '') }}   
-  </div>
+
+    <div style="position: relative;font-weight:bold;text-align: center;">
+        <div style="position:absolute;right:72px;">
+         <img style="height: 4px;float:left;margin-right:4px;" src="{{ asset('images/print/wa.svg') }}">
+          <div style="margin-left:25px;">
+         {{ ucfirst(Auth::user()->namacabang()->tlp ?? '') }}   
+          </div>
+       
+        </div>
+  
+
+    </div>
+
     @else
     <div style="position: relative;font-weight:bold;text-align: center;">
         <div style="position:absolute;right:72px;">
