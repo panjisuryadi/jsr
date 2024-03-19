@@ -345,7 +345,9 @@ class Create extends Component
     }
 
     public function generateCode(){
-        $this->data["additional_data"]["code"] = Product::generateCode();
+        $group = Group::find($this->data['additional_data']['group']['id']);
+        $karat = Karat::find($this->data['karat_id']);
+        $this->data["additional_data"]["code"] = Product::generateCode($group->code, $karat->name);
     }
 
     private function checkGroup(){
