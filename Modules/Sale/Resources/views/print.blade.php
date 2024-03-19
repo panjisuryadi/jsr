@@ -136,7 +136,7 @@
 
     
     ?>
-     <img src="{{ $imagePath }}" order="0" width="70"/>
+     <img src="{{ $imagePath }}" order="0" height="55" ="55"/>
     
     
 </td>
@@ -220,7 +220,42 @@
 
     </tfoot>
 </table>
-<hr>
+
+<br>
+ <table style='width:100%!important; font-size:12pt;' cellspacing='1'>
+            <tr>
+                <td style="border: none !important;text-align: left;" align='center'>
+                 <div style="position:relative;">
+           
+         <div>
+          <strong>Potongan Rp. : .........................................</strong>
+      </div>
+
+       </div>     
+                
+                </td>
+            
+                <td style="text-align: left; border: none !important;" align='center'>
+                    {{-- Rp {{ number_format($total) }} --}}
+       <div style="position:relative;">
+           
+         <div>
+          <strong>Jumlah harga Rp. : .........................................</strong>
+      </div>
+
+       </div>             
+   
+                </td>
+            </tr>
+        </table>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 <div style="padding: 2px;color: #e50073 !important;">
 <p style="font-weight: bold;" class="bold">CATATAN</p>
