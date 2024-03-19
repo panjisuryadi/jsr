@@ -73,8 +73,8 @@
 <div style="text-align:center;">
  {{-- <div style='font-size:16pt'><b>{{ settings()->company_name }}</b></div> --}}
 
-<img height="70" style="height: 70px;" src="{{ asset('images/print/logo.png') }}">
-
+<img height="93" style="height: 93px;" src="{{ asset('images/print/logo.png') }}">
+<br>
     
    @if(Auth::user()->isUserCabang())
   {!! Auth::user()->namacabang()->alamat ?? '' !!} 
@@ -82,7 +82,18 @@
      Telp. {{ ucfirst(Auth::user()->namacabang()->tlp ?? '') }}   
   </div>
     @else
-    {{ settings()->company_address }}
+    <div style="position: relative;font-weight:bold;text-align: center;">
+        <div style="position:absolute;right:72px;">
+         <img style="height: 4px;float:left;margin-right:4px;" src="{{ asset('images/print/wa.svg') }}">
+          <div style="margin-left:25px;">
+           {{ settings()->company_phone }}
+          </div>
+       
+        </div>
+  
+
+    </div>
+   
     @endif
   
 
@@ -92,9 +103,13 @@
 
     </td>
     <td style='border: none !important;vertical-align:top' width='40%' align='left'>
+        <br>
+        <br>
+        <div  style="font-weight:bold;text-align: right;">
         Invoice: {{ $sale->reference }}</br>
         Tanggal : {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</br>
-        Alamat :  - </br>
+         </br>
+        </div>
     </td>
 </table>
 <p></p>
@@ -250,11 +265,24 @@
         </table>
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
+
+
+      <table style='width:100%!important; font-size:12pt;' cellspacing='1'>
+            <tr>
+            <td style="border: none !important;text-align: center;" align='center'>
+                 <div style="position:relative;">
+                       <div style="margin-top:9px;font-size:18px;color:#333;">
+                     <i>{{ terbilang($total) }} Rupiah</i>
+                       </div>
+
+                   </div>     
+                
+                </td>              
+            </tr>
+        </table>
+
+     <br>
+
 
 
 <div style="padding: 2px;color: #e50073 !important;">
