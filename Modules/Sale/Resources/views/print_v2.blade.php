@@ -145,8 +145,8 @@
             <th class ="fh text-center">Barang</th>
             <th class ="fh text-center">kode</th>
             <th class ="fh text-center">berat <span style="font-size:4pt;">(gr)</span></th>
-              <th style="width:5%;" class ="fh text-center">Qty</th>
-            <th class ="fh text-center">Harga</th>
+              <th style="width:5%;" class="fh text-center">Qty</th>
+            <th class="fh text-center">Harga</th>
           
         </tr>
     </thead>
@@ -252,7 +252,7 @@
 </table>
 
 
-<hr style="color:red;margin-bottom: 5pt;">
+<hr style="color:#e50073;margin-bottom: 5pt;">
 <table border="0" width="100%">
     
 <tr>

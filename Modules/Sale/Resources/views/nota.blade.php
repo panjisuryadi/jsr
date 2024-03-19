@@ -11,7 +11,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-             color: red;
+             color: #e50073;
             padding: 0;
         }
 
@@ -34,12 +34,12 @@
         .header {
             text-align: center;
             margin-bottom: 10px;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
         .invoice-details {
             display: flex;
             justify-content: space-between;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
         .invoice-details p {
             margin: 0;
@@ -58,26 +58,27 @@
 
        .table1 th, td {
             border: none;
+             border: 1px solid #fff;
 
         }
 
         td {
-            border: 1px solid red; /* Change border color to red */
+            border: 1px solid #e50073; /* Change border color to red */
             padding: 4px;
             text-align: left;
             font-size: 8pt !important;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
         th{
             text-transform: uppercase;
-              border: 1px solid red; /* Change border color to red */
+              border: 1px solid #e50073; /* Change border color to red */
             font-size: 8pt !important;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
         .total {
             margin-top: 20px;
             text-align: right;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
    
         small{font-size:11px;}
@@ -88,21 +89,62 @@
 <body>
 
 <div style="margin:0 auto">
-    <div style="color:red;" id="receipt-data">
-        <div class="centered">
-            <h5 style="margin-bottom: 5px">{{ settings()->company_name }}</h5>
+    <div style="color:#e50073;" id="receipt-data">
 
-            <p style="font-size: 12px;line-height: 15px;margin-top: 0">
-                {{ settings()->company_email }}, {{ settings()->company_phone }}
-                <br>{{ settings()->company_address }}
-            </p>
+
+<table style="width:91mm" class="table1">
+    <tr>
+        <td style="border:none;">
+            
+  <img height="37" style="height: 37px;" src="{{ asset('images/print/logo.png') }}">
+<br>   
+
+   @if(Auth::user()->isUserCabang())
+  {!! Auth::user()->namacabang()->alamat ?? '' !!} 
+       <div style="position: relative;font-weight:bold;text-align: center;">
+      <div style="position:absolute;right:52px;">
+         <img style="height: 2px;float:left;margin-right:4px;" src="{{ asset('images/print/wa.svg') }}">
+          <div style="margin-left:12px;">
+           {{ ucfirst(Auth::user()->namacabang()->tlp ?? '') }}  
+          </div>
+       
         </div>
-        <p style="font-size: 12px;line-height: 15px;margin-top: 0">
+  
+
+    </div>
+    @else
+    <div style="position: relative;font-weight:bold;text-align: center;">
+        <div style="position:absolute;right:52px;">
+         <img style="height: 2px;float:left;margin-right:4px;" src="{{ asset('images/print/wa.svg') }}">
+          <div style="margin-left:12px;">
+           {{ settings()->company_phone }}
+          </div>
+       
+        </div>
+  
+
+    </div>
+   
+    @endif
+
+        </td>
+         <td style="border:none;">
+            
+   <div style="font-size: 12px;line-height:15px; font-weight:bold;margin-top: 9px;">
             Tanggal: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}<br>
             Invoice: {{ $sale->reference }}
             <br>
             Customer: {{ $sale->customer_name }}
-        </p>
+        </div>
+
+        </td> 
+    </tr>
+</table>
+
+    
+
+<br>
+ 
 
 
 <table style="width:91mm" class="invoice-items">
@@ -142,7 +184,7 @@
                     
                     ?>
                      {{-- {{ $imagePath }} --}}
-                  <img width="30" src="{{ $imagePath }}"/>
+                  <img width="27" src="{{ $imagePath }}"/>
 
 
 
