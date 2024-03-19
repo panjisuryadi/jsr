@@ -284,6 +284,39 @@
 </table>
 
 
+<br>
+ <table style='width:191mm!important; font-size:12pt;' cellspacing='1'>
+                <tr>
+                <td style="border: none !important;text-align: left;" align='center'>
+                 <div style="position:relative;">
+           
+         <div>
+      <strong>Potongan Rp. :  {{ $saleDetail->note ?? '------------------------------------' }} </strong>
+      </div>
+
+       </div>     
+                
+                </td>
+            
+           <td style="text-align: left; border: none !important;" align='center'>
+                    {{-- Rp {{ number_format($total) }} --}}
+       <div style="position:relative;">
+           
+         <div>
+        
+        <strong>Jumlah harga Rp {{ number_format($sale->grand_total_amount) }}</strong>
+     
+    
+
+      </div>
+
+       </div>             
+   
+                </td>
+            </tr>
+        </table>
+
+
     </div>
 </div>
 
