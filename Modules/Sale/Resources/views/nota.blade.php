@@ -248,33 +248,33 @@
            @endif
 
         <tr>
-            <td colspan = '6'><div style='text-align:right'>Qty : </div></td>
+            <td colspan ='6'><div style='text-align:right'>Qty : </div></td>
             <td style='text-align:right'>{{ number_format($totalQty) }} Item</td>
         </tr>
 
         <tr>
-            <td colspan = '6'><div style='text-align:right'>Total : </div></td>
+            <td colspan ='6'><div style='text-align:right'>Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($total) }}</td>
         </tr>
 
         <tr>
-            <td colspan = '6'><div style='text-align:right'>Diskon : </div></td>
+            <td colspan ='6'><div style='text-align:right'>Diskon : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->discount_amount) }}</td>
         </tr>
         @if($sale->dp_payment)
         <tr>
-            <td colspan = '6'><div style='text-align:right'>DP : </div></td>
+            <td colspan ='6'><div style='text-align:right'>DP : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->dp_nominal) }}</td>
         </tr>
         @endif
 
         <tr>
-            <td colspan = '6'><div style='text-align:right'>Grand Total : </div></td>
+            <td colspan ='6'><div style='text-align:right'>Grand Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->grand_total_amount) }}</td>
         </tr>
         @if($sale->dp_payment)
         <tr>
-            <td colspan = '6'><div style='text-align:right'>Sisa Pembayaran : </div></td>
+            <td colspan ='6'><div style='text-align:right'>Sisa Pembayaran : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->remain_amount) }}</td>
         </tr>
         @endif

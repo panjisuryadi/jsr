@@ -253,19 +253,23 @@
                  <div style="position:relative;">
            
          <div>
-          <strong>Potongan Rp. : .........................................</strong>
+      <strong>Potongan Rp. :  {{ $saleDetail->note ?? '------------------------------------' }} </strong>
       </div>
 
        </div>     
                 
                 </td>
             
-                <td style="text-align: left; border: none !important;" align='center'>
+           <td style="text-align: left; border: none !important;" align='center'>
                     {{-- Rp {{ number_format($total) }} --}}
        <div style="position:relative;">
            
          <div>
-          <strong>Jumlah harga Rp. : .........................................</strong>
+        
+           <strong>Jumlah harga Rp. :{{ number_format($sale->grand_total_amount) }}</strong>
+     
+    
+
       </div>
 
        </div>             
