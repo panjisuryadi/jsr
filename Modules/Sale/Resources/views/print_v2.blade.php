@@ -24,12 +24,12 @@
         .header {
             text-align: center;
             margin-bottom: 8px;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to #e50073 */
         }
         .invoice-details {
             display: flex;
             justify-content: space-between;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to #e50073 */
         }
         .invoice-details p {
             margin: 0;
@@ -66,11 +66,11 @@
   
         th, td {
 
-            border: 1px solid red; /* Change border color to red */
+            border: 1px solid #e50073; /* Change border color to red */
             padding: 2px;
             text-align: left;
             font-size: 6pt !important;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
         th{
             text-transform: uppercase;
@@ -80,7 +80,7 @@
         .total {
             margin-top: 2px;
             text-align: right;
-            color: red; /* Change text color to red */
+            color: #e50073; /* Change text color to red */
         }
     </style>
 </head>
@@ -91,16 +91,48 @@
 
 <table class="table1" style='width:100%; border: none !important; font-size:15pt; font-family:calibri; border-collapse: collapse;' border="0">
     <td class="table1" width='60%' align='left' style='border: none !important;padding-right:60px; vertical-align:top'>
-        <span style='font-size:10pt'><b>{{ settings()->company_name }}</b></span>
-        </br>
-         {{ settings()->company_email }}, {{ settings()->company_phone }} <br>
-         {{ settings()->company_address }}
+    <img height="40" style="height: 40px;" src="{{ asset('images/print/logo.png') }}">
+<br>   
+
+   @if(Auth::user()->isUserCabang())
+  {!! Auth::user()->namacabang()->alamat ?? '' !!} 
+       <div style="position: relative;font-weight:bold;text-align: center;">
+     <div style="position:absolute;right:42px;">
+         <img style="height: 0.1rem;float:left;margin-right:4px;" src="{{ asset('images/print/wa.svg') }}">
+          <div style="margin-left:12px;">
+           {{ ucfirst(Auth::user()->namacabang()->tlp ?? '') }}  
+          </div>
+       
+        </div>
+  
+
+    </div>
+    @else
+    <div style="position: relative;font-weight:bold;text-align: center;">
+        <div style="position:absolute;right:42px;">
+         <img style="height: 0.1rem;float:left;margin-right:4px;" src="{{ asset('images/print/wa.svg') }}">
+          <div style="margin-left:12px;">
+           {{ settings()->company_phone }}
+          </div>
+       
+        </div>
+  
+
+    </div>
+   
+    @endif
+
+
+
+
     </td>
+
+
     <td style='border: none !important;vertical-align:top' width='40%' align='left'>
         Invoice: {{ $sale->reference }}</br>
         Tanggal : {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</br>
         Kostumer: {{ $sale->customer_name }}</br>
-        Alamat :  - </br>
+      
     </td>
 </table>
 <br>
@@ -144,7 +176,7 @@
 
     
     ?>
-     <img src="{{ $imagePath }}" width="32"/>
+     <img src="{{ $imagePath }}" width="28"/>
     
     
 </td>
