@@ -12,13 +12,13 @@
 
 @section('content')
     <div class="container-fluid">
-        <form id="expense-form" action="{{ route('expenses.store') }}" method="POST">
+        <form onsubmit="return validateInputs()" id="expense-form" action="{{ route('expenses.store') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create Expense <i class="bi bi-check"></i></button>
+                        <button onclick="validateInputs()" class="btn btn-primary">Create <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="category_id">Category <span class="text-danger">*</span></label>
                                         <select name="category_id" id="category_id" class="form-control" required>
@@ -51,10 +51,16 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="amount">Amount <span class="text-danger">*</span></label>
-                                        <input id="amount" type="text" class="form-control" name="amount" required>
+                                        <label for="amount">Masuk <span class="text-danger">*</span></label>
+                                        <input id="amount" type="number" class="form-control" name="amount">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="amount_out">Keluar <span class="text-danger">*</span></label>
+                                        <input id="amount_out" type="number" class="form-control" name="amount_out">
                                     </div>
                                 </div>
                             </div>
@@ -88,20 +94,47 @@
     <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
 
+        function validateInputs() {
+            var amount = $('#amount').val();
+            var amount_out = $('#amount_out').val();
+
+            if (amount && amount_out) {
+                alert("Anda hanya dapat mengisi salah satu dari Masuk atau Keluar.");
+                return false;
+            }
+
+            return true;
+        }
+
+        function showAlert(type, message) {
+            var alertContainer = document.getElementById("alert-container");
+            var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
+                                message +
+                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                    '<span aria-hidden="true">&times;</span>' +
+                                '</button>' +
+                            '</div>';
+
+            alertContainer.innerHTML = alertHtml;
+        }
+
         var id_kategori_dp = "{{ $id_kategori_dp }}";
         $(document).ready(function () {
             $('#form_sale_id').hide();
 
-            $('#amount').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-            });
+            // var amount = $('#amount').val();
+            // var amount_out = $('#amount_out').val();
 
-            $('#expense-form').submit(function () {
-                var amount = $('#amount').maskMoney('unmasked')[0];
-                $('#amount').val(amount);
-            });
+            // $('#amount').maskMoney({
+            //     prefix:'{{ settings()->currency->symbol }}',
+            //     thousands:'{{ settings()->currency->thousand_separator }}',
+            //     decimal:'{{ settings()->currency->decimal_separator }}',
+            // });
+
+            // $('#expense-form').submit(function () {
+            //     var amount = $('#amount').maskMoney('unmasked')[0];
+            //     $('#amount').val(amount);
+            // });
 
             $('#category_id').on('change', function(){
                 let current_value = $('option:selected',this).val();

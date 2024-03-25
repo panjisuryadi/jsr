@@ -18,6 +18,9 @@ class ExpensesDataTable extends DataTable
             ->addColumn('amount', function ($data) {
                 return format_currency($data->amount);
             })
+            ->addColumn('amount_out', function ($data) {
+                return format_currency($data->amount_out);
+            })
             ->addColumn('action', function ($data) {
                 return view('expense::expenses.partials.actions', compact('data'));
             });
@@ -35,7 +38,7 @@ class ExpensesDataTable extends DataTable
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(6)
+            ->orderBy(7)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -63,7 +66,11 @@ class ExpensesDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::computed('amount')
-                ->title(__("Amount"))
+                ->title(__("Masuk"))
+                ->className('text-center align-middle'),
+
+            Column::computed('amount_out')
+                ->title(__("Keluar"))
                 ->className('text-center align-middle'),
 
             Column::make('details')

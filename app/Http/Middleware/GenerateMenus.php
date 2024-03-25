@@ -1813,7 +1813,7 @@ class GenerateMenus
             // customers Access Control Dropdown ==================================
             $access_expenses = $menu->add(
                 '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
-                ' . __('labels.menu.expense') . '',
+                ' . __('Kas Toko') . '',
                 [
                     'class' => 'c-sidebar-nav-dropdown',
                 ]
@@ -1835,7 +1835,7 @@ class GenerateMenus
             // Submenu: expenses
             $access_expenses->add(
                 '<i class="c-sidebar-nav-icon bi bi-journal-arrow-up mb-1"></i>
-                 ' . __('labels.menu.expense_list') . '',
+                 ' . __('Keluar Masuk Kas') . '',
                 [
                     'route' => 'expenses.index',
                     'class' => 'nav-item',
@@ -1854,7 +1854,7 @@ class GenerateMenus
             // Submenu: expense_categories
             $access_expenses->add(
                 '<i class="c-sidebar-nav-icon bi bi-journal-bookmark-fill mb-1"></i>
-                 ' . __('labels.menu.expense_categories') . '',
+                 ' . __('Kategori Kas Toko') . '',
                 [
                     'route' => 'expense-categories.index',
                     'class' => 'nav-item',
