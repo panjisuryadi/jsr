@@ -35,12 +35,12 @@
             width: 100%;
             border-collapse: collapse;
         }
-.table1 table {
+       .table1 table {
             width: 100%;
             border-collapse: collapse;
         }
 
-  .table1 th, td {
+       .table1 th, td {
             border: none;
 
         }
@@ -227,12 +227,12 @@
         </tr>
         @if($sale->dp_payment)
         <tr>
-            <td colspan = '6'><div style='text-align:right'>DP : </div></td>
+            <td colspan ='6'><div style='text-align:right'>DP : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->dp_nominal) }}</td>
         </tr>
         @endif
         <tr>
-            <td colspan = '6'><div style='text-align:right'>Grand Total : </div></td>
+            <td colspan ='6'><div style='text-align:right'>Grand Total : </div></td>
             <td style='text-align:right'>Rp {{ number_format($sale->grand_total_amount) }}</td>
         </tr>
         @if($sale->dp_payment)
@@ -303,7 +303,7 @@
 <p style="font-weight: bold;" class="bold">CATATAN</p>
 
 <ol>
-  <li>Mas dan Berat Barang telah di timbang dan disaksikan pembeli</li>
+  <li>Emas dan Berat Barang telah di timbang dan disaksikan pembeli</li>
   <li>Barang ini dapat dijual kembali dengan potongan yang ditentukan</li>
   <li>Barang yang rusak terkena <strong>potongan hingga 30%</strong></li>
   <li>Bila dijual kembali harap membawa Surat</li>
@@ -339,24 +339,6 @@
 
 
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
