@@ -19,9 +19,25 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ route('expenses.create') }}" class="btn btn-primary">
-                          {{  __("Add") }}<i class="bi bi-plus"></i>
-                        </a>
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <a href="{{ route('expenses.create') }}" class="btn btn-primary">
+                                    {{  __("Add") }}<i class="bi bi-plus"></i>
+                                  </a>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="uppercase text-lg text-gray-600 font-semibold">
+                                    Jumlah <span class="text-red-500 uppercase">Masuk {{ format_uang($data->sum('amount')) }}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="uppercase text-lg text-gray-600 font-semibold">
+                                    Jumlah Keluar <span class="text-red-500 uppercase">Keluar {{ format_uang($data->sum('amount_out')) }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+
 
                         <hr>
 
