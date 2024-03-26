@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::middleware('auth:api')->get('/people', function (Request $request) {
     return $request->user();
 });
+
+
+Route::group([
+    'middleware' => 'api.key',
+   ], function ($router) {
+    Route::get('/customer', 'Api\CustomersController@index');
+    Route::get('/suppliers', 'Api\SuppliersController@index');
+  
+ });

@@ -234,6 +234,7 @@
                         @endforelse
                         </tbody>
                     </table>
+                    
                     <div @class(['mt-3' => $sales->hasPages()])>
                         {{ $sales->links() }}
                     </div>

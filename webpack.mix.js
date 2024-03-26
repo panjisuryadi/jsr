@@ -37,3 +37,12 @@ mix.styles(
     ],
     "public/css/backend.css"
 );
+
+
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            'jquery': path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js')
+        }
+    }
+});

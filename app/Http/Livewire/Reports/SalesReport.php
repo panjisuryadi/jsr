@@ -50,6 +50,8 @@ class SalesReport extends Component
 
     public function mount($customers) {
         $this->customers = $customers;
+
+        
         $this->customer_id = '';
         $this->cabangs = Cabang::all();
         $this->selected_cabang = auth()->user()->isUserCabang()?auth()->user()->namacabang()->id:'';
@@ -81,6 +83,7 @@ class SalesReport extends Component
             'total_nominal' => $total_nominal
         ]);
     }
+
 
     public function filterReport() {
         $this->validate();

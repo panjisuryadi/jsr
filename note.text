@@ -17,6 +17,10 @@ php artisan make:model SocialMedia --migration
 # php artisan module:make-migration add_status_to_buysbacks_table BuysBack
 # php artisan module:make-model BuysBackDetails BuysBack --migration
 
+
+php artisan module:make-controller Api/SuppliersController People
+
+
 #php artisan make:livewire PenentuanHarga/Create
 
 use Illuminate\Support\Facades\DB;

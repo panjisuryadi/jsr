@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    'api_key' => env('JSR_API_KEY', 'jsr2024'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
