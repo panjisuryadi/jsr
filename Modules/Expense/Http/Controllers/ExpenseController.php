@@ -18,8 +18,8 @@ class ExpenseController extends Controller
 
     public function index(ExpensesDataTable $dataTable) {
         abort_if(Gate::denies('access_expenses'), 403);
-
-        return $dataTable->render('expense::expenses.index');
+        $data = Expense::get();
+        return $dataTable->render('expense::expenses.index', compact('data'));
     }
 
 
@@ -39,8 +39,8 @@ class ExpenseController extends Controller
             'date' => 'required|date',
             'reference' => 'required|string|max:255',
             'category_id' => 'required',
-            'amount' => 'required_without:amount_out|numeric|max:2147483647',
-            'amount_out' => 'required_without:amount|numeric|max:2147483647',
+            'amount' => 'required_without:amount_out',
+            'amount_out' => 'required_without:amount',
             'details' => 'nullable|string|max:1000'
         ]);
 
