@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/reports', function (Request $request) {
     return $request->user();
 });
+
+Route::group([
+    'middleware' => 'api.key',
+   ], function ($router) {
+    Route::get('/reports/pembelian', 'Api\PembelianController@index');
+  
+  
+ });
