@@ -20,7 +20,7 @@
                              <a href="{{ route(''.$module_name.'.tambah_insentif') }}"
                                 id="zxzx"
                                 data-toggle="tooltip"
-                                 class="btn bg-green-600 uppercase text-white px-3">
+                                 class="btn btn-primary px-3">
                                  <i class="bi bi-plus"></i>
                                  Tambah Insentif
                             </a>
@@ -101,9 +101,9 @@
 
                 {data: 'bulan', name:  'bulan'},
                 {data: 'cabang', name: 'cabang'},
-                      
+
                 {data: 'incentive', name: 'incentive'},
-           
+
 
                 {
                     data: 'action',
@@ -136,7 +136,7 @@ $(document).on('click', '#Tambah, #Edit, #Status', function(e){
             $('.modal-dialog').addClass('modal-lg');
             $('.modal-dialog').removeClass('modal-sm');
             $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }  
+        }
 
         if($(this).attr('id') == 'Status')
         {

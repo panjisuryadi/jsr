@@ -10,15 +10,16 @@
                         <thead>
                             <tr>
                                 <th style="width: 3%!important;">No</th>
-                                <th style="width: 12%!important;">Tanggal</th>
+                                <th style="width: 18%!important;">Tanggal</th>
                                 <th style="width: 16%!important;">Nota</th>
-                                <th style="width: 16%!important;">Cabang</th>
+                                <th style="width: 10%!important;">Cabang</th>
+                                <th style="width: 16%!important;">Grand Total</th>
                                 <th style="width: 10%!important;">Status</th>
                                 <th style="width: 10%!important;">Jumlah Barang</th>
 
                                 <th style="width: 15%!important;" class="@if(auth()->user()->can('edit_buybacktoko') || auth()->user()->can('show_buybacktoko') || auth()->user()->can('delete_buybacktoko'))
                                @else
-                               no-sort 
+                               no-sort
                                 @endif
                                     text-center">
                                     {{ __('Action') }}
@@ -63,7 +64,7 @@
                     "visible": false,
                 }
             ],
-           
+
             "sPaginationType": "simple_numbers",
             ajax: '{{ route("$module_name.toko.buyback-barangluar.index_data_nota_office") }}',
             dom: 'Blfrtip',
@@ -84,10 +85,11 @@
                 {data: 'date', name: 'date'},
                 {data: 'nota', name:  'nota'},
                 {data: 'cabang', name:  'cabang'},
-              
+                {data: 'nominal', name:  'nominal'},
+
                 {data: 'status', name: 'status'},
                 {data: 'total_item', name: 'total_item'},
-              
+
 
                 {
                     data: 'action',

@@ -189,10 +189,10 @@ public function export_excel(Request $request)
                  $data_stok = Product::pending()->get();
              }
 
-     
+
          return Excel::download(new StokPending($tanggal,$status,$judul),
             'export-stok-'.$judul.'_'.$tanggal.'.xlsx');
-        
+
           // return view('stok::stoks.export_excel',
           //                       compact('tanggal','judul','status','data_stok'));
 
@@ -228,7 +228,7 @@ public function index_data_ready_office(Request $request)
         if(isset($request->karat)){
             $datas = $datas->where('karat_id',$request->karat);
         }
-        
+
         $datas = $datas->get();
 
         return Datatables::of($datas)
@@ -245,7 +245,7 @@ public function index_data_ready_office(Request $request)
                                     ' . $data->karat->label  . '</h3>
                                         </div>';
                                     return $tb;
-                                })  
+                                })
 
                         ->editColumn('product', function ($data) {
                             $tb = '<div class="flex items-center gap-x-2">
@@ -253,20 +253,20 @@ public function index_data_ready_office(Request $request)
                             <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                                 ' . $data->category->category_name . '</div>
                                 <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3><h3 class="text-sm font-bold text-gray-800 dark:text-white "> ' . $data->product_code . '</h3>
-                            
+
 
                             </div>
                                 </div>';
                             return $tb;
-                            }) 
-                        
+                            })
+
                             ->editColumn('weight', function ($data) {
                             $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
                                     ' . formatBerat($data->berat_emas) . ' gr</h3>
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
 
                             ->editColumn('image', function ($data) {
                             $tb = '<div class="flex justify-center"><a href="'.$data->image_url_path.'" data-lightbox="{{ @$image }} " class="single_image">
@@ -274,12 +274,12 @@ public function index_data_ready_office(Request $request)
                             </a></div>';
                                 return $tb;
                             })
-                        
+
                         ->rawColumns([
-                                'image', 
+                                'image',
                                 'karat',
-                                'action', 
-                                'product', 
+                                'action',
+                                'product',
                                 'weight'])
                             ->make(true);
                      }
@@ -365,10 +365,10 @@ public function index_data_lantakan(Request $request)
                                    ' . $data->karat->label  . '</h3>
                                     </div>';
                                 return $tb;
-                            })  
- 
+                            })
 
-                           
+
+
                               ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
@@ -376,7 +376,7 @@ public function index_data_lantakan(Request $request)
                                     </div>';
                                 return $tb;
                             })
-                 
+
                         ->rawColumns(['updated_at', 'karat', 'action', 'weight'])
                         ->make(true);
                      }
@@ -396,8 +396,8 @@ public function rongsok() {
         'module_title',
         'module_icon', 'module_model'));
 }
-                
-                
+
+
 public function index_data_rongsok(Request $request)
 
     {
@@ -428,8 +428,8 @@ public function index_data_rongsok(Request $request)
                                     ' . $data->karat?->label  . '</h3>
                                     </div>';
                                 return $tb;
-                            })  
-    
+                            })
+
                                 ->editColumn('weight', function ($data) {
                                 $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
@@ -437,7 +437,7 @@ public function index_data_rongsok(Request $request)
                                     </div>';
                                 return $tb;
                             })
-                    
+
                         ->rawColumns(['updated_at', 'karat', 'action', 'weight'])
                         ->make(true);
                         }
@@ -475,7 +475,7 @@ public function index_data_dp(Request $request)
                                    ' . $data->karat->label  . '</h3>
                                     </div>';
                                 return $tb;
-                            })  
+                            })
 
                           ->editColumn('cabang', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -483,7 +483,7 @@ public function index_data_dp(Request $request)
                                    ' .$data->cabang->code  . ' | ' .$data->cabang->name  . '</h3>
                                     </div>';
                                 return $tb;
-                            })  
+                            })
 
                              ->editColumn('customer', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -491,9 +491,9 @@ public function index_data_dp(Request $request)
                                    ' .$data->customer->name  . '</h3>
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
 
-                           
+
                               ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
@@ -501,7 +501,7 @@ public function index_data_dp(Request $request)
                                     </div>';
                                 return $tb;
                             })
-                 
+
                         ->rawColumns(['updated_at', 'karat','customer', 'cabang', 'action', 'weight'])
                         ->make(true);
                      }
@@ -542,7 +542,7 @@ public function index_data_sales(Request $request)
                                    ' . $data->karat->label  . '</h3>
                                     </div>';
                                 return $tb;
-                            })  
+                            })
 
                           ->editColumn('sales', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -550,9 +550,9 @@ public function index_data_sales(Request $request)
                                    ' .$data->sales->name. '</h3>
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
 
-                           
+
                               ->editColumn('weight', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
@@ -595,7 +595,7 @@ public function index_data_pending_office(Request $request)
         if(isset($request->karat)){
             $datas = $datas->where('karat_id',$request->karat);
         }
-        
+
         $datas = $datas->get();
 
         return Datatables::of($datas)
@@ -612,7 +612,7 @@ public function index_data_pending_office(Request $request)
                                     ' . $data->karat->label  . '</h3>
                                         </div>';
                                     return $tb;
-                                })  
+                                })
 
                         ->editColumn('product', function ($data) {
                             $tb = '<div class="flex items-center gap-x-2">
@@ -623,15 +623,15 @@ public function index_data_pending_office(Request $request)
                             </div>
                                 </div>';
                             return $tb;
-                            }) 
-                        
+                            })
+
                             ->editColumn('weight', function ($data) {
                             $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
                                     ' . formatBerat($data->berat_emas) . ' gr</h3>
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
 
                             ->editColumn('image', function ($data) {
                             $tb = '<div class="flex justify-center"><a href="'.$data->image_url_path.'" data-lightbox="{{ @$image }} " class="single_image">
@@ -639,12 +639,12 @@ public function index_data_pending_office(Request $request)
                             </a></div>';
                                 return $tb;
                             })
-                        
+
                         ->rawColumns([
-                                'image', 
+                                'image',
                                 'karat',
-                                'action', 
-                                'product', 
+                                'action',
+                                'product',
                                 'weight'])
                             ->make(true);
                      }
@@ -666,7 +666,7 @@ public function index_data_pending(Request $request)
     if(isset($request->karat)){
         $datas = $datas->where('karat_id',$request->karat);
     }
-    
+
     $datas = $datas->get();
 
     return Datatables::of($datas)
@@ -683,7 +683,7 @@ public function index_data_pending(Request $request)
                                 ' . $data->karat->label  . '</h3>
                                     </div>';
                                 return $tb;
-                            })  
+                            })
 
                     ->editColumn('product', function ($data) {
                         $tb = '<div class="flex items-center gap-x-2">
@@ -696,15 +696,15 @@ public function index_data_pending(Request $request)
                         </div>
                             </div>';
                         return $tb;
-                        }) 
-                    
+                        })
+
                         ->editColumn('weight', function ($data) {
                         $tb = '<div class="items-center text-center">
                                 <h3 class="text-sm font-medium text-gray-800">
                                 ' . formatBerat($data->berat_emas) . ' gr</h3>
                                 </div>';
                             return $tb;
-                        }) 
+                        })
 
                         ->editColumn('image', function ($data) {
                         $tb = '<div class="flex justify-center"><a href="'.$data->image_url_path.'" data-lightbox="{{ @$image }} " class="single_image">
@@ -712,12 +712,12 @@ public function index_data_pending(Request $request)
                         </a></div>';
                             return $tb;
                         })
-                    
+
                     ->rawColumns([
-                            'image', 
+                            'image',
                             'karat',
-                            'action', 
-                            'product', 
+                            'action',
+                            'product',
                             'weight'])
                         ->make(true);
                 }
@@ -728,7 +728,7 @@ public function get_stock_pending(Request $request){
     if(isset($request->karat)){
         $data = $data->where('karat_id',$request->karat);
     }
-    
+
     $data = $data->get();
     return response()->json([
         'sisa_stok' => $data->sum('berat_emas'),
@@ -741,7 +741,7 @@ public function get_stock_pending_office(Request $request){
     if(isset($request->karat)){
         $data = $data->where('karat_id',$request->karat);
     }
-    
+
     $data = $data->get();
     return response()->json([
         'sisa_stok' => $data->sum('berat_emas'),
@@ -754,7 +754,7 @@ public function get_stock_ready_office(Request $request){
     if(isset($request->karat)){
         $data = $data->where('karat_id',$request->karat);
     }
-    
+
     $data = $data->get();
     return response()->json([
         'sisa_stok' => $data->sum('berat_emas'),
@@ -793,7 +793,7 @@ public function index_data_office(Request $request)
                                    ' . $data->karat->label . '</h3>
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
 
                                ->editColumn('berat_real', function ($data) {
                              $tb = '<div class="items-center text-center">
@@ -801,7 +801,7 @@ public function index_data_office(Request $request)
                                      ' . formatBerat($data->berat_real) . ' gram </h3>
                                     </div>';
                                 return $tb;
-                            })  
+                            })
                               ->editColumn('berat_kotor', function ($data) {
                              $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
@@ -1322,9 +1322,9 @@ public function update_ajax(Request $request, $id)
             'dataCabang',
             'module_icon', 'module_model'));
     }
-    
 
-    
+
+
     public function index_data_ready(Request $request)
     {
         $module_title = $this->module_title;
@@ -1356,7 +1356,7 @@ public function update_ajax(Request $request, $id)
                 ->when(!empty($categories), function (Builder $query) use ($categories){
                     $query->whereIn('category_id', $categories);
                 });
-        
+
         $datas = $datas->get();
         return Datatables::of($datas)
                             ->editColumn('karat', function ($data) {
@@ -1365,7 +1365,7 @@ public function update_ajax(Request $request, $id)
                                     ' . $data->karat?->label  . '</h3>
                                         </div>';
                                     return $tb;
-                                })  
+                                })
 
                         ->editColumn('product', function ($data) {
                             $tb = '<div class="flex items-center gap-x-2">
@@ -1374,27 +1374,27 @@ public function update_ajax(Request $request, $id)
                                 ' . $data->category?->category_name . '</div>
                                 <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
                                 <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_code . '</h3>
-                            
+
 
                             </div>
                                 </div>';
                             return $tb;
-                            }) 
-                        
+                            })
+
                             ->editColumn('weight', function ($data) {
                             $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
                                     ' . formatBerat($data->berat_emas) . ' gr</h3>
                                     </div>';
                                 return $tb;
-                            }) 
+                            })
                             ->editColumn('cabang', function ($data) {
                                 $tb = '<div class="items-center text-center">
                                         <h3 class="text-sm font-medium text-gray-800">
                                         ' .$data->cabang?->name . '</h3>
                                         </div>';
                                     return $tb;
-                            }) 
+                            })
 
                             ->editColumn('image', function ($data) {
                             $tb = '<div class="flex justify-center"><a href="'.$data->image_url_path.'" data-lightbox="{{ @$image }} " class="single_image">
@@ -1402,16 +1402,16 @@ public function update_ajax(Request $request, $id)
                             </a></div>';
                                 return $tb;
                             })
-                        
+
                         ->rawColumns([
-                                'image', 
+                                'image',
                                 'karat',
                                 'cabang',
-                                'product', 
+                                'product',
                                 'weight'])
                             ->make(true);
                         }
-    
+
     public function get_stock_ready(Request $request){
         $data = Product::ready();
         if(isset($request->karat)){
@@ -1420,7 +1420,7 @@ public function update_ajax(Request $request, $id)
         if(isset($request->cabang) && $request->cabang !== 'undefined'){
             $data = $data->where('cabang_id',$request->cabang);
         }
-        
+
         $data = $data->get();
         return response()->json([
             'sisa_stok' => $data->sum('berat_emas'),

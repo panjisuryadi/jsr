@@ -286,7 +286,9 @@ class GoodsReceiptsController extends Controller
                 return $tb;
             })
             ->editColumn('status', function ($data) {
-                $tb = '<button class="btn bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">' . $data->current_status->name . '</button>';
+                $tb = '<div class="items-center text-center">
+                    <button class="btn bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">' . $data->current_status->name . '</button>
+                    </div>';
                 return $tb;
             })
             ->editColumn('nota', function ($data) {
@@ -299,7 +301,7 @@ class GoodsReceiptsController extends Controller
 
             ->editColumn('date', function ($data) {
                 $tb = '<div class="font-semibold items-center text-center">
-                                               ' . $data->date . '
+                                               ' . tanggal($data->date) . '
                                                </div>';
                 return $tb;
             })
@@ -309,8 +311,16 @@ class GoodsReceiptsController extends Controller
                                                </div>';
                 return $tb;
             })
+            ->editColumn('nominal', function ($data) {
+                $tb = '<div class="font-semibold items-center text-center">
+                                               ' . format_uang($data->items->sum('nominal')) . '
+                                               </div>';
+                return $tb;
+            })
             ->rawColumns([
-                'action', 'cabang',
+                'action',
+                'cabang',
+                'nominal',
                 'total_item',
                 'status',
                 'nota',

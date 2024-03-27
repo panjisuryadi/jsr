@@ -119,7 +119,7 @@ class GenerateMenus
 
             // Submenu: Customer Sales
             $customers_suppliers->add(
-                '<i class="c-sidebar-nav-icon  bi bi-person-square"></i> 
+                '<i class="c-sidebar-nav-icon  bi bi-person-square"></i>
                  ' . __('Konsumen Sales') . '',
                 [
                     'route' => 'customersales.index',
