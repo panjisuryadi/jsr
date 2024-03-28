@@ -21,6 +21,10 @@ Route::group([
     'middleware' => 'api.key',
    ], function ($router) {
     Route::get('/reports/pembelian', 'Api\PembelianController@index');
+    Route::get('/reports/sales-return-report', 'Api\SalesReturnController@index');
   
   
  });
+
+
+
