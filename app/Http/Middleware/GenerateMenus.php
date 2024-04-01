@@ -2005,17 +2005,17 @@ class GenerateMenus
 
 
             // Submenu: Users
-            $report->add('<i class="c-sidebar-nav-icon bi bi-bag-x mb-2"></i> ' . __('Purchases Return Report') . '', [
-                'route' => 'purchases-return-report.index',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 88,
-                    'permission'    => ['access_laporan_retur_pembelian'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link',
-                ]);
+            // $report->add('<i class="c-sidebar-nav-icon bi bi-bag-x mb-2"></i> ' . __('Purchases Return Report') . '', [
+            //     'route' => 'purchases-return-report.index',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 88,
+            //         'permission'    => ['access_laporan_retur_pembelian'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link',
+            //     ]);
 
 
             // LaporanAssets
