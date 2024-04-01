@@ -39,14 +39,15 @@ div#kanan {
         <td  class ="text-dark" style="width:40%;border:none !important;text-align: left;">
           <div style="relative">
             <div style="position:absolute; top:1.2rem;font-size: 0.9rem;left:1rem;">
-              <img width="35" src="data:image/png;base64, {!! $barcode !!}">   
+              <img width="35" src="data:image/png;base64, {!! $barcode !!}">
             </div>
             <div style="position:absolute; bottom:1rem;left:1rem;">
               <div style="font-size: 0.65rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_name}}
               </div>
               <div style="font-size: 1rem; font-weight: bold;" class="qr-dark">
-                  {{$product->product_item[0]->berat_total ?? 0}} Ct
+                    {{ $product->product_item->berat_total ?? 0 }}
+                    {{ $product->category->kategoriproduk->slug === 'berlian' ? 'Ct' : 'Gr' }}
               </div>
               <div style="font-size: 0.65rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_code}}
@@ -62,20 +63,21 @@ div#kanan {
                   {{$product->product_name}}
               </div>
               <div style="font-size: 1rem;  font-weight: bold;" class="qr-dark">
-                  {{$product->product_item[0]->berat_total ?? 0 }} Ct
+                    {{ $product->product_item->berat_total ?? 0 }}
+                    {{ $product->category->kategoriproduk->slug === 'berlian' ? 'Ct' : 'Gr' }}
               </div>
               <div style="font-size: 0.65rem; font-weight: bold;" class="qr-dark">
                   {{$product->product_code}}
               </div>
             </div>
             <div style="position:absolute; bottom:1.2rem;right:3.2rem;">
-              <img class="tf" width="35" src="data:image/png;base64, {!! $barcode !!}">   
+              <img class="tf" width="35" src="data:image/png;base64, {!! $barcode !!}">
             </div>
-          </div>   
+          </div>
         </td>
-      
+
       </tr>
-    
+
   </table>
 
 
