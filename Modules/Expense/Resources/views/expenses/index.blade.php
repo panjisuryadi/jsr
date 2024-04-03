@@ -15,33 +15,70 @@
 
 @section('content')
     <div class="container-fluid">
+        @php
+        $total_masuk = $data->sum('amount');
+        $total_keluar = $data->sum('amount_out');
+        $total = $total_masuk - $total_keluar;
+    @endphp
+        <div class=" px-0 py-2 grid grid-cols-3 gap-4 m-2 text-center no-underline">
+            <div class="no-underline cursor-pointer px-0 py-2 w-full">
+                <a class="w-full no-underline hover:no-underline" id="openModalKategori"
+                    href="#" >
+                    <div class="justify-center items-center border-2 border-gray-400 bg-white  px-2 py-3 rounded-lg transform transition duration-500 hover:scale-110">
+                        <div class="justify-center text-center items-center">
+
+                        </div>
+                        <div class="font-semibold text-gray-600 no-underline hover:text-red-600 leading-tight">
+                        Masuk : {{ format_uang($total_masuk) }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="no-underline cursor-pointer px-0 py-2 w-full">
+                <a class="w-full no-underline hover:no-underline" id="openModalKategori"
+                    href="#" >
+                    <div class="justify-center items-center border-2 border-gray-400 bg-white  px-2 py-3 rounded-lg transform transition duration-500 hover:scale-110">
+                        <div class="justify-center text-center items-center">
+
+                        </div>
+                        <div class="font-semibold text-gray-600 no-underline hover:text-red-600 leading-tight">
+                        Keluar : {{ format_uang($total_keluar) }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="no-underline cursor-pointer px-0 py-2 w-full">
+                <a class="w-full no-underline hover:no-underline" id="openModalKategori"
+                    href="#" >
+                    <div class="justify-center items-center border-2 border-gray-400 bg-white  px-2 py-3 rounded-lg transform transition duration-500 hover:scale-110">
+                        <div class="justify-center text-center items-center">
+
+                        </div>
+                        <div class="font-semibold text-gray-600 no-underline hover:text-red-600 leading-tight">
+                        Sisa : {{ format_uang($total) }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="startDate">Start Date</label>
                                     <input type="date" class="form-control" id="startDate">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="endDate">End Date</label>
                                     <input type="date" class="form-control" id="endDate">
                                 </div>
                             </div>
-                            {{-- <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="type">Type Barang</label>
-                                    <select class="form-control" id="type">
-                                        <option value="" selected disabled>Select type</option>
-                                        <option value="1" >barang buyback</option>
-                                        <option value="2" >barang luar</option>
-                                    </select>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                     <div class="card-body">
@@ -92,7 +129,7 @@
         $('#startDate, #endDate').on('change', function() {
             startDate = $('#startDate').val();
             endDate = $('#endDate').val();
-            console.log(endDate);
+            // console.log(endDate);
             $('#datatable').DataTable().ajax.reload();
         });
 
