@@ -46,7 +46,7 @@ class ExpenseController extends Controller
         $module_action = 'List';
 
         $data = Expense::get();
-        abort_if(Gate::denies('access_'.$module_name.''), 403);
+        abort_if(Gate::denies('access_expenses'), 403);
          return view(''.$module_name.'::'.$module_path.'.index',
            compact('module_name',
             'module_action',
