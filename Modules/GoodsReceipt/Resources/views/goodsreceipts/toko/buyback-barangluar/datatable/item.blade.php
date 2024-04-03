@@ -2,8 +2,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <div class="flex justify-between">
-                    <h2 class="text-lg font-bold uppercase">Penerimaan Barang BuyBack - Barang Luar</h2>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h2 class="text-lg font-bold uppercase">Penerimaan Barang BuyBack - Barang Luar</h2>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group text-right">
+                            <h2 class="text-lg font-bold" id="totalNominal"></h2>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -92,6 +99,7 @@
         let endDate = '';
         let type = '';
 
+
         $('#startDate, #endDate, #type').on('change', function() {
             startDate = $('#startDate').val();
             endDate = $('#endDate').val();
@@ -159,8 +167,14 @@
 
 
                 {data: 'status', name: 'status'},
-                {data: 'nominal', name: 'nominal'},
-
+                {data: 'nominal', name: 'nominal',
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="font-semibold items-center text-center">Rp. ' + $.fn.dataTable.render.number('.', ',', 2).display(data) + '</div>';
+                        }
+                        return data;
+                    }
+                },
 
                 {
                     data: 'action',
@@ -168,12 +182,23 @@
                     orderable: false,
                     searchable: false
                 }
-            ]
+            ],
+            drawCallback: function() {
+                var api = this.api();
+                var numFormat = $.fn.dataTable.render.number('\.', ',', 2).display;
+
+                var total = api
+                    .column(6, { page: 'current', type: 'filter'})
+                    .data()
+                    .reduce(function(a, b) {
+                        return a + b;
+                    }, 0);
+
+                $('#totalNominal').html('Total Nominal : <label class="text-danger"> Rp.' + numFormat(total) + '</label>');
+            }
         })
         .buttons().remove()
         .container()
-
-
 
     </script>
 @endpush
