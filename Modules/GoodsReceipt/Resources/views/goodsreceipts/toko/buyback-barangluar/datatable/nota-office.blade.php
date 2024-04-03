@@ -5,17 +5,31 @@
                 <h2 class="text-lg font-bold uppercase">Penerimaan Barang Buy Back & Barang Luar (Toko)</h2>
             </div>
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" class="form-control" id="startDate">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" class="form-control" id="endDate">
+                        </div>
+                    </div>
+                </div>
                 <div class="table-responsive mt-1">
                     <table id="buyback-barangluar-nota-datatable" style="width: 100%" class="table table-bordered table-hover table-responsive-sm">
                         <thead>
                             <tr>
-                                <th style="width: 3%!important;">No</th>
-                                <th style="width: 18%!important;">Tanggal</th>
-                                <th style="width: 16%!important;">Nota</th>
-                                <th style="width: 10%!important;">Cabang</th>
-                                <th style="width: 16%!important;">Grand Total</th>
+                                <th style="width: 5%!important;">No</th>
+                                <th style="width: 12%!important;">Tanggal</th>
+                                <th style="width: 18%!important;">Nota</th>
+                                <th style="width: 12%!important;">Cabang</th>
+                                <th style="width: 14%!important;">Grand Total</th>
                                 <th style="width: 10%!important;">Status</th>
-                                <th style="width: 10%!important;">Jumlah Barang</th>
+                                <th style="width: 12%!important;">Jumlah Barang</th>
 
                                 <th style="width: 15%!important;" class="@if(auth()->user()->can('edit_buybacktoko') || auth()->user()->can('show_buybacktoko') || auth()->user()->can('delete_buybacktoko'))
                                @else
@@ -36,6 +50,16 @@
 
 @push('page_scripts')
 <script type="text/javascript">
+
+        let startDate = '';
+        let endDate = '';
+
+        $('#startDate, #endDate').on('change', function() {
+            startDate = $('#startDate').val();
+            endDate = $('#endDate').val();
+            $('#buyback-barangluar-nota-datatable').DataTable().ajax.reload();
+        });
+
         $('#buyback-barangluar-nota-datatable').DataTable({
            processing: true,
            serverSide: true,
@@ -66,7 +90,13 @@
             ],
 
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.toko.buyback-barangluar.index_data_nota_office") }}',
+            ajax: {
+                url: '{{ route("$module_name.toko.buyback-barangluar.index_data_nota_office") }}',
+                data: function(d) {
+                    d.startDate = startDate;
+                    d.endDate = endDate;
+                }
+            },
             dom: 'Blfrtip',
             buttons: [
 

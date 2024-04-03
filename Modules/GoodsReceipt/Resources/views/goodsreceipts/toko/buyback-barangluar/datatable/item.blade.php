@@ -7,6 +7,30 @@
                 </div>
             </div>
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" class="form-control" id="startDate">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" class="form-control" id="endDate">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="type">Type Barang</label>
+                            <select class="form-control" id="type">
+                                <option value="" selected disabled>Select type</option>
+                                <option value="1" >barang buyback</option>
+                                <option value="2" >barang luar</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex justify-between py-1 border-bottom">
 
                     <div>
@@ -64,6 +88,18 @@
 
 @push('page_scripts')
 <script type="text/javascript">
+        let startDate = '';
+        let endDate = '';
+        let type = '';
+
+        $('#startDate, #endDate, #type').on('change', function() {
+            startDate = $('#startDate').val();
+            endDate = $('#endDate').val();
+            type = $('#type').val();
+            // console.log(type);
+            $('#goodsreceipt-buyback-barangluar-item-datatable').DataTable().ajax.reload();
+        });
+
         $('#goodsreceipt-buyback-barangluar-item-datatable').DataTable({
            processing: true,
            serverSide: true,
@@ -92,9 +128,16 @@
                     "visible": false,
                 }
             ],
-           
+
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.toko.buyback-barangluar.index_data_item") }}',
+            ajax: {
+                url: '{{ route("$module_name.toko.buyback-barangluar.index_data_item") }}',
+                data: function(d) {
+                    d.startDate = startDate;
+                    d.endDate = endDate;
+                    d.type = type;
+                }
+            },
             dom: 'Blfrtip',
             buttons: [
 
@@ -113,11 +156,11 @@
                 {data: 'barang', name: 'barang'},
                 {data: 'tipe', name:'tipe'},
                 {data: 'customer', name:  'customer'},
-             
-              
+
+
                 {data: 'status', name: 'status'},
                 {data: 'nominal', name: 'nominal'},
-              
+
 
                 {
                     data: 'action',

@@ -89,8 +89,27 @@ class GoodsReceiptsController extends Controller
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
 
-        $module_action = 'List';
-        $$module_name = $this->module_model_item::with(['product'])->where('cabang_id', auth()->user()->namacabang()->id)->orderBy('updated_at', 'DESC')->get();
+        $query = $this->module_model_item::query();
+
+        if ($request->has('startDate') && $request->has('endDate') && $request->has('type')) {
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
+            $type = $request->input('type');
+
+            if(!empty($type)){
+                $query->where('type', $type);
+            }
+
+            if (!empty($startDate) && !empty($endDate)) {
+                $query->whereBetween('created_at', [
+                    $startDate . ' 00:00:00',
+                    $endDate . ' 23:59:59'
+                ]);
+            }
+        }
+        $$module_name = $query->with(['product'])->where('cabang_id', auth()->user()->namacabang()->id)->orderBy('updated_at', 'DESC')->get();;
+
+        // $$module_name = $this->module_model_item::with(['product'])->where('cabang_id', auth()->user()->namacabang()->id)->orderBy('updated_at', 'DESC')->get();
         return Datatables::of($$module_name)
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
@@ -267,7 +286,22 @@ class GoodsReceiptsController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = BuyBackBarangLuar\GoodsReceiptNota::get();
+        // $$module_name = BuyBackBarangLuar\GoodsReceiptNota::get();
+        $query = BuyBackBarangLuar\GoodsReceiptNota::query();
+
+        if ($request->has('startDate') && $request->has('endDate')) {
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
+
+            if (!empty($startDate) && !empty($endDate)) {
+                $query->whereBetween('created_at', [
+                    $startDate . ' 00:00:00',
+                    $endDate . ' 23:59:59'
+                ]);
+            }
+        }
+        $$module_name = $query->get();
+
         return Datatables::of($$module_name)
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
