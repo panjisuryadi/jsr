@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           
+
 
                         </div>
                         <div id="buttons">
@@ -34,9 +34,9 @@
                                     <th style="width: 15%!important;" class="text-center">
                                          {{ __('Updated') }}
                                     </th>
-                                    <th style="width: 18%!important;" class="text-center">
+                                    {{-- <th style="width: 18%!important;" class="text-center">
                                         {{ __('Action') }}
-                                    </th>
+                                    </th> --}}
                                 </tr>
                             </thead>
                         </table>
@@ -97,14 +97,15 @@
 
                 {data: 'name', name: 'name'},
                 {data: 'cabang', name: 'cabang'},
-                {data: 'updated_at', name: 'updated_at'},
+                {data: 'updated_at', name: 'updated_at'}
+                // ,
 
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // }
             ]
         })
         .buttons()
