@@ -145,8 +145,12 @@ class Product extends Model implements HasMedia
     public static function generateCode($group, $karat)
         {
             $date = now()->format('dmy');
-            $produk_code = $group . $karat;
-            $dateCode = $produk_code . $date;
+            if($group && $karat){
+                $produk_code = $group . $karat;
+                $dateCode = $produk_code . $date;
+            }else{
+                $dateCode = $date;
+            }
             $lastOrder = self::select([DB::raw('MAX(products.product_code) AS last_code')])
                 ->withTrashed()
                 ->where('product_code', 'like', $dateCode . '%')
@@ -164,6 +168,33 @@ class Product extends Model implements HasMedia
 
             if (self::_isUniqueCodeExists($orderCode)) {
                 return self::generateCode($group, $karat);
+             }
+            return $orderCode;
+        }
+
+        public static function generateCodeBerlian()
+        {
+            $date = now()->format('dmy');
+
+                $dateCode = $date;
+
+            $lastOrder = self::select([DB::raw('MAX(products.product_code) AS last_code')])
+                ->withTrashed()
+                ->where('product_code', 'like', $dateCode . '%')
+                ->first();
+
+
+            $rand = rand(0, 999);
+            $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
+            $orderCode = $dateCode . $rand;
+            if ($lastOrderCode) {
+                $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
+                $nextOrderNumber = sprintf('%03d', (int)$rand + 1);
+                $orderCode = $dateCode . $nextOrderNumber;
+            }
+
+            if (self::_isUniqueCodeExists($orderCode)) {
+                return self::generateCodeBerlian();
              }
             return $orderCode;
         }
@@ -215,7 +246,7 @@ class Product extends Model implements HasMedia
             $query->where('status_id', ProductStatus::PENDING_CABANG);
             if(auth()->user()->isUserCabang()){
                 $query->where('cabang_id',auth()->user()->namacabang()->id);
-            }   
+            }
        }
 
        public function scopeCuci($query){

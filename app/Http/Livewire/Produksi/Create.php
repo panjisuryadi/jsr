@@ -143,7 +143,7 @@ class Create extends Component
 
     public function mount()
     {
-        
+
         $this->dataKarat = Karat::whereNull('parent_id')->get();
         $this->dataKaratBerlian = KaratBerlian::all();
         $this->dataShapes = ShapeBerlian::all();
@@ -157,7 +157,7 @@ class Create extends Component
         $this->id_kategoriproduk_berlian = !empty($id_kategoriproduk_berlian['value']) ? $id_kategoriproduk_berlian['value'] : 0;
         $this->dataKategoriProduk = Category::where('kategori_produk_id', $this->id_kategoriproduk_berlian)->get();
         $this->dataCertificateAttribute = DiamondCertificateAttributes::all();
-        $this->code = Product::generateCode();
+        $this->code = Product::generateCodeBerlian();
         $this->sertifikat['tanggal'] = $this->hari_ini;
 
         $arrayKaratBerlian = [];

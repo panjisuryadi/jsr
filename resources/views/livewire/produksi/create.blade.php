@@ -49,10 +49,10 @@
                                             </span>
                                             @endif
                                         </div>
-                                        
-                                        
+
+
                                     </div>
-                                    
+
                                     @if($kategoriproduk_id == $id_kategoriproduk_berlian)
                                     <div class="py-2">
                                         <p class="uppercase text-lg text-gray-600 font-semibold">MATA LEPASAN</p>
@@ -143,7 +143,7 @@
                                                 @endif
                                                 @if(!empty($inputs[$key]['id_items']))
                                                 @php
-                                                
+
                                                 $id_items = (int) $inputs[$key]['id_items'];
                                                 $colour = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['colour']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['colour'] : '-';
                                                 $clarity = !empty($dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['clarity']) ? $dataPenerimaanBerlianArray[$id_items]['accessories']['accessories_berlian']['clarity'] : '-';
@@ -226,7 +226,7 @@
                                                         $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                                         $readonly = !empty($inputs[$key]['harga_beli']) || (!empty($inputs[$key]['type']) && $inputs[$key]['type'] == 1)  ? 'readonly' : '';
                                                         $required = '';
-                                                        @endphp           
+                                                        @endphp
                                                         <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
                                                         <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_name }}" value="{{ $harga_beli ?? $harga_beli_pcs ?? 0 }}" placeholder="{{$field_lable}}" {{ $readonly }} disabled>
 
@@ -272,7 +272,7 @@
 
 
 <div class="flex justify-between px-2">
-    
+
 <div>
 <button class="btn text-white text-sm btn-info btn-md" wire:click.prevent="addInput()" wire:loading.attr="disabled">
 <span wire:loading.remove wire:target="add"> Tambah Item<i class="bi bi-plus"></i></span>
@@ -284,7 +284,7 @@
 
 
 <div>
-    
+
 {{-- <button type="button" class="btn text-white text-sm btn-success btn-md" onclick="showModal()">
 <span > Input Sertifikat Perhiasan<i class="bi bi-plus"></i></span>
 </button>
@@ -311,7 +311,7 @@ Input Sertifikat Perhiasan
 
 </div>
 
-                             
+
 
 
                                     @endif
@@ -416,7 +416,7 @@ Input Sertifikat Perhiasan
                                                 </div>
                                                 <div id="upload1" wire:ignore>
                                                     <div class="form-group">
-                                                        
+
                                                         <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                                             <div class="dz-message" data-dz-message>
                                                                 <i class="bi bi-cloud-arrow-up"></i>
@@ -464,7 +464,7 @@ Input Sertifikat Perhiasan
                                                 </span>
                                                 @endif
                                             </div>
-                                       
+
                                             <div class="form-group">
                                                 @php
                                                 $field_name = 'category_id';
@@ -499,16 +499,11 @@ Input Sertifikat Perhiasan
                                                 <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                                 <input class="form-control"
                                                 type="number"
-                                                step="any"
+                                                step="0.01"
                                                 name="{{ $field_name }}"
                                                 id="{{ $field_name }}"
                                                 wire:model = "{{ $field_name }}"
                                                 placeholder="{{ $field_placeholder }}">
-                                                    {{-- type="number" --}}
-                                                    name="{{ $field_name }}"
-                                                    id="{{ $field_name }}"
-                                                    wire:model = "{{ $field_name }}"
-                                                    placeholder="{{ $field_placeholder }}">
                                                 <span class="invalid feedback" role="alert">
                                                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                                                 </span>
@@ -634,7 +629,7 @@ Input Sertifikat Perhiasan
                                                         </span>
                                                         @endif
                                                     </div>
-                                                    
+
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -736,7 +731,7 @@ Input Sertifikat Perhiasan
                                                         </span>
                                                         @endif
                                                     </div>
-                                                    
+
                                                     @endforeach
                                                 </div>
                                             </div>
