@@ -91,19 +91,19 @@ public function index_data(Request $request)
                                 return $tb;
                             })
 
-                              ->editColumn('harga', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <span class="text-sm font-medium text-gray-600">
-                                     ' .number_format($data->harga) . '</span>
-                                    </div>';
-                                return $tb;
-                            })     ->editColumn('harga_modal', function ($data) {
-                             $tb = '<div class="items-center text-center">
-                                    <span class="text-sm font-medium text-gray-600">
-                                     ' .number_format($data->harga_modal) . '</span>
-                                    </div>';
-                                return $tb;
-                            })
+                            //   ->editColumn('harga', function ($data) {
+                            //  $tb = '<div class="items-center text-center">
+                            //         <span class="text-sm font-medium text-gray-600">
+                            //          ' .number_format($data->harga) . '</span>
+                            //         </div>';
+                            //     return $tb;
+                            // })     ->editColumn('harga_modal', function ($data) {
+                            //  $tb = '<div class="items-center text-center">
+                            //         <span class="text-sm font-medium text-gray-600">
+                            //          ' .number_format($data->harga_modal) . '</span>
+                            //         </div>';
+                            //     return $tb;
+                            // })
                            ->editColumn('updated_at', function ($data) {
                             $module_name = $this->module_name;
 
@@ -114,7 +114,7 @@ public function index_data(Request $request)
                                 return \Carbon\Carbon::parse($data->created_at)->isoFormat('L');
                             }
                         })
-                        ->rawColumns(['updated_at', 'jenis', 'harga', 'harga_modal', 'action', 'name'])
+                        ->rawColumns(['updated_at', 'jenis', 'action', 'name'])
                         ->make(true);
                      }
 
@@ -168,9 +168,10 @@ public function store(Request $request)
         $input = $request->except('_token');
         $input['code'] = $input['code'];
         $input['name'] = $input['name'];
-        $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $input['harga_modal'] = preg_replace("/[^0-9]/", "", $input['harga_modal']);
-        //dd($input);
+        // $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
+        // $input['harga_modal'] = preg_replace("/[^0-9]/", "", $input['harga_modal']);
+        // dd($input);
+        // dd($input);
         $$module_name_singular = $module_model::create($input);
 
         return response()->json(['success'=>'  '.$module_title.' Sukses disimpan.']);

@@ -37,8 +37,8 @@
                         <th style="width: 13%!important;" class="text-center">{{ __('Kode group') }}</th>
                         <th style="width: 15%!important;" class="text-center">{{ __('Jenis group') }}</th>
                         <th class="text-lef">{{ __('Name') }}</th>
-                        <th style="width: 10%!important;" class="text-center"> {{ __('Harga') }} </th>
-                        <th style="width: 14%!important;" class="text-center"> {{ __('Harga Modal') }} </th>
+                        {{-- <th style="width: 10%!important;" class="text-center"> {{ __('Harga') }} </th>
+                        <th style="width: 14%!important;" class="text-center"> {{ __('Harga Modal') }} </th> --}}
                         <th style="width: 18%!important;" class="text-center">
                             {{ __('Action') }}
                         </th>
@@ -119,8 +119,8 @@
                 {data: 'code', name: 'code'},
                 {data: 'jenis', name: 'jenis'},
                 {data: 'name', name: 'name'},
-                {data: 'harga', name: 'harga'},
-                {data: 'harga_modal', name: 'harga_modal'},
+                // {data: 'harga', name: 'harga'},
+                // {data: 'harga_modal', name: 'harga_modal'},
 
 
                 {

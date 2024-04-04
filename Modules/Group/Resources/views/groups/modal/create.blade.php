@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <?php
                 $field_name = 'harga';
                 $field_lable = label_case($field_name);
@@ -82,14 +82,14 @@
                 <span class="invalid feedback" role="alert">
                     <span class="text-danger error-text {{ $field_name }}_err"></span>
                 </span>
-            </div>
+            </div> --}}
 
 
 
 
 
 
-            
+
         </div>
     </form>
 </div>
