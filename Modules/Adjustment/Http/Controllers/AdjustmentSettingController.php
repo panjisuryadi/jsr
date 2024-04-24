@@ -9,7 +9,7 @@ class AdjustmentSettingController extends Controller{
 
 
     public function destroy(){
-        abort_if(Gate::denies('delete_adjustments'), 403);
+        // abort_if(Gate::denies('delete_adjustments'), 403);
         $cabang = null;
         if(auth()->user()->isUserCabang()){
             $cabang = auth()->user()->namacabang()->id;
