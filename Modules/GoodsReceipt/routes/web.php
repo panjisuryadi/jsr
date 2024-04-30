@@ -20,16 +20,17 @@ Route::group(['middleware' => 'auth'], function () {
     // Toko - BuyBack Barang Luar
     Route::get("$module_name/toko/buyback-barangluar", ['as' => "$module_name.toko.buyback-barangluar.index", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index"]);
 
-    Route::get("$module_name/toko/buyback-barangluar/{item}/print/", ['as' => "$module_name.toko.buyback-barangluar.print", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@print_item"]);  
+    Route::get("$module_name/toko/buyback-barangluar/{item}/print/", ['as' => "$module_name.toko.buyback-barangluar.print", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@print_item"]);
 
     Route::get("$module_name/toko/buyback-barangluar/create-nota", ['as' => "$module_name.toko.buyback-barangluar.create-nota", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@create_nota"]);
 
     Route::get("$module_name/toko/buyback-barangluar/nota/{id}", ['as' => "$module_name.toko.buyback-barangluar.nota.show", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@show_nota"]);
+    Route::get("$module_name/toko/buyback-barangluar/nota/print/{id}", ['as' => "$module_name.toko.buyback-barangluar.nota.print", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@print_nota"]);
 
     Route::get("$module_name/toko/buyback-barangluar/index_data_nota", ['as' => "$module_name.toko.buyback-barangluar.index_data_nota", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index_data_nota"]);
 
     Route::get("$module_name/toko/buyback-barangluar/index_data_nota_office", ['as' => "$module_name.toko.buyback-barangluar.index_data_nota_office", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@index_data_nota_office"]);
-    
+
 
     Route::patch("$module_name/toko/buyback-barangluar/nota-process", ['as' => "$module_name.toko.buyback-barangluar.nota-process", 'uses' => "Toko\BuyBackBarangLuar\GoodsReceiptsController@nota_process"]);
 
@@ -56,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
    Route::get("$module_name/view_produk/{id}", ['as' => "$module_name.view_produk", 'uses' => "$controller_name@view_produk"]);
 
     Route::patch("$module_name/update_status/{id}", ['as' => "$module_name.update_status", 'uses' => "$controller_name@update_status"]);
-   
+
  Route::get("$module_name/print_produk/{kode_pembelian}", ['as' => "$module_name.print_produk", 'uses' => "$controller_name@print_produk"]);
 
    Route::get("$module_name/index_data_product/{kode_pembelian}", ['as' => "$module_name.index_data_product", 'uses' => "$controller_name@index_data_product"]);

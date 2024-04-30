@@ -49,8 +49,8 @@ class GoodsReceiptNota extends Model
             }
         }
     }
-    
-    
+
+
 
     public function statuses(){
         return $this->belongsToMany(TrackingStatus::class,'goodsreceipt_toko_nota_tracking','goodsreceipt_toko_nota_id','status_id')->using(GoodsReceiptNotaTracking::class)->withPivot(['cabang_id','pic_id','date','note']);

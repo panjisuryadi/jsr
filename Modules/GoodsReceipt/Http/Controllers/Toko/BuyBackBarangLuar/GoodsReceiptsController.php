@@ -410,4 +410,25 @@ class GoodsReceiptsController extends Controller
             'module_icon', 'module_model'));
 
     }
+
+    public function print_nota($id)
+    {
+        if (AdjustmentSetting::exists()) {
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Print';
+        abort_if(Gate::denies('access_buys_back_luar'), 403);
+        $nota = BuyBackBarangLuar\GoodsReceiptNota::findOrFail($id);
+        $datetime = Carbon::parse($nota->created_at);
+        $filename = "Penerimaan Barang DP " . ucwords($nota->invoice) . " " . $nota->cabang->name . " " . ucwords($nota->owner_name);
+        $pdf = PDF::loadView('' . $module_name . '::' . $module_path . '.print', compact('nota', 'filename', 'datetime'));
+        return $pdf->stream($filename . '.pdf');
+    }
 }
