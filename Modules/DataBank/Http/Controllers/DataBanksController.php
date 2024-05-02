@@ -115,8 +115,8 @@ public function index_data(Request $request)
                             }
                         })
                         ->rawColumns(['updated_at', 'action' ,
-                         'nama_bank', 
-                         'nama_pemilik', 
+                         'nama_bank',
+                         'nama_pemilik',
                          'kode_bank', 'no_akun'])
                         ->make(true);
                      }
@@ -164,8 +164,8 @@ public function store(Request $request)
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $validator = \Validator::make($request->all(),[
-             'kode_bank' => 'required|max:191|unique:'.$module_model.',kode_bank',
-             'no_akun' => 'required|max:191',
+             'kode_bank' => 'required|max:191',
+             'no_akun' => 'required|max:191|unique:' . $module_model . ',no_akun',
              'nama_bank' => 'required|max:191',
              'nama_pemilik' => 'required|max:191',
 

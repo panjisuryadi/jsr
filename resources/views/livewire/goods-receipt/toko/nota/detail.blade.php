@@ -10,8 +10,6 @@
                 </a>
                 <a class="btn btn-sm btn-danger mfe-1 d-print-none" href="{{ route('goodsreceipt.toko.buyback-barangluar.nota.print', $nota->id) }}" target="_blank"><i class="bi bi-printer"></i> Print
                 </a>
-                {{-- @dump($nota) --}}
-                {{-- {{ route($module_name.'.show', $data->id) }} --}}
                 <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="#"
                     onclick="showTracking()">
                     <i class="bi bi-save"></i> History Tracking Nota
