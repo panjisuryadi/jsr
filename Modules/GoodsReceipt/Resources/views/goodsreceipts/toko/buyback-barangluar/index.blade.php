@@ -21,9 +21,9 @@
 @endsection
 
 @push('page_scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script type="text/javascript">
-    
+
 window.addEventListener('total_payment_amount', event => {
     toastr.error(event.detail.message);
 });
