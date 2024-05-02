@@ -15,7 +15,6 @@
                     <i class="bi bi-save"></i> History Tracking Nota
                 </a>
             </div>
-@dump($nota->items)
 
             <div class="card-body">
                 <div class="row mb-4">
