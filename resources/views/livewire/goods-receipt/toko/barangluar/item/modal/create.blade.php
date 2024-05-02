@@ -66,7 +66,7 @@
                                         </span>
                                     @endif
                                 </div>
-            
+
                                 <div class="form-group">
                                     <?php
                                     $field_name = 'data.additional_data.group.id';
@@ -91,8 +91,8 @@
                                         class="text-danger">
                                     </span>
                                     @endif
-            
-                                </div> 
+
+                                </div>
                                 <div class="form-group">
                                     <?php
                                     $field_name = 'data.additional_data.model.id';
@@ -117,7 +117,7 @@
                                     </span>
                                     @endif
                                 </div>
-            
+
                                 <div class="form-group">
                                     <?php
                                     $field_name = 'data.additional_data.code';
@@ -143,7 +143,7 @@
 
                             </div>
                             @if($isLogamMulia)
-    
+
                     <div class="grid grid-cols-2 gap-2">
                         <div class="form-group">
                             <?php
@@ -185,7 +185,7 @@
                             @endif
                         </div>
                     </div>
-    
+
                     <div class="flex relative py-1">
                         <div class="absolute inset-0 flex items-center">
                             <div class="w-full border-b border-gray-300"></div>
@@ -195,10 +195,10 @@
                             </span>
                         </div>
                     </div>
-    
-    
+
+
                     <div class="grid grid-cols-2 gap-2">
-                        
+
                         <div class="form-group">
                             <?php
                             $field_name = 'data.gold_weight';
@@ -223,7 +223,7 @@
                             </span>
                             @endif
                         </div>
-                        
+
                         <div class="form-group">
                             <?php
                             $field_name = 'data.total_weight';
@@ -241,11 +241,11 @@
                             placeholder="{{ $field_placeholder }}"
                             readonly>
                         </div>
-                        
+
                     </div>
-    
+
                     @else
-    
+
                     <div class="grid grid-cols-2 gap-2">
                         <div class="form-group">
                                 <?php
@@ -270,9 +270,9 @@
                                 @endif
                             </div>
                         </div>
-    
+
                         {{-- BERAT --}}
-    
+
                         <div class="flex relative py-1">
                             <div class="absolute inset-0 flex items-center">
                                 <div class="w-full border-b border-gray-300"></div>
@@ -283,7 +283,7 @@
                             </div>
                         </div>
                         <div class="flex flex-row grid grid-cols-4 gap-2">
-                            
+
                         <div class="form-group">
                                 <?php
                                 $field_name = 'data.additional_data.accessories_weight';
@@ -310,7 +310,7 @@
                                 </span>
                                 @endif
                             </div>
-    
+
                         <div class="form-group">
                                 <?php
                                 $field_name = 'data.additional_data.tag_weight';
@@ -334,7 +334,7 @@
                                 </span>
                                 @endif
                             </div>
-    
+
                             <div class="form-group">
                                 <?php
                                 $field_name = 'data.gold_weight';
@@ -359,7 +359,7 @@
                                 </span>
                                 @endif
                             </div>
-                            
+
                             <div class="form-group">
                                 <?php
                                 $field_name = 'data.total_weight';
@@ -377,7 +377,7 @@
                                 placeholder="{{ $field_placeholder }}"
                                 readonly>
                             </div>
-                            
+
                         </div>
                         @endif
                         </div>
@@ -411,9 +411,9 @@
                                 @endif
                             </div>
                         </div>
-                        
-    
-    
+
+
+
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
@@ -480,7 +480,7 @@
                                                     <option value="" selected>Pilih Bank</option>
                                                     @foreach($banks as $bank)
                                                     <option value="{{ $bank->id }}">
-                                                        {{ $bank->kode_bank }} | {{ $bank->nama_bank }}
+                                                        {{ $bank->nama_bank }} | {{ $bank->nama_pemilik }}
                                                     </option>
                                                     @endforeach
                                                 </select>
@@ -807,7 +807,7 @@
                                     @endif
                                 </div>
                             </div>
-                    
+
                 </form>
         </div>
         <div class="modal-footer">

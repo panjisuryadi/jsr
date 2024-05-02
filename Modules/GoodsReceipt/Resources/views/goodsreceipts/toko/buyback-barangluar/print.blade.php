@@ -6,6 +6,7 @@
     <style type="text/css">
         body {
             font-family: Helvetica, sans-serif;
+            font-size: 4mm;
         }
 
         h4,
@@ -60,11 +61,6 @@
 </head>
 
 <body>
-    {{-- @foreach ($nota->items as $row)
-<div class="text-center">
-{{ $row->nominal }}
-</div>
-    @endforeach --}}
     <header class="header">
         <div class="img-container">
             <img class="img" src="{{ public_path('images/logo.png') }}" alt="Image">
@@ -79,7 +75,7 @@
     <hr>
     <table width="100%">
         <thead>
-            <h3 class="nota-title">PROSES KONFIRMASI BARANG BUYBACK & LUAR (TOKO) OLEH OFFICE</h3>
+            <h2 class="nota-title">Proses Konfirmasi Barang Buyback & Luar (toko) Oleh Office</h2>
         </thead>
         <tr>
             <td width="100%">
@@ -87,7 +83,7 @@
                 <table width="100%">
                     <tr>
 
-                        <td style="width: 70%!important;">
+                        <td style="width: 50%!important;">
 
                             <table style="margin-bottom: 1rem;">
                                 <tr>
@@ -110,72 +106,43 @@
                                     <td width="2%">:</td>
                                     <td><b>{{ $nota->pic?->name }}</b></td>
                                 </tr>
-                                <tr>
-                                    {{-- @dump() --}}
-                                    <td width="30%">Status Saat ini</td>
-                                    <td width="2%">:</td>
-                                    <td><b>{{ $nota->current_status->name }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td width="30%">Kategori</td>
-                                    <td width="2%">:</td>
-                                    <td><b>{{ @$nota->kategoriProduk->name }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td width="30%">Berat Emas</td>
-                                    <td width="2%">:</td>
-                                    <td><b>{{ $nota->product->berat_emas ?? '' }} gr</b></td>
-                                </tr>
-                                <tr>
-                                    <td width="30%">Nominal</td>
-                                    <td width="2%">:</td>
-                                    <td><b>Rp. {{ number_format($nota->nominal) }}</b></td>
-                                </tr>
                             </table>
-
                         </td>
 
-                        <td width="30%" style="vertical-align: center;">
 
-                            <?php
-                            $image = $nota->product->images ?? '';
-                            if (empty($image)) {
-                                $imagePath = public_path('images/fallback_product_image.png');
-                            } else {
-                                $imagePath = public_path('storage/uploads/' . $image . '');
-                            }
-
-                            ?>
-                            {{-- {{ $imagePath }} --}}
-                            <img src="{{ $imagePath }}" />
-
-                        </td>
 
                     </tr>
 
                 </table>
+                <hr>
 
                 <table style="width: 100% !important;"
                     class="table-sm table-striped table-bordered">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 5%">No</th>
-                            <th class="text-center">Tipe Barang</th>
                             <th class="text-center">Produk</th>
                             <th class="text-center">Code Produk</th>
                             <th class="text-center">Karat</th>
                             <th class="text-center">Berat</th>
+                            <th class="text-center">Nominal</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $total = 0
+                        @endphp
                         @forelse ($nota->items as $detail)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration  }}</td>
-                                <td class="text-center">{{ @$detail->type_label }}</td>
                                 <td class="text-center">{{ @$detail->product->product_name }}</td>
                                 <td class="text-center">{{ @$detail->product->product_code }}</td>
                                 <td class="text-center">{{ @$detail->product->karat?->label }}</td>
                                 <td class="text-center">{{ @$detail->product->berat_emas }} gr</td>
+                                <td class="text-center">Rp. {{ rupiah($detail->nominal) }}</td>
+                                @php
+                                    $total += $detail->nominal;
+                                @endphp
                             </tr>
                         @empty
                             <tr>
@@ -183,6 +150,12 @@
                             </tr>
                         @endforelse
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5" class="text-right">Total:</th>
+                            <th class="text-center">Rp. {{ rupiah($total) }}</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </td>
         </tr>
