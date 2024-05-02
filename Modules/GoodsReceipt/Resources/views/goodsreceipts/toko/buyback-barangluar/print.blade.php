@@ -60,6 +60,11 @@
 </head>
 
 <body>
+    {{-- @foreach ($nota->items as $row)
+<div class="text-center">
+{{ $row->nominal }}
+</div>
+    @endforeach --}}
     <header class="header">
         <div class="img-container">
             <img class="img" src="{{ public_path('images/logo.png') }}" alt="Image">
@@ -72,10 +77,9 @@
         </div>
     </header>
     <hr>
-    {{-- @dump($nota->items()->get()) --}}
     <table width="100%">
         <thead>
-            <h3 class="nota-title">Detail Penerimaan Barang Buyback & Luar</h3>
+            <h3 class="nota-title">PROSES KONFIRMASI BARANG BUYBACK & LUAR (TOKO) OLEH OFFICE</h3>
         </thead>
         <tr>
             <td width="100%">
@@ -107,14 +111,15 @@
                                     <td><b>{{ $nota->pic?->name }}</b></td>
                                 </tr>
                                 <tr>
-                                    <td width="30%">Alamat</td>
+                                    {{-- @dump() --}}
+                                    <td width="30%">Status Saat ini</td>
                                     <td width="2%">:</td>
-                                    <td><b>{{ $nota->address }}</b></td>
+                                    <td><b>{{ $nota->current_status->name }}</b></td>
                                 </tr>
                                 <tr>
-                                    <td width="30%">Karat</td>
+                                    <td width="30%">Kategori</td>
                                     <td width="2%">:</td>
-                                    <td><b>{{ $nota->product->karat->label ?? '' }}</b></td>
+                                    <td><b>{{ @$nota->kategoriProduk->name }}</b></td>
                                 </tr>
                                 <tr>
                                     <td width="30%">Berat Emas</td>
@@ -150,34 +155,27 @@
 
                 </table>
 
-                {{-- <table style="width: 100% !important;"
-                    class="table-sm table-striped table-bordered table rounded rounded-lg">
+                <table style="width: 100% !important;"
+                    class="table-sm table-striped table-bordered">
                     <thead>
                         <tr>
-
-                            <th class="text-center" style="width:5%">No</th>
-                            <th class="text-center">Preview</th>
-                            <th class="text-center">Tipe</th>
+                            <th class="text-center" style="width: 5%">No</th>
+                            <th class="text-center">Tipe Barang</th>
                             <th class="text-center">Produk</th>
-                            <th class="text-center">Customer</th>
-                            <th class="text-center">Nominal</th>
-                            <th class="text-center">Note</th>
-
+                            <th class="text-center">Code Produk</th>
+                            <th class="text-center">Karat</th>
+                            <th class="text-center">Berat</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($nota->items()->approved()->get() as $detail)
+                        @forelse ($nota->items as $detail)
                             <tr>
-                                <td>Tipe Barang : {{ $detail->type_label }}</td>
-                                <td class="font-semibold">
-                                    <p>Nama Produk : {{ @$row->product->product_name }}</p>
-                                    <p>Kode Produk : {{ @$row->product->product_code }}</p>
-                                    <p>Karat : {{ @$row->product->karat?->label }}</p>
-                                    <p>Berat : {{ @$row->product->berat_emas }} gr</p>
-                                </td>
-                                <td class="text-center font-semibold">{{ @$row->customer_name }}</td>
-                                <td class="text-center font-semibold">{{ rupiah(@$row->nominal) }}</td>
-                                <td class="text-center font-semibold">{{ @$row->note }}</td>
+                                <td class="text-center">{{ $loop->iteration  }}</td>
+                                <td class="text-center">{{ @$detail->type_label }}</td>
+                                <td class="text-center">{{ @$detail->product->product_name }}</td>
+                                <td class="text-center">{{ @$detail->product->product_code }}</td>
+                                <td class="text-center">{{ @$detail->product->karat?->label }}</td>
+                                <td class="text-center">{{ @$detail->product->berat_emas }} gr</td>
                             </tr>
                         @empty
                             <tr>
@@ -185,7 +183,7 @@
                             </tr>
                         @endforelse
                     </tbody>
-                </table> --}}
+                </table>
             </td>
         </tr>
     </table>

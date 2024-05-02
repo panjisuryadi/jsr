@@ -9,11 +9,13 @@
                 </div>
                 <a class="btn  mfs-auto btn-sm btn-success mfe-1" href="#"><i class="bi bi-house-door"></i> Dashboard
                 </a>
+                <a class="btn btn-sm btn-danger mfe-1 d-print-none" href="{{ route('goodsreceipt.toko.buyback-barangluar.nota.print', $nota->id) }}" target="_blank"><i class="bi bi-printer"></i> Print
+                </a>
                 <a id="Tracking" class="btn btn-sm btn-info mfe-1 d-print-none" href="#" onclick="showTracking()">
                     <i class="bi bi-save"></i> History Tracking Nota
                 </a>
             </div>
-
+@dump($nota->items)
 
             <div class="card-body">
                 <div class="row mb-4">
@@ -85,7 +87,7 @@
                                         </a>
                                     </td>
                                 <td class="text-center font-semibold"> {{ucwords(@$row->type_label)}}</td>
-                                <td class="font-semibold"> 
+                                <td class="font-semibold">
                                     <p>Nama Produk : {{@$row->product->product_name}}</p>
                                     <p>Kode Produk : {{@$row->product->product_code}}</p>
                                     <p>Karat : {{@$row->product->karat?->label}}</p>
