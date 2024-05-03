@@ -72,7 +72,7 @@
             style="cursor: pointer;"
             >
 
-              {{--          @if($row->id_produk == $pilih[])
+                      {{-- @if($row->id_produk == $pilih[])
                        dipilih
                         @else
                         tidak

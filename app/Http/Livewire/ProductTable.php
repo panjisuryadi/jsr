@@ -8,6 +8,7 @@ use Modules\Product\Entities\ProductLocation;
 use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\Locations\Entities\Locations;
 
+
 class ProductTable extends Component
 {
     use WithPagination;

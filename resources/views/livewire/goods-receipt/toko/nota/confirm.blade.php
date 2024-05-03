@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row w-full">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-wrap align-items-center">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <div class="w-full md:overflow-x-scroll lg:overflow-x-auto table-responsive-sm">
+                <div class="w-full  lg:overflow-y-auto table-responsive-sm">
 
 
                     <div class="flex relative py-1 pb-3">
@@ -52,7 +52,9 @@
 
                         </div>
                     </div>
-                    <table style="width: 100% !important;" class="table table-sm table-striped rounded rounded-lg table-bordered">
+
+
+      <table style="width: 100% !important;" class="w-full table table-sm table-striped rounded rounded-lg table-bordered">
                         <thead>
                             <tr>
                                 <th class="text-center">

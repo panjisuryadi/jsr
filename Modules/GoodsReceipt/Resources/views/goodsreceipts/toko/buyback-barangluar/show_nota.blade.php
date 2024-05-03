@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mx-auto px-2 sm:px-2 lg:px-3">
     @if ($nota->isProcessing() && !auth()->user()->isUserCabang())
         @livewire('goods-receipt.toko.nota.confirm',['nota' => $nota])
     @elseif ($nota->isProcessing() && auth()->user()->isUserCabang())

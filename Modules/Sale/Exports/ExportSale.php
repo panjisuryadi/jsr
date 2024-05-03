@@ -56,7 +56,6 @@ class ExportSale implements FromView, WithTitle, ShouldAutoSize, WithEvents, Wit
                 }else{
                   $data_sale = Sale::akses()->where('payment_method',$type)
                     ->orderBy('created_at', 'desc')->get();
-                   
                 }
                $data = $data_sale;
                //dd($data);

@@ -20,6 +20,7 @@
             && ! request()->routeIs('goodsreceipt.add_products_by_categories')
             && ! request()->routeIs('goodsreceipt.create')
             && ! request()->routeIs('goodsreceipt.show')
+            && ! request()->routeIs('goodsreceipt.toko.buyback-barangluar.nota.show')
             && ! request()->routeIs('iventory.type')
             && ! request()->routeIs('distribusitoko.berlian.create')
             && ! request()->routeIs('distribusitoko.emas')
