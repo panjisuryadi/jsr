@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit-tafsir-modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
+<div class="modal" id="edit-tafsir-modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -100,10 +100,3 @@
         </div>
     </div>
 </div>
-
-@push('page_scripts')
-<script>
-
-
-</script>
-@endpush

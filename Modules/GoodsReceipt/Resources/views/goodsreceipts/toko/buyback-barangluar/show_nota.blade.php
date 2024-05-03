@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mx-auto px-2 sm:px-2 lg:px-3">
+    <div class="container-fluid">
     @if ($nota->isProcessing() && !auth()->user()->isUserCabang())
         @livewire('goods-receipt.toko.nota.confirm',['nota' => $nota])
     @elseif ($nota->isProcessing() && auth()->user()->isUserCabang())
@@ -23,17 +23,6 @@
     @endif
     </div>
 @endsection
-
-        @push('page_css')
-        <style type="text/css">
-        @media (max-width: 767.98px) { 
-         .table-sm th,
-         .table-sm td {
-             padding: .4em !important;
-          }
-        }
-        </style>
-        @endpush
 
 @push('page_scripts')
     <script>
@@ -82,7 +71,7 @@
                 }
             });
             Livewire.emitTo('goods-receipt.toko.nota.confirm', 'isSelectAll', isAllSelected)
-            
+
         });
     </script>
 @endpush

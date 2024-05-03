@@ -98,7 +98,7 @@
                                         </a>
                                     </td>
                                 <td class="text-center font-semibold"> {{ucwords(@$row->type_label)}}</td>
-                                <td class="font-semibold"> 
+                                <td class="font-semibold">
                                     <p>Nama Produk : {{@$row->product->product_name}}</p>
                                     <p>Kode Produk : {{@$row->product->product_code}}</p>
                                     <p>Karat : {{@$row->product->karat?->label}}</p>
@@ -135,7 +135,7 @@
 
                     </table>
 
-                    
+
 
                 <div class="flex justify-end items-center mt-1 gap-3">
                     <div>

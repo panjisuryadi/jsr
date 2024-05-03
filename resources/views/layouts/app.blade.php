@@ -33,7 +33,7 @@
             @if(! request()->routeIs('app.pos.*')
             && ! request()->routeIs('purchase.*')
             && ! request()->routeIs('rfid.*')
-                 
+
             )
             <header class="c-header c-header-light c-header-fixed">
                 @include('layouts.header')
@@ -41,7 +41,7 @@
                   @if(! request()->routeIs('goodsreceipt.add_products_by_categories')
                     && ! request()->routeIs('goodsreceipt.show')
                     && ! request()->routeIs('goodsreceipt.create')
-                   
+
                   )
                     <div class="c-subheader justify-content-between px-3">
                         @yield('breadcrumb')
