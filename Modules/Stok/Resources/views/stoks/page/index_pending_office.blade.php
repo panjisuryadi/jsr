@@ -54,7 +54,7 @@
                                     <tr>
                                         <th style="width: 6%!important;">No</th>
                                         <th class="text-left">{{ Label_Case('Karat') }}</th>
-                                        <th class="text-left">{{ Label_Case('Jenis Product') }}</th>
+                                        <th class="text-left">{{ Label_Case('Product') }}</th>
                                         <th class="text-left">{{ Label_Case('Total Berat') }}</th>
                                         <th class="text-left">{{ Label_Case('Pcs') }}</th>
                                         <th class="text-left">{{ Label_Case('aksi') }}</th>
