@@ -8,10 +8,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" id="form-product-process">
+                <form action="" id="form-product-process" method="POST">
                     <div id="modal-content">
                         @csrf
-                        <input type="hidden" name="data_id" id="data_id"  value="">
+                        <input type="hidden" name="data_name" id="data_name"  value="">
+                        <input type="hidden" name="data_category" id="data_category"  value="">
                         <div class="flex">
                             <select class="form-control uppercase" name="status_id" id="status_id" required>
                                 <option value="" selected disabled>Pilih Status</option>
@@ -31,7 +32,7 @@
                         </div>
                         <div class="form-group " id ="form_berat_total">
                             <label for="">Kembali</label>
-                            <input class="form-control" type="number" name="berat_total" id="berat_total" value="">                    
+                            <input class="form-control" type="number" name="berat_total" id="berat_total" value="">
                             <span class="invalid feedback" role="alert">
                                 <span class="text-danger error-text berat_total_err"></span>
                             </span>

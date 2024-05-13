@@ -38,6 +38,7 @@ use PDF;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Adjustment\Entities\AdjustmentSetting;
+use Modules\Karat\Models\Karat;
 use Modules\Product\Models\Penyusutan;
 use Modules\Produksi\Models\DiamondCertificateAttribute;
 use Modules\Produksi\Models\DiamondCertificateAttributes;
@@ -381,7 +382,7 @@ class ProductController extends Controller
                             <h3 class="small font-medium text-gray-600 dark:text-white "> ' . $data->product_name . '</h3>
                              <div class="text-xs font-normal text-blue-500 font-semibold">
                             ' . @$data->cabang->name . '</div>
-                           
+
 
                         </div>
                     </div>';
@@ -482,7 +483,7 @@ class ProductController extends Controller
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                             ' . $data->category->category_name . '</div>
                             <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                           
+
 
                         </div>
                     </div>';
@@ -1230,7 +1231,7 @@ class ProductController extends Controller
         );
     }
 
-    //start tambah produk tanpa Modal 
+    //start tambah produk tanpa Modal
 
     //tambah produk by kategori ID
     public function add_products_by_categories(Request $request, $id)
@@ -1435,7 +1436,7 @@ class ProductController extends Controller
             'product_quantity'                  => $input['product_quantity'],
             'product_barcode_symbology'         => $input['product_barcode_symbology'],
             'product_unit'                      => $input['product_unit'],
-            'status'                            => 0, //status Purchase 
+            'status'                            => 0, //status Purchase
             'product_cost'                      => $product_cost
         ]);
 
@@ -1717,10 +1718,10 @@ class ProductController extends Controller
         $diamondCertifikatT = DiamondCertifikatT::where('id', $product->diamond_certificate_id)->first();
 
         $diamondCertifikatAttribute = DB::table('diamond_certificate_attributes_t')
-        ->join('diamond_certificate_attributes_m', 'diamond_certificate_attributes_t.diamond_certificate_attributes_id', '=', 'diamond_certificate_attributes_m.id')
-        ->where('diamond_certificate_attributes_t.diamond_certificate_id', $diamondCertifikatT->id)
-        ->select('diamond_certificate_attributes_t.*', 'diamond_certificate_attributes_m.name as name')
-        ->get();
+            ->join('diamond_certificate_attributes_m', 'diamond_certificate_attributes_t.diamond_certificate_attributes_id', '=', 'diamond_certificate_attributes_m.id')
+            ->where('diamond_certificate_attributes_t.diamond_certificate_id', $diamondCertifikatT->id)
+            ->select('diamond_certificate_attributes_t.*', 'diamond_certificate_attributes_m.name as name')
+            ->get();
         $detail = $module_model::where('id', $id)->first();
 
         //dd($detail);
@@ -1746,24 +1747,24 @@ class ProductController extends Controller
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
-        
+
         $product = $module_model::akses()->with('product_item.karat.penentuanHarga')->where('id', $id)->first();
         $diamondCertifikatT = DiamondCertifikatT::where('id', $product->diamond_certificate_id)->first();
         // $diamondCertifikatAttribute = DiamondCertificateAttribute::where('diamond_certificate_id', $diamondCertifikatT->id)->get();
         $diamondCertifikatAttribute = DB::table('diamond_certificate_attributes_t')
-        ->join('diamond_certificate_attributes_m', 'diamond_certificate_attributes_t.diamond_certificate_attributes_id', '=', 'diamond_certificate_attributes_m.id')
-        ->where('diamond_certificate_attributes_t.diamond_certificate_id', $diamondCertifikatT->id)
-        ->select('diamond_certificate_attributes_t.*', 'diamond_certificate_attributes_m.name as name')
-        ->take(6)
-        ->get();
+            ->join('diamond_certificate_attributes_m', 'diamond_certificate_attributes_t.diamond_certificate_attributes_id', '=', 'diamond_certificate_attributes_m.id')
+            ->where('diamond_certificate_attributes_t.diamond_certificate_id', $diamondCertifikatT->id)
+            ->select('diamond_certificate_attributes_t.*', 'diamond_certificate_attributes_m.name as name')
+            ->take(6)
+            ->get();
         $image = $product->images;
         if (empty($image)) {
             $imagePath = public_path('images/fallback_product_image.png');
-         } else {
-            $imagePath = public_path('storage/uploads/'.$image.'');
-         }
+        } else {
+            $imagePath = public_path('storage/uploads/' . $image . '');
+        }
         $detail = $module_model::where('id', $id)->first();
-        
+
         // $customPaper = 'A4';
         $customPaper = array(0, 0, 120, 420);
         $barcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($product->product_code));
@@ -2111,7 +2112,7 @@ class ProductController extends Controller
                            <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
                             ' . $data->category->category_name . '</div>
                             <h3 class="text-sm font-medium text-gray-800 dark:text-white "> ' . $data->product_name . '</h3>
-                           
+
 
                         </div>
                     </div>';
@@ -2217,48 +2218,64 @@ class ProductController extends Controller
 
     public function update_status(Request $request)
     {
-        $model = $this->module_model::findOrFail($request->data_id);
-        $old_berat_emas = $model->berat_emas;
+        $karat = Karat::where('name', $request->data_name)->first();
+        if (!$karat) {
+            return response()->json(['status' => 'error', 'message' => 'Karat tidak ditemukan']);
+        }
+        $category = Category::where('category_name', $request->data_category)->first();
+        if (!$category) {
+            return response()->json(['status' => 'error', 'message' => 'Karat tidak ditemukan']);
+        }
+        $models = $this->module_model::whereHas('karat', function ($query) use ($karat) {
+            $query->where('id', $karat->id);
+        })
+            ->whereHas('category', function ($query) use ($category) {
+                $query->where('id', $category->id);
+            })
+            ->get();
+        // $old_berat_emas = $models->berat_emas;
         DB::beginTransaction();
         try {
-            $model->updateTracking($request->status_id);
+            foreach($models as $model){
+                $model->updateTracking($request->status_id);
 
-            if (!empty($request->post('berat_total'))) {
-
-
-
-                $validator = \Validator::make($request->all(), [
-                    'berat_total' => [
-                        function ($attribute, $value, $fail) use ($request, $old_berat_emas) {
-                            if ($request->post('berat_total') > $old_berat_emas) {
-                                $fail('Jumlah kembali tidak boleh lebih dari berat asal!');
-                            }
-                        }
-                    ],
-                ]);
+                if (!empty($request->post('berat_total'))) {
 
 
-                if (!$validator->passes()) {
-                    return response()->json(['error' => $validator->errors()]);
+
+                    // $validator = \Validator::make($request->all(), [
+                    //     'berat_total' => [
+                    //         function ($attribute, $value, $fail) use ($request, $old_berat_emas) {
+                    //             if ($request->post('berat_total') > $old_berat_emas) {
+                    //                 $fail('Jumlah kembali tidak boleh lebih dari berat asal!');
+                    //             }
+                    //         }
+                    //     ],
+                    // ]);
+
+
+                    // if (!$validator->passes()) {
+                    //     return response()->json(['error' => $validator->errors()]);
+                    // }
+                    $history_penyusutan = Penyusutan::create([
+                        'product_id' => $request->data_id,
+                        'berat_asal' => $request->post('berat_asal'),
+                        'berat_asli' => $request->post('berat_total'),
+                        'berat_susut' => $request->post('berat_susut'),
+                        'created_by' => auth()->user()->id,
+                    ]);
+
+                    $model->berat_emas = $request->post('berat_total');
+
+                    $product_item = ProductItem::where('product_id', $request->data_id)->first();
+
+                    // if ($product_item && ($product_item->berat_total == $old_berat_emas)) {
+                    //     $product_item->berat_total = $request->post('berat_total');
+                    //     $product_item->save();
+                    // }
                 }
-                $history_penyusutan = Penyusutan::create([
-                    'product_id' => $request->data_id,
-                    'berat_asal' => $request->post('berat_asal'),
-                    'berat_asli' => $request->post('berat_total'),
-                    'berat_susut' => $request->post('berat_susut'),
-                    'created_by' => auth()->user()->id,
-                ]);
-
-                $model->berat_emas = $request->post('berat_total');
-
-                $product_item = ProductItem::where('product_id', $request->data_id)->first();
-
-                if ($product_item && ($product_item->berat_total == $old_berat_emas)) {
-                    $product_item->berat_total = $request->post('berat_total');
-                    $product_item->save();
-                }
+                $model->save();
             }
-            $model->save();
             DB::commit();
             return response()->json([
                 'status' => 'success',
