@@ -15,6 +15,8 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 Route::get('language/{language}', 'LanguageController@switch')->name('language.switch');
 
+
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')
         ->name('home');  

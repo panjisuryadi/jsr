@@ -15,6 +15,7 @@ use Modules\DiamondCertificate\database\seeders\DiamondCertificateDatabaseSeeder
 use Modules\Karat\database\seeders\KaratDatabaseSeeder;
 use Modules\KategoriProduk\database\seeders\KategoriProdukDatabaseSeeder;
 use Modules\GoodsReceiptBerlian\database\seeders\SeedQcAttributeTableSeeder;
+
 class DatabaseSeeder extends Seeder
 {
     /**

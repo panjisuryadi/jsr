@@ -180,6 +180,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+      
+       
 
     ],
 
@@ -242,6 +244,7 @@ return [
         'Location' => Stevebauman\Location\Facades\Location::class,
         'Html' => Spatie\Html\Facades\Html::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        
     ],
 
 ];
