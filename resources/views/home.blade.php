@@ -17,7 +17,7 @@ $user = \App\Models\User::findOrFail(Auth::user()->id);
 
 
 
-         @include('vendor.notif')
+         {{-- @include('vendor.notif') --}}
         @can('show_total_stats')
         <div class="row">
             <div class="col-md-6 col-lg-3">
