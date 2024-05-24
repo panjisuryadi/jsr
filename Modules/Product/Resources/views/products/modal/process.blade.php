@@ -17,12 +17,10 @@
                             <select class="form-control uppercase" name="status_id" id="status_id" required>
                                 <option value="" selected disabled>Pilih Status</option>
                                 @foreach($product_status as $status)
-                                <option value="{{$status->id}}" class="uppercase">
-                                    {{ $status->name }}
-                                </option>
+                                    <option value="{{$status->id}}" class="uppercase">
+                                        {{ $status->name }}
+                                    </option>
                                 @endforeach
-
-
                             </select>
                         </div>
 

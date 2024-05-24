@@ -75,5 +75,5 @@
             </div>
         </div>
     </div>
-</div>
 @include('stok::stoks.modal.confirm')
+</div>

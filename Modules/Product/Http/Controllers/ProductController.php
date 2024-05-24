@@ -2233,30 +2233,13 @@ class ProductController extends Controller
                 $query->where('id', $category->id);
             })
             ->get();
-        // $old_berat_emas = $models->berat_emas;
+
         DB::beginTransaction();
         try {
             foreach($models as $model){
                 $model->updateTracking($request->status_id);
 
                 if (!empty($request->post('berat_total'))) {
-
-
-
-                    // $validator = \Validator::make($request->all(), [
-                    //     'berat_total' => [
-                    //         function ($attribute, $value, $fail) use ($request, $old_berat_emas) {
-                    //             if ($request->post('berat_total') > $old_berat_emas) {
-                    //                 $fail('Jumlah kembali tidak boleh lebih dari berat asal!');
-                    //             }
-                    //         }
-                    //     ],
-                    // ]);
-
-
-                    // if (!$validator->passes()) {
-                    //     return response()->json(['error' => $validator->errors()]);
-                    // }
                     $history_penyusutan = Penyusutan::create([
                         'product_id' => $request->data_id,
                         'berat_asal' => $request->post('berat_asal'),
@@ -2266,13 +2249,7 @@ class ProductController extends Controller
                     ]);
 
                     $model->berat_emas = $request->post('berat_total');
-
                     $product_item = ProductItem::where('product_id', $request->data_id)->first();
-
-                    // if ($product_item && ($product_item->berat_total == $old_berat_emas)) {
-                    //     $product_item->berat_total = $request->post('berat_total');
-                    //     $product_item->save();
-                    // }
                 }
                 $model->save();
             }

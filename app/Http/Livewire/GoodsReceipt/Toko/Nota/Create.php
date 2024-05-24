@@ -131,7 +131,7 @@ class Create extends Component
             $this->attachItems($goodsreceipt_nota, $this->selectedItems);
             DB::commit();
         }catch (\Exception $e) {
-            DB::rollBack(); 
+            DB::rollBack();
             throw $e;
         }
         toast('Nota Pengiriman Berhasil dibuat','success');
@@ -149,5 +149,5 @@ class Create extends Component
         }
     }
 
-    
+
 }

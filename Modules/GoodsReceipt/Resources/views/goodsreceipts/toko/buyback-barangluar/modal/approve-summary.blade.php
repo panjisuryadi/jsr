@@ -32,7 +32,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                 <button type="button" class="btn btn-primary" wire:click.prevent="submit">
-                    @lang('Submit') 
+                    @lang('Submit')
                 </button>
             </div>
 

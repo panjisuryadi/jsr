@@ -8,40 +8,27 @@
                 </button>
             </div>
             <div class="modal-body p-4">
-                @dump($selectedItems)
                 @php
                     $selected_count = count($selectedItems);
                     $total_count = count($details);
                     $retur_count = $total_count - $selected_count;
                 @endphp
-                <p>Jumlah Barang diterima : <strong>{{ $total_count }}</strong> buah</p>
+                <p>Jumlah Barang diterima : <strong>{{ $selected_count }}</strong> buah</p>
                 <div class="flex mt-4">
-                    <select class="form-control uppercase" name="status_id" id="status_id" required>
+                    <select class="form-control uppercase" name="status_id" id="status_id" wire:model="selected_status_id" required>
                         <option value="" selected disabled>Pilih Status</option>
-                        @foreach(\Modules\Product\Models\ProductStatus::get() as $status)
+                        @foreach($product_status as $status)
                             <option value="{{$status->id}}" class="uppercase">
                                 {{ $status->name }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-                @if ($retur_count)
-                    <p>Jumlah Barang di Retur : <strong>{{ $retur_count }}</strong> buah</p>
-                    <div class="form-group mt-3">
-                        <label for="note" class="font-medium">Catatan / Berita Acara</label>
-                        <textarea id="note" class="form-control" wire:model="note" cols="30" rows="10" placeholder="Tulis disini..."></textarea>
-                        @if($errors->has('note'))
-                            <span class="invalid feedback"role="alert">
-                        <small class="text-danger">{{ $errors->first('note') }}.</small>
-                    </span>
-                        @endif
-                    </div>
-                @endif
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary" wire:click.prevent="submit">
+                <button type="button" class="btn btn-primary" wire:click.prevent="store">
                     @lang('Submit')
                 </button>
             </div>
