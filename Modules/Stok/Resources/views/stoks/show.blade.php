@@ -31,5 +31,36 @@
             </div>
         </div>
     </div>
-@endsection
 
+@endsection
+@push('page_scripts')
+    <script>
+        document.getElementById('select-all').addEventListener('change', function() {
+
+            const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
+            let selectedItems = [];
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked
+                if(checkbox.checked){
+                    selectedItems.push(checkbox.value);
+                }
+            });
+            Livewire.emitTo('stoks.show', 'selectAllItem', selectedItems)
+        });
+        window.addEventListener('check:all-selected', event => {
+            const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
+            let isAllSelected = true;
+            checkboxes.forEach(checkbox => {
+                if(!checkbox.checked){
+                    isAllSelected = false;
+                    return;
+                }
+            });
+            Livewire.emitTo('stoks.show', 'isSelectAll', isAllSelected)
+        });
+
+        window.addEventListener('confirm:modal', event => {
+            $('#confirm-modal').modal('show');
+        });
+    </script>
+@endpush
