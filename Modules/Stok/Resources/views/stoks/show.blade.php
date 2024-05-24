@@ -15,19 +15,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th> Name</th>
-                                    <td>{{ @$detail->name }}</td>
-                                </tr>
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                @livewire('stoks.show', ['details' => $details])
             </div>
         </div>
     </div>

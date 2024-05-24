@@ -723,6 +723,37 @@ class StoksController extends Controller
             ->make(true);
     }
 
+    public function show_pending_office($categoryName, $karatName)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'Show';
+
+        $details = Product::join('karats as k', 'products.karat_id', '=', 'k.id')
+            ->join('categories as c', 'products.category_id', '=', 'c.id')
+            ->where('c.category_name', $categoryName)
+            ->where('k.name', $karatName)
+            ->where('products.status_id', 4)
+            ->select('products.*')
+            ->get();
+        return view(
+            '' . $module_name . '::' . $module_path . '.show',
+            compact(
+                'module_name',
+                'module_action',
+                'details',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
+    }
+
     public function index_data_pending(Request $request)
 
     {
