@@ -50,7 +50,13 @@ class Show extends Component
 
     public function proses()
     {
-        $this->dispatchBrowserEvent('confirm:modal');
+        if(count($this->selectedItems) == 0){
+            $this->dispatchBrowserEvent('items:not-selected',[
+                'message' => 'Pilih Barang Terlebih Dahulu'
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('confirm:modal');
+        }
     }
 
     public function store()

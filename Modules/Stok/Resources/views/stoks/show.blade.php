@@ -50,5 +50,9 @@
         window.addEventListener('confirm:modal', event => {
             $('#confirm-modal').modal('show');
         });
+
+        window.addEventListener('items:not-selected', event => {
+            toastr.error(event.detail.message);
+        });
     </script>
 @endpush

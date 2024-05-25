@@ -1,7 +1,6 @@
 <div class="text-center">
     <a  class="btn btn-sm btn-info font-bold"
-        href="{{ route('stok.show_pending_office', ['categoryName' => $data->category_name, 'karatName' => $data->name]) }}"
-    >
+        href="{{ route('stok.show_pending_office', ['categoryName' => $data->category_name, 'karatName' => $data->name]) }}">
         Detail
     </a>
 
