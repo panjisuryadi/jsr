@@ -9,9 +9,9 @@
             </div>
             <div class="modal-body p-4">
                 @php
-                    $selected_count = count($selectedItems);
-                    $total_count = count($details);
-                    $retur_count = $total_count - $selected_count;
+                        $selected_count = is_array($selectedItems) ? count($selectedItems) : 0 ;
+                        $total_count = count($details);
+                        $retur_count = $total_count - $selected_count;
                 @endphp
                 <p>Jumlah Barang diterima : <strong>{{ $selected_count }}</strong> buah</p>
                 <div class="flex mt-4">
