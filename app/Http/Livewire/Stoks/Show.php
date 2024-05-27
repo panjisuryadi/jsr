@@ -15,9 +15,6 @@ class Show extends Component
     public $selectAll = false;
     public $selectedItems = [];
     public $totalWeight = 0;
-    public $showConfirmModal = false;
-
-
 
     protected $listeners = [
         'selectAllItem' => 'handleSelectAllItem',
