@@ -4,12 +4,12 @@
         Detail
     </a>
 
-{{--    <button--}}
-{{--        onclick="process({{$data}})"--}}
-{{--        id="Status"--}}
-{{--        data-toggle="tooltip"--}}
-{{--        class="btn btn-sm btn-success font-bold">--}}
-{{--        Proses--}}
-{{--    </button>--}}
+    <button
+        onclick="process({{$data}})"
+        id="Status"
+        data-toggle="tooltip"
+        class="btn btn-sm btn-success font-bold">
+        Proses
+    </button>
 
 </div>
