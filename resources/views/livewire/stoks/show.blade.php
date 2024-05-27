@@ -84,7 +84,7 @@
                     <a href="#" class="px-5 btn btn-lg btn-success" wire:click.prevent="proses">Proses</a>
                 </div>
             </div>
+@include('stok::stoks.modal.confirm')
         </div>
     </div>
-@include('stok::stoks.modal.confirm')
 </div>
