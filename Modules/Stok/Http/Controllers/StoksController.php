@@ -723,6 +723,8 @@ class StoksController extends Controller
             ->make(true);
     }
 
+
+
     public function show_pending_office($categoryName, $karatName)
     {
         $module_title = $this->module_title;
