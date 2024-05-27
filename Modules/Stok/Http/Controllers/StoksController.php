@@ -672,7 +672,7 @@ class StoksController extends Controller
             ->get();
 
         return Datatables::of($datas)
-            ->addColumn('action', function ($data) {
+            ->addColumn('action',   function ($data) {
                 $module_name = $this->module_name;
                 $module_model = $this->module_model;
                 $module_path = $this->module_path;
@@ -700,7 +700,7 @@ class StoksController extends Controller
             ->editColumn('weight', function ($data) {
                 $tb = '<div class="items-center text-center">
                                     <h3 class="text-sm font-medium text-gray-800">
-                                    ' . formatBerat($data->total_berat) . ' gr</h3>
+                                    ' . formatBerat($data->total_berat) . '</h3>
                                     </div>';
                 return $tb;
             })
