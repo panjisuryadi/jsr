@@ -9,13 +9,12 @@
             </div>
             <div class="modal-body p-4">
                 @php
-//                        $selected_count = is_array($selectedItems ?? 0) ? count($selectedItems) : 0 ;
-                        $selected_count = 0;
-                        if ($selectedItems) {
-                            $selected_count = count($selectedItems) ;
-                        }
-                        $total_count = count($details);
-                        $retur_count = $total_count - $selected_count;
+                    $selected_count = 0;
+                    if (isset($selectedItems) && is_array($selectedItems)) {
+                        $selected_count = count($selectedItems);
+                    }
+                    $total_count = count($details);
+                    $retur_count = $total_count - $selected_count;
                 @endphp
                 <p>Jumlah Barang diterima : <strong>{{ $selected_count }}</strong> buah</p>
                 <div class="flex mt-4">
