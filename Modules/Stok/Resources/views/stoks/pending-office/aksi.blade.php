@@ -11,5 +11,4 @@
         class="btn btn-sm btn-success font-bold">
         Proses
     </button>
-
 </div>
