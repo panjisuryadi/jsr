@@ -9,7 +9,8 @@
             </div>
             <div class="modal-body p-4">
                 @php
-                        $selected_count = is_array($selectedItems) ? count($selectedItems) : 0 ;
+//                        $selected_count = is_array($selectedItems ?? 0) ? count($selectedItems) : 0 ;
+                        $selected_count = count($selectedItems ?? 0) ;
                         $total_count = count($details);
                         $retur_count = $total_count - $selected_count;
                 @endphp
