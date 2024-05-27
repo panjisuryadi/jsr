@@ -11,7 +11,7 @@ class Show extends Component
 {
     public $details;
     public $selected_status_id;
-    public $product_status;
+    public $product_status = [];
     public $selectAll = false;
     public $selectedItems = [];
     public $totalWeight = 0;

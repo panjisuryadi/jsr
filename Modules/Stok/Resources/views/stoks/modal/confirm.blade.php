@@ -1,4 +1,5 @@
-<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" wire:ignore.self>
+<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+     aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,13 +19,16 @@
                 @endphp
                 <p>Jumlah Barang diterima : <strong>{{ $selected_count }}</strong> buah</p>
                 <div class="flex mt-4">
-                    <select class="form-control uppercase" name="status_id" id="status_id" wire:model="selected_status_id" required>
+                    <select class="form-control uppercase" name="status_id" id="status_id"
+                            wire:model="selected_status_id" required>
                         <option value="" selected disabled>Pilih Status</option>
-                        @foreach($product_status as $status)
+                        @forelse($product_status as $status)
                             <option value="{{$status->id}}" class="uppercase">
                                 {{ $status->name }}
                             </option>
-                        @endforeach
+                        @empty
+                            <option value="" selected disabled>Pilih Status</option>
+                        @endforelse
                     </select>
                 </div>
 
