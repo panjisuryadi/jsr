@@ -4,6 +4,10 @@
         Detail
     </a>
 
+
+
+
+
     <button
         onclick="process({{$data}})"
         id="Status"
