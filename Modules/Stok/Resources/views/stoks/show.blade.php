@@ -24,7 +24,6 @@
 @push('page_scripts')
     <script>
         document.getElementById('select-all').addEventListener('change', function() {
-
             const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
             let selectedItems = [];
             checkboxes.forEach(checkbox => {

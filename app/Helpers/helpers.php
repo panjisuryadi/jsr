@@ -83,7 +83,7 @@ if (!function_exists('qrCode')) {
 
      function qrCode($content)
     {
-       
+
     }
 }
 
@@ -93,7 +93,7 @@ function generateQRCode($content)
     /**
      * result in data uri
      */
- 
+
 }
 
 
@@ -542,7 +542,7 @@ if (!function_exists('bpstts')) {
          }
       }
 
-      
+
 
  if (!function_exists('shortdate')) {
         function shortdate($value)
@@ -551,7 +551,7 @@ if (!function_exists('bpstts')) {
         $date = '';
         $date = \Carbon\Carbon::parse($value);
         $tgl = $date->format('d/m/Y');
-    
+
          return $date = ''. $tgl.'';
 
          }
@@ -612,7 +612,7 @@ if (!function_exists('statusPo')) {
              $return_text = '<div class="w-full btn btn-sm text-xs btn-outline-primary items-center text-center">Completed</div>';
 
         }
-   
+
         //status barang di kembalikan
         elseif ($required == 3){
              $return_text = '<div class="w-full btn btn-sm text-xs btn-outline-danger items-center text-center">Di Retur</div>';
@@ -639,7 +639,7 @@ if (!function_exists('draf')) {
         }else{
 
 
-         $return_text = '<div class="w-full btn btn-sm text-xs btn-danger-secondary items-center text-center">Terkirim</div>';        
+         $return_text = '<div class="w-full btn btn-sm text-xs btn-danger-secondary items-center text-center">Terkirim</div>';
 
         }
 
@@ -735,7 +735,7 @@ if (!function_exists('formatWeight')) {
         if (substr($weight, -1) === '.') {
             $weight = substr($weight, 0, -1);
         }
-        return $weight;
+        return $weight . ' gr';
     }
 }
 

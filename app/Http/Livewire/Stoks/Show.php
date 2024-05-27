@@ -14,6 +14,7 @@ class Show extends Component
     public $product_status;
     public $selectAll = false;
     public $selectedItems = [];
+    public $totalWeight = 0;
     public $showConfirmModal = false;
 
 
@@ -29,6 +30,27 @@ class Show extends Component
 
     public function handleIsSelectAll($value){
         $this->selectAll = $value;
+    }
+
+    public function updatedSelectedItems()
+    {
+        $this->calculateTotalWeight();
+    }
+
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            $this->selectedItems = $this->details->pluck('id')->toArray();
+        } else {
+            $this->selectedItems = [];
+        }
+        $this->calculateTotalWeight();
+    }
+
+    protected function calculateTotalWeight()
+    {
+        $this->totalWeight = $this->details->whereIn('id', $this->selectedItems)
+            ->sum('berat_emas');
     }
 
     public function amount($details)

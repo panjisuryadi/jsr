@@ -7,6 +7,7 @@
             Dashboard
         </a>
     </div>
+{{--    @dump($details)--}}
     <div class="card-body">
         <div class="table-responsive">
             <table style="width: 100% !important;" class="w-full table table-sm table-striped rounded-lg table-bordered">
@@ -54,7 +55,7 @@
                             <strong class="text-warning">{{@$detail->product_code}}</strong>
                         </td>
                         <td class="text-center">{{$detail->category->category_name}}</td>
-                        <td class="text-center text-danger">{{formatWeight($detail->berat_emas)}} gr</td>
+                        <td class="text-center text-danger">{{formatWeight($detail->berat_emas)}}</td>
                     </tr>
                 @empty
                     <tr>
@@ -66,8 +67,18 @@
             <div class="flex justify-end items-center mt-1 gap-3">
                 <div>
                     <span class="font-bold text-gray-800-500">
-                        <strong>{{ count($selectedItems) }}</strong> barang yang dipilih
+                    <table style="width: 100% !important;" class="w-full table table-sm table-borderless rounded-lg">
+                        <tr>
+                            <td>Jumlah Barang</td>
+                            <td>{{ count($selectedItems) }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Berat</td>
+                            <td>{{formatBerat($totalWeight)}}</td>
+                        </tr>
+                    </table>
                     </span>
+
                 </div>
                 <div>
                     <a href="#" class="px-5 btn btn-lg btn-success" wire:click.prevent="proses">Proses</a>
