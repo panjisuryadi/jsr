@@ -20,7 +20,7 @@ jobs:
          key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
          port: ${{ secrets.SSH_PORT_DEV }}
          script: |
-          cd /home/sales.hokkie.official-jsr.com/public_html
+          cd /home/sales.official-jsr.com/public_html
           git stash
           git pull origin prod
           sudo update-alternatives --set php /usr/bin/php8.0
