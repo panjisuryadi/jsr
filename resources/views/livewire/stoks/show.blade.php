@@ -7,10 +7,11 @@
             Dashboard
         </a>
     </div>
-{{--    @dump($details)--}}
+    {{--    @dump($details)--}}
     <div class="card-body">
         <div class="table-responsive">
-            <table style="width: 100% !important;" class="w-full table table-sm table-striped rounded-lg table-bordered">
+            <table style="width: 100% !important;"
+                   class="w-full table table-sm table-striped rounded-lg table-bordered">
                 <thead>
                 <tr>
                     <th class="text-center">
@@ -40,7 +41,8 @@
                     @endphp
                     <tr>
                         <td class="text-center">
-                            <input type="checkbox" wire:model="selectedItems" value="{{$detail->id}}" name="selected_items[]" />
+                            <input type="checkbox" wire:model="selectedItems" value="{{$detail->id}}"
+                                   name="selected_items[]"/>
                         </td>
                         <td class="text-center">{{$row + 1}}</td>
                         <td class="flex justify-center">
@@ -67,6 +69,10 @@
             <div class="flex justify-end items-center mt-1 gap-3">
                 <div>
                     <span class="font-bold text-gray-800-500">
+                        <div>
+                    <input type="number" wire:model="weightTarget" placeholder="Enter target weight (in grams)"
+                           class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none">
+                        </div>
                     <table style="width: 100% !important;" class="w-full table table-sm table-borderless rounded-lg">
                         <tr>
                             <td>Jumlah Barang</td>

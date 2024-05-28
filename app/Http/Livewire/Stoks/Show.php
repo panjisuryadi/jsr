@@ -15,6 +15,24 @@ class Show extends Component
     public $selectAll = false;
     public $selectedItems = [];
     public $totalWeight = 0;
+    public $weightTarget;
+
+    public function updatedWeightTarget($value)
+    {
+        $targetWeight = floatval($value);
+        $currentWeight = 0;
+        $this->selectedItems = [];
+
+        foreach ($this->details as $detail) {
+            if ($currentWeight + $detail->berat_emas <= $targetWeight) {
+                $this->selectedItems[] = $detail->id;
+                $currentWeight += $detail->berat_emas;
+            } else {
+                break;
+            }
+        }
+        $this->calculateTotalWeight();
+    }
 
     protected $listeners = [
         'selectAllItem' => 'handleSelectAllItem',
