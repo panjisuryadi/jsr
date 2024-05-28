@@ -156,6 +156,8 @@
 
         function process(data){
             $('#product-process-modal').modal('show')
+            $('#product-process-modal #data_name').val(data.name)
+            $('#product-process-modal #data_category').val(data.category_name)
             $('#product-process-modal #data_id').val(data.id)
         }
 

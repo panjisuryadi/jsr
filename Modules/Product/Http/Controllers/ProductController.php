@@ -2222,37 +2222,37 @@ class ProductController extends Controller
         if (!$karat) {
             return response()->json(['status' => 'error', 'message' => 'Karat tidak ditemukan']);
         }
+
         $category = Category::where('category_name', $request->data_category)->first();
         if (!$category) {
-            return response()->json(['status' => 'error', 'message' => 'Karat tidak ditemukan']);
+            return response()->json(['status' => 'error', 'message' => 'Kategori tidak ditemukan']);
         }
-        $models = $this->module_model::whereHas('karat', function ($query) use ($karat) {
-            $query->where('id', $karat->id);
-        })
-            ->whereHas('category', function ($query) use ($category) {
-                $query->where('id', $category->id);
-            })
-            ->get();
 
         DB::beginTransaction();
         try {
-            foreach($models as $model){
-                $model->updateTracking($request->status_id);
+            $model = $this->module_model::find($request->data_id);
 
-                if (!empty($request->post('berat_total'))) {
-                    $history_penyusutan = Penyusutan::create([
-                        'product_id' => $request->data_id,
-                        'berat_asal' => $request->post('berat_asal'),
-                        'berat_asli' => $request->post('berat_total'),
-                        'berat_susut' => $request->post('berat_susut'),
-                        'created_by' => auth()->user()->id,
-                    ]);
-
-                    $model->berat_emas = $request->post('berat_total');
-                    $product_item = ProductItem::where('product_id', $request->data_id)->first();
-                }
-                $model->save();
+            if (!$model) {
+                throw new \Exception('Model tidak ditemukan');
             }
+
+            $model->updateTracking($request->status_id);
+
+            if (!empty($request->post('berat_total'))) {
+                $history_penyusutan = Penyusutan::create([
+                    'product_id' => $request->data_id,
+                    'berat_asal' => $request->post('berat_asal'),
+                    'berat_asli' => $request->post('berat_total'),
+                    'berat_susut' => $request->post('berat_susut'),
+                    'created_by' => auth()->user()->id,
+                ]);
+
+                $model->berat_emas = $request->post('berat_total');
+                $product_item = ProductItem::where('product_id', $request->data_id)->first();
+            }
+
+            $model->save();
+
             DB::commit();
             return response()->json([
                 'status' => 'success',
@@ -2266,4 +2266,5 @@ class ProductController extends Controller
             ]);
         }
     }
+
 }

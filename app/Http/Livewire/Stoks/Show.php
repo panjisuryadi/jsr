@@ -105,12 +105,11 @@ class Show extends Component
 
                 $product->status_id = $this->selected_status_id;
                 $product->save();
-
             }
 
             DB::commit();
-            toast('Nota Pengiriman Berhasil dibuat','success');
-            return redirect(route('stok.pending'));
+            toast('Status Berhasil Diupdate','success');
+            return redirect(route('stok.pending_office'));
         } catch (\Exception $e) {
             DB::rollBack();
             $this->emit('updateError', $e->getMessage());

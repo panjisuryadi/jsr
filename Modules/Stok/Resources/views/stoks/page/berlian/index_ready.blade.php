@@ -18,7 +18,7 @@
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
                             <p class="uppercase text-lg text-gray-600 font-semibold">
-                                Stok 
+                                Stok
                                 <span class="text-yellow-500 uppercase">{{$module_action}}</span>
                              </p>
                         </div>
@@ -108,7 +108,7 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-    
+
                     {data: 'image', name: 'image'},
                     {data: 'product', name: 'product'},
                     {data: 'cabang', name: 'cabang'},
@@ -130,8 +130,8 @@
             getStockInfo()
         });
 
-        
-       
+
+
 
         function getStockInfo(){
             $.ajax({
@@ -152,6 +152,8 @@
 
         function process(data){
             $('#product-process-modal').modal('show')
+            $('#product-process-modal #data_name').val(data.name)
+            $('#product-process-modal #data_category').val(data.category_name)
             $('#product-process-modal #data_id').val(data.id)
         }
 
@@ -168,7 +170,7 @@
                 success: function(data){
                     if(data.status == 'success'){
                         toastr.success(data.message)
-                        setTimeout(function(){ 
+                        setTimeout(function(){
                            window.location.reload()
                             $('#product-process-modal').modal('hide')
                         }, 1000);
@@ -181,7 +183,7 @@
                         if(data.message == 'The given data was invalid.'){
                             err = data.errors;
                             $.each(err, function(key, val) {
-                                $("."+key+"_field .fv-plugins-message-container").text(val);                   
+                                $("."+key+"_field .fv-plugins-message-container").text(val);
                                 $("."+key+"_field .fv-plugins-message-container").show();
                             });
 
