@@ -35,7 +35,7 @@ use Modules\Adjustment\Entities\AdjustmentSetting;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
 use Modules\Stok\Models\StockKroom;
 
-class GoodsReceiptsController extends Controller
+class GoodReceiptsController extends Controller
 {
 
     private $module_title;
@@ -82,6 +82,34 @@ class GoodsReceiptsController extends Controller
             compact(
                 'module_name',
                 'module_action',
+                'module_title',
+                'module_icon',
+                'module_model'
+            )
+        );
+    }
+
+    public function penerimaans()
+    {
+        if (AdjustmentSetting::exists()) {
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $code = $module_model::generateCode();
+        $module_action = 'Create';
+        abort_if(Gate::denies('create_goodsreceipts'), 403);
+        return view(
+            '' . $module_name . '::' . $module_path . '.create',
+            compact(
+                'module_name',
+                'module_action',
+                'code',
                 'module_title',
                 'module_icon',
                 'module_model'
@@ -288,9 +316,6 @@ class GoodsReceiptsController extends Controller
                                     </div>';
                 $tb .= '<div class="text-xs text-left">
                                     Total Emas :' . $data->total_emas . '
-                                    </div>';
-                $tb .= '<div class="text-xs text-left">
-                                    Total Qty :' . $data->total_qty . '
                                     </div>';
                 $tb .= '<div class="text-xs text-left">
                                     Karat :' . $data->goodsreceiptitem->pluck('karat.label')->implode(', ') . '

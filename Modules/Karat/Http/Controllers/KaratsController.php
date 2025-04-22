@@ -11,20 +11,18 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Modules\Karat\Models\Karat;
+use App\Models\Harga;
 use Modules\PenentuanHarga\Models\PenentuanHarga;
-
-
 
 class KaratsController extends Controller
 {
-
-
 
   public function __construct()
     {
         // Page Title
         $this->module_title = 'Karat';
         $this->module_name = 'karat';
+        $this->harga = 913271;
         $this->module_path = 'karats';
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\Karat\Models\Karat";
@@ -121,7 +119,88 @@ public function index_data()
                         ->make(true);
     }
 
+public function index_data_2()
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
 
+        $module_action = 'List';
+        // $harga = Harga::where('tanggal', date('Y-m-d'))->first();
+        $harga = Harga::latest()->first();  
+        if($harga == null){
+            $harga  = 0;
+        }else{
+            $harga = $harga->harga;
+        }     
+        // $harga  = 1000000;
+        $$module_name = $module_model::latest()->get();
+        $$module_name->each(function ($item) use ($harga) {
+            $item->harga = $harga; // Add the harga attribute to the model
+        });
+        
+        $data = $$module_name;
+        return Datatables::of($$module_name)
+                    ->addColumn('action', function ($data) {
+                       $module_name = $this->module_name;
+                        $module_model = $this->module_model;
+                        $module_path = $this->module_path;
+                        $harga = 1000000;
+                        return view($module_name.'::'.$module_path.'.includes.action',
+                        compact('module_name', 'data', 'module_model'));
+                            })
+                         
+                        ->editColumn('karat', function($data){
+                            // $output = '';
+                            // if(is_null($data->parent_id)){
+                            //     $output = "{$data->name} {$data->kode}";
+                            // }else{
+                            //     $output = "{$data->parent->name} {$data->parent->kode} - {$data->name}";
+                            // }
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .$data->label . '</h3>
+                                    </div>';
+                             })  
+
+                ->editColumn('type', function($data){
+                            $output = '';
+                            if(is_null($data->type)){
+                 $output = ($data->parent?->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
+                            }else{
+                 $output = ($data->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
+                            }
+                       return '<div class="items-center text-center">' .$output . '</div>';
+                        }) 
+                      ->editColumn('coef', function($data){
+                            $output = '';
+                          
+                        return '<div class="items-center text-center">
+                                            <span class="text-sm font-medium text-gray-800"> ' .$data->coef . '</span>
+                                    </div>';
+
+                        })   
+                      ->editColumn('ph', function($data){
+                            $output = '';
+                          
+                            return '<div class="items-center font-semibold text-center">
+                             ' .rupiah(@$data->penentuanharga->harga_emas) . '
+                             </div>';
+
+                        })
+                        ->editColumn('harga', function($data){
+                            $output = '';
+                          
+                            return '<div class="items-center font-semibold text-center">
+                             ' .rupiah(@$data->coef*@$data->harga) . '
+                             </div>';
+
+                        })
+                        ->rawColumns(['karat', 'action','coef','type','ph', 'harga'])
+                        ->make(true);
+    }
 
 
 

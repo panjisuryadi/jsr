@@ -81,6 +81,10 @@ class GoodsReceipt extends Model implements HasMedia
         $query->where('status', 1);
     }
 
+    public static function getLastInserted()
+    {
+        return self::latest()->first();
+    }
 
     public function scopeCompleted($query)
     {

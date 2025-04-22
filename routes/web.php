@@ -33,5 +33,95 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/payment-flow/chart-data', 'HomeController@paymentChart')
         ->name('payment-flow.chart');
+
+    Route::get('/sale', 'JualController@list')
+        ->name('sale.list');
+
+    Route::get('/buyback', 'BuybackController@list')
+        ->name('buyback.list');
+
+    Route::get('/buyback_index_data', 'BuybackController@index_data')
+        ->name('buyback.index_data');
+
+    Route::post('/buyback_insert', 'BuybackController@insert')
+        ->name('buyback.insert');
+
+    Route::get('/product_history', 'HistoryProductsController@list')
+        ->name('history_product.list');
+
+    Route::get('/product_history_data', 'HistoryProductsController@product_data')
+        ->name('history_product.product_data');
+
+    Route::get('/test_pdf', 'JualController@test_pdf')
+        ->name('sale.test_pdf');
+
+    Route::get('/sale/index_data', 'JualController@index_data')
+        ->name('sale.index_data');
+
+    Route::get('/sale/action', 'JualController@action')
+        ->name('sale.action');
+
+    Route::post('/sale/insert', 'JualController@insert')
+        ->name('sale.insert');
+
+    Route::get('/products_nota', 'ProductController@list')
+        ->name('products.list');
+    
+    Route::get('/products_emas', 'ProductController@list_emas')
+        ->name('products.emas');
+
+    Route::get('/products_all', 'ProductController@list_all')
+        ->name('products.all');
+
+    Route::post('/products_insert', 'ProductController@insert')
+        ->name('products.insert');
+
+    Route::post('/products_insert', 'ProductController@insert')
+        ->name('products.insert');
+
+    Route::get('/products_data/{id}', 'ProductController@data_nota')
+        ->name('products.data');
+
+    Route::post('/products_all_data', 'ProductController@data_all')
+        ->name('products.all_data');
+
+    Route::get('/karats', 'KaratController@list')
+        ->name('karats.list');
+
+    Route::post('/karats', 'KaratController@insert')
+        ->name('karats.insert');
+
+    Route::post('/karats_update', 'KaratController@update')
+        ->name('karats.update');
+
+    Route::get('/karats_history', 'KaratController@history')
+        ->name('karats.history');
+
+    Route::get('/karats_history_data', 'KaratController@history_data')
+        ->name('karats.history_data');
+
+    Route::get('/penerimaan-barangs', 'GoodReceiptController@create')
+        ->name('penerimaan.create');
+
+    Route::get('/penerimaan-barangs/qr/{id}', 'GoodReceiptController@qr')
+        ->name('penerimaan.qr');
+
+    Route::get('/penerimaan-barangs/qr_data/{id}', 'GoodReceiptController@qr_data')
+        ->name('penerimaan.qr_data');
+
+    Route::get('/penerimaan-barangs/detail/{id}', 'GoodReceiptController@detail')
+        ->name('penerimaan.detail');
+
+    Route::get('/penerimaan-barangs/product/{id}', 'GoodReceiptController@products')
+        ->name('penerimaan.product');
+    
+    Route::post('/penerimaan-barangs/product', 'GoodReceiptController@product_update')
+        ->name('penerimaan.product_update');
+    
+    Route::post('/penerimaan-barangs', 'GoodReceiptController@insert')
+        ->name('penerimaan.insert');
+
+    Route::get('/penerimaan-barangs/tambah', 'GoodReceiptController@tambah')
+        ->name('penerimaan.tambah');
 });
 

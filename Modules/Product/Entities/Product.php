@@ -208,6 +208,10 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Karat::class,'karat_id');
        }
 
+       public function karats(){
+        return $this->belongsTo(Karat::class, 'karat_id', 'id');
+       }
+
        public function statuses(){
         return $this->belongsToMany(ProductStatus::class,'product_tracking_history','product_id','status_id')->using(ProductTrackingHistory::class)->withTimestamps()->withPivot('cabang_id','properties');
        }

@@ -234,6 +234,70 @@ class GenerateMenus
                 ]);
 
 
+
+            // EMAS - PRODUCT
+            $Products = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-bag"></i>' . __('Products') . '', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+                ->data([
+                    'order'         => 1,
+                    'activematches' => [
+                        'purchase-payments*',
+                        'purchase-goodsreceipts*',
+
+                    ],
+                    'permission'    => ['access_purchases', 'access_goodsreceipts'],
+                ]);
+            $Products->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            // EMAS - PEMBELIAN - PENERIMAAN BARANG
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Nota'), [
+                'route' => 'products.emas',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 1,
+                    'activematches' => ['goodsreceipts*'],
+                    'permission'    => ['access_goodsreceipts'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            // EMAS - PEMBELIAN - Hutang
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Tanpa Nota'), [
+                'route' => 'products.list',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 2,
+                    'activematches' => ['goodsreceipts*'],
+                    'permission'    => ['access_goodsreceipts'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            // ReturPembelians
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('All Products'), [
+                'route' => 'products.all',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+
+
+
             // EMAS - PEMBELIAN - RETUR PEMBELIAN
             // $Purchases->add('<i class="c-sidebar-nav-icon bi bi-cash-coin mb-1"></i>
             //  '.__('Purchase Returns').'', [

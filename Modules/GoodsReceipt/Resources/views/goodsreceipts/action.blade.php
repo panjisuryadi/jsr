@@ -16,6 +16,13 @@
         @lang('Detail')
     </a> 
 
+    <a href="{{ route("penerimaan.qr",($data->id)) }}"
+
+data-toggle="tooltip"
+ class="btn btn-outline-info btn-sm py-1">
+    Qr
+</a> 
+
 {{--     <a href="{{ route("$module_name.edit",encode_id($data->id)) }}"
 
     data-toggle="tooltip"
