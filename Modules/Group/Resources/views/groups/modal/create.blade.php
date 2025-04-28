@@ -98,8 +98,9 @@
     jQuery.noConflict();
     (function( $ ) {
         function autoRefresh(){
-            var table = $('#datatable').DataTable();
-            table.ajax.reload();
+            // var table = $('#datatable').DataTable();
+            // table.ajax.reload();
+            location.reload()
         }
         function Tambah()
         {

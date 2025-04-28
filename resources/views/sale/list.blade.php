@@ -107,7 +107,7 @@
             </div>
             <div class="col-md-9">
                 <select name="customer" id="customer_modal" class="form-control">
-                    <option>Pilih Customer / User Umum</option>
+                    <option value="0">Pilih Customer / User Umum</option>
                 @foreach($customers as $index => $c)
                     <option value="{{$c->id}}">{{$c->customer_name}}</option>
                 @endforeach

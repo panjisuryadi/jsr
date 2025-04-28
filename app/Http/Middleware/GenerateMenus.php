@@ -295,6 +295,32 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
 
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Luar'), [
+                'route' => 'products.luar',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Pending'), [
+                'route' => 'products.pending',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
 
 
 
@@ -1476,196 +1502,196 @@ class GenerateMenus
 
             // ================ Start of Berlian =================
 
-            $berlian = $menu->add('<i class="c-sidebar-nav-icon bi bi-gem"></i> ' . __('Berlian'), [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])->data([
-                'order'         => 3,
-                'activematches' => [
-                    'products*',
-                    'goodsreceipt*',
-                    'product-categories*',
-                    'diamondcertificates*',
-                    'itemrounds*',
-                    'itemshapes*',
+            // $berlian = $menu->add('<i class="c-sidebar-nav-icon bi bi-gem"></i> ' . __('Berlian'), [
+            //     'class' => 'c-sidebar-nav-dropdown',
+            // ])->data([
+            //     'order'         => 3,
+            //     'activematches' => [
+            //         'products*',
+            //         'goodsreceipt*',
+            //         'product-categories*',
+            //         'diamondcertificates*',
+            //         'itemrounds*',
+            //         'itemshapes*',
 
-                ],
-                'permission' => [],
-            ]);
-            $berlian->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
+            //     ],
+            //     'permission' => [],
+            // ]);
+            // $berlian->link->attr([
+            //     'class' => 'c-sidebar-nav-dropdown-toggle',
+            //     'href'  => '#',
+            // ]);
 
-            // // BERLIAN - PEMBELIAN
-            $purchase_berlian = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-bag"></i>' . __('Purchases') . '', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])->data([
-                'order'         => 1,
-                'activematches' => [
-                    'purchase-payments*',
+            // // // BERLIAN - PEMBELIAN
+            // $purchase_berlian = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-bag"></i>' . __('Purchases') . '', [
+            //     'class' => 'c-sidebar-nav-dropdown',
+            // ])->data([
+            //     'order'         => 1,
+            //     'activematches' => [
+            //         'purchase-payments*',
 
-                ],
-                'permission'    => ['access_purchases'],
-            ]);
-            $purchase_berlian->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
+            //     ],
+            //     'permission'    => ['access_purchases'],
+            // ]);
+            // $purchase_berlian->link->attr([
+            //     'class' => 'c-sidebar-nav-dropdown-toggle',
+            //     'href'  => '#',
+            // ]);
 
-            // BERLIAN - PEMBELIAN - PENERIMAAN QC
-            $purchase_berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-card-checklist"></i>' . __('Goods Receipts QC'), [
-                'route' => 'goodsreceiptberlian.qc.index',
-                'class' => 'nav-item ',
-            ])->data([
-                'order'         => 1,
-                'activematches' => ['goodsreceiptsberlian*'],
-                'permission'    => ['access_goodsreceipts'],
-            ])->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+            // // BERLIAN - PEMBELIAN - PENERIMAAN QC
+            // $purchase_berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-card-checklist"></i>' . __('Goods Receipts QC'), [
+            //     'route' => 'goodsreceiptberlian.qc.index',
+            //     'class' => 'nav-item ',
+            // ])->data([
+            //     'order'         => 1,
+            //     'activematches' => ['goodsreceiptsberlian*'],
+            //     'permission'    => ['access_goodsreceipts'],
+            // ])->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2',
+            // ]);
 
-            // EMAS - PEMBELIAN - Hutang
-            $purchase_berlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Goods Receipt Debts'), [
-                'route' => 'goodsreceiptberlian.debts',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 2,
-                    'activematches' => ['goodsreceipts*'],
-                    'permission'    => ['access_goodsreceipts'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // // EMAS - PEMBELIAN - Hutang
+            // $purchase_berlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Goods Receipt Debts'), [
+            //     'route' => 'goodsreceiptberlian.debts',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 2,
+            //         'activematches' => ['goodsreceipts*'],
+            //         'permission'    => ['access_goodsreceipts'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
 
 
-            // Berlian - PRODUKSI
+            // // Berlian - PRODUKSI
 
-            $produksi = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-card-checklist"></i>' . __('Produksi'), [
-                'route' => 'produksi.index',
-                'class' => 'nav-item ',
-            ])->data([
-                'order'         => 2,
-                'activematches' => ['produksis*'],
-                'permission'    => ['access_produksis'],
-            ])->link->attr([
-                'class' => 'c-sidebar-nav-link py-2',
-            ]);
+            // $produksi = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-card-checklist"></i>' . __('Produksi'), [
+            //     'route' => 'produksi.index',
+            //     'class' => 'nav-item ',
+            // ])->data([
+            //     'order'         => 2,
+            //     'activematches' => ['produksis*'],
+            //     'permission'    => ['access_produksis'],
+            // ])->link->attr([
+            //     'class' => 'c-sidebar-nav-link py-2',
+            // ]);
 
-            // Berlian - TOKO
-            $berlianToko = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-shop"></i>' . __('Toko') . '', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-            ->data([
-                'order'         => 2,
-                'activematches' => ['produksis*'],
-                'permission'    => ['access_produksis'],
-            ]);
-            $berlianToko->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
+            // // Berlian - TOKO
+            // $berlianToko = $berlian->add('<i class="c-sidebar-nav-icon mb-1 bi bi-shop"></i>' . __('Toko') . '', [
+            //     'class' => 'c-sidebar-nav-dropdown',
+            // ])
+            // ->data([
+            //     'order'         => 2,
+            //     'activematches' => ['produksis*'],
+            //     'permission'    => ['access_produksis'],
+            // ]);
+            // $berlianToko->link->attr([
+            //     'class' => 'c-sidebar-nav-dropdown-toggle',
+            //     'href'  => '#',
+            // ]);
 
-            // Berlian - TOKO - Distribusi Toko
-            $distribusiTokoBerlian = $berlianToko->add(
-                '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
-                ' . __('Distribusi Toko') . '',
-                [
-                    'class' => 'c-sidebar-nav-dropdown',
-                ]
-            )
-                ->data([
-                    'order'         => 4,
-                    'activematches' => [
-                        'datasales*',
-                        'distribusitokos*',
+            // // Berlian - TOKO - Distribusi Toko
+            // $distribusiTokoBerlian = $berlianToko->add(
+            //     '<i class="c-sidebar-nav-icon mb-1 bi bi-journal-plus"></i>
+            //     ' . __('Distribusi Toko') . '',
+            //     [
+            //         'class' => 'c-sidebar-nav-dropdown',
+            //     ]
+            // )
+            //     ->data([
+            //         'order'         => 4,
+            //         'activematches' => [
+            //             'datasales*',
+            //             'distribusitokos*',
 
-                    ],
-                    'permission'    => ['access_distribusitoko'],
-                ]);
-            $distribusiTokoBerlian->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
+            //         ],
+            //         'permission'    => ['access_distribusitoko'],
+            //     ]);
+            // $distribusiTokoBerlian->link->attr([
+            //     'class' => 'c-sidebar-nav-dropdown-toggle',
+            //     'href'  => '#',
+            // ]);
 
-            // EMAS - TOKO - Distribusi Toko - PRODUK
-            $distribusiTokoBerlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Produk'), [
-                'route' => 'products.index',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 2,
-                    'activematches' => ['products*'],
-                    'permission'    => ['access_products'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // // EMAS - TOKO - Distribusi Toko - PRODUK
+            // $distribusiTokoBerlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Produk'), [
+            //     'route' => 'products.index',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 2,
+            //         'activematches' => ['products*'],
+            //         'permission'    => ['access_products'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
-            // EMAS - TOKO - Distribusi Toko - LIST DISTRIBUSI TOKO
-            $distribusiTokoBerlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('List Distribusi Toko'), [
-                'route' => 'distribusitoko.berlian',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 1,
-                    'activematches' => ['distribusitokos*'],
-                    'permission'    => ['access_distribusitoko'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // // EMAS - TOKO - Distribusi Toko - LIST DISTRIBUSI TOKO
+            // $distribusiTokoBerlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('List Distribusi Toko'), [
+            //     'route' => 'distribusitoko.berlian',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 1,
+            //         'activematches' => ['distribusitokos*'],
+            //         'permission'    => ['access_distribusitoko'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
-            // Berlian - STOK
-            $stok_berlian = $berlian->add('<i class="mb-2 c-sidebar-nav-icon bi bi-box-seam"></i> Stok', [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-                ->data([
-                    'order'         => 4,
-                    'activematches' => [
-                        'stoks*',
-                        'stokcabangs*',
-                    ],
-                    'permission' => [
-                        'access_stoks',
-                        'access_stok_cabang',
-                        'access_stok_dp',
-                        'access_stok_pending',
-                        'access_menu_stok'
-                    ],
-                ]);
-            $stok_berlian->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
-            // EMAS - Stok Cabang
-            $stock_cabang_berlian = $stok_berlian->add('<i class="c-sidebar-nav-icon  bi-card-checklist"></i> ' . __('Stok Cabang'), [
-                'class' => 'c-sidebar-nav-dropdown',
-            ])
-                ->data([
-                    'order'         => 2,
-                    'activematches' => [],
-                    'permission'    => ['access_stok_cabang'],
-                ]);
-            $stock_cabang_berlian->link->attr([
-                'class' => 'c-sidebar-nav-dropdown-toggle',
-                'href'  => '#',
-            ]);
+            // // Berlian - STOK
+            // $stok_berlian = $berlian->add('<i class="mb-2 c-sidebar-nav-icon bi bi-box-seam"></i> Stok', [
+            //     'class' => 'c-sidebar-nav-dropdown',
+            // ])
+            //     ->data([
+            //         'order'         => 4,
+            //         'activematches' => [
+            //             'stoks*',
+            //             'stokcabangs*',
+            //         ],
+            //         'permission' => [
+            //             'access_stoks',
+            //             'access_stok_cabang',
+            //             'access_stok_dp',
+            //             'access_stok_pending',
+            //             'access_menu_stok'
+            //         ],
+            //     ]);
+            // $stok_berlian->link->attr([
+            //     'class' => 'c-sidebar-nav-dropdown-toggle',
+            //     'href'  => '#',
+            // ]);
+            // // EMAS - Stok Cabang
+            // $stock_cabang_berlian = $stok_berlian->add('<i class="c-sidebar-nav-icon  bi-card-checklist"></i> ' . __('Stok Cabang'), [
+            //     'class' => 'c-sidebar-nav-dropdown',
+            // ])
+            //     ->data([
+            //         'order'         => 2,
+            //         'activematches' => [],
+            //         'permission'    => ['access_stok_cabang'],
+            //     ]);
+            // $stock_cabang_berlian->link->attr([
+            //     'class' => 'c-sidebar-nav-dropdown-toggle',
+            //     'href'  => '#',
+            // ]);
 
-            // EMAS - STOK CABANG - STOK PENDING
-            $stock_cabang_berlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Stok Ready'), [
-                'route' => 'stok.berlian.ready',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 1,
-                    'activematches' => ['stoks*'],
-                    'permission'    => ['show_stock_ready_cabang'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // // EMAS - STOK CABANG - STOK PENDING
+            // $stock_cabang_berlian->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Stok Ready'), [
+            //     'route' => 'stok.berlian.ready',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 1,
+            //         'activematches' => ['stoks*'],
+            //         'permission'    => ['show_stock_ready_cabang'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
             // ================ End of Berlian =================
 
@@ -2128,6 +2154,20 @@ class GenerateMenus
                     'order'         => 91,
                     'activematches' => 'currencies*',
                     'permission'    => ['access_currencies'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link',
+                ]);
+
+
+            $setting->add('<i class="c-sidebar-nav-icon bi bi-config"></i> ' . __('Config') . '', [
+                'route' => 'config.index',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 91,
+                    'activematches' => 'settings*',
+                    'permission'    => ['access_settings'],
                 ])
                 ->link->attr([
                     'class' => 'c-sidebar-nav-link',

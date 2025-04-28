@@ -37,6 +37,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sale', 'JualController@list')
         ->name('sale.list');
 
+    Route::get('/config/index_data', 'ConfigController@index_data')
+        ->name('config.index_data');
+
+    Route::get('/config/nota', 'ConfigController@test_nota')
+        ->name('config.nota');
+
+    Route::get('/config', 'ConfigController@list')
+        ->name('config.index');
+
+    Route::post('/config/insert', 'ConfigController@insert')
+        ->name('config.insert');
+
+    Route::post('/config/update', 'ConfigController@update')
+        ->name('config.update');
+
+    Route::post('/config', 'ConfigController@create')
+        ->name('config.index');
+
     Route::get('/buyback', 'BuybackController@list')
         ->name('buyback.list');
 
@@ -72,6 +90,18 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/products_all', 'ProductController@list_all')
         ->name('products.all');
+
+    Route::get('/products_luar', 'ProductController@list_luar')
+        ->name('products.luar');
+
+    Route::get('/products_dataluar', 'ProductController@index_dataluar')
+        ->name('products.dataluar');
+
+    Route::post('/products_insert_luar', 'ProductController@insert_luar')
+        ->name('products.insert_luar');
+
+    Route::get('/products_pending', 'ProductController@list_pending')
+        ->name('products.pending');
 
     Route::post('/products_insert', 'ProductController@insert')
         ->name('products.insert');

@@ -37,7 +37,7 @@
                         <div class="w-2/3">
                               <div class="form-group">
                   <?php
-                    $field_name = 'Name';
+                    $field_name = 'name';
                     $field_lable = __($field_name);
                     $field_placeholder = Label_case($field_lable);
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -51,7 +51,7 @@
                 </div>
                        <div class="form-group">
                              <?php
-                            $field_name = 'Description';
+                            $field_name = 'description';
                             $field_lable = __($field_name);
                             $field_placeholder = Label_case($field_lable);
                             $invalid = $errors->has($field_name) ? ' is-invalid' : '';

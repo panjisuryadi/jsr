@@ -50,6 +50,7 @@
 
 @endsection
 <x-library.datatable />
+<script src="http://localhost:8000/js/jquery.min.js"></script>
 @push('page_scripts')
    <script type="text/javascript">
         $('#datatable').DataTable({

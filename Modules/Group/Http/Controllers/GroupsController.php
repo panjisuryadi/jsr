@@ -274,8 +274,8 @@ public function update(Request $request, $id)
         $input['code'] = $input['code'];
         $input['name'] = $input['name'];
         //$input['harga'] = $input['harga'];
-        $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga']);
-        $input['harga_modal'] = preg_replace("/[^0-9]/", "", $input['harga_modal']);
+        $input['harga'] = preg_replace("/[^0-9]/", "", $input['harga'] ?? 0);
+        $input['harga_modal'] = preg_replace("/[^0-9]/", "", $input['harga_modal'] ?? 0);
         //dd($input);
         $$module_name_singular->update($input);
         return response()->json(['success'=>'  '.$module_title.' Sukses diupdate.']);

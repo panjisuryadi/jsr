@@ -13,7 +13,11 @@ use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Category;
 use Modules\Group\Models\Group;
 use Modules\Product\Entities\Product;
+use App\Models\SalesGold;
+use App\Models\SalesItem;
+use App\Models\Service;
 use App\Models\Harga;
+use App\Models\Config;
 use App\Models\ProductHistories;
 use Modules\Product\Entities\ProductItem;
 use Modules\Sale\Entities\Sale;
@@ -91,17 +95,65 @@ class JualController extends Controller
     }
 
     public function insert(Request $request){
+        $config = Config::where('name', 'nota')->first();
+        $value   = $config->value;
+        $val    = json_decode($value, true);
+        $alamat = $val['alamat'];
+        $telp = $val['telp'];
+        $info = $val['info'];
+
+        // echo json_encode($_POST);
+        // exit();
+        $products   = array();        
+        $services   = array();        
+        $total      = 0;
+        $number     = 0;
         $nama_cus   = '';
-        if(!empty($request->customer)){
-            // $customer   = Customer::where('id', $request->customer)->first();
-            // $nama_cus   = $customer->customer_name;
+        if($request->customer != '0'){
+            $customer   = Customer::where('id', $request->customer)->first();
+            $nama_cus   = $customer->customer_name;
+            $address    = $customer->address;
     //         $nama_cus   = '
     // <p style="text-align: right; font-size:13px">Kepada Yth : '.$nama_cus.'</p>
     //         ';
         }
+        // exit();
+        foreach ($request->product as $p) {
+            if($p == 0){ // SERVICE NON PRODUCT
+                $services[] = $p;
+            }else{
+                if(in_array($p, $products)){
+                    return redirect()->action([JualController::class, 'list']);
+                }
+                $products[] = $p;
+            }
+            $harga  = $request->harga[$number];
+
+            $total  = $total+$harga;
+            $number++;
+        }
+        // INSERT SALES
+        $nomor  = '0000000001';
+        // $nomor  = SalesGold::latest()->get();
+        // $nomor  = (int)$nomor->nomor;
+        // $nomor  = $nomor+1;
+        // for ($i=0; $i < 10; $i++) { 
+        //     if(strlen($nomor) !== $i){
+        //         $nomor  = '0'.$nomor;
+        //     }
+        // }
+        $salesGold  = SalesGold::create([
+            'nomor' => $nomor,
+            'customer' => $request->customer,
+            'products' => json_encode($products),
+            'services' => json_encode($services),
+            'total' => $total,
+        ]);
+        $id = $salesGold->id;
+
         // UPDATE STATUS PRODUCT
-        $number = 0;
         $data   = array();
+        $number     = 0;
         foreach ($request->product as $p) {
             if($p == 0){ // SERVICE NON PRODUCT
                 $title  = 'Faktur';
@@ -109,6 +161,21 @@ class JualController extends Controller
                 $desc   = $request->product_desc[$number];
                 $gram   = '-';
                 $harga  = $request->harga[$number];
+
+                $serv   = Service::create([
+                    'sales' => $id,
+                    'name'  => $name,
+                    'desc'  => $desc,
+                    'total' => $harga
+                ]);
+
+                $product_history = ProductHistories::create([
+                    'product_id'    => $p,
+                    'status'        => 'S',
+                    'keterangan'    => $id,
+                    'harga'         => $request->harga[$number],
+                    'tanggal'       => date('Y-m-d'),
+                ]);
             }else{
                 $title  = 'Nota Emas';
                 $product= Product::where('id', $p)->firstOrFail();
@@ -129,33 +196,55 @@ class JualController extends Controller
                     'tanggal'       => date('Y-m-d'),
                 ]);
             }
+
+            // INSERT SALES ITEMS
+            $salesItem  = SalesItem::create([
+                'product'   => $p,
+                'name'      => $name,
+                'desc'      => $desc,
+                'total'     => $total,
+            ]);
+            $sales_id   = $salesItem->id;
+
+            for ($i=0; $i < 8; $i++) { 
+                if(strlen($sales_id) !== $i){
+                    $sales_id  = '0'.$sales_id;
+                }
+            }
+
             $array['products'][$number]['title'] = $title;
             $array['products'][$number]['name'] = $name;
             $array['products'][$number]['desc'] = $desc;
             $array['products'][$number]['gram'] = $gram;
             $array['products'][$number]['harga'] = $harga;
+            $array['products'][$number]['nomor'] = $nomor;
+            $array['products'][$number]['sales_id'] = $sales_id;
+            $array['products'][$number]['alamat'] = $alamat;
+            $array['products'][$number]['telp'] = $telp;
+            $array['products'][$number]['info'] = $info;
             $array['products'][$number]['customer'] =$nama_cus;
+            $array['products'][$number]['address'] =$address;
 
-            
             $number++;
         }
-        // $pdf = PDF::loadView('sale.invoice', $data)->setPaper('a5', 'landscape');
-        // return $pdf->download('invoice.pdf');
-        // $data = [
-        //     'title' => 'Nota Emas',
-        //     'date' => date('d/m/Y H:i:s'),
-        //     'products' => [
-        //         ['name' => 'Produk A', 'code' => 'CEmas 17K160125435', 'gram' => 1, 'price' => 10000],
-        //         ['name' => 'Produk B', 'code' => 'GEMAS 375140225232', 'gram' => 2, 'price' => 15000],
-        //         ['name' => 'Produk B', 'code' => 'GEMAS 375140225232', 'gram' => 2, 'price' => 15000],
-        //     ]
-        // ];
 
-        $pdf = PDF::loadView('sale.invoice', $array)->setPaper('a5', 'landscape');
+
+        $pdf = PDF::loadView('sale.invoice', $array)
+              ->setPaper('a5', 'landscape')  // A5 paper size, landscape orientation
+              ->setOptions([
+                  'isHtml5ParserEnabled' => true,  // Enable HTML5
+                  'isPhpEnabled' => true  // Enable PHP if necessary for advanced functionality
+              ]);
+
+        // $pdf = PDF::loadView('sale.invoice', $array)
+        //       ->setPaper('a5', 'landscape')  // Set paper size to A5 and orientation to landscape
+        //       ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);  // Enable HTML5 and PHP if needed
+    
         return $pdf->stream('invoice.pdf');
-        // echo json_encode($request);
-        // echo json_encode($_POST);
-        // exit();
+
+
+        // $pdf = PDF::loadView('sale.invoice', $array)->setPaper('a5', 'landscape');
+        // return $pdf->stream('invoice.pdf');
     }
 
     public function index_data(Request $request)
