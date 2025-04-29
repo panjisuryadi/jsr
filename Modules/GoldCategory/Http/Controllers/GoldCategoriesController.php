@@ -63,7 +63,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::get();
+        $$module_name = $module_model::latest()->get();
 
         $data = $$module_name;
 

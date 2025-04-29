@@ -78,7 +78,7 @@ public function index_data()
 
 
         $$module_name = $module_model::with('kategoriproduk')
-        ->withCount('products')->get();
+        ->withCount('products')->latest()->get();
 
         $data = $$module_name;
 

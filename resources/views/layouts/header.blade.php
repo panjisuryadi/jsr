@@ -29,9 +29,9 @@
 <ul class="c-header-nav ml-auto mr-4">
     @can('create_pos')
     <li class="c-header-nav-item mr-0">
-        <a class="c-header-nav-link {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}"
+        <a class="c-header-nav-link {{ request()->routeIs('sale.list') ? 'disabled' : '' }}"
           data-toggle="tooltip" data-placement="bottom" title="@lang('Hokkie POS')"
-         href="{{ route('app.pos.index') }}">
+         href="{{ route('sale.list') }}">
      <img class="w-7 mb-1" src="{{  asset('images/icon/cart.svg') }}">
             {{-- <i class="bi bi-cart mr-1"></i> @lang('POS') --}}
         </a>

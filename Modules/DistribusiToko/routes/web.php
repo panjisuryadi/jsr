@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get("$module_name/kategori/{slug}", ['as' => "$module_name.kategori", 'uses' => "$controller_name@kategori"]);
 
-  Route::get("$module_name/cetak/{id}", ['as' => "$module_name.cetak", 'uses' => "$controller_name@cetak"]);
+  // Route::get("$module_name/cetak/{id}", ['as' => "$module_name.cetak", 'uses' => "$controller_name@cetak"]);
 
 
     Route::get("$module_name/send/{dist_toko}", ['as' => "$module_name.send", 'uses' => "$controller_name@send"]);

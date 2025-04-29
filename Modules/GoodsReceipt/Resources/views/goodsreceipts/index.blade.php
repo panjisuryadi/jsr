@@ -27,7 +27,7 @@ table.dataTable>thead .sorting, table.dataTable>thead .sorting_asc, table.dataTa
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-                           <a href="{{ route(''.$module_name.'.create') }}"
+                           <a href="{{ route('penerimaan.create') }}"
                                 id=""
                                 data-toggle="tooltip"
                                  class="btn btn-primary px-3 py-1">

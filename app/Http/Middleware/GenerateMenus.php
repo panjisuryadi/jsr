@@ -135,6 +135,8 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link py-3',
                 ]);
 
+            
+
 
             //menuemas
             $emas = $menu->add('<i class="c-sidebar-nav-icon bi bi-star"></i> Emas', [
@@ -205,6 +207,20 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
 
+            // EMAS - PEMBELIAN - TANPA NOTA
+            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Input Barang (Tanpa Nota)'), [
+                'route' => 'products.list',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 2,
+                    'activematches' => ['goodsreceipts*'],
+                    'permission'    => ['access_goodsreceipts'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
             // EMAS - PEMBELIAN - Hutang
             $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Goods Receipt Debts'), [
                 'route' => 'goodsreceipt.debts',
@@ -254,32 +270,32 @@ class GenerateMenus
             ]);
 
             // EMAS - PEMBELIAN - PENERIMAAN BARANG
-            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Nota'), [
-                'route' => 'products.emas',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 1,
-                    'activematches' => ['goodsreceipts*'],
-                    'permission'    => ['access_goodsreceipts'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Nota'), [
+            //     'route' => 'products.emas',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 1,
+            //         'activematches' => ['goodsreceipts*'],
+            //         'permission'    => ['access_goodsreceipts'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
             // EMAS - PEMBELIAN - Hutang
-            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Tanpa Nota'), [
-                'route' => 'products.list',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 2,
-                    'activematches' => ['goodsreceipts*'],
-                    'permission'    => ['access_goodsreceipts'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Tanpa Nota'), [
+            //     'route' => 'products.list',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 2,
+            //         'activematches' => ['goodsreceipts*'],
+            //         'permission'    => ['access_goodsreceipts'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
             // ReturPembelians
             $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('All Products'), [
@@ -295,7 +311,7 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
 
-            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Luar'), [
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Barang Luar'), [
                 'route' => 'products.luar',
                 'class' => 'nav-item',
             ])
@@ -310,6 +326,84 @@ class GenerateMenus
 
             $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Pending'), [
                 'route' => 'products.pending',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products History'), [
+                'route' => 'history_product.list',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Reparasi'), [
+                'route' => 'products.reparasi',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Cuci'), [
+                'route' => 'products.cuci',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Lebur'), [
+                'route' => 'products.lebur',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Gudang'), [
+                'route' => 'products.gudang',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Buyback'), [
+                'route' => 'buyback.list',
                 'class' => 'nav-item',
             ])
                 ->data([
@@ -1214,22 +1308,22 @@ class GenerateMenus
 
 
             // DiamondCertificates
-            $Categories->add(
-                // '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.diamond_certificate'), [
-                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> ' . __('Sertifikat Logam'),
-                [
-                    'route' => 'diamondcertificate.index',
-                    'class' => 'nav-item',
-                ]
-            )
-                ->data([
-                    'order'         => 3,
-                    'activematches' => ['diamondcertificates*'],
-                    'permission'    => ['access_diamondcertificates'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $Categories->add(
+            //     // '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> '.__('labels.menu.diamond_certificate'), [
+            //     '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> ' . __('Sertifikat Logam'),
+            //     [
+            //         'route' => 'diamondcertificate.index',
+            //         'class' => 'nav-item',
+            //     ]
+            // )
+            //     ->data([
+            //         'order'         => 3,
+            //         'activematches' => ['diamondcertificates*'],
+            //         'permission'    => ['access_diamondcertificates'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
 
 
@@ -1299,18 +1393,18 @@ class GenerateMenus
             //     ]);
 
             // Cabangs
-            $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Cabang'), [
-                'route' => 'cabang.index',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 3,
-                    'activematches' => ['cabangs*'],
-                    'permission'    => ['access_cabangs'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $jenisGropus->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Cabang'), [
+            //     'route' => 'cabang.index',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 3,
+            //         'activematches' => ['cabangs*'],
+            //         'permission'    => ['access_cabangs'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
 
 
@@ -1353,6 +1447,19 @@ class GenerateMenus
             // ProdukModels
             $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Produk Models'), [
                 'route' => 'produkmodel.index',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 3,
+                    'activematches' => ['produkmodels*'],
+                    'permission'    => ['access_produkmodels'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $dataMaster->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Baki'), [
+                'route' => 'bakis.list',
                 'class' => 'nav-item',
             ])
                 ->data([
@@ -1408,7 +1515,7 @@ class GenerateMenus
             $Parameters->add(
                 '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> ' . __('Karat Emas'),
                 [
-                    'route' => 'karat.index',
+                    'route' => 'karats.list',
                     'class' => 'nav-item',
                 ]
             )

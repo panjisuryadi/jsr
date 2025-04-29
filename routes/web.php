@@ -25,6 +25,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/buys-backnota', 'HomeController@buysbacknota')
         ->name('home.buysbacknota');
 
+    Route::get('/bakis', 'BakiController@list')
+        ->name('bakis.list');
+
+    Route::get('/bakis/index_data', 'BakiController@index_data')
+        ->name('bakis.index_data');
+
+    Route::post('/bakis', 'BakiController@insert')
+        ->name('bakis.insert');
+
+    Route::post('/bakis/update', 'BakiController@update')
+        ->name('bakis.update');
+
     Route::get('/sales-purchases/chart-data', 'HomeController@salesPurchasesChart')
         ->name('sales-purchases.chart');
 
@@ -53,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('config.update');
 
     Route::post('/config', 'ConfigController@create')
-        ->name('config.index');
+        ->name('config.create');
 
     Route::get('/buyback', 'BuybackController@list')
         ->name('buyback.list');
@@ -103,6 +115,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products_pending', 'ProductController@list_pending')
         ->name('products.pending');
 
+    Route::post('/products_updatepending', 'ProductController@update_pending')
+        ->name('products.updatepending');
+
+    Route::post('/products_updatestatus', 'ProductController@update_status')
+        ->name('products.updatestatus');
+
+    Route::get('/products_datapending', 'ProductController@data_pending')
+        ->name('products.datapending');
+
     Route::post('/products_insert', 'ProductController@insert')
         ->name('products.insert');
 
@@ -114,6 +135,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/products_all_data', 'ProductController@data_all')
         ->name('products.all_data');
+
+    Route::get('/products_index_data/{id}', 'ProductController@index_datas')
+        ->name('products.index_data');
+
+    Route::get('/products_reparasi', 'ProductController@list_reparasi')
+        ->name('products.reparasi');
+
+    Route::get('/products_lebur', 'ProductController@list_lebur')
+        ->name('products.lebur');
+
+    Route::get('/products_cuci', 'ProductController@list_cuci')
+        ->name('products.cuci');
+
+    Route::get('/products_gudang', 'ProductController@list_gudang')
+        ->name('products.gudang');
 
     Route::get('/karats', 'KaratController@list')
         ->name('karats.list');

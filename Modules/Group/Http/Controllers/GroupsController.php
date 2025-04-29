@@ -64,7 +64,7 @@ public function index_data(Request $request)
 
         $module_action = 'List';
 
-        $$module_name = $module_model::with('jenis_group')->get();
+        $$module_name = $module_model::with('jenis_group')->latest()->get();
 
         $data = $$module_name;
 

@@ -49,9 +49,9 @@
 
                       <th style="width: 13%!important;" class="text-center">{{ Label_case('Status') }}</th>
 
-                 <!-- <th style="width: 18%!important;" class="text-center">
+                 <th style="width: 18%!important;" class="text-center">
                                         Action
-                                    </th> -->
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
@@ -340,12 +340,12 @@
             data: 'status',
             name: 'status'
         },
-        // {
-        //     data: 'action',
-        //     name: 'action',
-        //     orderable: false,
-        //     searchable: false
-        // }
+        {
+            data: 'action',
+            name: 'action',
+            orderable: false,
+            searchable: false
+        }
         ]
     })
     .buttons()

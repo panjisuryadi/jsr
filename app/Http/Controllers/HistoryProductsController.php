@@ -131,6 +131,15 @@ class HistoryProductsController extends Controller
                         elseif($data->status == 'B'){
                             $status = 'Buyback';
                         }
+                        elseif($data->status == 'P'){
+                            $status = 'Pending';
+                        }
+                        elseif($data->status == 'L'){
+                            $status = 'Buy Luar';
+                        }
+                        elseif($data->status == 'H'){
+                            $status = 'Hancur/Lebur';
+                        }
                         return $status;
                          }) 
                          

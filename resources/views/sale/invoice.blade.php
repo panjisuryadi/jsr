@@ -51,12 +51,37 @@
             text-align: center;
         }
 
-        /* Invoice Details table */
-        .invoice-details {
+
+        
+        .header {
+            text-align: center; /* Center the content */
+            width: 100%;
+        }
+
+        .header img {
+            display: inline-block; /* Display image inline */
+            width: 80px; /* Set the logo size */
+            vertical-align: middle; /* Align the logo vertically */
+            margin-right: 10px; /* Space between the logo and text */
+        }
+
+        .header div {
+            display: inline-block; /* Display the text inline */
+            vertical-align: middle; /* Align the text vertically */
+            text-align: left; /* Align text to the left */
+        }
+
+        .header h2, .header p {
+            margin: 0;
+        }
+
+
+
+        /* .invoice-details {
             width: 100%;
             margin-top: 10px;
             font-size: 12px;
-            table-layout: fixed; /* Prevent overflow and adjust column widths */
+            table-layout: fixed;
         }
 
         .invoice-details td {
@@ -72,7 +97,10 @@
         .invoice-details .right {
             width: 50%;
             text-align: right;
-        }
+        } */
+
+
+
 
         /* Align Total to the right */
         .total {
@@ -134,6 +162,8 @@
             
             <!-- Centered: Toko Emas Cahaya -->
             <h2>Toko Emas Cahaya</h2>
+            <p>{{ $product['alamat'] }}</p>
+            <p>{{ $product['telp'] }}</p>
         </div>
 
         <!-- Invoice Details table -->
@@ -151,16 +181,16 @@
         <table class="invoice-table">
             <thead>
                 <tr>
-                    <th>Nama Produk</th>
-                    <th>Desc Produk</th>
-                    <th>Gram</th>
+                    <th>Kode</th>
+                    <th>Jenis</th>
+                    <th>Berat</th>
                     <th>Harga</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $product['name'] }}</td>
                     <td>{{ $product['desc'] }}</td>
+                    <td>{{ $product['name'] }}</td>
                     <td>{{ $product['gram'] }}</td>
                     <td>Rp {{ number_format($product['harga'], 0, ',', '.') }}</td>
                 </tr>

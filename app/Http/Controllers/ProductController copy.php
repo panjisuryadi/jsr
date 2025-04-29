@@ -156,56 +156,26 @@ class ProductController extends Controller
 
     public function update_pending(Request $request)
     {   
-        // echo json_encode($_POST);
-        // exit();
         $id = $request->id;
         // UPDATE STATUS PRODUCT
         $products   = Product::where('id', $id)->firstOrFail();
         $products->status   = $request->status;
         $products->save();
         // INSERT HISTORY
-        $stat[1] = 'O';
-        $stat[8] = 'R';
-        $stat[2] = 'S';
-        $stat[15] = 'H';
-        // $stat[1] = 'L';
         $product_history = ProductHistories::create([
             'product_id'    => $id,
-            'status'        => $stat[$request->status],
+            'status'        => $request->status,
             'keterangan'    => 'update dari pending',
-            'harga'         => $request->harga ?? 0,
+            'harga'         => $request->harga,
             'tanggal'       => date('Y-m-d'),
         ]);
 
-        return redirect()->action([ProductController::class, 'list_pending']);
+        $harga = Harga::where('tanggal', date('Y-m-d'))->firstOrFail();
+        $harga->harga = $request->harga;
+        $harga->save();
+
+        return redirect()->action([KaratController::class, 'list']);
     }
-
-    public function update_status(Request $request)
-    {   
-        // echo json_encode($_POST);
-        // exit();
-        $id = $request->id;
-        $product = $request->product;
-        // UPDATE STATUS PRODUCT
-        $products   = Product::where('id', $id)->firstOrFail();
-        $products->status   = $request->status;
-        $products->save();
-        // INSERT HISTORY
-        $stat[1] = 'O';
-        $stat[8] = 'R';
-        $stat[2] = 'S';
-        $stat[15] = 'H';
-        // $stat[1] = 'L';
-        $product_history = ProductHistories::create([
-            'product_id'    => $id,
-            'status'        => $stat[$request->status],
-            'keterangan'    => 'update dari '.$product,
-            'harga'         => $request->harga ?? 0,
-            'tanggal'       => date('Y-m-d'),
-        ]);
-
-        return redirect()->action([ProductController::class, 'list_'.$product]);
-    }   
 
     public function list_luar(Request $request)
     {
@@ -281,197 +251,6 @@ class ProductController extends Controller
                 'dataKarat',
             )
         );
-    }
-
-    public function list_reparasi(Request $request)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        return view(
-            'products.list_reparasi', // Path to your create view file
-            compact(
-                'module_title',
-                'module_name',
-                'module_path',
-                'module_icon',
-                'module_model',
-            )
-        );
-    }
-
-    public function list_cuci(Request $request)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        return view(
-            'products.list_cuci', // Path to your create view file
-            compact(
-                'module_title',
-                'module_name',
-                'module_path',
-                'module_icon',
-                'module_model',
-            )
-        );
-    }
-
-    public function list_lebur(Request $request)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        return view(
-            'products.list_lebur', // Path to your create view file
-            compact(
-                'module_title',
-                'module_name',
-                'module_path',
-                'module_icon',
-                'module_model',
-            )
-        );
-    }
-
-    public function list_gudang(Request $request)
-    {
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        return view(
-            'products.list_gudang', // Path to your create view file
-            compact(
-                'module_title',
-                'module_name',
-                'module_path',
-                'module_icon',
-                'module_model',
-            )
-        );
-    }
-
-    public function index_datas(Request $request)
-    {   
-        $id     = $request->id;
-
-        $module_title = $this->module_title;
-        $module_name = $this->module_name;
-        $module_path = $this->module_path;
-        $module_icon = $this->module_icon;
-        $module_model = $this->module_model;
-        $module_name_singular = Str::singular($module_name);
-
-        $module_action = 'List';
-        $$module_name = $module_model::with('category', 'product_item');
-        if ($request->get('status')) {
-            $$module_name = $$module_name->where('status_id', $request->get('status'));
-        }
-        
-        $$module_name->where('status', $id)->get();
-        $harga = Harga::latest()->first();  
-        if($harga == null){
-            $harga  = 0;
-        }else{
-            $harga = $harga->harga;
-        }     
-        // $harga  = 1000000;
-        $$module_name = $$module_name->latest()->get();
-        $$module_name->each(function ($item) use ($harga) {
-            $item->harga = $harga; 
-        });
-        $data = $$module_name;
-
-        $stat[8] = 'reparasi';
-        $stat[5] = 'cuci';
-        $stat[6] = 'lebur';
-        $stat[4] = 'gudang';
-
-        return Datatables::of($$module_name)
-            ->addColumn('action', function ($data) {
-                $module_name = $this->module_name;
-                $module_model = $this->module_model;
-                return view(
-                    'product::products.partials.'.$stat[$id],
-                    compact('module_name', 'data', 'module_model')
-                );
-            })
-
-            ->editColumn('product_name', function ($data) {
-                $tb = '<div class="flex items-center gap-x-2">
-                        <div>
-                           <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
-                            ' . $data->category?->category_name . '</div>
-
-                            <h3 class="small font-medium text-gray-600 dark:text-white "> ' . $data->product_name . '</h3>
-                             <div class="text-xs font-normal text-blue-500 font-semibold">
-                            ' . @$data->cabang->name . '</div>
-
-
-                        </div>
-                    </div>';
-                return $tb;
-            })
-            //    ->addColumn('product_image', function ($data) {
-            //     $url = $data->getFirstMediaUrl('images', 'thumb');
-            //     return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
-            // })
-
-
-            ->addColumn('product_image', function ($data) {
-                return view('product::products.partials.image', compact('data'));
-            })
-
-            ->addColumn('status', function ($data) {
-                return view('product::products.partials.status', compact('data'));
-            })
-
-            ->editColumn('cabang', function ($data) {
-                $tb = '<div class="text-center items-center gap-x-2">
-                            <div class="text-sm text-center">
-                              ' . @$data->cabang->name . '</div>
-                                </div>';
-                return $tb;
-            })
-
-            ->editColumn('karat', function ($data) {
-                $tb = '<div class="items-center gap-x-2">
-                                <div class="text-sm text-center text-gray-500">
-                                <b>' . @$data->karat->label . ' </b><br>
-                                Rp .' . @rupiah($data->product_price) . ' <br>
-                                </div>
-                                </div>';
-                return $tb;
-            })
-
-
-            ->addColumn('tracking', function ($data) {
-                $module_name = $this->module_name;
-                $module_model = $this->module_model;
-                return view(
-                    'product::products.partials.qrcode_button',
-                    compact('module_name', 'data', 'module_model')
-                );
-            })
-
-
-            ->editColumn('created_at', function ($data) {
-                $module_name = $this->module_name;
-                return tgljam($data->created_at);
-            })
-            ->rawColumns([
-                'created_at', 'product_image', 'weight', 'status', 'tracking',
-                'product_name', 'karat', 'berat_emas', 'cabang', 'action'
-            ])
-            ->make(true);
     }
 
     public function list(Request $request)
@@ -857,7 +636,7 @@ class ProductController extends Controller
                 $module_name = $this->module_name;
                 $module_model = $this->module_model;
                 return view(
-                    'product::products.partials.pending',
+                    'product::products.partials.actions',
                     compact('module_name', 'data', 'module_model')
                 );
             })
