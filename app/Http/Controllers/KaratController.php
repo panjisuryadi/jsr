@@ -60,6 +60,42 @@ class KaratController extends Controller
         return redirect()->action([KaratController::class, 'list']);
     }
 
+    public function update_diskon(Request $request, Karat $data)
+    {
+        $validator = \Validator::make($request->all(),[
+            'coef' => 'required|numeric',
+        ]);
+        if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+        $diskon = $request->input('diskon');
+        $data->diskon = $diskon;
+        $data->save();
+        if(empty($data->parent_id)){
+            $dataKarat = [
+                'karat_id' => $data->parent_id,
+                'user_id' => auth()->id(),
+                'tgl_update' => now(),
+                'harga_emas' => 0,
+                'harga_modal' => 0,
+                'margin' => 0,
+                'harga_jual' => 0
+            ];
+            
+            $penentuan_harga = PenentuanHarga::where('karat_id', $data->id)->first();
+            if(!$penentuan_harga){
+                $penentuan_harga = $data->penentuanHarga()->create($dataKarat);
+                $dataKarat['karat_id'] = $data->id;
+                $dataKarat['updated'] = 1;
+                $dataKarat['created_by'] = auth()->user()->name;
+                unset($dataKarat['tgl_update']);
+                $dataKarat['tanggal'] = now();
+                $penentuan_harga->history()->create($dataKarat);
+            }
+        }
+        return response()->json(['success'=>'Diskon Sukses diupdate.']);
+    }
+
     public function list(Request $request)
     {
         // $harga = Harga::where('tanggal', date('Y-m-d'))->first();
@@ -74,7 +110,7 @@ class KaratController extends Controller
         $module_model = $this->module_model;
         $dataKarat = Karat::whereNull('parent_id')->get();
         return view(
-            'Karats.list', // Path to your create view file
+            'karats.list', // Path to your create view file
             compact(
                 'module_title',
                 'module_name',
@@ -87,9 +123,12 @@ class KaratController extends Controller
         );
     }
 
-    public function history(Request $request)
+    public function list_diskon(Request $request)
     {
+        // $harga = Harga::where('tanggal', date('Y-m-d'))->first();
         $harga = Harga::latest()->first();
+        // echo json_encode($harga);
+        // exit();
 
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -98,7 +137,7 @@ class KaratController extends Controller
         $module_model = $this->module_model;
         $dataKarat = Karat::whereNull('parent_id')->get();
         return view(
-            'Karats.history', // Path to your create view file
+            'karats.list_diskon', // Path to your create view file
             compact(
                 'module_title',
                 'module_name',
@@ -109,6 +148,196 @@ class KaratController extends Controller
                 'harga',
             )
         );
+    }
+
+    public function index_diskon(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        // $harga = Harga::where('tanggal', date('Y-m-d'))->first();
+        $harga = Harga::latest()->first();  
+        if($harga == null){
+            $harga  = 0;
+        }else{
+            $harga = $harga->harga;
+        }     
+        // $harga  = 1000000;
+        $$module_name = Karat::latest()->get();
+        $$module_name->each(function ($item) use ($harga) {
+            $item->harga = $harga; // Add the harga attribute to the model
+        });
+        
+        $data = $$module_name;
+        return Datatables::of($$module_name)
+                    ->addColumn('action', function ($data) {
+                       $module_name = $this->module_name;
+                        $module_model = $this->module_model;
+                        $module_path = $this->module_path;
+                        $harga = 1000000;
+                        return view($module_name.'::'.$module_path.'.includes.diskon',
+                        compact('module_name', 'data', 'module_model'));
+                            })
+                         
+                        ->editColumn('karat', function($data){
+                            // $output = '';
+                            // if(is_null($data->parent_id)){
+                            //     $output = "{$data->name} {$data->kode}";
+                            // }else{
+                            //     $output = "{$data->parent->name} {$data->parent->kode} - {$data->name}";
+                            // }
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .$data->label . '</h3>
+                                    </div>';
+                             })  
+
+                ->editColumn('type', function($data){
+                            $output = '';
+                            if(is_null($data->type)){
+                 $output = ($data->parent?->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
+                            }else{
+                 $output = ($data->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
+                            }
+                       return '<div class="items-center text-center">' .$output . '</div>';
+                        }) 
+                      ->editColumn('coef', function($data){
+                            $output = '';
+                          
+                        return '<div class="items-center text-center">
+                                            <span class="text-sm font-medium text-gray-800"> ' .$data->coef . '</span>
+                                    </div>';
+
+                        })   
+                        ->editColumn('margin', function($data){
+                            return number_format($data->margin);
+                            // return '<div class="items-center text-center">
+                            //                 <h3 class="text-sm font-bold text-gray-800"> ' .number_format($data->margin) . '</h3>
+                            //         </div>';
+                            }) 
+                        
+                        ->editColumn('rekomendasi', function($data){
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .number_format(($data->coef*$data->harga)+$data->margin) . '</h3>
+                                    </div>';
+                            })
+                      ->editColumn('ph', function($data){
+                            $output = '';
+                          
+                            return '<div class="items-center font-semibold text-center">
+                             ' .rupiah(@$data->penentuanharga->harga_emas) . '
+                             </div>';
+
+                        })
+                        ->editColumn('harga', function($data){
+                            $output = '';
+                          
+                            return '<div class="items-center font-semibold text-center">
+                             ' .rupiah(@$data->coef*@$data->harga) . '
+                             </div>';
+
+                        })
+                        ->rawColumns(['karat', 'rekomendasi', 'action','coef','type','ph', 'harga'])
+                        ->make(true);
+    }
+
+    public function index_data(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        // $harga = Harga::where('tanggal', date('Y-m-d'))->first();
+        $harga = Harga::latest()->first();  
+        if($harga == null){
+            $harga  = 0;
+        }else{
+            $harga = $harga->harga;
+        }     
+        // $harga  = 1000000;
+        $$module_name = Karat::latest()->get();
+        $$module_name->each(function ($item) use ($harga) {
+            $item->harga = $harga; // Add the harga attribute to the model
+        });
+        
+        $data = $$module_name;
+        return Datatables::of($$module_name)
+                    ->addColumn('action', function ($data) {
+                       $module_name = $this->module_name;
+                        $module_model = $this->module_model;
+                        $module_path = $this->module_path;
+                        $harga = 1000000;
+                        return view($module_name.'::'.$module_path.'.includes.action',
+                        compact('module_name', 'data', 'module_model'));
+                            })
+                         
+                        ->editColumn('karat', function($data){
+                            // $output = '';
+                            // if(is_null($data->parent_id)){
+                            //     $output = "{$data->name} {$data->kode}";
+                            // }else{
+                            //     $output = "{$data->parent->name} {$data->parent->kode} - {$data->name}";
+                            // }
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .$data->label . '</h3>
+                                    </div>';
+                             })  
+
+                ->editColumn('type', function($data){
+                            $output = '';
+                            if(is_null($data->type)){
+                 $output = ($data->parent?->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
+                            }else{
+                 $output = ($data->type == 'LM')?'<span class="text-sm font-medium text-yellow-700">Logam Mulia</span>':'<span class="text-sm font-medium text-green-700">Perhiasan</span>';
+                            }
+                       return '<div class="items-center text-center">' .$output . '</div>';
+                        }) 
+                      ->editColumn('coef', function($data){
+                            $output = '';
+                          
+                        return '<div class="items-center text-center">
+                                            <span class="text-sm font-medium text-gray-800"> ' .$data->coef . '</span>
+                                    </div>';
+
+                        })   
+                        ->editColumn('margin', function($data){
+                            return number_format($data->margin);
+                            // return '<div class="items-center text-center">
+                            //                 <h3 class="text-sm font-bold text-gray-800"> ' .number_format($data->margin) . '</h3>
+                            //         </div>';
+                            }) 
+                        
+                        ->editColumn('rekomendasi', function($data){
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .number_format(($data->coef*$data->harga)+$data->margin) . '</h3>
+                                    </div>';
+                            })
+                      ->editColumn('ph', function($data){
+                            $output = '';
+                          
+                            return '<div class="items-center font-semibold text-center">
+                             ' .rupiah(@$data->penentuanharga->harga_emas) . '
+                             </div>';
+
+                        })
+                        ->editColumn('harga', function($data){
+                            $output = '';
+                          
+                            return '<div class="items-center font-semibold text-center">
+                             ' .rupiah(@$data->coef*@$data->harga) . '
+                             </div>';
+
+                        })
+                        ->rawColumns(['karat', 'rekomendasi', 'action','coef','type','ph', 'harga'])
+                        ->make(true);
     }
 
     public function history_data()
@@ -142,16 +371,22 @@ class KaratController extends Controller
                             })
                          
                         ->editColumn('harga', function($data){
-                            // $output = '';
-                            // if(is_null($data->parent_id)){
-                            //     $output = "{$data->name} {$data->kode}";
-                            // }else{
-                            //     $output = "{$data->parent->name} {$data->parent->kode} - {$data->name}";
-                            // }
                             return '<div class="items-center text-center">
                                             <h3 class="text-sm font-bold text-gray-800"> ' .number_format($data->harga) . '</h3>
                                     </div>';
                              })  
+
+                        ->editColumn('margin', function($data){
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .number_format($data->margin) . '</h3>
+                                    </div>';
+                            }) 
+                        
+                        ->editColumn('rekomendasi', function($data){
+                            return '<div class="items-center text-center">
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .number_format($data->harga+$data->margin) . '</h3>
+                                    </div>';
+                            })
 
                       ->editColumn('tanggal', function($data){
                         $output = '';

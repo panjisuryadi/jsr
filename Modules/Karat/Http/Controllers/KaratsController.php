@@ -383,7 +383,9 @@ public function update(Request $request, $id)
           return response()->json(['error'=>$validator->errors()]);
         }
         $coef = $request->input('coef');
+        $margin = $request->input('margin');
         $data->coef = $coef;
+        $data->margin = $margin;
         $data->save();
         if(empty($data->parent_id)){
             $dataKarat = [
@@ -407,7 +409,43 @@ public function update(Request $request, $id)
                 $penentuan_harga->history()->create($dataKarat);
             }
         }
-        return response()->json(['success'=>'Coef Sukses diupdate.']);
+        return response()->json(['success'=>'Karat Sukses diupdate.']);
+ }
+
+ public function update_diskon(Request $request, Karat $data)
+    {
+        $validator = \Validator::make($request->all(),[
+            'coef' => 'required|numeric',
+        ]);
+        if (!$validator->passes()) {
+          return response()->json(['error'=>$validator->errors()]);
+        }
+        $diskon = $request->input('diskon');
+        $data->diskon = $diskon;
+        $data->save();
+        if(empty($data->parent_id)){
+            $dataKarat = [
+                'karat_id' => $data->parent_id,
+                'user_id' => auth()->id(),
+                'tgl_update' => now(),
+                'harga_emas' => 0,
+                'harga_modal' => 0,
+                'margin' => 0,
+                'harga_jual' => 0
+            ];
+            
+            $penentuan_harga = PenentuanHarga::where('karat_id', $data->id)->first();
+            if(!$penentuan_harga){
+                $penentuan_harga = $data->penentuanHarga()->create($dataKarat);
+                $dataKarat['karat_id'] = $data->id;
+                $dataKarat['updated'] = 1;
+                $dataKarat['created_by'] = auth()->user()->name;
+                unset($dataKarat['tgl_update']);
+                $dataKarat['tanggal'] = now();
+                $penentuan_harga->history()->create($dataKarat);
+            }
+        }
+        return response()->json(['success'=>'Diskon Sukses diupdate.']);
  }
 
     /**

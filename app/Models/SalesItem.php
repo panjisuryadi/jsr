@@ -13,5 +13,6 @@ class SalesItem extends Model
         'name',
         'desc',
         'total',
+        'nomor',
     ];
 }

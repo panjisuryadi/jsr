@@ -389,6 +389,19 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
 
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Baki'), [
+                'route' => 'products.baki',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
             $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Gudang'), [
                 'route' => 'products.gudang',
                 'class' => 'nav-item',

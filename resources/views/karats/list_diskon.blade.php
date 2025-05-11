@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Buyback')
+@section('title', 'Karat')
 @section('third_party_stylesheets')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 @endsection
@@ -17,15 +17,8 @@
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
                         <div>
-
-                <div class="btn-group">
-                    <a href="#" class="px-3 btn btn-danger" data-toggle="modal" data-target="#createModal">
-                        + BuyBack <i class="bi bi-plus"></i>
-                    </a>
-                    
-                </div>
-
-                    </div>
+                        <h2>Discont</h2>
+                        </div>
                         <div id="buttons"></div>
                     </div>
                     <div class="table-responsive mt-1">
@@ -36,21 +29,27 @@
                                         NO
                                     </th>
                                     <th>
-                                        Product
+                                        Karat
                                     </th>
-                                    <th>
-                                        Nota
-                                    </th>
-                                     <th style="width: 15%!important;" class="text-center">
-                                        Kondisi
+                                     <th style="width: 13%!important;" class="text-center">
+                                        Tipe
                                     </th>  
 
-                                     <th style="width: 10%!important;" class="text-center">
-                                        Harga
+                                     <th style="width: 9%!important;" class="text-center">
+                                        Coef
                                     </th>  
-                                    <th style="width: 15%!important;" class="text-center">
-                                        Tanggal
+                                     <!-- <th style="width: 7%!important;" class="text-center">
+                                        Ph
+                                    </th>  -->
+                                    <th style="width: 8%!important;" class="text-center">
+                                        Harga Jual
                                     </th> 
+                                    <th style="width: 8%!important;" class="text-center">
+                                        Discont
+                                    </th> 
+                                    <th style="width: 10%!important;" class="text-center">
+                                       {{__('Action')}}
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
@@ -62,57 +61,19 @@
 </div>
 
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-lg font-bold" id="addModalLabel">Buyback +</h3>
+                <h3 class="modal-title text-lg font-bold" id="addModalLabel">Set Harga</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body p-4">
-                <form action="/buyback_insert" method="post">
+                <form action="/karats" method="post">
                     @csrf
-                    <!-- <div class="form-group">
-                        <label for="">Code Product</label>
-                        <input type="text" class="form-control" name="product" required>
-                    </div> -->
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="">No Nota</label>
-                                <input type="hidden" name="product" id="product">
-                                <input type="text" class="form-control" name="nota" id="nota" onkeyup="view_nota();" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Kondisi</label>
-                                <input type="text" class="form-control" name="kondisi" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Harga</label>
-                                <input type="number" class="form-control" name="harga" required>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="">Nama</label>
-                                <input type="text" class="form-control" name="name" id="name" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Desc</label>
-                                <input type="text" class="form-control" name="desc" id="desc" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Total</label>
-                                <input type="text" class="form-control" name="total" id="total" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    
+                    <label for="">Harga</label>
+                    <input type="number" class="form-control" name="harga">
                     <br>
                     <button class="btn btn-sm btn-success">Submit</button>
                 </form>
@@ -121,12 +82,31 @@
     </div>
 </div>
 
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-lg font-bold" id="addModalLabel">Set Harga</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+                <form action="/karats_update" method="post">
+                    @csrf
+                    <label for="">Harga</label>
+                    <input type="number" class="form-control" name="harga">
+                    <button class="btn btn-sm btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 <x-library.datatable />
 @push('page_scripts')
    <script type="text/javascript">
-    
         $('#datatable').DataTable({
            processing: true,
            serverSide: true,
@@ -155,7 +135,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("buyback.index_data") }}',
+            ajax: '{{ route("karats.index_diskon") }}',
             dom: 'Blfrtip',
             buttons: [
                 'excel',
@@ -171,30 +151,42 @@
                 },
 
                 {
-                    data: 'product',
-                    name: 'product'
-                },
-                {
-                    data: 'nota',
-                    name: 'nota'
-                },
-                {
-                    data: 'kondisi',
-                    name: 'kondisi'
+                    data: 'karat',
+                    name: 'karat'
                 },{
-                    data: 'harga',
-                    name: 'harga'
+                    data: 'type',
+                    name: 'type'
+                },{
+                    data: 'coef',
+                    name: 'coef'
                 },
                 // {
                 //     data: 'ph',
                 //     name: 'ph'
                 // }
                 // ,
+                // {
+                //     data: 'harga',
+                //     name: 'harga'
+                // },
+                // {
+                //     data: 'margin',
+                //     name: 'margin'
+                // },
                 {
-                    data: 'tanggal',
-                    name: 'tanggal'
+                    data: 'rekomendasi',
+                    name: 'rekomendasi'
                 },
-                
+                {
+                    data: 'diskon',
+                    name: 'diskon'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
             ]
         })
         .buttons()
@@ -222,39 +214,5 @@ $(document).on('click', '#Tambah, #Edit', function(e){
         $('#ModalGue').modal('show');
     });
 })(jQuery);
-</script>
-<script src="./js/jquery.min.js"></script>
-<script>
-function view_nota(){
-    let nota = $('#nota').val();
-    let length = nota.length;
-    if (length == 10){
-        $('#name').val();
-        $('#desc').val();
-        $('#total').val();
-        $.ajax({
-            url: './buyback_nota/'+nota, // The URL for your route
-            type: 'GET', // Request method
-            dataType: 'json', // Expecting JSON response
-            success: function(response) {
-                console.log(response);
-                // On success, handle the response
-                if(response) {
-                    $('#product').val(response.product);
-                    $('#name').val(response.name);
-                    $('#desc').val(response.desc);
-                    $('#total').val(response.total);
-                    
-                } else {
-                    // $("#result").html("<p>No data found.</p>");
-                }
-            },
-            error: function() {
-                // Handle errors
-                alert('An error occurred.');
-            }
-        });
-    }
-}
 </script>
 @endpush

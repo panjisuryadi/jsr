@@ -42,8 +42,9 @@
                             <th style="width: 15%!important;">{{ Label_case('image') }}</th>
                             <th style="width: 18%!important;">Code</th>
                             <th style="width: 17%!important;">{{ Label_case('product') }}</th>
+                            <th style="width: 15%!important;" class="text-center">{{ Label_case('Karat') }}</th>
                             <th style="width: 15%!important;" class="text-center">{{ Label_case('Rekomendasi') }}</th>
-                            <th style="width: 25%!important;" class="text-center">{{ Label_case('Date') }}</th>
+                            <!-- <th style="width: 25%!important;" class="text-center">{{ Label_case('Date') }}</th> -->
                             <th style="width: 5%!important;" class="text-center">#</th>
                         </tr>
                     </thead>
@@ -244,9 +245,13 @@
             name: 'karat'
         }, 
         {
-            data: 'created_at',
-            name: 'created_at'
-        },
+            data: 'rekomendasi',
+            name: 'rekomendasi'
+        }, 
+        // {
+        //     data: 'created_at',
+        //     name: 'created_at'
+        // },
         {
             data: null,
             className: 'text-center',
@@ -322,12 +327,15 @@
         const newItem = `
             <div class="border-bottom pb-2 mb-2 preview-item">
                 <div class="row align-items-center">
-                    <div class="col-5">
+                    <div class="col-3">
                         <div class="text-xs text-yellow-600">${service}</div>
                         <h6 class="mb-0 small text-gray-700">${desc}</h6>
                     </div>
                     <div class="col-3">
                         <small>Rekomendasi: <strong>${harga}</strong></small>
+                    </div>
+                    <div class="col-2">
+                        <small>Diskon: <strong>0</strong></small>
                     </div>
                     <div class="col-3">
                         <input type="hidden" name="product[]" value="0">
@@ -376,11 +384,14 @@
         const newItem = `
         <div class="border-bottom pb-2 mb-2 preview-item">
             <div class="row align-items-center">
-                <div class="col-5">
+                <div class="col-3">
                     <h6 class="mb-0 small text-gray-700">${data.product_name}</h6>
                 </div>
                 <div class="col-3">
                     <small>Rekomendasi: <strong>${rekomendasi}</strong></small>
+                </div>
+                <div class="col-2">
+                    <small>Diskon: <strong>0</strong></small>
                 </div>
                 <div class="col-3">
                     <input type="hidden" name="product[]" value="${product}">

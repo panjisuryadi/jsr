@@ -144,6 +144,25 @@
         .page-break {
             page-break-after: always;
         }
+
+        .invoice-details {
+            width: 100%;
+            margin-top: 10px;
+            font-size: 12px;
+            table-layout: fixed;
+        }
+
+        .invoice-details .left {
+            width: 50%;
+            text-align: left;
+        }
+
+        .invoice-details .right {
+            width: 50%;
+            text-align: right;
+        }
+
+        
     </style>
 </head>
 
@@ -155,6 +174,14 @@
     $imageSrc = 'data:image/png;base64,' . $imageData;
     @endphp
     @foreach($products as $index => $product)
+
+        @php
+        $gambar = $product['img'];
+        $gambar = '1742774180.png';
+        $ipath = public_path('storage/uploads/'.$gambar); // Path to your image
+        $idata = base64_encode(file_get_contents($ipath));
+        $isrc = 'data:image/png;base64,' . $idata;
+        @endphp
     <div class="invoice">
         <div class="header">
             <!-- Left side: Logo -->
@@ -181,6 +208,7 @@
         <table class="invoice-table">
             <thead>
                 <tr>
+                    <th>Pic</th>
                     <th>Kode</th>
                     <th>Jenis</th>
                     <th>Berat</th>
@@ -189,6 +217,7 @@
             </thead>
             <tbody>
                 <tr>
+                    <td><img src="{{ $isrc }}" style="width: 80px;" alt="Image"></td>
                     <td>{{ $product['desc'] }}</td>
                     <td>{{ $product['name'] }}</td>
                     <td>{{ $product['gram'] }}</td>

@@ -3,6 +3,7 @@
 namespace Modules\Product\Entities;
 
 use App\Models\LookUp;
+use App\Models\Baki;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Product\Notifications\NotifyQuantityAlert;
@@ -81,6 +82,10 @@ class Product extends Model implements HasMedia
 
     public function cabang() {
         return $this->belongsTo(Cabang::class, 'cabang_id', 'id');
+    }
+
+    public function baki() {
+        return $this->belongsTo(Baki::class, 'baki_id', 'id');
     }
 
     public function registerMediaCollections(): void {

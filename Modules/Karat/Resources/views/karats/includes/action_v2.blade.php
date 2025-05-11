@@ -5,7 +5,7 @@
 id="Edit"
 data-toggle="tooltip"
  class="btn btn-outline-info btn-sm">
-    <i class="bi bi-pencil"></i> &nbsp;@lang('Edit') Karat
+    <i class="bi bi-pencil"></i> &nbsp;@lang('Edit') Coef
 </a>
 @endcan
 @endif

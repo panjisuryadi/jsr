@@ -102,8 +102,6 @@ class JualController extends Controller
         $telp = $val['telp'];
         $info = $val['info'];
 
-        // echo json_encode($_POST);
-        // exit();
         $products   = array();        
         $services   = array();        
         $total      = 0;
@@ -113,11 +111,10 @@ class JualController extends Controller
             $customer   = Customer::where('id', $request->customer)->first();
             $nama_cus   = $customer->customer_name;
             $address    = $customer->address;
-    //         $nama_cus   = '
-    // <p style="text-align: right; font-size:13px">Kepada Yth : '.$nama_cus.'</p>
-    //         ';
+            //         $nama_cus   = '
+            // <p style="text-align: right; font-size:13px">Kepada Yth : '.$nama_cus.'</p>
+            //         ';
         }
-        // exit();
         foreach ($request->product as $p) {
             if($p == 0){ // SERVICE NON PRODUCT
                 $services[] = $p;
@@ -133,15 +130,18 @@ class JualController extends Controller
             $number++;
         }
         // INSERT SALES
-        $nomor  = '0000000001';
-        // $nomor  = SalesGold::latest()->get();
-        // $nomor  = (int)$nomor->nomor;
-        // $nomor  = $nomor+1;
-        // for ($i=0; $i < 10; $i++) { 
-        //     if(strlen($nomor) !== $i){
-        //         $nomor  = '0'.$nomor;
-        //     }
-        // }
+        // $nomor  = '0000000001';
+        $nomor  = SalesGold::latest()->first();
+        // echo json_encode($nomor);
+        // exit();
+        $nomor  = $nomor->nomor;
+        $nomor  = (int)$nomor+1;
+        for ($i=0; $i < 8; $i++) { 
+            if(strlen($nomor) !== $i){
+                $nomor  = '0'.$nomor;
+            }
+        }
+
         $salesGold  = SalesGold::create([
             'nomor' => $nomor,
             'customer' => $request->customer,
@@ -160,6 +160,7 @@ class JualController extends Controller
                 $name   = $request->product_name[$number];
                 $desc   = $request->product_desc[$number];
                 $gram   = '-';
+                $images = '';
                 $harga  = $request->harga[$number];
 
                 $serv   = Service::create([
@@ -180,11 +181,11 @@ class JualController extends Controller
                 $title  = 'Nota Emas';
                 $product= Product::where('id', $p)->firstOrFail();
                 $name   = $product->product_name;
-                $name   = $product->product_name;
+                $images = $product->images;
                 $desc   = $product->product_code;
                 $gram   = $product->berat_emas;
                 $harga  = $request->harga[$number];
-                $product->status_id = 1;
+                $product->status_id = 2;
                 $product->save();
 
                 // INSERT KE PRODUCT HISTORY
@@ -198,11 +199,20 @@ class JualController extends Controller
             }
 
             // INSERT SALES ITEMS
+            $salesNomor = SalesItem::latest()->first();
+            $salesNomor = $salesNomor->nomor != null ? $salesNomor->nomor : '0000000001';
+            $salesNomor  = (int)$salesNomor+1;
+            for ($i=0; $i < 9; $i++) { 
+                if(strlen($salesNomor) !== $i){
+                    $salesNomor  = '0'.$salesNomor;
+                }
+            }
             $salesItem  = SalesItem::create([
+                'nomor'     => $salesNomor,
                 'product'   => $p,
                 'name'      => $name,
                 'desc'      => $desc,
-                'total'     => $total,
+                'total'     => $harga,
             ]);
             $sales_id   = $salesItem->id;
 
@@ -213,12 +223,14 @@ class JualController extends Controller
             }
 
             $array['products'][$number]['title'] = $title;
+            $array['products'][$number]['img'] = $images;
             $array['products'][$number]['name'] = $name;
             $array['products'][$number]['desc'] = $desc;
             $array['products'][$number]['gram'] = $gram;
             $array['products'][$number]['harga'] = $harga;
-            $array['products'][$number]['nomor'] = $nomor;
-            $array['products'][$number]['sales_id'] = $sales_id;
+            $array['products'][$number]['nomor'] = $salesNomor;
+            $array['products'][$number]['sales_id'] = $salesNomor;
+            // $array['products'][$number]['sales_id'] = $sales_id;
             $array['products'][$number]['alamat'] = $alamat;
             $array['products'][$number]['telp'] = $telp;
             $array['products'][$number]['info'] = $info;
@@ -228,6 +240,8 @@ class JualController extends Controller
             $number++;
         }
 
+        // echo json_encode($array);
+        // exit();
 
         $pdf = PDF::loadView('sale.invoice', $array)
               ->setPaper('a5', 'landscape')  // A5 paper size, landscape orientation
@@ -269,6 +283,8 @@ class JualController extends Controller
         if($id == 2){ // without nota
             $$module_name->where('is_nota', false)->get();
         }
+        $$module_name->where('status_id', 1)->get();
+
         $harga = Harga::latest()->first();  
         if($harga == null){
             $harga  = 0;
@@ -280,6 +296,9 @@ class JualController extends Controller
             $item->harga = $harga; // Add the harga attribute to the model
         });
         $data = $$module_name;
+
+        // echo json_encode($data);
+        // exit();
 
         return Datatables::of($$module_name)
             ->addColumn('action', function ($data) {
@@ -334,13 +353,24 @@ class JualController extends Controller
                 return $tb;
             })
 
-            ->editColumn('karat', function ($data) {
+            ->editColumn('rekomendasi', function ($data) {
                 $tb = '<div class="items-center gap-x-2">
                                 <div class="text-sm text-center text-gray-500">
-                                Rp .' . @rupiah(($data->karat->coef*$data->harga)) . ' <br>
+                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
                                 </div>
                                 </div>';
                 return $tb;
+            })
+
+            ->editColumn('karat', function ($data) {
+                // $tb = '<div class="items-center gap-x-2">
+                //                 <div class="text-sm text-center text-gray-500">
+                //                 Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
+                //                 </div>
+                //                 </div>';
+                // $karatnya   = $data->karat->name.' | '.$data->karat->kode;
+                return $data->karat->name ?? '-';
+                // return $data->karat->coef;
             })
 
 
@@ -359,7 +389,7 @@ class JualController extends Controller
                 return tgljam($data->created_at);
             })
             ->rawColumns([
-                'created_at', 'product_image', 'weight', 'status', 'tracking',
+                'created_at', 'product_image', 'rekomendasi', 'weight', 'status', 'tracking',
                 'product_name', 'karat', 'cabang', 'action'
             ])
             ->make(true);

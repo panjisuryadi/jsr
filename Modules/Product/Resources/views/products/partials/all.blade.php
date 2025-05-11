@@ -15,7 +15,7 @@
                 </button>
             </div>
             <div class="modal-body p-4">
-                <form action="/products_updatepending" method="post">
+                <form action="/products_updateall" method="post">
                     @csrf
                     <div class="px-0 py-2">
                                 @php

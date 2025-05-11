@@ -1,14 +1,13 @@
   <div class="px-3">
       <x-library.alert />
-      <form id="FormEdit" action="{{ route('karat.update_diskon', $detail) }}" method="POST">
+      <form id="FormEdit" action="{{ route(''.$module_name.'.update_diskon', $detail) }}" method="POST">
           @csrf
           @method('patch')
           <div class="flex flex-row grid grid-cols-1 gap-4">
-              
               <div class="form-group">
                   <?php
                     $field_name = 'diskon';
-                    $field_lable = label_case('Max Diskon');
+                    $field_lable = label_case('Diskon');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = "required";

@@ -70,11 +70,17 @@
                                      <!-- <th style="width: 7%!important;" class="text-center">
                                         Ph
                                     </th>  -->
-                                    <th style="width: 7%!important;" class="text-center">
-                                        Rekomendasi
+                                    <th style="width: 8%!important;" class="text-center">
+                                        Harga
+                                    </th> 
+                                    <th style="width: 8%!important;" class="text-center">
+                                        Margin
+                                    </th> 
+                                    <th style="width: 8%!important;" class="text-center">
+                                        Harga Jual
                                     </th> 
 
-                                    <th style="width: 13%!important;" class="text-center">
+                                    <th style="width: 10%!important;" class="text-center">
                                        {{__('Action')}}
                                     </th>
                                 </tr>
@@ -162,7 +168,7 @@
                 }
             ],
             "sPaginationType": "simple_numbers",
-            ajax: '{{ route("$module_name.index_data_2") }}',
+            ajax: '{{ route("karats.index_data") }}',
             dom: 'Blfrtip',
             buttons: [
                 'excel',
@@ -195,6 +201,14 @@
                 {
                     data: 'harga',
                     name: 'harga'
+                },
+                {
+                    data: 'margin',
+                    name: 'margin'
+                },
+                {
+                    data: 'rekomendasi',
+                    name: 'rekomendasi'
                 },
                 {
                     data: 'action',

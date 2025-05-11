@@ -25,39 +25,8 @@
 
 
 <div class=" px-0 py-2 grid grid-cols-4 gap-4 m-2 text-center no-underline">
-<?php  
-$jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
-?>  
-    @foreach($jp as $category)
-    <div class="no-underline cursor-pointer px-0 py-2 w-full">
-           <a class="w-full no-underline hover:no-underline" id="openModalKategori"
-                href="{{ route('products.view_by_kategori',$category->slug) }}" >
-        <div class="justify-center items-center border-2 border-gray-400 bg-white  px-2 py-3 rounded-lg transform transition duration-500 hover:scale-110">
-            <div class="justify-center text-center items-center">
-                <?php
-                if ($category->image) {
-                $image = asset(imageUrl() . $category->image);
-                }else{
-                $image = asset('images/logo.png');
-                }
-                ?>
-                <img id="default_1" src="{{ $image }}" alt="images"
-                class="h-16 w-16 object-contain mx-auto"/>
-            </div>
-            <div
-            class="font-semibold text-gray-600 no-underline hover:text-red-600 leading-tight">
-            {{ $category->name }}
-            </div>
-        </div>
-        </a>
-    </div>
 
-
-    @endforeach
 </div>
-
-
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -81,9 +50,10 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
 
                             <th style="width: 11%!important;" class="text-center">{{ Label_case('Date') }}</th>
 
-                      <th style="width: 10%!important;" class="text-center">{{ Label_case('Qr Code') }}</th>
+                      <!-- <th style="width: 10%!important;" class="text-center">{{ Label_case('Qr Code') }}</th> -->
 
 
+                      <th style="width: 13%!important;" class="text-center">Baki</th>
                       <th style="width: 13%!important;" class="text-center">{{ Label_case('Status') }}</th>
 
                  <th style="width: 18%!important;" class="text-center">
@@ -392,9 +362,14 @@ $jp = \Modules\KategoriProduk\Models\KategoriProduk::all();
         }, {
             data: 'created_at',
             name: 'created_at'
-        },{
-            data: 'tracking',
-            name: 'tracking'
+        },
+        // {
+        //     data: 'tracking',
+        //     name: 'tracking'
+        // },
+        {
+            data: 'baki',
+            name: 'baki'
         },{
             data: 'status',
             name: 'status'

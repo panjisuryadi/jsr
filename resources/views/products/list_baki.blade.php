@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div class="flex justify-between pb-3 border-bottom">
                         <div> 
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk Pending</span>
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk Baki</span>
                         </div>
                         <div id="buttons"></div>
                     </div>
@@ -37,19 +37,11 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
-                                    <!-- <th style="width: 9%!important;">{{ Label_case('image') }}</th> -->
                                     <th>{{ Label_case('product') }}</th>
-                                   
                                     <th style="width: 14%!important;" class="text-center">{{ Label_case('Karat / Harga') }}</th>
                                     <th style="width: 14%!important;" class="text-center">Berat (gr)</th>
-
-
-                            <th style="width: 11%!important;" class="text-center">{{ Label_case('Date') }}</th>
-
-
-                      <!-- <th style="width: 13%!important;" class="text-center">{{ Label_case('Status') }}</th> -->
-
-                 <th style="width: 18%!important;" class="text-center">
+                                    <th style="width: 11%!important;" class="text-center">{{ Label_case('Date') }}</th>
+                                    <th style="width: 18%!important;" class="text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -122,7 +114,7 @@
         ],
         "sPaginationType": "simple_numbers",
         // ajax: '{{ route("$module_name.index_data") }}',
-        ajax: '/products_datapending',
+        ajax: '/products_index_data/6',
         dom: 'Blfrtip',
         buttons: [
             {

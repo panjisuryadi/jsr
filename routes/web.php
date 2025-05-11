@@ -73,6 +73,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/buyback_index_data', 'BuybackController@index_data')
         ->name('buyback.index_data');
 
+    Route::get('/buyback_nota/{id}', 'BuybackController@view_nota')
+        ->name('buyback.nota');
+
     Route::post('/buyback_insert', 'BuybackController@insert')
         ->name('buyback.insert');
 
@@ -118,6 +121,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/products_updatepending', 'ProductController@update_pending')
         ->name('products.updatepending');
 
+    Route::post('/products_updateall', 'ProductController@update_all')
+        ->name('products.updateall');
+
     Route::post('/products_updatestatus', 'ProductController@update_status')
         ->name('products.updatestatus');
 
@@ -139,17 +145,32 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products_index_data/{id}', 'ProductController@index_datas')
         ->name('products.index_data');
 
+    Route::get('/products/baki', 'ProductController@index_baki')
+        ->name('products.baki');
+
     Route::get('/products_reparasi', 'ProductController@list_reparasi')
         ->name('products.reparasi');
 
     Route::get('/products_lebur', 'ProductController@list_lebur')
         ->name('products.lebur');
 
+    Route::get('/products_baki', 'ProductController@list_baki')
+        ->name('products.baki');
+
     Route::get('/products_cuci', 'ProductController@list_cuci')
         ->name('products.cuci');
 
     Route::get('/products_gudang', 'ProductController@list_gudang')
         ->name('products.gudang');
+
+    Route::get('/discounts', 'KaratController@list_diskon')
+        ->name('discounts.list');
+
+    Route::get('/discounts/index_discounts', 'KaratController@index_diskon')
+        ->name('karats.index_diskon');
+    
+    Route::post('/discounts/update_diskon/{id}', 'KaratController@update_diskon')
+        ->name('karat.update_diskon');
 
     Route::get('/karats', 'KaratController@list')
         ->name('karats.list');
@@ -159,6 +180,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/karats_update', 'KaratController@update')
         ->name('karats.update');
+
+    Route::get('/karats/index_data', 'KaratController@index_data')
+        ->name('karats.index_data');
 
     Route::get('/karats_history', 'KaratController@history')
         ->name('karats.history');

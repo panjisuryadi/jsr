@@ -22,6 +22,8 @@ use App\Models\BuyBack;
 use Modules\Product\Entities\Product;
 use Yajra\DataTables\DataTables;
 use App\Models\ProductHistories;
+use App\Models\SalesGold;
+use App\Models\SalesItem;
 
 class BuybackController extends Controller
 {
@@ -45,13 +47,15 @@ class BuybackController extends Controller
     
     public function insert(Request $request)
     {   
+        // echo json_encode($_POST);
+        // exit();
         $product = $request->product;
-        $products = Product::where('product_code', $product)->first();
+        $products = Product::where('id', $product)->first();
         // echo json_encode($products);
         // exit();
         $id_product = $products->id;
         $buyback    = Buyback::create([
-            'nota'   => '-',
+            'nota'   => $request->nota,
             'product_id'   => $id_product,
             'kondisi'   => $request->kondisi,
             'harga'   => $request->harga,
@@ -65,14 +69,14 @@ class BuybackController extends Controller
         $desc   = $product->product_code;
         $gram   = $product->berat_emas;
         $harga  = $request->harga;
-        $product->status_id = 2; // pending
+        $product->status_id = 3; // pending
         $product->save();
 
         // HISTORY
         $product_history = ProductHistories::create([
             'product_id'    => $id_product,
             'status'        => 'B',
-            'keterangan'    => 'Buyback',
+            'keterangan'    => $request->kondisi,
             'harga'         => $request->harga,
             'tanggal'       => date('Y-m-d'),
         ]);
@@ -173,7 +177,36 @@ class BuybackController extends Controller
         );
     }
 
+    public function view_nota(Request $request){
+        $id   = $request->id;
+        $salesGold  = SalesItem::where('nomor', $id)->where('product', '!=', 0)->first();
+        if ($salesGold) {
+            $product    = $salesGold->product;
+            $name       = $salesGold->name;
+            $desc       = $salesGold->desc;
+            $total      = $salesGold->total;
+            $product    = Product::where('id', $product)->first();
+            $status     = $product->status_id;
+            if($status == 2){
+                return response()->json([
+                    'product' => $product,
+                    'name' => $name,
+                    'desc' => $desc,
+                    'total' => 'Rp '.number_format($total)
+                ]);
+            }
+        }
     
+        return response()->json([
+            'product' => '',
+            'name' => '',
+            'desc' => '',
+            'total' => ''
+        ]);
+        // return response()->json([], 404);
+        // return $salesGold;
+        // $product    = 
+    }
 
     public function index_data_2()
     {
