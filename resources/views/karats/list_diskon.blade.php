@@ -45,7 +45,7 @@
                                         Harga Jual
                                     </th> 
                                     <th style="width: 8%!important;" class="text-center">
-                                        Discont
+                                        Max Discont
                                     </th> 
                                     <th style="width: 10%!important;" class="text-center">
                                        {{__('Action')}}

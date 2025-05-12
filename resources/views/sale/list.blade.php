@@ -316,6 +316,8 @@
         const desc      = $('#desc').val().trim();
         const harga     = formatRupiah(parseFloat($('#harga').val()));
         const price     = $('#harga').val();
+        const diskon    = $('#diskon').val();
+        const min       = price-diskon;
         
         if (!service || isNaN(harga)) {
             alert("Please fill out the form correctly.");
@@ -335,13 +337,13 @@
                         <small>Rekomendasi: <strong>${harga}</strong></small>
                     </div>
                     <div class="col-2">
-                        <small>Diskon: <strong>0</strong></small>
+                        <small>Max Diskon: <strong>${diskon}</strong></small>
                     </div>
                     <div class="col-3">
                         <input type="hidden" name="product[]" value="0">
                         <input type="hidden" name="product_name[]" value="${service}">
                         <input type="hidden" name="product_desc[]" value="${desc}">
-                        <input type="number" name="harga[]" class="form-control form-control-sm" onkeyup="sum_harga();" value="${price}" placeholder="Harga">
+                        <input type="number" name="harga[]" class="form-control form-control-sm" onkeyup="sum_harga();" min="${min}" value="${price}" placeholder="Harga">
                     </div>
                     <div class="col-1 text-end">
                         <button type="button" class="btn btn-sm btn-outline-danger btn-delete-current">
@@ -380,6 +382,8 @@
         const previewArea = $('#preview-area');
         const rekomendasi = formatRupiah(data.harga * data.karats.coef);
         const price       = (data.harga * data.karats.coef);
+        const diskon      = (data.karats.diskon);
+        const min         = (price-diskon);
         const product     = (data.id);
         const newItem = `
         <div class="border-bottom pb-2 mb-2 preview-item">
@@ -391,13 +395,13 @@
                     <small>Rekomendasi: <strong>${rekomendasi}</strong></small>
                 </div>
                 <div class="col-2">
-                    <small>Diskon: <strong>0</strong></small>
+                    <small>Max Diskon: <strong>${diskon}</strong></small>
                 </div>
                 <div class="col-3">
                     <input type="hidden" name="product[]" value="${product}">
                     <input type="hidden" name="product_name[]" value="${data.category.category_name}">
                     <input type="hidden" name="product_desc[]" value="${data.category.category_name}">
-                    <input type="number" name="harga[]" class="form-control form-control-sm" value="${price}" onkeyup="sum_harga();" placeholder="Harga">
+                    <input type="number" name="harga[]" class="form-control form-control-sm" value="${price}" min="${min}" onkeyup="sum_harga();" placeholder="Harga">
                 </div>
                 <div class="col-1 text-end">
                     <button type="button" class="btn btn-sm btn-outline-danger btn-delete-current">

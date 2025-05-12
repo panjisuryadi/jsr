@@ -118,22 +118,22 @@ class GenerateMenus
                 ]);
 
             // Submenu: Customer Sales
-            $customers_suppliers->add(
-                '<i class="c-sidebar-nav-icon  bi bi-person-square"></i>
-                 ' . __('Konsumen Sales') . '',
-                [
-                    'route' => 'customersales.index',
-                    'class' => 'nav-item',
-                ]
-            )
-                ->data([
-                    'order'         => 3,
-                    'activematches' => 'customersales*',
-                    'permission'    => ['access_customersales'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-3',
-                ]);
+            // $customers_suppliers->add(
+            //     '<i class="c-sidebar-nav-icon  bi bi-person-square"></i>
+            //      ' . __('Konsumen Sales') . '',
+            //     [
+            //         'route' => 'customersales.index',
+            //         'class' => 'nav-item',
+            //     ]
+            // )
+            //     ->data([
+            //         'order'         => 3,
+            //         'activematches' => 'customersales*',
+            //         'permission'    => ['access_customersales'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-3',
+            //     ]);
 
             
 
@@ -208,18 +208,18 @@ class GenerateMenus
                 ]);
 
             // EMAS - PEMBELIAN - TANPA NOTA
-            $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Input Barang (Tanpa Nota)'), [
-                'route' => 'products.list',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 2,
-                    'activematches' => ['goodsreceipts*'],
-                    'permission'    => ['access_goodsreceipts'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Input Barang (Tanpa Nota)'), [
+            //     'route' => 'products.list',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 2,
+            //         'activematches' => ['goodsreceipts*'],
+            //         'permission'    => ['access_goodsreceipts'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
             // EMAS - PEMBELIAN - Hutang
             $Purchases->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Goods Receipt Debts'), [
@@ -457,6 +457,66 @@ class GenerateMenus
             // ->link->attr([
             //     'class' => 'c-sidebar-nav-link',
             // ]);
+
+            $pos = $emas->add('<i class="c-sidebar-nav-icon mb-1 bi bi-shop"></i>' . __('POS/Buyback') . '', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+                ->data([
+                    'order'         => 2,
+                    'activematches' => [
+                        'penentuanhargas*',
+                        'storeemployees*',
+
+                    ],
+                    'permission'    => [
+                        'access_penentuanharga',
+                        'access_storeemployees',
+                    ],
+                ]);
+            $pos->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            $sale = $pos->add('<i class="c-sidebar-nav-icon  bi bi-person text-sm"></i> ' . __('POS'), [
+                'route' => 'sale.list',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 1,
+                    'activematches' => ['storeemployees*'],
+                    'permission'    => ['access_storeemployees'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $buyback = $pos->add('<i class="c-sidebar-nav-icon  bi bi-person text-sm"></i> ' . __('Buyback'), [
+                'route' => 'buyback.list',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 1,
+                    'activematches' => ['storeemployees*'],
+                    'permission'    => ['access_storeemployees'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $luar = $pos->add('<i class="c-sidebar-nav-icon  bi bi-person text-sm"></i> ' . __('Barang Luar'), [
+                'route' => 'products.luar',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 1,
+                    'activematches' => ['storeemployees*'],
+                    'permission'    => ['access_storeemployees'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
 
 
             // EMAS - TOKO master menu
