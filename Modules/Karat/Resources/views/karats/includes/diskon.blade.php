@@ -1,7 +1,7 @@
 <div class="text-center">
 @if (empty($data->parent_id))
 @can('edit_'.$module_name.'')
-<a href="{{ route(''.$module_name.'.edit', $data->id) }}"
+<a href="{{ route('discounts.edit', ['id' => $data->id]) }}"
 id="Edit"
 data-toggle="tooltip"
  class="btn btn-outline-info btn-sm">

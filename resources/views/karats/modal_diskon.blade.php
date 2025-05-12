@@ -1,34 +1,21 @@
 <div class="px-3">
       <x-library.alert />
-      <form id="FormEdit" action="{{ route(''.$module_name.'.update_coef', $detail) }}" method="POST">
+      <form id="FormEdit" action="{{ route('karat.update_diskon', $detail) }}" method="POST">
           @csrf
           @method('patch')
           <div class="flex flex-row grid grid-cols-1 gap-4">
-              <div class="form-group @if(!empty($detail->parent_id)) hidden @endif">
-                  <?php
-                    $field_name = 'coef';
-                    $field_lable = label_case('Coef');
-                    $field_placeholder = $field_lable;
-                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                    $required = "required";
-                    ?>
-                  <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="{{$detail->coef }}">
-                  <span class="invalid feedback" role="alert">
-                      <span class="text-danger error-text {{ $field_name }}_err"></span>
-                  </span>
-
-              </div>
+              
               <div class="form-group">
                   <?php
-                    $field_name = 'margin';
-                    $field_lable = label_case('Margin');
+                    $field_name = 'diskon';
+                    $field_lable = label_case('Max Diskon');
                     $field_placeholder = $field_lable;
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = "required";
                     ?>
                   <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="{{$detail->margin }}">
+                  <input type="hidden" name="id" value="{{$detail->id}}">
+                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="{{$detail->diskon }}">
               </div>
           </div>
       </form>
@@ -51,6 +38,7 @@
                   data: $('#FormEdit').serialize(),
                   dataType: 'json',
                   success: function(data) {
+                    location.reload();  
                       console.log(data.error)
                       if ($.isEmptyObject(data.error)) {
                           $('#ResponseInput').html(data.success);

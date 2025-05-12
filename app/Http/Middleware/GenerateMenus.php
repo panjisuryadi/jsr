@@ -324,6 +324,19 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
 
+            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Barang Satuan'), [
+                'route' => 'products.nota',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 77,
+                    'activematches' => ['returpembelians*'],
+                    'permission'    => ['access_returpembelians'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
             $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Pending'), [
                 'route' => 'products.pending',
                 'class' => 'nav-item',
@@ -389,31 +402,31 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link py-2',
                 ]);
 
-            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Baki'), [
-                'route' => 'products.baki',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 77,
-                    'activematches' => ['returpembelians*'],
-                    'permission'    => ['access_returpembelians'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Baki'), [
+            //     'route' => 'products.baki',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 77,
+            //         'activematches' => ['returpembelians*'],
+            //         'permission'    => ['access_returpembelians'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
-            $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Gudang'), [
-                'route' => 'products.gudang',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 77,
-                    'activematches' => ['returpembelians*'],
-                    'permission'    => ['access_returpembelians'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Gudang'), [
+            //     'route' => 'products.gudang',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 77,
+            //         'activematches' => ['returpembelians*'],
+            //         'permission'    => ['access_returpembelians'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
             $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Buyback'), [
                 'route' => 'buyback.list',
@@ -1529,6 +1542,22 @@ class GenerateMenus
                 '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> ' . __('Karat Emas'),
                 [
                     'route' => 'karats.list',
+                    'class' => 'nav-item',
+                ]
+            )
+                ->data([
+                    'order'         => 3,
+                    'activematches' => ['karats*'],
+                    'permission'    => ['access_karats'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link py-2',
+                ]);
+
+            $Parameters->add(
+                '<i class="c-sidebar-nav-icon  bi bi-dot text-sm"></i> ' . __('Diskon'),
+                [
+                    'route' => 'discounts.list',
                     'class' => 'nav-item',
                 ]
             )

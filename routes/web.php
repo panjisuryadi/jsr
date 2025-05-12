@@ -91,13 +91,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sale/index_data', 'JualController@index_data')
         ->name('sale.index_data');
 
+    Route::get('/sale/index_data/{id}', 'JualController@index_data_custom')
+        ->name('sale.index_data_custome');
+
+    Route::get('/sale/index_data_baki/{id}', 'JualController@index_data_baki')
+        ->name('sale.index_data_baki');
+
     Route::get('/sale/action', 'JualController@action')
         ->name('sale.action');
 
     Route::post('/sale/insert', 'JualController@insert')
         ->name('sale.insert');
 
-    Route::get('/products_nota', 'ProductController@list')
+    Route::get('/products_notas', 'ProductController@list')
         ->name('products.list');
     
     Route::get('/products_emas', 'ProductController@list_emas')
@@ -106,14 +112,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products_all', 'ProductController@list_all')
         ->name('products.all');
 
+    Route::get('/products_nota', 'ProductController@list_nota')
+        ->name('products.nota');
+
     Route::get('/products_luar', 'ProductController@list_luar')
         ->name('products.luar');
 
-    Route::get('/products_dataluar', 'ProductController@index_dataluar')
+    Route::get('/products_dataluar', 'ProductController@dataluar')
         ->name('products.dataluar');
+
+    Route::get('/products_datanota', 'ProductController@datanota')
+        ->name('products.datanota');
 
     Route::post('/products_insert_luar', 'ProductController@insert_luar')
         ->name('products.insert_luar');
+
+    Route::post('/products_insert_nota', 'ProductController@insert_nota')
+        ->name('products.insert_nota');
 
     Route::get('/products_pending', 'ProductController@list_pending')
         ->name('products.pending');
@@ -129,9 +144,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/products_datapending', 'ProductController@data_pending')
         ->name('products.datapending');
-
-    Route::post('/products_insert', 'ProductController@insert')
-        ->name('products.insert');
 
     Route::post('/products_insert', 'ProductController@insert')
         ->name('products.insert');
@@ -154,8 +166,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products_lebur', 'ProductController@list_lebur')
         ->name('products.lebur');
 
-    Route::get('/products_baki', 'ProductController@list_baki')
+    Route::get('/products_baki/{id}', 'ProductController@list_baki')
         ->name('products.baki');
+
+    Route::get('/products_baki/update/{id}/{product}', 'ProductController@update_baki')
+        ->name('products.baki_update');
+
+    // Route::get('/products_baki', 'ProductController@list_baki')
+    //     ->name('products.baki');
 
     Route::get('/products_cuci', 'ProductController@list_cuci')
         ->name('products.cuci');
@@ -166,10 +184,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/discounts', 'KaratController@list_diskon')
         ->name('discounts.list');
 
+    Route::get('/discounts/edit/{id}', 'KaratController@edit_diskon')
+        ->name('discounts.edit');
+
     Route::get('/discounts/index_discounts', 'KaratController@index_diskon')
         ->name('karats.index_diskon');
     
-    Route::post('/discounts/update_diskon/{id}', 'KaratController@update_diskon')
+    Route::patch('/discounts/update_diskon/{id}', 'KaratController@update_diskon')
         ->name('karat.update_diskon');
 
     Route::get('/karats', 'KaratController@list')

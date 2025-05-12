@@ -146,6 +146,54 @@ class ProductController extends Controller
         return redirect()->action([ProductController::class, 'list_luar']);
     }
 
+    public function insert_nota(Request $request)
+    {
+        $i = 0;
+        // echo json_encode($_POST);
+        // exit();
+        $group  = Group::where('id', $request->new_product_group_id)->first();
+        $group_name = $group->name;
+        $model  = ProdukModel::where('id', $request->new_product_model_id)->first();
+        $model_name = $model->name;
+        $product_name   = $group_name.' '.$model_name;
+        $product    = Product::create([
+            'category_id'       => $request->new_product_category_id,
+            'product_code'       => $request->new_product_code_id,
+            'product_name'       => $product_name,
+            'product_price'       => 0,
+            'product_barcode_symbology'       => 'C128',
+            'product_unit'       => 'Gram',
+            'product_stock_alert'       => 5,
+            'status'       => 3,
+            'images'       => 'jpg',
+            'berat_emas'       => $request->new_product_berat,
+            'status_id'       => 3,
+            'group_id'       => $request->new_product_group_id,
+            'model_id'       => $request->new_product_model_id,
+            'goodreceipt_item_id' => 0,
+            'is_nota' => false,
+        ]);
+
+        $productItem    = ProductItem::create([
+            'product_id'       => $product->id,
+            'berat_total'       => $request->new_product_total_weight,
+            'berat_emas'       => $request->new_product_gold_weight,
+            'berat_accessories'       => $request->new_product_accessories_weight,
+            'tag_label'       => 0,
+            'berat_label'       => 0,
+        ]);
+
+        $product_history = ProductHistories::create([
+            'product_id'    => $product->id,
+            'status'        => 'P',
+            'keterangan'    => $request->new_product_keterangan,
+            'harga'         => 0,
+            'tanggal'       => date('Y-m-d'),
+        ]);
+
+        return redirect()->action([ProductController::class, 'list_nota']);
+    }
+
     public function update(Request $request)
     {
         $harga = Harga::where('tanggal', date('Y-m-d'))->firstOrFail();
@@ -274,6 +322,44 @@ class ProductController extends Controller
         );
     }
 
+    public function list_nota(Request $request)
+    {
+        $product_categories = Category::all();  // Assuming Supplier model is set up
+        $groups = Group::all();  // Assuming Supplier model is set up
+        $models = ProdukModel::all();  // Assuming Supplier model is set up
+        $dataKarat = Karat::whereNull('parent_id')->get();
+        $hari_ini = new DateTime();
+        $hari_ini = $hari_ini->format('Y-m-d');
+        $isLogamMulia   = true;
+        // $harga = Harga::where('tanggal', date('Y-m-d'))->first();
+        // echo json_encode($harga);
+        // exit();
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $dataKarat = Karat::whereNull('parent_id')->get();
+        return view(
+            'products.list_nota', // Path to your create view file
+            compact(
+                'module_title',
+                'module_name',
+                'module_path',
+                'module_icon',
+                'module_model',
+                'product_categories',
+                'groups',
+                'models',
+                'isLogamMulia',
+                'hari_ini',
+                // 'inputs',
+                'dataKarat',
+            )
+        );
+    }
+
     public function list_pending(Request $request)
     {
         $product_categories = Category::all();  // Assuming Supplier model is set up
@@ -350,8 +436,38 @@ class ProductController extends Controller
         );
     }
 
+    public function update_baki(Request $request){
+        $id     = $request->id;
+        $product    = $request->product;
+        // echo $id;
+        // echo $product;
+        // echo json_encode($_GET);
+        // exit();
+
+        $products   = Product::where('id', $product)->firstOrFail();
+        $products->baki_id   = $id;
+        $products->status   = 1;
+        $products->status_id   = 1;
+        $products->save();
+        // INSERT HISTORY
+       
+        // $stat[1] = 'L';
+        $product_history = ProductHistories::create([
+            'product_id'    => $id,
+            'status'        => 'X',
+            'keterangan'    => 'update baki '.$id,
+            'harga'         => $request->harga ?? 0,
+            'tanggal'       => date('Y-m-d'),
+        ]);
+        return redirect()->route('products.baki', ['id' => $id]);
+
+        // return redirect()->action([ProductController::class, 'list_baki'.$product]);
+    }
+
     public function list_baki(Request $request)
     {
+        $id     = $request->id;
+
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -360,6 +476,7 @@ class ProductController extends Controller
         return view(
             'products.list_baki', // Path to your create view file
             compact(
+                'id',
                 'module_title',
                 'module_name',
                 'module_path',
@@ -859,7 +976,7 @@ class ProductController extends Controller
             ->make(true);
     }
 
-    public function data_luar(Request $request)
+    public function dataluar(Request $request)
     {   
         $id     = $request->id;
 
@@ -871,7 +988,7 @@ class ProductController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = $module_model::with('category', 'product_item');
+        $$module_name = $module_model::with('category', 'product_item', 'product_history');
         if ($request->get('status')) {
             $$module_name = $$module_name->where('status_id', $request->get('status'));
         }
@@ -881,6 +998,8 @@ class ProductController extends Controller
         if($id == 2){ // without nota
             $$module_name->where('is_nota', false)->get();
         }
+        $$module_name->where('product_price', '>', 0)->get();
+
         $harga = Harga::latest()->first();  
         if($harga == null){
             $harga  = 0;
@@ -893,6 +1012,9 @@ class ProductController extends Controller
             $item->harga = $harga; // Add the harga attribute to the model
         });
         $data = $$module_name;
+
+        // echo json_encode($data);
+        // exit();
 
         return Datatables::of($$module_name)
             ->addColumn('action', function ($data) {
@@ -933,12 +1055,11 @@ class ProductController extends Controller
                 return view('product::products.partials.status', compact('data'));
             })
 
-            ->editColumn('cabang', function ($data) {
-                $tb = '<div class="text-center items-center gap-x-2">
-                            <div class="text-sm text-center">
-                              ' . @$data->cabang->name . '</div>
-                                </div>';
-                return $tb;
+            ->editColumn('code', function ($data) {
+                return $data->product_code;
+            })
+            ->editColumn('keterangan', function ($data) {
+                return $data->product_history->keterangan ?? '';
             })
 
             ->editColumn('karat', function ($data) {
@@ -951,29 +1072,21 @@ class ProductController extends Controller
                 return $tb;
             })
 
-
-            ->addColumn('tracking', function ($data) {
-                $module_name = $this->module_name;
-                $module_model = $this->module_model;
-                return view(
-                    'product::products.partials.qrcode_button',
-                    compact('module_name', 'data', 'module_model')
-                );
-            })
-
-
             ->editColumn('created_at', function ($data) {
                 $module_name = $this->module_name;
                 return tgljam($data->created_at);
             })
+            ->editColumn('berat_emas', function ($data) {
+                return $data->berat_emas;
+            })
             ->rawColumns([
-                'created_at', 'product_image', 'weight', 'status', 'tracking',
+                'created_at', 'product_image', 'keterangan', 'code', 'weight', 'status', 'tracking',
                 'product_name', 'karat', 'berat_emas', 'cabang', 'action'
             ])
             ->make(true);
     }
 
-    public function data_nota(Request $request)
+    public function datanota(Request $request)
     {   
         $id     = $request->id;
 
@@ -995,6 +1108,7 @@ class ProductController extends Controller
         if($id == 2){ // without nota
             $$module_name->where('is_nota', false)->get();
         }
+        $$module_name->where('product_price', '=', 0)->get();
         $harga = Harga::latest()->first();  
         if($harga == null){
             $harga  = 0;
@@ -1013,11 +1127,9 @@ class ProductController extends Controller
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
                 $module_model = $this->module_model;
-                $baki   = Baki::latest()->get();
-
                 return view(
-                    'product::products.partials.all',
-                    compact('module_name', 'data', 'module_model', 'baki')
+                    'product::products.partials.actions',
+                    compact('module_name', 'data', 'module_model')
                 );
             })
 
@@ -1050,12 +1162,11 @@ class ProductController extends Controller
                 return view('product::products.partials.status', compact('data'));
             })
 
-            ->editColumn('cabang', function ($data) {
-                $tb = '<div class="text-center items-center gap-x-2">
-                            <div class="text-sm text-center">
-                              ' . @$data->cabang->name . '</div>
-                                </div>';
-                return $tb;
+            ->editColumn('code', function ($data) {
+                return $data->product_code;
+            })
+            ->editColumn('keterangan', function ($data) {
+                return $data->product_history->keterangan ?? '';
             })
 
             ->editColumn('karat', function ($data) {
@@ -1068,31 +1179,19 @@ class ProductController extends Controller
                 return $tb;
             })
 
-
-            // ->addColumn('tracking', function ($data) {
-            //     $module_name = $this->module_name;
-            //     $module_model = $this->module_model;
-            //     return view(
-            //         'product::products.partials.qrcode_button',
-            //         compact('module_name', 'data', 'module_model')
-            //     );
-            // })
-
-
             ->editColumn('created_at', function ($data) {
                 $module_name = $this->module_name;
                 return tgljam($data->created_at);
             })
-            ->editColumn('baki', function ($data) {
-                // $module_name = $this->module_name;
-                return ($data->baki->name ?? '-');
+            ->editColumn('berat_emas', function ($data) {
+                return $data->berat_emas;
             })
             ->rawColumns([
-                'created_at', 'product_image', 'weight', 'status', 'tracking',
-                'product_name', 'karat', 'cabang', 'action'
+                'created_at', 'product_image', 'keterangan', 'code', 'weight', 'status', 'tracking',
+                'product_name', 'karat', 'berat_emas', 'cabang', 'action'
             ])
             ->make(true);
-    }
+        }
 
     public function index_data(Request $request)
     {

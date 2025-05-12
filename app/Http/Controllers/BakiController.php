@@ -95,6 +95,7 @@ class BakiController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
+        $$module_name = Baki::where('id', '!=', 3)->get();
         $$module_name = Baki::latest()->get();
         $data = $$module_name;
         return Datatables::of($data)

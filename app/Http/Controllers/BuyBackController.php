@@ -50,20 +50,20 @@ class BuybackController extends Controller
         // echo json_encode($_POST);
         // exit();
         $product = $request->product;
-        $products = Product::where('id', $product)->first();
+        // $products = Product::where('id', $product)->first();
         // echo json_encode($products);
         // exit();
-        $id_product = $products->id;
+        // $id_product = $products;
         $buyback    = Buyback::create([
             'nota'   => $request->nota,
-            'product_id'   => $id_product,
+            'product_id'   => $product,
             'kondisi'   => $request->kondisi,
             'harga'   => $request->harga,
             'tanggal'   => date('Y-m-d'),
         ]);
 
         // UPDATE PRODUCT
-        $product= Product::where('id', $id_product)->firstOrFail();
+        $product= Product::where('id', $product)->firstOrFail();
         $name   = $product->product_name;
         $name   = $product->product_name;
         $desc   = $product->product_code;
@@ -71,6 +71,8 @@ class BuybackController extends Controller
         $harga  = $request->harga;
         $product->status_id = 3; // pending
         $product->save();
+
+        $id_product = $product->id;
 
         // HISTORY
         $product_history = ProductHistories::create([
@@ -189,19 +191,25 @@ class BuybackController extends Controller
             $status     = $product->status_id;
             if($status == 2){
                 return response()->json([
-                    'product' => $product,
-                    'name' => $name,
+                    'product' => $product->id,
+                    'image' => $product->images,
+                    'kode' => $product->product_code,
+                    'jenis' => $product->product_name,
+                    'berat' => $product->berat_emas,
                     'desc' => $desc,
-                    'total' => 'Rp '.number_format($total)
+                    'harga' => 'Rp '.number_format($total)
                 ]);
             }
         }
     
         return response()->json([
             'product' => '',
-            'name' => '',
+            'image' => '',
+            'kode' => '',
+            'jenis' => '',
+            'berat' => '',
             'desc' => '',
-            'total' => ''
+            'harga' => ''
         ]);
         // return response()->json([], 404);
         // return $salesGold;

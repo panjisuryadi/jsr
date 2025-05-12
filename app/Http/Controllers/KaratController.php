@@ -63,12 +63,14 @@ class KaratController extends Controller
     public function update_diskon(Request $request, Karat $data)
     {
         $validator = \Validator::make($request->all(),[
-            'coef' => 'required|numeric',
+            'diskon' => 'required|numeric',
         ]);
         if (!$validator->passes()) {
           return response()->json(['error'=>$validator->errors()]);
         }
+        $id = $request->input('id');
         $diskon = $request->input('diskon');
+        $data = Karat::where('id', $id)->firstOrFail();
         $data->diskon = $diskon;
         $data->save();
         if(empty($data->parent_id)){
@@ -81,17 +83,6 @@ class KaratController extends Controller
                 'margin' => 0,
                 'harga_jual' => 0
             ];
-            
-            $penentuan_harga = PenentuanHarga::where('karat_id', $data->id)->first();
-            if(!$penentuan_harga){
-                $penentuan_harga = $data->penentuanHarga()->create($dataKarat);
-                $dataKarat['karat_id'] = $data->id;
-                $dataKarat['updated'] = 1;
-                $dataKarat['created_by'] = auth()->user()->name;
-                unset($dataKarat['tgl_update']);
-                $dataKarat['tanggal'] = now();
-                $penentuan_harga->history()->create($dataKarat);
-            }
         }
         return response()->json(['success'=>'Diskon Sukses diupdate.']);
     }
@@ -148,6 +139,25 @@ class KaratController extends Controller
                 'harga',
             )
         );
+    }
+
+    public function edit_diskon($id)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Edit';
+        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        $detail = Karat::findOrFail($id);
+          return view('karats.modal_diskon',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
     }
 
     public function index_diskon(Request $request)
@@ -225,6 +235,10 @@ class KaratController extends Controller
                                             <h3 class="text-sm font-bold text-gray-800"> ' .number_format(($data->coef*$data->harga)+$data->margin) . '</h3>
                                     </div>';
                             })
+
+                        ->editColumn('diskon', function($data){
+                            return number_format($data->diskon);
+                            })
                       ->editColumn('ph', function($data){
                             $output = '';
                           
@@ -241,7 +255,7 @@ class KaratController extends Controller
                              </div>';
 
                         })
-                        ->rawColumns(['karat', 'rekomendasi', 'action','coef','type','ph', 'harga'])
+                        ->rawColumns(['karat', 'rekomendasi', 'diskon', 'action','coef','type','ph', 'harga'])
                         ->make(true);
     }
 

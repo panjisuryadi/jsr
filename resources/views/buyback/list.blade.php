@@ -1,6 +1,24 @@
 @extends('layouts.app')
 @section('title', 'Buyback')
 @section('third_party_stylesheets')
+<style>
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.invoice-table th, .invoice-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.invoice-table th {
+    background-color: #f2f2f2;
+}
+.invoice-table td {
+    background-color: #fff;
+}
+</style>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 @endsection
 @section('breadcrumb')
@@ -78,38 +96,49 @@
                         <input type="text" class="form-control" name="product" required>
                     </div> -->
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="">No Nota</label>
                                 <input type="hidden" name="product" id="product">
                                 <input type="text" class="form-control" name="nota" id="nota" onkeyup="view_nota();" required>
                             </div>
-
+                        </div>
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="">Kondisi</label>
-                                <input type="text" class="form-control" name="kondisi" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Harga</label>
-                                <input type="number" class="form-control" name="harga" required>
+                                <input type="text" class="form-control" name="kondisi" id="kondisi" required readonly>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
-                                <label for="">Nama</label>
-                                <input type="text" class="form-control" name="name" id="name" readonly>
+                                <label for="">Harga</label>
+                                <input type="number" class="form-control" name="harga" id="harga" required readonly>
                             </div>
-
-                            <div class="form-group">
-                                <label for="">Desc</label>
-                                <input type="text" class="form-control" name="desc" id="desc" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Total</label>
-                                <input type="text" class="form-control" name="total" id="total" readonly>
-                            </div>
+                        </div>
+                            
+                        <div class="col-12 mt-5">
+                            <table class="invoice-table">
+                                <thead>
+                                    <tr>
+                                        <th>Img</th>
+                                        <th>Kode</th>
+                                        <th>Jenis</th>
+                                        <th>Deskripsi</th>
+                                        <th>Berat</th>
+                                        <th>Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><img id="t_image" src="./storage/uploads/1742774180.png" order="0" width="70" class="img-thumbnail"></td>
+                                        <td id="t_kode">Emas Dummy</td>
+                                        <td id="t_jenis">Emas Antam</td>
+                                        <td id="t_desc">Gold 1 ml Ruth</td>
+                                        <td id="t_berat">1 g</td>
+                                        <td id="t_harga">Rp. 9.999.999</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     
@@ -204,34 +233,23 @@
 
     <script type="text/javascript">
 jQuery.noConflict();
-(function( $ ) {
-$(document).on('click', '#Tambah, #Edit', function(e){
-         e.preventDefault();
-        if($(this).attr('id') == 'Tambah')
-        {
-            $('.modal-dialog').addClass('modal-lg');
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbspTambah {{ Label_case($module_title) }}');
-        }
-        if($(this).attr('id') == 'Edit')
-        {
-            $('.modal-dialog').removeClass('modal-sm');
-            $('#ModalHeader').html('<i class="bi bi-grid-fill"></i> &nbsp;Edit {{ Label_case($module_title) }}');
-        }
-        $('#ModalContent').load($(this).attr('href'));
-        $('#ModalGue').modal('show');
-    });
-})(jQuery);
+
 </script>
 <script src="./js/jquery.min.js"></script>
 <script>
 function view_nota(){
     let nota = $('#nota').val();
+    $('#harga').prop('readonly', true);
+    $('#kondisi').prop('readonly', true);
     let length = nota.length;
-    if (length == 10){
-        $('#name').val();
-        $('#desc').val();
-        $('#total').val();
+    console.log(length);
+    if (length > 9){
+        $('#t_image').html();
+        $('#t_kode').html();
+        $('#t_jenis').html();
+        $('#t_desc').html();
+        $('#t_berat').html();
+        $('#t_harga').html();
         $.ajax({
             url: './buyback_nota/'+nota, // The URL for your route
             type: 'GET', // Request method
@@ -240,10 +258,20 @@ function view_nota(){
                 console.log(response);
                 // On success, handle the response
                 if(response) {
+                    $('#harga').prop('readonly', false);
+                    $('#kondisi').prop('readonly', false);
+                    
                     $('#product').val(response.product);
-                    $('#name').val(response.name);
-                    $('#desc').val(response.desc);
-                    $('#total').val(response.total);
+                    // $('#name').val(response.name);
+                    // $('#desc').val(response.desc);
+                    // $('#total').val(response.total);
+
+                    $('#t_image').attr('src', './storage/uploads/'+response.image);
+                    $('#t_kode').html(response.kode);
+                    $('#t_jenis').html(response.jenis);
+                    $('#t_desc').html(response.desc);
+                    $('#t_berat').html(response.berat);
+                    $('#t_harga').html(response.harga);
                     
                 } else {
                     // $("#result").html("<p>No data found.</p>");

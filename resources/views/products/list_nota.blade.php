@@ -27,13 +27,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="btn-group">
-                        <a href="{{ route('penentuanharga.index') }}" class="px-3 btn btn-danger" data-toggle="modal" data-target="#createModal">
+                        <a href="#" class="px-3 btn btn-danger" data-toggle="modal" data-target="#createModal">
                             Add Product <i class="bi bi-plus"></i>
                         </a>
                     </div>
                     <div class="flex justify-between pb-3 border-bottom">
                         <div> 
-                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk Dari Luar (Tanpa Nota)</span>
+                            <i class="bi bi-plus"></i> &nbsp; <span class="text-lg font-semibold"> List Produk Satuan</span>
                         </div>
                         <div id="buttons"></div>
                     </div>
@@ -43,7 +43,7 @@
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
                                     <th style="width: 15%!important;">Product</th>
-                                    <th style="width: 15%!important;" class="text-center">Harga Beli</th>
+                                    <!-- <th style="width: 15%!important;" class="text-center">Harga Beli</th> -->
                                     <th style="width: 10%!important;" class="text-center">Berat</th>
                                     <th style="width: 15%!important;" class="text-center">Code</th>
                                     <th style="width: 25%!important;" class="text-center">Keterangan</th>
@@ -66,13 +66,13 @@
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-lg font-bold" id="addModalLabel">Add Product Luar (Tanpa Nota)</h3>
+                <h3 class="modal-title text-lg font-bold" id="addModalLabel">Add Product Satuan</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body p-4">
-                <form action="/products_insert_luar" method="post">
+                <form action="/products_insert_nota" method="post">
                     @csrf
                     <div class="px-0 py-2">
                                 @php
@@ -164,21 +164,6 @@
                                                     <button class="btn btn-info relative rounded-l-none" onclick="gencode({{ $number }});" type="button">Check</button>
                                                 </span>
                                             </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <?php
-                                            $field_name = 'new_product.harga';
-                                            $field_id   = 'harga_'.$number;
-                                            $field_lable = label_case('harga');
-                                            $field_placeholder = $field_lable;
-                                            $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                            $required = "required";
-                                            ?>
-                                            <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                            <input type="number" id="{{ $field_id }}" name="new_product_harga" class="form-control " >
-                                            <!-- <div class="input-group">
-                                            </div> -->
                                         </div>
 
                                         <div class="form-group">
@@ -283,7 +268,7 @@
         ],
         "sPaginationType": "simple_numbers",
         // ajax: '{{ route("$module_name.index_data") }}',
-        ajax: '/products_dataluar',
+        ajax: '/products_datanota',
         dom: 'Blfrtip',
         buttons: [
             {
@@ -320,10 +305,10 @@
             data: 'product_name',
             name: 'product_name'
         },
-        {
-            data: 'karat',
-            name: 'karat'
-        },
+        // {
+        //     data: 'karat',
+        //     name: 'karat'
+        // },
         {
             data: 'berat_emas',
             name: 'berat_emas'

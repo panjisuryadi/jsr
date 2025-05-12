@@ -106,6 +106,7 @@ body {
                         <table class="invoice-table">
                             <thead>
                                 <tr>
+                                    <th>Img</th>
                                     <th>Kode</th>
                                     <th>Jenis</th>
                                     <th>Deskripsi</th>
@@ -115,6 +116,7 @@ body {
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td><img src="./storage/uploads/1742774180.png" order="0" width="70" class="img-thumbnail"></td>
                                     <td>Aring F</td>
                                     <td>Aring L6</td>
                                     <td>Gold 1 ml Ruth</td>

@@ -4,6 +4,7 @@ namespace Modules\Product\Entities;
 
 use App\Models\LookUp;
 use App\Models\Baki;
+use App\Models\ProductHistories;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Product\Notifications\NotifyQuantityAlert;
@@ -57,8 +58,12 @@ class Product extends Model implements HasMedia
             $builder->where('cabang_id', $cabang_id);
         });
    }
-  public function product_item() {
+    public function product_item() {
         return $this->hasOne(ProductItem::class, 'product_id', 'id');
+    }
+
+    public function product_history(){
+        return $this->hasOne(ProductHistories::class, 'product_id', 'id');
     }
 
     public function scopeAkses($query)

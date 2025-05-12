@@ -394,4 +394,272 @@ class JualController extends Controller
             ])
             ->make(true);
     }
+
+    public function index_data_baki(Request $request)
+    {   
+        $id     = $request->id;
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = Product::with('category', 'product_item', 'karats', 'baki');
+        if ($request->get('status')) {
+            $$module_name = $$module_name->where('status_id', $request->get('status'));
+        }
+        
+        $$module_name->where('status_id', [1, 3])->get();
+        $$module_name->where('baki_id', '!=', $id)->get();
+
+        $harga = Harga::latest()->first();  
+        if($harga == null){
+            $harga  = 0;
+        }else{
+            $harga = $harga->harga;
+        }     
+        $$module_name = $$module_name->latest()->get();
+        $$module_name->each(function ($item) use ($harga) {
+            $item->harga = $harga; // Add the harga attribute to the model
+        });
+        $data = $$module_name;
+
+        // echo json_encode($data);
+        // exit();
+
+        return Datatables::of($$module_name)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                // return view(
+                //     'product::products.partials.actions',
+                //     compact('module_name', 'data', 'module_model')
+                // );
+                return view('Sale.action', compact('module_name', 'data', 'module_model'));
+
+            })
+
+            ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                           <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+                            ' . $data->category?->category_name . '</div>
+
+                            <h3 class="small font-medium text-gray-600 dark:text-white "> ' . $data->product_name . '</h3>
+                             <div class="text-xs font-normal text-blue-500 font-semibold">
+                            ' . @$data->cabang->name . '</div>
+
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
+            //    ->addColumn('product_image', function ($data) {
+            //     $url = $data->getFirstMediaUrl('images', 'thumb');
+            //     return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+            // })
+
+
+            ->addColumn('product_image', function ($data) {
+                return view('product::products.partials.image', compact('data'));
+            })
+
+            ->addColumn('product_code', function ($data) {
+                return $data->product_code;
+            })
+
+            ->addColumn('baki', function ($data) {
+                return $data->baki->name;
+            })
+
+            ->addColumn('status', function ($data) {
+                return view('product::products.partials.status', compact('data'));
+            })
+
+            ->editColumn('cabang', function ($data) {
+                $tb = '<div class="text-center items-center gap-x-2">
+                            <div class="text-sm text-center">
+                              ' . @$data->cabang->name . '</div>
+                                </div>';
+                return $tb;
+            })
+
+            ->editColumn('rekomendasi', function ($data) {
+                $tb = '<div class="items-center gap-x-2">
+                                <div class="text-sm text-center text-gray-500">
+                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
+                                </div>
+                                </div>';
+                return $tb;
+            })
+
+            ->editColumn('karat', function ($data) {
+                // $tb = '<div class="items-center gap-x-2">
+                //                 <div class="text-sm text-center text-gray-500">
+                //                 Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
+                //                 </div>
+                //                 </div>';
+                // $karatnya   = $data->karat->name.' | '.$data->karat->kode;
+                return $data->karat->name ?? '-';
+                // return $data->karat->coef;
+            })
+
+
+            ->addColumn('tracking', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                return view(
+                    'product::products.partials.qrcode_button',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+
+
+            ->editColumn('created_at', function ($data) {
+                $module_name = $this->module_name;
+                return tgljam($data->created_at);
+            })
+            ->rawColumns([
+                'created_at', 'product_image', 'rekomendasi', 'weight', 'status', 'tracking',
+                'product_name', 'karat', 'cabang', 'action'
+            ])
+            ->make(true);
+    }
+
+    public function index_data_custom(Request $request)
+    {   
+        $id     = $request->id;
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = Product::with('category', 'product_item', 'karats', 'baki');
+        if ($request->get('status')) {
+            $$module_name = $$module_name->where('status_id', $request->get('status'));
+        }
+        
+        $$module_name->where('baki_id', $id)->get();
+        // $$module_name->where('status_id', 1)->get();
+
+        $harga = Harga::latest()->first();  
+        if($harga == null){
+            $harga  = 0;
+        }else{
+            $harga = $harga->harga;
+        }     
+        $$module_name = $$module_name->latest()->get();
+        $$module_name->each(function ($item) use ($harga) {
+            $item->harga = $harga; // Add the harga attribute to the model
+        });
+        $data = $$module_name;
+
+        // echo json_encode($data);
+        // exit();
+
+        return Datatables::of($$module_name)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                // return view(
+                //     'product::products.partials.actions',
+                //     compact('module_name', 'data', 'module_model')
+                // );
+                return view('Sale.action', compact('module_name', 'data', 'module_model'));
+
+            })
+
+            ->editColumn('product_name', function ($data) {
+                $tb = '<div class="flex items-center gap-x-2">
+                        <div>
+                           <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+                            ' . $data->category?->category_name . '</div>
+
+                            <h3 class="small font-medium text-gray-600 dark:text-white "> ' . $data->product_name . '</h3>
+                             <div class="text-xs font-normal text-blue-500 font-semibold">
+                            ' . @$data->cabang->name . '</div>
+
+
+                        </div>
+                    </div>';
+                return $tb;
+            })
+            //    ->addColumn('product_image', function ($data) {
+            //     $url = $data->getFirstMediaUrl('images', 'thumb');
+            //     return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+            // })
+
+
+            ->addColumn('product_image', function ($data) {
+                return view('product::products.partials.image', compact('data'));
+            })
+
+            ->addColumn('product_code', function ($data) {
+                return $data->product_code;
+            })
+
+            ->addColumn('baki', function ($data) {
+                return $data->baki->name;
+            })
+
+            ->addColumn('status', function ($data) {
+                return view('product::products.partials.status', compact('data'));
+            })
+
+            ->editColumn('cabang', function ($data) {
+                $tb = '<div class="text-center items-center gap-x-2">
+                            <div class="text-sm text-center">
+                              ' . @$data->cabang->name . '</div>
+                                </div>';
+                return $tb;
+            })
+
+            ->editColumn('rekomendasi', function ($data) {
+                $tb = '<div class="items-center gap-x-2">
+                                <div class="text-sm text-center text-gray-500">
+                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
+                                </div>
+                                </div>';
+                return $tb;
+            })
+
+            ->editColumn('karat', function ($data) {
+                // $tb = '<div class="items-center gap-x-2">
+                //                 <div class="text-sm text-center text-gray-500">
+                //                 Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
+                //                 </div>
+                //                 </div>';
+                // $karatnya   = $data->karat->name.' | '.$data->karat->kode;
+                return $data->karat->name ?? '-';
+                // return $data->karat->coef;
+            })
+
+
+            ->addColumn('tracking', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                return view(
+                    'product::products.partials.qrcode_button',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+
+
+            ->editColumn('created_at', function ($data) {
+                $module_name = $this->module_name;
+                return tgljam($data->created_at);
+            })
+            ->rawColumns([
+                'created_at', 'product_image', 'rekomendasi', 'weight', 'status', 'tracking',
+                'product_name', 'karat', 'cabang', 'action'
+            ])
+            ->make(true);
+    }
 }

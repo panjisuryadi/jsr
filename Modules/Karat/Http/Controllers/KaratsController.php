@@ -320,6 +320,25 @@ public function show($id)
             'module_icon', 'module_model'));
     }
 
+    public function edit_diskon($id)
+    {
+       $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'Edit';
+        abort_if(Gate::denies('edit_'.$module_name.''), 403);
+        $detail = $module_model::findOrFail($id);
+          return view(''.$module_name.'::'.$module_path.'.modal.diskon',
+           compact('module_name',
+            'module_action',
+            'detail',
+            'module_title',
+            'module_icon', 'module_model'));
+    }
+
     /**
      * Update the specified resource in storage.
      * @param Request $request
