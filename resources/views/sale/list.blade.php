@@ -40,10 +40,10 @@
                         <tr>
                             <th style="width: 5%!important;">No</th>
                             <th style="width: 15%!important;">{{ Label_case('image') }}</th>
-                            <th style="width: 18%!important;">Code</th>
-                            <th style="width: 17%!important;">{{ Label_case('product') }}</th>
-                            <th style="width: 15%!important;" class="text-center">{{ Label_case('Karat') }}</th>
-                            <th style="width: 15%!important;" class="text-center">{{ Label_case('Rekomendasi') }}</th>
+                            <th style="width: 15%!important;">Code</th>
+                            <th style="width: 20%!important;">{{ Label_case('product') }}</th>
+                            <th style="width: 23%!important;" class="text-center">{{ Label_case('Karat | Berat') }}</th>
+                            <th style="width: 17%!important;" class="text-center">{{ Label_case('Harga') }}</th>
                             <!-- <th style="width: 25%!important;" class="text-center">{{ Label_case('Date') }}</th> -->
                             <th style="width: 5%!important;" class="text-center">#</th>
                         </tr>
@@ -117,7 +117,7 @@
             <hr>
         </div>
         
-        <div class="mt-3" id="copy">
+        <div class="mt-5" id="copy">
 
         </div>
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -176,6 +176,11 @@
 <!-- Bootstrap JS (with Popper) – CDN version -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AHR5oKn06PWzGk+E9Y1kCfmhktbZ5d9+8wCjUY8H7Sk/9kccB+ApPBALSczF+" crossorigin="anonymous"></script> -->
     <script> 
+    $(document).ready(function(){
+        $('#confirmProductModal').on('hidden.bs.modal', function () {
+            remove_copy();
+        });
+    });
     function submit_form(){
         let cust = $("#customer_modal").val();
         $("#customer").val(cust);
@@ -184,13 +189,42 @@
     }
 
     function copy_div(){
+        let clone = $("#preview-area").clone();
+
+        // For each diskon input inside the clone, set the 'value' attribute to the current input value
+        clone.find('input[name="diskon[]"]').each(function(){
+            $(this).attr('value', $(this).val());
+        });
+
+        // Similarly, for each harga input inside the clone, update the 'value' attribute
+        clone.find('input[name="harga[]"]').each(function(){
+            $(this).attr('value', $(this).val());
+        });
+
+        // Remove unwanted elements in the clone
+        // clone.find('input[name="diskon[]"]').remove();       // If you want to remove discount inputs in the copy
+        clone.find('.btn-delete-current').remove();          // Remove delete buttons from copy
+
+        // Now set the HTML of #copy using the clone's HTML
+        $("#copy").html(clone.html());
+        let total = $("#total-nominal").html();
+        $("#total").html(total);
+
+    }
+
+    function copy_div_old(){
+        // $('input[name="diskon[]"]').prop('readonly', true);
         let div = $("#preview-area").html();
         let total = $("#total-nominal").html();
         $("#copy").html(div);
         $("#total").html(total);
-        $('#copy input[name="harga[]"]').remove();
+        $('#copy input[name="diskon[]"]').remove();
         $('#copy .btn-delete-current').remove();
     }     
+    function remove_copy(){
+        // $('input[name="diskon[]"]').prop('readonly', false);
+        $("#copy").html('');
+    }
     $('#datatable').DataTable({
         processing: true,
         serverSide: true,
@@ -271,7 +305,7 @@
     .buttons()
     .container()
     .appendTo("#buttons"); 
-
+    
     function sum_harga(){
         let total = 0;
 
@@ -286,6 +320,35 @@
         // Format and update total display
         $('#total-nominal').text(`Rp ${formatRupiah(total)}`);
     }
+
+    function sum_diskon() {
+        const diskonInputs = document.querySelectorAll('input[name="diskon[]"]');
+        const hargaInputs = document.querySelectorAll('input[name="harga[]"]');
+
+        diskonInputs.forEach((diskonInput, index) => {
+            const hargaInput = hargaInputs[index];
+            if (!hargaInput) return;
+
+            const originalHarga = parseInt(hargaInput.getAttribute('data-original-harga')) || 0;
+            let diskonVal = parseInt(diskonInput.value) || 0;
+
+            // Ensure discount is not negative or above max
+            if (diskonVal < 0) diskonVal = 0;
+            const maxDiskon = parseInt(diskonInput.getAttribute('max')) || diskonVal;
+            if (diskonVal > maxDiskon) {
+            diskonVal = maxDiskon;
+            diskonInput.value = maxDiskon; // correct the input value
+            }
+
+            // Calculate the new harga after discount
+            let newHarga = originalHarga - diskonVal;
+            if (newHarga < 0) newHarga = 0; // prevent negative harga
+
+            hargaInput.value = newHarga;
+        });
+        sum_harga();
+    }
+
 
     function formatRupiah(number) {
         return number.toLocaleString('id-ID');
@@ -330,20 +393,20 @@
             <div class="border-bottom pb-2 mb-2 preview-item">
                 <div class="row align-items-center">
                     <div class="col-3">
-                        <div class="text-xs text-yellow-600">${service}</div>
+                        <div class="text-xs text-blue-600">${service}</div>
                         <h6 class="mb-0 small text-gray-700">${desc}</h6>
                     </div>
                     <div class="col-3">
-                        <small>Rekomendasi: <strong>${harga}</strong></small>
+                        <small>Harga: <strong>${harga}</strong></small>
                     </div>
                     <div class="col-2">
-                        <small>Max Diskon: <strong>${diskon}</strong></small>
+                        <input type="number" name="diskon[]" class="form-control form-control-sm" value="0" max="0" readonly>
                     </div>
                     <div class="col-3">
                         <input type="hidden" name="product[]" value="0">
                         <input type="hidden" name="product_name[]" value="${service}">
                         <input type="hidden" name="product_desc[]" value="${desc}">
-                        <input type="number" name="harga[]" class="form-control form-control-sm" onkeyup="sum_harga();" min="${min}" value="${price}" placeholder="Harga">
+                        <input type="number" name="harga[]" class="form-control form-control-sm" data-original-harga="${price}" onkeyup="sum_harga();" value="${price}" placeholder="Harga" readonly>
                     </div>
                     <div class="col-1 text-end">
                         <button type="button" class="btn btn-sm btn-outline-danger btn-delete-current">
@@ -380,28 +443,32 @@
     function renderPreview(data) {
         // console.log(data);
         const previewArea = $('#preview-area');
-        const rekomendasi = formatRupiah(data.harga * data.karats.coef);
-        const price       = (data.harga * data.karats.coef);
-        const diskon      = (data.karats.diskon);
+        const harga       = (data.harga*data.karats.coef+data.karats.margin)*data.berat_emas;
+        const rekomendasi = formatRupiah(harga);
+        const price       = (harga);
+        const diskon      = (data.karats.diskon)*data.berat_emas;
         const min         = (price-diskon);
         const product     = (data.id);
         const newItem = `
         <div class="border-bottom pb-2 mb-2 preview-item">
             <div class="row align-items-center">
-                <div class="col-3">
+                <div class="col-2">
                     <h6 class="mb-0 small text-gray-700">${data.product_name}</h6>
                 </div>
-                <div class="col-3">
-                    <small>Rekomendasi: <strong>${rekomendasi}</strong></small>
+                <div class="col-2">
+                    <small>Harga: <strong>${rekomendasi}</strong></small>
                 </div>
                 <div class="col-2">
                     <small>Max Diskon: <strong>${diskon}</strong></small>
+                </div>
+                <div class="col-2">
+                    <input type="number" name="diskon[]" class="form-control form-control-sm" value="0" max="${diskon}" onkeyup="sum_diskon();" placeholder="Diskon">
                 </div>
                 <div class="col-3">
                     <input type="hidden" name="product[]" value="${product}">
                     <input type="hidden" name="product_name[]" value="${data.category.category_name}">
                     <input type="hidden" name="product_desc[]" value="${data.category.category_name}">
-                    <input type="number" name="harga[]" class="form-control form-control-sm" value="${price}" min="${min}" onkeyup="sum_harga();" placeholder="Harga">
+                    <input type="number" name="harga[]" class="form-control form-control-sm" data-original-harga="${price}" value="${price}" onkeyup="sum_harga();" placeholder="Harga" readonly>
                 </div>
                 <div class="col-1 text-end">
                     <button type="button" class="btn btn-sm btn-outline-danger btn-delete-current">

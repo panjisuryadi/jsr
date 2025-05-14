@@ -41,10 +41,11 @@
                     <thead>
                         <tr>
                             <th style="width: 5%!important;">No</th>
-                            <th style="width: 18%!important;">Code</th>
+                            <th style="width: 16%!important;">Code</th>
                             <th style="width: 17%!important;">{{ Label_case('product') }}</th>
-                            <th style="width: 15%!important;" class="text-center">Baki</th>
-                            <th style="width: 15%!important;" class="text-center">{{ Label_case('Rekomendasi') }}</th>
+                            <th style="width: 10%!important;" class="text-center">Baki</th>
+                            <th style="width: 6%!important;" class="text-center">Berat</th>
+                            <th style="width: 16%!important;" class="text-center">{{ Label_case('Harga') }}</th>
                             <!-- <th style="width: 25%!important;" class="text-center">{{ Label_case('Date') }}</th> -->
                             <th style="width: 5%!important;" class="text-center">#</th>
                         </tr>
@@ -59,10 +60,11 @@
                     <thead>
                         <tr>
                             <th style="width: 5%!important;">No</th>
-                            <th style="width: 18%!important;">Code</th>
+                            <th style="width: 16%!important;">Code</th>
                             <th style="width: 17%!important;">{{ Label_case('product') }}</th>
-                            <th style="width: 15%!important;" class="text-center">Baki</th>
-                            <th style="width: 15%!important;" class="text-center">{{ Label_case('Rekomendasi') }}</th>
+                            <th style="width: 10%!important;" class="text-center">Baki</th>
+                            <th style="width: 6%!important;" class="text-center">Berat</th>
+                            <th style="width: 16%!important;" class="text-center">{{ Label_case('Harga') }}</th>
                             <!-- <th style="width: 25%!important;" class="text-center">{{ Label_case('Date') }}</th> -->
                         </tr>
                     </thead>
@@ -213,6 +215,10 @@
             name: 'baki'
         }, 
         {
+            data: 'berat_emas',
+            name: 'berat_emas'
+        }, 
+        {
             data: 'rekomendasi',
             name: 'rekomendasi'
         }, 
@@ -293,6 +299,10 @@
         {
             data: 'baki',
             name: 'baki'
+        }, 
+        {
+            data: 'berat_emas',
+            name: 'berat_emas'
         }, 
         {
             data: 'rekomendasi',

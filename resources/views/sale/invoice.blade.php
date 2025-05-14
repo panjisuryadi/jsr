@@ -33,12 +33,12 @@
             display: flex;
             justify-content: space-between; /* Ensure the logo and title are spaced apart */
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 7px;
             font-size: 13px;
         }
 
         .header img {
-            width: 80px; /* Adjust logo size */
+            width: 70px; /* Adjust logo size */
         }
 
         .header h2 {
@@ -106,7 +106,7 @@
         .total {
             margin-top: 10px;
             margin-right: 30px;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
             text-align: right;
         }
@@ -114,14 +114,14 @@
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .invoice-table th, .invoice-table td {
             padding: 6px 8px;
             text-align: left;
             border: 1px solid #ddd;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .invoice-table th {
@@ -133,12 +133,12 @@
         }
 
         .footer p {
-            margin-top: 10px;
-            font-size: 12px;
+            margin-top: 6px;
+            font-size: 11px;
         }
 
         .footer p:last-child {
-            margin-top: 15px;
+            margin-top: 8px;
         }
 
         .page-break {
@@ -147,8 +147,8 @@
 
         .invoice-details {
             width: 100%;
-            margin-top: 10px;
-            font-size: 12px;
+            margin-top: 7px;
+            font-size: 11px;
             table-layout: fixed;
         }
 
@@ -176,11 +176,15 @@
     @foreach($products as $index => $product)
 
         @php
-        $gambar = $product['img'];
         $gambar = '1742774180.png';
-        $ipath = public_path('storage/uploads/'.$gambar); // Path to your image
-        $idata = base64_encode(file_get_contents($ipath));
-        $isrc = 'data:image/png;base64,' . $idata;
+        $gambar = $product['img'];
+        if($gambar == 'non'){}
+
+        else{
+            $ipath = public_path('storage/uploads/'.$gambar); // Path to your image
+            $idata = base64_encode(file_get_contents($ipath));
+            $isrc = 'data:image/png;base64,' . $idata;
+        }
         @endphp
     <div class="invoice">
         <div class="header">
@@ -188,7 +192,7 @@
             <img src="{{ $imageSrc }}" alt="Logo">
             
             <!-- Centered: Toko Emas Cahaya -->
-            <h2>Toko Emas Cahaya</h2>
+            <h3>Toko Emas Cahaya</h3>
             <p>{{ $product['alamat'] }}</p>
             <p>{{ $product['telp'] }}</p>
         </div>
@@ -208,20 +212,34 @@
         <table class="invoice-table">
             <thead>
                 <tr>
+                @if ($product['title'] == 'Faktur')
+                    <th>Kode</th>
+                    <th>Jenis</th>
+                    <th>Berat</th>
+                    <th>Harga</th>
+                @else
                     <th>Pic</th>
                     <th>Kode</th>
                     <th>Jenis</th>
                     <th>Berat</th>
                     <th>Harga</th>
+                @endif
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><img src="{{ $isrc }}" style="width: 80px;" alt="Image"></td>
+                @if ($product['title'] == 'Faktur')
                     <td>{{ $product['desc'] }}</td>
                     <td>{{ $product['name'] }}</td>
                     <td>{{ $product['gram'] }}</td>
                     <td>Rp {{ number_format($product['harga'], 0, ',', '.') }}</td>
+                @else
+                    <td><img src="{{ $isrc }}" style="width: 65px;" alt="Image"></td>
+                    <td>{{ $product['desc'] }}</td>
+                    <td>{{ $product['name'] }}</td>
+                    <td>{{ $product['gram'] }}</td>
+                    <td>Rp {{ number_format($product['harga'], 0, ',', '.') }}</td>
+                @endif
                 </tr>
             </tbody>
         </table>

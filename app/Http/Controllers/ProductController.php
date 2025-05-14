@@ -183,6 +183,7 @@ class ProductController extends Controller
             'product_price'       => 0,
             'product_barcode_symbology'       => 'C128',
             'product_unit'       => 'Gram',
+            'karat_id'       => $request->new_product_karat_id,
             'product_stock_alert'       => 5,
             'status'       => 4, // brankas
             'images'       => $gambar,
@@ -469,9 +470,19 @@ class ProductController extends Controller
         $stat   = 4;
         $baki   = Baki::where('id', $id)->firstOrFail();
         $posisi = $baki->posisi;
+        $capacity = $baki->capacity;
         if($posisi == 'etalase'){
             $stat   = 1;
         }
+        $product_count = Product::where('baki_id', $id)->count();
+
+        if($capacity <= $product_count){
+            toast('Kapasitas baki penuh', 'error');
+            return redirect()->back();
+            // return redirect()->route('products.baki', ['id' => $id])
+            // ->with('error', 'Kapasitas Baki');
+        }
+
 
         $products   = Product::where('id', $product)->firstOrFail();
         $products->baki_id   = $id;

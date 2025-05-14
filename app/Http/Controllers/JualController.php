@@ -75,7 +75,7 @@ class JualController extends Controller
         $customers = Customer::all();
         $product_categories = Category::all();
 
-        return view('Sale.list', compact('product_categories', 'customers', 'karat', 'category', 'group', 'models'));
+        return view('sale.list', compact('product_categories', 'customers', 'karat', 'category', 'group', 'models'));
     }
 
     public function test_pdf(){
@@ -107,6 +107,7 @@ class JualController extends Controller
         $total      = 0;
         $number     = 0;
         $nama_cus   = '';
+        $address    = '';
         if($request->customer != '0'){
             $customer   = Customer::where('id', $request->customer)->first();
             $nama_cus   = $customer->customer_name;
@@ -122,6 +123,14 @@ class JualController extends Controller
                 if(in_array($p, $products)){
                     return redirect()->action([JualController::class, 'list']);
                 }
+                $sold = Product::where('id', $p)
+                ->where('status_id', 2)
+                ->get();
+
+                if ($sold->isNotEmpty()) {
+                    return redirect()->action([JualController::class, 'list']);
+                }
+
                 $products[] = $p;
             }
             $harga  = $request->harga[$number];
@@ -160,7 +169,7 @@ class JualController extends Controller
                 $name   = $request->product_name[$number];
                 $desc   = $request->product_desc[$number];
                 $gram   = '-';
-                $images = '';
+                $images = 'non';
                 $harga  = $request->harga[$number];
 
                 $serv   = Service::create([
@@ -186,6 +195,7 @@ class JualController extends Controller
                 $gram   = $product->berat_emas;
                 $harga  = $request->harga[$number];
                 $product->status_id = 2;
+                $product->status = 2;
                 $product->save();
 
                 // INSERT KE PRODUCT HISTORY
@@ -356,7 +366,7 @@ class JualController extends Controller
             ->editColumn('rekomendasi', function ($data) {
                 $tb = '<div class="items-center gap-x-2">
                                 <div class="text-sm text-center text-gray-500">
-                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
+                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)*$data->berat_emas) . ' <br>
                                 </div>
                                 </div>';
                 return $tb;
@@ -369,7 +379,11 @@ class JualController extends Controller
                 //                 </div>
                 //                 </div>';
                 // $karatnya   = $data->karat->name.' | '.$data->karat->kode;
-                return $data->karat->name ?? '-';
+                $karat  = $data->karat->name ?? '-';
+                $berat  = $data->berat_emas ?? 0;
+                $akhir  = $karat.' | '.$berat.'gr';
+                // return $data->karat->name ?? '-';
+                return $akhir;
                 // return $data->karat->coef;
             })
 
@@ -491,7 +505,7 @@ class JualController extends Controller
             ->editColumn('rekomendasi', function ($data) {
                 $tb = '<div class="items-center gap-x-2">
                                 <div class="text-sm text-center text-gray-500">
-                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
+                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)*$data->berat_emas) . ' <br>
                                 </div>
                                 </div>';
                 return $tb;
@@ -626,7 +640,7 @@ class JualController extends Controller
             ->editColumn('rekomendasi', function ($data) {
                 $tb = '<div class="items-center gap-x-2">
                                 <div class="text-sm text-center text-gray-500">
-                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)) . ' <br>
+                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)*$data->berat_emas) . ' <br>
                                 </div>
                                 </div>';
                 return $tb;
