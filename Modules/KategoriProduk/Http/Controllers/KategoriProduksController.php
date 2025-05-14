@@ -168,18 +168,18 @@ public function create()
         $params['name'] = $params['name'];
         $params['slug']  = Str::slug($params['name']);
         $params['description'] = $params['description'];
-        //  if ($image = $request->file('image')) {
-        //  $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //  $normal = Image::make($image)->resize(600, null, function ($constraint) {
-        //             $constraint->aspectRatio();
-        //             })->encode();
-        //  $normalpath = 'uploads/' . $gambar;
-        //  if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-        //  Storage::disk($storage)->put($normalpath, (string) $normal);
-        //  $params['image'] = "$gambar";
-        // }else{
-        //    $params['image'] = 'no_foto.png';
-        // }
+         if ($image = $request->file('image')) {
+         $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+         $normal = Image::make($image)->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    })->encode();
+         $normalpath = 'uploads/' . $gambar;
+         if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+         Storage::disk($storage)->put($normalpath, (string) $normal);
+         $params['image'] = "$gambar";
+        }else{
+           $params['image'] = 'no_foto.png';
+        }
 
 
          $$module_name_singular = $module_model::create($params);
