@@ -31,24 +31,27 @@
                         <table id="datatable" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 10%!important;">
+                                    <th style="width: 5%!important;">
                                         NO
                                     </th>
-                                    <th style="width: 20%!important;" class="text-center">
+                                    <th style="width: 15%!important;" class="text-center">
                                         Code
                                     </th>
-                                     <th style="width: 20%!important;" class="text-center">
+                                    <th style="width: 15%!important;" class="text-center">
+                                        Posisi
+                                    </th>
+                                     <th style="width: 15%!important;" class="text-center">
                                         Name
                                     </th>  
 
-                                     <th style="width: 15%!important;" class="text-center">
+                                     <th style="width: 10%!important;" class="text-center">
                                         Capacity
                                     </th>  
                                     <th style="width: 20%!important;" class="text-center">
                                         Created
                                     </th> 
 
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 20%!important;" class="text-center">
                                        {{__('Action')}}
                                     </th>
                                 </tr>
@@ -78,6 +81,13 @@
                         <input type="text" class="form-control" name="code" required>
                     </div>
                     <div class="form-group">
+                        <label for="">Posisi</label>
+                        <select name="posisi" id="posisi" class="form-control">
+                            <option value="etalase">Etalase</option>
+                            <option value="brankas">Brankas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="">Name</label>
                         <input type="text" class="form-control" name="name" required>
                     </div>
@@ -86,27 +96,6 @@
                         <input type="number" class="form-control" name="capacity" required>
                     </div>
                     <br>
-                    <button class="btn btn-sm btn-success">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-lg font-bold" id="addModalLabel">Set Harga</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body p-4">
-                <form action="/karats_update" method="post">
-                    @csrf
-                    <label for="">Harga</label>
-                    <input type="number" class="form-control" name="harga">
                     <button class="btn btn-sm btn-success">Submit</button>
                 </form>
             </div>
@@ -164,7 +153,12 @@
                 {
                     data: 'code',
                     name: 'code'
-                },{
+                },
+                {
+                    data: 'posisi',
+                    name: 'posisi'
+                },
+                {
                     data: 'name',
                     name: 'name'
                 },{

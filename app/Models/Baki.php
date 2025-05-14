@@ -11,6 +11,7 @@ class Baki extends Model
     protected $table = 'baki';
     protected $fillable = [
         'code',
+        'posisi',
         'name',
         'capacity',
     ];

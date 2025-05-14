@@ -45,6 +45,7 @@ class BakiController extends Controller
     {
         $baki    = Baki::create([
             'code'      => $request->code,
+            'posisi'    => $request->posisi,
             'name'      => $request->name,
             'capacity'  => $request->capacity,
         ]);
@@ -55,6 +56,7 @@ class BakiController extends Controller
     public function update(Request $request)
     {
         $baki = Baki::where('id', $request->id)->firstOrFail();
+        $baki->posisi = $request->posisi;
         $baki->code = $request->code;
         $baki->name = $request->name;
         $baki->capacity = $request->capacity;
@@ -65,8 +67,6 @@ class BakiController extends Controller
 
     public function list(Request $request)
     {
-        
-
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -111,7 +111,7 @@ class BakiController extends Controller
                 return ($data->created_at);
             })
                 
-            ->rawColumns(['code', 'name', 'capacity'])
+            ->rawColumns(['code', 'posisi', 'name', 'capacity'])
             ->make(true);
     }
 }

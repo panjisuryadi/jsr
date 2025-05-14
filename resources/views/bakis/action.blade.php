@@ -1,5 +1,5 @@
 <div class="btn-group">
-    <a href="#" class="px-3 btn btn-warning" data-toggle="modal" data-target="#editModal" onclick="show_modal({{ $data->id }}, '{{ $data->code }}', '{{ $data->name }}', '{{ $data->capacity }}');">
+    <a href="#" class="px-3 btn btn-warning" data-toggle="modal" data-target="#editModal" onclick="show_modal({{ $data->id }}, '{{ $data->code }}', '{{ $data->posisi }}', '{{ $data->name }}', '{{ $data->capacity }}');">
         Edit <i class="bi bi-edit"></i>
     </a>
 </div>
@@ -30,9 +30,16 @@
                         <div class="col-span-2 px-2">
                             <div class="flex flex-row grid grid-cols-2 gap-1">
                                 <div class="form-group">
-                                <label for="">Code</label>
-                                <input type="hidden" name="id" id="id">
-                                <input type="text" class="form-control" name="code" id="code" required>
+                                    <label for="">Code</label>
+                                    <input type="hidden" name="id" id="id">
+                                    <input type="text" class="form-control" name="code" id="code" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Posisi</label>
+                                    <select name="posisi" id="posisi" class="form-control">
+                                        <option value="etalase">Etalase</option>
+                                        <option value="brankas">Brankas</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Name</label>
@@ -56,13 +63,14 @@
 </div>
 
 <script>
-function show_modal(id, code, name, capacity){
-    console.log(code);
-    console.log(name);
-    console.log(capacity);
+function show_modal(id, code, posisi, name, capacity){
+    // console.log(code);
+    // console.log(name);
+    // console.log(capacity);
 
     document.getElementById("id").value = id;
     document.getElementById("code").value = code;
+    document.getElementById("posisi").value = posisi;
     document.getElementById("name").value = name;
     document.getElementById("capacity").value = capacity;
 }
