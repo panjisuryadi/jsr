@@ -23,6 +23,8 @@ use App\Models\Harga;
 use App\Models\Baki;
 use Yajra\DataTables\DataTables;
 use App\Models\ProductHistories;
+use Image;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -156,6 +158,24 @@ class ProductController extends Controller
         $model  = ProdukModel::where('id', $request->new_product_model_id)->first();
         $model_name = $model->name;
         $product_name   = $group_name.' '.$model_name;
+
+        // IMAGE
+        if ($image = $request->file('image')) {
+            $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $normal = Image::make($image)->resize(600, null, function ($constraint) {
+                       $constraint->aspectRatio();
+                       })->encode();
+            $normalpath = 'uploads/' . $gambar;
+            if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+            Storage::disk($storage)->put($normalpath, (string) $normal);
+            // $params['image'] = "$gambar";
+            $gambar = $gambar;
+        }else{
+            $gambar = 'no_foto.png';
+            // $params['image'] = 'no_foto.png';
+        }
+        $berat  = str_replace(',', '.', $request->new_product_berat);
+
         $product    = Product::create([
             'category_id'       => $request->new_product_category_id,
             'product_code'       => $request->new_product_code_id,
@@ -164,10 +184,10 @@ class ProductController extends Controller
             'product_barcode_symbology'       => 'C128',
             'product_unit'       => 'Gram',
             'product_stock_alert'       => 5,
-            'status'       => 3,
-            'images'       => 'jpg',
-            'berat_emas'       => $request->new_product_berat,
-            'status_id'       => 3,
+            'status'       => 4, // brankas
+            'images'       => $gambar,
+            'berat_emas'       => $berat,
+            'status_id'       => 4, // brankas
             'group_id'       => $request->new_product_group_id,
             'model_id'       => $request->new_product_model_id,
             'goodreceipt_item_id' => 0,
@@ -176,8 +196,9 @@ class ProductController extends Controller
 
         $productItem    = ProductItem::create([
             'product_id'       => $product->id,
-            'berat_total'       => $request->new_product_total_weight,
-            'berat_emas'       => $request->new_product_gold_weight,
+            'berat_total'       => $berat,
+            // 'berat_emas'       => $request->new_product_gold_weight,
+            'berat_emas'       => $berat,
             'berat_accessories'       => $request->new_product_accessories_weight,
             'tag_label'       => 0,
             'berat_label'       => 0,
@@ -473,10 +494,12 @@ class ProductController extends Controller
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
+        $baki   = Baki::findorFail($id);
         return view(
             'products.list_baki', // Path to your create view file
             compact(
                 'id',
+                'baki',
                 'module_title',
                 'module_name',
                 'module_path',

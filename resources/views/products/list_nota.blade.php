@@ -42,6 +42,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
+                                    <th style="width: 15%!important;">Image</th>
                                     <th style="width: 15%!important;">Product</th>
                                     <!-- <th style="width: 15%!important;" class="text-center">Harga Beli</th> -->
                                     <th style="width: 10%!important;" class="text-center">Berat</th>
@@ -63,7 +64,7 @@
 </div>
 
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title text-lg font-bold" id="addModalLabel">Add Product Satuan</h3>
@@ -72,7 +73,7 @@
                 </button>
             </div>
             <div class="modal-body p-4">
-                <form action="/products_insert_nota" method="post">
+                <form action="/products_insert_nota" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="px-0 py-2">
                                 @php
@@ -80,6 +81,37 @@
                                 @endphp
                                 <div class="col-span-2 px-2">
                                     <div class="flex flex-row grid grid-cols-2 gap-1">
+                                        <div class="form-group">
+                                            <div x-data="{photoName: null, photoPreview: null}" class="justify-center form-group">
+                                            <?php
+                                            $field_name = 'image';
+                                            $field_lable = __($field_name);
+                                            $label = Label_Case($field_lable);
+                                            $field_placeholder = $label;
+                                            $required = '';
+                                            ?>
+                                            <input type="file" name="{{ $field_name }}" accept="image/*" class="hidden" x-ref="photo" x-on:change="
+                                            photoName = $refs.photo.files[0].name;
+                                            const reader = new FileReader();
+                                            reader.onload = (e) => {
+                                            photoPreview = e.target.result;
+                                            };
+                                            reader.readAsDataURL($refs.photo.files[0]);
+                                            ">
+                                            <div class="text-center">
+                                                <div class="mt-2 py-2" x-show="! photoPreview">
+                                                    <img src="{{asset("images/logo.png")}}" class="w-40 h-40 m-auto rounded-xl ">
+                                                </div>
+                                                <div class="mt-2 py-2" x-show="photoPreview" style="display: none;">
+                                                    <span class="block w-40 h-40 rounded-xl m-auto" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+                                                    </span>
+                                                </div>
+                                                <button type="button" class="btn btn-secondary px-5" x-on:click.prevent="$refs.photo.click()">
+                                                @lang('Select Image')
+                                                </button>
+                                            </div>
+                                        </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="product_category">Product Category</label>
                                             <select name="new_product_category_id" id="product_category" class="form-control @error('new_product.product_category_id') is-invalid @enderror">
@@ -297,10 +329,10 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
-        // {
-        //     data: 'product_image',
-        //     name: 'product_image'
-        // }, 
+        {
+            data: 'product_image',
+            name: 'product_image'
+        }, 
         {
             data: 'product_name',
             name: 'product_name'
