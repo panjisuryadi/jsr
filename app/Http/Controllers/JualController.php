@@ -308,7 +308,7 @@ class JualController extends Controller
                 //     'product::products.partials.actions',
                 //     compact('module_name', 'data', 'module_model')
                 // );
-                return view('Sale.action', compact('module_name', 'data', 'module_model'));
+                return view('sale.action', compact('module_name', 'data', 'module_model'));
 
             })
 
@@ -574,7 +574,7 @@ class JualController extends Controller
                 //     'product::products.partials.actions',
                 //     compact('module_name', 'data', 'module_model')
                 // );
-                return view('Sale.action', compact('module_name', 'data', 'module_model'));
+                return view('sale.action', compact('module_name', 'data', 'module_model'));
 
             })
 

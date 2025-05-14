@@ -466,11 +466,16 @@ class ProductController extends Controller
         // exit();
 
         // CEK KAPASITAS BAKI
-        
+        $stat   = 4;
+        $baki   = Baki::where('id', $id)->firstOrFail();
+        $posisi = $baki->posisi;
+        if($posisi == 'etalase'){
+            $stat   = 1;
+        }
 
         $products   = Product::where('id', $product)->firstOrFail();
         $products->baki_id   = $id;
-        $products->status   = 1;
+        $products->status   = $stat;
         $products->status_id   = 1;
         $products->save();
         // INSERT HISTORY
