@@ -408,11 +408,11 @@ class JualController extends Controller
 
         $module_action = 'List';
         $$module_name = Product::with('category', 'product_item', 'karats', 'baki');
-        if ($request->get('status')) {
-            $$module_name = $$module_name->where('status_id', $request->get('status'));
-        }
+        // if ($request->get('status')) {
+        //     $$module_name = $$module_name->where('status_id', $request->get('status'));
+        // }
         
-        $$module_name->where('status_id', [1, 3])->get();
+        $$module_name->where('status_id', [1, 3, 4])->get();
         $$module_name->where('baki_id', '!=', $id)->get();
 
         $harga = Harga::latest()->first();  
