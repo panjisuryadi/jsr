@@ -465,6 +465,9 @@ class ProductController extends Controller
         // echo json_encode($_GET);
         // exit();
 
+        // CEK KAPASITAS BAKI
+        
+
         $products   = Product::where('id', $product)->firstOrFail();
         $products->baki_id   = $id;
         $products->status   = 1;

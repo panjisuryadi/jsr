@@ -407,30 +407,31 @@ class JualController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = Product::with('category', 'product_item', 'karats', 'baki');
-        // if ($request->get('status')) {
-        //     $$module_name = $$module_name->where('status_id', $request->get('status'));
-        // }
-        
-        $$module_name->where('status_id', [1, 3, 4])->get();
-        $$module_name->where('baki_id', '!=', $id)->get();
-
+        $module_name = Product::with('category', 'karats', 'baki');
+        // $module_name = Product::query();
+        // $$module_name = Product::with('category', 'karats');
+        // $$module_name = Product::with('karats');
+        $module_name->whereIn('status_id', [1, 3, 4]);
+        // $$module_name->where('baki_id', '!=', $id);
+        $module_name->whereRaw('baki_id != ?', [$id]);
+        // $final_sql  = $$module_name->toSql();
+        // dd($final_sql);
+        $module_name = $module_name->latest()->get();
         $harga = Harga::latest()->first();  
         if($harga == null){
             $harga  = 0;
         }else{
             $harga = $harga->harga;
         }     
-        $$module_name = $$module_name->latest()->get();
-        $$module_name->each(function ($item) use ($harga) {
+        $module_name->each(function ($item) use ($harga) {
             $item->harga = $harga; // Add the harga attribute to the model
         });
-        $data = $$module_name;
+        $data = $module_name;
 
         // echo json_encode($data);
         // exit();
 
-        return Datatables::of($$module_name)
+        return Datatables::of($module_name)
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
                 $module_model = $this->module_model;
@@ -541,11 +542,12 @@ class JualController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = Product::with('category', 'product_item', 'karats', 'baki');
+        $$module_name = Product::with('category', 'karats', 'baki');
         if ($request->get('status')) {
             $$module_name = $$module_name->where('status_id', $request->get('status'));
         }
         
+        $$module_name = $$module_name->where('status_id', '!=', 2);
         $$module_name->where('baki_id', $id)->get();
         // $$module_name->where('status_id', 1)->get();
 
