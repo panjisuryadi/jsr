@@ -2382,6 +2382,19 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link',
                 ]);
 
+            $setting->add('<i class="c-sidebar-nav-icon bi bi-config"></i> ' . __('Stock Opname') . '', [
+                    'route' => 'stock_opname.list',
+                    'class' => 'nav-item',
+                ])
+                    ->data([
+                        'order'         => 91,
+                        'activematches' => 'settings*',
+                        'permission'    => ['access_settings'],
+                    ])
+                    ->link->attr([
+                        'class' => 'c-sidebar-nav-link',
+                    ]);
+    
 
             $setting->add('<i class="c-sidebar-nav-icon bi-sliders"></i> ' . __('System Settings') . '', [
                 'route' => 'settings.index',

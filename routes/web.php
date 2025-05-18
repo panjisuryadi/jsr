@@ -25,6 +25,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/buys-backnota', 'HomeController@buysbacknota')
         ->name('home.buysbacknota');
 
+    Route::get('/stockopname', 'StockOpnameController@list')
+        ->name('stock_opname.list');
+
+    Route::get('/stockopname/index_data/{id}', 'StockOpnameController@index_data')
+        ->name('stock_opname.index_data');
+
+    Route::get('/stockopname/detail/{id}', 'StockOpnameController@detail')
+        ->name('stock_opname.detail');
+
+    Route::get('/stockopname/detail_data/{id}', 'StockOpnameController@detail_data')
+        ->name('stock_opname.detail_data');
+
+    Route::get('/stockopname/opname_data/{id}', 'StockOpnameController@opname_data')
+        ->name('stock_opname.opname_data');
+
     Route::get('/bakis', 'BakiController@list')
         ->name('bakis.list');
 
