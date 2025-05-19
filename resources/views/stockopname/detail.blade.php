@@ -35,7 +35,7 @@
 
             <!-- Left Side: Product List -->
             <div class="col-md-6">
-                <h1><strong>Origin</strong></h1>
+                <h1><strong>{{$baki->name}}</strong></h1>
                 <br>
                 <table id="datatable" style="width: 100%" class="mt-5 table table-bordered table-hover table-responsive-sm">
                     <thead>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="col-md-6">
-                <a href="./stockopname/product/{{$id}}" class="btn btn-success">Done</a>
+                <a href="/stockopname/baki/{{$id}}" class="btn btn-success <?= $button; ?>">Done</a>
                 <br>
                 <table id="datatable2" style="width: 100%" class="mt-5 table table-bordered table-hover table-responsive-sm">
                     <thead>
@@ -75,63 +75,36 @@
 
 </div>
 
-<div class="modal fade" id="confirmProductModal" tabindex="-1" aria-labelledby="customProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered">
+<div class="modal fade" id="confirmhistory" tabindex="-1" aria-labelledby="customProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="customProductModalLabel">Summary</h5>
+        <h5 class="modal-title" id="customProductModalLabel">#</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       
-      <div class="modal-body">
-        <div class="mt-3" id="copy">
-
+      <form action="./history" method="post" id="history">
+        @csrf
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="">Status</label>
+                <input type="hidden" name="id" id="id">
+                <select name="status" id="status" class="form-control">
+                    <option value="R">Rusak</option>
+                    <option value="H">Hilang</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Keterangan (Optional)</label>
+                <textarea name="keterangan" class="form-control" id="keterangan"></textarea>
+            </div>
         </div>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="fw-bold fs-5">Total:</span>
-            <span id="total" class="fw-bold fs-4 text-success">Rp 0</span>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" onclick="return confirm('Yakin Submit')">submit</button>
         </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" form="" class="btn btn-primary" onclick="submit_form();">submit</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Custom Product Modal -->
-<div class="modal fade" id="customProductModal" tabindex="-1" aria-labelledby="customProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="customProductModalLabel">Add Custom Product</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <div class="modal-body">
-        <form id="custom-product-form">
-          <div class="mb-3">
-            <label class="form-label">Service</label>
-            <input type="text" class="form-control" id="service" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Desc</label>
-            <input type="text" class="form-control" id="desc" required>
-            <!-- <textarea name="form-control" id="desc" name="desc" required>hello</textarea> -->
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Harga</label>
-            <input type="number" class="form-control" id="harga" onkeyup="sum_harga();" required>
-          </div>
-        </form>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" form="custom-product-form" class="btn btn-primary">Add Product</button>
-      </div>
+    </form>
     </div>
   </div>
 </div>
@@ -143,11 +116,21 @@
 <!-- Bootstrap JS (with Popper) – CDN version -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AHR5oKn06PWzGk+E9Y1kCfmhktbZ5d9+8wCjUY8H7Sk/9kccB+ApPBALSczF+" crossorigin="anonymous"></script> -->
     <script> 
+    document.addEventListener('DOMContentLoaded', function() {
+        const disabledLink = document.querySelector('.btn.disabled'); // Select based on both classes
+
+        if (disabledLink) {
+            disabledLink.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevents navigation
+            });
+        }
+    });
     function submit_form(){
-        let cust = $("#customer_modal").val();
-        $("#customer").val(cust);
-        $("#sale").submit();
-        // return true;
+        $("#history").submit();
+    }
+
+    function data_history(id){
+        $("#id").val(id);
     }
 
     function copy_div(){
@@ -309,7 +292,11 @@
             className: 'text-center',
             render: function(data, type, row, meta) {
                 // return `<button class="btn btn-sm btn-success btn-add-to-preview" data-row='${JSON.stringify(row)}'>Move</button>`;
-                return `<a href="./update/{{$id}}/${row.id}" class="btn btn-sm btn-success btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="confirm('Yakin Pindah Baki');">Move</a>`;
+                return `
+                <a href="./update/{{$id}}/${row.id}" class="btn btn-sm btn-warning btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="return confirm('Yakin Opname ?');">Opname</a>
+                <a href="#" data-toggle="modal" class="btn btn-sm btn-danger" data-target="#confirmhistory" onclick="data_history('${row.id}');">#</a>
+                `;
+                // return `<a href="./update/${row.id}" class="btn btn-sm btn-success btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="confirm('Yakin Pindah Baki');">Move</a>`;
             }
         },
 

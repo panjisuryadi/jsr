@@ -22,6 +22,7 @@ use App\Models\Baki;
 use App\Models\StockOpname;
 use App\Models\StockOpnameBaki;
 use App\Models\StockOpnameProduct;
+use App\Models\StockOpnameHistories;
 use Modules\Product\Entities\Product;
 use Yajra\DataTables\DataTables;
 
@@ -59,25 +60,96 @@ class StockopnameController extends Controller
 
     public function update(Request $request)
     {
-        $baki = Baki::where('id', $request->id)->firstOrFail();
-        $baki->posisi = $request->posisi;
-        $baki->code = $request->code;
-        $baki->name = $request->name;
-        $baki->capacity = $request->capacity;
-        $baki->save();
+        $id = $request->id;
+        $product = $request->product;
+        $stockopnameproduct = StockOpnameProduct::where('id', $product)->firstOrFail();
+        $stockopnameproduct->status = 'D';
+        $stockopnameproduct->save();
+        return redirect()->route('stock_opname.detail', ['id' => $id]);
 
-        return redirect()->action([BakiController::class, 'list']);
+        // return redirect()->action([StockOpnameController::class, 'detail', ['id' => $id]]);
+    }
+
+    public function done(Request $request)
+    {
+        $id = $request->id;
+        $stockopname = StockOpname::where('id', $id)->firstOrFail();
+        $stockopname->status = 'B';
+        $stockopname->save();
+        return redirect()->route('bakis.list');
+    }
+
+    public function history(Request $request)
+    {
+        // echo json_encode($request);
+        // echo json_encode($_POST);
+        // exit();
+        $id         = $request->id;
+        $status     = $request->status;
+        $keterangan = $request->keterangan;
+
+        if($status == 'H'){
+            $stat   = 10;
+        }elseif($status == 'R'){
+            $stat   = 15;
+        }
+
+        $stockopnameproduct = StockOpnameProduct::where('id', $id)->firstOrFail();
+        $stockopname_id     = $stockopnameproduct->stock_opname_id;
+        $baki_id            = $stockopnameproduct->baki_id;
+        $product_id         = $stockopnameproduct->product_id;
+        $stockopnameproduct->status = $status;
+        $stockopnameproduct->save();
+
+        $products = Product::where('id', $product_id)->firstOrFail();
+        $products->status = $stat;
+        $products->status_id = $stat;
+        $products->save();
+
+        $stockopnamehistories    = StockopnameHistories::create([
+            'stock_opname_id'   => $stockopname_id,
+            'baki_id'           => $baki_id,
+            'product_id'        => $product_id,
+            'status'            => $status,
+            'keterangan'        => $keterangan,
+        ]);
+        return redirect()->back();
+
+        // return redirect()->route('stock_opname.detail', ['id' => $id]);
+
+        // return redirect()->action([StockOpnameController::class, 'detail', ['id' => $id]]);
+    }
+
+    public function baki(Request $request)
+    {
+        $id = $request->id;
+        $stockopnamebaki = StockOpnameBaki::where('id', $id)->firstOrFail();
+        $stockopname    = $stockopnamebaki->stock_opname_id;
+        $stockopnamebaki->status = 'D';
+        $stockopnamebaki->save();
+        // return redirect()->route('stock_opname.list', ['id' => $id]);
+        return redirect()->route('stock_opname.list');
+
+        // return redirect()->action([StockOpnameController::class, 'detail', ['id' => $id]]);
     }
 
     public function list(Request $request)
     {
         $stockopname   = Stockopname::latest()->first();
+        $stockopname_id   = $stockopname->id;
         $status = $stockopname->status;
         if($status !== 'A'){
             $stockopname    = Stockopname::create([
                 'status'      => 'A',
             ]);
         }
+
+        $button = '';
+        $count  = StockOpnameBaki::where('stock_opname_id', $stockopname_id)->where('status', 'W')->count();
+        if($count > 0){
+            $button = 'disabled';
+        }
+
         $stockopname_id = $stockopname->id;
         $baki   = Baki::latest()->get();
         if($status !== 'A'){
@@ -110,6 +182,7 @@ class StockopnameController extends Controller
             'stockopname.list', // Path to your create view file
             compact(
                 'stockopname',
+                'button',
                 'module_title',
                 'module_name',
                 'module_path',
@@ -127,7 +200,7 @@ class StockopnameController extends Controller
         $status             = $stockopnamebaki->status;
         $stockopname_id     = $stockopnamebaki->stock_opname_id;
         $baki_id            = $stockopnamebaki->baki_id;
-        if($status !== 'P'){
+        if($status == 'W'){
             $stockopnamebaki->status = 'P';
             $stockopnamebaki->save();
             $product            = Product::where('baki_id', $baki_id)->latest()->get();
@@ -141,6 +214,16 @@ class StockopnameController extends Controller
             }
         }
 
+        $button = '';
+        $count = StockOpnameProduct::
+        where('stock_opname_id', $stockopname_id)
+        ->where('baki_id', $baki_id)
+        ->where('status', 'W')
+        ->count();
+        if($count > 0){
+            $button = 'disabled';
+        }
+
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_path = $this->module_path;
@@ -151,6 +234,7 @@ class StockopnameController extends Controller
             'stockopname.detail', // Path to your create view file
             compact(
                 'id',
+                'button',
                 'baki',
                 'module_title',
                 'module_name',

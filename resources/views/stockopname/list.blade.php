@@ -16,9 +16,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between py-1 border-bottom">
-                        <div>
-                        </div>
-                        <div id="buttons"></div>
+                        <a href="./stockopname/done/{{$stockopname->id}}" class="btn btn-success {{$button}}">Done</a>
                     </div>
                     <div class="table-responsive mt-1">
                         <table id="datatable" class="table table-bordered table-hover table-responsive-sm">
@@ -63,6 +61,15 @@
 <x-library.datatable />
 @push('page_scripts')
    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const disabledLink = document.querySelector('.btn.disabled'); // Select based on both classes
+
+        if (disabledLink) {
+            disabledLink.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevents navigation
+            });
+        }
+    });
         $('#datatable').DataTable({
            processing: true,
            serverSide: true,
