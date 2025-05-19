@@ -79,6 +79,15 @@ class StockopnameController extends Controller
         return redirect()->route('bakis.list');
     }
 
+    public function data(Request $request)
+    {
+        $id = $request->id;
+        $stockopname = StockOpname::where('id', $id)->firstOrFail();
+        $stockopname->status = 'B';
+        $stockopname->save();
+        return redirect()->route('bakis.list');
+    }
+
     public function history(Request $request)
     {
         // echo json_encode($request);

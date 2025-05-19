@@ -89,14 +89,14 @@
             <div class="form-group">
                 <label for="">Status</label>
                 <input type="hidden" name="id" id="id">
-                <select name="status" id="status" class="form-control">
-                    <option value="R">Rusak</option>
+                <select name="status" id="status" class="form-control" required>
+                    <!-- <option value="R">Rusak</option> -->
                     <option value="H">Hilang</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="">Keterangan (Optional)</label>
-                <textarea name="keterangan" class="form-control" id="keterangan"></textarea>
+                <textarea name="keterangan" class="form-control" id="keterangan" required></textarea>
             </div>
         </div>
         
@@ -293,7 +293,7 @@
             render: function(data, type, row, meta) {
                 // return `<button class="btn btn-sm btn-success btn-add-to-preview" data-row='${JSON.stringify(row)}'>Move</button>`;
                 return `
-                <a href="./update/{{$id}}/${row.id}" class="btn btn-sm btn-warning btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="return confirm('Yakin Opname ?');">Opname</a>
+                <a href="./update/{{$id}}/${row.id}" class="btn btn-sm btn-warning btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="return confirm('Checked ?');">Checked</a>
                 <a href="#" data-toggle="modal" class="btn btn-sm btn-danger" data-target="#confirmhistory" onclick="data_history('${row.id}');">#</a>
                 `;
                 // return `<a href="./update/${row.id}" class="btn btn-sm btn-success btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="confirm('Yakin Pindah Baki');">Move</a>`;

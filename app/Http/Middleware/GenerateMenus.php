@@ -2334,9 +2334,51 @@ class GenerateMenus
 
 
 
+            // STOCK OPNAME
+            $stockopname = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-gear"></i>' . __('Stock Opname') . '', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+                ->data([
+                    'order'         => 90,
+                    'activematches' => [
+                        'currencies*',
 
+                    ],
+                    'permission'    => ['access_currencies', 'access_settings'],
+                ]);
+            $stockopname->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+
+            $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('Start') . '', [
+                'route' => 'stock_opname.list',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 91,
+                    'activematches' => 'currencies*',
+                    'permission'    => ['access_currencies'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link',
+                ]);
+
+            $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('History') . '', [
+                'route' => 'stock_opname.data',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 91,
+                    'activematches' => 'currencies*',
+                    'permission'    => ['access_currencies'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link',
+                ]);
 
             // Access Control Dropdown
+
             $setting = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-gear"></i>' . __('Setting') . '', [
                 'class' => 'c-sidebar-nav-dropdown',
             ])

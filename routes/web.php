@@ -46,6 +46,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/stockopname/detail/history', 'StockOpnameController@history')
         ->name('stock_opname.history');
 
+    Route::post('/stockopname/data', 'StockOpnameController@data')
+        ->name('stock_opname.data');
+
     Route::get('/stockopname/detail_data/{id}', 'StockOpnameController@detail_data')
         ->name('stock_opname.detail_data');
 
