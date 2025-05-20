@@ -37,6 +37,29 @@
             <div class="col-md-6">
                 <h1><strong>{{$baki->name}}</strong></h1>
                 <br>
+                <form action="/stockopname/update" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Code Product</label>
+                                <input type="hidden" name="id" value="{{$id}}" >
+                                <input type="text" name="code" class="form-control form-control-sm" placeholder="Input Code Product">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-sm btn-info">Check</button>
+                            </div>
+                        </div>
+                        <div class="col-4">
+
+                        </div>
+                        <div class="col-4">
+
+                        </div>
+                    </div>
+                    
+                    
+                </form>
                 <table id="datatable" style="width: 100%" class="mt-5 table table-bordered table-hover table-responsive-sm">
                     <thead>
                         <tr>
@@ -291,12 +314,10 @@
             data: null,
             className: 'text-center',
             render: function(data, type, row, meta) {
-                // return `<button class="btn btn-sm btn-success btn-add-to-preview" data-row='${JSON.stringify(row)}'>Move</button>`;
+                // <a href="./update/{{$id}}/${row.id}" class="btn btn-sm btn-warning btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="return confirm('Checked ?');">Checked</a>
                 return `
-                <a href="./update/{{$id}}/${row.id}" class="btn btn-sm btn-warning btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="return confirm('Checked ?');">Checked</a>
                 <a href="#" data-toggle="modal" class="btn btn-sm btn-danger" data-target="#confirmhistory" onclick="data_history('${row.id}');">#</a>
                 `;
-                // return `<a href="./update/${row.id}" class="btn btn-sm btn-success btn-add-to-preview" data-row='${JSON.stringify(row)}' onclick="confirm('Yakin Pindah Baki');">Move</a>`;
             }
         },
 

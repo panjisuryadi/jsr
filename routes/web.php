@@ -40,14 +40,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/stockopname/detail/update/{id}/{product}', 'StockOpnameController@update')
         ->name('stock_opname.update');
 
+    Route::post('/stockopname/update', 'StockOpnameController@update_new')
+        ->name('stock_opname.update_new');
+
     Route::get('/stockopname/done/{id}', 'StockOpnameController@done')
         ->name('stock_opname.done');
 
     Route::post('/stockopname/detail/history', 'StockOpnameController@history')
         ->name('stock_opname.history');
 
-    Route::post('/stockopname/data', 'StockOpnameController@data')
+    Route::get('/stockopname/data', 'StockOpnameController@data')
         ->name('stock_opname.data');
+
+    Route::get('/stockopname/riwayat', 'StockOpnameController@riwayat')
+        ->name('stock_opname.riwayat');
 
     Route::get('/stockopname/detail_data/{id}', 'StockOpnameController@detail_data')
         ->name('stock_opname.detail_data');

@@ -58,8 +58,39 @@ class StockopnameController extends Controller
         return redirect()->action([BakiController::class, 'list']);
     }
 
+    public function update_new(Request $request)
+    {
+        $id = $request->id;
+        $code = $request->code;
+
+        $pro    = Product::where('product_code', $code)->firstOrFail();
+        $product_id = $pro->id;
+        $baki_id = $pro->baki_id;
+
+        $stockopnamebaki    = StockOpnameBaki::where('id', $id)->latest()->first();
+        $baki   = $stockopnamebaki->baki_id;
+        $stockopname_id = $stockopnamebaki->stock_opname_id;
+        if($baki !== $baki_id){
+            $bak    = Baki::where('id', $baki_id)->first();
+            $baki_name  = $bak->name;
+            toast('Product ini seharusnya di '.$baki_name, 'error');
+            return redirect()->back();   
+        }
+
+        // CHECK BAKI
+
+        $stockopnameproduct = StockOpnameProduct::where('product_id', $product_id)->where('stock_opname_id', $stockopname_id)->firstOrFail();
+        $stockopnameproduct->status = 'D';
+        $stockopnameproduct->save();
+        return redirect()->route('stock_opname.detail', ['id' => $id]);
+
+        // return redirect()->action([StockOpnameController::class, 'detail', ['id' => $id]]);
+    }
+
     public function update(Request $request)
     {
+        // toast('Stock Opname sedang Aktif!', 'error');
+        // return redirect()->back();
         $id = $request->id;
         $product = $request->product;
         $stockopnameproduct = StockOpnameProduct::where('id', $product)->firstOrFail();
@@ -76,16 +107,57 @@ class StockopnameController extends Controller
         $stockopname = StockOpname::where('id', $id)->firstOrFail();
         $stockopname->status = 'B';
         $stockopname->save();
-        return redirect()->route('bakis.list');
+        return redirect()->route('stock_opname.riwayat');
     }
 
     public function data(Request $request)
     {
-        $id = $request->id;
-        $stockopname = StockOpname::where('id', $id)->firstOrFail();
-        $stockopname->status = 'B';
-        $stockopname->save();
-        return redirect()->route('bakis.list');
+        $stockopname   = Stockopname::where('status', 'B')->latest()->first();
+        $stockopname_id   = $stockopname->id;
+        $status = $stockopname->status;
+
+        
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        return view(
+            'stockopname.data', // Path to your create view file
+            compact(
+                'stockopname',
+                'module_title',
+                'module_name',
+                'module_path',
+                'module_icon',
+                'module_model',
+            )
+        );
+    }
+
+    public function riwayat(Request $request)
+    {
+        $stockopname   = Stockopname::where('status', 'B')->latest()->first();
+        $stockopname_id   = $stockopname->id;
+        $status = $stockopname->status;
+
+        
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        return view(
+            'stockopname.data', // Path to your create view file
+            compact(
+                'stockopname',
+                'module_title',
+                'module_name',
+                'module_path',
+                'module_icon',
+                'module_model',
+            )
+        );
     }
 
     public function history(Request $request)

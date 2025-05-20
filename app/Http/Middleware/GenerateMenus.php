@@ -2351,20 +2351,7 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
-            $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('Start') . '', [
-                'route' => 'stock_opname.list',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 91,
-                    'activematches' => 'currencies*',
-                    'permission'    => ['access_currencies'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link',
-                ]);
-
-            $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('History') . '', [
+            $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('Opname') . '', [
                 'route' => 'stock_opname.data',
                 'class' => 'nav-item',
             ])
@@ -2376,6 +2363,19 @@ class GenerateMenus
                 ->link->attr([
                     'class' => 'c-sidebar-nav-link',
                 ]);
+
+            // $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('History') . '', [
+            //     'route' => 'stock_opname.data',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 91,
+            //         'activematches' => 'currencies*',
+            //         'permission'    => ['access_currencies'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link',
+            //     ]);
 
             // Access Control Dropdown
 

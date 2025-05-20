@@ -24,9 +24,11 @@ use Yajra\DataTables\DataTables;
 use App\Models\ProductHistories;
 use App\Models\SalesGold;
 use App\Models\SalesItem;
+use App\Models\StockOpname;
 
 class BuybackController extends Controller
 {
+    
     private $module_title;
     private $module_name;
     private $module_path;
@@ -38,6 +40,10 @@ class BuybackController extends Controller
 
     public function __construct()
     {
+        $opname = StockOpname::check_opname();
+        if($opname == 'A'){
+            abort(403, 'Access denied during active stock opname.');
+        }
         $this->module_title = 'Karat';
         $this->module_name = 'karat';
         $this->module_path = 'karats';

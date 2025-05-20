@@ -27,6 +27,44 @@
 </ul>
 
 <ul class="c-header-nav ml-auto mr-4">
+    <!-- STOCKOPNAME -->
+
+        <style>
+            .blinking-dot {
+                height: 14px;
+                width: 14px;
+                background-color: #0eeb45;
+                border-radius: 50%;
+                display: inline-block;
+                animation: blinking 1.5s infinite;
+                }
+
+                @keyframes blinking {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+        </style>
+        <?php
+        use App\Models\StockOpname;
+        
+        $status = StockOpname::check_opname();
+        
+        if($status == 'A'){
+        ?>
+        <li class="c-header-nav-item mr-3 d-flex align-items-center" id="stock-opname-indicator" title="Stock Opname Status">
+            <span style="color: #d40f0f; font-weight: bold; font-size: 0.9rem; margin-right: 6px;">
+                Stock Opname
+            </span>
+            <span class="blinking-dot"></span>
+            <span style="color: #0eeb45; font-weight: bold; font-size: 0.9rem; margin-left: 6px;">
+                ON
+            </span>
+        </li>
+        <?php
+        }
+        ?>
+        
+    <!-- STOCK OPNAME -->
     @can('create_pos')
     <li class="c-header-nav-item mr-0">
         <a class="c-header-nav-link {{ request()->routeIs('sale.list') ? 'disabled' : '' }}"

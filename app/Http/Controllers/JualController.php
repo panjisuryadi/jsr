@@ -19,6 +19,7 @@ use App\Models\Service;
 use App\Models\Harga;
 use App\Models\Config;
 use App\Models\ProductHistories;
+use App\Models\StockOpname;
 use Modules\Product\Entities\ProductItem;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
@@ -47,6 +48,10 @@ class JualController extends Controller
 
     public function __construct()
     {
+        $opname = StockOpname::check_opname();
+        if($opname == 'A'){
+            abort(403, 'Access denied during active stock opname.');
+        }
         $this->module_title = 'Sale';
 
         $this->module_name = 'sales';

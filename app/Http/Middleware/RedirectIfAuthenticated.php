@@ -28,9 +28,11 @@ class RedirectIfAuthenticated
             if (Auth::guard()->check()) {
                 return redirect(RouteServiceProvider::HOME);
             }
-            
         }
-
+        // if(isset($request->email) && isset($request->password)){
+        //     return true;
+        // }
         return $next($request);
+        // return true;
     }
 }

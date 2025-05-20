@@ -12,4 +12,10 @@ class StockOpname extends Model
     protected $fillable = [
         'status',
     ];
+
+    public static function check_opname()
+    {
+        $stock  = self::latest()->first();
+        return $stock->status; // or StockOpname::latest()->get();
+    }
 }

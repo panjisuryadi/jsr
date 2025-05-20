@@ -21,6 +21,7 @@ use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Stok\Models\StockOffice;
 use App\Models\Harga;
 use App\Models\Baki;
+use App\Models\StockOpname;
 use Yajra\DataTables\DataTables;
 use App\Models\ProductHistories;
 use Image;
@@ -39,6 +40,10 @@ class ProductController extends Controller
 
     public function __construct()
     {
+        $opname = StockOpname::check_opname();
+        if($opname == 'A'){
+            abort(403, 'Access denied during active stock opname.');
+        }
         $this->module_title = 'Products';
         $this->module_name = 'products';
         $this->module_path = 'product';
