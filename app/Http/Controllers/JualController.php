@@ -48,10 +48,10 @@ class JualController extends Controller
 
     public function __construct()
     {
-        $opname = StockOpname::check_opname();
-        if($opname == 'A'){
-            abort(403, 'Access denied during active stock opname.');
-        }
+        // $opname = StockOpname::check_opname();
+        // if($opname == 'A'){
+        //     abort(403, 'Access denied during active stock opname.');
+        // }
         $this->module_title = 'Sale';
 
         $this->module_name = 'sales';
@@ -100,13 +100,15 @@ class JualController extends Controller
     }
 
     public function insert(Request $request){
+        // echo json_encode($_POST);
+        // exit();
         $config = Config::where('name', 'nota')->first();
         $value   = $config->value;
         $val    = json_decode($value, true);
         $alamat = $val['alamat'];
         $telp = $val['telp'];
         $info = $val['info'];
-
+        $lanjut = true;
         $products   = array();        
         $services   = array();        
         $total      = 0;
@@ -133,7 +135,8 @@ class JualController extends Controller
                 ->get();
 
                 if ($sold->isNotEmpty()) {
-                    return redirect()->action([JualController::class, 'list']);
+                    $lanjut = false;
+                    // return redirect()->action([JualController::class, 'list']);
                 }
 
                 $products[] = $p;
@@ -156,18 +159,21 @@ class JualController extends Controller
             }
         }
 
-        $salesGold  = SalesGold::create([
-            'nomor' => $nomor,
-            'customer' => $request->customer,
-            'products' => json_encode($products),
-            'services' => json_encode($services),
-            'total' => $total,
-        ]);
-        $id = $salesGold->id;
+        if($lanjut){
+            $salesGold  = SalesGold::create([
+                'nomor' => $nomor,
+                'customer' => $request->customer,
+                'products' => json_encode($products),
+                'services' => json_encode($services),
+                'total' => $total,
+            ]);
+            $id = $salesGold->id;
+        }
 
         // UPDATE STATUS PRODUCT
         $data   = array();
         $number     = 0;
+        $jumlah_data    = count($request->product);
         foreach ($request->product as $p) {
             if($p == 0){ // SERVICE NON PRODUCT
                 $title  = 'Faktur';
@@ -176,21 +182,22 @@ class JualController extends Controller
                 $gram   = '-';
                 $images = 'non';
                 $harga  = $request->harga[$number];
-
-                $serv   = Service::create([
-                    'sales' => $id,
-                    'name'  => $name,
-                    'desc'  => $desc,
-                    'total' => $harga
-                ]);
-
-                $product_history = ProductHistories::create([
-                    'product_id'    => $p,
-                    'status'        => 'S',
-                    'keterangan'    => $id,
-                    'harga'         => $request->harga[$number],
-                    'tanggal'       => date('Y-m-d'),
-                ]);
+                if($lanjut){
+                    $serv   = Service::create([
+                        'sales' => $id,
+                        'name'  => $name,
+                        'desc'  => $desc,
+                        'total' => $harga
+                    ]);
+    
+                    $product_history = ProductHistories::create([
+                        'product_id'    => $p,
+                        'status'        => 'S',
+                        'keterangan'    => $id,
+                        'harga'         => $request->harga[$number],
+                        'tanggal'       => date('Y-m-d'),
+                    ]);
+                }
             }else{
                 $title  = 'Nota Emas';
                 $product= Product::where('id', $p)->firstOrFail();
@@ -204,44 +211,55 @@ class JualController extends Controller
                 $product->save();
 
                 // INSERT KE PRODUCT HISTORY
-                $product_history = ProductHistories::create([
-                    'product_id'    => $p,
-                    'status'        => 'S',
-                    'keterangan'    => 'terjual',
-                    'harga'         => $request->harga[$number],
-                    'tanggal'       => date('Y-m-d'),
-                ]);
+                if($lanjut){
+                    $product_history = ProductHistories::create([
+                        'product_id'    => $p,
+                        'status'        => 'S',
+                        'keterangan'    => 'terjual',
+                        'harga'         => $request->harga[$number],
+                        'tanggal'       => date('Y-m-d'),
+                    ]);
+                }
             }
 
             // INSERT SALES ITEMS
+            $kurangi    = 0;
+            if($lanjut){
+                $kurangi = $jumlah_data;
+            }
             $salesNomor = SalesItem::latest()->first();
             $salesNomor = $salesNomor->nomor != null ? $salesNomor->nomor : '0000000001';
-            $salesNomor  = (int)$salesNomor+1;
+            $salesNomor  = (int)$salesNomor+2-$kurangi;
             for ($i=0; $i < 9; $i++) { 
                 if(strlen($salesNomor) !== $i){
                     $salesNomor  = '0'.$salesNomor;
                 }
             }
-            $salesItem  = SalesItem::create([
-                'nomor'     => $salesNomor,
-                'product'   => $p,
-                'name'      => $name,
-                'desc'      => $desc,
-                'total'     => $harga,
-            ]);
-            $sales_id   = $salesItem->id;
-
-            for ($i=0; $i < 8; $i++) { 
-                if(strlen($sales_id) !== $i){
-                    $sales_id  = '0'.$sales_id;
-                }
+            if($lanjut){
+                $salesItem  = SalesItem::create([
+                    'nomor'     => $salesNomor,
+                    'product'   => $p,
+                    'name'      => $name,
+                    'desc'      => $desc,
+                    'diskon'      => $request->diskon[$number],
+                    'ongkos'      => $request->ongkos[$number],
+                    'total'     => $harga,
+                ]);
+                $sales_id   = $salesItem->id;
             }
+
+            // for ($i=0; $i < 8; $i++) { 
+            //     if(strlen($sales_id) !== $i){
+            //         $sales_id  = '0'.$sales_id;
+            //     }
+            // }
 
             $array['products'][$number]['title'] = $title;
             $array['products'][$number]['img'] = $images;
             $array['products'][$number]['name'] = $name;
             $array['products'][$number]['desc'] = $desc;
             $array['products'][$number]['gram'] = $gram;
+            $array['products'][$number]['ongkos'] = $request->ongkos[$number];
             $array['products'][$number]['harga'] = $harga;
             $array['products'][$number]['nomor'] = $salesNomor;
             $array['products'][$number]['sales_id'] = $salesNomor;
@@ -288,16 +306,19 @@ class JualController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = Product::with('category', 'product_item', 'karats');
+        $$module_name = Product::with('category', 'product_item', 'karats', 'baki');
         if ($request->get('status')) {
             $$module_name = $$module_name->where('status_id', $request->get('status'));
         }
-        if($id == 1){ // with nota
-            $$module_name->where('is_nota', true)->get();
-        }
-        if($id == 2){ // without nota
-            $$module_name->where('is_nota', false)->get();
-        }
+        // if($id == 1){ // with nota
+        //     $$module_name->where('is_nota', true)->get();
+        // }
+        // if($id == 2){ // without nota
+        //     $$module_name->where('is_nota', false)->get();
+        // }
+        $$module_name = $$module_name->whereHas('baki', function ($query) {
+            $query->where('status', 'A');
+        });
         $$module_name->where('status_id', 1)->get();
 
         $harga = Harga::latest()->first();  

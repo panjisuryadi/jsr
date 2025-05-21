@@ -100,16 +100,46 @@
         } */
 
 
+        .summary-footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* align items at top */
+    margin-top: 20px;
+    gap: 20px;
+    page-break-inside: avoid; /* prevent breaking inside when printing */
+}
+
+.footer-text {
+    flex: 1;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.total-section {
+    flex: 1;
+    text-align: right;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.summary-footer-container p {
+    margin: 0 0 4px 0; /* reduce paragraph vertical margin */
+}
+
+.total-section div {
+    margin-bottom: 2px; /* reduce space between totals */
+}
+
 
 
         /* Align Total to the right */
-        .total {
+        /* .total {
             margin-top: 10px;
             margin-right: 30px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             text-align: right;
-        }
+        } */
 
         .invoice-table {
             width: 100%;
@@ -132,14 +162,14 @@
             background-color: #fff;
         }
 
-        .footer p {
+        /* .footer p {
             margin-top: 6px;
             font-size: 11px;
         }
 
         .footer p:last-child {
             margin-top: 8px;
-        }
+        } */
 
         .page-break {
             page-break-after: always;
@@ -161,8 +191,7 @@
             width: 50%;
             text-align: right;
         }
-
-        
+       
     </style>
 </head>
 
@@ -196,6 +225,16 @@
             <p>{{ $product['alamat'] }}</p>
             <p>{{ $product['telp'] }}</p>
         </div>
+
+        <!-- <div class="row">
+            <div class="col-6">
+                <p>Hormat</p>
+                <p>Toko</p>
+            </div>
+            <div class="col-2"><p></p><p></p><p></p></div>
+            <div class="col-2"><p>total: Rp</p><p>Ongkos: Rp</p><p>Grand: Rp</p></div>
+            <div class="col-2"><p> 4.510.000</p><p> 150.000</p><p> 4.660.000</p></div>
+        </div> -->
 
         <!-- Invoice Details table -->
         <table class="invoice-details">
@@ -244,21 +283,38 @@
             </tbody>
         </table>
 
-        <div class="total">
-            <div><strong>Total: </strong>  Rp {{ number_format($product['harga'], 0, ',', '.') }}</div>
-        </div>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <tr>
+                <!-- Left cell: Footer text -->
+                <td style="width: 50%; vertical-align: top; font-size: 11px; padding-right: 10px;">
+                <p style="margin: 0;">Hormat Kami,</p>
+                <p style="margin: 0;">Toko Emas Cahaya</p>
+                </td>
 
-        <div class="footer">
-            <p>Hormat Kami,</p>
-            <p>Toko Emas Cahaya</p>
-            <table class="invoice-table">
-                <thead>
-                    <tr>
-                        <th>{{ $product['info'] }}</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+                <!-- Right cell: Totals -->
+                <td style="width: 50%; vertical-align: top; font-size: 11px; text-align: right; padding-left: 10px;">
+                <p style="margin: 0;"><strong>Total:</strong> Rp {{ number_format($product['harga'] - $product['ongkos'], 0, ',', '.') }}</p>
+                <p style="margin: 0;"><strong>Ongkos:</strong> Rp {{ number_format($product['ongkos'], 0, ',', '.') }}</p>
+                <p style="margin: 0;"><strong>Grand Total:</strong> Rp {{ number_format($product['harga'], 0, ',', '.') }}</p>
+                </td>
+            </tr>
+            
+        </table>
+
+        <p style="font-size:12px;"><u>{{$product['info']}}</u></p>
+        <!-- <div class="summary-footer-container">
+            <div class="footer-text">
+                <p>Hormat Kami,</p>
+                <p>Toko Emas Cahaya</p>
+            </div>
+
+            <div class="total-section">
+                <div><strong>Total: </strong> Rp {{ number_format($product['harga'] - $product['ongkos'], 0, ',', '.') }}</div>
+                <div><strong>Ongkos: </strong> Rp {{ number_format($product['ongkos'], 0, ',', '.') }}</div>
+                <div><strong>Grand Total: </strong> Rp {{ number_format($product['harga'], 0, ',', '.') }}</div>
+            </div>
+        </div> -->
+
     </div>
 
     {{-- Add page break except after last item --}}

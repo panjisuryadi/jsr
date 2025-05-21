@@ -226,7 +226,7 @@ class StockopnameController extends Controller
         }
 
         $button = '';
-        $count  = StockOpnameBaki::where('stock_opname_id', $stockopname_id)->where('status', 'W')->count();
+        $count  = StockOpnameBaki::where('stock_opname_id', $stockopname_id)->where('status', 'P')->count();
         if($count > 0){
             $button = 'disabled';
         }
@@ -277,10 +277,20 @@ class StockopnameController extends Controller
     {
         $id     = $request->id;
         // $stockopnamebaki    = stockopnamebaki::where('id', $id)->first()->get();
+
         $stockopnamebaki    = stockopnamebaki::where('id', $id)->firstOrFail();
         $status             = $stockopnamebaki->status;
         $stockopname_id     = $stockopnamebaki->stock_opname_id;
         $baki_id            = $stockopnamebaki->baki_id;
+
+        // UPDATE BAKI YANG OPNAME DISABLE
+        Baki::where('id', $baki_id)->update(['status' => 'O']);
+
+        StockOpnameBaki::where('stock_opname_id', $stockopname_id)
+        ->where('id', '!=', $id)
+        ->where('status', 'W')
+        ->update(['status' => 'H']);
+
         if($status == 'W'){
             $stockopnamebaki->status = 'P';
             $stockopnamebaki->save();
@@ -354,6 +364,10 @@ class StockopnameController extends Controller
                 $stat   = 'Waiting';
                 if($data->status == 'D'){
                     $stat   = 'Done';
+                }elseif($data->status == 'H'){
+                    $stat   = 'Hold';
+                }elseif($data->status == 'P'){
+                    $stat   = 'Proses';
                 }
                 return $stat;
             })

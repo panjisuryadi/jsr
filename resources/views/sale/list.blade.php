@@ -196,6 +196,10 @@
             $(this).attr('value', $(this).val());
         });
 
+        clone.find('input[name="ongkos[]"]').each(function(){
+            $(this).attr('value', $(this).val());
+        });
+
         // Similarly, for each harga input inside the clone, update the 'value' attribute
         clone.find('input[name="harga[]"]').each(function(){
             $(this).attr('value', $(this).val());
@@ -322,11 +326,14 @@
     }
 
     function sum_diskon() {
+        const ongkosInputs = document.querySelectorAll('input[name="ongkos[]"]');
         const diskonInputs = document.querySelectorAll('input[name="diskon[]"]');
         const hargaInputs = document.querySelectorAll('input[name="harga[]"]');
 
         diskonInputs.forEach((diskonInput, index) => {
             const hargaInput = hargaInputs[index];
+            const ongkosInput = parseInt(ongkosInputs[index].value) || 0;
+            console.log(ongkosInput);
             if (!hargaInput) return;
 
             const originalHarga = parseInt(hargaInput.getAttribute('data-original-harga')) || 0;
@@ -341,7 +348,8 @@
             }
 
             // Calculate the new harga after discount
-            let newHarga = originalHarga - diskonVal;
+            let newHarga = originalHarga - diskonVal + ongkosInput;
+            // let newHarga = originalHarga - diskonVal;
             if (newHarga < 0) newHarga = 0; // prevent negative harga
 
             hargaInput.value = newHarga;
@@ -349,6 +357,36 @@
         sum_harga();
     }
 
+    function sum_ongkos() {
+        const ongkosInputs = document.querySelectorAll('input[name="ongkos[]"]');
+        const diskonInputs = document.querySelectorAll('input[name="diskon[]"]');
+        const hargaInputs = document.querySelectorAll('input[name="harga[]"]');
+
+        ongkosInputs.forEach((ongkosInput, index) => {
+            const hargaInput = hargaInputs[index];
+            const diskonInput = parseInt(diskonInputs[index].value) || 0;
+            console.log(diskonInput);
+            if (!hargaInput) return;
+
+            const originalHarga = parseInt(hargaInput.getAttribute('data-original-harga')) || 0;
+            let ongkosVal = parseInt(ongkosInput.value) || 0;
+
+            // Ensure discount is not negative or above max
+            // if (diskonVal < 0) diskonVal = 0;
+            // const maxDiskon = parseInt(ongkosInput.getAttribute('max')) || diskonVal;
+            // if (diskonVal > maxDiskon) {
+            // diskonVal = maxDiskon;
+            // ongkosInput.value = maxDiskon; // correct the input value
+            // }
+
+            // Calculate the new harga after discount
+            let newHarga = originalHarga + ongkosVal - diskonInput;
+            if (newHarga < 0) newHarga = 0; // prevent negative harga
+
+            hargaInput.value = newHarga;
+        });
+        sum_harga();
+    }
 
     function formatRupiah(number) {
         return number.toLocaleString('id-ID');
@@ -392,7 +430,7 @@
         const newItem = `
             <div class="border-bottom pb-2 mb-2 preview-item">
                 <div class="row align-items-center">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="text-xs text-blue-600">${service}</div>
                         <h6 class="mb-0 small text-gray-700">${desc}</h6>
                     </div>
@@ -402,7 +440,10 @@
                     <div class="col-2">
                         <input type="number" name="diskon[]" class="form-control form-control-sm" value="0" max="0" readonly>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
+                        <input type="number" name="ongkos[]" class="form-control form-control-sm" value="0" max="0" readonly>
+                    </div>
+                    <div class="col-2">
                         <input type="hidden" name="product[]" value="0">
                         <input type="hidden" name="product_name[]" value="${service}">
                         <input type="hidden" name="product_desc[]" value="${desc}">
@@ -446,7 +487,7 @@
         const harga       = (data.harga*data.karats.coef+data.karats.margin)*data.berat_emas;
         const rekomendasi = formatRupiah(harga);
         const price       = (harga);
-        const diskon      = (data.karats.diskon)*data.berat_emas;
+        const diskon      = Math.round((data.karats.diskon)*data.berat_emas);
         const min         = (price-diskon);
         const product     = (data.id);
         const newItem = `
@@ -458,13 +499,16 @@
                 <div class="col-2">
                     <small>Harga: <strong>${rekomendasi}</strong></small>
                 </div>
-                <div class="col-2">
-                    <small>Max Diskon: <strong>${diskon}</strong></small>
+                <div class="col-1">
+                    <small>Max Disc: <strong>${diskon}</strong></small>
                 </div>
                 <div class="col-2">
                     <input type="number" name="diskon[]" class="form-control form-control-sm" value="0" max="${diskon}" onkeyup="sum_diskon();" placeholder="Diskon">
                 </div>
-                <div class="col-3">
+                <div class="col-2">
+                    <input type="number" name="ongkos[]" class="form-control form-control-sm" value="0" onkeyup="sum_ongkos();" placeholder="Diskon">
+                </div>
+                <div class="col-2">
                     <input type="hidden" name="product[]" value="${product}">
                     <input type="hidden" name="product_name[]" value="${data.category.category_name}">
                     <input type="hidden" name="product_desc[]" value="${data.category.category_name}">

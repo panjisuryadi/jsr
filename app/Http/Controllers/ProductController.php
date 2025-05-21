@@ -40,10 +40,10 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $opname = StockOpname::check_opname();
-        if($opname == 'A'){
-            abort(403, 'Access denied during active stock opname.');
-        }
+        // $opname = StockOpname::check_opname();
+        // if($opname == 'A'){
+        //     abort(403, 'Access denied during active stock opname.');
+        // }
         $this->module_title = 'Products';
         $this->module_name = 'products';
         $this->module_path = 'product';
@@ -479,7 +479,7 @@ class ProductController extends Controller
         if($posisi == 'etalase'){
             $stat   = 1;
         }
-        $product_count = Product::where('baki_id', $id)->count();
+        $product_count = Product::where('baki_id', $id)->where('status', 1)->where('status_id', 1)->count();
 
         if($capacity <= $product_count){
             toast('Kapasitas baki penuh', 'error');

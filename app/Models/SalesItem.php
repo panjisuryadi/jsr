@@ -12,6 +12,8 @@ class SalesItem extends Model
         'product',
         'name',
         'desc',
+        'diskon',
+        'ongkos',
         'total',
         'nomor',
     ];

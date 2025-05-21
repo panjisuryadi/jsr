@@ -10,6 +10,7 @@ use Modules\People\Entities\Supplier;
 use DateTime;
 use Modules\Karat\Models\Karat;
 use Modules\Product\Entities\Category;
+use Modules\Product\Entities\Product;
 use Modules\Group\Models\Group;
 use Modules\ProdukModel\Models\ProdukModel;
 use Modules\GoodsReceipt\Models\GoodsReceipt;
@@ -109,6 +110,11 @@ class BakiController extends Controller
 
             ->editColumn('created', function ($data) {
                 return ($data->created_at);
+            })
+
+            ->editColumn('used', function ($data) {
+                $count  = Product::where('baki_id', $data->id)->count();
+                return ($count);
             })
                 
             ->rawColumns(['code', 'posisi', 'name', 'capacity'])

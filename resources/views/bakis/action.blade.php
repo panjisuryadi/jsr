@@ -3,13 +3,13 @@
         Edit <i class="bi bi-edit"></i>
     </a>
 </div>
-
+@if ($data->status == 'A')
 <div class="btn-group">
     <a href="./products_baki/{{ $data->id }}" class="px-3 btn btn-info" target="_blank">
         Detail <i class="bi bi-edit"></i>
     </a>
 </div>
-
+@endif
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable" role="document">

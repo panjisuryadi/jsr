@@ -34,10 +34,10 @@
                                     <th style="width: 5%!important;">
                                         NO
                                     </th>
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 10%!important;" class="text-center">
                                         Code
                                     </th>
-                                    <th style="width: 15%!important;" class="text-center">
+                                    <th style="width: 10%!important;" class="text-center">
                                         Posisi
                                     </th>
                                      <th style="width: 15%!important;" class="text-center">
@@ -46,12 +46,15 @@
 
                                      <th style="width: 10%!important;" class="text-center">
                                         Capacity
+                                    </th>
+                                    <th style="width: 10%!important;" class="text-center">
+                                        Used
                                     </th>  
-                                    <th style="width: 20%!important;" class="text-center">
+                                    <th style="width: 15%!important;" class="text-center">
                                         Created
                                     </th> 
 
-                                    <th style="width: 20%!important;" class="text-center">
+                                    <th style="width: 25%!important;" class="text-center">
                                        {{__('Action')}}
                                     </th>
                                 </tr>
@@ -164,6 +167,9 @@
                 },{
                     data: 'capacity',
                     name: 'capacity'
+                },{
+                    data: 'used',
+                    name: 'used'
                 },{
                     data: 'created',
                     name: 'created'
