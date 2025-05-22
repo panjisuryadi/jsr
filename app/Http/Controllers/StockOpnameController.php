@@ -25,6 +25,7 @@ use App\Models\StockOpnameProduct;
 use App\Models\StockOpnameHistories;
 use Modules\Product\Entities\Product;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class StockopnameController extends Controller
 {
@@ -107,7 +108,7 @@ class StockopnameController extends Controller
         $stockopname = StockOpname::where('id', $id)->firstOrFail();
         $stockopname->status = 'B';
         $stockopname->save();
-        return redirect()->route('stock_opname.riwayat');
+        return redirect()->route('stock_opname.data');
     }
 
     public function data(Request $request)
@@ -148,9 +149,34 @@ class StockopnameController extends Controller
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         return view(
-            'stockopname.data', // Path to your create view file
+            'stockopname.riwayat', // Path to your create view file
             compact(
                 'stockopname',
+                'module_title',
+                'module_name',
+                'module_path',
+                'module_icon',
+                'module_model',
+            )
+        );
+    }
+
+    public function hilang(Request $request)
+    {
+        // $stockopname   = Stockopname::where('status', 'B')->latest()->first();
+        // $stockopname_id   = $stockopname->id;
+        // $status = $stockopname->status;
+        $id = $request->id;
+        
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        return view(
+            'stockopname.hilang', // Path to your create view file
+            compact(
+                'id',
                 'module_title',
                 'module_name',
                 'module_path',
@@ -185,6 +211,7 @@ class StockopnameController extends Controller
         $products = Product::where('id', $product_id)->firstOrFail();
         $products->status = $stat;
         $products->status_id = $stat;
+        $products->baki_id = 999;
         $products->save();
 
         $stockopnamehistories    = StockopnameHistories::create([
@@ -240,7 +267,7 @@ class StockopnameController extends Controller
                 $name       = $b->name;
                 $capacity   = $b->capacity;
                 $posisi     = $b->posisi;
-                $used       = Product::where('baki_id', $baki_id)->count();
+                $used       = Product::where('baki_id', $baki_id)->where('status_id', 1)->count();
     
                 $stockopnamebaki    = StockopnameBaki::create([
                     'stock_opname_id'   => $stockopname_id,
@@ -372,6 +399,144 @@ class StockopnameController extends Controller
                 return $stat;
             })
                 
+            ->rawColumns(['code', 'posisi', 'used', 'name', 'capacity'])
+            ->make(true);
+    }
+
+    public function index_riwayat()
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        // $$module_name = Karat::latest()->get();
+        // $$module_name->each(function ($item) use ($harga) {
+        //     $item->harga = $harga; // Add the harga attribute to the model
+        // });
+
+        $module_action = 'List';
+        // $$module_name = StockOpname::
+        // with('stock_opname_baki', 'stock_opname_product')->
+        // whereHas('stock_opname_baki', function ($query) {
+        //     $query->where('status', 'D');
+        // })->
+        // latest()->
+        // get();
+
+        $$module_name = StockOpname::
+        join('stock_opname_baki', 'stock_opname_baki.stock_opname_id', '=', 'stock_opname.id')
+        ->where('stock_opname_baki.status', 'D')
+        ->orderBy('stock_opname.created_at', 'desc')
+        ->select(
+            'stock_opname.*',
+            'stock_opname_baki.*',
+            DB::raw('(SELECT COUNT(id) FROM stock_opname_histories WHERE stock_opname_id = stock_opname.id) as lost')
+        )
+        ->distinct()
+        ->get();
+
+        // echo json_encode($$module_name);
+
+        $data   = array();
+        // exit();
+        $data = $$module_name;
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view('stockopname.view',
+                compact('module_name', 'data', 'module_model'));
+            })
+
+            ->editColumn('created', function ($data) {
+                // return (date('Y-m-d', strtotime($data->created_at)));
+                return $data->created_at;
+            })
+            ->editColumn('baki', function ($data) {
+                return $data->name;
+            })
+            ->editColumn('capacity', function ($data) {
+                return $data->capacity;
+            })
+            ->editColumn('used', function ($data) {
+                return $data->used-$data->lost;
+            })
+            ->editColumn('available', function ($data) {
+                return ($data->capacity-$data->used+$data->lost);
+            })
+            ->editColumn('lost', function ($data) {
+                return '<a href="/stockopname/hilang/'.$data->stock_opname_id.'">'.$data->lost.'</a>';
+            })
+            ->rawColumns(['lost', 'posisi', 'used', 'name', 'capacity'])
+            ->make(true);
+    }
+    // <a href="/stock_opname/hilang/43">1</a>
+    public function index_hilang(Request $request)
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $id = $request->id;
+        // $$module_name = Karat::latest()->get();
+        // $$module_name->each(function ($item) use ($harga) {
+        //     $item->harga = $harga; // Add the harga attribute to the model
+        // });
+
+        $module_action = 'List';
+        // $$module_name = StockOpname::
+        // with('stock_opname_baki', 'stock_opname_product')->
+        // whereHas('stock_opname_baki', function ($query) {
+        //     $query->where('status', 'D');
+        // })->
+        // latest()->
+        // get();
+
+        $$module_name = StockOpnameHistories::
+        with('baki', 'product')
+        ->where('stock_opname_id', $id)
+        ->latest()
+        ->get();
+
+        // echo json_encode($$module_name);
+
+        $data   = array();
+        // exit();
+        $data = $$module_name;
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                $module_path = $this->module_path;
+                return view('stockopname.view',
+                compact('module_name', 'data', 'module_model'));
+            })
+
+            ->editColumn('created', function ($data) {
+                // return (date('Y-m-d', strtotime($data->created_at)));
+                return $data->created_at;
+            })
+            ->editColumn('baki', function ($data) {
+                return $data->baki->name;
+            })
+            ->editColumn('product', function ($data) {
+                return $data->product->product_name;
+            })
+            ->editColumn('code', function ($data) {
+                return $data->product->product_code;
+            })
+            ->editColumn('berat', function ($data) {
+                return ($data->product->berat_emas);
+            })
+            ->editColumn('keterangan', function ($data) {
+                return ($data->keterangan);
+            })
             ->rawColumns(['code', 'posisi', 'used', 'name', 'capacity'])
             ->make(true);
     }

@@ -31,6 +31,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/stockopname/index_data/{id}', 'StockOpnameController@index_data')
         ->name('stock_opname.index_data');
 
+    Route::get('/stockopname/index_riwayat', 'StockOpnameController@index_riwayat')
+        ->name('stock_opname.index_riwayat');
+
+    Route::get('/stockopname/index_hilang/{id}', 'StockOpnameController@index_hilang')
+        ->name('stock_opname.index_hilang');
+
+    Route::get('/stockopname/hilang', 'StockOpnameController@hilang')
+        ->name('stock_opname.hilang');
+
+    // Route::get('/stockopname/view/{id}', 'StockOpnameController@view')
+    //     ->name('stock_opname.view');
+
     Route::get('/stockopname/detail/{id}', 'StockOpnameController@detail')
         ->name('stock_opname.detail');
 
@@ -54,6 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/stockopname/riwayat', 'StockOpnameController@riwayat')
         ->name('stock_opname.riwayat');
+
+    Route::get('/stockopname/hilang/{id}', 'StockOpnameController@hilang')
+        ->name('stock_opname.hilang');
 
     Route::get('/stockopname/detail_data/{id}', 'StockOpnameController@detail_data')
         ->name('stock_opname.detail_data');

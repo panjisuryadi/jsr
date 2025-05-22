@@ -22,4 +22,9 @@ class StockOpnameHistories extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'id'); // assuming 'user' is the foreign key in hargas table
     }
+
+    public function baki()
+    {
+        return $this->belongsTo(Baki::class, 'baki_id', 'id'); // assuming 'user' is the foreign key in hargas table
+    }
 }
