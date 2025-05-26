@@ -108,6 +108,11 @@ class StockopnameController extends Controller
         $stockopname = StockOpname::where('id', $id)->firstOrFail();
         $stockopname->status = 'B';
         $stockopname->save();
+
+        $baki   = Baki::where('status', 'O')->firstOrFail();
+        $baki->status   = 'A';
+        $baki->save();
+
         return redirect()->route('stock_opname.data');
     }
 
