@@ -156,8 +156,8 @@ class ProductController extends Controller
     public function insert_nota(Request $request)
     {
         if($request->upload == 'on'){
-            $gambar = 'products_20250522095614.png';
         }
+        $gambar = 'products_20250522095614.png';
         $gam                     = $this->getUploadedImage($request['image'], $request['uploaded_image']);
         // echo $gam;
         $i = 0;
@@ -184,6 +184,8 @@ class ProductController extends Controller
             $gambar = 'no_foto.png';
             // $params['image'] = 'no_foto.png';
         }
+        $gambar = 'products_20250522095614.png';
+
         $berat  = str_replace(',', '.', $request->new_product_berat);
 
         $product    = Product::create([
