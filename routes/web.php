@@ -100,6 +100,36 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sale', 'JualController@list')
         ->name('sale.list');
 
+    Route::get('/dashboard', 'DashboardController@list')
+        ->name('dashboard.index');
+
+    Route::get('/pettycash', 'PettyCashController@list')
+        ->name('pettycash.index');  
+
+    Route::get('/webcam', 'WebcamController@list')
+        ->name('webcam.index');
+        
+    Route::get('/webcam/update/{value}', 'WebcamController@update')
+        ->name('webcam.update');
+        
+    Route::get('/pettycash/detail/{id}', 'PettyCashController@detail')
+        ->name('pettycash.detail');  
+
+    Route::post('/pettycash/insert', 'PettyCashController@insert')
+        ->name('pettycash.insert');
+
+    Route::post('/pettycash/update', 'PettyCashController@update')
+        ->name('pettycash.update');
+
+    Route::post('/pettycash/close', 'PettyCashController@close')
+        ->name('pettycash.close');
+
+    Route::get('/pettycash/index_data', 'PettyCashController@index_data')
+        ->name('pettycash.index_data');
+        
+    Route::get('/pettycash/detail_data/{id}', 'PettyCashController@detail_data')
+        ->name('pettycash.detail_data');
+    
     Route::get('/config/index_data', 'ConfigController@index_data')
         ->name('config.index_data');
 

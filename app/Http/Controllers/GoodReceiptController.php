@@ -76,7 +76,7 @@ class GoodReceiptController extends Controller
         ];
         $tipe_pembayaran    = 'lunas';
         return view(
-            'GoodsReceipts.creates', // Path to your create view file
+            'goodsreceipts.creates', // Path to your create view file
             compact(
                 'dataSupplier',
                 'last_po',

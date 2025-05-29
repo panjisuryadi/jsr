@@ -114,6 +114,16 @@
                 @endforeach
                 </select>
             </div>
+            <div class="col-md-3">
+                <label for="">Payment</label>
+            </div>
+            <div class="col-md-9">
+                <select name="payment" id="payment" class="">
+                    <option value="cash">Cash</option>                
+                    <option value="edc">EDC</option>                
+                    <option value="transfer">Transfer</option>                
+                </select>
+            </div>
             <hr>
         </div>
         

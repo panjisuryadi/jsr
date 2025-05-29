@@ -155,6 +155,11 @@ class ProductController extends Controller
 
     public function insert_nota(Request $request)
     {
+        if($request->upload == 'on'){
+            $gambar = 'products_20250522095614.png';
+        }
+        $gam                     = $this->getUploadedImage($request['image'], $request['uploaded_image']);
+        // echo $gam;
         $i = 0;
         // echo json_encode($_POST);
         // exit();
@@ -1238,6 +1243,22 @@ class ProductController extends Controller
                 'product_name', 'karat', 'berat_emas', 'cabang', 'action'
             ])
             ->make(true);
+        }
+
+        private function getUploadedImage($image, $uploaded_image)
+        {
+            $folderPath = "uploads/";
+            if (!empty($uploaded_image)) {
+                Storage::disk('public')->move("temp/dropzone/{$uploaded_image}", "{$folderPath}{$uploaded_image}");
+                return $uploaded_image;
+            } elseif (!empty($image)) {
+                $image_parts = explode(";base64,", $image);
+                $image_base64 = base64_decode($image_parts[1]);
+                $fileName = 'webcam_' . uniqid() . '.jpg';
+                $file = $folderPath . $fileName;
+                Storage::disk('public')->put($file, $image_base64);
+                return $fileName;
+            }
         }
 
     public function index_data(Request $request)

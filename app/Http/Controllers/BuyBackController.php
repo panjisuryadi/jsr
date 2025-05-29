@@ -19,6 +19,8 @@ use Modules\GoodsReceipt\Models\GoodsReceiptItem;
 use Modules\Stok\Models\StockOffice;
 use App\Models\Harga;
 use App\Models\BuyBack;
+use App\Models\PettyCash;
+use App\Models\PettyCashData;
 use Modules\Product\Entities\Product;
 use Yajra\DataTables\DataTables;
 use App\Models\ProductHistories;
@@ -53,8 +55,8 @@ class BuybackController extends Controller
     
     public function insert(Request $request)
     {   
-        // echo json_encode($_POST);
-        // exit();
+        echo json_encode($_POST);
+        exit();
         $product = $request->product;
         // $products = Product::where('id', $product)->first();
         // echo json_encode($products);
@@ -64,6 +66,7 @@ class BuybackController extends Controller
             'nota'   => $request->nota,
             'product_id'   => $product,
             'kondisi'   => $request->kondisi,
+            'payment'   => $request->payment,
             'harga'   => $request->harga,
             'tanggal'   => date('Y-m-d'),
         ]);
@@ -84,10 +87,28 @@ class BuybackController extends Controller
         $product_history = ProductHistories::create([
             'product_id'    => $id_product,
             'status'        => 'B',
-            'keterangan'    => $request->kondisi,
+            'keterangan'    => $request->payment.' | '.$request->kondisi,
             'harga'         => $request->harga,
             'tanggal'       => date('Y-m-d'),
         ]);
+
+        if($request->payment == 'cash'){
+            $pettycash          = PettyCash::where('status', 'A')->latest()->firstOrFail();
+            $id                 = $pettycash->id;
+            $current_modal      = $pettycash->modal;
+            $current_current    = $pettycash->current;
+            $current_out        = $pettycash->out;
+            $pettycash->current = $current_current-$request->harga;
+            $pettycash->out     = $current_out+$request->harga;
+            $pettycash->save();
+            
+            $pettycashdata  = PettycashData::create([
+                'petty_cash_id' => $id,
+                'type'  => 'buyback',
+                'nominal' => $request->harga,
+                'from' => 'kasir'
+            ]);
+        }
 
         return redirect()->action([BuybackController::class, 'list']);
     }

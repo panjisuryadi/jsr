@@ -96,23 +96,33 @@
                         <input type="text" class="form-control" name="product" required>
                     </div> -->
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="form-group">
                                 <label for="">No Nota</label>
                                 <input type="hidden" name="product" id="product">
                                 <input type="text" class="form-control" name="nota" id="nota" onkeyup="view_nota();" required>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="form-group">
                                 <label for="">Kondisi</label>
                                 <input type="text" class="form-control" name="kondisi" id="kondisi" required readonly>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="form-group">
                                 <label for="">Harga</label>
                                 <input type="number" class="form-control" name="harga" id="harga" required readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Payment</label>
+                                <select name="payment" id="payment" class="form-control">
+                                    <option value="cash">Cash</option>
+                                    <option value="transfer">Transfer</option>
+                                </select>
                             </div>
                         </div>
                             

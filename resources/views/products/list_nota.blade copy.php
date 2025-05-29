@@ -123,8 +123,37 @@
                                         </span>
                                     @endif
                                 </div>
-                                        
-                                        <!-- </div> -->
+                                        <div class="form-group">
+                                            <div x-data="{photoName: null, photoPreview: null}" class="justify-center form-group">
+                                            <?php
+                                            $field_name = 'image';
+                                            $field_lable = __($field_name);
+                                            $label = Label_Case($field_lable);
+                                            $field_placeholder = $label;
+                                            $required = '';
+                                            ?>
+                                            <input type="file" name="{{ $field_name }}" accept="image/*" class="hidden" x-ref="photo" x-on:change="
+                                            photoName = $refs.photo.files[0].name;
+                                            const reader = new FileReader();
+                                            reader.onload = (e) => {
+                                            photoPreview = e.target.result;
+                                            };
+                                            reader.readAsDataURL($refs.photo.files[0]);
+                                            ">
+                                            <div class="text-center">
+                                                <div class="mt-2 py-2" x-show="! photoPreview">
+                                                    <img src="{{asset("images/logo.png")}}" class="w-40 h-40 m-auto rounded-xl ">
+                                                </div>
+                                                <div class="mt-2 py-2" x-show="photoPreview" style="display: none;">
+                                                    <span class="block w-40 h-40 rounded-xl m-auto" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+                                                    </span>
+                                                </div>
+                                                <button type="button" class="btn btn-secondary px-5" x-on:click.prevent="$refs.photo.click()">
+                                                @lang('Select Image')
+                                                </button>
+                                            </div>
+                                        </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="product_category">Product Category</label>
                                             <select name="new_product_category_id" id="product_category" class="form-control @error('new_product.product_category_id') is-invalid @enderror">
