@@ -582,7 +582,7 @@ class StockopnameController extends Controller
                 return ($data->product->product_code);
             })
             ->editColumn('product_name', function ($data) {
-                return ($data->product->product_name);
+                return view('stockopname.image', compact('data'));
             })
             ->editColumn('baki', function ($data) {
                 return ($data->baki->name);
@@ -598,7 +598,7 @@ class StockopnameController extends Controller
                 return $stat;
             })
                 
-            ->rawColumns(['code', 'posisi', 'used', 'name', 'capacity'])
+            ->rawColumns(['product_name', 'posisi', 'used', 'name', 'capacity'])
             ->make(true);
     }
 
@@ -638,7 +638,7 @@ class StockopnameController extends Controller
                 return ($data->product->product_code);
             })
             ->editColumn('product_name', function ($data) {
-                return ($data->product->product_name);
+                return view('stockopname.image', compact('data'));
             })
             ->editColumn('baki', function ($data) {
                 return ($data->baki->name);
@@ -654,7 +654,7 @@ class StockopnameController extends Controller
                 return $stat;
             })
                 
-            ->rawColumns(['code', 'posisi', 'used', 'name', 'capacity'])
+            ->rawColumns(['product_name', 'posisi', 'used', 'name', 'capacity'])
             ->make(true);
     }
 }
