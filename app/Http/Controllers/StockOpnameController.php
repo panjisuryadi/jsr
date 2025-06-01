@@ -75,6 +75,7 @@ class StockopnameController extends Controller
             $bak    = Baki::where('id', $baki_id)->first();
             $baki_name  = $bak->name;
             toast('Product ini seharusnya di '.$baki_name, 'error');
+              
             return redirect()->back();   
         }
 

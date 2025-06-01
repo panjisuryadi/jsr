@@ -103,10 +103,10 @@
       
       <div class="modal-body">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="">Customer</label>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-4">
                 <select name="customer" id="customer_modal" class="form-control">
                     <option value="0">Pilih Customer / User Umum</option>
                 @foreach($customers as $index => $c)
@@ -114,11 +114,11 @@
                 @endforeach
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="">Payment</label>
             </div>
-            <div class="col-md-9">
-                <select name="payment" id="payment" class="">
+            <div class="col-md-4">
+                <select name="payment" id="payment" class="form-control">
                     <option value="cash">Cash</option>                
                     <option value="edc">EDC</option>                
                     <option value="transfer">Transfer</option>                
@@ -513,9 +513,11 @@
                     <small>Max Disc: <strong>${diskon}</strong></small>
                 </div>
                 <div class="col-2">
+                    <label>Disc</label>
                     <input type="number" name="diskon[]" class="form-control form-control-sm" value="0" max="${diskon}" onkeyup="sum_diskon();" placeholder="Diskon">
                 </div>
                 <div class="col-2">
+                    <label>Ongkos</label>
                     <input type="number" name="ongkos[]" class="form-control form-control-sm" value="0" onkeyup="sum_ongkos();" placeholder="Diskon">
                 </div>
                 <div class="col-2">

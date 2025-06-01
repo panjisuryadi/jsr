@@ -223,13 +223,13 @@ class JualController extends Controller
             }
 
             // INSERT SALES ITEMS
-            $kurangi    = 0;
+            $kurangi = $number+1-$jumlah_data;
             if($lanjut){
-                $kurangi = $jumlah_data;
+                $kurangi    = 0;
             }
             $salesNomor = SalesItem::latest()->first();
             $salesNomor = $salesNomor->nomor != null ? $salesNomor->nomor : '0000000001';
-            $salesNomor  = (int)$salesNomor+2-$kurangi;
+            $salesNomor  = (int)$salesNomor+1+$kurangi;
             for ($i=0; $i < 9; $i++) { 
                 if(strlen($salesNomor) !== $i){
                     $salesNomor  = '0'.$salesNomor;
@@ -260,6 +260,7 @@ class JualController extends Controller
             $array['products'][$number]['desc'] = $desc;
             $array['products'][$number]['gram'] = $gram;
             $array['products'][$number]['ongkos'] = $request->ongkos[$number];
+            $array['products'][$number]['diskon'] = $request->diskon[$number];
             $array['products'][$number]['harga'] = $harga;
             $array['products'][$number]['nomor'] = $salesNomor;
             $array['products'][$number]['sales_id'] = $salesNomor;
