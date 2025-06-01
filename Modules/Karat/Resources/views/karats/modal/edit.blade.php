@@ -27,8 +27,8 @@
                     $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                     $required = "required";
                     ?>
-                  <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="{{$detail->margin }}">
+                  <label for="{{ $field_name }}">{{ $field_lable }} %<span class="text-danger">* </span></label>
+                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="{{$detail->persen }}">
               </div>
           </div>
       </form>

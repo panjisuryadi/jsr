@@ -178,99 +178,99 @@
 
                                 </div>
 
-                                <div class="py-2">
+                                <div class="py-2" >
                                     @if (session()->has('message'))
                                     <div class="alert alert-success">
                                         {{ session('message') }}
                                     </div>
                                     @endif
-
-                                    <div class="flex justify-between mt-0">
-                                        <div class="add-input w-full mx-auto flex flex-row gap-2" id="input-container">
-                                        <!-- <div class="add-input w-full mx-auto flex flex-row grid grid-cols-4 gap-2" id="input-container"> -->
-                                            <div>
-                                                <div class="form-group" id="form-group-0">
-                                                    <?php
-                                                    $field_name = 'karat_id[0]';
-                                                    $field_id   = 'karat_id_0';
-                                                    $field_lable = __('Parameter Karat');
-                                                    $field_placeholder = Label_case($field_lable);
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $required = '';
-                                                    $number_karat = explode('_', $field_id);
-                                                    $number_karat = end($number_karat);
-                                                    ?>
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    <select class="form-control" name="{{ $field_name }}" id="{{ $field_id }}" onchange="berat_real(<?= $number_karat; ?>);">
-                                                        <option value="" selected disabled>Select Karat</option>
-                                                        @foreach($dataKarat as $row)
-                                                        <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
-                                                            {{$row->name}} | {{$row->kode}} | {{$row->coef}}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-    
-                                                <div class="form-group" id="form-group-0">
-                                                    <?php
-                                                    // $field_name = 'inputs[0].berat_kotor';
-                                                    $field_name = 'berat_kotor[0]';
-                                                    $field_id   = 'berat_kotor_0';
-                                                    $field_lable = label_case('berat_kotor');
-                                                    $field_placeholder = $field_lable;
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $required = '';
-                                                    $number_kotor = explode('_', $field_id);
-                                                    $number_kotor = end($number_kotor);
-                                                    ?>
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_id }}" min="0" step="0.001" onchange="berat_real(<?= $number_kotor; ?>);" placeholder="{{$field_lable}}">
-                                                </div>
-    
-                                                <div class="form-group" id="form-group-0">
-                                                    <?php
-                                                    $field_name = 'berat_real[0]';
-                                                    $field_id   = 'berat_real_0';
-                                                    $field_lable = label_case('Berat_real');
-                                                    $field_placeholder = $field_lable;
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $required = '';
-                                                    ?>
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_id }}" min="0" step="0.001" placeholder="{{$field_lable}}" readonly>
-                                                </div>
-    
-                                                <div class="form-group" id="form-group-0">
-                                                    <?php
-                                                    $field_name = 'quantity[0]';
-                                                    $field_id   = 'quantity_0';
-                                                    $field_lable = label_case('Qty');
-                                                    $field_placeholder = $field_lable;
-                                                    $invalid = $errors->has($field_name) ? ' is-invalid' : '';
-                                                    $required = '';
-                                                    $number_qty = explode('_', $field_id);
-                                                    $number_qty = end($number_qty);
-                                                    ?>
-                                                    <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
-                                                    <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_id }}" min="0" step="0.001" onchange="berat_real(<?= $number_qty; ?>);" placeholder="{{$field_lable}}" >
+                                    <div class="overflow-x-auto">
+                                        <div class="flex justify-between mt-0">
+                                            <div class="add-input w-full mx-auto flex flex-row gap-2 min-w-max" id="input-container">
+                                            <!-- <div class="add-input w-full mx-auto flex flex-row grid grid-cols-4 gap-2" id="input-container"> -->
+                                                <div>
+                                                    <div class="form-group" id="form-group-0">
+                                                        <?php
+                                                        $field_name = 'karat_id[0]';
+                                                        $field_id   = 'karat_id_0';
+                                                        $field_lable = __('Parameter Karat');
+                                                        $field_placeholder = Label_case($field_lable);
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = '';
+                                                        $number_karat = explode('_', $field_id);
+                                                        $number_karat = end($number_karat);
+                                                        ?>
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        <select class="form-control" name="{{ $field_name }}" id="{{ $field_id }}" onchange="berat_real(<?= $number_karat; ?>);">
+                                                            <option value="" selected disabled>Select Karat</option>
+                                                            @foreach($dataKarat as $row)
+                                                            <option value="{{$row->id}}" {{ old('karat_id') == $row->id ? 'selected' : '' }}>
+                                                                {{$row->name}} | {{$row->kode}} | {{$row->coef}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+        
+                                                    <div class="form-group" id="form-group-0">
+                                                        <?php
+                                                        // $field_name = 'inputs[0].berat_kotor';
+                                                        $field_name = 'berat_kotor[0]';
+                                                        $field_id   = 'berat_kotor_0';
+                                                        $field_lable = label_case('berat_kotor');
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = '';
+                                                        $number_kotor = explode('_', $field_id);
+                                                        $number_kotor = end($number_kotor);
+                                                        ?>
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_id }}" min="0" step="0.001" onchange="berat_real(<?= $number_kotor; ?>);" placeholder="{{$field_lable}}">
+                                                    </div>
+        
+                                                    <div class="form-group" id="form-group-0">
+                                                        <?php
+                                                        $field_name = 'berat_real[0]';
+                                                        $field_id   = 'berat_real_0';
+                                                        $field_lable = label_case('Berat_real');
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = '';
+                                                        ?>
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_id }}" min="0" step="0.001" placeholder="{{$field_lable}}" readonly>
+                                                    </div>
+        
+                                                    <div class="form-group" id="form-group-0">
+                                                        <?php
+                                                        $field_name = 'quantity[0]';
+                                                        $field_id   = 'quantity_0';
+                                                        $field_lable = label_case('Qty');
+                                                        $field_placeholder = $field_lable;
+                                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                        $required = '';
+                                                        $number_qty = explode('_', $field_id);
+                                                        $number_qty = end($number_qty);
+                                                        ?>
+                                                        <label class="mb-0" for="{{ $field_name }}">{{ $field_lable }}</label>
+                                                        <input class="form-control" type="number" name="{{ $field_name }}" id="{{ $field_id }}" min="0" step="0.001" onchange="berat_real(<?= $number_qty; ?>);" placeholder="{{$field_lable}}" >
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <!-- Add and Delete buttons -->
-                                        <div class="px-1 mt-4">
-                                            <button class="btn text-white text-xl btn-info btn-md" type="button" id="add-input-btn">
-                                                <span><i class="bi bi-plus"></i></span>
-                                            </button>
-                                        </div>
+                                            <!-- Add and Delete buttons -->
+                                            <div class="px-1 mt-4">
+                                                <button class="btn text-white text-xl btn-info btn-md" type="button" id="add-input-btn">
+                                                    <span><i class="bi bi-plus"></i></span>
+                                                </button>
+                                            </div>
 
-                                        <div class="px-1">
-                                            <button class="btn text-white text-xl btn-danger btn-md" type="button" id="delete-input-btn">
-                                                <span><i class="bi bi-trash"></i></span>
-                                            </button>
+                                            <div class="px-1">
+                                                <button class="btn text-white text-xl btn-danger btn-md" type="button" id="delete-input-btn">
+                                                    <span><i class="bi bi-trash"></i></span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
 
 

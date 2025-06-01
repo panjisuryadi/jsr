@@ -114,6 +114,33 @@ class KaratController extends Controller
         );
     }
 
+    public function history(Request $request)
+    {
+        // $harga = Harga::where('tanggal', date('Y-m-d'))->first();
+        $harga = Harga::latest()->first();
+        // echo json_encode($harga);
+        // exit();
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $dataKarat = Karat::whereNull('parent_id')->get();
+        return view(
+            'karats.history', // Path to your create view file
+            compact(
+                'module_title',
+                'module_name',
+                'module_path',
+                'module_icon',
+                'module_model',
+                'dataKarat',
+                'harga',
+            )
+        );
+    }
+
     public function list_diskon(Request $request)
     {
         // $harga = Harga::where('tanggal', date('Y-m-d'))->first();
@@ -289,7 +316,8 @@ class KaratController extends Controller
                         $module_model = $this->module_model;
                         $module_path = $this->module_path;
                         $harga = 1000000;
-                        return view($module_name.'::'.$module_path.'.includes.action',
+                        // return view($module_name.'::'.$module_path.'.includes.action',
+                        return view('karats.action',
                         compact('module_name', 'data', 'module_model'));
                             })
                          
@@ -323,7 +351,7 @@ class KaratController extends Controller
 
                         })   
                         ->editColumn('margin', function($data){
-                            return number_format($data->margin);
+                            return ($data->persen.' %');
                             // return '<div class="items-center text-center">
                             //                 <h3 class="text-sm font-bold text-gray-800"> ' .number_format($data->margin) . '</h3>
                             //         </div>';
@@ -331,7 +359,7 @@ class KaratController extends Controller
                         
                         ->editColumn('rekomendasi', function($data){
                             return '<div class="items-center text-center">
-                                            <h3 class="text-sm font-bold text-gray-800"> ' .number_format(($data->coef*$data->harga)+$data->margin) . '</h3>
+                                            <h3 class="text-sm font-bold text-gray-800"> ' .number_format(($data->coef*$data->harga)+(($data->coef*$data->persen*$data->harga)/100)) . '</h3>
                                     </div>';
                             })
                       ->editColumn('ph', function($data){

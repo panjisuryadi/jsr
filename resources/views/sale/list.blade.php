@@ -494,7 +494,7 @@
     function renderPreview(data) {
         // console.log(data);
         const previewArea = $('#preview-area');
-        const harga       = (data.harga*data.karats.coef+data.karats.margin)*data.berat_emas;
+        const harga       = ((data.harga*data.karats.coef)+(data.harga*data.karats.coef*data.karats.persen/100))*data.berat_emas;
         const rekomendasi = formatRupiah(harga);
         const price       = (harga);
         const diskon      = Math.round((data.karats.diskon)*data.berat_emas);

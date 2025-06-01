@@ -393,7 +393,7 @@ class JualController extends Controller
             ->editColumn('rekomendasi', function ($data) {
                 $tb = '<div class="items-center gap-x-2">
                                 <div class="text-sm text-center text-gray-500">
-                                Rp .' . @rupiah((($data->karat->coef+$data->karat->margin)*$data->harga)*$data->berat_emas) . ' <br>
+                                Rp .' . @rupiah((($data->karat->coef*$data->harga)+($data->karat->coef*$data->harga*$data->karat->persen/100))*$data->berat_emas) . ' <br>
                                 </div>
                                 </div>';
                 return $tb;

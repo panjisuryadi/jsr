@@ -1216,6 +1216,15 @@ class ProductController extends Controller
                 return view('product::products.partials.status', compact('data'));
             })
 
+            ->addColumn('qr', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                return view(
+                    'product::products.partials.qrcode_button',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+
             ->editColumn('code', function ($data) {
                 return $data->product_code;
             })

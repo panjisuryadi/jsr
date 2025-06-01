@@ -59,7 +59,8 @@
                                     <!-- <th style="width: 15%!important;" class="text-center">Harga Beli</th> -->
                                     <th style="width: 10%!important;" class="text-center">Berat</th>
                                     <th style="width: 15%!important;" class="text-center">Code</th>
-                                    <th style="width: 25%!important;" class="text-center">Keterangan</th>
+                                    <th style="width: 10%!important;" class="text-center">QR</th>
+                                    <th style="width: 15%!important;" class="text-center">Keterangan</th>
                                     <th style="width: 15%!important;" class="text-center">Date</th>
                                     
                  <!-- <th style="width: 18%!important;" class="text-center">
@@ -366,6 +367,10 @@
             name: 'code'
         },
         {
+            data: 'qr',
+            name: 'qr'
+        },
+        {
             data: 'keterangan',
             name: 'keterangan'
         },
@@ -395,7 +400,11 @@
 
 
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script type="text/javascript">
+
 jQuery.noConflict();
 (function( $ ) {
 $(document).on('click', '#Tambah,#QrCode,#Show, #Edit', function(e){
@@ -432,6 +441,9 @@ $(document).on('click', '#Tambah,#QrCode,#Show, #Edit', function(e){
         }
         
         $('#ModalContent').load($(this).attr('href'));
+        // var myModalEl = document.getElementById('ModalGue');
+        // var modal = new bootstrap.Modal(myModalEl);
+        // modal.show();
         $('#ModalGue').modal('show');
     });
 

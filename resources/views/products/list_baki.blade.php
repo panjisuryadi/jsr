@@ -199,14 +199,15 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
+        {
+            data: 'product_image',
+            name: 'product_image'
+        }, 
         // {
-        //     data: 'product_image',
-        //     name: 'product_image'
+        //     data: 'product_code',
+        //     name: 'product_code'
         // }, 
         {
-            data: 'product_code',
-            name: 'product_code'
-        }, {
             data: 'product_name',
             name: 'product_name'
         },
@@ -285,14 +286,15 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
+        {
+            data: 'product_image',
+            name: 'product_image'
+        }, 
         // {
-        //     data: 'product_image',
-        //     name: 'product_image'
+        //     data: 'product_code',
+        //     name: 'product_code'
         // }, 
         {
-            data: 'product_code',
-            name: 'product_code'
-        }, {
             data: 'product_name',
             name: 'product_name'
         },

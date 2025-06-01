@@ -23,6 +23,7 @@ class Karat extends Model
         'coef',
         'margin',
         'diskon',
+        'persen',
         'description',
         'start_date',
         'end_date',

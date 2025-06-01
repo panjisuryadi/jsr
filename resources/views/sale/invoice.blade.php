@@ -292,6 +292,7 @@
                 </td>
                 <!-- Right cell: Totals -->
                 <td style="width: 50%; vertical-align: top; font-size: 11px; text-align: right; padding-left: 10px;">
+                    <p style="margin: 0;"><strong>Harga:</strong> Rp {{ number_format($product['harga']+$product['diskon']-$product['ongkos'], 0, ',', '.') }}</p>
                     <p style="margin: 0;"><strong>Diskon:</strong> Rp {{ number_format($product['diskon'], 0, ',', '.') }}</p>
                     <p style="margin: 0;"><strong>Ongkos:</strong> Rp {{ number_format($product['ongkos'], 0, ',', '.') }}</p>
                     <p style="margin: 0;"><strong>Grand Total:</strong> Rp {{ number_format($product['harga'], 0, ',', '.') }}</p>
