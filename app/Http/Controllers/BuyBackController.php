@@ -55,8 +55,8 @@ class BuybackController extends Controller
     
     public function insert(Request $request)
     {   
-        echo json_encode($_POST);
-        exit();
+        // echo json_encode($_POST);
+        // exit();
         $product = $request->product;
         // $products = Product::where('id', $product)->first();
         // echo json_encode($products);
