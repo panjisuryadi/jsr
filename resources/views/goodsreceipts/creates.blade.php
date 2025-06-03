@@ -399,7 +399,7 @@
                                         <select class="form-control" name="{{ $field_name }}" id="{{ $field_name }}" onchange="show_tipe_pembayaran();">
                                             <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                             <option value="cicil">Cicil</option>
-                                            <option value="jatuh_tempo">Jatuh Tempo</option>
+                                            <!-- <option value="jatuh_tempo">Jatuh Tempo</option> -->
                                             <option value="lunas">Lunas</option>
                                         </select>
                                         @if ($errors->has($field_name))
@@ -430,20 +430,15 @@
                                         $field_name = 'cicil';
                                         $field_lable = __('cicil');
                                         $field_placeholder = Label_case($field_lable);
-                                        $invalid = $errors->has($field_name) ? ' is-invalid' : '';
                                         $required = '';
                                         ?>
                                         <label class="mb-0" for="{{ $field_name }}"> {{ $field_placeholder }} <span class="text-danger">*</span></label>
-                                        <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
+                                        <!-- <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}"> -->
+                                        <select class="form-control select2" name="{{ $field_name }}" id="{{ $field_name }}" onchange="show_cicil();">
                                             <option value="" selected disabled>Jumlah {{ $field_name }}an</option>
                                             <option value="2">2 kali</option>
                                             <option value="3">3 kali </option>
                                         </select>
-                                        @if ($errors->has($field_name))
-                                            <span class="invalid feedback" role="alert">
-                                                <small class="text-danger">{{ $field_name }}.</small class="text-danger">
-                                            </span>
-                                        @endif
                                     </div>
 
                                     <div id="jatuh_tempo" class="form-group" style="display:none;">
@@ -463,16 +458,13 @@
                                     </div>
                                 </div>
 
-                                @if ($tipe_pembayaran == 'cicil' && $cicil != '')
-                                <div class="card p-6 bg-gray-100 rounded-lg shadow-md">
+                                <div class="card p-6 bg-gray-100 rounded-lg shadow-md" id="tanggal_cicilan" style="display:none;">
                                     <div class="text-md font-bold mb-4">Input Tanggal Cicilan</div>
-
-                                    @for ($i = 1; $i <= $cicil; $i++)
-                                        <div class="mb-4">
-                                            <label for="cicilan{{ $i }}" class="text-gray-600 text-sm mb-2 block">Cicilan Ke {{ $i }}</label>
+                                    <div class="mb-4">
+                                            <label for="cicilan1" class="text-gray-600 text-sm mb-2 block">Cicilan Ke 1</label>
                                             <div class="relative rounded-lg">
                                                 <?php
-                                                $field_name = 'detail_cicilan.'.$i;
+                                                $field_name = 'detail_cicilan.1';
                                                 $field_lable = __('Tanggal Jatuh Tempo');
                                                 $field_placeholder = Label_case($field_lable);
                                                 $invalid = $errors->has($field_name) ? ' is-invalid' : '';
@@ -481,9 +473,6 @@
                                                     type="date"
                                                     id="{{ $field_name }}"
                                                     name="{{ $field_name }}"
-                                                    wire:model="{{ $field_name }}"
-                                                    wire:change="resetDetailCicilanAfterwards({{$i}})"
-                                                    min="{{ $this->getMinCicilDate($i)}}"
                                                     class="block w-full py-2 px-3 text-gray-800 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                                                 />
 
@@ -494,10 +483,42 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    @endfor
+                                        <div class="mb-4">
+                                            <label for="cicilan2" class="text-gray-600 text-sm mb-2 block">Cicilan Ke 2</label>
+                                            <div class="relative rounded-lg">
+                                                <?php
+                                                $field_name = 'detail_cicilan.2';
+                                                $field_lable = __('Tanggal Jatuh Tempo');
+                                                $field_placeholder = Label_case($field_lable);
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                ?>
+                                                <input
+                                                    type="date"
+                                                    id="{{ $field_name }}"
+                                                    name="{{ $field_name }}"
+                                                    class="block w-full py-2 px-3 text-gray-800 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="mb-4" id="cicilan_3" style="display:none;">
+                                            <label for="cicilan3" class="text-gray-600 text-sm mb-2 block">Cicilan Ke 3</label>
+                                            <div class="relative rounded-lg">
+                                                <?php
+                                                $field_name = 'detail_cicilan.3';
+                                                $field_lable = __('Tanggal Jatuh Tempo');
+                                                $field_placeholder = Label_case($field_lable);
+                                                $invalid = $errors->has($field_name) ? ' is-invalid' : '';
+                                                ?>
+                                                <input
+                                                    type="date"
+                                                    id="{{ $field_name }}"
+                                                    name="{{ $field_name }}"
+                                                    class="block w-full py-2 px-3 text-gray-800 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                                />
+                                            </div>
+                                        </div>
                                 </div>
 
-                                @endif
 
                                 <div class="flex flex-row grid grid-cols-2 gap-2">
                                     <div class="form-group">
@@ -556,6 +577,25 @@
     </script>
     @push('page_scripts')
     <script>
+        function show_tipe_pembayaran(){
+            let type = $("#tipe_pembayaran").val();
+            if(type == 'cicil'){
+                $("#cicilan").show();
+                $("#tanggal_cicilan").show();
+            }else{
+                $("#cicilan").hide();
+                $("#tanggal_cicilan").hide();
+            }
+        }
+
+        function show_cicil(){
+            let cicil  = $("#cicil").val();
+            if(cicil > 2){
+                $("#cicilan_3").show();
+            }else{
+                $("#cicilan_3").hide();
+            }
+        }
         function sumInputs() {
             $('#total_berat_kotor').val(0);  // Reset the total fields to 0
             $('#total_berat_real').val(0);
@@ -760,15 +800,6 @@
 <script type="text/javascript">
     jQuery.noConflict();
 
-    function show_tipe_pembayaran(){
-        type    = this.val();
-        muncul  = this.html();
-        console.log(type);
-        console.log(muncul);
-    }
-
-    
-    
     (function($) {
 
         $('#up1').change(function() {
