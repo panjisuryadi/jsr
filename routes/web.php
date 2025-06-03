@@ -148,7 +148,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/config', 'ConfigController@create')
         ->name('config.create');
 
-    Route::get('/buyback', 'BuybackController@list')
+    Route::get('/buyback', 'BuyBackController@list')
         ->name('buyback.list');
 
     Route::get('/buyback_index_data', 'BuyBackController@index_data')
