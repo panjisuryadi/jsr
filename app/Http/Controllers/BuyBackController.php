@@ -42,10 +42,10 @@ class BuybackController extends Controller
 
     public function __construct()
     {
-        $opname = StockOpname::check_opname();
-        if($opname == 'A'){
-            abort(403, 'Access denied during active stock opname.');
-        }
+        // $opname = StockOpname::check_opname();
+        // if($opname == 'A'){
+        //     abort(403, 'Access denied during active stock opname.');
+        // }
         $this->module_title = 'Karat';
         $this->module_name = 'karat';
         $this->module_path = 'karats';
