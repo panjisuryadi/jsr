@@ -506,10 +506,10 @@ class GoodReceiptController extends Controller
 
     public function insert(Request $request)
     {
-        echo json_encode($_POST);
-        echo json_encode($_FILES);
-        echo json_encode($_GET);
-        exit();
+        // echo json_encode($_POST);
+        // echo json_encode($_FILES);
+        // echo json_encode($_GET);
+        // exit();
         $products = array();
         $hitung = count($_POST['karat_id']);
         for ($i = 0; $i < $hitung; $i++) {
