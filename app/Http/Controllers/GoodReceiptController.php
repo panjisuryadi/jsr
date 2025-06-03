@@ -127,7 +127,7 @@ class GoodReceiptController extends Controller
         ];
         $tipe_pembayaran    = 'lunas';
         return view(
-            'GoodsReceipts.products', // Path to your create view file
+            'goodsreceipts.products', // Path to your create view file
             compact(
                 'product_categories',
                 'groups',
@@ -403,7 +403,7 @@ class GoodReceiptController extends Controller
         $tipe_pembayaran    = 'lunas';
 
         return view(
-            'GoodsReceipts.products', // Path to your create view file
+            'goodsreceipts.products', // Path to your create view file
             compact(
                 'products',
                 'supplier',
@@ -626,7 +626,7 @@ class GoodReceiptController extends Controller
         
         $tipe_pembayaran    = 'lunas';
         return view(
-            'GoodsReceipts.products', // Path to your create view file
+            'goodsreceipts.products', // Path to your create view file
             compact(
                 'products',
                 'product_categories',

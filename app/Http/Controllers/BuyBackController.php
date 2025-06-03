@@ -110,7 +110,7 @@ class BuybackController extends Controller
             ]);
         }
 
-        return redirect()->action([BuybackController::class, 'list']);
+        return redirect()->action([BuyBackController::class, 'list']);
     }
 
     public function index_data()
