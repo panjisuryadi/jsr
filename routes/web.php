@@ -151,13 +151,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/buyback', 'BuybackController@list')
         ->name('buyback.list');
 
-    Route::get('/buyback_index_data', 'BuybackController@index_data')
+    Route::get('/buyback_index_data', 'BuyBackController@index_data')
         ->name('buyback.index_data');
 
-    Route::get('/buyback_nota/{id}', 'BuybackController@view_nota')
+    Route::get('/buyback_nota/{id}', 'BuyBackController@view_nota')
         ->name('buyback.nota');
 
-    Route::post('/buyback_insert', 'BuybackController@insert')
+    Route::post('/buyback_insert', 'BuyBackController@insert')
         ->name('buyback.insert');
 
     Route::get('/product_history', 'HistoryProductsController@list')
