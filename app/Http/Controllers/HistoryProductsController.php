@@ -56,7 +56,7 @@ class HistoryProductsController extends Controller
         $module_model = $this->module_model;
         $dataKarat = Karat::whereNull('parent_id')->get();
         return view(
-            'Product_histories.list', // Path to your create view file
+            'product_histories.list', // Path to your create view file
             compact(
                 'module_title',
                 'module_name',
