@@ -50,19 +50,18 @@
                         <table id="datatable" class="table table-bordered table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 7%!important;">
+                                    <th style="width: 10%!important;" class="text-center">
                                         NO
                                     </th>
-                                    <th>
+                                    <th style="width: 30%!important;" class="text-center">
                                         Product
                                     </th>
-                                    <th>
+                                    <th style="width: 15%!important;" class="text-center">
                                         Nota
                                     </th>
-                                     <th style="width: 15%!important;" class="text-center">
+                                     <th style="width: 20%!important;" class="text-center">
                                         Kondisi
                                     </th>  
-
                                      <th style="width: 10%!important;" class="text-center">
                                         Harga
                                     </th>  
