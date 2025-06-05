@@ -7,7 +7,7 @@
   <div class="flex  flex-row justify-center">
   <div class="justify-center items-center px-2 py-3 rounded-lg">
             <div class="justify-center text-center items-center img-responsive img-fluid" id="qrcode_image">
-{!! \Milon\Barcode\Facades\DNS1DFacade::getBarCodeSVG($detail->product_code, 'C128', 2, 60) !!}
+{!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG($detail->product_code, 'QRCODE', 15, 15) !!}
 
             </div>
 
