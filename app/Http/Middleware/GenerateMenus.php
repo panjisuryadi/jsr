@@ -541,33 +541,33 @@ class GenerateMenus
             ]);
 
 
-            $pegawai_toko = $toko->add('<i class="c-sidebar-nav-icon  bi bi-person text-sm"></i> ' . __('Data Pegawai Toko'), [
-                'route' => 'storeemployee.index',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 1,
-                    'activematches' => ['storeemployees*'],
-                    'permission'    => ['access_storeemployees'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $pegawai_toko = $toko->add('<i class="c-sidebar-nav-icon  bi bi-person text-sm"></i> ' . __('Data Pegawai Toko'), [
+            //     'route' => 'storeemployee.index',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 1,
+            //         'activematches' => ['storeemployees*'],
+            //         'permission'    => ['access_storeemployees'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
             // EMAS - TOKO - PENENTUAN HARGA
-            $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-cash-stack text-sm"></i>
-                ' . __('Penentuan Harga'), [
-                'route' => 'penentuanharga.index',
-                'class' => 'nav-item',
-            ])
-                ->data([
-                    'order'         => 2,
-                    'activematches' => ['penentuanhargas*'],
-                    'permission'    => ['access_penentuanharga'],
-                ])
-                ->link->attr([
-                    'class' => 'c-sidebar-nav-link py-2',
-                ]);
+            // $penentuan_harga = $toko->add('<i class="c-sidebar-nav-icon  bi bi-cash-stack text-sm"></i>
+            //     ' . __('Penentuan Harga'), [
+            //     'route' => 'penentuanharga.index',
+            //     'class' => 'nav-item',
+            // ])
+            //     ->data([
+            //         'order'         => 2,
+            //         'activematches' => ['penentuanhargas*'],
+            //         'permission'    => ['access_penentuanharga'],
+            //     ])
+            //     ->link->attr([
+            //         'class' => 'c-sidebar-nav-link py-2',
+            //     ]);
 
 
 
