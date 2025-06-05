@@ -47,17 +47,18 @@ class LoginController extends Controller
     }
 
     protected function authenticated(Request $request, $user) {
-        // Run your custom logic after login
-        $this->ActivityLastLogin($request, $user);
-
-        // Check if the user is deactivated
+        if ($user) {
+           $this->ActivityLastLogin($request ,$user);
+        }
+       // dd($user);
         if ($user->is_active != 1) {
-            Auth::logout(); // Log the user out again
-            // Correctly return a redirect response with an error message
+            Auth::logout();
             return back()->with([
-                'account_deactivated' => 'Your account is deactivated! Please contact the Super Admin.'
+                'account_deactivated' => 'Your account is deactivated! Please contact with Super Admin.'
             ]);
         }
+
+        return next($request);
     }
 
 

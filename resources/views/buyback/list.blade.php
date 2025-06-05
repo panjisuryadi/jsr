@@ -40,7 +40,6 @@
                     <a href="#" class="px-3 btn btn-danger" data-toggle="modal" data-target="#createModal">
                         + BuyBack <i class="bi bi-plus"></i>
                     </a>
-                    
                 </div>
 
                     </div>
@@ -158,7 +157,6 @@
         </div>
     </div>
 </div>
-
 
 @endsection
 <x-library.datatable />
