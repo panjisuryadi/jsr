@@ -27,7 +27,7 @@
         </div>
 
         <script>
-  function printQRCode() {
+  function printQRCodeold() {
     var printContents = document.getElementById('qrcode_image').innerHTML;
     var originalContents = document.body.innerHTML;
 
@@ -38,6 +38,45 @@
     document.body.innerHTML = originalContents;
     location.reload();  // Reload page to restore event handlers if needed
   }
+
+  function printQRCode() {
+  const content = document.getElementById('qrcode_image').innerHTML;
+  const printWindow = window.open('', '_blank', 'width=600,height=400');
+
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print QR Code</title>
+        <style>
+          @media print {
+            body {
+              margin: 0;
+              padding: 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        ${content}
+        <script>
+          window.onload = function() {
+            window.print();
+            window.onafterprint = function() {
+              window.close();
+            };
+          };
+        <\/script>
+      </body>
+    </html>
+  `);
+
+  printWindow.document.close(); // Needed for some browsers to start rendering
+}
+
 </script>
 
 
