@@ -54,7 +54,6 @@
 
 
                       <th style="width: 13%!important;" class="text-center">Baki</th>
-                      <th style="width: 13%!important;" class="text-center">{{ Label_case('Status') }}</th>
 
                  <th style="width: 18%!important;" class="text-center">
                                         Action
@@ -370,10 +369,11 @@
         {
             data: 'baki',
             name: 'baki'
-        },{
-            data: 'status',
-            name: 'status'
         },
+        // {
+        //     data: 'status',
+        //     name: 'status'
+        // },
         {
             data: 'action',
             name: 'action',

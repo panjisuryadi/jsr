@@ -249,8 +249,19 @@ class ProductController extends Controller
         $products->save();
         // INSERT HISTORY
         $stat[1] = 'O';
-        $stat[8] = 'R';
         $stat[2] = 'S';
+        $stat[3] = 'P';
+        $stat[4] = 'B';
+        $stat[5] = 'C';
+        $stat[6] = 'M';
+        $stat[7] = 'K';
+        $stat[8] = 'R';
+        $stat[9] = '2';
+        $stat[10] = 'L';
+        $stat[11] = 'D';
+        $stat[12] = 'W';
+        $stat[13] = 'F';
+        $stat[14] = 'N';
         $stat[15] = 'H';
         // $stat[1] = 'L';
         $product_history = ProductHistories::create([
@@ -618,6 +629,11 @@ class ProductController extends Controller
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
                 $module_model = $this->module_model;
+                $id = $data->status_id;
+                $stat[8] = 'reparasi';
+                $stat[5] = 'cuci';
+                $stat[6] = 'lebur';
+                $stat[4] = 'gudang';
                 return view(
                     'product::products.partials.'.$stat[$id],
                     compact('module_name', 'data', 'module_model')
@@ -705,12 +721,15 @@ class ProductController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         $module_action = 'List';
-        $$module_name = $module_model::with('category', 'product_item');
+        $$module_name = $module_model::with('category', 'product_item', 'baki');
         if ($request->get('status')) {
             $$module_name = $$module_name->where('status_id', $request->get('status'));
         }
-        
-        $$module_name->where('status', $id)->get();
+        if($id == 0){
+
+        }else{
+            $$module_name->where('status_id', $id)->get();
+        }
         $harga = Harga::latest()->first();  
         if($harga == null){
             $harga  = 0;
@@ -723,6 +742,8 @@ class ProductController extends Controller
             $item->harga = $harga; 
         });
         $data = $$module_name;
+        // echo json_encode($data);
+        // exit();
 
         $stat[8] = 'reparasi';
         $stat[5] = 'cuci';
@@ -733,8 +754,17 @@ class ProductController extends Controller
             ->addColumn('action', function ($data) {
                 $module_name = $this->module_name;
                 $module_model = $this->module_model;
+                $id = $data->status_id;
+                $stat[4] = 'gudang';
+                $stat[4] = 'gudang';
+                $stat[4] = 'gudang';
+                $stat[4] = 'gudang';
+                $stat[4] = 'gudang';
+                $stat[5] = 'cuci';
+                $stat[6] = 'lebur';
+                $stat[8] = 'reparasi';
                 return view(
-                    'product::products.partials.'.$stat[$id],
+                    'product::products.partials.'.$stat[8],
                     compact('module_name', 'data', 'module_model')
                 );
             })
@@ -766,6 +796,11 @@ class ProductController extends Controller
 
             ->addColumn('status', function ($data) {
                 return view('product::products.partials.status', compact('data'));
+            })
+
+            ->addColumn('baki', function ($data) {
+                $baki   = !empty($data->baki->name) ? $data->baki->name : '-';
+                return $baki;
             })
 
             ->editColumn('cabang', function ($data) {

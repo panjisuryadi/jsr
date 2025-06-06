@@ -229,7 +229,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/products_insert', 'ProductController@insert')
         ->name('products.insert');
 
-    Route::get('/products_data/{id}', 'ProductController@data_nota')
+    Route::get('/products_data/{id}', 'ProductController@index_datas')
         ->name('products.data');
 
     Route::post('/products_all_data', 'ProductController@data_all')
@@ -242,7 +242,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('products.baki');
 
     Route::get('/products_reparasi', 'ProductController@list_reparasi')
-        ->name('products.reparasi');
+        ->name('products.reparasis');
 
     Route::get('/products_lebur', 'ProductController@list_lebur')
         ->name('products.lebur');

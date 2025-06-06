@@ -364,7 +364,7 @@ class GenerateMenus
                 ]);
 
             $Products->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('Products Reparasi'), [
-                'route' => 'products.reparasi',
+                'route' => 'products.reparasis',
                 'class' => 'nav-item',
             ])
                 ->data([
