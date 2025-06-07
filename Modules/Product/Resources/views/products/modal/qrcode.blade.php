@@ -12,11 +12,10 @@
           {!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG($detail->product_code, 'QRCODE', 15, 15) !!}
         </div>
       </div>
-      <div class="col-6 flex justify-center items-center"> <!-- 👈 Make this a flex container -->
+      <div class="col-6 flex justify-center items-center ml-3"> <!-- 👈 Make this a flex container -->
     <div class="py-2 text-center font-semibold uppercase text-gray-600 no-underline text-lg hover:text-red-600 leading-tight" style="font-size: 55pt;">
       <p class=""><strong>{{ $detail->product_code }}</strong></p>
-      <p class=""><strong>{{ $detail->berat_emas }} gr</strong></p>
-      <p class=""><strong>{{ $detail->karat->name }}</strong></p>
+      <p class=""><strong>{{ $detail->berat_emas }} gr, {{ $detail->karat->name }}</strong></p>
     </div>
 </div>
     </div>
