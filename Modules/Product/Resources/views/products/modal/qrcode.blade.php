@@ -6,14 +6,14 @@
 
   <div class="flex  flex-row justify-center">
   <div class="justify-center items-center px-2 py-3 rounded-lg">
-    <div class="row"  id="qrcode_image">
+    <div class="row ml-1"  id="qrcode_image">
       <div class="col-6">
         <div class="justify-center text-center items-center img-responsive img-fluid">
           {!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG($detail->product_code, 'QRCODE', 15, 15) !!}
         </div>
       </div>
       <div class="col-6 flex justify-center items-center"> <!-- 👈 Make this a flex container -->
-    <div class="py-2 text-center font-semibold uppercase text-gray-600 no-underline text-lg hover:text-red-600 leading-tight" style="font-size: 45pt;">
+    <div class="py-2 text-center font-semibold uppercase text-gray-600 no-underline text-lg hover:text-red-600 leading-tight" style="font-size: 70pt;">
       <p class=""><strong>{{ $detail->product_code }}</strong></p>
       <p class=""><strong>{{ $detail->berat_emas }} gr</strong></p>
       <p class=""><strong>{{ $detail->karat->name }}</strong></p>
