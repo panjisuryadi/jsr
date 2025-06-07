@@ -14,9 +14,9 @@
       </div>
       <div class="col-6 flex justify-center items-center"> <!-- 👈 Make this a flex container -->
     <div class="py-2 text-center font-semibold uppercase text-gray-600 no-underline text-lg hover:text-red-600 leading-tight">
-      <p class="h2">{{ $detail->product_code }}</p>
-      <p class="h2">{{ $detail->berat_emas }} gr</p>
-      <p class="h2">{{ $detail->karat->name }}</p>
+      <p class="h1"><strong>{{ $detail->product_code }}</strong></p>
+      <p class="h1"><strong>{{ $detail->berat_emas }} gr</strong></p>
+      <p class="h1"><strong>{{ $detail->karat->name }}</strong></p>
     </div>
 </div>
     </div>
