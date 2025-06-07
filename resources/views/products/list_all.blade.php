@@ -12,6 +12,18 @@
     width: 70px !important;
     display: inline-block;
     }
+    .dropzone {
+        height: 280px !important;
+        min-height: 190px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+    }
+
+    .dropzone i.bi.bi-cloud-arrow-up {
+        font-size: 5rem;
+        color: #bd4019 !important;
+    }
 </style>
 @endsection
 @section('breadcrumb')
@@ -54,6 +66,7 @@
 
 
                       <th style="width: 13%!important;" class="text-center">Baki</th>
+                      <th style="width: 13%!important;" class="text-center">QR</th>
 
                  <th style="width: 18%!important;" class="text-center">
                                         Action
@@ -261,6 +274,9 @@
 
 @endsection
 <x-library.datatable />
+@section('third_party_scripts')
+<script src="{{ asset('js/dropzone.js') }}"></script>
+@endsection
 @push('page_scripts')
 <script src="{{  asset('js/jquery.min.js') }}"></script>
 
@@ -369,6 +385,10 @@
         {
             data: 'baki',
             name: 'baki'
+        },
+        {
+            data: 'tracking',
+            name: 'tracking'
         },
         // {
         //     data: 'status',
