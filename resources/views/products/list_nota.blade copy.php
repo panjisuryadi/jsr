@@ -61,6 +61,7 @@
                                     <th style="width: 15%!important;" class="text-center">Code</th>
                                     <th style="width: 25%!important;" class="text-center">Keterangan</th>
                                     <th style="width: 15%!important;" class="text-center">Date</th>
+                                    <th style="width: 15%!important;" class="text-center">Delete</th>
                                     
                  <!-- <th style="width: 18%!important;" class="text-center">
                                         Action

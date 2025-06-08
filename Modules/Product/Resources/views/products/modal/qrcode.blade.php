@@ -8,7 +8,7 @@
   <div class="justify-center items-center px-2 py-3 rounded-lg">
     <div class="row m-1"  id="qrcode_image">
       <div class="col-6">
-        <div class="justify-center text-center items-center img-responsive img-fluid">
+        <div class="justify-center text-center items-center img-responsive img-fluid" style="font-family: plessey;">
           {!! \Milon\Barcode\Facades\DNS2DFacade::getBarCodeSVG($detail->product_code, 'QRCODE', 15, 15) !!}
         </div>
       </div>

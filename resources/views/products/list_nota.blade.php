@@ -62,6 +62,7 @@
                                     <th style="width: 10%!important;" class="text-center">QR</th>
                                     <th style="width: 15%!important;" class="text-center">Keterangan</th>
                                     <th style="width: 15%!important;" class="text-center">Date</th>
+                                    <th style="width: 15%!important;" class="text-center">Delete</th>
                                     
                  <!-- <th style="width: 18%!important;" class="text-center">
                                         Action
@@ -377,6 +378,10 @@
         {
             data: 'created_at',
             name: 'created_at'
+        },
+        {
+            data: 'delete',
+            name: 'delete'
         },
         // {
         //     data: 'tracking',

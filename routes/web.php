@@ -202,6 +202,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products_dataluar', 'ProductController@dataluar')
         ->name('products.dataluar');
 
+    Route::delete('/products/delete/{id}', 'ProductController@delete_product')
+        ->name('products.delete');
+
     Route::get('/products_datanota', 'ProductController@datanota')
         ->name('products.datanota');
 

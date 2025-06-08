@@ -589,6 +589,19 @@ class ProductController extends Controller
         );
     }
 
+    public function delete_product(Request $request)
+    {
+        $id = $request->id;
+        $product = Product::where('id', $id)->first();
+
+        if ($product) {
+            $product->delete();
+            return redirect()->action([ProductController::class, 'list_nota']);
+        } else {
+            return redirect()->action([ProductController::class, 'list_nota']);
+        }
+    }
+
     public function index_baki(Request $request)
     {   
         $id     = $request->id;
@@ -1218,6 +1231,15 @@ class ProductController extends Controller
                 $module_model = $this->module_model;
                 return view(
                     'product::products.partials.actions',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+
+            ->addColumn('delete', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                return view(
+                    'product::products.partials.delete',
                     compact('module_name', 'data', 'module_model')
                 );
             })
