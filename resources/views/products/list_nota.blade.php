@@ -89,6 +89,7 @@
             <div class="modal-body p-4">
                 <form action="/products_insert_nota" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="webcam" id="hasilcapture">
                     <div class="px-0 py-2">
                                 @php
                                 $number = 0;
@@ -107,7 +108,7 @@
                                         </div>
                                     </div>
                                     <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
-                                    @livewire('webcam', ['key' => 1], key('cam-'. 1))
+                                    @livewire('webcam', ['key' => 0], key('cam-'. 0))
                                     </div>
                                     <div id="upload1" wire:ignore>
                                         <div class="form-group">
@@ -468,6 +469,7 @@ $(document).on('click', '#Tambah,#QrCode,#Show, #Edit', function(e){
             "X-CSRF-TOKEN": "{{ csrf_token() }}"
         },
         success: function(file, response) {
+            console.log('uploaded');
             $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
             uploadedDocumentMap[file.name] = response.name;
             Livewire.emit('imageUploaded',response.name);
@@ -514,69 +516,66 @@ $(document).on('click', '#Tambah,#QrCode,#Show, #Edit', function(e){
     window.addEventListener('uploaded-image:remove', event => {
         Dropzone.forElement("div#document-dropzone").removeAllFiles(true);
     });
-        $('#up1').change(function() {
-            $('#upload2').toggle();
-            $('#upload1').hide();
+    $('#up1').change(function() {
+        $('#upload2').toggle();
+        $('#upload1').hide();
+    });
+    $('#up2').change(function() {
+        $('#upload1').toggle();
+        $('#upload2').hide();
+    });
+    function configure(){
+        Webcam.set({
+            width: 340,
+            height: 230,
+            autoplay: false,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            force_flash: false
         });
-        $('#up2').change(function() {
-            $('#upload1').toggle();
-            $('#upload2').hide();
+        Webcam.attach( '#camera' );
+        $("#camera").attr("style", "display:block")
+        $('#hasilGambar').addClass('d-none');
+        $('#Start').addClass('d-none');
+        $('#snap').removeClass('d-none');
+    }
+    // preload shutter audio clip
+    var shutter = new Audio();
+    shutter.autoplay = false;
+    shutter.src = navigator.userAgent.match(/Firefox/) ? asset('js/webcamjs/shutter.ogg') : asset('js/webcamjs/shutter.mp3');
+
+    function take_snapshot() {
+        console.log('here');
+        // play sound effect
+        shutter.play();
+        // take snapshot and get image data
+        Webcam.snap( function(data_uri) {
+            $(".image-tag").val(data_uri);
+            $("#camera").attr("style", "display:none")
+            $('#hasilGambar').removeClass('d-none').delay(5000);
+            document.getElementById('hasilGambar').innerHTML =
+                '<img class="border-2 border-dashed border-yellow-600 rounded-xl" id="imageprev" src="'+data_uri+'"/><span class="absolute bottom-1 text-white right-4">Capture Sukses..!! </span>';
+            $('#snap').addClass('d-none');
+            $('#Start').removeClass('d-none');
         });
-        function configure(){
-            Webcam.set({
-                width: 340,
-                height: 230,
-                autoplay: false,
-                image_format: 'jpeg',
-                jpeg_quality: 90,
-                force_flash: false
-            });
-            Webcam.attach( '#camera' );
-            $("#camera").attr("style", "display:block")
-            $('#hasilGambar').addClass('d-none');
-            $('#Start').addClass('d-none');
-            $('#snap').removeClass('d-none');
-        }
-        // preload shutter audio clip
-        var shutter = new Audio();
-        shutter.autoplay = false;
-        shutter.src = navigator.userAgent.match(/Firefox/) ? asset('js/webcamjs/shutter.ogg') : asset('js/webcamjs/shutter.mp3');
+        Webcam.reset();
+    }
 
-        function take_snapshot() {
-            // play sound effect
-            shutter.play();
-           // take snapshot and get image data
-            Webcam.snap( function(data_uri) {
-                $(".image-tag").val(data_uri);
-                $("#camera").attr("style", "display:none")
-                $('#hasilGambar').removeClass('d-none').delay(5000);
-                document.getElementById('hasilGambar').innerHTML =
-                    '<img class="border-2 border-dashed border-yellow-600 rounded-xl" id="imageprev" src="'+data_uri+'"/><span class="absolute bottom-1 text-white right-4">Capture Sukses..!! </span>';
-                $('#snap').addClass('d-none');
-                $('#Start').removeClass('d-none');
+    function reset() {
+            Webcam.reset();
+                alert('off');
+    }
 
+    function saveSnap(){
+        // Get base64 value from <img id='imageprev'> source
+        var base64image =  document.getElementById("imageprev").src;
 
-            });
-           Webcam.reset();
-        }
+            Webcam.upload( base64image, 'upload.php', function(code, text) {
+                console.log('Save successfully');
+                //console.log(text);
+        });
 
-        function reset() {
-             Webcam.reset();
-                 alert('off');
-        }
-
-        function saveSnap(){
-            // Get base64 value from <img id='imageprev'> source
-            var base64image =  document.getElementById("imageprev").src;
-
-             Webcam.upload( base64image, 'upload.php', function(code, text) {
-                 console.log('Save successfully');
-                 //console.log(text);
-            });
-
-        }
-
-
+    }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 

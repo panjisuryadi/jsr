@@ -155,14 +155,19 @@ class ProductController extends Controller
 
     public function insert_nota(Request $request)
     {
+        // echo $gam;
+        // echo json_encode($_POST);
+        // exit();
+        $doc    = isset($request['document'][0]) ? $request['document'][0] : '';
         if($request->upload == 'on'){
         }
         $gambar = 'products_20250522095614.png';
-        $gam                     = $this->getUploadedImage($request['image'], $request['uploaded_image']);
-        // echo $gam;
+        $gam                     = $this->getUploadedImage($request['webcam'], $doc);
+        if(!empty($gam)){
+            $gambar = $gam;
+        }
+        
         $i = 0;
-        // echo json_encode($_POST);
-        // exit();
         $group  = Group::where('id', $request->new_product_group_id)->first();
         $group_name = $group->name;
         $model  = ProdukModel::where('id', $request->new_product_model_id)->first();
@@ -170,21 +175,21 @@ class ProductController extends Controller
         $product_name   = $group_name.' '.$model_name;
 
         // IMAGE
-        if ($image = $request->file('image')) {
-            $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $normal = Image::make($image)->resize(600, null, function ($constraint) {
-                       $constraint->aspectRatio();
-                       })->encode();
-            $normalpath = 'uploads/' . $gambar;
-            if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
-            Storage::disk($storage)->put($normalpath, (string) $normal);
-            // $params['image'] = "$gambar";
-            $gambar = $gambar;
-        }else{
-            $gambar = 'no_foto.png';
-            // $params['image'] = 'no_foto.png';
-        }
-        $gambar = 'products_20250522095614.png';
+        // if ($image = $request->file('image')) {
+        //     $gambar = 'products_'.date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //     $normal = Image::make($image)->resize(600, null, function ($constraint) {
+        //                $constraint->aspectRatio();
+        //                })->encode();
+        //     $normalpath = 'uploads/' . $gambar;
+        //     if (config('app.env') === 'production') {$storage = 'public'; } else { $storage = 'public'; }
+        //     Storage::disk($storage)->put($normalpath, (string) $normal);
+        //     // $params['image'] = "$gambar";
+        //     $gambar = $gambar;
+        // }else{
+        //     $gambar = 'no_foto.png';
+        //     // $params['image'] = 'no_foto.png';
+        // }
+        // $gambar = 'products_20250522095614.png';
 
         $berat  = str_replace(',', '.', $request->new_product_berat);
 
