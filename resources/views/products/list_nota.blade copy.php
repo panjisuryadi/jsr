@@ -161,7 +161,7 @@
                                             <option value="">Semua Produk</option>
 
                                                 @foreach($product_categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                                    <option value="{{ $category->id }}" code="{{$category->category_code}}">{{ $category->category_name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -308,7 +308,7 @@
             $("#code_"+number).val('');
             let rand    = Math.floor(Math.random() * 1000);
             let group   = $('#group_' + number).find('option:selected').text();
-            group       = group.substring(0, 1);
+            // group       = group.substring(0, 1);
             let karat   = $('#karat_' + number).find('option:selected').text();
             karat       = karat.split('|')[0]?.trim();
             let date    = new Date();
