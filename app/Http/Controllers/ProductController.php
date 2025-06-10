@@ -159,9 +159,10 @@ class ProductController extends Controller
         // echo json_encode($_POST);
         // exit();
         $doc    = isset($request['document'][0]) ? $request['document'][0] : '';
-        if($request->upload == 'on'){
+        if(empty($doc) && empty($request['webcam'])){
+            toast('Image Required', 'error');
+            return redirect()->back();
         }
-        $gambar = 'products_20250522095614.png';
         $gam                     = $this->getUploadedImage($request['webcam'], $doc);
         if(!empty($gam)){
             $gambar = $gam;

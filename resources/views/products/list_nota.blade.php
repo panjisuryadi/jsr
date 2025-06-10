@@ -112,7 +112,6 @@
                                     </div>
                                     <div id="upload1" wire:ignore>
                                         <div class="form-group">
-
                                             <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                                 <div class="dz-message" data-dz-message>
                                                     <i class="bi bi-cloud-arrow-up"></i>
@@ -281,6 +280,7 @@
         }
 
         function gencode(number){
+            console.log(number);
             let rand    = Math.floor(Math.random() * 1000);
             let group   = $('#group_' + number).find('option:selected').text();
             group       = group.substring(0, 1);
@@ -291,7 +291,7 @@
             let date    = new Date();
             let formattedDate = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
             let code    = categoryCode+karat+formattedDate+rand;
-            // $("#code_"+number).val(code);
+            $("#code_"+number).val(code);
         }
     $('#datatable').DataTable({
         processing: true,
