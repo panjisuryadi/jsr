@@ -133,7 +133,7 @@
                                             $field_id   = 'product_category_'.$number;
                                             ?>
                                             <label for="product_category">Product Category</label>
-                                            <select name="new_product_category_id" id="{{$field_id}}" class="form-control @error('new_product.product_category_id') is-invalid @enderror">
+                                            <select name="new_product_category_id" id="{{$field_id}}" class="form-control @error('new_product.product_category_id') is-invalid @enderror" required>
                                             <option value="">Semua Produk</option>
 
                                                 @foreach($product_categories as $category)
@@ -151,7 +151,7 @@
                                             $required = "required";
                                             ?>
                                             <label for="{{ $field_name }}">{{ $field_lable }}</label>
-                                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
+                                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" required>
                                                 <option value="" selected disabled>Pilih Model</option>
                                                 @foreach($models as $model)
                                                 <option value="{{$model->id}}">
@@ -171,7 +171,7 @@
                                             $required = "required";
                                             ?>
                                             <label for="{{ $field_name }}">@lang('Karat') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_id }}">
+                                            <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_id }}" required>
                                                 @foreach($dataKarat as $karat)
                                                     <option value="{{ $karat->id }}" >{{ $karat->label }}</option>
                                                 @endforeach
@@ -191,7 +191,7 @@
                                                 <span class="text-danger">*</span>
                                                 <span class="small">Jenis Perhiasan</span>
                                             </label>
-                                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_id }}">
+                                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_id }}" required>
                                                 <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                 @foreach($groups as $group)
                                                 <option value="{{ $group->id }}">{{ $group->name }}</option>
@@ -210,7 +210,7 @@
                                             ?>
                                             <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                             <div class="input-group">
-                                                <input type="text" id="{{ $field_id }}" name="new_product_code_id" class="form-control @error($field_name) is-invalid @enderror" readonly>
+                                                <input type="text" id="{{ $field_id }}" name="new_product_code_id" class="form-control @error($field_name) is-invalid @enderror" readonly required>
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-info relative rounded-l-none" onclick="gencode({{ $number }});" type="button">Check</button>
                                                 </span>
@@ -242,7 +242,7 @@
                                             $required = "required";
                                             ?>
                                             <label for="{{ $field_name }}">{{ $field_lable }} (gram)<span class="text-danger">*</span></label>
-                                            <input type="text" id="{{ $field_id }}" name="new_product_berat" class="form-control " >
+                                            <input type="text" id="{{ $field_id }}" name="new_product_berat" class="form-control " required>
                                             <!-- <div class="input-group">
                                             </div> -->
                                         </div>
@@ -281,7 +281,6 @@
         }
 
         function gencode(number){
-            $("#code_"+number).val('');
             let rand    = Math.floor(Math.random() * 1000);
             let group   = $('#group_' + number).find('option:selected').text();
             group       = group.substring(0, 1);
@@ -292,7 +291,7 @@
             let date    = new Date();
             let formattedDate = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
             let code    = categoryCode+karat+formattedDate+rand;
-            $("#code_"+number).val(code);
+            // $("#code_"+number).val(code);
         }
     $('#datatable').DataTable({
         processing: true,
