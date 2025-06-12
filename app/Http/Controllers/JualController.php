@@ -83,6 +83,94 @@ class JualController extends Controller
         return view('sale.list', compact('product_categories', 'customers', 'karat', 'category', 'group', 'models'));
     }
 
+    public function data_report(Request $request)
+    {   
+        $id     = $request->id;
+
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'List';
+        $$module_name = SalesGold::with('pelanggan')->latest()->get();
+        // $$module_name = SalesGold::latest()->get();
+        
+        $data = $$module_name;
+        // echo $data;
+        // exit();
+
+        return Datatables::of($data)
+            ->addColumn('action', function ($data) {
+                $module_name = $this->module_name;
+                $module_model = $this->module_model;
+                return view(
+                    'sale.aksi',
+                    compact('module_name', 'data', 'module_model')
+                );
+            })
+
+            // ->editColumn('product_name', function ($data) {
+            //     $tb = '<div class="flex items-center gap-x-2">
+            //             <div>
+            //                <div class="text-xs font-normal text-yellow-600 dark:text-gray-400">
+            //                 ' . $data->category?->category_name . '</div>
+
+            //                 <h3 class="small font-medium text-gray-600 dark:text-white "> ' . $data->product_name . '</h3>
+            //                  <div class="text-xs font-normal text-blue-500 font-semibold">
+            //                 ' . @$data->cabang->name . '</div>
+
+
+            //             </div>
+            //         </div>';
+            //     return $tb;
+            // })
+            //    ->addColumn('product_image', function ($data) {
+            //     $url = $data->getFirstMediaUrl('images', 'thumb');
+            //     return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+            // })
+
+            ->editColumn('customer', function ($data) {
+                return $data->pelanggan->customer_name ?? '-';
+            })
+
+            ->editColumn('created_at', function ($data) {
+                return tgljam($data->created_at);
+            })
+
+            ->editColumn('total', function ($data) {
+                return number_format($data->total);
+            })
+            
+            ->rawColumns([
+                'created_at', 'product_image', 'keterangan', 'code', 'weight', 'status', 'tracking',
+                'product_name', 'karat', 'berat_emas', 'cabang', 'action'
+            ])
+            ->make(true);
+        }
+
+    public function laporan() {
+        if(AdjustmentSetting::exists()){
+            toast('Stock Opname sedang Aktif!', 'error');
+            return redirect()->back();
+        }
+        Cart::instance('sale')->destroy();
+        $karat  = Karat::latest()->get();
+        $category  = Category::latest()->get();
+        $group  = Group::latest()->get();
+        $models  = ProdukModel::latest()->get();
+        $customers = Customer::all();
+        $product_categories = Category::all();
+        $module_title   = $this->module_title;
+        return view(
+            'sale.report', compact(
+                'module_title', 'product_categories', 'customers', 'karat', 'category', 'group', 'models'
+            )
+        );
+    }
+
     public function test_pdf(){
         $data = [
             'title' => 'Nota Emas',
@@ -99,6 +187,119 @@ class JualController extends Controller
         // return $pdf->download('invoice.pdf');
     }
 
+    public function print(Request $request){
+        $id         = $request->id;
+        $password   = $request->password;
+        $print      = '[ Printed ]';
+        if($password === 'password'){
+            $print  = '';
+        }
+        $nama_cus   = '';
+        $address    = '';        
+        $array      = array();
+
+        $config = Config::where('name', 'nota')->first();
+        $value  = $config->value;
+        $val    = json_decode($value, true);
+        $alamat = $val['alamat'];
+        $telp   = $val['telp'];
+        $info   = $val['info'];
+
+        $salesGold  = SalesGold::where('id', $id)->firstOrFail();
+        $customer   = $salesGold->customer;
+        if($customer != '0'){
+            $customer   = Customer::where('id', $customer)->first();
+            $nama_cus   = $customer->customer_name;
+            $address    = $customer->address;
+        }
+        $salesItem  = SalesItem::where('sales_gold_id', $id)->get();
+        $number     = 0;
+
+        foreach($salesItem as $s){
+            $product      = $s->product;
+            $title  = 'Faktur';
+            $gram   = 0;
+            if($product !== 0){
+                $title  = 'Nota Emas';
+                $image  = Product::where('id', $product)->firstOrFail();
+                $images = $image->images;
+                $gram   = $image->berat_emas;
+            }
+            $name       = $s->desc;
+            $desc       = $s->name;
+            $ongkos     = $s->ongkos;
+            $diskon     = $s->diskon;
+            $harga      = $s->total;
+            $salesNomor = $s->nomor;
+            
+            $array['products'][$number]['title'] = $title;
+            $array['products'][$number]['img'] = $images;
+            $array['products'][$number]['name'] = $name;
+            $array['products'][$number]['desc'] = $desc;
+            $array['products'][$number]['gram'] = $gram;
+            $array['products'][$number]['ongkos'] = $ongkos;
+            $array['products'][$number]['diskon'] = $diskon;
+            $array['products'][$number]['harga'] = $harga;
+            $array['products'][$number]['nomor'] = $salesNomor;
+            $array['products'][$number]['sales_id'] = $salesNomor;
+            // $array['products'][$number]['sales_id'] = $sales_id;
+            $array['products'][$number]['alamat'] = $alamat;
+            $array['products'][$number]['telp'] = $telp;
+            $array['products'][$number]['info'] = $info;
+            $array['products'][$number]['print'] = $print;
+            $array['products'][$number]['customer'] =$nama_cus;
+            $array['products'][$number]['address'] =$address;
+
+
+            // $array['products'][$number]['title'] = $title;
+            // $array['products'][$number]['img'] = $images;
+            // $array['products'][$number]['name'] = $name;
+            // $array['products'][$number]['desc'] = $desc;
+            // $array['products'][$number]['gram'] = $gram;
+            // $array['products'][$number]['ongkos'] = $request->ongkos[$number];
+            // $array['products'][$number]['diskon'] = $request->diskon[$number];
+            // $array['products'][$number]['harga'] = $harga;
+            // $array['products'][$number]['nomor'] = $salesNomor;
+            // $array['products'][$number]['sales_id'] = $salesNomor;
+            // // $array['products'][$number]['sales_id'] = $sales_id;
+            // $array['products'][$number]['alamat'] = $alamat;
+            // $array['products'][$number]['telp'] = $telp;
+            // $array['products'][$number]['info'] = $info;
+            // $array['products'][$number]['customer'] =$nama_cus;
+            // $array['products'][$number]['address'] =$address;
+            
+            $number++;
+        }
+        
+        
+
+        
+        // exit();
+        
+        
+        
+
+        // echo json_encode($array);
+        // exit();
+
+        $pdf = PDF::loadView('sale.invoice', $array)
+              ->setPaper('a5', 'landscape')  // A5 paper size, landscape orientation
+              ->setOptions([
+                  'isHtml5ParserEnabled' => true,  // Enable HTML5
+                  'isPhpEnabled' => true  // Enable PHP if necessary for advanced functionality
+              ]);
+
+        // $pdf = PDF::loadView('sale.invoice', $array)
+        //       ->setPaper('a5', 'landscape')  // Set paper size to A5 and orientation to landscape
+        //       ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);  // Enable HTML5 and PHP if needed
+    
+        return $pdf->stream('invoice.pdf');
+
+
+        // $pdf = PDF::loadView('sale.invoice', $array)->setPaper('a5', 'landscape');
+        // return $pdf->stream('invoice.pdf');
+    }
+
     public function insert(Request $request){
         // echo json_encode($_POST);
         // exit();
@@ -109,6 +310,7 @@ class JualController extends Controller
         $telp = $val['telp'];
         $info = $val['info'];
         $lanjut = true;
+        $print  = '';
         $products   = array();        
         $services   = array();        
         $total      = 0;
@@ -135,6 +337,7 @@ class JualController extends Controller
                 ->get();
 
                 if ($sold->isNotEmpty()) {
+                    $print      = '[ Printed ]';
                     $lanjut = false;
                     // return redirect()->action([JualController::class, 'list']);
                 }
@@ -208,6 +411,7 @@ class JualController extends Controller
                 $harga  = $request->harga[$number];
                 $product->status_id = 2;
                 $product->status = 2;
+                $product->baki_id = 0;
                 $product->save();
 
                 // INSERT KE PRODUCT HISTORY
@@ -223,13 +427,18 @@ class JualController extends Controller
             }
 
             // INSERT SALES ITEMS
-            $kurangi = $number+1-$jumlah_data;
+            $kurangi = $number-$jumlah_data;
             if($lanjut){
                 $kurangi    = 0;
             }
-            $salesNomor = SalesItem::latest()->first();
+            // $salesNomor = SalesItem::latest()->first();
+            $salesNomor = SalesItem::orderBy('id', 'desc')->first();
             $salesNomor = $salesNomor->nomor != null ? $salesNomor->nomor : '0000000001';
-            $salesNomor  = (int)$salesNomor+1+$kurangi;
+            // $salesNomor  = (int)$salesNomor+1+$jumlah_data+$kurangi;
+            // echo $salesNomor;
+            $salesNomor = (int)$salesNomor+1+$kurangi;
+            // echo $salesNomor;
+            // exit();
             for ($i=0; $i < 9; $i++) { 
                 if(strlen($salesNomor) !== $i){
                     $salesNomor  = '0'.$salesNomor;
@@ -237,6 +446,7 @@ class JualController extends Controller
             }
             if($lanjut){
                 $salesItem  = SalesItem::create([
+                    'sales_gold_id'     => $id,
                     'nomor'     => $salesNomor,
                     'product'   => $p,
                     'name'      => $name,
@@ -268,6 +478,7 @@ class JualController extends Controller
             $array['products'][$number]['alamat'] = $alamat;
             $array['products'][$number]['telp'] = $telp;
             $array['products'][$number]['info'] = $info;
+            $array['products'][$number]['print'] = $print;
             $array['products'][$number]['customer'] =$nama_cus;
             $array['products'][$number]['address'] =$address;
 
@@ -283,12 +494,17 @@ class JualController extends Controller
                   'isHtml5ParserEnabled' => true,  // Enable HTML5
                   'isPhpEnabled' => true  // Enable PHP if necessary for advanced functionality
               ]);
+        return $pdf->stream('invoice.pdf');
+
+
+
+
+
 
         // $pdf = PDF::loadView('sale.invoice', $array)
         //       ->setPaper('a5', 'landscape')  // Set paper size to A5 and orientation to landscape
         //       ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);  // Enable HTML5 and PHP if needed
     
-        return $pdf->stream('invoice.pdf');
 
 
         // $pdf = PDF::loadView('sale.invoice', $array)->setPaper('a5', 'landscape');

@@ -62,7 +62,7 @@
                                     <th style="width: 10%!important;" class="text-center">QR</th>
                                     <th style="width: 15%!important;" class="text-center">Keterangan</th>
                                     <th style="width: 15%!important;" class="text-center">Date</th>
-                                    <th style="width: 15%!important;" class="text-center">Delete</th>
+                                    <th style="width: 15%!important;" class="text-center">#</th>
                                     
                  <!-- <th style="width: 18%!important;" class="text-center">
                                         Action
@@ -96,35 +96,35 @@
                                 @endphp
                                 <div class="col-span-2 px-2">
                                     <div class="flex flex-row grid grid-cols-2 gap-1">
-                                    <div class="form-group">
-                                    <div class="py-1">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="upload" id="up2" checked>
-                                            <label class="form-check-label" for="up2">Upload</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="upload" id="up1">
-                                            <label class="form-check-label" for="up1">Webcam</label>
-                                        </div>
-                                    </div>
-                                    <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
-                                    @livewire('webcam', ['key' => 0], key('cam-'. 0))
-                                    </div>
-                                    <div id="upload1" wire:ignore>
                                         <div class="form-group">
-                                            <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
-                                                <div class="dz-message" data-dz-message>
-                                                    <i class="bi bi-cloud-arrow-up"></i>
+                                            <div class="py-1">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="upload" id="up2" checked>
+                                                    <label class="form-check-label" for="up2">Upload</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="upload" id="up1">
+                                                    <label class="form-check-label" for="up1">Webcam</label>
                                                 </div>
                                             </div>
+                                            <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
+                                            @livewire('webcam', ['key' => 0], key('cam-'. 0))
+                                            </div>
+                                            <div id="upload1" wire:ignore>
+                                                <div class="form-group">
+                                                    <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
+                                                        <div class="dz-message" data-dz-message>
+                                                            <i class="bi bi-cloud-arrow-up"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if ($errors->has('image'))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first('image') }}</small class="text-danger">
+                                                </span>
+                                            @endif
                                         </div>
-                                    </div>
-                                    @if ($errors->has('image'))
-                                        <span class="invalid feedback" role="alert">
-                                            <small class="text-danger">{{ $errors->first('image') }}</small class="text-danger">
-                                        </span>
-                                    @endif
-                                </div>
                                         
                                         <!-- </div> -->
                                         <div class="form-group">

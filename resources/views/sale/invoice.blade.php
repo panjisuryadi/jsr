@@ -221,7 +221,7 @@
             <img src="{{ $imageSrc }}" alt="Logo">
             
             <!-- Centered: Toko Emas Cahaya -->
-            <h3>Toko Emas Cahaya</h3>
+            <h3>Toko Emas Cahaya {{ $product['print'] }}</h3>
             <p>{{ $product['alamat'] }}</p>
             <p>{{ $product['telp'] }}</p>
         </div>

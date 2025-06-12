@@ -100,6 +100,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sale', 'JualController@list')
         ->name('sale.list');
 
+    Route::get('/sale/report', 'JualController@laporan')
+        ->name('sale.report');
+
+    Route::get('/sale/data_report', 'JualController@data_report')
+        ->name('sale.data_report');
+    
+    Route::post('/sale/print', 'JualController@print')
+        ->name('sale.print');
+
     Route::get('/dashboard', 'DashboardController@list')
         ->name('dashboard.index');
 
@@ -183,6 +192,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/sale/insert', 'JualController@insert')
         ->name('sale.insert');
+
+    Route::get('/products_all/update', 'ProductController@update_new')
+        ->name('products_all.update');
+
+    Route::get('/products_all/edit', 'ProductController@edit')
+        ->name('products_all.edit');
 
     Route::get('/products_notas', 'ProductController@list')
         ->name('products.list');
@@ -282,6 +297,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/karats', 'KaratController@insert')
         ->name('karats.insert');
+
+    Route::delete('/karats/{id}', 'KaratController@delete')
+        ->name('karats.delete');
 
     Route::post('/karats_update', 'KaratController@update')
         ->name('karats.update');

@@ -1,6 +1,6 @@
 <div class="px-3">
       <x-library.alert />
-      <form id="FormEdit" action="{{ route(''.$module_name.'.update_coef', $detail) }}" method="POST">
+      <form id="FormEdit" action="{{ route('products_all.update', $detail) }}" method="POST">
           @csrf
           @method('patch')
           <div class="flex flex-row grid grid-cols-1 gap-4">
@@ -13,7 +13,7 @@
                     $required = "required";
                     ?>
                   <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="{{$detail->coef }}">
+                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="">
                   <span class="invalid feedback" role="alert">
                       <span class="text-danger error-text {{ $field_name }}_err"></span>
                   </span>
@@ -28,7 +28,7 @@
                     $required = "required";
                     ?>
                   <label for="{{ $field_name }}">{{ $field_lable }} %<span class="text-danger">* </span></label>
-                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="{{$detail->persen }}">
+                  <input class="form-control" type="number" name="{{ $field_name }}" step="0.01" id="{{ $field_name }}" value="">
               </div>
               <div class="form-group">
                   <?php
@@ -39,7 +39,7 @@
                     $required = "required";
                     ?>
                   <label for="{{ $field_name }}">{{ $field_lable }} %<span class="text-danger">* </span></label>
-                  <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" value="{{$detail->name }}">
+                  <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" value="">
               </div>
 
               <div class="form-group">
@@ -51,7 +51,7 @@
                     $required = "required";
                     ?>
                   <label for="{{ $field_name }}">{{ $field_lable }} %<span class="text-danger">* </span></label>
-                  <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" value="{{$detail->kode }}">
+                  <input class="form-control" type="text" name="{{ $field_name }}" id="{{ $field_name }}" value="">
               </div>
               
           </div>

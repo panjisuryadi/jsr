@@ -12,6 +12,18 @@
     width: 70px !important;
     display: inline-block;
     }
+    .dropzone {
+        height: 280px !important;
+        min-height: 190px !important;
+        border: 2px dashed #FF9800 !important;
+        border-radius: 8px;
+        background: #ff98003d !important;
+    }
+
+    .dropzone i.bi.bi-cloud-arrow-up {
+        font-size: 5rem;
+        color: #bd4019 !important;
+    }
 </style>
 @endsection
 @section('breadcrumb')
@@ -42,6 +54,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%!important;">NO</th>
+                                    <th style="width: 15%!important;">Image</th>
                                     <th style="width: 15%!important;">Product</th>
                                     <th style="width: 15%!important;" class="text-center">Harga Beli</th>
                                     <th style="width: 10%!important;" class="text-center">Berat</th>
@@ -63,7 +76,7 @@
 </div>
 
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title text-lg font-bold" id="addModalLabel">Add Product Luar (Tanpa Nota)</h3>
@@ -74,6 +87,7 @@
             <div class="modal-body p-4">
                 <form action="/products_insert_luar" method="post">
                     @csrf
+                    <input type="hidden" name="webcam" id="hasilcapture">
                     <div class="px-0 py-2">
                                 @php
                                 $number = 0;
@@ -81,12 +95,44 @@
                                 <div class="col-span-2 px-2">
                                     <div class="flex flex-row grid grid-cols-2 gap-1">
                                         <div class="form-group">
+                                            <div class="py-1">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="upload" id="up2" checked>
+                                                    <label class="form-check-label" for="up2">Upload</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="upload" id="up1">
+                                                    <label class="form-check-label" for="up1">Webcam</label>
+                                                </div>
+                                            </div>
+                                            <div id="upload2" style="display: none !important;" class="align-items-center justify-content-center" wire:ignore>
+                                            @livewire('webcam', ['key' => 0], key('cam-'. 0))
+                                            </div>
+                                            <div id="upload1" wire:ignore>
+                                                <div class="form-group">
+                                                    <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
+                                                        <div class="dz-message" data-dz-message>
+                                                            <i class="bi bi-cloud-arrow-up"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if ($errors->has('image'))
+                                                <span class="invalid feedback" role="alert">
+                                                    <small class="text-danger">{{ $errors->first('image') }}</small class="text-danger">
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <?php
+                                            $field_id   = 'product_category_'.$number;
+                                            ?>
                                             <label for="product_category">Product Category</label>
-                                            <select name="new_product_category_id" id="product_category" class="form-control @error('new_product.product_category_id') is-invalid @enderror">
+                                            <select name="new_product_category_id" id="{{$field_id}}" required class="form-control @error('new_product.product_category_id') is-invalid @enderror">
                                             <option value="">Semua Produk</option>
 
                                                 @foreach($product_categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                                    <option value="{{ $category->id }}" code="{{ $category->category_code }}">{{ $category->category_name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -100,7 +146,7 @@
                                             $required = "required";
                                             ?>
                                             <label for="{{ $field_name }}">{{ $field_lable }}</label>
-                                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" wire:model="{{ $field_name }}">
+                                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_name }}" required>
                                                 <option value="" selected disabled>Pilih Model</option>
                                                 @foreach($models as $model)
                                                 <option value="{{$model->id}}">
@@ -120,7 +166,7 @@
                                             $required = "required";
                                             ?>
                                             <label for="{{ $field_name }}">@lang('Karat') <span class="text-danger">*</span></label>
-                                            <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_id }}">
+                                            <select class="form-control select2 @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_id }}" required>
                                                 @foreach($dataKarat as $karat)
                                                     <option value="{{ $karat->id }}" >{{ $karat->label }}</option>
                                                 @endforeach
@@ -140,7 +186,7 @@
                                                 <span class="text-danger">*</span>
                                                 <span class="small">Jenis Perhiasan</span>
                                             </label>
-                                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_id }}">
+                                            <select class="form-control @error($field_name) is-invalid @enderror" name="{{ $field_name }}" id="{{ $field_id }}" required>
                                                 <option value="" selected disabled>Pilih {{ $field_lable }}</option>
                                                 @foreach($groups as $group)
                                                 <option value="{{ $group->id }}">{{ $group->name }}</option>
@@ -159,7 +205,7 @@
                                             ?>
                                             <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
                                             <div class="input-group">
-                                                <input type="text" id="{{ $field_id }}" name="new_product_code_id" class="form-control @error($field_name) is-invalid @enderror" readonly>
+                                                <input type="text" id="{{ $field_id }}" name="new_product_code_id" class="form-control @error($field_name) is-invalid @enderror" readonly required>
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-info relative rounded-l-none" onclick="gencode({{ $number }});" type="button">Check</button>
                                                 </span>
@@ -176,7 +222,7 @@
                                             $required = "required";
                                             ?>
                                             <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                            <input type="number" id="{{ $field_id }}" name="new_product_harga" class="form-control " >
+                                            <input type="number" id="{{ $field_id }}" name="new_product_harga" class="form-control " required>
                                             <!-- <div class="input-group">
                                             </div> -->
                                         </div>
@@ -191,7 +237,7 @@
                                             $required = "required";
                                             ?>
                                             <label for="{{ $field_name }}">{{ $field_lable }}<span class="text-danger">*</span></label>
-                                            <textarea id="{{ $field_id }}" name="new_product_keterangan" class="form-control"></textarea>
+                                            <textarea id="{{ $field_id }}" name="new_product_keterangan" class="form-control" required></textarea>
                                             <!-- <div class="input-group">
                                             </div> -->
                                         </div>
@@ -206,7 +252,7 @@
                                             $required = "required";
                                             ?>
                                             <label for="{{ $field_name }}">{{ $field_lable }} (gram)<span class="text-danger">*</span></label>
-                                            <input type="text" id="{{ $field_id }}" name="new_product_berat" class="form-control " >
+                                            <input type="text" id="{{ $field_id }}" name="new_product_berat" class="form-control " required>
                                             <!-- <div class="input-group">
                                             </div> -->
                                         </div>
@@ -225,10 +271,83 @@
 
 @endsection
 <x-library.datatable />
+@section('third_party_scripts')
+<script src="{{ asset('js/dropzone.js') }}"></script>
+@endsection
 @push('page_scripts')
+
 <script src="{{  asset('js/jquery.min.js') }}"></script>
 
 <script type="text/javascript">
+    var uploadedDocumentMap = {}
+    Dropzone.options.documentDropzone = {
+        url: "{{ route('dropzone.upload') }}",
+        maxFilesize: 1,
+        acceptedFiles: '.jpg, .jpeg, .png',
+        maxFiles: 1,
+        addRemoveLinks: true,
+        dictRemoveFile: "<i class='bi bi-x-circle text-danger'></i> remove",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        success: function(file, response) {
+            console.log('uploaded');
+            $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
+            uploadedDocumentMap[file.name] = response.name;
+            Livewire.emit('imageUploaded',response.name);
+            console.log(response.name);
+        },
+        removedfile: function(file) {
+            file.previewElement.remove();
+            var name = '';
+            if (typeof file.file_name !== 'undefined') {
+                name = file.file_name;
+            } else {
+                name = uploadedDocumentMap[file.name];
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ route('dropzone.delete') }}",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'file_name': `${name}`
+                },
+            });
+            $('form').find('input[name="document[]"][value="' + name + '"]').remove();
+            Livewire.emit('imageRemoved',name);
+        },
+        init: function() {
+            @if(isset($product) && $product->getMedia('pembelian'))
+            var files = {
+                !!json_encode($product->getMedia('pembelian')) !!
+            };
+            for (var i in files) {
+                var file = files[i];
+                this.options.addedfile.call(this, file);
+                this.options.thumbnail.call(this, file, file.original_url);
+                file.previewElement.classList.add('dz-complete');
+                $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+            }
+            @endif
+        }
+    }
+
+    window.addEventListener('webcam-image:remove', event => {
+        $('#imageprev0').attr('src','');
+    });
+    window.addEventListener('uploaded-image:remove', event => {
+        Dropzone.forElement("div#document-dropzone").removeAllFiles(true);
+    });
+    $('#up1').change(function() {
+        $('#upload2').toggle();
+        $('#upload1').hide();
+    });
+    $('#up2').change(function() {
+        $('#upload1').toggle();
+        $('#upload2').hide();
+    });
+
+
     jQuery.noConflict();
 
     function getotal(number){
@@ -242,15 +361,17 @@
         }
 
         function gencode(number){
-            $("#code_"+number).val('');
+            console.log(number);
             let rand    = Math.floor(Math.random() * 1000);
             let group   = $('#group_' + number).find('option:selected').text();
             group       = group.substring(0, 1);
+            let categoryCode = $('#product_category_' + number).find('option:selected').attr('code');
+
             let karat   = $('#karat_' + number).find('option:selected').text();
             karat       = karat.split('|')[0]?.trim();
             let date    = new Date();
             let formattedDate = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
-            let code    = group+karat+formattedDate+rand;
+            let code    = categoryCode+karat+formattedDate+rand;
             $("#code_"+number).val(code);
         }
     $('#datatable').DataTable({
@@ -312,10 +433,10 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
-        // {
-        //     data: 'product_image',
-        //     name: 'product_image'
-        // }, 
+        {
+            data: 'product_image',
+            name: 'product_image'
+        }, 
         {
             data: 'product_name',
             name: 'product_name'

@@ -1307,6 +1307,74 @@ class GenerateMenus
             // ]);
 
 
+            $jual = $menu->add('<i class="c-sidebar-nav-icon bi bi-bag"></i> Sales', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+                ->data([
+                    'order'         => 3,
+                    'activematches' => [
+                        'products*',
+                        'kategoriproduk*',
+                        'product-categories*',
+                        'diamondcertificates*',
+                        'itemrounds*',
+                        'penjualansales*',
+                        'retursales*',
+                        'itemshapes*',
+                        'stokcabangs*',
+                        'goodsreceipts*',
+
+                    ],
+                    'permission' => [
+                        'access_masterdata',
+                        'access_penjualansales',
+                        'access_kategoriproduks',
+                        'access_retursale',
+                        'access_buybacktoko',
+                        'access_goodsreceipts',
+                        'access_stok_cabang',
+                        'access_stok_dp',
+                        'access_stok_pending',
+                        'access_diamondcertificates'
+                    ],
+                ]);
+            $jual->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+            $jual->add('<i class="c-sidebar-nav-icon bi-sliders"></i> ' . __('Report') . '', [
+                'route' => 'sale.report',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 91,
+                    'activematches' => 'settings*',
+                    'permission'    => ['access_settings'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link',
+                ]);
+
+            // EMAS - PEMBELIAN
+            // $Penjualan = $jual->add('<i class="c-sidebar-nav-icon mb-1 bi bi-bag"></i>' . __('Laporan') . '', [
+            //     'class' => 'c-sidebar-nav-dropdown',
+            //     'route' => 'sale.laporan',
+            // ])
+            //     ->data([
+            //         'order'         => 1,
+            //         'activematches' => [
+            //             'purchase-payments*',
+            //             'purchase-goodsreceipts*',
+
+            //         ],
+            //         'permission'    => ['access_purchases', 'access_goodsreceipts'],
+            //     ]);
+            // $Penjualan->link->attr([
+            //     'class' => 'c-sidebar-nav-dropdown-toggle',
+            //     'href'  => '#',
+            // ]);
+
+
 
             //==== Access Control Dropdown Categories
             $Categories = $masterData->add('<i class="c-sidebar-nav-icon  bi bi-chevron-right text-sm"></i> ' . __('labels.menu.categories'), [

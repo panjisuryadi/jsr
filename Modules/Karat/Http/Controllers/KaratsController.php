@@ -404,8 +404,12 @@ public function update(Request $request, $id)
         }
         $coef = $request->input('coef');
         $margin = $request->input('margin');
+        $name = $request->input('name');
+        $kode = $request->input('kode');
         $data->coef = $coef;
         $data->persen = $margin;
+        $data->name = $name;
+        $data->kode = $kode;
         $data->save();
         if(empty($data->parent_id)){
             // $dataKarat = [

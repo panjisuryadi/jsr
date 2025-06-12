@@ -16,5 +16,6 @@ class SalesItem extends Model
         'ongkos',
         'total',
         'nomor',
+        'sales_gold_id',
     ];
 }

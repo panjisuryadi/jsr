@@ -51,6 +51,20 @@ class KaratController extends Controller
         return redirect()->action([KaratController::class, 'list']);
     }
 
+    public function delete($id)
+    {
+        // echo $id;
+        // echo $request->id;
+        // exit();
+        $karat = Karat::where('id', $id)->firstOrFail();
+        $karat->status = 'D';
+        $karat->save();
+
+        return redirect()->action([KaratController::class, 'list']);
+        // return redirect()->route('karats.list')->with('success', 'Deleted successfully');
+
+    }
+
     public function update(Request $request)
     {
         $harga = Harga::where('tanggal', date('Y-m-d'))->firstOrFail();
@@ -304,7 +318,7 @@ class KaratController extends Controller
             $harga = $harga->harga;
         }     
         // $harga  = 1000000;
-        $$module_name = Karat::latest()->get();
+        $$module_name = Karat::where('status', 'A')->latest()->get();
         $$module_name->each(function ($item) use ($harga) {
             $item->harga = $harga; // Add the harga attribute to the model
         });

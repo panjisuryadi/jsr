@@ -107,6 +107,15 @@ class ProductController extends Controller
 
     public function insert_luar(Request $request)
     {
+        $doc    = isset($request['document'][0]) ? $request['document'][0] : '';
+        if(empty($doc) && empty($request['webcam'])){
+            toast('Image Required', 'error');
+            return redirect()->back();
+        }
+        $gam                     = $this->getUploadedImage($request['webcam'], $doc);
+        if(!empty($gam)){
+            $gambar = $gam;
+        }
         $i = 0;
         // echo json_encode($_POST);
         // exit();
@@ -124,7 +133,7 @@ class ProductController extends Controller
             'product_unit'       => 'Gram',
             'product_stock_alert'       => 5,
             'status'       => 3,
-            'images'       => 'jpg',
+            'images'       => $gam,
             'berat_emas'       => $request->new_product_berat,
             'status_id'       => 3,
             'group_id'       => $request->new_product_group_id,
@@ -606,6 +615,20 @@ class ProductController extends Controller
         } else {
             return redirect()->action([ProductController::class, 'list_nota']);
         }
+    }
+
+    public function update_new(){
+
+    }
+
+    public function edit($id)
+    {
+        $detail = Product::findOrFail($id);
+        return view('product'.'modal_edit',
+            compact(
+                'detail',
+            )
+        );
     }
 
     public function index_baki(Request $request)
@@ -1335,7 +1358,8 @@ class ProductController extends Controller
             }
         }
 
-    public function index_data(Request $request)
+    
+        public function index_data(Request $request)
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
