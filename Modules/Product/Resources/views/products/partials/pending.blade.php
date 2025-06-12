@@ -28,9 +28,9 @@
                                             <input type="hidden" name="id" id="id">
                                             <select name="status" id="status" onchange="rubah_harga();" class="form-control" required>
                                                 <option value="1">Ready</option>
-                                                <option value="4">Pending Office</option>
+                                                <option value="4">Brankas</option>
                                                 <option value="5">Cuci</option>
-                                                <option value="6">Masak</option>
+                                                <!-- <option value="6">Masak</option> -->
                                                 <option value="8">Reparasi</option>
                                                 <option value="15">Lebur/Removed</option>
                                             </select>
@@ -41,7 +41,7 @@
                                             <input type="number" id="harga" class="form-control" name="harga" disabled>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" id="select_baki">
                                             <label for="product_category">Baki</label>
                                             <select name="baki" id="baki" class="form-control">
                                             <!-- @if (isset($baki)) -->
@@ -72,8 +72,12 @@ function show_modal(id){
 
 function rubah_harga(){
     $('#harga').prop('disabled', true);
+    $('#select_baki').hide();
     if($("#status").val() == 8){
         $('#harga').prop('disabled', false);
+    }
+    if($("#status").val() == 1){
+        $('#select_baki').show();
     }
 }
 </script>

@@ -191,8 +191,10 @@ class JualController extends Controller
         $id         = $request->id;
         $password   = $request->password;
         $print      = '[ Printed ]';
-        if($password === 'password'){
+        if($password !== 'password'){
             $print  = '';
+            toast('Password Salah!', 'error');
+            return redirect()->back();
         }
         $nama_cus   = '';
         $address    = '';        
@@ -337,7 +339,7 @@ class JualController extends Controller
                 ->get();
 
                 if ($sold->isNotEmpty()) {
-                    $print      = '[ Printed ]';
+                    $print      = '';
                     $lanjut = false;
                     // return redirect()->action([JualController::class, 'list']);
                 }

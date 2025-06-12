@@ -260,7 +260,9 @@ class ProductController extends Controller
         // UPDATE STATUS PRODUCT
         $products   = Product::where('id', $id)->firstOrFail();
         $products->status_id   = $request->status;
-        $products->baki_id   = $request->baki;
+        if($request->status == 1){
+            $products->baki_id   = $request->baki;
+        }
         $products->save();
         // INSERT HISTORY
         $stat[1] = 'O';
