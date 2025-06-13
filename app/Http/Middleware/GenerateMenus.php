@@ -2403,34 +2403,34 @@ class GenerateMenus
 
 
             // STOCK OPNAME
-            // $stockopname = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-gear"></i>' . __('Stock Opname') . '', [
-            //     'class' => 'c-sidebar-nav-dropdown',
-            // ])
-            //     ->data([
-            //         'order'         => 90,
-            //         'activematches' => [
-            //             'currencies*',
+            $stockopname = $menu->add('<i class="c-sidebar-nav-icon mb-1 bi bi-gear"></i>' . __('Stock Opname') . '', [
+                'class' => 'c-sidebar-nav-dropdown',
+            ])
+                ->data([
+                    'order'         => 90,
+                    'activematches' => [
+                        'currencies*',
 
-            //         ],
-            //         'permission'    => ['access_currencies', 'access_settings'],
-            //     ]);
-            // $stockopname->link->attr([
-            //     'class' => 'c-sidebar-nav-dropdown-toggle',
-            //     'href'  => '#',
-            // ]);
+                    ],
+                    'permission'    => ['access_currencies', 'access_settings'],
+                ]);
+            $stockopname->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
 
-            // $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('Opname') . '', [
-            //     'route' => 'stock_opname.data',
-            //     'class' => 'nav-item',
-            // ])
-            //     ->data([
-            //         'order'         => 91,
-            //         'activematches' => 'currencies*',
-            //         'permission'    => ['access_currencies'],
-            //     ])
-            //     ->link->attr([
-            //         'class' => 'c-sidebar-nav-link',
-            //     ]);
+            $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('Opname') . '', [
+                'route' => 'stock_opname.data',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 91,
+                    'activematches' => 'currencies*',
+                    'permission'    => ['access_currencies'],
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link',
+                ]);
 
             // $stockopname->add('<i class="c-sidebar-nav-icon bi bi-currency-exchange"></i> ' . __('History') . '', [
             //     'route' => 'stock_opname.data',
@@ -2518,18 +2518,18 @@ class GenerateMenus
                     'class' => 'c-sidebar-nav-link',
                 ]);
 
-            $setting->add('<i class="c-sidebar-nav-icon bi bi-config"></i> ' . __('Stock Opname') . '', [
-                    'route' => 'stock_opname.list',
-                    'class' => 'nav-item',
-                ])
-                    ->data([
-                        'order'         => 91,
-                        'activematches' => 'settings*',
-                        'permission'    => ['access_settings'],
-                    ])
-                    ->link->attr([
-                        'class' => 'c-sidebar-nav-link',
-                    ]);
+            // $setting->add('<i class="c-sidebar-nav-icon bi bi-config"></i> ' . __('Stock Opname') . '', [
+            //         'route' => 'stock_opname.list',
+            //         'class' => 'nav-item',
+            //     ])
+            //         ->data([
+            //             'order'         => 91,
+            //             'activematches' => 'settings*',
+            //             'permission'    => ['access_settings'],
+            //         ])
+            //         ->link->attr([
+            //             'class' => 'c-sidebar-nav-link',
+            //         ]);
     
 
             $setting->add('<i class="c-sidebar-nav-icon bi-sliders"></i> ' . __('System Settings') . '', [

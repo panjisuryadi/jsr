@@ -27,6 +27,7 @@ use App\Models\ProductHistories;
 use App\Models\SalesGold;
 use App\Models\SalesItem;
 use App\Models\StockOpname;
+use PDF;
 
 class BuybackController extends Controller
 {
@@ -52,6 +53,25 @@ class BuybackController extends Controller
         $this->module_icon = 'fas fa-sitemap';
         $this->module_model = "Modules\Karat\Models\Karat";
     }
+
+    public function print_struk($id)
+    {
+        $buyback = Buyback::where('id', $id)->with('product')->firstOrFail();
+        $nota   = $buyback->nota;
+        $payment   = $buyback->payment;
+        $harga   = $buyback->harga;
+        $product_name   = $buyback->product->product_name;
+        $product_code   = $buyback->product->product_code;
+        $berat   = $buyback->berat_emas;
+        // echo $buyback;
+        // exit();
+        return view(
+            'buyback.struk', // Path to your create view file
+            compact(
+                'buyback',
+            )
+        );
+    }
     
     public function insert(Request $request)
     {   
@@ -70,6 +90,8 @@ class BuybackController extends Controller
             'harga'   => $request->harga,
             'tanggal'   => date('Y-m-d'),
         ]);
+
+        $id_buyback = $buyback->id;
 
         // UPDATE PRODUCT
         $product= Product::where('id', $product)->firstOrFail();
@@ -109,8 +131,9 @@ class BuybackController extends Controller
                 'from' => 'kasir'
             ]);
         }
+        return redirect()->route('buyback.print', ['id' => $buyback->id]);
 
-        return redirect()->action([BuyBackController::class, 'list']);
+        // return redirect()->action([BuyBackController::class, 'list']);
     }
 
     public function index_data()
@@ -135,15 +158,10 @@ class BuybackController extends Controller
         // echo $$module_name;        
         $data = $$module_name;
         return Datatables::of($data)
-                    // ->addColumn('action', function ($data) {
-                    //    $module_name = $this->module_name;
-                    //     $module_model = $this->module_model;
-                    //     $module_path = $this->module_path;
-                    //     return view($module_name.'::'.$module_path.'.includes.action',
-                    //     compact('module_name', 'data', 'module_model'));
-                    //         })
-
-                    
+                    ->addColumn('action', function ($data) {
+                        return view('buyback.action',
+                        compact('data'));
+                            })
 
                       ->editColumn('tanggal', function($data){
                         $output = '';

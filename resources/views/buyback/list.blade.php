@@ -67,6 +67,9 @@
                                     <th style="width: 15%!important;" class="text-center">
                                         Tanggal
                                     </th> 
+                                    <th style="width: 15%!important;" class="text-center">
+                                        #
+                                    </th> 
                                 </tr>
                             </thead>
                         </table>
@@ -229,6 +232,10 @@
                 {
                     data: 'tanggal',
                     name: 'tanggal'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
                 },
                 
             ]

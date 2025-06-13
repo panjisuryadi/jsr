@@ -160,6 +160,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/buyback', 'BuyBackController@list')
         ->name('buyback.list');
 
+    Route::get('/buyback/print/{id}', 'BuyBackController@print_struk')
+        ->name('buyback.print');
+
     Route::get('/buyback_index_data', 'BuyBackController@index_data')
         ->name('buyback.index_data');
 
