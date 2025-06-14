@@ -190,7 +190,7 @@ class JualController extends Controller
     public function print(Request $request){
         $id         = $request->id;
         $password   = $request->password;
-        $print      = '[ Printed ]';
+        $print      = '';
         if($password !== 'password'){
             $print  = '';
             toast('Password Salah!', 'error');
