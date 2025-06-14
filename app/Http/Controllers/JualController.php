@@ -223,18 +223,18 @@ class JualController extends Controller
 
         foreach($salesItem as $s){
             $product      = $s->product;
-            echo $product;
-            exit();
+            // echo $product;
+            // exit();
             $images = 'non';
             $title  = 'Faktur';
             $gram   = 0;
             if($product !== 0){
                 $title  = 'Nota Emas';
                 $image  = Product::where('id', $product)->first();
-                exit();
-                echo $image;
-                $images = $image->images;
+                // exit();
+                // echo $image;
                 $gram   = $image->berat_emas;
+                $images = $image->images;
             }
             $name       = $s->desc;
             $desc       = $s->name;
