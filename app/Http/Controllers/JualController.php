@@ -207,7 +207,11 @@ class JualController extends Controller
         $telp   = $val['telp'];
         $info   = $val['info'];
 
-        $salesGold  = SalesGold::where('id', $id)->firstOrFail();
+        $salesGold  = SalesGold::where('id', $id)->first();
+        if(!$salesGold){
+            toast('Data Sales not found!', 'error');
+            return redirect()->back();
+        }
         $customer   = $salesGold->customer;
         if($customer != '0'){
             $customer   = Customer::where('id', $customer)->first();
@@ -219,11 +223,12 @@ class JualController extends Controller
 
         foreach($salesItem as $s){
             $product      = $s->product;
+            $images = 'non';
             $title  = 'Faktur';
             $gram   = 0;
             if($product !== 0){
                 $title  = 'Nota Emas';
-                $image  = Product::where('id', $product)->firstOrFail();
+                $image  = Product::where('id', $product)->first();
                 $images = $image->images;
                 $gram   = $image->berat_emas;
             }
