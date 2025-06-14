@@ -223,6 +223,8 @@ class JualController extends Controller
 
         foreach($salesItem as $s){
             $product      = $s->product;
+            echo $product;
+            exit();
             $images = 'non';
             $title  = 'Faktur';
             $gram   = 0;
