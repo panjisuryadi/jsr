@@ -229,6 +229,7 @@ class JualController extends Controller
             if($product !== 0){
                 $title  = 'Nota Emas';
                 $image  = Product::where('id', $product)->first();
+                exit();
                 echo $image;
                 $images = $image->images;
                 $gram   = $image->berat_emas;
